@@ -1,0 +1,81 @@
+<div class="row animated fadeIn fast">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <input type="text" class="form-control" placeholder="Buscar tienda" #txtTermino (keyup)="buscar(txtTermino.value)">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row animated fadeIn fast" *ngIf="cargando">
+    <div class="col-12">
+        <div class="alert alert-info text-center">
+            <div class="alert-heading">Cargando</div>
+            <i class="fa fa-spin fa-refresh fa-2x"></i>
+            <p class="mb-0">Por favor espere</p>
+        </div>
+    </div>
+</div>
+
+<div class="row" *ngIf="!cargando">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-9">
+                        <h4 class="card-title">Tiendas: ({{ tiendas.length}})</h4>
+                        <h6 class="card-subtitle">Tiendas registrados en la app</h6>
+                    </div>
+                    <div class="col-3">
+                        <div class="text-right">
+                            <button class="btn btn-primary" [routerLink]="['/dashboard/tienda/registro/']">
+                              <i class="fa fa-pencil"></i>
+                              Crear Tienda
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <hr>
+
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Img</th>
+                                <th>Nombre</th>
+                                <th>Local</th>
+                                <th>sub Categoria</th>
+                                <th class="text-nowrap">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let tienda of tiendas |  paginate: { itemsPerPage: count, currentPage: p } | orderBy:'createdAt, desc'">
+                                <td class="text-center">
+                                    <img [src]="tienda.img | imagenPipe: 'tiendas'" class="img-responsive avatar" alt="{{tienda.nombre}}">
+                                    <!-- <img (click)="abrirModal(marca)" [src]="marca.imagenUrl | imagenPipe: 'marcas'" class="avatar cursor" alt="{{marca.nombre}}"> -->
+                                </td>
+                                <td>
+                                    {{tienda.nombre}}
+                                </td>
+                                <td>
+                                    {{tienda.local}}
+                                </td>
+                                <td>
+                                    {{tienda.subcategoria}}
+                                </td>
+                                <td class="text-nowrap text-center">
+                                    <a [routerLink]="['/dashboard/tienda/edit/', tienda._id]" class="cursor" data-toggle="tooltip" data-original-title="Edit"> <i class="fa fa-pencil text-inverse m-r-10"></i> </a>
+                                    <a (click)="eliminarMarca(tienda)" class="cursor" data-toggle="tooltip" data-original-title="Borrar"> <i class="fa fa-close text-danger"></i> </a>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+                <pagination-controls (pageChange)="p = $event"></pagination-controls>
+            </div>
+        </div>
+    </div>
+</div>

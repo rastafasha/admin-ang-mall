@@ -1,0 +1,146 @@
+<div class="row animated fadeIn fast">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <input type="text" class="form-control" placeholder="Buscar " #txtTermino (keyup)="buscar(txtTermino.value)">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- <div class="row animated fadeIn fast" *ngIf="cargando">
+    <div class="col-12">
+        <div class="alert alert-info text-center">
+            <div class="alert-heading">Cargando</div>
+            <i class="fa fa-spin fa-refresh fa-2x"></i>
+            <p class="mb-0">Por favor espere</p>
+        </div>
+    </div>
+</div> -->
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-6">
+                        <h4 class="card-title">Videos: ({{ videocursos.length}})</h4>
+                        <h6 class="card-subtitle">Videos registrados en la app</h6>
+                    </div>
+                    <div class="col-3">
+                        <div class="text-right">
+                            <button class="btn btn-outline-danger" href="javascript:void(0)" (click)="goBack()">Volver</button>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="text-right">
+                            <button class="btn btn-primary" [routerLink]="['/dashboard/curso/curso-video/create']">
+                        <i class="fa fa-pencil"></i>
+                        Crear Video
+                      </button>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <hr>
+
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+
+                                <th>Video</th>
+                                <th>Curso</th>
+                                <th>Titulo</th>
+                                <th>Status</th>
+                                <th>Activar</th>
+                                <th>Creado</th>
+                                <th>Modificado</th>
+                                <th class="text-nowrap">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let gal of videocursos |  paginate: { itemsPerPage: count, currentPage: p }">
+                                <td class="text-center">
+                                    <img src="http://img.youtube.com/vi/{{gal.video}}/2.jpg" class=" cursor" alt="{{gal.titulo}}">
+                                </td>
+                                <td>{{gal.curso.titulo}}</td>
+                                <td>{{gal.titulo}}</td>
+                                <td>
+                                    <div class="font-size-sm mb-4">
+                                        <span class="text-heading font-weight-medium mr-1">Estado:</span>
+                                        <span class="badge badge-secondary badge-shadow" *ngIf="gal.status == 'Edicion'">{{gal.status}}</span>
+                                        <span class="badge badge-success badge-shadow" *ngIf="gal.status == 'Activo'">{{gal.status}}</span>
+                                        <span class="badge badge-primary badge-shadow" *ngIf="gal.status == 'Desactivado'">{{gal.status}}</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-accent" *ngIf="gal.status == 'Edicion' || gal.status == 'Desactivado'" data-toggle="modal" [attr.data-target]="'#activar-'+gal._id"><span class="czi-check"></span> Activar</button>
+
+                                    <div class="modal fade" [attr.id]="'activar-'+gal._id" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title">Confirmación</h4>
+                                                    <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p class="font-size-sm">Al aceptar, estás confirmando que el video fué editado correctamente.</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button class="btn btn-secondary btn-sm" type="button" data-dismiss="modal">Cerrar</button>
+                                                    <button class="btn btn-primary btn-shadow btn-sm" type="button" (click)="activar(gal._id)">Aceptar</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <button type="button" class="btn btn-primary" *ngIf="gal.status == 'Activo'" data-toggle="modal" [attr.data-target]="'#desactivar-'+gal._id"><span class="czi-close"></span> Desactivar</button>
+                                    <div class="modal fade" [attr.id]="'desactivar-'+gal._id" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title">Confirmación</h4>
+                                                    <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p class="font-size-sm">Al aceptar el video, no será visible en la tienda.</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button class="btn btn-secondary btn-sm" type="button" data-dismiss="modal">Cerrar</button>
+                                                    <button class="btn btn-primary btn-shadow btn-sm" type="button" (click)="desactivar(gal._id)">Aceptar</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+                                    <span class="text-muted" *ngIf="gal.status == 'Edicion'" style="font-size: 13px;">Este video aún se encuentra en edición.</span>
+                                    <span class="text-muted" *ngIf="gal.status == 'Desactivado'" style="font-size: 13px;">Este video aún no está disponible en la tienda.</span>
+
+                                </td>
+                                <td>{{ gal.createdAt | date:'MMM d, y, h:mm:ss a' }}</td>
+                                <td>{{ gal.updatedAt | date:'MMM d, y, h:mm:ss a' }}</td>
+                                <td class="text-nowrap text-center">
+
+                                    <div class="btn-group" role="group">
+                                        <button type="button" class="btn btn-dark dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span class="czi-settings"></span> Opciones
+                                  </button>
+                                        <div class="dropdown-menu">
+                                            <a [routerLink]="['/dashboard/curso/curso-video/edit',gal._id]" class="dropdown-item"><span class="czi-edit-alt"></span> &nbsp;Editar</a>
+                                            <a (click)="eliminarVideo(gal)" class="dropdown-item"><span class="czi-delete-document"></span> &nbsp;Eliminar</a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+                <pagination-controls (pageChange)="p = $event"></pagination-controls>
+            </div>
+        </div>
+    </div>
+</div>

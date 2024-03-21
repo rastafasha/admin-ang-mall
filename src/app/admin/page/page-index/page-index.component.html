@@ -1,0 +1,145 @@
+<div class="row animated fadeIn fast">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <input type="text" class="form-control" placeholder="Buscar " #txtTermino (keyup)="buscar(txtTermino.value)">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row animated fadeIn fast" *ngIf="cargando">
+    <div class="col-12">
+        <div class="alert alert-info text-center">
+            <div class="alert-heading">Cargando</div>
+            <i class="fa fa-spin fa-refresh fa-2x"></i>
+            <p class="mb-0">Por favor espere</p>
+        </div>
+    </div>
+</div>
+
+<div class="row" *ngIf="!cargando">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-9">
+                        <h4 class="card-title">Page: ({{ pages.length}})</h4>
+                        <h6 class="card-subtitle">Pages registrados en la app</h6>
+                    </div>
+                    <div class="col-3">
+                        <div class="text-right">
+                            <button class="btn btn-primary" [routerLink]="['/dashboard/page/create/']">
+                    <i class="fa fa-pencil"></i>
+                    Crear Page
+                  </button>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <hr>
+
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>img</th>
+                                <th>Titulo</th>
+                                <th>Status</th>
+                                <th>Destacado</th>
+                                <th>Activar</th>
+                                <th>Created</th>
+                                <th>Updated</th>
+                                <th class="text-nowrap">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let page of pages | paginate: { itemsPerPage: count, currentPage: p }">
+                                <td class="text-center">
+                                    <!-- <img [src]="producto.img | imagenPipe: 'productos'" class="img-responsive avatar" alt="{{producto.titulo}}"> -->
+                                    <img [routerLink]="['/dashboard/page/edit',page._id]" [src]="page.img | imagenPipe: 'pages'" class="avatar cursor" alt="{{page.titulo}}">
+                                </td>
+                                <td>{{page.titulo}}</td>
+                                <td>
+                                    <div class="font-size-sm mb-4">
+                                        <span class="badge badge-accent badge-shadow" *ngIf="page.status == 'Edición'">{{page.status}}</span>
+                                        <span class="badge badge-success badge-shadow" *ngIf="page.status == 'Activo'">{{page.status}}</span>
+                                        <span class="badge badge-primary badge-shadow" *ngIf="page.status == 'Desactivado'">{{page.status}}</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="font-size-sm mb-4">
+                                        <span class="badge badge-danger badge-shadow" *ngIf="page.isFeatured == false">{{page.isFeatured}}</span>
+                                        <span class="badge badge-success badge-shadow" *ngIf="page.isFeatured == true">{{page.isFeatured}}</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-accent" *ngIf="page.status == 'Edición' || page.status == 'Desactivado'" data-toggle="modal" [attr.data-target]="'#activar-'+page._id"><span class="czi-check"></span> Activar</button>
+
+                                    <div class="modal fade" [attr.id]="'activar-'+page._id" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title">Confirmación</h4>
+                                                    <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p class="font-size-sm">Al aceptar, estás confirmando que el page fué editado correctamente.</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button class="btn btn-secondary btn-sm" type="button" data-dismiss="modal">Cerrar</button>
+                                                    <button class="btn btn-primary btn-shadow btn-sm" type="button" (click)="activar(page._id)">Aceptar</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <button type="button" class="btn btn-primary" *ngIf="page.status == 'Activo'" data-toggle="modal" [attr.data-target]="'#desactivar-'+page._id"><span class="czi-close"></span> Desactivar</button>
+                                    <div class="modal fade" [attr.id]="'desactivar-'+page._id" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title">Confirmación</h4>
+                                                    <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p class="font-size-sm">Al aceptar el page, no será visible en la tienda.</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button class="btn btn-secondary btn-sm" type="button" data-dismiss="modal">Cerrar</button>
+                                                    <button class="btn btn-primary btn-shadow btn-sm" type="button" (click)="desactivar(page._id)">Aceptar</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+                                    <span class="text-muted" *ngIf="page.status == 'Edición'" style="font-size: 13px;">Este page aún se encuentra en edición.</span>
+                                    <span class="text-muted" *ngIf="page.status == 'Desactivado'" style="font-size: 13px;">Este page aún no está disponible en la tienda.</span>
+
+                                </td>
+                                <td>{{ page.createdAt | date:'MMM d, y, h:mm:ss a' }}</td>
+                                <td>{{ page.updatedAt | date:'MMM d, y, h:mm:ss a' }}</td>
+                                <td class="text-nowrap text-center">
+
+                                    <div class="btn-group" role="group">
+                                        <button type="button" class="btn btn-dark dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="czi-settings"></span> Opciones
+                              </button>
+                                        <div class="dropdown-menu">
+                                            <a [routerLink]="['/dashboard/page/edit',page._id]" class="dropdown-item"><span class="czi-edit-alt"></span> &nbsp;Editar</a>
+                                            <a (click)="eliminarPage(page)" class="dropdown-item"><span class="czi-delete-document"></span> &nbsp;Eliminar</a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+                <pagination-controls (pageChange)="p = $event"></pagination-controls>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,181 @@
+<div class="row animated fadeIn fast">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <input type="text" class="form-control" placeholder="Buscar producto" #txtTermino (keyup)="buscar(txtTermino.value)">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row animated fadeIn fast" *ngIf="cargando">
+    <div class="col-12">
+        <div class="alert alert-info text-center">
+            <div class="alert-heading">Cargando</div>
+            <i class="fa fa-spin fa-refresh fa-2x"></i>
+            <p class="mb-0">Por favor espere</p>
+        </div>
+    </div>
+</div>
+
+<div class="row" *ngIf="!cargando">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-6">
+                        <h4 class="card-title">Productos: ({{ productos.length}})</h4>
+                        <h6 class="card-subtitle">Productos registrados en la app</h6>
+                    </div>
+                    <div class="col-3">
+                        <div class="text-right">
+                            <button class="btn btn-primary" [routerLink]="['/dashboard/producto/create/']">
+                          <i class="fa fa-pencil"></i>
+                          Crear Producto
+                        </button>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="text-right">
+                            <button class="btn btn-primary" [routerLink]="['/dashboard/producto/papelera/']">
+                        <i class="fa fa-trash"></i>
+                        Papelera
+                      </button>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <hr>
+
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>img</th>
+                                <th>Titulo</th>
+                                <th>Status</th>
+                                <th>Destacado</th>
+                                <th>Precio Ahora</th>
+                                <th>Precio Antes</th>
+                                <th>Activar</th>
+                                <th>Created</th>
+                                <th>Updated</th>
+                                <th class="text-nowrap">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let producto of productos |  paginate: { itemsPerPage: count, currentPage: p } | orderBy:'createdAt, desc' ">
+                                <td class="text-center">
+                                    <!-- <img [src]="producto.img | imagenPipe: 'productos'" class="img-responsive avatar" alt="{{producto.titulo}}"> -->
+                                    <img [routerLink]="['/dashboard/producto/edit',producto._id]" [src]="producto.img | imagenPipe: 'productos' " class="avatar cursor" alt="{{producto.titulo}}">
+                                </td>
+                                <td>{{producto.titulo |slice:0:30}}...</td>
+                                <td>
+                                    <div class="font-size-sm mb-4">
+                                        <span class="badge badge-accent badge-shadow" *ngIf="producto.status == 'Edición'">{{producto.status}}</span>
+                                        <span class="badge badge-success badge-shadow" *ngIf="producto.status == 'Activo'">{{producto.status}}</span>
+                                        <span class="badge badge-primary badge-shadow" *ngIf="producto.status == 'Desactivado'">{{producto.status}}</span>
+                                        <span class="badge badge-primary badge-shadow" *ngIf="producto.status == 'Papelera'">{{producto.status}}</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="font-size-sm mb-4">
+                                        <span class="badge badge-danger badge-shadow" *ngIf="producto.isFeatured == false">{{producto.isFeatured}}</span>
+                                        <span class="badge badge-success badge-shadow" *ngIf="producto.isFeatured == true">{{producto.isFeatured}}</span>
+                                    </div>
+                                </td>
+                                <td>{{producto.precio_ahora}}...</td>
+                                <td>{{producto.precio_antes}}...</td>
+                                <td>
+                                    <button type="button" class="btn btn-accent" *ngIf="producto.status == 'Edición' || producto.status == 'Desactivado'" data-toggle="modal" [attr.data-target]="'#activar-'+producto._id"><span class="czi-check"></span> Activar</button>
+
+                                    <div class="modal fade" [attr.id]="'activar-'+producto._id" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title">Confirmación</h4>
+                                                    <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p class="font-size-sm">Al aceptar, estás confirmando que el producto fué editado correctamente.</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button class="btn btn-secondary btn-sm" type="button" data-dismiss="modal">Cerrar</button>
+                                                    <button class="btn btn-primary btn-shadow btn-sm" type="button" (click)="activar(producto._id)">Aceptar</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <button type="button" class="btn btn-primary" *ngIf="producto.status == 'Activo'" data-toggle="modal" [attr.data-target]="'#desactivar-'+producto._id"><span class="czi-close"></span> Desactivar</button>
+                                    <div class="modal fade" [attr.id]="'desactivar-'+producto._id" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title">Confirmación</h4>
+                                                    <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p class="font-size-sm">Al aceptar el producto, no será visible en la tienda.</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button class="btn btn-secondary btn-sm" type="button" data-dismiss="modal">Cerrar</button>
+                                                    <button class="btn btn-primary btn-shadow btn-sm" type="button" (click)="desactivar(producto._id)">Aceptar</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <button type="button" class="btn btn-secondary" data-toggle="modal" [attr.data-target]="'#papelera-'+producto._id"><span class="czi-remove-folder
+                                    "></span> Papelera</button>
+
+                                    <div class="modal fade" [attr.id]="'papelera-'+producto._id" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title">Confirmación</h4>
+                                                    <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p class="font-size-sm">El producto se moverá a la papelera de reciclaje.</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button class="btn btn-secondary btn-sm" type="button" data-dismiss="modal">Cerrar</button>
+                                                    <button class="btn btn-primary btn-shadow btn-sm" type="button" (click)="papelera(producto._id)">Aceptar</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <span class="text-muted" *ngIf="producto.status == 'Edición'" style="font-size: 13px;">Este producto aún se encuentra en edición.</span>
+                                    <span class="text-muted" *ngIf="producto.status == 'Desactivado'" style="font-size: 13px;">Este producto aún no está disponible en la tienda.</span>
+
+                                </td>
+                                <td>{{ producto.createdAt | date:'MMM d, y, h:mm:ss a' }}</td>
+                                <td>{{ producto.updatedAt | date:'MMM d, y, h:mm:ss a' }}</td>
+                                <td class="text-nowrap text-center">
+
+                                    <div class="btn-group" role="group">
+                                        <button type="button" class="btn btn-dark dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                      <span class="czi-settings"></span> Opciones
+                                    </button>
+                                        <div class="dropdown-menu">
+                                            <a [routerLink]="['/dashboard/producto/edit',producto._id]" class="dropdown-item"><span class="czi-edit-alt"></span> &nbsp;Editar</a>
+                                            <a [routerLink]="['/dashboard/producto/galeria', producto._id]" class="dropdown-item"><span class="czi-image"></span> &nbsp;Galería</a>
+                                            <a [routerLink]="['/dashboard/producto/selector', producto._id]" class="dropdown-item"><span class="czi-menu-circle"></span> &nbsp;Selectores</a>
+                                            <a [routerLink]="['/dashboard/producto/color', producto._id]" class="dropdown-item"><span class="czi-diamond"></span> &nbsp;Colores</a>
+
+                                            <a (click)="eliminarProducto(producto)" class="dropdown-item"><span class="czi-delete-document"></span> &nbsp;Eliminar</a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+                <pagination-controls (pageChange)="p = $event"></pagination-controls>
+            </div>
+        </div>
+    </div>
+</div>

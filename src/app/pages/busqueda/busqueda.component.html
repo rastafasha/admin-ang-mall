@@ -1,0 +1,95 @@
+<div class="row animated fadeIn fast">
+    <!---usuarios-->
+    <div class="col-4">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Usuarios</h4>
+                <div class="alert alert-info" *ngIf="usuarios.length === 0">
+                    <p class="mb-0"> No hay usuarios con ese termino</p>
+                </div>
+                <div class="table-responsive" *ngIf="usuarios.length > 0">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Avatar</th>
+                                <th>Nombre</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let usuario of usuarios" class="animated fadeIn fast">
+                                <td>
+                                    <img [src]="usuario.img | imagenPipe: 'usuarios' " class="avatar ">
+                                </td>
+                                <td>{{usuario.nombre}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!---medicos-->
+    <div class="col-4">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">blogs</h4>
+                <div class="alert alert-info" *ngIf="blogs.length === 0">
+                    <p class="mb-0"> No hay medicos con ese termino</p>
+                </div>
+                <div class="table-responsive" *ngIf="blogs.length > 0">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Avatar</th>
+                                <th>Nombre</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let b of blogs" class="animated fadeIn fast cursor">
+                                <td>
+                                    <a [routerLink]="['/dashboard/blog', b._id]">
+                                        <img [src]="b.img | imagenPipe: 'blogs'" class="avatar">
+                                    </a>
+                                </td>
+                                <td>
+                                    <a [routerLink]="['/dashboard/blog', b._id]">
+                                      {{b.nombre}}
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!---hospitales-->
+    <div class="col-4">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Productos</h4>
+                <div class="alert alert-info" *ngIf="productos.length === 0">
+                    <p class="mb-0"> No hay productos con ese termino</p>
+                </div>
+                <div class="table-responsive" *ngIf="productos.length > 0">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Foto</th>
+                                <th>Nombre</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let p of productos" class="animated fadeIn fast">
+                                <td>
+                                    <img [src]="p.img | imagenPipe: 'productos' " class="avatar">
+                                </td>
+                                <td>{{p.nombre}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

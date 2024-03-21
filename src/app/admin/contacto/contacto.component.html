@@ -1,0 +1,202 @@
+<section>
+    <div class="pt-2 px-4 pl-lg-0 pr-xl-5">
+        <div class="row">
+
+
+            <div class="col-lg-12">
+                <div class="border-bottom mt-lg-2 pb-2">
+                    <h1 class="mt-lg-4">Mensajes</h1>
+                    <div class="d-flex flex-wrap flex-md-nowrap justify-content-between">
+                        <p class="text-muted">Mensajeria del apartado de contacto.</p>
+
+                    </div>
+
+                </div>
+                <div class="row">
+
+                     <!-- Nav pills -->
+                     <ul class="nav pilss">
+                        <li>
+                            <a href="#" onclick="return false;" [ngClass]="{'active': option_selected == 1}" (click)="optionSelected(1)">Pendientes</a>
+                        </li>
+                        <li>
+                            <a href="#" onclick="return false;" [ngClass]="{'active': option_selected == 2}" (click)="optionSelected(2)">Atendidas</a>
+                        </li>
+                        <li>
+                            <a href="#" onclick="return false;" [ngClass]="{'active': option_selected == 3}" (click)="optionSelected(3)">Todas</a>
+                        </li>
+                    </ul>
+                    <div class="row" *ngIf="option_selected == 1">
+                        <div class="col-md-6 col-lg-4" *ngFor="let item of pendientes |  paginate: { itemsPerPage: count, currentPage: p } | orderBy:'createdAt, desc'">
+    
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="d-flex">
+                                        <h4 class="card-title"><span class="lstick"></span>Mail:
+                                            <span class="font-size-ms text-muted">
+                                          <i class="czi-time align-middle mr-2"></i>
+                                          {{item.createdAt|date :'MMM d, y, h:mm:ss a'}}
+                                        </span></h4>
+                                        <!-- <span class="badge badge-success">9</span> -->
+                                        <div class="btn-group ml-auto m-t-10">
+                                            <a href="JavaScript:void(0)" class="icon-options-vertical link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
+                                            <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; transform: translate3d(-184px, 32px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                                <!-- <a class="dropdown-item" [routerLink]="['/dashboard/contacto/edit',contacto._id]">Leer</a> -->
+                                                <a class="dropdown-item" href="javascript:void(0)" (click)="eliminarMensaje(contacto)">Eliminar</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="activity-box">
+                                    <div class="card card-body">
+    
+                                        <div class="row">
+                                            <div class="col-md-4 col-lg-3 text-center">
+                                                <a href="app-contact-detail.html"><img src="../assets/images/users/1.jpg" alt="user" class="img-circle img-responsive"></a>
+                                            </div>
+                                            <div class="col-md-8 col-lg-9">
+                                                <h3 class="box-title m-b-0">{{item.nombres}}</h3> <small>Tema: {{item.tema}}</small>
+                                                <address>
+                                      <p class="font-size-md mb-1 ">{{item.mensaje}}</p>
+                                        <br>
+                                        <br>
+                                        <span class="font-size-ms text-muted">
+                                          <i class="czi-phone align-middle mr-2"></i>
+                                          {{item.telefono}}
+                                        </span><br>
+                                                <span class="font-size-ms text-muted">
+                                          <i class="czi-wechat align-middle mr-2"></i>
+                                          {{item.correo}}
+                                        </span>
+    
+                                    </address>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+    
+    
+    
+                        </div>
+                    </div>
+                    <div class="row" *ngIf="option_selected == 2">
+                        <div class="col-md-6 col-lg-4" *ngFor="let item of atendidas |  paginate: { itemsPerPage: count, currentPage: p } | orderBy:'createdAt, desc'">
+    
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="d-flex">
+                                        <h4 class="card-title"><span class="lstick"></span>Mail:
+                                            <span class="font-size-ms text-muted">
+                                          <i class="czi-time align-middle mr-2"></i>
+                                          {{item.createdAt|date :'MMM d, y, h:mm:ss a'}}
+                                        </span></h4>
+                                        <!-- <span class="badge badge-success">9</span> -->
+                                        <div class="btn-group ml-auto m-t-10">
+                                            <a href="JavaScript:void(0)" class="icon-options-vertical link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
+                                            <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; transform: translate3d(-184px, 32px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                                <!-- <a class="dropdown-item" [routerLink]="['/dashboard/contacto/edit',contacto._id]">Leer</a> -->
+                                                <a class="dropdown-item" href="javascript:void(0)" (click)="eliminarMensaje(contacto)">Eliminar</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="activity-box">
+                                    <div class="card card-body">
+    
+                                        <div class="row">
+                                            <div class="col-md-4 col-lg-3 text-center">
+                                                <a href="app-contact-detail.html"><img src="../assets/images/users/1.jpg" alt="user" class="img-circle img-responsive"></a>
+                                            </div>
+                                            <div class="col-md-8 col-lg-9">
+                                                <h3 class="box-title m-b-0">{{item.nombres}}</h3> <small>Tema: {{item.tema}}</small>
+                                                <address>
+                                      <p class="font-size-md mb-1 ">{{item.mensaje}}</p>
+                                        <br>
+                                        <br>
+                                        <span class="font-size-ms text-muted">
+                                          <i class="czi-phone align-middle mr-2"></i>
+                                          {{item.telefono}}
+                                        </span><br>
+                                                <span class="font-size-ms text-muted">
+                                          <i class="czi-wechat align-middle mr-2"></i>
+                                          {{item.correo}}
+                                        </span>
+    
+                                    </address>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+    
+    
+    
+                        </div>
+                    </div>
+                    <div class="row" *ngIf="option_selected == 3">
+                        <div class="col-md-6 col-lg-4" *ngFor="let item of mensajes |  paginate: { itemsPerPage: count, currentPage: p } | orderBy:'createdAt, desc'">
+    
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="d-flex">
+                                        <h4 class="card-title"><span class="lstick"></span>Mail:
+                                            <span class="font-size-ms text-muted">
+                                          <i class="czi-time align-middle mr-2"></i>
+                                          {{item.createdAt|date :'MMM d, y, h:mm:ss a'}}
+                                        </span></h4>
+                                        <!-- <span class="badge badge-success">9</span> -->
+                                        <div class="btn-group ml-auto m-t-10">
+                                            <a href="JavaScript:void(0)" class="icon-options-vertical link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
+                                            <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; transform: translate3d(-184px, 32px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                                <!-- <a class="dropdown-item" [routerLink]="['/dashboard/contacto/edit',contacto._id]">Leer</a> -->
+                                                <a class="dropdown-item" href="javascript:void(0)" (click)="eliminarMensaje(contacto)">Eliminar</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="activity-box">
+                                    <div class="card card-body">
+    
+                                        <div class="row">
+                                            <div class="col-md-4 col-lg-3 text-center">
+                                                <a href="app-contact-detail.html"><img src="../assets/images/users/1.jpg" alt="user" class="img-circle img-responsive"></a>
+                                            </div>
+                                            <div class="col-md-8 col-lg-9">
+                                                <h3 class="box-title m-b-0">{{item.nombres}}</h3> <small>Tema: {{item.tema}}</small>
+                                                <address>
+                                      <p class="font-size-md mb-1 ">{{item.mensaje}}</p>
+                                        <br>
+                                        <br>
+                                        <span class="font-size-ms text-muted">
+                                          <i class="czi-phone align-middle mr-2"></i>
+                                          {{item.telefono}}
+                                        </span><br>
+                                                <span class="font-size-ms text-muted">
+                                          <i class="czi-wechat align-middle mr-2"></i>
+                                          {{item.correo}}
+                                        </span>
+    
+                                    </address>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+    
+    
+    
+                        </div>
+                    </div>
+
+
+
+                </div>
+                <div class="col-lg-12">
+                    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>

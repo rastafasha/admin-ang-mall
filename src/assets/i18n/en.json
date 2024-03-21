@@ -1,0 +1,175 @@
+{
+
+
+
+    "_lang": "en",
+
+    "Inicio": "Home",
+    "View Profile": "View Profile",
+    "Clases de Música": "Music Classes",
+    "Letras": "Lyrics",
+    "Audio": "Audio",
+    "Noticias": "News",
+    "Contacto": "Contact",
+    "Comprar Libros en Línea": "Buy Book on line",
+    "Preguntas Frecuentes": "Frequent Ask",
+    "Mark Brown / Equipo": "Mark Brown / Team",
+    "Cómo Ayudar?": "How help?",
+    "Fundación LR": "Foundation LR",
+    "Síguenos en:": "Follows in:",
+    "ver más": "view more",
+    "Clases": "Classes",
+    "Encuentre por aqui": "Find here",
+    "Título": "Title",
+    "Nombre del archivo": "File name",
+
+    "Introducción": "Introduction",
+    "dedicado.text": "He has dedicated much of his life to the study and musical performance. His interest in collecting scores for the publication of the Royal Book is influenced in part by his mother ...",
+    "sededica.text": "DEDICATES TO MUSICAL TEACHING,",
+    "paramusicos.text": "FOR MUSICIANS INTERESTED IN LEARNING OR IMPROVING YOUR TECHNIQUE.",
+    "ensa.text": "PERSONALIZED TEACHING",
+
+    "Necesitas.text": "¿Do you need all the lyrics of the compositions that appear in the Royal Book of Venezuelan Traditional Music?",
+    "Puedes.text": "You can download them for free in pdf format by clicking here:",
+
+    "libro.titulo": "The Royal Book, its history",
+    "proyecto.text": "This project began in January 2001, with a research process undertaken by the musician Mark P. Brown that has led him to tour much of Venezuela in the search for creators and compositions. It all started when in the 90 s, Brown was interested in performing traditional Venezuelan music, but he discovered that there was very little written music and it was difficult toget it.This led him to transcribe some pieces of the repertoire Venezuelan traditional, in principle for personal use and then, in 2001, with the vision of creating a publication inspired by other similar editions in other countries, compilations that had become a mandatory reference for musicians interested in those genres.",
+    "precisamente.text": "It is precisely there where the Royal Book makes a fundamental difference: although it is a transcription work presented in a compilation of scores, there is a research work carried out jointly with many of the composers whose works are present in the publication to ensure the Correct transcription of the themes, guaranteeing not only the attachment to the original work but also contributing to leave as faithful a record as possible of the traditional Venezuelan musical repertoire.",
+    "gracias.text": "Because the scores in the book have harmony, melody and lyrics, the pieces can be interpreted in a variety of instruments and even sung. “Since the teaching of Venezuelan music has been fundamentally of oral tradition, it is currently quite difficult to transmit and disseminate Venezuelan music to interested people,” says Mark. “With this work I hope to provide teachers and students with a practical tool that they can use to teach musical reading using pieces of our folklore.”",
+    "encuentros.text": "From Mark's encounters with the authors there have been valuable stories for the Ana, as well as a repertoire of more than 570 scores of 232 composers, which is an important compilation of works of traditional Venezuelan music.",
+    "resultado.text": "This result, which materializes with the publication of the Royal Book, has been possible thanks to the effort, enthusiasm and persistence of the author and in this last year, a small work team that, under Brown's guidelines, has managed to review and refine known and unpublished musical material and turn it into what will be a piece of cultural and pedagogical interest for musicians, academics and enthusiasts of Venezuelan folklore. ",
+    "interes.text": "The primary interest of the publication of the Royal Book is to leave a record of the richness and diversity of Venezuelan traditional music; is to be a work tool, a learning instrument, so that these pieces can be read, learned and interpreted by the new generations of Venezuelan musicians; while recognizing the valuable work of those who, with their compositions, have paved the way to build an essential part of Venezuela's cultural heritage.",
+    "primeraedicion.text": "The first edition of the Royal Book of Venezuela is two volumes of approximately 500 pages each. They contain more than 570 musical pieces. Volume 1 is in alphabetical order from A to J, and volume 2 follows from L to Z.",
+    "partitura.text": "Each score identifies the title of the piece, the genre with which it is accompanied and the page number. The structure of each piece is identified with circle letters, for example part A, part B, etc ... to facilitate the understanding of the form.",
+    "partitura2.text": "Each score identifies the composer with their dates and the state in which they were born.",
+    "partitura3.text": "The scores are one or two pages only. The user will never have to turn a page when interpreting each piece. The lyrics of the song have been included in the blank pages to facilitate singers.",
+    "partitura4.text": "Each score has the melody with its letter by syllables below each note and the harmony in encryption. When there was space, the full letter was placed at the bottom of the page.",
+    "partitura5.text": "When the date of composition could be obtained, it was placed next to the title.",
+
+    "autor.title": "About the author of the Royal Book",
+    "markabout1.text": "Mark P. Brown, has dedicated much of his life to the study and musical performance. Hence their genuine interest in having access to correctly transcribed scores, and in valuing the work of those who, with their ingenuity and talent, are dedicated to composition.",
+    "markabout2.text": "He was born in Queens, New York, and at age nine he moved to Venezuela with his family. During his eighteen years of stay in the country, he developed as a musician in multiple instruments, opting for the double bass and electric bass guitar.",
+    "markabout3.text": "He studied music at various conservatories in Caracas, playing cello, guitar, double bass and singing. At age 17 he began to be interested in jazz and for years he dedicated his efforts to this genre. In 1994 he had the opportunity to take advantage of a scholarship to study at Manhattan School of Music and in four years he completed this stage with bachelor's and master's degrees in jazz.",
+    "markabout4.text": "From 1998 to 2007 he was a teacher and music teacher in public schools in New York where he worked hard to share and spread Venezuelan music to his students. Mark teaches and conducts the Latin Jazz orchestra in the summer courses of the Manhattan School of Music since 1995.",
+    "markabout5.text": "Upon returning to Venezuela in 2007 Mark was part of the ensemble of singer Cecilia Todd. For seven years he traveled with Cecilia, from Turkey to Chile, celebrating in many countries Venezuelan traditions. Also in those years he dedicated himself to playing with his own jazz quartet and sharing his lessons in that style with many musicians in Caracas and the interior of the country. He is currently dedicated to music education in Caracas and also taking advantage of platforms such as Skype, which allow him to share his knowledge at a distance with musicians interested in other countries.",
+    "markabout6.text": "His interest in Venezuelan music is influenced in part by his mother, Beatriz López, who in his youth stood out as a singer of Venezuelan and international music and from whom he inherited the taste and respect for the various folkloric manifestations that make up the heritage of music Venezuelan traditional.",
+    "markabout7.text": "The need to make this compilation of scores that today make up the Royal Book, part of his own experience in learning Venezuelan music, and finding the limitations implied by the limited existence of written music in the country.",
+
+    "galeria1.text": "With Pablo Camacaro in Cabudare, 2009.",
+    "galeria2.text": "With Ricardo Mendoza, 2008.",
+    "galeria3.text": "With Adelis Fréitez, Barquisimeto, 2008.",
+    "galeria4.text": "With Rafael Rincón Gonzalez, 2009.",
+    "galeria5.text": "With Aldemaro Romero 2005.",
+    "galeria6.text": "With Henry Martinez in Maracay, 2008.",
+    "galeria7.text": "Mark with Rafael Rincón Gonzalez, in Maracaibo, 2009.",
+    "galeria8.text": "Mark with Enrique Hidalgo in Miami 2014.",
+
+    "equipo": "Our Team",
+    "equipo.textmodal.mariaeugnia": "She was the first assistant to the Royal Book of Venezuelan Traditional Music since 2014. While working for this project, Maru studied and graduated as a nurse. He was in charge of finding new repertoire, researching authors, finding the meaning of rare words and transcribing music and lyrics, as well as collaborating on endless tasks. Maru studied violin at the Juan José Landaeta Conservatory.",
+    "equipo.textmodal.vanesa": "He joined the Royal Book in February 2017, while graduating in Foreign Trade at the Simón Bolívar University. Initially he had no experience in music and was dedicated to reviewing the lyrics of the songs; Later, he learned to use music publishing programs and his contributions to the design were very important to optimize the image of the book. She is extremely meticulous and possesses enviable writing skills. Vane is learning to play the saxophone.",
+    "equipo.textmodal.franciest": "He has worked in the production and coordination of the Royal Book since March 2016, when the piles of procedures and parallel processes that would be necessary to publish it became evident. Fran is an internationalist graduated from the UCV and graphic producer in the newspaper El Nacional. He is extraordinarily efficient and has taken this project from being an amorphous pile of sheet music on a computer to its final result.",
+    "equipo.textmodal.eloimar": "She is a UCAB social communicator, with skills for the development and coordination of projects and audiovisual production and events. Elo participates since June 2017 as production assistant for the conclusion of the Book Real and was responsible for many of the necessary steps for its publication.",
+    "equipo.textmodal.bernal": " She began working as an assistant to the Royal Book in November 2016. She is tireless and has worked in reviewing details of page layout, transcription of pieces, research, contact with composers, selection of repertoire and a long list of tasks that she has fulfilled. the greatest enthusiasm. Bernie plays the four and sings. He is a music professor graduated in 2009 from the Universidad Pedagógica Experimental Libertador (UPEL), Instituto Pedagógico de Caracas",
+
+    "quieres.titulo": "Do you want to learn about Venezuelan genres, musical theory or specific instruments?",
+    "quieres1.text": "It doesn't matter in which country you live. Through Skype, Mark Brown can teach you some of these subjects in private 50-minute classes.",
+    "quieres2.text": "As they are 100% personalized sessions, there is no rigid pensum nor previous notions are required: they can build it together based on your concerns and needs, as well as fully adapt it to your level. You also choose how often you want to receive the lessons, at a convenient time for both. Mark works with children from 9 years of age and adults of all ages. All classes are individual so that you as a student can make the most of each encounter.",
+
+    "algunas": "These are some of the areas in which it can help you expand your musical knowledge:",
+    "estilos": "Styles",
+    "edicion": "Edition",
+    "improvisacion": "Improvisation",
+    "instrumentos": "Instruments",
+    "entendimiento.titulo": "Understanding and execution of Venezuelan music.",
+    "entendimiento.text": "Do you want to understand the roots and characteristics of the most representative musical genres of Venezuela? In these classes you can learn about several of those investigated by Mark in the Royal Book of Venezuelan Traditional Music: Caracas merengue, joropo, Zulian dance, waltz, bambuco, Larense coup and many more. If your line of work or study is already focused on a particular genre, region or composer - or if you want to explore others that you have never worked on - Mark and you can focus on them to improve your domain.",
+    "usoprofesional.titulo": "Professional use of the FINALE application to edit written music.",
+    "usoprofesional.text": "If you want to learn to write and document music methodically, in these classes you will learn with Mark how to make the most of FINALE. It is a practical program for professional edition that allows you to generate scores of your own compositions or transcribe the pieces you need to work individually or share with your group. Knowing and managing this tool will broaden your horizons as an author and interpreter.",
+    "teoria.titulo": "Musical theory for improvisation.",
+    "teoria.text": "As you know, improvisation is spontaneous but rarely fortuitous. Behind a good instantaneous arrangement or a great download, an important mastery of musical language is always evident. Here Mark teaches you to work in depth the construction of harmonies, encryption and melodic development management to be able to reinterpret pieces on the fly. These resources are not only useful for making better arrangements, but for significantly enriching the performance of both instrumentalists and vocalists.",
+    "saxofon.titulo": "Saxophone, double bass, bass guitar, four for beginners.",
+    "saxofon.text": "Choose your instrument! These classes expressly adapt to your abilities: Mark can teach you to play it from scratch or take it back from the notions you already have to take you to a new level. It is also possible to explore it from the genres that interest you, as well as correct your technical vices, polish the repertoire you are already playing and clarify doubts. The goal is to sharpen your skills as a performer, in addition to offering you numerous tips to optimize your overall instrument handling.",
+
+
+    "multimedia.title": "Collection with good taste.",
+    "multimedia.text": "We have endless audios included in our books where you can find your favorite song.",
+
+    "visite": "Visit our channel",
+    "preinscribirme": "pre-register",
+    "subscribete.title": "SUBSCRIBE TO OUR NEWSLETTER AND REMAIN UPDATED.",
+    "subscribirme.title": "Subscribe!",
+    "nombre.title": "Name and Last Name",
+    "email.title": "your@email.com",
+    "notfount.title": "Oops, esta página no puede ser encontrada!",
+    "notfount.text": "la página que estas bucandos pude estar removida, cambiada de nombre, o temporalmente no disponible.",
+    "coomingson": "Próximamente",
+
+
+    "slider1.titulo1": "We introduce you: El libro Real of",
+    "slider1.titulo2": "traditional Venezuelan music.",
+    "slider1.titulo3": "hundreds of sheet music to learn and play.",
+
+    "slider2.titulo1": "Meet",
+    "slider2.titulo2": "Mark Brown",
+    "slider2.titulo3": "Musician, pedagogue and author of the royal book of Venezuelan music.",
+
+    "slider3.titulo1": "Music Classes",
+    "slider3.titulo2": "learning online personalized.",
+
+    "noticia.tituloEng": "noticia.tituloEng",
+    "noticia.introEng": "noticia.introEng",
+
+    "cambio": "Change",
+
+    "Dirección de Envío": "Shipping Address",
+    "Nombre*": "First Name*",
+    "Apellido*": "Last Name*",
+    "Email*": "E-mail*",
+    "Teléfono local*": "home Phone*",
+    "Teléfono móvil*": "Mobile Phone*",
+    "Dirección*": "Address*",
+    "Ciudad / Provincia*": "City / province*",
+    "Estado*": "State*",
+    "País*": "Country*",
+    "Seleccione": "Select",
+    "Código postal*": "ZIP Code*",
+    "Acepto las": "I Acept",
+    "Condiciones Generales": "General Conditions",
+
+
+    "Ingrese sus Datos": "Insert your data",
+    "Nombre": "First Name",
+    "Apellido": "Last name",
+    "Empresa (Opcional)": "Compani (Optional)",
+    "Email": "E-mail",
+    "Teléfono Móvil": "Phone Mobile",
+    "Teléfono Local": "Phone Number",
+    "País": "Country",
+    "Ciudad": "City",
+    "Comentarios/ Preguntas": "Comments/ Asks",
+    "Seleccione la clase que desea aprender": "Select the class to learn",
+    "Entendimiento y ejecución de la música venezolana clases": "Understanding and execution of Venezuelan music classes",
+    "Uso profesional de la aplicación FINALE para editar música escrita": "Professional use of the FINALE application to edit written music",
+    "Teoría musical para improvisación": "Music theory of improvisation",
+    "Contrabajo y bajo guitarra": "Double bass, bass guitar",
+    "Saxofón": "Saxophone",
+    "Cuatro para principiantes": "Four for beginners",
+    "Desea recibir información adicional y noticias?": "Do you want receive additional information and news?",
+    "Si": "Yes",
+    "No": "No",
+    "Publicaciones Recientes": "Recent Posts",
+
+    "Cuando comenzó el trabajo del Libro Real?": "When did the work on the Royal Book begin?",
+    "En enero del 2001. El autor empezó las primeras transcripciones cuando vivía en Nueva York.": "In January 2001. The author began the first transcriptions while living in New York.",
+
+    "Quien ha trabajado en el Libro Real?": "Who has worked on the Libro Real?",
+    "respuesta1": "At first, it started as a mutual project with double bass player David Peña, who did the basic transcription of some nine songs during a visit to New York in 2001. Then Mark Brown followed on his own for 14 years until he hired María Eugenia Hamoni as personal assistant. She helped with lyrics, some transcriptions, data search, page layout, repertoire organization, databases, and many other details. During 2016 María Luisa Lamas, María Victoria Yánez and Heriberto Rojas contributed sporadically with basic transcriptions. In October 2016, Mark tried to hire a permanent team, but the staff changed frequently. Among the various attendees, Bernardo Bernal, Vanessa Tapia and Javier Villamizar stood out. The eight months of intensive work to complete volumes 1 and 2 of the Royal Book included the editing work of María Eugenia Hamoni, Vanessa Tapia and Bernardo Bernal. In Production, Franciest Poller worked since 2016 and Eloimar Bonilla in the months of May-October 2017. Jessica Alcalá helped in a thousand ways in 2016-2017 to keep the work going and is in charge of the YouTube channel, generating the videos and editing . Many composers have offered their time and talent to improve this project, among them Cristobal Soto, Henry Martinez, Pablo Camacaro, Aquiles Baez, Omar García, Vianey Isolis Ramirez, Miguel and Raúl Delgado Estevez, among others. In research we have the help of Carlos García Carbó. In all the design details, both inside and outside the book, Pedro Quintero.",
+    "Qué estilos están incluidos en el Libro Real de Venezuela y que criterio se usó para elegir?": "What styles are included in the Royal Book of Venezuela and what criteria was used to choose?",
+    "respuesta2": "Only traditional Venezuelan styles of music were included in the Royal Book. The criterion used was to give priority to the most authentic styles of Venezuela and to leave those that derive from foreign styles for another work. Therefore you will find joropos from various regions of Venezuela, merengues (Caracas, oriental, and Andean), dances (Zuliana, oriental), bagpipes, bambucos, diversions, passages, and waltzes. Although the waltz does not originate in Venezuela, Venezuelan waltzes have characteristics that make them creoles and form an important part of the national folk repertoire. <br> <br> The music of the plains and in part that of the Andes, it can be said that We share it with our Colombian brothers. In no way do we claim exclusivity over these genres.",
+    "Que metodología se usó para la correcta transcripción de la música?": "What methodology was used for the correct transcription of the music?",
+    "respuesta3": "Mark Brown interviewed many composers personally and showed them their transcripts, both written and audio, to verify authenticity with the same authors. If the composer had already passed away, an attempt was made to interview his closest fellow musicians to review the transcripts. In cases of very old music, the oldest recording closest to the composer was sought and it was used for the musical transcription. <br> <br> In many cases it was difficult to know exactly which recording was the best, or perhaps there was no recording of the time, or in some cases they were pieces that had never been recorded and there was only a handwritten score, sometimes by the author, sometimes not. In some cases, the pieces were only recorded on cassettes that were already very deteriorated, from home recordings. In these cases, professional audio programs were used to better hear the details and make the most accurate possible score of the piece. <br> <br> As the interpretation of some authors is very free and also changing from one presentation to another , it was necessary to study the piece and choose how it could be written in the most basic way, assuming that each interpreter is going to interpret it in their own way. In these cases, the score is a guide and users are encouraged to listen to various versions of the piece to see how they want to interpret it. For this we have prepared a YouTube channel with audios that we recommend listening to, with information about the piece and relevant photos of the composer, performer and the geography where the piece is from."
+
+
+
+
+
+}

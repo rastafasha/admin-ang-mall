@@ -1,0 +1,88 @@
+<div class="row animated fadeIn fast">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <input type="text" class="form-control" placeholder="Buscar" #txtTermino (keyup)="buscar(txtTermino.value)">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row animated fadeIn fast" *ngIf="cargando">
+    <div class="col-12">
+        <div class="alert alert-info text-center">
+            <div class="alert-heading">Cargando</div>
+            <i class="fa fa-spin fa-refresh fa-2x"></i>
+            <p class="mb-0">Por favor espere</p>
+        </div>
+    </div>
+</div>
+
+<div class="row" *ngIf="!cargando">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-9">
+                        <h4 class="card-title">Slider: ({{ sliders.length}})</h4>
+                        <h6 class="card-subtitle">Slider registrados en la app</h6>
+                    </div>
+                    <div class="col-3">
+                        <div class="text-right">
+                            <button class="btn btn-primary" [routerLink]="['/dashboard/slider/create/']">
+                            <i class="fa fa-pencil"></i>
+                            Crear Slider
+                          </button>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <hr>
+
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Foto</th>
+                                <th>Nombre</th>
+                                <th>Status</th>
+                                <th>Created</th>
+                                <th>Updated</th>
+                                <th class="text-nowrap">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let slider of sliders |  paginate: { itemsPerPage: count, currentPage: p } | orderBy:'createdAt, desc'">
+                                <td class="text-center">
+                                    <img [src]="slider.img | imagenPipe: 'sliders'" class="img-responsive avatar" alt="{{slider.title}}">
+                                    <!-- <img (click)="abrirModal(marca)" [src]="marca.imagenUrl | imagenPipe: 'marcas'" class="avatar cursor" alt="{{marca.nombre}}"> -->
+                                </td>
+                                <td>
+                                    {{slider.first_title}}
+                                </td>
+                                <td>
+                                    <div class="font-size-sm mb-4">
+                                        <span class="badge badge-danger badge-shadow" *ngIf="slider.status == false">{{slider.status}}</span>
+                                        <span class="badge badge-success badge-shadow" *ngIf="slider.status == true">{{slider.status}}</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    {{slider.createdAt | date:'mediumDate'}}
+                                </td>
+                                <td>
+                                    {{slider.updatedAt | date:'mediumDate'}}
+                                </td>
+                                <td class="text-nowrap text-center">
+                                    <a [routerLink]="['/dashboard/slider/edit', slider._id]" class="cursor" data-toggle="tooltip" data-original-title="Edit"> <i class="fa fa-pencil text-inverse m-r-10"></i> </a>
+                                    <a (click)="eliminarSlider(slider)" class="cursor" data-toggle="tooltip" data-original-title="Borrar"> <i class="fa fa-close text-danger"></i> </a>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+                <pagination-controls (pageChange)="p = $event"></pagination-controls>
+            </div>
+        </div>
+    </div>
+</div>

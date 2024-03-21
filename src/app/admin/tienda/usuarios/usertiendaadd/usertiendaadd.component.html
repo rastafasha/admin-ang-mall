@@ -1,0 +1,83 @@
+<div class="row">
+
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">{{pageTitle}}</h4>
+                <h6 class="card-subtitle">Ajustes</h6>
+                <button class="btn btn-outline-danger" href="javascript:void(0)" (click)="goBack()">Volver</button>
+                <form class="form p-t-20 form-horizontal form-material" [formGroup]="registerForm" (submit)="saveEmployee()">
+                    <div class="row">
+                        <div class="form-group col-xs-12 col-sm-6">
+                            <label for="exampleInputuname">Nombres</label>
+                            <div class="input-group">
+    
+                                <input class="form-control" type="text" formControlName="first_name" placeholder="Nombre">
+                            </div>
+                        </div>
+                        <div class="form-group col-xs-12 col-sm-6">
+                            <label for="exampleInputuname">Apellidos</label>
+                            <div class="input-group">
+    
+                                <input class="form-control" type="text" formControlName="last_name" placeholder="Apellido">
+                            </div>
+                        </div>
+                        <div class="form-group col-xs-12 col-sm-6">
+                            <label for="exampleInputuname">Email</label>
+                            <div class="input-group">
+    
+                                <input class="form-control" type="text" formControlName="email" placeholder="Email">
+                            </div>
+                        </div>
+                        <div class="form-group col-xs-12 col-sm-6">
+                            <label for="exampleInputuname">Password</label>
+                            <div class="input-group">
+    
+                                <input class="form-control" type="password" formControlName="password" placeholder="Password">
+                            </div>
+                        </div>
+                        <div class="form-group col-xs-12 col-sm-6">
+                            <label for="exampleInputuname">Confirm Password</label>
+                            <div class="input-group">
+    
+                                <input class="form-control" type="password" formControlName="password2" placeholder="Confirm Password">
+                            </div>
+                        </div>
+                        <div class="form-group col-xs-12 col-sm-6 ">
+                            <label class=" col-form-label font-weight-medium" for="text-input">Role</label>
+                            <div class="input-group">
+                                <select class="form-control" formControlName="role">
+                                <option  disabled value="">SELECCIONAR</option>
+                                <option  value="TIENDA">Tienda</option>
+                                <option  value="ALMACEN">Almacen</option>
+                              </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" [disabled]="registerForm.invalid" class="btn btn-success waves-effect waves-light m-r-10 btn-block">
+                 <i class="fa fa-save"></i> Guardar cambios
+                </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4" *ngIf="categoriaSeleccionado">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">imagen</h4>
+                <h6 class="card-subtitle">Logo de marca</h6>
+                <div class="text-center">
+                    <img *ngIf="!imgTemp" [src]="categoriaSeleccionado.img | imagenPipe: 'categorias'  " class="img-responsive img-thumbnail" alt="">
+                    <img *ngIf="imgTemp" [src]="imgTemp" class="img-avatar">
+                </div>
+                <input type="file" (change)="cambiarImagen($event.target.files[0])">
+                <br>
+                <br>
+                <button type="button" [disabled]="!imagenSubir" (click)="subirImagen()" class="btn btn-success waves-effect waves-light m-r-10 btn-block">
+              <i class="fa fa-save"></i> Cambiar imagen
+             </button>
+            </div>
+        </div>
+    </div>
+</div>

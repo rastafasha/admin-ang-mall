@@ -1,0 +1,121 @@
+<div class="row">
+
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">{{pageTitle}}</h4>
+                <h6 class="card-subtitle">Ajustes</h6>
+                <button class="btn btn-outline-danger" href="javascript:void(0)" (click)="goBack()">Volver</button>
+                <form [formGroup]="sliderForm" (ngSubmit)="onSubmit(sliderForm)" class="form-horizontal form-material">
+                    <div class="card border-0 box-shadow">
+
+                        <div class="card-body">
+                            <div class="tab-content" style="margin-top: 20px;">
+                                <div class="tab-pane fade active show">
+                                    <div class="row">
+                                        <div class="form-group col-xs-12 col-sm-6">
+                                            <label class=" font-weight-medium" for="text-input">Titulo</label>
+                                            <div class="col-md-12">
+                                                <input class="form-control" type="text" placeholder="Nombre del producto" formControlName="first_title">
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-xs-12 col-sm-6">
+                                            <label class=" font-weight-medium" for="text-input">Sub título</label>
+                                            <div class="col-md-12">
+                                                <input class="form-control" type="text" placeholder="Titulo superior" formControlName="subtitulo">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-xs-12 col-sm-6">
+                                            <label class=" font-weight-medium" for="text-input">Enlace <span class="required">*</span></label>
+                                            <div class="col-md-12">
+                                                <input class="form-control" type="text" placeholder="enlace" formControlName="enlace" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-xs-12 col-sm-6">
+                                            <label class=" font-weight-medium" for="text-input">Estado</label>
+                                            <div class="col-md-12">
+                                                <div class="custom-control custom-checkbox">
+                                                    <input class="custom-control-input" formControlName="status" type="checkbox" id="ex-check-01">
+                                                    <label class="custom-control-label" *ngIf="slider.status" for="ex-check-01">Activo</label>
+                                                    <input class="custom-control-input" formControlName="status" type="checkbox" id="ex-check-02">
+                                                    <label class="custom-control-label" *ngIf="!slider.status" for="ex-check-02">Desactivado</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-xs-12 col-sm-6">
+                                            <label class="font-weight-medium" for="text-input">Target</label>
+                                            <div class="col-md-12">
+                                                <div class="custom-control custom-checkbox">
+                                                    <input class="custom-control-input" formControlName="target" type="checkbox" id="ex-check-1">
+                                                    <label class="custom-control-label" *ngIf="slider.target" for="ex-check-1">Self</label>
+                                                    <input class="custom-control-input" formControlName="target" type="checkbox" id="ex-check-2">
+                                                    <label class="custom-control-label" *ngIf="!slider.target" for="ex-check-2">Blank</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-xs-12 col-sm-6">
+                                            <label class=" col-form-label font-weight-medium" for="text-input">status <span class="required">*</span></label>
+                                            <div class="col-md-12">
+                                                <div class="row">
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label for="select-input">Visible</label>
+                                                            <select class="form-control " formControlName="mostrarInfo" required>
+                                                                <option disabled  value="">SELECCIONAR</option>
+                                                                <option  [value]="true">Activo</option>
+                                                                <option  [value]="false">Inactivo</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label for="select-input">Destacado?</label>
+                                                            <select class="form-control " formControlName="mostrarboton">
+                                                              <option disabled value="">SELECCIONAR</option>
+                                                              <option  [value]="true">Activo</option>
+                                                              <option  [value]="false">Inactivo</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+    
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-success waves-effect waves-light m-r-10 btn-block" type="submit"><i class="fa fa-save"></i> Guardar cambios</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 animated fadeIn fast" *ngIf="sliderSeleccionado">
+        <div class="card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Image</h4>
+                    <h6 class="card-subtitle">Logo de marca</h6>
+                    <div class="text-center">
+                        <img *ngIf="!imgTemp" [src]="sliderSeleccionado.img | imagenPipe: 'sliders'  " class="img-responsive img-thumbnail" alt="">
+                        <img *ngIf="imgTemp" [src]="imgTemp" class="img-avatar">
+                    </div>
+                    <input type="file" (change)="cambiarImagen($event.target.files[0])">
+                    <br>
+                    <br>
+                    <button type="button" [disabled]="!imagenSubir" (click)="subirImagen()" class="btn btn-success waves-effect waves-light m-r-10 btn-block">
+          <i class="fa fa-save"></i> Cambiar imagen
+         </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

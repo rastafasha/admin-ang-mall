@@ -1,0 +1,165 @@
+<div class="row animated fadeIn fast">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <input type="text" class="form-control" placeholder="Buscar " #txtTermino (keyup)="buscar(txtTermino.value)">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row animated fadeIn fast" *ngIf="cargando">
+    <div class="col-12">
+        <div class="alert alert-info text-center">
+            <div class="alert-heading">Cargando</div>
+            <i class="fa fa-spin fa-refresh fa-2x"></i>
+            <p class="mb-0">Por favor espere</p>
+        </div>
+    </div>
+</div>
+
+<div class="row" *ngIf="!cargando">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-9">
+                        <h4 class="card-title">Cursos: ({{ cursos.length}})</h4>
+                        <h6 class="card-subtitle">Cursos registrados en la app</h6>
+                    </div>
+                    <div class="col-3">
+                        <div class="text-right">
+                            <button class="btn btn-primary" [routerLink]="['/dashboard/curso/create/']">
+                        <i class="fa fa-pencil"></i>
+                        Crear Curso
+                      </button>
+                            <button class="btn btn-primary" [routerLink]="['/dashboard/curso/curso-video']">
+                        <i class="fa fa-pencil"></i>
+                        Videos
+                      </button>
+                    </div>
+                    </div>
+                    <!-- <div class="col-3">
+                        <div class="text-right">
+                            <button class="btn btn-primary" [routerLink]="['/dashboard/curso/papelera/']">
+                      <i class="fa fa-trash"></i>
+                      Papelera
+                    </button>
+                        </div>
+                    </div> -->
+                </div>
+                <br>
+                <hr>
+
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>img</th>
+                                <th>video</th>
+                                <th>Titulo</th>
+                                <th>Status</th>
+                                <th>Destacado</th>
+                                <th>Precio Ahora</th>
+                                <th>Precio Antes</th>
+                                <th>Activar</th>
+                                <th>Creado</th>
+                                <th>Modificado</th>
+                                <th class="text-nowrap">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let curso of cursos |  paginate: { itemsPerPage: count, currentPage: p }">
+                                <td class="text-center">
+                                    <img [routerLink]="['/dashboard/curso/edit',curso._id]" [src]="curso.img | imagenPipe: 'cursos'" class="avatar cursor" alt="{{curso.titulo}}">
+                                </td>
+                                <td class="text-center">
+                                    <img src="http://img.youtube.com/vi/{{curso.video_review}}/2.jpg" [routerLink]="['/dashboard/curso/edit',curso._id]" class="avatar cursor" alt="{{curso.titulo}}">
+                                </td>
+                                <td>{{curso.titulo}}</td>
+                                <td>
+                                    <div class="font-size-sm mb-4">
+                                        <span class="badge badge-accent badge-shadow" *ngIf="curso.status == 'Edición'">{{curso.status}}</span>
+                                        <span class="badge badge-success badge-shadow" *ngIf="curso.status == 'Activo'">{{curso.status}}</span>
+                                        <span class="badge badge-primary badge-shadow" *ngIf="curso.status == 'Desactivado'">{{curso.status}}</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="font-size-sm mb-4">
+                                        <span class="badge badge-danger badge-shadow" *ngIf="curso.isFeatured == false">{{curso.isFeatured}}</span>
+                                        <span class="badge badge-success badge-shadow" *ngIf="curso.isFeatured == true">{{curso.isFeatured}}</span>
+                                    </div>
+                                </td>
+                                <td>{{curso.precio_ahora}}...</td>
+                                <td>{{curso.precio_antes}}...</td>
+                                <td>
+                                    <button type="button" class="btn btn-accent" *ngIf="curso.status == 'Edición' || curso.status == 'Desactivado'" data-toggle="modal" [attr.data-target]="'#activar-'+curso._id"><span class="czi-check"></span> Activar</button>
+
+                                    <div class="modal fade" [attr.id]="'activar-'+curso._id" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title">Confirmación</h4>
+                                                    <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p class="font-size-sm">Al aceptar, estás confirmando que el curso fué editado correctamente.</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button class="btn btn-secondary btn-sm" type="button" data-dismiss="modal">Cerrar</button>
+                                                    <button class="btn btn-primary btn-shadow btn-sm" type="button" (click)="activar(curso._id)">Aceptar</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <button type="button" class="btn btn-primary" *ngIf="curso.status == 'Activo'" data-toggle="modal" [attr.data-target]="'#desactivar-'+curso._id"><span class="czi-close"></span> Desactivar</button>
+                                    <div class="modal fade" [attr.id]="'desactivar-'+curso._id" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title">Confirmación</h4>
+                                                    <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p class="font-size-sm">Al aceptar el curso, no será visible en la tienda.</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button class="btn btn-secondary btn-sm" type="button" data-dismiss="modal">Cerrar</button>
+                                                    <button class="btn btn-primary btn-shadow btn-sm" type="button" (click)="desactivar(curso._id)">Aceptar</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+                                    <span class="text-muted" *ngIf="curso.status == 'Edición'" style="font-size: 13px;">Este curso aún se encuentra en edición.</span>
+                                    <span class="text-muted" *ngIf="curso.status == 'Desactivado'" style="font-size: 13px;">Este curso aún no está disponible en la tienda.</span>
+
+                                </td>
+                                <td>{{ curso.createdAt | date:'MMM d, y, h:mm:ss a' }}</td>
+                                <td>{{ curso.updatedAt | date:'MMM d, y, h:mm:ss a' }}</td>
+                                <td class="text-nowrap text-center">
+
+                                    <div class="btn-group" role="group">
+                                        <button type="button" class="btn btn-dark dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span class="czi-settings"></span> Opciones
+                                  </button>
+                                        <div class="dropdown-menu">
+                                            <a [routerLink]="['/dashboard/curso/edit',curso._id]" class="dropdown-item"><span class="czi-edit-alt"></span> &nbsp;Editar</a>
+                                           
+                                            <a (click)="eliminarCurso(curso)" class="dropdown-item"><span class="czi-delete-document"></span> &nbsp;Eliminar</a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+                <pagination-controls (pageChange)="p = $event"></pagination-controls>
+            </div>
+        </div>
+    </div>
+</div>

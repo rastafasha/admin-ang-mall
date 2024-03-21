@@ -1,0 +1,76 @@
+<div class="row">
+
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Mi perfil de usuario</h4>
+                <h6 class="card-subtitle">Ajustes</h6>
+                <form class="form p-t-20 " [formGroup]="perfilForm" (submit)="actualizarPerfil()">
+                    <div class="form-group">
+                        <label for="exampleInputuname">Nombre</label>
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="ti-user"></i></div>
+                            <input type="text" formControlName="first_name" class="form-control" id="exampleInputuname" placeholder="nombre">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputApellido">Apellido</label>
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="ti-user"></i></div>
+                            <input type="text" formControlName="last_name" class="form-control" id="exampleInputApellido" placeholder="apellido">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputTelefono">Telefono</label>
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="ti-user"></i></div>
+                            <input type="text" formControlName="telefono" class="form-control" id="exampleInputTelefono" placeholder="telefono">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPais">Pais</label>
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="ti-user"></i></div>
+                            <input type="text" formControlName="pais" class="form-control" id="exampleInputPais" placeholder="Pais">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputID">Numdoc</label>
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="ti-user"></i></div>
+                            <input type="text" formControlName="numdoc" class="form-control" id="exampleInputID" placeholder="Id">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail">Email address</label>
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="ti-email"></i></div>
+                            <input type="email" formControlName="email" [readOnly]="usuario.google" class="form-control" id="exampleInputEmail" placeholder="email">
+                        </div>
+                    </div>
+                    <button type="submit" [disabled]="perfilForm.invalid" class="btn btn-success waves-effect waves-light m-r-10 btn-block">
+                     <i class="fa fa-save"></i> Guardar cambios
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Avatar</h4>
+                <h6 class="card-subtitle">Imagen de usuario</h6>
+                <div class="text-center">
+                    <img *ngIf="!imgTemp" [src]="usuario.imagenUrl" class="img-avatar">
+                    <img *ngIf="imgTemp" [src]="imgTemp" class="img-avatar">
+                </div>
+                <input type="file" (change)="cambiarImagen($event.target.files[0])">
+                <br>
+                <br>
+                <button type="button" [disabled]="!imagenSubir" (click)="subirImagen()" class="btn btn-success waves-effect waves-light m-r-10 btn-block">
+                  <i class="fa fa-save"></i> Cambiar imagen
+                 </button>
+            </div>
+        </div>
+    </div>
+</div>

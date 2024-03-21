@@ -1,0 +1,59 @@
+<div class="row">
+
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Selectores del producto</h4>
+                <h6 class="card-subtitle">Ajustes</h6>
+                <button class="btn btn-outline-danger" href="javascript:void(0)" (click)="goBack()">Volver</button>
+                <form #selectorForm="ngForm" (ngSubmit)="onSubmit(selectorForm)">
+                    <div class="btn-group mr-2 mb-2" role="group" aria-label="Apply settings" style="width: 100%;">
+                        <input type="text" class="form-contorl" name="titulo" [(ngModel)]="titulo" style="padding-left: 10px;width: 100%" required autocomplete="off">
+                        <button type="submit" class="btn btn-info">
+                      <i class="czi-add"></i> Agregar
+                  </button>
+                    </div>
+                </form>
+                <div class="col-lg-8" *ngIf="!selector">
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        <span class="font-weight-medium">Mensaje:</span> No hay ningun selector en este producto.
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                    </div>
+                </div>
+                <div class="col-lg-10" *ngIf="msm_error">
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        <span class="font-weight-medium">Mensaje:</span> {{msm_error}}.
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                    </div>
+                </div>
+                <div class="col-lg-10" *ngIf="selector">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-sm">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">Item</th>
+
+                                    <th class="text-center">Eliminar</th>
+                                </tr>
+                            </thead>
+                            <tbody *ngFor="let item of selector">
+                                <tr>
+                                    <td class="text-center">{{item.titulo}}</td>
+
+                                    <td class="text-center">
+                                        <button class="btn btn-danger btn-sm" (click)="eliminar(item._id)">Eliminar</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

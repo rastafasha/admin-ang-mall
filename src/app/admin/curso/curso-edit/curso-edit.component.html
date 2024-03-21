@@ -1,0 +1,118 @@
+<div class="row">
+
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">{{pageTitle}}</h4>
+                <h6 class="card-subtitle">Ajustes</h6>
+                <button class="btn btn-outline-danger" href="javascript:void(0)" (click)="goBack()">Volver</button>
+                <form class="form p-t-20 form-horizontal form-material" [formGroup]="cursoForm" (submit)="updateCurso()">
+                    <div class="form-group">
+                        <label for="exampleInputuname">Titulo <span class="required">*</span></label>
+                        <div class="input-group">
+
+                            <input type="text" formControlName="titulo" class="form-control" id="exampleInputuname" placeholder="titulo" required>
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        <label class=" col-form-label font-weight-medium" for="text-input">Descripción <span class="required">*</span></label>
+                        <div class="col-md-12">
+                            <ckeditor [editor]="Editor" formControlName="detalle" data="<p>Hello, world!</p>" required></ckeditor>
+
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        <label class=" col-form-label font-weight-medium" for="textarea-input">Descripción corta<span class="required">*</span></label>
+                        <div class="col-md-1fa-rotate-270">
+                            <ckeditor [editor]="Editor1" formControlName="info_short" data="<p>Hello, world!</p>" required></ckeditor>
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        <label class=" col-form-label font-weight-medium" for="text-input">video de youtube <span class="required">*</span></label>
+                        <div class="input-group">
+                            <input type="text" formControlName="video_review" class="form-control" id="exampleInputuname" placeholder="Codigo de insercion de vídeo." required>
+
+                        </div>
+                    </div>
+
+                    <div class="form-group ">
+                        <label class=" col-form-label font-weight-medium" for="text-input">Detalles Valor<span class="required">*</span></label>
+                        <div class="col-md-12">
+                            <div class="row">
+
+                                <div class="col-lg-6">
+                                    <label class=" col-form-label font-weight-medium">Precio Actual <span class="required">*</span></label>
+                                    <input class="form-control" type="number" placeholder="Precio actual" formControlName="precio_ahora" min="0" required>
+                                </div>
+                                <div class="col-lg-6">
+                                    <label class=" col-form-label font-weight-medium">Precio Anterior <span class="required">*</span></label>
+                                    <input class="form-control" type="number" placeholder="Precio antes" formControlName="precio_antes" min="0" required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group ">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="select-input">Categoría <span class="required">*</span></label>
+                                        <select class="form-control " formControlName="categoria" required>
+                                            <option disabled  value="">SELECCIONAR</option>
+                                            <option *ngFor="let item of listCategorias" [value]="item._id">{{item.nombre}}</option>
+
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="select-input">Destacado?</label>
+                                        <select class="form-control " formControlName="isFeatured">
+                                      <option  disabled value="">SELECCIONAR</option>
+                                      <option  [value]="true">Activo</option>
+                                      <option  [value]="false">Inactivo</option>
+
+                                  </select>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <button type="submit" [disabled]="cursoForm.invalid" class="btn btn-success waves-effect waves-light m-r-10 btn-block">
+               <i class="fa fa-save"></i> Guardar cambios
+              </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 animated fadeIn fast" *ngIf="cursoSeleccionado">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Image</h4>
+                <div class="text-center">
+                    <img *ngIf="!imgTemp" [src]="cursoSeleccionado.img | imagenPipe: 'cursos'  " class="img-responsive img-thumbnail" alt="">
+                    <img *ngIf="imgTemp" [src]="imgTemp" class="img-avatar">
+                </div>
+                <input type="file" (change)="cambiarImagen($event.target.files[0])">
+                <br>
+                <br>
+                <button type="button" [disabled]="!imagenSubir" (click)="subirImagen()" class="btn btn-success waves-effect waves-light m-r-10 btn-block">
+            <i class="fa fa-save"></i> Cambiar imagen
+           </button>
+            </div>
+        </div>
+        <div *ngIf="cursoSeleccionado.video_review">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Video</h4>
+                    <iframe class="videom" [src]="getVideoIframe(cursoSeleccionado.video_review)" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; " allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
