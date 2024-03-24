@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 import { Usuario } from '../models/usuario.model';
 
 const base_url = environment.baseUrl;
+const clientIdGoogle = environment.clientIdGoogle;
 declare const gapi: any;
 
 @Injectable({
@@ -51,12 +52,17 @@ export class UsuarioService {
   }
 
   getLocalStorage(){
-    localStorage.getItem('token')
-        
-  }
+    if(localStorage.getItem('token') && localStorage.getItem('user')){
+      let USER = localStorage.getItem('user');
+      this.usuario = JSON.parse(USER ? USER: '');
+    }else{
+      this.usuario = null;
+    }
+ }
 
-  guardarLocalStorage(token: string, menu: any){
+  guardarLocalStorage(token: string, user:any, menu: any){
     localStorage.setItem('token', token);
+    localStorage.setItem("user",JSON.stringify(user));
         localStorage.setItem('menu', JSON.stringify(menu));
   }
 
@@ -67,7 +73,8 @@ export class UsuarioService {
 
       gapi.load('auth2', () =>{
         this.auth2 = gapi.auth2.init({
-          client_id: '291137676127-svvuuca518djs47q2v78se9q6iggi4nq.apps.googleusercontent.com',
+          client_id: clientIdGoogle,
+          // client_id: '291137676127-svvuuca518djs47q2v78se9q6iggi4nq.apps.googleusercontent.com',
           cookiepolicy: 'single_host_origin',
         });
         resolve();
@@ -81,6 +88,7 @@ export class UsuarioService {
   logout(){
     localStorage.removeItem('token');
     localStorage.removeItem('menu');
+    localStorage.removeItem('user');
 
 
     this.auth2.signOut().then(()=>{
@@ -100,11 +108,11 @@ export class UsuarioService {
       }
     }).pipe(
       map((resp: any) => {
-        const { first_name, last_name, pais, telefono, numdoc, email, img='', google, role, uid} = resp.usuario;
+        const { first_name, last_name, pais, telefono, numdoc, email, local, img='', google, role, uid} = resp.usuario;
 
-        this.usuario = new Usuario(first_name, last_name, pais, telefono, numdoc, email, '', img, google, role, uid);
+        this.usuario = new Usuario(first_name, last_name, pais, telefono, numdoc, email, local, '', img, google, role, uid);
 
-        this.guardarLocalStorage(resp.token, resp.menu);
+        this.guardarLocalStorage(resp.token,resp.usuario, resp.menu);
         return true;
       }),
       catchError(error => of(false))
@@ -115,7 +123,7 @@ export class UsuarioService {
     return this.http.post(`${base_url}/usuarios/registro`, formData)
     .pipe(
       tap((resp: any) => {
-        this.guardarLocalStorage(resp.token, resp.menu);
+        this.guardarLocalStorage(resp.token,resp.usuario, resp.menu);
       })
     )
   }
@@ -135,7 +143,7 @@ export class UsuarioService {
     return this.http.post(`${base_url}/login`, formData)
     .pipe(
       tap((resp: any) => {
-        this.guardarLocalStorage(resp.token, resp.menu);
+        this.guardarLocalStorage(resp.token, resp.usuario, resp.menu);
       })
     )
   }
@@ -144,7 +152,7 @@ export class UsuarioService {
     return this.http.post(`${base_url}/login/google`, {token})
     .pipe(
       tap((resp: any) => {
-        this.guardarLocalStorage(resp.token, resp.menu);
+        this.guardarLocalStorage(resp.token, resp.usuario, resp.menu);
       })
     )
   }
@@ -164,6 +172,7 @@ export class UsuarioService {
               user.numdoc,
               user.email,
               '',
+              user.local,
                user.img,
               user.google,
               user.role,
@@ -179,6 +188,127 @@ export class UsuarioService {
       )
   }
 
+  cargarUsuariosTienda(desde: number = 0){
+
+    const url = `${base_url}/usuarios/users_store?desde=${desde}`;
+    return this.http.get<CargarUsuario>(url, this.headers)
+      .pipe(
+        map( resp =>{
+          const tiendausers = resp.tiendausers.map(
+            user => new Usuario(
+              user.first_name,
+              user.last_name,
+              user.pais,
+              user.telefono,
+              user.numdoc,
+              user.email,
+              '',
+              user.local,
+               user.img,
+              user.google,
+              user.role,
+              user.uid
+              ));
+
+          return {
+            total: resp.total,
+            tiendausers
+
+          }
+        })
+      )
+  }
+  cargarUsuariosAlmacen(desde: number = 0){
+
+    const url = `${base_url}/usuarios/users_almacen?desde=${desde}`;
+    return this.http.get<CargarUsuario>(url, this.headers)
+      .pipe(
+        map( resp =>{
+          const almacenusers = resp.almacenusers.map(
+            user => new Usuario(
+              user.first_name,
+              user.last_name,
+              user.pais,
+              user.telefono,
+              user.numdoc,
+              user.email,
+              '',
+              user.local,
+               user.img,
+              user.google,
+              user.role,
+              user.uid
+              ));
+
+          return {
+            total: resp.total,
+            almacenusers
+
+          }
+        })
+      )
+  }
+  cargarEmployees(desde: number = 0){
+
+    const url = `${base_url}/usuarios/employees?desde=${desde}`;
+    return this.http.get<CargarUsuario>(url, this.headers)
+      .pipe(
+        map( resp =>{
+          const employees = resp.employees.map(
+            user => new Usuario(
+              user.first_name,
+              user.last_name,
+              user.pais,
+              user.telefono,
+              user.numdoc,
+              user.email,
+              '',
+              user.local,
+               user.img,
+              user.google,
+              user.role,
+              user.uid
+              ));
+
+          return {
+            total: resp.total,
+            employees
+
+          }
+        })
+      )
+  }
+  cargarClients(desde: number = 0){
+
+    const url = `${base_url}/usuarios/clients?desde=${desde}`;
+    return this.http.get<CargarUsuario>(url, this.headers)
+      .pipe(
+        map( resp =>{
+          const clients = resp.clients.map(
+            user => new Usuario(
+              user.first_name,
+              user.last_name,
+              user.pais,
+              user.telefono,
+              user.numdoc,
+              user.email,
+              '',
+              user.local,
+               user.img,
+              user.google,
+              user.role,
+              user.uid
+              ));
+
+          return {
+            total: resp.total,
+            clients
+
+          }
+        })
+      )
+  }
+
 
   borrarUsuario(usuario: any){
     const url = `${base_url}/usuarios/${usuario.uid}`;
@@ -187,7 +317,7 @@ export class UsuarioService {
 
 
   guardarUsuario(usuario: Usuario){
-    return this.http.put(`${base_url}/usuarios/${usuario.uid}`, usuario, this.headers);
+    return this.http.put(`${base_url}/usuarios/update/${usuario.uid}`, usuario, this.headers);
   }
 
 
@@ -219,6 +349,7 @@ export class UsuarioService {
       )
 
   }
+  
 
 
 

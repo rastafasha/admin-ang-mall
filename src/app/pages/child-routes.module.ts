@@ -136,7 +136,8 @@ const childRoutes: Routes = [
             
             {path: 'tienda-user', component: UsuariosTiendaComponent , data:{tituloPage:'Tienda-empleado'}},
             {path: 'tienda-user/registro', component: UsertiendaaddComponent , data:{tituloPage:'Tienda-empleado'}},
-            {path: 'tienda-user/detalle/:id', component: UserDetailComponent , data:{tituloPage:'Tienda-empleado'}},
+            {path: 'tienda-user/edit/:id', component: UsertiendaaddComponent , data:{tituloPage:'Tienda-empleado-edit'}},
+            {path: 'tienda-user/detalle/:id', component: UserDetailComponent , data:{tituloPage:'Tienda-empleado-detail'}},
 
             //mantenimientos
 

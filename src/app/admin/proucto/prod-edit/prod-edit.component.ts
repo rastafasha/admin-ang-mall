@@ -101,6 +101,7 @@ export class ProdEditComponent implements OnInit {
       marca: ['',Validators.required],
       video_review: ['',],
       isFeatured: [''],
+      local: [''],
     })
 
     if(this.productoSeleccionado){

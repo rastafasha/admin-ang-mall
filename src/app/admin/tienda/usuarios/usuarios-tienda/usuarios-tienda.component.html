@@ -49,18 +49,18 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let usuario of usuarios ">
+                            <tr *ngFor="let usuario of tiendausers ">
                                 <td class="text-center">
                                     <!-- <img src="{{usuario.imagenUrl}}" (click)="abrirModal(usuario)" class="img-thumbnail avatar cursor" alt=""> -->
-                                    <img src="{{usuario.imagenUrl}}" [routerLink]="['/dashboard/usuario/',usuario.uid]" class="img-thumbnail avatar cursor" alt="">
+                                    <img src="{{usuario.imagenUrl}}" [routerLink]="['/dashboard/tienda-user/edit/',usuario.uid]" class="img-thumbnail avatar cursor" alt="">
                                 </td>
                                 <td>{{usuario.email}}</td>
                                 <td>{{usuario.first_name}}</td>
                                 <td>
                                     <select class="form-control" [(ngModel)]="usuario.role" (change)="cambiarRole(usuario)">
-                                    <option value="ADMIN">Admin</option>
+                                    <!-- <option value="ADMIN">Admin</option>
                                     <option value="USER">User</option>
-                                    <option value="VENTAS">Ventas</option>
+                                    <option value="VENTAS">Ventas</option> -->
                                     <option value="TIENDA">Tienda</option>
                                     <option value="ALMACEN">Almacen</option>
                                   </select>

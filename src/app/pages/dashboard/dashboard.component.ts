@@ -34,8 +34,15 @@ export class DashboardComponent implements OnInit {
   public num_comentarios = 0;
 
   public totalUsuarios: number = 0;
+  public totalEmployees: number = 0;
+  public totalClients: number = 0;
+  public totalLocals: number = 0;
+  public totalLocalsEmployees: number = 0;
+
   public usuarios: Usuario[] = [];
   public usuariosTemp: Usuario[] = [];
+  public employees: Usuario[] = [];
+  public employeesTemp: Usuario[] = [];
 
   public desde: number = 0;
 
@@ -245,9 +252,13 @@ export class DashboardComponent implements OnInit {
 
           }
         );
-
+        
         this.data_ventas();
+        this.loadEmployeess();
+        this.loadClientes();
         this.loadUsuarios();
+        this.loadLocalUsers();
+        this.loadLocalsEmployees();
         // this._userService.get_user_data().subscribe(
         //   response =>{
         //     this.num_user = response.data.length;
@@ -285,7 +296,7 @@ export class DashboardComponent implements OnInit {
       response =>{
 
         this.last_sellers = response.data;
-        console.log(response);
+        // console.log(response);
       },
       error=>{
 
@@ -300,6 +311,51 @@ export class DashboardComponent implements OnInit {
         this.totalUsuarios = total;
         this.usuarios = usuarios;
         this.usuariosTemp = usuarios;
+      }
+    )
+  }
+
+
+  loadClientes(){
+    this._userService.cargarClients(this.desde)
+    .subscribe(
+      ({total})=>{
+        this.totalClients = total;
+        // this.usuarios = usuarios;
+        // this.usuariosTemp = usuarios;
+      }
+    )
+  }
+  loadEmployeess(){
+    this._userService.cargarEmployees(this.desde)
+    .subscribe(
+      (resp:any)=>{
+        console.log(resp);
+      }
+      // ({total, usuarios})=>{
+      //   this.totalEmployees = total;
+      //   this.employees = usuarios;
+      //   this.employeesTemp = usuarios;
+      // }
+    )
+  }
+  loadLocalUsers(){
+    this._userService.cargarUsuariosTienda(this.desde)
+    .subscribe(
+      ({total})=>{
+        this.totalLocals = total;
+        // this.usuarios = usuarios;
+        // this.usuariosTemp = usuarios;
+      }
+    )
+  }
+  loadLocalsEmployees(){
+    this._userService.cargarUsuariosAlmacen(this.desde)
+    .subscribe(
+      ({total})=>{
+        this.totalLocalsEmployees = total;
+        // this.usuarios = usuarios;
+        // this.usuariosTemp = usuarios;
       }
     )
   }

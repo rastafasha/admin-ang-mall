@@ -16,8 +16,8 @@ import { UsuarioService } from 'src/app/services/usuario.service';
 export class UsuariosTiendaComponent implements OnInit {
 
   public totalUsuarios: number = 0;
-  public usuarios: Usuario[] = [];
-  public usuariosTemp: Usuario[] = [];
+  public tiendausers: Usuario[] = [];
+  public tiendausersTemp: Usuario[] = [];
 
   public desde: number = 0;
   public cargando: boolean = true;
@@ -50,14 +50,14 @@ export class UsuariosTiendaComponent implements OnInit {
 
   loadUsuarios(){
     this.cargando = true;
-    this.usuarioService.cargarUsuarios(this.desde)
+    this.usuarioService.cargarUsuariosTienda(this.desde)
     .subscribe(
-      ({total, usuarios})=>{
+      ({total, tiendausers})=>{
         this.totalUsuarios = total;
-        this.usuarios = usuarios;
-        this.usuariosTemp = usuarios;
+        this.tiendausers = tiendausers;
+        this.tiendausersTemp = tiendausers;
         this.cargando = false;
-        console.log(this.usuarios);
+        console.log(this.tiendausers);
       }
     )
   }
@@ -80,12 +80,12 @@ export class UsuariosTiendaComponent implements OnInit {
   buscar(termino: string){
 
     if(termino.length === 0){
-      return this.usuarios = this.usuariosTemp;
+      return this.tiendausers = this.tiendausersTemp;
     }
 
     this.busquedaService.buscar('usuarios', termino)
     .subscribe( (resultados: Usuario[]) => {
-      this.usuarios = resultados;
+      this.tiendausers = resultados;
     })
   }
 
@@ -118,7 +118,7 @@ export class UsuariosTiendaComponent implements OnInit {
   }
 
 
-  cambiarRole(usuario: Usuario){
+  cambiarRole(usuario: Usuario){debugger
     this.usuarioService.guardarUsuario(usuario).subscribe(
       resp =>{ console.log(resp);}
     )

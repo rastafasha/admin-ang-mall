@@ -12,6 +12,8 @@ import { CategoriaService } from 'src/app/services/categoria.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { IconosService } from 'src/app/services/iconos.service';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { TiendaService } from 'src/app/services/tienda.service';
+import { Tienda } from 'src/app/models/tienda.model';
 
 interface HtmlInputEvent extends Event{
   target : HTMLInputElement & EventTarget;
@@ -36,11 +38,13 @@ export class UsertiendaaddComponent implements OnInit {
 
   banner: string;
   pageTitle: string;
-  listIcons;
+  listIcons: any;
+  listTiendas: any;
+  public localList:any;
   state_banner:boolean;
 
   public Editor = ClassicEditor;
-  public categoriaSeleccionado: Categoria;
+  public usertiendaSeleccionado: Usuario;
 
   constructor(
     private fb: FormBuilder,
@@ -51,6 +55,7 @@ export class UsertiendaaddComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private location: Location,
     private _iconoService: IconosService,
+    private tiendaService: TiendaService,
   ) {
     this.usuario = usuarioService.usuario;
     const base_url = environment.baseUrl;
@@ -59,11 +64,12 @@ export class UsertiendaaddComponent implements OnInit {
   ngOnInit(): void {
     window.scrollTo(0,0);
 
-    this.cargar_iconos();
+    // this.cargar_iconos();
+    this.cargar_Locales();
     
     this.validarFormulario();
-    // this.activatedRoute.params.subscribe( ({id}) => this.cargarCategoria(id));
-    if(this.categoriaSeleccionado){
+    this.activatedRoute.params.subscribe( ({id}) => this.cargar_usuario(id));
+    if(this.usertiendaSeleccionado){
       //actualizar
     this.pageTitle = 'Edit Categoría';
     
@@ -82,12 +88,23 @@ export class UsertiendaaddComponent implements OnInit {
       email: [ '', [Validators.required, Validators.email] ],
       password: ['', Validators.required],
       password2: ['', Validators.required],
-      terminos: [false, Validators.required],
-      role: ['false, Validators.required'],
+      local: ['', Validators.required],
+      role: ['', Validators.required],
+      telefono: ['', Validators.required],
+      numdoc: ['', Validators.required],
 
     })
   }
 
+  cargar_usuario(id){
+    this.usuarioService.getUserById(id).subscribe(
+      (resp:any) =>{
+        // this.listIcons = resp.iconos;
+        console.log(resp)
+
+      }
+    )
+  }
   cargar_iconos(){
     this._iconoService.getIcons().subscribe(
       (resp:any) =>{
@@ -97,32 +114,52 @@ export class UsertiendaaddComponent implements OnInit {
       }
     )
   }
+  cargar_Locales(){
+    this.tiendaService.cargarTiendas().subscribe(
+      (resp:any) =>{
+        console.log(resp)
+        this.listTiendas = resp;
+
+      }
+    )
+  }
 
 
 
+  guardar(){debugger
 
+    const {first_name, last_name,
+      email,
+      password,
+      password2,
+      // terminos,
+      local,
+      role,
+      telefono,
+      numdoc } = this.registerForm.value;
 
-  saveEmployee(){
-
-    const {nombre, subcategorias } = this.registerForm.value;
-
-    if(this.categoriaSeleccionado){
+    if(this.usertiendaSeleccionado){
       //actualizar
       const data = {
         ...this.registerForm.value,
-        _id: this.categoriaSeleccionado._id
+        _id: this.usertiendaSeleccionado.uid,
+        local: this.localList,
       }
-      this.categoriaService.actualizarCategoria(data).subscribe(
+      this.usuarioService.actualizarPerfil(data).subscribe(
         resp =>{
-          Swal.fire('Actualizado', `${nombre} actualizado correctamente`, 'success');
+          Swal.fire('Actualizado', `${first_name} actualizado correctamente`, 'success');
         });
 
     }else{
+      const data = {
+        ...this.registerForm.value,
+        local: this.localList
+      }
       //crear
-      this.categoriaService.crearCategoria(this.registerForm.value)
+      this.usuarioService.crearUsuario(data)
       .subscribe( (resp: any) =>{
-        Swal.fire('Creado', `${nombre} creado correctamente`, 'success');
-        this.router.navigateByUrl(`/dashboard/categoria`);
+        Swal.fire('Creado', `${first_name} creado correctamente`, 'success');
+        this.router.navigateByUrl(`/dashboard/tienda-user`);
       })
     }
 
@@ -146,8 +183,8 @@ export class UsertiendaaddComponent implements OnInit {
 
   subirImagen(){
     this.fileUploadService
-    .actualizarFoto(this.imagenSubir, 'categorias', this.categoriaSeleccionado._id)
-    .then(img => { this.categoriaSeleccionado.img = img;
+    .actualizarFoto(this.imagenSubir, 'categorias', this.usertiendaSeleccionado.uid)
+    .then(img => { this.usertiendaSeleccionado.img = img;
       Swal.fire('Guardado', 'La imagen fue actualizada', 'success');
 
     }).catch(err =>{

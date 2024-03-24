@@ -16,7 +16,7 @@ export class LoginComponent implements OnInit {
 
   public formSumitted = false;
   public auth2: any;
-
+  public user:any;
   loginForm: FormGroup;
 
 
@@ -35,8 +35,9 @@ export class LoginComponent implements OnInit {
   }
 
 ngOnInit(){
-  this.renderButton();
-  this.usuarioService.getLocalStorage();
+  // this.renderButton();
+  // this.usuarioService.getLocalStorage();
+  this.getLocalStorage();
 }
 
   login(){
@@ -55,6 +56,18 @@ ngOnInit(){
     )
 
   }
+
+  getLocalStorage(){
+    if(localStorage.getItem('token') && localStorage.getItem('user')){
+      let USER = localStorage.getItem('user');
+      this.user = JSON.parse(USER ? USER: '');
+      console.log(this.user);
+      // this.getuserRol();
+      // this.getuserPermisos();
+    }else{
+      this.user = null;
+    }
+ }
 
 
 
