@@ -40,6 +40,7 @@ export class UsertiendaaddComponent implements OnInit {
   pageTitle: string;
   listIcons: any;
   listTiendas: any;
+  user_id: any;
   public localList:any;
   state_banner:boolean;
 
@@ -63,22 +64,37 @@ export class UsertiendaaddComponent implements OnInit {
 
   ngOnInit(): void {
     window.scrollTo(0,0);
-
-    // this.cargar_iconos();
+    
+    // this.activatedRoute.params.subscribe( ({id}) => this.cargar_usuario(id));
+    this.activatedRoute.params.subscribe((resp:any)=>{
+      this.user_id = resp.id;
+     })
+     this.cargar_usuario();
     this.cargar_Locales();
     
-    this.validarFormulario();
-    this.activatedRoute.params.subscribe( ({id}) => this.cargar_usuario(id));
-    if(this.usertiendaSeleccionado){
+    if( this.user_id ){
       //actualizar
-    this.pageTitle = 'Edit Categoría';
+    this.pageTitle = 'Edit Empleado';
     
     }else{
       //crear
-      this.pageTitle = 'Create Categoría';
+      this.pageTitle = 'Create Empleado';
       }
 
 
+  }
+
+ 
+  cargar_usuario(){
+    this.usuarioService.getUserById(this.user_id).subscribe(
+      (resp:any) =>{
+        // this.listIcons = resp.iconos;
+        this.usertiendaSeleccionado = resp;
+        console.log(resp)
+
+      }
+    )
+    this.validarFormulario();
   }
 
   validarFormulario(){
@@ -96,24 +112,6 @@ export class UsertiendaaddComponent implements OnInit {
     })
   }
 
-  cargar_usuario(id){
-    this.usuarioService.getUserById(id).subscribe(
-      (resp:any) =>{
-        // this.listIcons = resp.iconos;
-        console.log(resp)
-
-      }
-    )
-  }
-  cargar_iconos(){
-    this._iconoService.getIcons().subscribe(
-      (resp:any) =>{
-        this.listIcons = resp.iconos;
-        // console.log(this.listIcons.iconos)
-
-      }
-    )
-  }
   cargar_Locales(){
     this.tiendaService.cargarTiendas().subscribe(
       (resp:any) =>{
@@ -126,7 +124,7 @@ export class UsertiendaaddComponent implements OnInit {
 
 
 
-  guardar(){debugger
+  guardar(){
 
     const {first_name, last_name,
       email,

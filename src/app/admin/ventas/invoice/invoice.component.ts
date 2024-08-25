@@ -20,11 +20,12 @@ export class InvoiceComponent implements OnInit {
   public detalle : any = {};
   public venta : any = {};
   public url;
+  public producto_id:any;
 
   constructor(
     private _userService: UsuarioService,
     private _router : Router,
-    private _route :ActivatedRoute,
+    private activatedRoute :ActivatedRoute,
     private http: HttpClient,
     private _ventaService: VentaService,
     private _comentarioService : ComentarioService,
@@ -36,12 +37,20 @@ export class InvoiceComponent implements OnInit {
 
   ngOnInit(): void {
     window.scrollTo(0,0);
+    this.activatedRoute.params.subscribe((resp:any)=>{
+      this.producto_id = resp.id;
+    })
+    this.getDetalle();
     this.url = environment.baseUrl;
-    this._ventaService.detalle(this.id).subscribe(
-      response =>{
+    
+  }
+
+  getDetalle(){
+    this._ventaService.detalle(this.producto_id).subscribe(
+      (response:any) =>{
+        console.log(response);
         this.detalle = response.detalle;
         this.venta = response.venta;
-        console.log(this.detalle);
 
       },
       error=>{

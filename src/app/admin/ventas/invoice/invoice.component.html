@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>HostingNice - Factura nº{{id.toUpperCase()}}</title>
+    <title>HostingNice - Factura nº{{producto_id?.toUpperCase()}}</title>
 
     <link href="/templates/six/css/all.min.css" rel="stylesheet">
     <link href="/assets/css/fontawesome-all.min.css" rel="stylesheet">
@@ -30,7 +30,7 @@
             <div class="invoice-col">
 
                 <h3 class="invoice-status" style="padding-bottom: 8px;">Factura N°:</h3>
-                <span>{{id.toUpperCase()}}</span>
+                <span>{{producto_id?.toUpperCase()}}</span>
 
             </div>
             <div class="invoice-col text-right">
@@ -57,7 +57,7 @@
                         <strong>Cliente: </strong>{{venta.user.first_name}} {{venta.user.last_name}}<br>
                         <strong>Monto: </strong> ${{venta.total_pagado}}<br>
                         <strong>Correo: </strong> {{venta.user.email}}<br>
-                        <strong>Transaccion: </strong> {{venta.idtransaccion.toUpperCase()}}<br>
+                        <strong>Transaccion: </strong> {{venta.idtransaccion?.toUpperCase()}}<br>
                 </address>
             </div>
             <div class="col-lg-6 text-right">

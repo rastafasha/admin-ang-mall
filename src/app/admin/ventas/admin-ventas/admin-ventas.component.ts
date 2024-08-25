@@ -32,6 +32,8 @@ export class AdminVentasComponent implements OnInit {
   public msm_error_track = false;
   public data_view = 1;
 
+  option_selected:number = 1;
+
   public data_ids : any = [];
   public count_selects=false;
 
@@ -272,5 +274,10 @@ export class AdminVentasComponent implements OnInit {
     this.search(null,null);
     this.count_selects = false;
   }
+
+  optionSelected(value:number){
+    this.option_selected = value;
+  }
+
 
 }

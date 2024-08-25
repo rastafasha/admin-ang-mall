@@ -319,6 +319,12 @@ export class UsuarioService {
   guardarUsuario(usuario: Usuario){
     return this.http.put(`${base_url}/usuarios/update/${usuario.uid}`, usuario, this.headers);
   }
+  upadateStatusRole(data: any, uid:any){
+    // return this.http.put(`${base_url}/usuarios/update/update/${usuario.uid}`, usuario, this.headers);
+
+    let URL = base_url+"/usuarios/update/statusrole/"+uid;
+    return this.http.put(URL,data,this.headers);
+  }
 
 
   get_user(usuario:Usuario):Observable<any>{

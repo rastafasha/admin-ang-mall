@@ -123,13 +123,7 @@ export class VentaService {
     return this._http.post('https://api.sandbox.paypal.com/v1/payments/capture/'+id+'/refund',{},{headers:headers});
   }
 
-  track(number:any){
-    let headers = new HttpHeaders()
-    .set('x-rapidapi-host', this.rapidapiH)
-    .set("x-rapidapi-key", this.rapidapiK)
-    .set("useQueryString", "true");
-    return this._http.get('https://apidojo-17track-v1.p.rapidapi.com/track?timeZoneOffset=0&codes='+number,{headers:headers});
-  }
+  
 
   get_cancelacion_venta(id:string):Observable<any>{
 
@@ -148,11 +142,6 @@ export class VentaService {
     return this._http.get(this.url+'/ventas/venta_admin/listar/'+search+'/'+orden+'/'+tipo,{headers:headers});
   }
 
-  set_track(id:string,data:any):Observable<any>{
-    let headers = new HttpHeaders().set('Content-Type','application/json');
-    return this._http.post(this.url+'/ventas/venta_track/set/'+id,data,{headers:headers});
-  }
-
   get_data_dashboard():Observable<any>{
     let headers = new HttpHeaders().set('Content-Type','application/json');
     return this._http.get(this.url+'/ventas/venta_data/dashboard',{headers:headers});
@@ -167,4 +156,21 @@ export class VentaService {
     let headers = new HttpHeaders().set('Content-Type','application/json');
     return this._http.get(this.url+'/ventas/venta_admin_init/init_data',{headers:headers});
   }
+
+  //tracking
+
+  set_track(id:string,data:any):Observable<any>{
+    let headers = new HttpHeaders().set('Content-Type','application/json');
+    return this._http.post(this.url+'/ventas/venta_track/set/'+id,data,{headers:headers});
+  }
+
+  track(number:any){
+    let headers = new HttpHeaders()
+    .set('x-rapidapi-host', this.rapidapiH)
+    .set("x-rapidapi-key", this.rapidapiK)
+    .set("useQueryString", "true");
+    return this._http.get('https://apidojo-17track-v1.p.rapidapi.com/track?timeZoneOffset=0&codes='+number,{headers:headers});
+  }
+
+ 
 }

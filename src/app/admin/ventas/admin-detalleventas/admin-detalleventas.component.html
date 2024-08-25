@@ -61,7 +61,7 @@
                     <div class="row no-gutters">
                         <div class="col-sm-4">
                             <a [routerLink]="['/producto/',item.producto.slug]">
-                                <img [src]="item.img | imagenPipe: 'productos'" class="rounded-left" alt="Card image">
+                                <img [src]="item.producto.img | imagenPipe: 'productos'" class="rounded-left img-responsive" alt="Card image">
                             </a>
                         </div>
                         <div class="col-sm-8">

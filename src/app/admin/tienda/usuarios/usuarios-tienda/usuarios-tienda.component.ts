@@ -118,9 +118,16 @@ export class UsuariosTiendaComponent implements OnInit {
   }
 
 
-  cambiarRole(usuario: Usuario){debugger
-    this.usuarioService.guardarUsuario(usuario).subscribe(
-      resp =>{ console.log(resp);}
+  cambiarStatus(data:any){debugger
+    let VALUE = data.role;
+    // console.log(VALUE);
+    
+    this.usuarioService.upadateStatusRole(data, data.uid).subscribe(
+      resp =>{
+        // console.log(resp);
+        Swal.fire('Updated', `Client Status Updated successfully!`, 'success');
+        this.loadUsuarios();
+      }
     )
   }
 

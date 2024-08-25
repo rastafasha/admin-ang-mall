@@ -16,6 +16,7 @@ export class Producto{
         public subcategoria: string,
         public nombre_selector: string,
         public marca: string,
+        public local?: string,
         public isFeatured?: boolean,
         public img?: string,
         public _id?: string

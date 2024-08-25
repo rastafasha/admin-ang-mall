@@ -143,7 +143,8 @@ const childRoutes: Routes = [
 
 
             //rutas de admin
-            { path: 'usuarios', canActivate: [ AdminGuard ], component: UsuariosComponent, data:{tituloPage:'Mantenimiento de Usuarios '} },
+            // canActivate: [ AdminGuard ],
+            { path: 'usuarios',  component: UsuariosComponent, data:{tituloPage:'Mantenimiento de Usuarios '} },
 ]
 
 @NgModule({

@@ -202,17 +202,18 @@
 
                         <div class="btn-group" role="group" aria-label="Solid button group">
                             <button type="button" id="btn-uno" class="btn btn-secondary"
-                                (click)="method_data_view(1)"><span class="czi-server"></span></button>
+                                (click)="optionSelected(1)"><span class="czi-server"></span></button>
                             <button type="button" id="btn-dos" class="btn btn-secondary"
-                                (click)="method_data_view(2)"><span class="czi-menu"></span></button>
+                                (click)="optionSelected(2)"><span class="czi-menu"></span></button>
 
 
                         </div>
                     </div>
-                    <div class="card-body" *ngIf="data_view == 1">
+                    <div class="card-body" *ngIf="option_selected == 1">
                         <div class="row">
+                            <!-- | keys  -->
                             <div class="col-lg-12 pb-2"
-                                *ngFor="let item of ventas| keys | paginate: { itemsPerPage: count, currentPage: p }">
+                                *ngFor="let item of ventas| paginate: { itemsPerPage: count, currentPage: p }">
                                 <div class="card">
                                     <div class="card-header">
                                         <h3 class="product-title font-size-base" style="margin-bottom: 0px;">
@@ -290,7 +291,7 @@
                                                                         <span class="czi-plane"></span> Traking y envío
                                                                     </a>
                                                                 </ng-container>
-                                                                <a target="_blank"
+                                                                <a 
                                                                     [routerLink]="['/dashboard/ventas/modulo/invoice/',item._id]"
                                                                     class="dropdown-item">
                                                                     <span class="czi-book"></span> Factura
@@ -386,7 +387,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card-body" *ngIf="data_view == 2">
+                    <div class="card-body" *ngIf="option_selected == 2">
                         <!-- Light table with contextual rows -->
                         <div class="table-responsive">
                             <table class="table">
@@ -572,7 +573,7 @@
 
                     </div>
 
-                    <div class="card-footer" *ngIf="data_view == 2">
+                    <div class="card-footer" *ngIf="option_selected == 2">
                         <ng-container *ngIf="count_selects">
                             <button class="btn btn-success btn-sm" (click)="update_envio()">
                                 <span class="czi-plane"></span> Marcar como enviados

@@ -19,6 +19,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { ColorService } from 'src/app/services/color.service';
 import { SelectorService } from 'src/app/services/selector.service';
+import { TiendaService } from 'src/app/services/tienda.service';
 
 
 interface HtmlInputEvent extends Event{
@@ -55,6 +56,9 @@ export class ProdEditComponent implements OnInit {
 
   banner: string;
   pageTitle: string;
+  producto_id: any;
+  listTiendas: any;
+  localList: any[];
 
   public productoSeleccionado: Producto;
   public Editor = ClassicEditor;
@@ -67,65 +71,54 @@ export class ProdEditComponent implements OnInit {
     private modalImagenService: ModalImagenService,
     private marcaService: MarcaService,
     private categoriaService: CategoriaService,
+    private tiendaService: TiendaService,
     private fileUploadService: FileUploadService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private location: Location,
     private _colorService: ColorService,
     private _selectorService: SelectorService,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+
   ) {
     this.usuario = usuarioService.usuario;
     const base_url = environment.baseUrl;
   }
 
   ngOnInit(): void {
-    this.activatedRoute.params.subscribe( ({id}) => this.cargarProducto(id));
-    this.activatedRoute.params.subscribe( ({id}) => this.listConfig(id));
-
     window.scrollTo(0,0);
-    this.getMarca();
-    this.getCategorias();
+    // this.activatedRoute.params.subscribe( ({id}) => this.cargarProducto(id));
+    // this.activatedRoute.params.subscribe( ({id}) => this.listConfig(id));
+    this.activatedRoute.params.subscribe((resp:any)=>{
+      this.producto_id = resp.id;
+     })
 
-
-    this.productoForm = this.fb.group({
-      titulo: ['',Validators.required],
-      detalle: ['',Validators.required],
-      info_short: ['',Validators.required],
-      precio_antes: ['',Validators.required],
-      precio_ahora: ['',Validators.required],
-      stock: ['',Validators.required],
-      categoria: ['',Validators.required],
-      subcategoria: ['',Validators.required],
-      nombre_selector: ['',Validators.required],
-      marca: ['',Validators.required],
-      video_review: ['',],
-      isFeatured: [''],
-      local: [''],
-    })
-
-    if(this.productoSeleccionado){
+     if(this.producto_id){
       //actualizar
       this.pageTitle = 'Edit Producto';
-
-      
-
-      
+      this.cargarProducto();
     }else{
       //crear
       this.pageTitle = 'Create Producto';
     }
+    this.validarFormulario();
 
+    // this.listConfig()
+    
+    this.getMarca();
+    this.getCategorias();
+    this.cargar_Locales();
 
+    
 
   }
 
-  listConfig(id){
-    this._colorService.colorByProduct(id).subscribe(
-      response =>{
-        this.colores = response;
-        this.color_to_cart = this.colores[0].color;
-        console.log(response);
+  listConfig(){
+    this._colorService.colorByProduct(this.producto_id).subscribe(
+      (resp:any) =>{
+        console.log(resp);
+        // this.colores = resp;
+        // this.color_to_cart = this.colores[0].color;
 
       },
       error=>{
@@ -133,7 +126,7 @@ export class ProdEditComponent implements OnInit {
       }
     );
 
-    this._selectorService.selectorByProduct(id).subscribe(
+    this._selectorService.selectorByProduct(this.producto_id).subscribe(
       response =>{
         this.selectores = response;
         console.log(response);
@@ -144,13 +137,11 @@ export class ProdEditComponent implements OnInit {
       }
     );
   }
-
-
   getMarca(){
     this.marcaService.cargarMarcas().subscribe(
       resp =>{
         this.listMarcas = resp;
-        console.log(this.listMarcas)
+        // console.log(this.listMarcas)
 
       }
     )
@@ -159,55 +150,97 @@ export class ProdEditComponent implements OnInit {
     this.categoriaService.cargarCategorias().subscribe(
       resp =>{
         this.listCategorias = resp;
-        console.log(this.listCategorias);
+        // console.log(this.listCategorias);
 
       }
     )
   }
 
-  cargarProducto(_id: string){
+  cargar_Locales(){
+    this.tiendaService.cargarTiendas().subscribe(
+      (resp:any) =>{
+        console.log(resp)
+        this.listTiendas = resp;
 
-    if(_id === 'nuevo'){
+      }
+    )
+  }
+
+  
+
+
+  cargarProducto(){
+
+    if(this.producto_id === 'nuevo'){
       return;
     }
 
-    this.productoService.getProductoById(_id)
+    this.productoService.getProductoById(this.producto_id)
     .pipe(
       // delay(100)
       )
       .subscribe( producto =>{
-      if(!_id){
+      if(!this.producto_id){
         return this.router.navigateByUrl(`/dasboard/producto`);
       }
         const { titulo, precio_antes,info_short,detalle, stock,categoria,subcategoria,
-          nombre_selector,marca,video_review,precio_ahora, isFeatured  } = producto;
+          nombre_selector,marca,video_review,precio_ahora, isFeatured, local  } = producto;
 
           
 
         this.productoSeleccionado = producto;
+        console.log(this.productoSeleccionado);
+
         this.productoForm.setValue({
           titulo, precio_antes,info_short,detalle, stock,categoria,subcategoria,
-          nombre_selector,marca,video_review,precio_ahora, isFeatured
+          nombre_selector,marca,video_review,precio_ahora, isFeatured,
+          local
         });
 
-      });
+        
 
+      });
+      
+      this.validarFormulario();
+  }
+
+  validarFormulario(){
+    this.productoForm = this.fb.group({
+      titulo: ['', Validators.required],
+      detalle: ['', Validators.required],
+      info_short: ['', Validators.required],
+      video_review: [''],
+      stock: ['', Validators.required],
+      precio_ahora: ['', Validators.required],
+      precio_antes: ['', Validators.required],
+      categoria: ['', Validators.required],
+      subcategoria: [''],
+      isFeatured: [''],
+      marca: ['', Validators.required],
+      local: ['', Validators.required],
+      nombre_selector: ['', Validators.required]
+    })
   }
 
 
 
 
 
-  updateProducto(){
+  updateProducto(){debugger
 
-    const {titulo, precio_antes,info_short,detalle, stock,categoria,subcategoria,
-      nombre_selector,marca,video_review,precio_ahora, isFeatured } = this.productoForm.value;
+    const {titulo, precio_antes,info_short, detalle, 
+      stock,categoria,subcategoria, 
+      nombre_selector,marca,
+      video_review,precio_ahora, 
+      isFeatured, local 
+    } = this.productoForm.value;
 
     if(this.productoSeleccionado){
       //actualizar
       const data = {
         ...this.productoForm.value,
-        _id: this.productoSeleccionado._id
+        _id: this.productoSeleccionado._id,
+        local: this.localList,
       }
       this.productoService.actualizarProducto(data).subscribe(
         resp =>{
@@ -216,7 +249,11 @@ export class ProdEditComponent implements OnInit {
 
     }else{
       //crear
-      this.productoService.crearProducto(this.productoForm.value)
+      const data = {
+        ...this.productoForm.value,
+        local: this.localList
+      }
+      this.productoService.crearProducto(data)
       .subscribe( (resp: any) =>{
         Swal.fire('Creado', `${titulo} creado correctamente`, 'success');
         this.router.navigateByUrl(`/dashboard/producto`);

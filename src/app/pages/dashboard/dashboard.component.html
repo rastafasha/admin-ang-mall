@@ -163,7 +163,7 @@
                                     <!-- Item -->
                                     <div class="media align-items-center pb-2 border-bottom" *ngFor="let item of last_sellers">
                                         <a class="d-block mr-2" *ngIf="item.producto">
-                                            <img width="64" [src]="item.producto.poster | imagenPipe: 'productos' " alt="Product" />
+                                            <img width="64" [src]="item.producto.img | imagenPipe: 'productos' " alt="Product" />
                                         </a>
                                         <div class="media-body">
                                             <h6 class="card-title pt-4" *ngIf="item.producto" style="font-size: 15.2px;margin-bottom: 0px;">{{item.producto.titulo.substr(0,30)}}..</h6>
