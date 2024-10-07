@@ -1,0 +1,147 @@
+<!-- paciente -->
+<div class="row animated fadeIn fast">
+    <div class="container">
+        <div class="card">
+            <div class="card-body">
+                <form autocomplete="false">
+    
+                    <!-- paciente -->
+                    <div class="row align-items-center py-4">
+                        
+                        <div class="col-12 col-md-6 col-xl-4">
+                            <div class="form-group local-forms">
+                                <label>Id/Cédula <span class="login-danger">*</span></label>
+                                <!-- [(ngModel)]="patient_id" -->
+                                <input class="form-control" name="patient_id"  
+                                    type="text">
+                                    <button type="button" class="btn btn-sm " >
+                                        Filtrar
+                                    </button>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-xl-4">
+                            <div class="form-group local-forms">
+                                <label>Nombre <span class="login-danger">*</span></label>
+                                <!-- [(ngModel)]="first_name" -->
+                                <input class="form-control" name="first_name"  
+                                    type="text">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-xl-4">
+                            <div class="form-group local-forms">
+                                <label>Apellido <span class="login-danger">*</span></label>
+                                <!-- [(ngModel)]="last_name" -->
+                                <input class="form-control" name="last_name"  
+                                    type="text">
+                            </div>
+                        </div>
+    
+                        
+                        <div class="col-12 col-md-6 col-xl-4">
+                            <div class="form-group local-forms">
+                                <label>Vendedor <span class="login-danger">*</span></label>
+                                <!-- <p style="padding:10px">{{doctor?.full_name}}</p> -->
+                                <input class="form-control"  name="provider_credential"
+                                type="text">
+    
+    
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-xl-4">
+                            <div class="form-group local-forms">
+                                <label>Vendedor Code <span class="login-danger">*</span></label>
+                                <!-- [(ngModel)]="provider_credential" -->
+                                <input class="form-control"  name="provider_credential"
+                                     type="text">
+    
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-xl-4">
+                            <div class="form-group local-forms">
+                                <label>Locación <span class="login-danger">*</span></label>
+                                <!-- [(ngModel)]="pos" -->
+                                <input class="form-control" name="pos" 
+                                     type="text">
+    
+                            </div>
+                        </div>
+                       
+                        
+                    </div>
+                    <!-- paciente -->
+                </form>
+    
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- fin paciente -->
+
+<div class="row animated fadeIn fast">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <input type="text" class="form-control" placeholder="Buscar producto" #txtTermino (keyup)="buscar(txtTermino.value)">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <!-- mensaje -->
+    <div class="alert alert-success alert-dismissible fade show" role="alert" *ngIf="msm_success">
+        Artículo agregado al <a [routerLink]="['/dashboard/carrito']"><b>Carrito!</b></a>.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    </div>
+    <!-- mensaje -->
+    <!-- mensaje -->
+    <!-- <div class="alert alert-success alert-dismissible fade show" role="alert" *ngIf="msm_success_fav">
+        Artículo agregado a <a [routerLink]="['/app/user/favorites']"><b>Favoritos!</b></a>.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    </div> -->
+    <!-- mensaje -->
+ </div>
+
+<section class="row">
+    <div class="container">
+        <div class="productos-atention">
+            <figure class="item" *ngFor="let prod of productos |  paginate: { itemsPerPage: count, currentPage: p }">
+                <div class="product product-style-1">
+                    <div class="img-wrapper">
+                        <a [routerLink]="['../producto/', prod._id]">
+                            <img class="img-responsive" [src]="prod.img | imagenPipe: 'productos'" alt="{{prod.titulo}} thumbnail" />
+                        </a>
+                        
+                    </div>
+                    <figcaption class="desc text-center">
+                        <h3>
+                            <a class="product-name" [routerLink]="['../producto/', prod._id]">{{prod.titulo}}</a>
+                        </h3>
+                        <span class="price">${{prod.precio_ahora}}</span><br>
+                        <span class="price precioantes">${{prod.precio_antes}}</span>
+                        <div class="button-add-cart  btn btn-outline-success" type="button " (click)="addToCart(prod) ">
+                            <i class="fa fa-shopping-bag " id="myBtn "></i>
+                        </div>
+                        <!-- <div class="button-add-favorite  btn btn-outline-primary" type="button " (click)="addToFavorites(prod) ">
+                            <i class="fa fa-heart " id="myBtn "></i>
+                        </div> -->
+                    </figcaption>
+                </div>
+            </figure>
+        </div>
+        <div class="clear"></div>
+        <!-- paginador -->
+        <div class="row" *ngIf="productos.length > 8">
+            <div class="col-md-12 text-right">
+                <pagination-controls (pageChange)="p = $event"></pagination-controls>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+ 

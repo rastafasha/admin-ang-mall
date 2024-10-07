@@ -52,6 +52,8 @@ import { TiendaListComponent } from '../admin/tienda/tienda/tienda-list/tienda-l
 import { UsuariosTiendaComponent } from '../admin/tienda/usuarios/usuarios-tienda/usuarios-tienda.component';
 import { UsertiendaaddComponent } from '../admin/tienda/usuarios/usertiendaadd/usertiendaadd.component';
 import { UserDetailComponent } from '../admin/tienda/usuarios/user-detail/user-detail.component';
+import { AtencionLocalComponent } from '../admin/tienda/atencion-local/atencion-local.component';
+import { CarritoComponent } from '../admin/tienda/atencion-local/carrito/carrito.component';
 
 
 const childRoutes: Routes = [
@@ -136,6 +138,11 @@ const childRoutes: Routes = [
             
             {path: 'tienda-user', component: UsuariosTiendaComponent , data:{tituloPage:'Tienda-empleado'}},
             {path: 'tienda-user/registro', component: UsertiendaaddComponent , data:{tituloPage:'Tienda-empleado'}},
+            {path: 'tienda-user/edit/:id', component: UsertiendaaddComponent , data:{tituloPage:'Tienda-empleado-edit'}},
+            {path: 'tienda-user/detalle/:id', component: UserDetailComponent , data:{tituloPage:'Tienda-empleado-detail'}},
+            
+            {path: 'atencion-local', component: AtencionLocalComponent , data:{tituloPage:'Atención Local'}},
+            {path: 'carrito', component: CarritoComponent , data:{tituloPage:'Tienda Carrito'}},
             {path: 'tienda-user/edit/:id', component: UsertiendaaddComponent , data:{tituloPage:'Tienda-empleado-edit'}},
             {path: 'tienda-user/detalle/:id', component: UserDetailComponent , data:{tituloPage:'Tienda-empleado-detail'}},
 

@@ -13,6 +13,8 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { PipesModule } from 'src/app/pipes/pipes.module';
+import { AtencionLocalComponent } from './atencion-local/atencion-local.component';
+import { CarritoComponent } from './atencion-local/carrito/carrito.component';
 
 
 
@@ -23,7 +25,9 @@ import { PipesModule } from 'src/app/pipes/pipes.module';
     UsuariosTiendaComponent,
     TiendaListComponent,
     TiendaDetailComponent,
-    UserDetailComponent
+    UserDetailComponent,
+    AtencionLocalComponent,
+    CarritoComponent
 
   ],
   exports: [
