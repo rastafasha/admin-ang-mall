@@ -54,6 +54,7 @@ import { UsertiendaaddComponent } from '../admin/tienda/usuarios/usertiendaadd/u
 import { UserDetailComponent } from '../admin/tienda/usuarios/user-detail/user-detail.component';
 import { AtencionLocalComponent } from '../admin/tienda/atencion-local/atencion-local.component';
 import { CarritoComponent } from '../admin/tienda/atencion-local/carrito/carrito.component';
+import { ListaTrasnferenciasComponent } from '../admin/transferencias/lista-trasnferencias/lista-trasnferencias.component';
 
 
 const childRoutes: Routes = [
@@ -141,6 +142,7 @@ const childRoutes: Routes = [
             {path: 'tienda-user/edit/:id', component: UsertiendaaddComponent , data:{tituloPage:'Tienda-empleado-edit'}},
             {path: 'tienda-user/detalle/:id', component: UserDetailComponent , data:{tituloPage:'Tienda-empleado-detail'}},
             
+            {path: 'transferencias', component: ListaTrasnferenciasComponent , data:{tituloPage:'transferencias'}},
             {path: 'atencion-local', component: AtencionLocalComponent , data:{tituloPage:'Atención Local'}},
             {path: 'carrito', component: CarritoComponent , data:{tituloPage:'Tienda Carrito'}},
             {path: 'tienda-user/edit/:id', component: UsertiendaaddComponent , data:{tituloPage:'Tienda-empleado-edit'}},

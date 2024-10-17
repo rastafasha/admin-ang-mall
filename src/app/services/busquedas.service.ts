@@ -62,9 +62,12 @@ export class BusquedasService {
   private trasnformarTiendas(resultados: any[]): Tienda[]{
     return resultados;
   }
+  private trasnformarTrasnferencias(resultados: any[]): Tienda[]{
+    return resultados;
+  }
 
 
-  buscar(tipo: 'usuarios'|'categorias' |'marcas' |'productos'|'blogs'|'pages'|'sliders'|'cursos'|'tiendas',
+  buscar(tipo: 'usuarios'|'categorias' |'marcas' |'productos'|'blogs'|'pages'|'sliders'|'cursos'|'tiendas'|'trasnferencias',
         termino: string
         ){
     const url = `${base_url}/todo/coleccion/${tipo}/${termino}`;
@@ -95,6 +98,9 @@ export class BusquedasService {
                 
                 case 'tiendas':
                 return this.trasnformarTiendas(resp.resultados)
+
+                case 'trasnferencias':
+                return this.trasnformarTrasnferencias(resp.resultados)
 
 
               default:

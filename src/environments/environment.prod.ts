@@ -1,9 +1,9 @@
 export const environment = {
   production: true,
   //local
-  baseUrl: 'http://localhost:3000/api',
-  mediaUrl: 'http://localhost:3000/api/uploads',
-  soketServer : 'http://localhost:3000',
+  baseUrl: 'http://localhost:3003/api',
+  mediaUrl: 'http://localhost:3003/api/uploads',
+  soketServer : 'http://localhost:3003',
   //remoto
   // baseUrl: 'https://backend-mean-eccm-main.vercel.app/api',
   // mediaUrl: 'https://backend-mean-eccm-main.vercel.app/api/uploads/',

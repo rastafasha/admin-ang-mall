@@ -56,6 +56,7 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { ContactodetailsComponent } from './contacto/contactodetails/contactodetails.component';
 import { TiendaModule } from './tienda/tienda.module';
+import { ListaTrasnferenciasComponent } from './transferencias/lista-trasnferencias/lista-trasnferencias.component';
 
 @NgModule({
   declarations: [
@@ -96,6 +97,7 @@ import { TiendaModule } from './tienda/tienda.module';
     VideoIndexComponent,
     VideoEditComponent,
     ContactodetailsComponent,
+    ListaTrasnferenciasComponent,
   ],
   exports: [
     MarcaIndexComponent,

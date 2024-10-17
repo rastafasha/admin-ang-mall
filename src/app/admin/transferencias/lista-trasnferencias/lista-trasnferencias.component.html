@@ -1,0 +1,103 @@
+<div class="row animated fadeIn fast">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <input type="text" class="form-control" placeholder="Buscar" #txtTermino (keyup)="buscar(txtTermino.value)">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row animated fadeIn fast" *ngIf="cargando">
+    <div class="col-12">
+        <div class="alert alert-info text-center">
+            <div class="alert-heading">Cargando</div>
+            <i class="fa fa-spin fa-refresh fa-2x"></i>
+            <p class="mb-0">Por favor espere</p>
+        </div>
+    </div>
+</div>
+
+<div class="row" *ngIf="!cargando">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-9">
+                        <h4 class="card-title">Transferencias: ({{ trasnfs.length}})</h4>
+                        <h6 class="card-subtitle">Transferencias registrados en la app</h6>
+                    </div>
+                </div>
+                <br>
+                <hr>
+
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Email</th>
+                                <th>Banco</th>
+                                <th>Metodo</th>
+                                <th>Monto</th>
+                                <th>Referencia</th>
+                                <th>Fecha</th>
+                                <th>Status</th>
+                                <th>Created</th>
+                                <th class="text-nowrap">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let transf of trasnfs |  paginate: { itemsPerPage: count, currentPage: p } | orderBy:'createdAt, desc'">
+                                
+                                <td>
+                                    {{transf.user | slice:0:10}}...
+                                </td>
+                                <td>
+                                    {{transf.bankName}}
+                                </td>
+                                <td>
+                                    {{transf.metodo_pago}}
+                                </td>
+                                <td>
+                                    {{transf.amount}}
+                                </td>
+                                <td>
+                                    {{transf.referencia}}
+                                </td>
+                                <td>
+                                    {{transf.paymentday}}
+                                </td>
+                                <td>
+                                    <div class="font-size-sm mb-4">
+                                        <span class="badge badge-primary badge-shadow" *ngIf="transf.status == 'pending'">{{transf.status}}</span>
+                                        <span class="badge badge-success badge-shadow" *ngIf="transf.status == 'ok'">{{transf.status}}</span>
+                                        <span class="badge badge-danger badge-shadow" *ngIf="transf.status == 'no'">{{transf.status}}</span>
+                                        
+                                    </div>
+                                </td>
+                                <td>
+                                    {{transf.createdAt | date:'mediumDate'}}
+                                </td>
+                                <td class="text-nowrap text-center">
+                                    <select
+                                    class="form-control form-select-solid fw-bolder"
+
+                                    name="state" [(ngModel)]="transf.status" (change)="cambiarStatus(transf)"
+                                    placeholder="state">
+                                    <option>-- Select --</option>
+                                    <option value="pending">Pendiente</option>
+                                      <option value="ok">Aprobado</option>
+                                      <option value="no">Rechazado</option>
+                                      </select>
+                                   
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+                <pagination-controls (pageChange)="p = $event"></pagination-controls>
+            </div>
+        </div>
+    </div>
+</div>
