@@ -55,6 +55,7 @@ import { UserDetailComponent } from '../admin/tienda/usuarios/user-detail/user-d
 import { AtencionLocalComponent } from '../admin/tienda/atencion-local/atencion-local.component';
 import { CarritoComponent } from '../admin/tienda/atencion-local/carrito/carrito.component';
 import { ListaTrasnferenciasComponent } from '../admin/transferencias/lista-trasnferencias/lista-trasnferencias.component';
+import { TiposdepagoComponent } from '../admin/tiposdepago/tiposdepago.component';
 
 
 const childRoutes: Routes = [
@@ -143,6 +144,7 @@ const childRoutes: Routes = [
             {path: 'tienda-user/detalle/:id', component: UserDetailComponent , data:{tituloPage:'Tienda-empleado-detail'}},
             
             {path: 'transferencias', component: ListaTrasnferenciasComponent , data:{tituloPage:'transferencias'}},
+            {path: 'tipos-de-pago', component: TiposdepagoComponent , data:{tituloPage:'tipos-de-pago'}},
             {path: 'atencion-local', component: AtencionLocalComponent , data:{tituloPage:'Atención Local'}},
             {path: 'carrito', component: CarritoComponent , data:{tituloPage:'Tienda Carrito'}},
             {path: 'tienda-user/edit/:id', component: UsertiendaaddComponent , data:{tituloPage:'Tienda-empleado-edit'}},

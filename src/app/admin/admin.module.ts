@@ -57,6 +57,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { ContactodetailsComponent } from './contacto/contactodetails/contactodetails.component';
 import { TiendaModule } from './tienda/tienda.module';
 import { ListaTrasnferenciasComponent } from './transferencias/lista-trasnferencias/lista-trasnferencias.component';
+import { TiposdepagoComponent } from './tiposdepago/tiposdepago.component';
 
 @NgModule({
   declarations: [
@@ -98,6 +99,7 @@ import { ListaTrasnferenciasComponent } from './transferencias/lista-trasnferenc
     VideoEditComponent,
     ContactodetailsComponent,
     ListaTrasnferenciasComponent,
+    TiposdepagoComponent
   ],
   exports: [
     MarcaIndexComponent,
@@ -136,7 +138,8 @@ import { ListaTrasnferenciasComponent } from './transferencias/lista-trasnferenc
     CursoEditComponent,
     VideoIndexComponent,
     VideoEditComponent,
-    ContactodetailsComponent
+    ContactodetailsComponent,
+    TiposdepagoComponent
   ],
 
 
