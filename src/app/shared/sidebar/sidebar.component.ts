@@ -13,6 +13,7 @@ export class SidebarComponent implements OnInit {
 
 
   public usuario: Usuario;
+  user:any;
 
   constructor(
     public sidebarService: SidebarService,
@@ -24,6 +25,8 @@ export class SidebarComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    let USER = localStorage.getItem("user");
+    this.user = JSON.parse(USER ? USER: '');
   }
 
   logout(){

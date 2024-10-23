@@ -182,7 +182,7 @@ export class TiendaaddComponent implements OnInit {
 
 
 
-  saveTienda(){debugger
+  saveTienda(){
 
     const {
       nombre, 

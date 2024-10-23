@@ -1,7 +1,7 @@
 <!-- ============================================================== -->
 <!-- Left Sidebar - style you can find in sidebar.scss  -->
 <!-- ============================================================== -->
-<aside class="left-sidebar">
+<aside class="left-sidebar" *ngIf="user.role ==='SUPERADMIN'">
     <!-- Sidebar scroll-->
     <div class="scroll-sidebar">
         <!-- Sidebar navigation-->
@@ -109,6 +109,51 @@
                         </li>
                     </ul>
                 </li> -->
+
+            </ul>
+        </nav>
+        <!-- End Sidebar navigation -->
+    </div>
+    <!-- End Sidebar scroll-->
+</aside>
+
+<aside class="left-sidebar" *ngIf="user.role ==='TIENDA'">
+    <!-- Sidebar scroll-->
+    <div class="scroll-sidebar">
+        <!-- Sidebar navigation-->
+        <nav class="sidebar-nav">
+            <ul id="sidebarnav">
+                <li class="user-profile">
+                    <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><img [src]="usuario.imagenUrl" alt="user" /><span class="hide-menu">{{usuario.first_name}} ({{usuario.role}})</span></a>
+                    <ul aria-expanded="false" class="collapse">
+                        <li><a routerLink="./perfil" routerLinkActive="active">My Profile </a></li>
+                        <!-- <li><a routerLink="account-settings">Account Setting</a></li> -->
+                        
+                    </ul>
+                </li>
+                
+                <li class="nav-devider"></li>
+                <li class="nav-small-cap">Tienda</li>
+                <li>
+                    <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false">
+                        <i class="mdi mdi-store"></i>
+                        <span class="hide-menu">Tienda<span class="label label-rouded label-themecolor pull-right">1</span>
+                        </span>
+                    </a>
+                    <ul aria-expanded="false" class="collapse">
+
+                        <!-- <li><a routerLink="tienda" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Tiendas </a></li> -->
+                        <li><a routerLink="atencion-local" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Atención Local </a></li>
+                        <!-- <li><a routerLink="tienda-user" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Usuarios Tienda </a></li> -->
+
+
+                    </ul>
+                </li>
+                <li class="nav-devider"></li>
+                
+                
+                <li><a (click)="logout()" class="cursor">Logout</a></li>
+                
 
             </ul>
         </nav>

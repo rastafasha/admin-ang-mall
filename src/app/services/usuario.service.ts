@@ -127,6 +127,11 @@ export class UsuarioService {
       })
     )
   }
+  
+  crearCliente(data: any){
+    const url = `${base_url}/usuarios/registrocliente`;
+    return this.http.post(url, data, this.headers);
+  }
 
   actualizarPerfil(data: {email: string, nombre: string, role?: string}){
 
@@ -355,7 +360,14 @@ export class UsuarioService {
       )
 
   }
-  
+
+  getClient(numdoc:string =''){
+    const url = `${base_url}/usuarios/numdoc/${numdoc}`;
+    return this.http.get<any>(url, this.headers)
+      .pipe(
+        map((resp:{ok: boolean, numdoc: Usuario}) => resp.numdoc)
+        );
+  }
 
 
 
