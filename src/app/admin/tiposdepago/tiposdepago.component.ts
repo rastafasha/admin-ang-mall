@@ -141,7 +141,7 @@ save(){
 
 deleteTipoPago(tiposdepago:any){debugger
 
-    this.paymentMethodService.borrarPaymentMethod(tiposdepago.id).subscribe(
+    this.paymentMethodService.borrarPaymentMethod(tiposdepago._id).subscribe(
       (resp:any) =>{
         this.getTiposdePagoByUser();
       });
