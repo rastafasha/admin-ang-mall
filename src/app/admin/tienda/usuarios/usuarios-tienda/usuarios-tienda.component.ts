@@ -21,6 +21,9 @@ export class UsuariosTiendaComponent implements OnInit {
 
   public desde: number = 0;
   public cargando: boolean = true;
+  public user: any;
+  public localId: any;
+  public role: any;
 
   public imgSubs: Subscription;
   p: number = 1;
@@ -35,12 +38,20 @@ export class UsuariosTiendaComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
-    this.loadUsuarios();
-    this.imgSubs = this.modalImagenService.nuevaImagen
-    .pipe(
-      delay(100)
-    )
-    .subscribe(img => { this.loadUsuarios();});
+    let USER = localStorage.getItem("user");
+    this.user = JSON.parse(USER ? USER: '');
+    this.localId = this.user.local;
+    this.role = this.user.role;
+
+    if(this.role === 'ADMIN'){
+      this.loadUsuarios();
+      
+    }
+    if(this.role === 'ALMACEN' || this.role === 'VENTAS'||this.role === 'TIENDA'){
+      this.loadEmployeesByLocalId();
+      
+    }
+    
 
   }
 
@@ -48,7 +59,7 @@ export class UsuariosTiendaComponent implements OnInit {
     this.imgSubs.unsubscribe();
   }
 
-  loadUsuarios(){
+  loadEmployeesByLocalId(){
     this.cargando = true;
     this.usuarioService.cargarUsuariosTienda(this.desde)
     .subscribe(
@@ -56,6 +67,18 @@ export class UsuariosTiendaComponent implements OnInit {
         this.totalUsuarios = total;
         this.tiendausers = tiendausers;
         this.tiendausersTemp = tiendausers;
+        this.cargando = false;
+        console.log(this.tiendausers);
+      }
+    )
+  }
+
+  loadUsuarios(){
+    this.cargando = true;
+    this.usuarioService.cargarEmployeesTienda(this.localId )
+    .subscribe(
+      local=>{
+        this.tiendausers = local;
         this.cargando = false;
         console.log(this.tiendausers);
       }

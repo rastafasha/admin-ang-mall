@@ -195,7 +195,7 @@ export class UsuarioService {
 
   cargarUsuariosTienda(desde: number = 0){
 
-    const url = `${base_url}/usuarios/users_store?desde=${desde}`;
+    const url = `${base_url}/usuarios/users_store/?desde=${desde}`;
     return this.http.get<CargarUsuario>(url, this.headers)
       .pipe(
         map( resp =>{
@@ -222,6 +222,15 @@ export class UsuarioService {
           }
         })
       )
+  }
+
+  cargarEmployeesTienda(localId: string){
+    const url = `${base_url}/usuarios/employe_store/${localId}`;
+    return this.http.get<any>(url, this.headers)
+      .pipe(
+        map((resp:{ok: boolean, local: Usuario[]}) => resp.local)
+        );
+
   }
   cargarUsuariosAlmacen(desde: number = 0){
 
