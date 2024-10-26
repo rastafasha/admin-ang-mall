@@ -45,7 +45,7 @@ export class TiposdepagoComponent implements OnInit {
   bankName:string;
   bankAccount:string;
   ciorif:string;
-  telefono:string;
+  phone:string;
   email:string;
   tipo:string;
   user:any;
@@ -129,21 +129,29 @@ save(){
       bankName: this.bankName,
       bankAccount: this.bankAccount,
       ciorif:this.ciorif,
-      telefono:this.telefono,
+      phone:this.phone,
       email: this.email,
       user: this.user.uid
     }
     this.paymentMethodService.crearPaymentMethod(data).subscribe((resp:any)=>{
       // console.log(resp);
-      this.getTiposdePagoByUser();
+      this.tipo = '';
+      this.bankAccountType = '';
+      this.bankName = '';
+      this.bankAccount = '';
+      this.ciorif = '';
+      this.phone = '';
+      this.email = '';
+      this.ngOnInit();
     })
   }
 
-deleteTipoPago(tiposdepago:any){debugger
+deleteTipoPago(tiposdepago:any){
 
     this.paymentMethodService.borrarPaymentMethod(tiposdepago._id).subscribe(
       (resp:any) =>{
         this.getTiposdePagoByUser();
+        
       });
     
   }
