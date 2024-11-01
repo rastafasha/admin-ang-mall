@@ -19,16 +19,18 @@ export class CarritoService {
 
   registro(data:any):Observable<any>{
     let headers = new HttpHeaders().set('Content-Type','application/json');
-    return this._http.post(this.url + '/carrito/registro',data,{headers:headers})
+    // se corrigió la ruta '/carritos'
+    return this._http.post(this.url + '/carritos',data,{headers:headers})
   }
 
   preview_carrito(id:string):Observable<any>{
     let headers = new HttpHeaders().set('Content-Type','application/json');
-    return this._http.get(this.url + '/carrito/limit/data/'+id,{headers:headers})
+    // se corrigió la ruta '/carrito/limit/data/', lo correcto es '/carritos/limit/data/'
+    return this._http.get(this.url + '/carritos/limit/data/'+id,{headers:headers})
   }
 
   remove_carrito(id:string):Observable<any>{
     let headers = new HttpHeaders().set('Content-Type','application/json');
-    return this._http.delete(this.url + '/carrito/delete/'+id,{headers:headers})
+    return this._http.delete(this.url + '/carritos/delete/'+id,{headers:headers})
   }
 }

@@ -65,7 +65,7 @@ export class AdminVentasComponent implements OnInit {
         this.ventas = response.data;
         // this.count_cat = this.ventas.length;
         this.page = 1;
-        console.log(this.ventas);
+        console.log('VENTAS',this.ventas);
 
       }
     );

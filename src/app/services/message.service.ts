@@ -8,7 +8,7 @@ import { StorageService } from './storage.service';
 })
 export class MessageService {
 
-  message = new Subject()
+  message = new Subject();
 
   constructor(
     private storageService: StorageService
@@ -16,7 +16,6 @@ export class MessageService {
 
   sendMessage(producto: Producto):void{
     this.message.next(producto);
-    
   }
 
   getMessage(): Observable<any>{

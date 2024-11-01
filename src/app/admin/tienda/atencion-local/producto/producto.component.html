@@ -1,0 +1,88 @@
+
+<div *ngIf="!producto">
+    <h1 class="text-center">No hay info</h1>
+</div>
+<div *ngIf="producto">
+
+    <section class="container mt-4">
+        <!-- imagen y nombre del producto -->
+        <article>
+            <img class="img-fluid" [src]="producto.img | imagenPipe: 'productos'" alt="{{producto.titulo}}">
+            <h3 class="heading-style-3" style="color:#696262">{{producto.titulo}}</h3>
+        </article>
+
+        <!-- detalles del producto y mensajes (alerts)-->
+         <article>
+            <!-- implementar aqui la galeria de imagenes del producto -->
+
+            <!-- mensaje indicando que se agregó producto al carrito-->
+            <div class="alert alert-success alert-dismissible fade show" role="alert" *ngIf="msm_success">
+                Artículo agregado al <a [routerLink]="['/dashboard/carrito']"><b>Carrito!</b></a>.
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <!-- detalles -->
+            <!-- precio -->
+            <div class="mb-3">
+                <span class="h3 font-weight-normal text-accent mr-2">${{producto.precio_ahora}}</span>
+                <del class="text-muted font-size-lg mr-3">${{producto.precio_antes}}</del>
+                <span class="badge badge-danger badge-shadow align-middle mt-2">Oferta</span>
+            </div>
+            <!-- colores -->
+            <div class="font-size-sm">
+                <div class="text-heading font-weight-medium mr-1 d-block">
+                      Colores:
+                </div>
+                <div class="text-muted listacolor" id="colorOption">
+                    <ng-container *ngFor="let color of colores">
+                        <ng-container>
+                            <i [style.background]="color.color" style="cursor: pointer;" (click)="get_color(color)"></i>
+                            <div class="d-block">{{color.titulo}}</div>
+                        </ng-container>
+                    </ng-container>
+                </div>
+            </div>
+            <!-- stock -->
+            <div class="font-size-sm mb-4 mt-4">
+                <span class="text-heading font-weight-medium mr-1">
+                  Stock:</span>
+                <span class="text-muted">
+                    {{producto.stock}}
+                </span>
+            </div>
+
+            <!-- form agregar al carrito -->
+            <form class="mb-grid-gutter" #carritoForm="ngForm" (ngSubmit)="add_to_cart(carritoForm)">
+                <div class="form-group">
+                    <div class="d-flex justify-content-between align-items-center pb-1">
+                        <label class="font-weight-medium" for="product-size">{{producto.nombre_selector}}:</label>
+                        <a class="nav-link-style font-size-sm" *ngIf="producto.subcategoria == 'Calzado'" data-toggle="modal" data-target="#sizes-modal" style="cursor: pointer;">
+                            <i class="czi-ruler lead align-middle mr-1 mt-n1"></i>Formato de tallas
+                        </a>
+                    </div>
+                    <select class="custom-select form-control" required="" id="product-size" name="selector_to_cart" [(ngModel)]="selector_to_cart">
+                      <option value=" " selected disabled>Selecciona</option>
+                      <option value="{{selector.titulo}}" *ngFor="let selector of selectores" >{{selector.titulo}}</option>
+                    </select>
+                    <div class="invalid-feedback" style="display: block;" *ngIf="selector_error">
+                        Selecciona alguna opción por favor.
+                    </div>
+                </div>
+                <div class="form-group d-flex align-items-center">
+                    <input type="number" class="form-control mr-3" min="1" [attr.max]="producto.stock" name="cantidad_to_cart" [(ngModel)]="cantidad_to_cart" style="width: 5rem;">
+                    <button class="btn btn-primary btn-shadow btn-block" disabled *ngIf="!identity" type="submit"><i class="czi-cart font-size-lg mr-2"></i>Agregar al carrito</button>
+                    <button class="btn btn-primary btn-shadow btn-block" *ngIf="identity" type="submit"><i class="czi-cart font-size-lg mr-2"></i>Agregar al carrito</button>
+                </div>
+                <div class="invalid-feedback" *ngIf="err_stock" style="display: block;">{{err_stock}}</div>
+            </form>
+
+            <!-- Product panels-->
+            <div class="card shadow">
+                <!-- <p class="text-justify" style="font-size: 14px;">{{producto.info_short}}</p> -->
+                {{producto.info_short}}
+            </div>
+         </article>
+    </section>
+</div>

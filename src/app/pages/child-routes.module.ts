@@ -56,6 +56,8 @@ import { AtencionLocalComponent } from '../admin/tienda/atencion-local/atencion-
 import { CarritoComponent } from '../admin/tienda/atencion-local/carrito/carrito.component';
 import { ListaTrasnferenciasComponent } from '../admin/transferencias/lista-trasnferencias/lista-trasnferencias.component';
 import { TiposdepagoComponent } from '../admin/tiposdepago/tiposdepago.component';
+import { ProductoComponent } from '../admin/tienda/atencion-local/producto/producto.component';
+import { PagosEfectivoComponent } from '../admin/pagos-efectivo/pagos-efectivo.component';
 
 
 const childRoutes: Routes = [
@@ -144,8 +146,11 @@ const childRoutes: Routes = [
             {path: 'tienda-user/detalle/:id', component: UserDetailComponent , data:{tituloPage:'Tienda-empleado-detail'}},
             
             {path: 'transferencias', component: ListaTrasnferenciasComponent , data:{tituloPage:'transferencias'}},
+            // ruta 'pagosefectivo' agregada por José Prados
+            {path: 'pagosefectivo', component: PagosEfectivoComponent, data:{tituloPage:'Pagos en Efectivo'}},
             {path: 'tipos-de-pago', component: TiposdepagoComponent , data:{tituloPage:'tipos-de-pago'}},
             {path: 'atencion-local', component: AtencionLocalComponent , data:{tituloPage:'Atención Local'}},
+            {path: 'producto/:id', component:ProductoComponent, data:{tituloPage:'Producto'} },
             {path: 'carrito', component: CarritoComponent , data:{tituloPage:'Tienda Carrito'}},
             {path: 'tienda-user/edit/:id', component: UsertiendaaddComponent , data:{tituloPage:'Tienda-empleado-edit'}},
             {path: 'tienda-user/detalle/:id', component: UserDetailComponent , data:{tituloPage:'Tienda-empleado-detail'}},

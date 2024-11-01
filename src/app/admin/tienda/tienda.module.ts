@@ -15,6 +15,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { PipesModule } from 'src/app/pipes/pipes.module';
 import { AtencionLocalComponent } from './atencion-local/atencion-local.component';
 import { CarritoComponent } from './atencion-local/carrito/carrito.component';
+import { ProductoComponent } from './atencion-local/producto/producto.component';
 
 
 
@@ -27,7 +28,8 @@ import { CarritoComponent } from './atencion-local/carrito/carrito.component';
     TiendaDetailComponent,
     UserDetailComponent,
     AtencionLocalComponent,
-    CarritoComponent
+    CarritoComponent,
+    ProductoComponent
 
   ],
   exports: [
