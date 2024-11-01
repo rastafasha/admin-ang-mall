@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Usuario } from 'src/app/models/usuario.model';
 import { ContactoService } from 'src/app/services/contact.service';
@@ -9,6 +9,10 @@ import { CongeneralService } from 'src/app/services/congeneral.service';
 import { CartItemModel } from 'src/app/models/cart-item-model';
 import { StorageService } from 'src/app/services/storage.service';
 import { CarritoService } from 'src/app/services/carrito.service';
+import { environment } from 'src/environments/environment';
+
+import * as io from "socket.io-client";
+import { MessageService } from 'src/app/services/message.service';
 
 @Component({
   selector: 'app-header',
@@ -42,6 +46,8 @@ export class HeaderComponent implements OnInit {
   flag = false;
   is_visible: boolean;
 
+  public socket = io(environment.soketServer);
+
   constructor(
     private usuarioService: UsuarioService,
     private congeralService: CongeneralService,
@@ -50,9 +56,12 @@ export class HeaderComponent implements OnInit {
     private translate: TranslateService,
     private storageService: StorageService,
     private _carritoService:CarritoService,
+    private _messageService: MessageService,
+    private cdr: ChangeDetectorRef
   ) {
     this.usuario = usuarioService.usuario;
     this.translate.setDefaultLang(this.activeLang);
+    this.identity = usuarioService.usuario;
   }
 
   ngOnInit(): void {
@@ -80,7 +89,11 @@ export class HeaderComponent implements OnInit {
 
     if(this.storageService.existCart()){
       this.cartItems = this.storageService.getCart();
-    } 
+    }
+
+    this.socket.on('new-carrito', function (data) {
+      this.show_Carrito();
+    }.bind(this));
     
     this.show_Carrito();
   }
@@ -117,16 +130,21 @@ export class HeaderComponent implements OnInit {
   }
 
 
+  // modificado por Jose Prados
   show_Carrito(){
+    this.subtotal = 0;
+
     this._carritoService.preview_carrito(this.identity.uid).subscribe(
       response =>{
-        this.carrito = response;
+        this.carrito = response.carrito;
+        console.log('CARRITO header: ',this.carrito);
 
         this.carrito.forEach(element => {
           this.subtotal = this.subtotal + (element.precio*element.cantidad);
         });
-        console.log(this.carrito);
 
+        // refrescar cambios en la vista del carrito del header
+        this.cdr.detectChanges();
       },
       error=>{
         console.log(error);
@@ -134,6 +152,8 @@ export class HeaderComponent implements OnInit {
       }
     );
   }
+
+  // modificado por José Prados
   remove_producto(id){
     this._carritoService.remove_carrito(id).subscribe(
       response=>{
@@ -141,9 +161,10 @@ export class HeaderComponent implements OnInit {
         this._carritoService.preview_carrito(this.identity.uid).subscribe(
           response =>{
             this.carrito = response;
-            // this.socket.emit('save-carrito_dos', {new:true});
+            this.socket.emit('save-carrito', {new:true});
 
-
+            // refrescar cambios en la vista del carrito del header
+            this.cdr.detectChanges();
           },
           error=>{
             console.log(error);

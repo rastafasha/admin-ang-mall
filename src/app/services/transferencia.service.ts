@@ -31,6 +31,11 @@ export class TransferenciaService {
     }
   }
 
+  // registrar transferencia que hizo el usuario
+  createTransfer(transfer:any){
+    return this.http.post<any>(`${base_url}/transferencias/store`,transfer);
+  }
+
 
   getTransferencias(){
 

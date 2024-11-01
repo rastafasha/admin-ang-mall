@@ -16,6 +16,8 @@ import { Usuario } from 'src/app/models/usuario.model';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { TiendaService } from 'src/app/services/tienda.service';
 import { Tienda } from 'src/app/models/tienda.model';
+import * as io from "socket.io-client";
+import { CarritoService } from 'src/app/services/carrito.service';
 
 declare var jQuery:any;
 declare var $:any;
@@ -26,6 +28,8 @@ declare var $:any;
   styleUrls: ['./atencion-local.component.css']
 })
 export class AtencionLocalComponent implements OnInit {
+
+  public socket = io(environment.soketServer);
 
   @Input() cartItem: CartItemModel;
   cartItems: any[] = [];
@@ -38,6 +42,7 @@ export class AtencionLocalComponent implements OnInit {
   public producto: Producto;
   public tienda: Tienda;
   public usuarioSeleccionado: any;
+  // public color_to_cart = '#16537e';
 
   public numdoc: any;
   public first_name: any;
@@ -67,6 +72,8 @@ export class AtencionLocalComponent implements OnInit {
 
   public productoSeleccionado: Producto;
 
+  public identity;
+
   constructor(
     private productoService: ProductoService,
     private categoriaService: CategoriaService,
@@ -75,11 +82,22 @@ export class AtencionLocalComponent implements OnInit {
     private messageService: MessageService,
     private userService: UsuarioService,
     private tiendaService: TiendaService,
+    private _carritoService: CarritoService,
   ) {
     this.url = environment.baseUrl;
+
+    this.identity = userService.usuario;
    }
 
   ngOnInit(): void {
+    this.uploads();
+  }
+
+  ngOnDestroy(){
+    this.imgSubs.unsubscribe();
+  }
+
+  private uploads(){
     let USER = localStorage.getItem("user");
     this.user = JSON.parse(USER ? USER: '');
     this.local = this.user.local;
@@ -92,10 +110,6 @@ export class AtencionLocalComponent implements OnInit {
       delay(100)
     )
     .subscribe(img => { this.loadProductos();});
-  }
-
-  ngOnDestroy(){
-    this.imgSubs.unsubscribe();
   }
 
   loadProductos(){
@@ -126,16 +140,32 @@ export class AtencionLocalComponent implements OnInit {
   }
 
 
+  /*
   addToCart(prod:any): void{
-    this.productoSeleccionado = prod;
-    this.messageService.sendMessage(this.productoSeleccionado);
-    console.log('sending item to cart...', this.productoSeleccionado);
+    console.log('prod save: ',prod)
+    // this.productoSeleccionado = prod;
+    let data = {
+      user: this.identity.uid,
+      producto : prod._id,
+      cantidad : this.cantidad_to_cart,
+      color : this.color_to_cart,
+      selector : this.selector_to_cart,
+      precio : prod.precio_ahora
+    }
+    // this.messageService.sendMessage(this.productoSeleccionado);
+    console.log('sending item to cart...', prod);
+    
+    this._carritoService.registro(prod).subscribe(response => {
+      this.socket.emit('save-carrito', {new:true});
+    });
     this.msm_success = true;
     setTimeout(()=>{
       this.close_alert()
     },2500);
     this.ngOnInit();
   }
+    */
+
 
   buscar(termino: string){
 
