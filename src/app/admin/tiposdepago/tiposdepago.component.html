@@ -104,7 +104,7 @@
                                         </div>
                                         <div class="form-group col-xs-12 col-sm-6">
                                             <label for="exampleInputEmail1">Télefono</label>
-                                            <input [(ngModel)]="telefono" name="telefono" type="text" class="form-control">
+                                            <input [(ngModel)]="phone" name="phone" type="text" class="form-control">
                                         </div>
                                     </div>
                                     <!-- <input type="hidden" [(ngModel)]="id"> -->
@@ -163,7 +163,7 @@
                                                     <td>{{tipodepago.bankName}}</td>
                                                     <td>
                                                         <span class="badge bg-success" *ngIf="tipodepago.status === 'ACTIVE'">Activo</span>
-                                                        <span class="badge bg-danger" *ngIf="tipodepago.status === 'pending'">Inactivo</span>
+                                                        <span class="badge bg-danger" *ngIf="tipodepago.status === 'INACTIVE'">Inactivo</span>
                                                     </td>
                                                     <td>
                                                         <!-- <div class="status-toggle d-flex justify-content-between align-items-center">
@@ -196,55 +196,55 @@
                             </div>
                         </div>
                        </div>
-                    <div class="col-xs-12 col-sm-7 col-sm-push-3" *ngIf="tipoSeleccionado">
+                    <div class="row" *ngIf="tipoSeleccionado">
                         <div class="card"  >
                             <div class="card-body">
                                 
-                                    <div class="row">
-                                        <div class="col-xs-12 col-sm-6">
+                                    <div class="row ">
+                                        <div class="col-xs-12 col-sm-6 col-md-6 ">
                                             <div class="rbt-form-group">
                                                 <b >
                                                     Tipo de Pago</b><br>
                                                 {{tipoSeleccionado.tipo}}
                                             </div>
                                         </div>
-                                        <div class="col-xs-12 col-sm-6" *ngIf="tipoSeleccionado.email">
+                                        <br>
+                                        <div class="col-xs-12 col-sm-6 col-md-6 " *ngIf="tipoSeleccionado.email">
                                             <div class="rbt-form-group">
                                                 <b >
                                                    Email</b><br>
                                                 {{tipoSeleccionado.email}}
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-xs-12 col-sm-6" *ngIf="tipoSeleccionado.ciorif">
+                                        <div class="col-xs-12 col-sm-6 col-md-6 " *ngIf="tipoSeleccionado.ciorif">
                                             <div class="rbt-form-group">
                                                 <b >
                                                     ci orif</b><br>
                                                     {{tipoSeleccionado.ciorif}}
                                             </div>
                                         </div>
-                                        <div class="col-xs-12 col-sm-6" *ngIf="tipoSeleccionado.telefono">
+                                        <br>
+                                        <div class="col-xs-12 col-sm-6 col-md-6 " *ngIf="tipoSeleccionado.phone">
                                             <div class="rbt-form-group">
                                                 <b > Teléfono</b><br>
-                                                {{tipoSeleccionado.telefono}}
+                                                {{tipoSeleccionado.phone}}
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-xs-12 col-sm-6" *ngIf="tipoSeleccionado.bankName">
+                                        <div class="col-xs-12 col-sm-6 col-md-6 " *ngIf="tipoSeleccionado.bankName">
                                             <div class="rbt-form-group">
                                                 <b > Nombre del Banco</b><br>
                                                 {{tipoSeleccionado.bankName}}
                                             </div>
                                         </div>
-                                        <div class="col-xs-12 col-sm-6" *ngIf="tipoSeleccionado.bankAccount">
+                                        <br>
+                                        <div class="col-xs-12 col-sm-6 col-md-6 " *ngIf="tipoSeleccionado.bankAccount">
                                             <div class="rbt-form-group">
                                                 <b > Cuenta Bancaria</b><br>
                                                 {{tipoSeleccionado.bankAccount}}
                                             </div>
                                         </div>
                                     </div>
+                                    
                                     
                                    
                                     
