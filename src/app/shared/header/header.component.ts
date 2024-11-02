@@ -28,6 +28,7 @@ export class HeaderComponent implements OnInit {
   value: string;
   id:string;
   // categorias: Categoria[];
+  public clienteSeleccionado: any ={};
 
   public carrito : Array<any> = [];
   public subtotal : any = 0;
@@ -65,6 +66,7 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.showCliente();
     this.flag = true;
     this._contactoService.listar().subscribe(
       response=>{
@@ -96,6 +98,19 @@ export class HeaderComponent implements OnInit {
     }.bind(this));
     
     this.show_Carrito();
+    
+  }
+
+  showCliente(){
+    // obtenemos el cliente del localstorage
+    const cliente = localStorage.getItem('cliente');
+
+    // Si el cliente existe, lo parseamos de JSON a un objeto
+    if (cliente) {
+        this.clienteSeleccionado = JSON.parse(cliente);
+    } else {
+        this.clienteSeleccionado = null; // O maneja el caso en que no hay cliente
+    }
   }
 
   public cambiarLenguaje(lang:any) {
@@ -134,7 +149,7 @@ export class HeaderComponent implements OnInit {
   show_Carrito(){
     this.subtotal = 0;
 
-    this._carritoService.preview_carrito(this.identity.uid).subscribe(
+    this._carritoService.preview_carrito(this.clienteSeleccionado.uid).subscribe(
       response =>{
         this.carrito = response.carrito;
         console.log('CARRITO header: ',this.carrito);

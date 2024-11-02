@@ -34,6 +34,8 @@ export class AtencionLocalComponent implements OnInit {
   @Input() cartItem: CartItemModel;
   cartItems: any[] = [];
 
+  @Input() clienteSeleccionado: any;
+
   public cantidad_to_cart = 1;
   public precio_to_cart;
   public selector_to_cart = ' ';
@@ -41,7 +43,6 @@ export class AtencionLocalComponent implements OnInit {
   public selector_error = false;
   public producto: Producto;
   public tienda: Tienda;
-  public usuarioSeleccionado: any;
   // public color_to_cart = '#16537e';
 
   public numdoc: any;
@@ -91,6 +92,7 @@ export class AtencionLocalComponent implements OnInit {
 
   ngOnInit(): void {
     this.uploads();
+    
   }
 
   ngOnDestroy(){
@@ -180,25 +182,35 @@ export class AtencionLocalComponent implements OnInit {
   }
 
   filterClient(){
+    localStorage.removeItem('cliente');
     this.userService.getClient(this.numdoc+"").subscribe(numdoc=>{
       console.log(numdoc);
-      this.usuarioSeleccionado = numdoc;
-      if(this.usuarioSeleccionado === 404){
-        this.usuarioSeleccionado.first_name= '';
-        this.usuarioSeleccionado.last_name= '';
-        this.usuarioSeleccionado.email= '';
-        this.usuarioSeleccionado.telefono= '';
-        this.usuarioSeleccionado.n_doc= 0;
+      this.clienteSeleccionado = numdoc; // se obtiene el cliente por la cedula para relacionar la compra
+      // y se envia como un input a producto y al carrito
+      
+      if(this.clienteSeleccionado === 404){
+        this.clienteSeleccionado.first_name= '';
+        this.clienteSeleccionado.last_name= '';
+        this.clienteSeleccionado.email= '';
+        this.clienteSeleccionado.telefono= '';
+        this.clienteSeleccionado.n_doc= 0;
       }else{
-        this.first_name= this.usuarioSeleccionado.first_name;
-        this.last_name= this.usuarioSeleccionado.last_name;
-        this.email= this.usuarioSeleccionado.email;
-        this.telefono= this.usuarioSeleccionado.telefono;
-        this.numdoc= this.usuarioSeleccionado.n_doc;
+        this.first_name= this.clienteSeleccionado.first_name;
+        this.last_name= this.clienteSeleccionado.last_name;
+        this.email= this.clienteSeleccionado.email;
+        this.telefono= this.clienteSeleccionado.telefono;
+        this.numdoc= this.clienteSeleccionado.n_doc;
       }
     })
   }
+
+  adjuntarClienteaCompra(){
+     // lo salvamos temporalmente en el storage
+     localStorage.setItem('cliente', JSON.stringify(this.clienteSeleccionado));
+      
+  }
   resetClient(){
+    localStorage.removeItem('cliente');
     this.first_name= '';
         this.last_name= '';
         this.email= '';

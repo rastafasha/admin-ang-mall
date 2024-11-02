@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, ChangeDetectorRef, Input } from '@angular/core';
 import { CarritoService } from "src/app/services/carrito.service";
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -25,6 +25,7 @@ import { TiposdepagoService } from 'src/app/services/tiposdepago.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { TransferenciaService } from 'src/app/services/transferencia.service';
 import { PagoEfectivoService } from 'src/app/services/pago-efectivo.service';
+import { Usuario } from 'src/app/models/usuario.model';
 
 @Component({
   selector: 'app-carrito',
@@ -35,7 +36,7 @@ export class CarritoComponent implements OnInit {
 
   @ViewChild('paypal',{static:true}) paypalElement : ElementRef;
 
-
+  public clienteSeleccionado: any;
 
   public direcciones:any =[];
   public identity;
@@ -61,6 +62,7 @@ export class CarritoComponent implements OnInit {
   public socket = io(environment.soketServer);
 
   public no_direccion = 'no necesita direccion';
+
 
 
   //DATA
@@ -119,13 +121,28 @@ export class CarritoComponent implements OnInit {
     private cdr: ChangeDetectorRef
   ) {
     this.identity = _userService.usuario;
-    console.log('identidad usuario: ',this.identity)
+    console.log('identidad usuario: ',this.identity);
+    // obtenemos el cliente del localstorage
+    const cliente = localStorage.getItem('cliente');
+
+    // Si el cliente existe, lo parseamos de JSON a un objeto
+    if (cliente) {
+        this.clienteSeleccionado = JSON.parse(cliente);
+    } else {
+        this.clienteSeleccionado = null; // O maneja el caso en que no hay cliente
+    }
+
+    console.log('identidad cliente: ',this.clienteSeleccionado);
+
     this.url = environment.baseUrl;
   }
 
   ngOnInit(): void {
 
     this.listAndIdentify();
+    
+
+    console.log(this.clienteSeleccionado);
 
   }
 
@@ -135,7 +152,7 @@ export class CarritoComponent implements OnInit {
     this.listar_carrito();
     this.obtenerMetodosdePago();
     
-    if(this.identity){
+    if(this.clienteSeleccionado){
       this.socket.on('new-carrito', function (data) {
         this.listar_carrito();
 
@@ -336,7 +353,7 @@ export class CarritoComponent implements OnInit {
     this.socket.on('new-carrito', function (data) {
       this.subtotal = 0;
 
-      this._carritoService.preview_carrito(this.identity.uid).subscribe(
+      this._carritoService.preview_carrito(this.clienteSeleccionado.uid).subscribe(
         response =>{
           this.carrito = response;
 
@@ -380,7 +397,7 @@ export class CarritoComponent implements OnInit {
 
   // modificado por José Prados
   listar_direcciones(){
-    this._direccionService.listarUsuario(this.identity.uid).subscribe(
+    this._direccionService.listarUsuario(this.clienteSeleccionado.uid).subscribe(
       response =>{
         // modificado: response por response.direcciones
         this.direcciones = response.direcciones;
@@ -405,7 +422,7 @@ export class CarritoComponent implements OnInit {
 
 
   listar_carrito(){
-    this._carritoService.preview_carrito(this.identity.uid).subscribe(
+    this._carritoService.preview_carrito(this.clienteSeleccionado.uid).subscribe(
       response =>{
         this.carrito = response.carrito;
         console.log('CARRITO: ',this.carrito)
@@ -439,7 +456,7 @@ export class CarritoComponent implements OnInit {
     this._carritoService.remove_carrito(id).subscribe(
       response=>{
         this.subtotal = Math.round(this.subtotal - (response.carrito.precio*response.carrito.cantidad));
-        this._carritoService.preview_carrito(this.identity.uid).subscribe(
+        this._carritoService.preview_carrito(this.clienteSeleccionado.uid).subscribe(
           response =>{
             this.carrito = response;
             this.socket.emit('save-carrito', {new:true});
@@ -450,7 +467,7 @@ export class CarritoComponent implements OnInit {
 
           }
         );
-        this._carritoService.preview_carrito(this.identity.uid).subscribe(
+        this._carritoService.preview_carrito(this.clienteSeleccionado.uid).subscribe(
           response =>{
             this.carrito = response.carrito;
             this.data_detalle = [];
@@ -608,7 +625,7 @@ export class CarritoComponent implements OnInit {
 
 
       this.data_venta = {
-        user : this.identity.uid,
+        user : this.clienteSeleccionado.uid,
         total_pagado : this.subtotal,
         codigo_cupon : this.cupon,
         info_cupon :  this.info_cupon_string,
@@ -676,7 +693,7 @@ export class CarritoComponent implements OnInit {
 
 
       this.data_venta = {
-        user : this.identity.uid,
+        user : this.clienteSeleccionado.uid,
         total_pagado : this.subtotal,
         codigo_cupon : this.cupon,
         info_cupon :  this.info_cupon_string,
@@ -725,7 +742,7 @@ export class CarritoComponent implements OnInit {
               this.listar_carrito();
               this.socket.emit('save-carrito', {new:true});
               this.socket.emit('save-stock', {new:true});
-              this._router.navigate(['/app/cuenta/ordenes']);
+              this._router.navigate(['/dashboard/ventas/modulo']);
             },
             error=>{
               console.log(error);

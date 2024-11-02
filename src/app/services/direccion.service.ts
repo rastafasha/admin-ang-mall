@@ -49,12 +49,12 @@ export class DireccionService {
 
   listarUsuario(id:string):Observable<any>{
     let headers = new HttpHeaders().set('Content-Type','application/json');
-    return this._http.get(this.url + '/direccions/direcciones/'+id,{headers:headers})
+    return this._http.get(this.url + '/direccions/direccionesusuario/'+id,{headers:headers})
 
   }
 
   get_direccion(id:string){
-    const url = `${base_url}/direccions/direccion/data/${id}`;
+    const url = `${base_url}/direccions/direccion/${id}`;
     return this._http.get<any>(url, this.headers)
       .pipe(
         map((resp:{ok: boolean, direccion: Direccion}) => resp.direccion)

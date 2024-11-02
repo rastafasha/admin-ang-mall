@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Categoria } from 'src/app/models/categoria.model';
 import { Producto } from 'src/app/models/producto.model';
@@ -17,6 +17,7 @@ import { VentaService } from 'src/app/services/venta.service';
 import { CarritoService } from 'src/app/services/carrito.service';
 import { ComentarioService } from 'src/app/services/comentario.service';
 import { CategoryService } from 'src/app/services/category.service';
+import { Usuario } from 'src/app/models/usuario.model';
 declare var jQuery:any;
 declare var $:any;
 
@@ -29,6 +30,8 @@ export class ProductoComponent implements OnInit {
 
   producto: any = [];
   categories: Categoria[];
+
+  public clienteSeleccionado: any ={};
 
   public socket = io(environment.soketServer);
 
@@ -135,6 +138,17 @@ export class ProductoComponent implements OnInit {
     if(!this.identity){
       this.router.navigateByUrl('/login');
     }
+    // obtenemos el cliente del localstorage
+    const cliente = localStorage.getItem('cliente');
+
+    // Si el cliente existe, lo parseamos de JSON a un objeto
+    if (cliente) {
+        this.clienteSeleccionado = JSON.parse(cliente);
+    } else {
+        this.clienteSeleccionado = null; // O maneja el caso en que no hay cliente
+    }
+
+    console.log(this.clienteSeleccionado);
   }
 
   click_img(img,id){
@@ -302,8 +316,8 @@ export class ProductoComponent implements OnInit {
         console.log('prod obtenido: ',this.producto)
 
 
-        if(this.identity){
-          this._ventaService.evaluar_venta_user(this.identity.uid,this.producto._id).subscribe(
+        if(this.clienteSeleccionado){
+          this._ventaService.evaluar_venta_user(this.clienteSeleccionado.uid,this.producto._id).subscribe(
             response =>{
               console.log('resp venta: ',response)
               this.get_state_user_producto_coment = response.data;
@@ -417,12 +431,12 @@ export class ProductoComponent implements OnInit {
     else{
       this.err_stock = '';
       let data = {
-        user: this.identity.uid,
+        user: this.clienteSeleccionado.uid,
         producto : this.producto._id,
         cantidad : this.cantidad_to_cart,
         color : this.color_to_cart,
         selector : this.selector_to_cart,
-        precio : this.precio_to_cart
+        precio : this.precio_to_cart,
       }
       if(this.selector_to_cart != " "){
         this.selector_error = false;
@@ -514,7 +528,7 @@ export class ProductoComponent implements OnInit {
         pros: reviewForm.value.review_pros,
         cons: reviewForm.value.review_cons,
         estrellas: reviewForm.value.review_estrellas,
-        user: this.identity.uid,
+        user: this.clienteSeleccionado.uid,
         producto: this.producto._id,
       }
       this._comentarioService.registro(data).subscribe(
