@@ -62,7 +62,7 @@ export class TiendaService {
   }
 
   borrarTienda(_id:string){
-    const url = `${base_url}/tiendas/${_id}`;
+    const url = `${base_url}/tiendas/delete/${_id}`;
     return this.http.delete(url, this.headers);
   }
 

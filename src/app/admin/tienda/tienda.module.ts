@@ -51,6 +51,7 @@ import { ProductoComponent } from './atencion-local/producto/producto.component'
     PdfViewerModule,
     NgxPaginationModule,
     CKEditorModule,
+    
   ]
 })
 export class TiendaModule { }

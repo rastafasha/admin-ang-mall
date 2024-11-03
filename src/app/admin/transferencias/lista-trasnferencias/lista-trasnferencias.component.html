@@ -35,14 +35,13 @@
                     <table class="table table-bordered">
                         <thead>
                             <tr>
-                                <th>Email</th>
-                                <th>Banco</th>
                                 <th>Metodo</th>
-                                <th>Monto</th>
                                 <th>Referencia</th>
+                                <th>Banco</th>
+                                <th>Monto</th>
                                 <th>Fecha</th>
                                 <th>Status</th>
-                                <th>Created</th>
+                                <th>Creada</th>
                                 <th class="text-nowrap">Acciones</th>
                             </tr>
                         </thead>
@@ -50,22 +49,19 @@
                             <tr *ngFor="let transf of trasnfs |  paginate: { itemsPerPage: count, currentPage: p } | orderBy:'createdAt, desc'">
                                 
                                 <td>
-                                    {{transf.user | slice:0:10}}...
-                                </td>
-                                <td>
-                                    {{transf.bankName}}
-                                </td>
-                                <td>
                                     {{transf.metodo_pago}}
-                                </td>
-                                <td>
-                                    {{transf.amount}}
                                 </td>
                                 <td>
                                     {{transf.referencia}}
                                 </td>
                                 <td>
-                                    {{transf.paymentday}}
+                                    {{transf.bankName}}
+                                </td>
+                                <td>
+                                    {{transf.amount|currency}}
+                                </td>
+                                <td>
+                                    {{transf.paymentday | date}}
                                 </td>
                                 <td>
                                     <div class="font-size-sm mb-4">
@@ -89,6 +85,8 @@
                                       <option value="ok">Aprobado</option>
                                       <option value="no">Rechazado</option>
                                       </select>
+
+                                      <a (click)="eliminarSlider(transf)" class="btn btn-outline-danger " data-toggle="tooltip" data-original-title="Borrar"> <i class="fa fa-trash text-danger"></i> </a>
                                    
                                 </td>
                             </tr>

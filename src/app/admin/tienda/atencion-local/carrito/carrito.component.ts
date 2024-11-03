@@ -26,6 +26,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { TransferenciaService } from 'src/app/services/transferencia.service';
 import { PagoEfectivoService } from 'src/app/services/pago-efectivo.service';
 import { Usuario } from 'src/app/models/usuario.model';
+import { TiendaService } from 'src/app/services/tienda.service';
 
 @Component({
   selector: 'app-carrito',
@@ -34,12 +35,13 @@ import { Usuario } from 'src/app/models/usuario.model';
 })
 export class CarritoComponent implements OnInit {
 
-  @ViewChild('paypal',{static:true}) paypalElement : ElementRef;
+  @ViewChild('paypal',{static:true}) paypalElement? : ElementRef;
 
   public clienteSeleccionado: any;
 
   public direcciones:any =[];
   public identity;
+  public localId;
   public carrito : Array<any> = [];
   public subtotal : any = 0;
   public url;
@@ -77,6 +79,8 @@ export class CarritoComponent implements OnInit {
   public info_cupon_string = '';
   public error_stock = false;
   public date_string;
+  
+  public data_direccionLocal : any = {};
 
   selectedMethod: string = '';
 
@@ -112,6 +116,7 @@ export class CarritoComponent implements OnInit {
     private _cuponService :CuponService,
     private _postalService :PostalService,
     private _direccionService :DireccionService,
+    private _tiendaService :TiendaService,
     private _ventaService :VentaService,
     private _messageService: MessageService,
     private _tipoPagos: TiposdepagoService,
@@ -121,7 +126,9 @@ export class CarritoComponent implements OnInit {
     private cdr: ChangeDetectorRef
   ) {
     this.identity = _userService.usuario;
+    this.localId = _userService.usuario.local;
     console.log('identidad usuario: ',this.identity);
+    console.log('idLocal: ',this.localId);
     // obtenemos el cliente del localstorage
     const cliente = localStorage.getItem('cliente');
 
@@ -135,17 +142,16 @@ export class CarritoComponent implements OnInit {
     console.log('identidad cliente: ',this.clienteSeleccionado);
 
     this.url = environment.baseUrl;
+
   }
 
   ngOnInit(): void {
 
+    this.direccionTienda();
     this.listAndIdentify();
     
-
-    console.log(this.clienteSeleccionado);
-
   }
-
+  
   private listAndIdentify(){
     this.listar_direcciones();
     this.listar_postal();
@@ -409,12 +415,22 @@ export class CarritoComponent implements OnInit {
     );
   }
 
-  get_direccion(id_direccion:any){
-    this.data_direccion = id_direccion;
-    this._direccionService.get_direccion(this.data_direccion).subscribe(
-      response =>{
-        this.data_direccion = response;
-        console.log(this.data_direccion);
+  // get_direccion(id_direccion:any){
+  //   this.data_direccion = id_direccion;
+  //   this._direccionService.get_direccion(this.data_direccion).subscribe(
+  //     response =>{
+  //       this.data_direccion = response;
+  //       console.log(this.data_direccion);
+  //     }
+  //   );
+
+  // }
+ 
+  direccionTienda(){
+    this._tiendaService.getTiendaById(this.localId).subscribe(
+      tienda =>{
+        this.data_direccionLocal = tienda;
+        console.log('direccion del local', this.data_direccionLocal);
       }
     );
 
@@ -597,7 +613,7 @@ export class CarritoComponent implements OnInit {
   }
 
   verify_data(){
-    if(this.id_direccion){
+    if(this.localId){
       this.msm_error = '';
       $('#btn-verify-data').animate().hide();
       $('#btn-back-data').animate().show();
@@ -619,7 +635,7 @@ export class CarritoComponent implements OnInit {
 
       var fecha = new Date();
 
-      var months = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Novimbre", "Deciembre"];
+      var months = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Deciembre"];
       fecha.setDate(fecha.getDate() + parseInt(this.medio_postal.dias));
       this.date_string =  fecha.getDate() +' de ' + months[fecha.getMonth()] + ' del ' + fecha.getFullYear();
 
@@ -636,13 +652,13 @@ export class CarritoComponent implements OnInit {
         precio_envio: this.medio_postal.precio,
         tiempo_estimado: this.date_string,
 
-        direccion: this.data_direccion.direccion,
-        destinatario: this.data_direccion.nombres_completos,
+        direccion: this.data_direccionLocal.direccion,
+        destinatario: this.clienteSeleccionado.first_name +''+ this.clienteSeleccionado.last_name,
         detalles:this.data_detalle,
-        referencia: this.data_direccion.referencia,
-        pais: this.data_direccion.pais,
-        ciudad: this.data_direccion.ciudad,
-        zip: this.data_direccion.zip,
+        referencia: this.data_direccionLocal.referencia,
+        pais: this.data_direccionLocal.pais,
+        ciudad: this.data_direccionLocal.ciudad,
+        zip: this.data_direccionLocal.zip,
       }
 
       console.log(this.data_venta);
@@ -665,7 +681,7 @@ export class CarritoComponent implements OnInit {
   }
 
   verify_dataComplete(){debugger
-    if(this.id_direccion){
+    if(this.localId){
       this.msm_error = '';
       $('#btn-verify-data').animate().hide();
       $('#btn-back-data').animate().show();
@@ -687,7 +703,7 @@ export class CarritoComponent implements OnInit {
 
       var fecha = new Date();
 
-      var months = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Novimbre", "Deciembre"];
+      var months = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Deciembre"];
       fecha.setDate(fecha.getDate() + parseInt(this.medio_postal.dias));
       this.date_string =  fecha.getDate() +' de ' + months[fecha.getMonth()] + ' del ' + fecha.getFullYear();
 
@@ -705,13 +721,13 @@ export class CarritoComponent implements OnInit {
         precio_envio: this.medio_postal.precio,
         tiempo_estimado: this.date_string,
 
-        direccion: this.data_direccion.direccion,
-        destinatario: this.data_direccion.nombres_completos,
+        direccion: this.data_direccionLocal.direccion,
+        destinatario: this.clienteSeleccionado.first_name +''+ this.clienteSeleccionado.last_name,
         detalles:this.data_detalle,
-        referencia: this.data_direccion.referencia,
-        pais: this.data_direccion.pais,
-        ciudad: this.data_direccion.ciudad,
-        zip: this.data_direccion.zip,
+        referencia: this.data_direccionLocal.referencia,
+        pais: this.data_direccionLocal.pais,
+        ciudad: this.data_direccionLocal.ciudad,
+        zip: this.data_direccionLocal.zip,
       }
 
       console.log(this.data_venta);
@@ -724,7 +740,7 @@ export class CarritoComponent implements OnInit {
 
   }
 
-  saveVenta(){debugger
+  saveVenta(){
     this._ventaService.registro(this.data_venta).subscribe(response =>{
       this.data_venta.detalles.forEach(element => {
         console.log(element);

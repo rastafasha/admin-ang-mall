@@ -147,7 +147,7 @@
                             </div>
                         </div>
                         <!-- direcciones -->
-                        <div class="card">
+                        <!-- <div class="card">
                             <div class="card-header">
                                 <h3 class="accordion-heading"><a class="collapsed" href="#shipping-estimates" role="button" data-toggle="collapse" aria-expanded="true" aria-controls="shipping-estimates">Dirección de envío<span class="accordion-indicator"></span></a></h3>
                             </div>
@@ -164,7 +164,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
 
                     </div>
                     <div class="invalid-tooltip" style="display: block;" *ngIf="msm_error">{{msm_error}}</div>
@@ -176,11 +176,11 @@
                     <div class="rounded-lg px-4 pt-4 pb-2 mb-4" id="card-data-envio">
                         <div class="row">
                             <div class="col-sm-12">
-                                <h4 class="h6">Detalles de envío:</h4>
+                                <h4 class="h6">Detalles de Entrega:</h4>
                                 <ul class="list-unstyled font-size-sm">
-                                    <li><span class="text-muted dt-w">Destinatario:&nbsp; <br></span>{{data_direccion.nombres_completos}}</li>
-                                    <li><span class="text-muted dt-w">Dirección:&nbsp; <br></span>{{data_direccion.direccion}}</li>
-                                    <li><span class="text-muted dt-w">País - Ciudad - ZIP:&nbsp; <br></span> {{data_direccion.pais}} <span> - </span> {{data_direccion.ciudad}} <span> - </span> {{data_direccion.zip}}</li>
+                                    <li><span class="text-muted dt-w">Cliente:&nbsp; <br></span>{{clienteSeleccionado.first_name}} {{clienteSeleccionado.last_name}}</li>
+                                    <li><span class="text-muted dt-w">Dirección:&nbsp; <br></span>{{data_direccionLocal.direccion}}</li>
+                                    <li><span class="text-muted dt-w">País - Ciudad - ZIP:&nbsp; <br></span> {{data_direccionLocal.pais}} <span> - </span> {{data_direccionLocal.ciudad}} <span> - </span> {{data_direccionLocal.zip}}</li>
                                 </ul>
                             </div>
 

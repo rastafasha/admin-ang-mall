@@ -46,7 +46,7 @@
                                 <th>Img</th>
                                 <th>Nombre</th>
                                 <th>Local</th>
-                                <th>sub Categoria</th>
+                                <th>Categoria</th>
                                 <th class="text-nowrap">Acciones</th>
                             </tr>
                         </thead>
@@ -63,7 +63,7 @@
                                     {{tienda.local}}
                                 </td>
                                 <td>
-                                    {{tienda.subcategoria}}
+                                    {{tienda.categoria}}
                                 </td>
                                 <td class="text-nowrap text-center">
                                     <a [routerLink]="['/dashboard/tienda/edit/', tienda._id]" class="cursor" data-toggle="tooltip" data-original-title="Edit"> <i class="fa fa-pencil text-inverse m-r-10"></i> </a>

@@ -9,24 +9,52 @@
                 <form class="form p-t-20 form-horizontal form-material" [formGroup]="tiendaForm" >
                     <div class="row">
                         <div class="form-group col-xs-12 col-sm-6">
-                            <label for="exampleInputuname">Titulo Tienda</label>
+                            <label for="Tienda">Titulo Tienda</label>
                             <div class="input-group">
     
-                                <input type="text" formControlName="nombre" class="form-control" id="exampleInputuname" placeholder="nombre">
+                                <input type="text" formControlName="nombre" class="form-control" id="Tienda" placeholder="nombre">
                             </div>
                         </div>
                         <div class="form-group col-xs-12 col-sm-6">
-                            <label for="exampleInputuname">Local</label>
+                            <label for="Local">Local</label>
                             <div class="input-group">
     
-                                <input type="text" formControlName="local" class="form-control" id="exampleInputuname" placeholder="local">
+                                <input type="text" formControlName="local" class="form-control" id="Local" placeholder="local">
+                            </div>
+                        </div>
+                        <div class="form-group ">
+                            <label class=" col-form-label font-weight-medium" for="text-input">Direccion <span class="required">*</span></label>
+                            <div class="col-md-12">
+                                <ckeditor formControlName="direccion" [editor]="Editor1"  data="<p>Hello, world!</p>" required></ckeditor>
+    
                             </div>
                         </div>
                         <div class="form-group col-xs-12 col-sm-6">
-                            <label for="exampleInputuname">telefono</label>
+                            <label for="telefono">Teléfono</label>
                             <div class="input-group">
     
-                                <input type="text" formControlName="telefono" class="form-control" id="exampleInputuname" placeholder="local">
+                                <input type="text" formControlName="telefono" class="form-control" id="telefono" placeholder="telefono">
+                            </div>
+                        </div>
+                        <div class="form-group col-xs-12 col-sm-6">
+                            <label for="Pais">Pais</label>
+                            <div class="input-group">
+    
+                                <input type="text" formControlName="pais" class="form-control" id="Pais" placeholder="Pais">
+                            </div>
+                        </div>
+                        <div class="form-group col-xs-12 col-sm-6">
+                            <label for="Ciudad">Ciudad</label>
+                            <div class="input-group">
+    
+                                <input type="text" formControlName="ciudad" class="form-control" id="Ciudad" placeholder="Ciudad">
+                            </div>
+                        </div>
+                        <div class="form-group col-xs-12 col-sm-6">
+                            <label for="zip">Codigo postal</label>
+                            <div class="input-group">
+    
+                                <input type="text" formControlName="zip" class="form-control" id="zip" placeholder="Ciudad">
                             </div>
                         </div>
                         <div class="form-group ">

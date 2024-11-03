@@ -42,7 +42,9 @@ export class TiendaaddComponent implements OnInit {
   listIcons;
   state_banner:boolean;
 
+
   public Editor = ClassicEditor;
+  public Editor1 = ClassicEditor;
   public tiendaSeleccionado?: Tienda;
 
   public redessociales:any = [];
@@ -104,16 +106,40 @@ export class TiendaaddComponent implements OnInit {
     )
   }
 
-  addRedSocial(){
-    this.redssociales.push({
-      name_red: this.name_red,
-      usuario_red: this.usuario_red,
-      icono: this.icono
-    })
+  // addRedSocial(){
+  //   this.redssociales.push({
+  //     name_red: this.name_red,
+  //     usuario_red: this.usuario_red,
+  //     icono: this.icono
+  //   })
+  //   this.name_red = '';
+  //   this.usuario_red = '';
+  //   this.icono = '';
+  // }
+
+
+  addRedSocial() {
+    if (this.redssociales) {
+      this.redssociales.push({
+        index: this.redssociales.length + 1,
+        name_red: this.name_red,
+        usuario_red: this.usuario_red,
+        icono: this.icono
+      });
+    } else {
+      this.redssociales = [
+        {
+          index: 1, // initial index
+          name_red: this.name_red,
+          usuario_red: this.usuario_red,
+          icono: this.icono
+        },
+      ];
+    }
     this.name_red = '';
     this.usuario_red = '';
     this.icono = '';
-  }
+    }
 
   deleteMedical(i:any){
     this.redssociales.splice(i,1);
@@ -127,6 +153,10 @@ export class TiendaaddComponent implements OnInit {
       local: ['', Validators.required],
       telefono: ['', ],
       categoria: ['', Validators.required],
+      direccion: ['', Validators.required],
+      pais: ['', Validators.required],
+      ciudad: ['', Validators.required],
+      zip: ['', Validators.required],
       subcategoria: [''],
       redssociales: [this.redessociales],
       status: ['false', Validators.required],
@@ -159,6 +189,10 @@ export class TiendaaddComponent implements OnInit {
             local: res.local,
             telefono: res.telefono,
             categoria: res.categoria,
+            direccion: res.direccion,
+            pais: res.pais,
+            ciudad: res.ciudad,
+            zip: res.zip,
             subcategoria: res.subcategoria,
             redssociales: res.redssociales,
             status: res.status,
@@ -189,6 +223,10 @@ export class TiendaaddComponent implements OnInit {
       local,
       telefono,
       categoria,
+      direccion,
+      pais,
+      ciudad,
+      zip,
       subcategoria,
       redssociales,
       status,

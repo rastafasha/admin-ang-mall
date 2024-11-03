@@ -96,7 +96,7 @@ export class DashboardComponent implements OnInit {
 
         var fecha = new Date();
 
-        var months = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Novimbre", "Deciembre"];
+        var months = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Deciembre"];
         this.current_month = months[fecha.getMonth()];
         this.last_month = months[fecha.getMonth()-1]
         this.mes_anterior = fecha.getMonth();

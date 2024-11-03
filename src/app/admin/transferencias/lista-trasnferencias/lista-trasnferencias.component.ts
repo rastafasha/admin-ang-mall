@@ -17,6 +17,7 @@ export class ListaTrasnferenciasComponent implements OnInit {
 
   public desde: number = 0;
   trasnferencia: Transferencia;
+  transf: Transferencia;
 
   p: number = 1;
   count: number = 8;
@@ -49,6 +50,15 @@ export class ListaTrasnferenciasComponent implements OnInit {
     this.trasnferenciaService.updateStatus(trasnferencia)
     .subscribe( resp => {
       Swal.fire('Actualizado', trasnferencia._id,  'success')
+    })
+
+  }
+
+  eliminarSlider(transf: Transferencia){
+    this.trasnferenciaService.borrarTransferencia(transf._id)
+    .subscribe( resp => {
+      this.loadTrasnferencias();
+      Swal.fire('Borrado', this.transf.referencia, 'success')
     })
 
   }
