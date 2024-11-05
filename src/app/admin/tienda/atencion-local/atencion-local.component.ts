@@ -45,7 +45,7 @@ export class AtencionLocalComponent implements OnInit {
   public tienda: Tienda;
   // public color_to_cart = '#16537e';
 
-  public numdoc: any;
+  public numdoc: number;
   public first_name: any;
   public last_name: any;
   public user: any;
@@ -72,6 +72,7 @@ export class AtencionLocalComponent implements OnInit {
 
 
   public productoSeleccionado: Producto;
+  public clienteGuardado: Usuario;
 
   public identity;
 
@@ -183,7 +184,7 @@ export class AtencionLocalComponent implements OnInit {
 
   filterClient(){
     localStorage.removeItem('cliente');
-    this.userService.getClient(this.numdoc+"").subscribe(numdoc=>{
+    this.userService.getClient(this.numdoc).subscribe(numdoc=>{
       console.log(numdoc);
       this.clienteSeleccionado = numdoc; // se obtiene el cliente por la cedula para relacionar la compra
       // y se envia como un input a producto y al carrito
@@ -215,7 +216,7 @@ export class AtencionLocalComponent implements OnInit {
         this.last_name= '';
         this.email= '';
         this.telefono= '';
-        this.numdoc= '';
+        this.numdoc= 0;
   }
 
 
@@ -231,16 +232,24 @@ export class AtencionLocalComponent implements OnInit {
       local:this.local,
     }
 
-
+    //guardamos el cliente nuevo
     this.userService.crearCliente(data).subscribe(
       resp =>{
         console.log(resp);
         // Swal.fire('Success', resp, 'error');
         Swal.fire('Agregado', `Cliente agregado correctamente`, 'success');
+
       },(err) => {
         Swal.fire('Error', err.error.msg, 'error');
       }
     );
+      // traemos este mismo registro
+        this.userService.getClient(this.numdoc).subscribe(
+         (numdoc) =>{
+           this.clienteGuardado = numdoc;
+           console.log(this.clienteGuardado);
+           localStorage.setItem('cliente', JSON.stringify(this.clienteGuardado));
+         }) 
 
     
   }

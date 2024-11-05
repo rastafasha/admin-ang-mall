@@ -680,7 +680,7 @@ export class CarritoComponent implements OnInit {
       $('.cart-data-venta').animate().show('fast');
   }
 
-  verify_dataComplete(){debugger
+  verify_dataComplete(){
     if(this.localId){
       this.msm_error = '';
       $('#btn-verify-data').animate().hide();

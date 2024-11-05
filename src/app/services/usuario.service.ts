@@ -354,7 +354,7 @@ export class UsuarioService {
         );
 
   }
-
+  
   get_user_data():Observable<any>{
     const url = `${base_url}/usuarios`;
     return this.http.get(url, this.headers)
@@ -370,7 +370,7 @@ export class UsuarioService {
 
   }
 
-  getClient(numdoc:string =''){
+  getClient(numdoc:number ){
     const url = `${base_url}/usuarios/numdoc/${numdoc}`;
     return this.http.get<any>(url, this.headers)
       .pipe(
