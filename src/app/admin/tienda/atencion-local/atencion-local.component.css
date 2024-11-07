@@ -46,4 +46,18 @@ ul li{
 
 }
 
-
+.listacolor{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    flex-wrap: wrap;
+    align-items: baseline;
+    margin-top: -30px;
+}
+.listacolor  i{
+    border: 2px solid #fff;
+    box-shadow: 0px 0px 2px #333;
+    border-radius: 100px; height: 30px; width: 30px;
+}
