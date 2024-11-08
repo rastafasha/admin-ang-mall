@@ -680,7 +680,7 @@ export class CarritoComponent implements OnInit {
       $('.cart-data-venta').animate().show('fast');
   }
 
-  verify_dataComplete(){
+  verify_dataComplete(){debugger
     if(this.localId){
       this.msm_error = '';
       $('#btn-verify-data').animate().hide();
@@ -724,7 +724,7 @@ export class CarritoComponent implements OnInit {
         direccion: this.data_direccionLocal.direccion,
         destinatario: this.clienteSeleccionado.first_name +''+ this.clienteSeleccionado.last_name,
         detalles:this.data_detalle,
-        referencia: this.data_direccionLocal.referencia,
+        referencia: this.data_direccionLocal.local,
         pais: this.data_direccionLocal.pais,
         ciudad: this.data_direccionLocal.ciudad,
         zip: this.data_direccionLocal.zip,

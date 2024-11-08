@@ -40,6 +40,7 @@ export class ListaTrasnferenciasComponent implements OnInit {
       transferencias => {
         this.cargando = false;
         this.trasnfs = transferencias;
+        this.trasnfs = transferencias;
         console.log(this.trasnfs);
       }
     )
