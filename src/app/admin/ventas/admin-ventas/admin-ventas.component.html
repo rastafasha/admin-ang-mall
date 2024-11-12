@@ -6,9 +6,21 @@
             <div class="col-lg-12">
                 <div class="border-bottom mt-lg-2 pb-2">
                     <h2 class="mt-lg-4">Ordenes</h2>
-                    <div class="d-flex flex-wrap flex-md-nowrap justify-content-between">
+                    <!-- <div class="d-flex flex-wrap flex-md-nowrap justify-content-between">
                         <p class="text-muted">Todas las ventas registradas en el ecommerce.</p>
-
+                    </div> -->
+                    <div class="mt-2" *ngIf="user.role==='ADMIN'">
+                        <label class=" col-form-label font-weight-medium" for="local">
+                        Filtro de Ventas por Local
+                        <span class="required">*</span></label>
+                        <div class="input-group">
+                            <select name="local" id="local" class="form-control" (change)="onChangeTienda($event)">
+                                <option value="todas" selected>Todos los locales</option>
+                                <option value="{{tienda._id}}" *ngFor="let tienda of listTiendas">
+                                    {{tienda.local}} | {{tienda.nombre}}
+                                </option>
+                            </select>
+                        </div>
                     </div>
                 </div>
 
@@ -213,7 +225,7 @@
                         <div class="row">
                             <!-- | keys  -->
                             <div class="col-lg-12 pb-2"
-                                *ngFor="let item of ventas| paginate: { itemsPerPage: count, currentPage: p }">
+                                *ngFor="let item of ventasFiltradas| paginate: { itemsPerPage: count, currentPage: p }">
                                 <div class="card">
                                     <div class="card-header">
                                         <h3 class="product-title font-size-base" style="margin-bottom: 0px;">
