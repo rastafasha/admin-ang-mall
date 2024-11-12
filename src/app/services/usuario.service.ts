@@ -193,9 +193,9 @@ export class UsuarioService {
       )
   }
 
-  cargarUsuariosTienda(desde: number = 0){
+  cargarUsuariosTienda(localId:string, desde: number = 0, ){
 
-    const url = `${base_url}/usuarios/users_store/?desde=${desde}`;
+    const url = `${base_url}/usuarios/users_store/${localId}/?desde=${desde}`;
     return this.http.get<CargarUsuario>(url, this.headers)
       .pipe(
         map( resp =>{

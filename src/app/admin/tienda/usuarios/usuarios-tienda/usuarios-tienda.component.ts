@@ -22,7 +22,7 @@ export class UsuariosTiendaComponent implements OnInit {
   public desde: number = 0;
   public cargando: boolean = true;
   public user: any;
-  public localId: any;
+  public localId: string;
   public role: any;
 
   public imgSubs: Subscription;
@@ -55,13 +55,13 @@ export class UsuariosTiendaComponent implements OnInit {
 
   }
 
-  ngOnDestroy(){
-    this.imgSubs.unsubscribe();
-  }
+  // ngOnDestroy(){
+  //   this.imgSubs.unsubscribe();
+  // }
 
   loadEmployeesByLocalId(){
     this.cargando = true;
-    this.usuarioService.cargarUsuariosTienda(this.desde)
+    this.usuarioService.cargarUsuariosTienda(this.localId, this.desde )
     .subscribe(
       ({total, tiendausers})=>{
         this.totalUsuarios = total;

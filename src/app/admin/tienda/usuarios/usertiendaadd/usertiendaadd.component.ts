@@ -35,6 +35,7 @@ export class UsertiendaaddComponent implements OnInit {
   public usuario: Usuario;
   public imagenSubir: File;
   public imgTemp: any = null;
+  public user : any = {};
 
   banner: string;
   pageTitle: string;
@@ -69,7 +70,8 @@ export class UsertiendaaddComponent implements OnInit {
     this.activatedRoute.params.subscribe((resp:any)=>{
       this.user_id = resp.id;
      })
-     this.cargar_usuario();
+     this.loadUser();
+    this.cargar_Locales();
     this.cargar_Locales();
     
     if( this.user_id ){
@@ -90,11 +92,37 @@ export class UsertiendaaddComponent implements OnInit {
       (resp:any) =>{
         // this.listIcons = resp.iconos;
         this.usertiendaSeleccionado = resp;
-        console.log(resp)
+        console.log(this.usertiendaSeleccionado)
 
       }
     )
     this.validarFormulario();
+  }
+
+  loadUser(){
+
+    if(this.user_id === 'nuevo'){
+      return;
+    }
+
+    this.usuarioService.getUserById(this.user_id)
+    .pipe(
+      // delay(100)
+      )
+      .subscribe( usuario =>{
+
+
+      if(!usuario){
+        return this.router.navigateByUrl(`/dashboard/tienda-user`);
+      }
+
+        const { first_name, last_name,  email,  local, role, telefono, numdoc } = usuario;
+        this.usertiendaSeleccionado = usuario;
+        console.log(this.usertiendaSeleccionado);
+        this.registerForm.setValue({first_name, last_name,  email, local, role, telefono, numdoc  });
+
+      });
+      this.validarFormulario();
   }
 
   validarFormulario(){

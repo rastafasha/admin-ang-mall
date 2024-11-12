@@ -257,8 +257,8 @@ export class DashboardComponent implements OnInit {
         this.loadEmployeess();
         this.loadClientes();
         this.loadUsuarios();
-        this.loadLocalUsers();
-        this.loadLocalsEmployees();
+        // this.loadLocalUsers();
+        // this.loadLocalsEmployees();
         // this._userService.get_user_data().subscribe(
         //   response =>{
         //     this.num_user = response.data.length;
@@ -339,25 +339,25 @@ export class DashboardComponent implements OnInit {
       // }
     )
   }
-  loadLocalUsers(){
-    this._userService.cargarUsuariosTienda(this.desde)
-    .subscribe(
-      ({total})=>{
-        this.totalLocals = total;
-        // this.usuarios = usuarios;
-        // this.usuariosTemp = usuarios;
-      }
-    )
-  }
-  loadLocalsEmployees(){
-    this._userService.cargarUsuariosAlmacen(this.desde)
-    .subscribe(
-      ({total})=>{
-        this.totalLocalsEmployees = total;
-        // this.usuarios = usuarios;
-        // this.usuariosTemp = usuarios;
-      }
-    )
-  }
+  // loadLocalUsers(){
+  //   this._userService.cargarUsuariosTienda(this.desde)
+  //   .subscribe(
+  //     ({total})=>{
+  //       this.totalLocals = total;
+  //       // this.usuarios = usuarios;
+  //       // this.usuariosTemp = usuarios;
+  //     }
+  //   )
+  // }
+  // loadLocalsEmployees(){
+  //   this._userService.cargarUsuariosAlmacen(this.desde)
+  //   .subscribe(
+  //     ({total})=>{
+  //       this.totalLocalsEmployees = total;
+  //       // this.usuarios = usuarios;
+  //       // this.usuariosTemp = usuarios;
+  //     }
+  //   )
+  // }
 
 }

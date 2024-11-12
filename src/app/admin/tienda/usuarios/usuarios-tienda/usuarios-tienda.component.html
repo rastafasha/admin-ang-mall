@@ -59,8 +59,8 @@
                                 <td>
                                     <select class="form-control" [(ngModel)]="usuario.role" (change)="cambiarStatus(usuario)">
                                     <!-- <option value="ADMIN">Admin</option>
-                                    <option value="USER">User</option>
-                                    <option value="VENTAS">Ventas</option> -->
+                                    <option value="USER">User</option>-->
+                                    <option value="VENTAS">Ventas</option> 
                                     <option value="TIENDA">Tienda</option>
                                     <option value="ALMACEN">Almacen</option>
                                   </select>
@@ -70,6 +70,7 @@
                                     <span *ngIf="!usuario.google" class="label label-info">Email</span>
                                 </td>
                                 <td class="text-nowrap text-center">
+                                    <a [routerLink]="['/dashboard/tienda-user/edit/',usuario.uid]" class="cursor" data-toggle="tooltip" data-original-title="editar"> <i class="fa fa-pencil text-success"></i> </a>
                                     <a (click)="eliminarUsuario(usuario)" class="cursor" data-toggle="tooltip" data-original-title="Borrar"> <i class="fa fa-close text-danger"></i> </a>
                                 </td>
                             </tr>
