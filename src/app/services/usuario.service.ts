@@ -195,11 +195,11 @@ export class UsuarioService {
 
   cargarUsuariosTienda(localId:string, desde: number = 0, ){
 
-    const url = `${base_url}/usuarios/users_store/${localId}/?desde=${desde}`;
-    return this.http.get<CargarUsuario>(url, this.headers)
+    const url = `${base_url}/usuarios/users_store/${desde}`;
+    return this.http.get<any>(url, this.headers)
       .pipe(
         map( resp =>{
-          const tiendausers = resp.tiendausers.map(
+          const tiendausers = resp.local.map(
             user => new Usuario(
               user.first_name,
               user.last_name,
@@ -207,8 +207,8 @@ export class UsuarioService {
               user.telefono,
               user.numdoc,
               user.email,
-              '',
               user.local,
+              '', //password
                user.img,
               user.google,
               user.role,

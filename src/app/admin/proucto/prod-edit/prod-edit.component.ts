@@ -189,14 +189,31 @@ export class ProdEditComponent implements OnInit {
           
 
         this.productoSeleccionado = producto;
-        console.log(this.productoSeleccionado);
+        console.log('producto seleccionado: ',this.productoSeleccionado);
 
+        // CODIGO COMENTADO POR JOSE PRADOS
+        // this.productoForm.setValue({
+        //   titulo, precio_antes,info_short,detalle, stock,categoria,subcategoria,
+        //   nombre_selector,marca,video_review,precio_ahora, isFeatured,
+        //   local
+        // });
+
+        // AGREGADO POR JOSE PRADOS, ASIGNACION DE VALORES DEL PRODUCTO AL FORMULARIO
         this.productoForm.setValue({
-          titulo, precio_antes,info_short,detalle, stock,categoria,subcategoria,
-          nombre_selector,marca,video_review,precio_ahora, isFeatured,
-          local
+          titulo: this.productoSeleccionado.titulo,
+          detalle: this.productoSeleccionado.detalle,
+          info_short: this.productoSeleccionado.info_short,
+          video_review: this.productoSeleccionado.video_review,
+          stock: this.productoSeleccionado.stock,
+          precio_ahora: this.productoSeleccionado.precio_ahora,
+          precio_antes: this.productoSeleccionado.precio_antes,
+          categoria: this.productoSeleccionado.categoria,
+          subcategoria: this.productoSeleccionado.subcategoria,
+          isFeatured: this.productoSeleccionado.isFeatured,
+          marca: this.productoSeleccionado.marca,
+          local: this.productoSeleccionado.local || '',
+          nombre_selector: this.productoSeleccionado.nombre_selector
         });
-
         
 
       });

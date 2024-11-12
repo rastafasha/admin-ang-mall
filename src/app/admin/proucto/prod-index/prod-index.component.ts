@@ -65,7 +65,7 @@ export class ProdIndexComponent implements OnInit {
       productos => {
         this.cargando = false;
         this.productos = productos;
-        console.log(this.productos);
+        console.log('PRODUCTOS CARGADOS: ',this.productos);
       }
     )
 

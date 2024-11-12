@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { UsuarioService } from '../../../services/usuario.service';
 import { VentaService } from 'src/app/services/venta.service';
 import {environment} from 'src/environments/environment';
+import { TiendaService } from 'src/app/services/tienda.service';
 
 declare var jQuery:any;
 declare var $:any;
@@ -26,6 +27,7 @@ export class AdminVentasComponent implements OnInit {
   public url;
 
   public ventas : Array<any> =[];
+  public ventasFiltradas : Array<any> = [];
   public tipo;
 
   public track;
@@ -44,11 +46,16 @@ export class AdminVentasComponent implements OnInit {
   p: number = 1;
   count: number = 8;
 
+  // agregado por José Prados
+  listTiendas: any;
+  user:any;
+
   constructor(
     private _userService: UsuarioService,
     private _router : Router,
     private _route :ActivatedRoute,
-    private _ventaService : VentaService
+    private _ventaService : VentaService,
+    private tiendaService: TiendaService, // agregado por José Prados
   ) {
     this.identity = this._userService.usuario;
     this.url = environment.baseUrl;
@@ -58,17 +65,36 @@ export class AdminVentasComponent implements OnInit {
   
   ngOnInit(): void {
     window.scrollTo(0,0);
+
+    // obtengo el usuario
+    let USER = localStorage.getItem("user");
+    this.user = JSON.parse(USER ? USER: '');
+
+    // Obtener locales
+    this.cargar_Locales();
+
     this.method_data_view(1);
     this.year = this.mydate.getFullYear();
     this._ventaService.init_data_admin().subscribe(
-      response=>{
-        this.ventas = response.data;
-        // this.count_cat = this.ventas.length;
+      response => {
+
+        if(this.user.role==='ADMIN'){
+          this.ventas = response.data;
+          this.ventasFiltradas = response.data;
+          // this.count_cat = this.ventas.length;
+        }
+        else{
+          this.ventas = response.data;
+          // this.ventasFiltradas = response.data;
+          this.ventasFiltradas = this.ventas.filter(item => item.user?.local===this.user.local)
+        }
+        
         this.page = 1;
-        console.log('VENTAS',this.ventas);
+        console.log('VENTAS',this.ventasFiltradas);
 
       }
     );
+
   }
 
   method_data_view(val){
@@ -279,5 +305,30 @@ export class AdminVentasComponent implements OnInit {
     this.option_selected = value;
   }
 
+  // agregado por José Prados
+  private cargar_Locales(){
+    this.tiendaService.cargarTiendas().subscribe(
+      (resp:any) =>{
+        this.listTiendas = resp;
+
+        console.log('locales: ',this.listTiendas)
+      }
+    )
+  }
+
+  // agregado por José Prados
+  onChangeTienda(event:any){
+    // console.log(event.target.value)
+
+    if( event.target.value === 'todas' ){
+      // se seleccionó la opción de todas las ventas
+      this.ventasFiltradas = this.ventas;
+    }
+    else{
+      // se seleccionó las ventas por un local
+      this.ventasFiltradas = this.ventas.filter(item => item.user?.local===event.target.value)
+    }
+
+  }
 
 }

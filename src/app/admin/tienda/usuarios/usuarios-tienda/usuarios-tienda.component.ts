@@ -43,6 +43,8 @@ export class UsuariosTiendaComponent implements OnInit {
     this.localId = this.user.local;
     this.role = this.user.role;
 
+    console.log('localID: ',this.localId)
+
     if(this.role === 'ADMIN'){
       this.loadUsuarios();
       
@@ -61,14 +63,15 @@ export class UsuariosTiendaComponent implements OnInit {
 
   loadEmployeesByLocalId(){
     this.cargando = true;
-    this.usuarioService.cargarUsuariosTienda(this.localId, this.desde )
+    this.usuarioService.cargarUsuariosTienda(this.localId)
     .subscribe(
       ({total, tiendausers})=>{
         this.totalUsuarios = total;
         this.tiendausers = tiendausers;
         this.tiendausersTemp = tiendausers;
         this.cargando = false;
-        console.log(this.tiendausers);
+        console.log('total: ',this.totalUsuarios);
+        console.log('tienda usuarios: ',this.tiendausers);
       }
     )
   }
