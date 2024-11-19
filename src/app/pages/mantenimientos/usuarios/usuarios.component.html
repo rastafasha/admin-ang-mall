@@ -58,7 +58,13 @@
                                     <span *ngIf="!usuario.google" class="label label-info">Email</span>
                                 </td>
                                 <td class="text-nowrap text-center">
-                                    <a (click)="eliminarUsuario(usuario)" class="cursor" data-toggle="tooltip" data-original-title="Borrar"> <i class="fa fa-close text-danger"></i> </a>
+                                    <!-- boton editar agregado por José Prados para ir a editar usuario -->
+                                    <a [routerLink]="['/dashboard/tienda-user/edit/', usuario.uid]" class="cursor" data-toggle="tooltip" data-original-title="Edit">
+                                        <i class="fa fa-pencil text-inverse m-r-10"></i>
+                                    </a>
+                                    <a (click)="eliminarUsuario(usuario)" class="cursor" data-toggle="tooltip" data-original-title="Borrar">
+                                        <i class="fa fa-close text-danger"></i>
+                                    </a>
                                 </td>
                             </tr>
 

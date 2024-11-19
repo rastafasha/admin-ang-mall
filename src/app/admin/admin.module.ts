@@ -59,6 +59,7 @@ import { TiendaModule } from './tienda/tienda.module';
 import { ListaTrasnferenciasComponent } from './transferencias/lista-trasnferencias/lista-trasnferencias.component';
 import { TiposdepagoComponent } from './tiposdepago/tiposdepago.component';
 import { PagosEfectivoComponent } from './pagos-efectivo/pagos-efectivo.component';
+import { FacturaComponent } from './ventas/factura/factura.component';
 
 @NgModule({
   declarations: [
@@ -101,7 +102,8 @@ import { PagosEfectivoComponent } from './pagos-efectivo/pagos-efectivo.componen
     ContactodetailsComponent,
     ListaTrasnferenciasComponent,
     TiposdepagoComponent,
-    PagosEfectivoComponent
+    PagosEfectivoComponent,
+    FacturaComponent
   ],
   exports: [
     MarcaIndexComponent,

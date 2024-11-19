@@ -64,22 +64,27 @@ export class UsertiendaaddComponent implements OnInit {
 
   ngOnInit(): void {
     window.scrollTo(0,0);
+
+    // AGREGADO POR JOSÉ PRADOS
+    this.validarFormulario();
     
     // this.activatedRoute.params.subscribe( ({id}) => this.cargar_usuario(id));
     this.activatedRoute.params.subscribe((resp:any)=>{
       this.user_id = resp.id;
+      console.log('id: ',this.user_id)
      })
-     this.cargar_usuario();
+    //  this.cargar_usuario();
     this.cargar_Locales();
     
     if( this.user_id ){
       //actualizar
-    this.pageTitle = 'Edit Empleado';
-    
-    }else{
+      this.pageTitle = 'Edit Empleado';
+      this.cargar_usuario();
+    }
+    else{
       //crear
       this.pageTitle = 'Create Empleado';
-      }
+    }
 
 
   }
@@ -90,11 +95,22 @@ export class UsertiendaaddComponent implements OnInit {
       (resp:any) =>{
         // this.listIcons = resp.iconos;
         this.usertiendaSeleccionado = resp;
-        console.log(resp)
+        console.log('editar user: ',this.usertiendaSeleccionado)
 
+        this.registerForm.setValue({
+          first_name: this.usertiendaSeleccionado.first_name,
+          last_name: this.usertiendaSeleccionado.last_name,
+          email: this.usertiendaSeleccionado.email,
+          password: '',
+          password2: '',
+          local: this.usertiendaSeleccionado.local || '',
+          role: this.usertiendaSeleccionado.role,
+          telefono: this.usertiendaSeleccionado.telefono,
+          numdoc: this.usertiendaSeleccionado.numdoc
+        });
       }
     )
-    this.validarFormulario();
+    // this.validarFormulario();
   }
 
   validarFormulario(){
@@ -137,22 +153,27 @@ export class UsertiendaaddComponent implements OnInit {
       numdoc } = this.registerForm.value;
 
     if(this.usertiendaSeleccionado){
+      // console.log('actualizar')
       //actualizar
+      // console.log(this.localList)
       const data = {
         ...this.registerForm.value,
         _id: this.usertiendaSeleccionado.uid,
-        local: this.localList,
+        // local: this.usertiendaSeleccionado.local,
       }
+      console.log('data: ',data)
       this.usuarioService.actualizarPerfil(data).subscribe(
         resp =>{
           Swal.fire('Actualizado', `${first_name} actualizado correctamente`, 'success');
-        });
+        }
+      );
 
     }else{
       const data = {
         ...this.registerForm.value,
-        local: this.localList
+        // local: this.localList
       }
+      console.log('crear');
       //crear
       this.usuarioService.crearUsuario(data)
       .subscribe( (resp: any) =>{
