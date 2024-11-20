@@ -313,11 +313,11 @@
                                                         </div>
                                                     </div>
                                                     <div class="btn-group mr-2 mb-2" role="group" aria-label="Apply settings">
-                                                        <button type="button" class="btn btn-info">
+                                                        <button type="button" class="btn btn-info" (click)="imprimir_factura(item)">
                                                             <i class="czi-check mr-2"></i>
                                                             Apply
                                                         </button>
-                                                        </div>
+                                                    </div>
 
                                                 </div>
                                                 <ng-container *ngIf="item.estado == 'Cancelado'">
@@ -607,4 +607,8 @@
         </div>
 
     </div>
+</section>
+
+<section>
+    <app-factura (eventCerrarModal)="cerrarModal($event)"></app-factura>
 </section>

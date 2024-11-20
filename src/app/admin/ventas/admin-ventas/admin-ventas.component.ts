@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UsuarioService } from '../../../services/usuario.service';
 import { VentaService } from 'src/app/services/venta.service';
 import {environment} from 'src/environments/environment';
 import { TiendaService } from 'src/app/services/tienda.service';
+import { FacturaComponent } from '../factura/factura.component';
+import Swal from 'sweetalert2';
 
 declare var jQuery:any;
 declare var $:any;
@@ -49,6 +51,11 @@ export class AdminVentasComponent implements OnInit {
   // agregado por José Prados
   listTiendas: any;
   user:any;
+
+  // accedo al componente hijo FacturaComponent, agregado por José Prados
+  @ViewChild(FacturaComponent) factura !: FacturaComponent;
+
+  itemSelected:any;
 
   constructor(
     private _userService: UsuarioService,
@@ -270,8 +277,53 @@ export class AdminVentasComponent implements OnInit {
   }
 
 
-  imprimir_factura(){
+  imprimir_factura(item:any){
+    this.itemSelected = item;
+    // console.log('imprimiendo factura... ',id)
+    this.abrirModalEnviandoFactura();
 
+    // llamar al metodo cargarFactura del componente hijo FacturaComponent
+    setTimeout(() => {
+      this.factura.cargarFactura(this.itemSelected._id);
+    }, 200);
+
+    // espero 2 segundos y envio factura al cliente
+    setTimeout(() => {
+      this.factura.enviarFacturaCliente();
+    }, 2000);
+  }
+
+  private abrirModalEnviandoFactura(){
+    // Abre el modal con el spinner
+    Swal.fire({
+      title: 'Enviando Factura...',
+      text: 'Por favor, espera',
+      allowOutsideClick: false,
+      didOpen: () => {
+      Swal.showLoading();
+      }
+    });
+  }
+
+  cerrarModal(evt:string){
+    Swal.close();
+
+    if(evt==='exito'){
+      
+
+      // realizar update de itemSelected
+      this._ventaService.update_envio(this.itemSelected._id).subscribe(
+        response => {
+          if(response.venta){
+            this.itemSelected.estado='Enviado';
+            console.log(response.venta);
+          }
+          else{
+            console.log(response.error);
+          }
+        }
+      );
+    }
   }
 
   select_id(){

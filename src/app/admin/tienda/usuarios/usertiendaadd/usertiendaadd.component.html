@@ -60,10 +60,11 @@
                             <label for="icono">local</label>
                             <div class="input-group">
     
-                                <select  [(ngModel)]="localList" name="local" class="form-control" [ngModelOptions]="{standalone: true}">
-                                <option *ngFor="let tienda of listTiendas" value="{{tienda._id}}">
-                                    {{tienda.local}} | {{tienda.nombre}} 
-                                </option>
+                                <!-- modificado por José Prados, agregado formControlName="local" -->
+                                <select  formControlName="local" name="local" class="form-control">
+                                    <option *ngFor="let tienda of listTiendas" value="{{tienda._id}}">
+                                        {{tienda.local}} | {{tienda.nombre}} 
+                                    </option>
                               </select>
     
                             </div>
@@ -81,8 +82,8 @@
                     </div>
 
                     <button type="button" (click)="guardar()" class="btn btn-success waves-effect waves-light m-r-10 btn-block">
-                 <i class="fa fa-save"></i> Guardar cambios
-                </button>
+                        <i class="fa fa-save"></i> Guardar cambios
+                    </button>
                 </form>
             </div>
         </div>
