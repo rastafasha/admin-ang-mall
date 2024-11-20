@@ -133,12 +133,7 @@ export class UsuarioService {
     return this.http.post(url, data, this.headers);
   }
 
-  actualizarPerfil(data: {email: string, nombre: string, role?: string}){
-
-    data = {
-      ...data,
-      role: this.usuario.role
-    }
+  actualizarPerfil(data:any){
 
     return this.http.put(`${base_url}/usuarios/${this.uid}`, data, this.headers);
   }
@@ -165,6 +160,7 @@ export class UsuarioService {
   cargarUsuarios(desde: number = 0){
 
     const url = `${base_url}/usuarios?desde=${desde}`;
+    console.log(url)
     return this.http.get<CargarUsuario>(url, this.headers)
       .pipe(
         map( resp =>{
@@ -176,8 +172,8 @@ export class UsuarioService {
               user.telefono,
               user.numdoc,
               user.email,
-              '',
               user.local,
+              '',
                user.img,
               user.google,
               user.role,

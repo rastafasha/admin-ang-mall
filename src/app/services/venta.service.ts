@@ -173,5 +173,16 @@ export class VentaService {
     return this._http.get('https://apidojo-17track-v1.p.rapidapi.com/track?timeZoneOffset=0&codes='+number,{headers:headers});
   }
 
- 
+  enviarFacturaCliente(pdf:any, venta:any){
+    // Convertir el PDF a Blob
+    const pdfBlob = pdf.output('blob');
+
+    const formData = new FormData();
+    formData.append('facturacliente', pdfBlob, `${venta._id}.pdf`);
+    formData.append('nombrecliente',venta.user.first_name + ' ' + venta.user.last_name);
+    formData.append('emailcliente',venta.user.email);
+    formData.append('monto',venta.total_pagado);
+
+    return this._http.post<any>(`${this.url}/ventas/enviar_factura`,formData);
+  }
 }
