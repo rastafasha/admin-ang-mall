@@ -75,6 +75,10 @@ export class CreateIngresoComponent implements OnInit, DoCheck {
    }
 
   ngOnInit(): void {
+
+    if(!this.identity){
+      this._router.navigate(['/login']);
+    }
     window.scrollTo(0,0);
     this._productoService.listar_general_data('').subscribe(
       response =>{
@@ -132,18 +136,18 @@ export class CreateIngresoComponent implements OnInit, DoCheck {
     this.data_ingreso.splice(idx,1);
   }
 
-  onSubmit(ingresoForm){
+  onSubmit(ingresoForm){debugger
     if(ingresoForm.valid){
       if(this.data_ingreso.length <= 0){
         this.error_msm_form = 'Ingrese algun detalle en el cardex de ingreso.';
       }else{
         if(this.file){
           let data={
-            user : this.identity._id,
+            user : this.identity.uid,
             total_pagado: this.ingreso.total_pagado,
             proveedor: this.ingreso.proveedor,
             nota: this.ingreso.nota,
-            factura: this.file,
+            // factura: this.file,
             detalles: JSON.stringify(this.data_ingreso)
           }
 
@@ -208,7 +212,7 @@ export class CreateIngresoComponent implements OnInit, DoCheck {
     }
   }
 
-  subirImagen(){
+  subirImagen(){debugger
     this.fileUploadService
     .actualizarFoto(this.imagenSubir, 'ingresos', this.ingresoSeleccionado._id)
     .then(img => { this.ingresoSeleccionado.img = img;
