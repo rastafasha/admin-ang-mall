@@ -23,7 +23,7 @@
                                     <td>{{pago.name_person}}</td>
                                     <td>{{pago.amount}}</td>
                                     <td>{{pago.phone}}</td>
-                                    <td>{{pago.paymentday}}</td>
+                                    <td>{{pago.paymentday | date : "shortDate"}}</td>
                                 </tr>
                                 <tr *ngIf="pagos_efectivo.length<=0">
                                     <td colspan="5">

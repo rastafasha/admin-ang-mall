@@ -43,14 +43,19 @@ ngOnInit(){
   login(){
 
     this.usuarioService.login(this.loginForm.value).subscribe(
-      resp =>{
+      (resp:any) =>{
         if(this.loginForm.get('remember').value){
           localStorage.setItem('email', this.loginForm.get('email').value);
         }else{
           localStorage.removeItem('email');
         }
-        this.router.navigateByUrl('/dashboard');
-      },(err) => {
+        // this.getLocalStorage();
+        if(localStorage.getItem('user')){
+          setTimeout(()=>{
+            this.router.navigateByUrl('/dashboard');
+          },500);
+        }
+      } ,(err) => {
         Swal.fire('Error', err.error.msg, 'error');
       }
     )
@@ -61,7 +66,7 @@ ngOnInit(){
     if(localStorage.getItem('token') && localStorage.getItem('user')){
       let USER = localStorage.getItem('user');
       this.user = JSON.parse(USER ? USER: '');
-      console.log(this.user);
+      // console.log(this.user);
       // this.getuserRol();
       // this.getuserPermisos();
     }else{
