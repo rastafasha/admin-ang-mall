@@ -106,11 +106,11 @@ export class UsuarioComponent implements OnInit {
             numdoc: res.numdoc,
             email: res.email,
             role: res.role,
+            lang: res.lang,
             google: res.google,
             img : res.img
           });
           this.usuario = res;
-          console.log(this.usuario);
         }
       );
     } else {

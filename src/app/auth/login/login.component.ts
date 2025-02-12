@@ -63,8 +63,10 @@ ngOnInit(){
   }
 
   getLocalStorage(){
-    if(localStorage.getItem('token') && localStorage.getItem('user')){
+    if(localStorage.getItem('token') && localStorage.getItem('user') 
+      && localStorage.getItem('lang')){
       let USER = localStorage.getItem('user');
+      let lang= localStorage.getItem('lang');
       this.user = JSON.parse(USER ? USER: '');
       // console.log(this.user);
       // this.getuserRol();

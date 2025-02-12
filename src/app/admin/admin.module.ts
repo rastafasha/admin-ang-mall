@@ -60,6 +60,7 @@ import { ListaTrasnferenciasComponent } from './transferencias/lista-trasnferenc
 import { TiposdepagoComponent } from './tiposdepago/tiposdepago.component';
 import { PagosEfectivoComponent } from './pagos-efectivo/pagos-efectivo.component';
 import { FacturaComponent } from './ventas/factura/factura.component';
+import { ReusablesModule } from '../reusables/reusables.module';
 
 @NgModule({
   declarations: [
@@ -158,7 +159,8 @@ import { FacturaComponent } from './ventas/factura/factura.component';
     PdfViewerModule,
     NgxPaginationModule,
     CKEditorModule,
-    TiendaModule
+    TiendaModule,
+    ReusablesModule
   ],
   providers:[
     IconosService,

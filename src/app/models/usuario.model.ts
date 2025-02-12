@@ -10,6 +10,7 @@ export class Usuario {
     public numdoc: string,
     public email: string,
     public local: string,
+    public lang?: string,
     public password?: string,
     public img?: string,
     public google?: boolean,

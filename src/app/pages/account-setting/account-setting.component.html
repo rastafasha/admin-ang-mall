@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-6">
+    <div class=" col-xs-12 col-sm-4 col-md-4">
         <div class="card">
             <div class="card-body">
                 <h4>Seleccione el tema</h4>
@@ -26,47 +26,7 @@
             </div>
         </div>
     </div>
-</div>
-<div class="container">
-    <div class="card">
-        <div *ngFor="let conf of congenerals">
-
-            <div class="pull-right mt-3 mr-3 mb-3">
-                <button class="btn btn-primary" [routerLink]="['/dashboard/configuracion/edit', conf._id]">
-                <i class="fa fa-pencil"></i> Editar
-              </button>
-            </div>
-            <div class="clear"></div>
-            <hr>
-            <div class="col-xs-12 col-sm-6" style="float:left;">
-                <p><b>Título:</b> {{conf.titulo}}</p>
-                <p><b>CR:</b> {{conf.cr}}</p>
-                <p><b>Teléfono uno:</b> {{conf.telefono_uno}}</p>
-                <p><b>Teléfono dos:</b> {{conf.telefono_dos}}</p>
-                <p><b>Email uno:</b> {{conf.email_uno}}</p>
-                <p><b>Email dos:</b> {{conf.email_dos}}</p>
-                <p><b>Dirección:</b> {{conf.direccion}}</p>
-                <p><b>Horarios:</b>{{conf.horarios}}</p>
-                <p><b><i class="fa fa-facebook"></i> Facebook:</b> {{conf.facebook}}</p>
-                <p><b><i class="fa fa-instagram"></i> Instagram:</b> {{conf.instagram}}</p>
-                <p><b><i class="fa fa-youtube-play"></i> Youtube:</b> {{conf.youtube}}</p>
-                <p><b><i class="fa fa-twitter"></i> Twitter:</b> {{conf.twitter}}</p>
-                <p><b>Modo Paypal Sandbox (modo de pruebas):</b></p>
-                <span class="badge badge-success badge-shadow" *ngIf="conf.modoPaypal == true">{{conf.modoPaypal}}</span>
-                <span class="badge badge-primary badge-shadow" *ngIf="conf.modoPaypal == false">{{conf.modoPaypal}}</span>
-                <p><b>Sandbox:</b> {{conf.sandbox}}</p>
-                <p><b>Cliente Paypal ID:</b> {{conf.clientePaypal}}</p>
-                <p><b>Rapid Api Key:</b> {{conf.rapidapiKey}}</p>
-            </div>
-            <div class="col-xs-12 col-sm-6" style="float:left;">
-                <p><b>iframe_mapa (ubicación):</b></p>
-                <iframe class="mapa" [src]="getMapIframe(conf.iframe_mapa)" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; " allowfullscreen></iframe>
-
-                <p><b>Logo:</b></p>
-                <img [src]="conf.img | imagenPipe: 'congenerals'" style="width: 150px; margin-left: 10px; " class="img-responsive img-thumbnail" alt="">
-                <p><b>Favicon:</b></p>
-                <img [src]="conf.favicon | imagenPipe: 'congenerals'" style="width: 150px; margin-left: 10px;" class="img-responsive img-thumbnail" alt="">
-            </div>
-        </div>
+    <div class="col-xs-12 col-sm-8 col-md-8">
+        <app-config-site></app-config-site>
     </div>
 </div>

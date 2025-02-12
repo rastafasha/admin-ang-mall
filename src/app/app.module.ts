@@ -24,6 +24,7 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { ProgressBarComponent } from './reusables/progress-bar/progress-bar.component';
 
 @NgModule({
   declarations: [

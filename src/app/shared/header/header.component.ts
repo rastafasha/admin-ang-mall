@@ -114,8 +114,10 @@ export class HeaderComponent implements OnInit {
   }
 
   public cambiarLenguaje(lang:any) {
+    
+    // this.activeLang = this.congenerals[0].lang;
     this.activeLang = lang;
-    this.translate.use(lang);
+    this.translate.use(this.activeLang);
     this.flag = !this.flag;
     this.is_visible = !this.is_visible;
   }

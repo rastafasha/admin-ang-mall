@@ -25,6 +25,7 @@ import { ComponentsModule } from '../components/components.module';
 import { NgChartsModule } from 'ng2-charts';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { UsuarioComponent } from './mantenimientos/usuario/usuario.component';
+import { AdminModule } from "../admin/admin.module";
 
 @NgModule({
   declarations: [
@@ -51,8 +52,9 @@ import { UsuarioComponent } from './mantenimientos/usuario/usuario.component';
     ReactiveFormsModule,
     PipesModule,
     NgChartsModule,
-    NgxPaginationModule
-  ],
+    NgxPaginationModule,
+    AdminModule
+],
   providers:[IconosService]
 })
 export class PagesModule { }

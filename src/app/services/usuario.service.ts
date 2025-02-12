@@ -54,6 +54,7 @@ export class UsuarioService {
   getLocalStorage(){
     if(localStorage.getItem('token') && localStorage.getItem('user')){
       let USER = localStorage.getItem('user');
+      
       this.usuario = JSON.parse(USER ? USER: '');
     }else{
       this.usuario = null;
@@ -133,9 +134,13 @@ export class UsuarioService {
     return this.http.post(url, data, this.headers);
   }
 
-  actualizarPerfil(data:any){
+  actualizarPerfil(data:any,){
 
-    return this.http.put(`${base_url}/usuarios/${this.uid}`, data, this.headers);
+    return this.http.put(`${base_url}/usuarios/update/${this.uid}`, data, this.headers);
+  }
+  upadateUser(data: any, uid:any){
+    let URL = base_url+"/usuarios/update/"+uid;
+    return this.http.put(URL,data,this.headers);
   }
 
 
@@ -173,6 +178,7 @@ export class UsuarioService {
               user.numdoc,
               user.email,
               user.local,
+              user.lang,
               '',
                user.img,
               user.google,
@@ -329,10 +335,17 @@ export class UsuarioService {
   guardarUsuario(usuario: Usuario){
     return this.http.put(`${base_url}/usuarios/update/${usuario.uid}`, usuario, this.headers);
   }
+
+  
   upadateStatusRole(data: any, uid:any){
     // return this.http.put(`${base_url}/usuarios/update/update/${usuario.uid}`, usuario, this.headers);
 
     let URL = base_url+"/usuarios/update/statusrole/"+uid;
+    return this.http.put(URL,data,this.headers);
+  }
+
+  upadateLanguage(data: any, uid:any){
+    let URL = base_url+"/usuarios/update/language/"+uid;
     return this.http.put(URL,data,this.headers);
   }
 

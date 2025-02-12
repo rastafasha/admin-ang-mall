@@ -18,7 +18,7 @@ export class Congeneral{
     public facebook: string,
     public instagram: string,
     public youtube: string,
-    public language: string,
+    public lang: string,
     public twitter: string,
     public modoPaypal: boolean,
     public rapidapiKey: string,

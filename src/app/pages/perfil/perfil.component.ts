@@ -19,6 +19,8 @@ export class PerfilComponent implements OnInit {
   public imgTemp: any = null;
   uid:string;
 
+  user:any=[];
+
   constructor(
     private fb: FormBuilder,
     private usuarioService: UsuarioService,
@@ -28,6 +30,12 @@ export class PerfilComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    const user = localStorage.getItem('user');
+    
+    this.user = JSON.parse(user);
+
+    this.getUserRemoto();
+    
     this.perfilForm = this.fb.group({
       email: [ this.usuario.email, Validators.required ],
       first_name: [ this.usuario.first_name, Validators.required ],
@@ -35,20 +43,32 @@ export class PerfilComponent implements OnInit {
       numdoc: [ this.usuario.numdoc ],
       telefono: [ this.usuario.telefono ],
       pais: [ this.usuario.pais],
+      lang: [ this.usuario.lang],
       google: [ this.usuario.google],
       role: [ this.usuario.role],
+      uid: [ this.user.uid],
     });
+
+    
+  }
+
+  getUserRemoto(){
+    this.usuarioService.getUserById(this.user.uid).subscribe((resp:Usuario)=>{
+      this.user = resp;
+    })
   }
 
   actualizarPerfil(){
 
-    this.usuarioService.actualizarPerfil(this.perfilForm.value)
-    .subscribe(resp => {
-      const {first_name, last_name, telefono, pais,  numdoc, email} = this.perfilForm.value;
+
+    this.usuarioService.upadateUser(this.perfilForm.value, this.user.uid)
+    .subscribe((resp:any) => {
+      const {first_name, last_name, telefono, pais,  numdoc, lang,   email} = this.perfilForm.value;
       this.usuario.first_name = first_name;
       this.usuario.last_name = last_name;
       this.usuario.telefono = telefono;
       this.usuario.numdoc = numdoc;
+      this.usuario.lang = lang;
       this.usuario.pais = pais;
       Swal.fire('Guardado', 'Los cambios fueron actualizados', 'success');
     }, (err)=>{

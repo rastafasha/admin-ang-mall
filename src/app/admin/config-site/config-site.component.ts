@@ -27,6 +27,8 @@ declare var $:any;
 export class ConfigSiteComponent implements OnInit {
 
 
+  public progressValue:boolean = false;
+
   pageTitle: string;
   public confGeneralForm: FormGroup;
   public congeneral: Congeneral;
@@ -36,6 +38,7 @@ export class ConfigSiteComponent implements OnInit {
   public imagenSubir1: File;
   public imgTemp1: any = null;
   public configCreated: any;
+  public congeneral_id : string;
 
   public Editor = ClassicEditor;
 
@@ -57,9 +60,68 @@ export class ConfigSiteComponent implements OnInit {
 
     window.scrollTo(0,0);
 
-    this.activatedRoute.params.subscribe( ({id}) => this.cargarConf(id));
+    // this.activatedRoute.params.subscribe( ({id}) => this.cargarConf(id));
+    this.getCongenerals();
 
-    this.validarFormulario();
+  }
+
+getCongenerals(){
+  this.congeneralService.cargarCongenerals().subscribe((resp:any)=>{
+
+    this.congeneral_id = resp[0]._id;
+    console.log('congeneral_id',this.congeneral_id);
+    if(this.congeneral_id ){
+      this.progressValue = true;
+      setTimeout(()=>{
+        this.cargarConf(this.congeneral_id);
+        this.progressValue = false;
+
+      }, 2000)
+    }
+  })
+  this.validarFormulario();
+}
+
+  cargarConf(id:string){
+
+    this.congeneral_id = id;
+
+    if (this.congeneral_id ) {
+      this.pageTitle = 'Editing';
+      this.congeneralService.getCongeneralById(this.congeneral_id ).subscribe(
+        res => {
+          this.confGeneralForm.patchValue({
+            id: res._id,
+            titulo: res.titulo,
+            cr: res.cr,
+            telefono_uno: res.telefono_uno,
+            telefono_dos: res.telefono_dos,
+            email_uno: res.email_uno,
+            email_dos: res.email_dos,
+            direccion: res.direccion,
+            horarios: res.horarios,
+            iframe_mapa: res.iframe_mapa,
+            facebook: res.facebook,
+            instagram: res.instagram,
+            youtube: res.youtube,
+            twitter: res.twitter,
+            lang: res.lang,
+            modoPaypal: res.modoPaypal,
+            sandbox: res.sandbox,
+            clientePaypal: res.clientePaypal,
+            rapidapiKey: res.rapidapiKey,
+            user_id: this.usuario.uid,
+            img : res.img,
+            favicon : res.favicon
+          });
+          this.congeneral = res;
+          console.log(this.congeneral);
+        }
+      );
+    } else {
+      this.pageTitle = 'Create ';
+
+    }
 
   }
 
@@ -78,7 +140,7 @@ export class ConfigSiteComponent implements OnInit {
       instagram: ['', ],
       youtube: ['', ],
       twitter: ['', ],
-      language: ['', Validators.required],
+      lang: ['', Validators.required],
       modoPaypal: ['', Validators.required],
       sandbox: ['',],
       clientePaypal: ['',],
@@ -88,56 +150,13 @@ export class ConfigSiteComponent implements OnInit {
 
 
 
-
-  cargarConf(_id: string){
-
-    if (_id) {
-      this.pageTitle = 'Editing';
-      this.congeneralService.getCongeneralById(_id).subscribe(
-        res => {
-          this.confGeneralForm.patchValue({
-            id: res._id,
-            titulo: res.titulo,
-            cr: res.cr,
-            telefono_uno: res.telefono_uno,
-            telefono_dos: res.telefono_dos,
-            email_uno: res.email_uno,
-            email_dos: res.email_dos,
-            direccion: res.direccion,
-            horarios: res.horarios,
-            iframe_mapa: res.iframe_mapa,
-            facebook: res.facebook,
-            instagram: res.instagram,
-            youtube: res.youtube,
-            twitter: res.twitter,
-            language: res.language,
-            modoPaypal: res.modoPaypal,
-            sandbox: res.sandbox,
-            clientePaypal: res.clientePaypal,
-            rapidapiKey: res.rapidapiKey,
-            user_id: this.usuario.uid,
-            img : res.img,
-            favicon : res.favicon
-          });
-          this.congeneral = res;
-          console.log(this.congeneral);
-        }
-      );
-    } else {
-      this.pageTitle = 'Create ';
-    }
-
-  }
-
-
-
   updateConfiguracion(){debugger
     const {titulo, cr, telefono_uno,telefono_dos, email_uno,
       email_dos, direccion, horarios, iframe_mapa, facebook,
-      instagram, youtube, twitter, language, modoPaypal,
+      instagram, youtube, twitter, lang, modoPaypal,
       sandbox,clientePaypal,rapidapiKey} = this.confGeneralForm.value;
 
-      if(this.confGeneralForm){
+      if(this.congeneral){
         //actualizar
         const data = {
           ...this.confGeneralForm.value,
@@ -160,9 +179,6 @@ export class ConfigSiteComponent implements OnInit {
           this.ngOnInit();
         })
       }
-     
-
-
   }
 
 
