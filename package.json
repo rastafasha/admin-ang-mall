@@ -7,7 +7,7 @@
         "start:dev": "ng serve --port 4203",
         "start:prod": "ng build  && lite-server --baseDir dist/adminpwa",
         "build": "ng build",
-        "build:adminecomerce": "ng build --configuration adminecomerce",
+        "build:adminecommerce": "ng build --configuration adminecommerce",
         "watch": "ng build --watch --configuration development",
         "test": "ng test"
     },
