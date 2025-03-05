@@ -16,7 +16,7 @@ import { PipesModule } from 'src/app/pipes/pipes.module';
 import { AtencionLocalComponent } from './atencion-local/atencion-local.component';
 import { CarritoComponent } from './atencion-local/carrito/carrito.component';
 import { ProductoComponent } from './atencion-local/producto/producto.component';
-
+import { ComponentsAtentionModule } from './atencion-local/components/components.module';
 
 
 @NgModule({
@@ -29,7 +29,7 @@ import { ProductoComponent } from './atencion-local/producto/producto.component'
     UserDetailComponent,
     AtencionLocalComponent,
     CarritoComponent,
-    ProductoComponent
+    ProductoComponent,
 
   ],
   exports: [
@@ -51,6 +51,7 @@ import { ProductoComponent } from './atencion-local/producto/producto.component'
     PdfViewerModule,
     NgxPaginationModule,
     CKEditorModule,
+    ComponentsAtentionModule
     
   ]
 })

@@ -163,7 +163,7 @@ export class UsertiendaaddComponent implements OnInit {
         // local: this.usertiendaSeleccionado.local,
       }
       console.log('data: ',data)
-      this.usuarioService.actualizarPerfil(data).subscribe(
+      this.usuarioService.upadateUser(data, this.usertiendaSeleccionado.uid).subscribe(
         resp =>{
           Swal.fire('Actualizado', `${first_name} actualizado correctamente`, 'success');
         }

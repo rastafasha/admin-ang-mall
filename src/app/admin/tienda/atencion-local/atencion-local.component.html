@@ -1,5 +1,5 @@
 <!-- paciente -->
-<div class="row animated fadeIn fast">
+<div class="row animated fadeIn fast" *ngIf="productNotSelected">
     <div class="container">
         <div class="card">
             <div class="card-body">
@@ -104,26 +104,8 @@
         </div>
     </div>
 </div>
-<!-- <div class="container"> -->
-    <!-- mensaje -->
-    <!-- <div class="alert alert-success alert-dismissible fade show" role="alert" *ngIf="msm_success">
-        Artículo agregado al <a [routerLink]="['/dashboard/carrito']"><b>Carrito!</b></a>.
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div> -->
-    <!-- mensaje -->
-    <!-- mensaje -->
-    <!-- <div class="alert alert-success alert-dismissible fade show" role="alert" *ngIf="msm_success_fav">
-        Artículo agregado a <a [routerLink]="['/app/user/favorites']"><b>Favoritos!</b></a>.
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-    </button>
-    </div> -->
-    <!-- mensaje -->
- <!-- </div> -->
 
-
+<!-- lista productos -->
 <section class="row" *ngIf="clienteSeleccionado && productNotSelected">
     <div class="container">
         <div class="productos-atention">
@@ -169,18 +151,23 @@
 
 <section class="container" *ngIf="clienteSeleccionado && !productNotSelected">
 
-    <!-- imagen y nombre del producto -->
+    <div class="row">
+        <div class="col-xs-12 col-sm-6">
+            <!-- imagen y nombre del producto -->
     <article>
         <img class="img-fluid" [src]="productoSeleccionado.img | imagenPipe: 'productos'" alt="{{productoSeleccionado.titulo}}">
+        
+    </article>
+
+    
+        </div>
+        <div class="col-xs-12 col-sm-6">
+            <!-- detalles del producto y mensajes (alerts)-->
+     <article>
+        <!-- implementar aqui la galeria de imagenes del producto -->
         <h3 class="heading-style-3" style="color:#696262">
             {{productoSeleccionado.titulo}}
         </h3>
-    </article>
-
-    <!-- detalles del producto y mensajes (alerts)-->
-     <article>
-        <!-- implementar aqui la galeria de imagenes del producto -->
-
         <!-- mensaje indicando que se agregó producto al carrito-->
         <div class="alert alert-success alert-dismissible fade show" role="alert" *ngIf="msm_success">
             Artículo agregado al <a [routerLink]="['/dashboard/carrito']"><b>Carrito!</b></a>.
@@ -256,8 +243,12 @@
             {{productoSeleccionado.info_short}}
         </div>
      </article>
-    
-    <button class="btn btn-outline-danger btn-sm mt-4" (click)="volverProductos()">
+     <button class="btn btn-outline-danger btn-sm mt-4" (click)="volverProductos()">
         Volver a Productos
     </button>
+        </div>
+        
+    </div>
+    
+    
 </section>

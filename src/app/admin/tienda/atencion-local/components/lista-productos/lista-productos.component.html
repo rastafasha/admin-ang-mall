@@ -1,0 +1,55 @@
+<!-- buscador -->
+<div class="row animated fadeIn fast" *ngIf="!productNotSelected">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <input type="text" class="form-control" placeholder="Buscar producto" #txtTermino (keyup)="buscar(txtTermino.value)">
+            </div>
+        </div>
+    </div>
+</div> 
+ <div class="container" *ngIf="!productNotSelected">
+        <div class="productos-atention">
+            <figure class="item" *ngFor="let prod of productos |  paginate: { itemsPerPage: count, currentPage: p }">
+                <div class="product product-style-1">
+                    <div class="card">
+                        <div class="card-bod">
+                            <div class="img-wrapper">
+                                <a (click)="cargarPorducto(prod)">
+                                    <img class="img-responsive pointer" [src]="prod.img | imagenPipe: 'productos'" alt="{{prod.titulo}} thumbnail" />
+                                </a>
+                                
+                            </div>
+                            <figcaption class="desc text-center p-2">
+                                <h5 style="max-height: 50px; height: 40px;">
+                                    <a class="product-name" (click)="cargarPorducto(prod)">
+                                        {{prod.titulo}}
+                                    </a>
+                                </h5>
+                                <span class="price">${{prod.precio_ahora}}</span>
+                                <span class="price precioantes">${{prod.precio_antes}}</span>
+                            </figcaption>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- modal de producto -->
+                
+            </figure>
+        </div>
+        <div class="clear"></div>
+        <!-- paginador -->
+        <div class="row" *ngIf="productos.length > 8">
+            <div class="col-md-12 text-right">
+                <pagination-controls (pageChange)="p = $event"></pagination-controls>
+
+            </div>
+        </div>
+    </div>
+
+    <section class="container" *ngIf="productNotSelected">
+        <button class="btn btn-outline-danger btn-sm mt-4" (click)="volverProductos()">
+            Volver a Productos
+        </button>
+        <app-productoSelected [event]="event" [productoSeleccionado]="productoSeleccionado" [msm_success]="msm_success" [colores]="colores"></app-productoSelected>
+    </section>

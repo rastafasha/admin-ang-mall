@@ -150,24 +150,26 @@ export class HeaderComponent implements OnInit {
   // modificado por Jose Prados
   show_Carrito(){
     this.subtotal = 0;
+    if(this.clienteSeleccionado){
 
-    this._carritoService.preview_carrito(this.clienteSeleccionado.uid).subscribe(
-      response =>{
-        this.carrito = response.carrito;
-        console.log('CARRITO header: ',this.carrito);
-
-        this.carrito.forEach(element => {
-          this.subtotal = this.subtotal + (element.precio*element.cantidad);
-        });
-
-        // refrescar cambios en la vista del carrito del header
-        this.cdr.detectChanges();
-      },
-      error=>{
-        console.log(error);
-
-      }
-    );
+      this._carritoService.preview_carrito(this.clienteSeleccionado.uid).subscribe(
+        response =>{
+          this.carrito = response.carrito;
+          console.log('CARRITO header: ',this.carrito);
+  
+          this.carrito.forEach(element => {
+            this.subtotal = this.subtotal + (element.precio*element.cantidad);
+          });
+  
+          // refrescar cambios en la vista del carrito del header
+          this.cdr.detectChanges();
+        },
+        error=>{
+          console.log(error);
+  
+        }
+      );
+    }
   }
 
   // modificado por José Prados

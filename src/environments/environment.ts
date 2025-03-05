@@ -5,9 +5,13 @@
 export const environment = {
   production: false,
   //local
-  baseUrl: 'http://localhost:3003/api',
-  mediaUrl: 'http://localhost:3003/api/uploads',
-  soketServer : 'http://localhost:3003',
+  baseUrl: 'http://localhost:3051/api',
+  mediaUrl: 'http://localhost:3051/api/uploads',
+  // mediaUrl: 'http://localhost:3010/api/uploads-cloudinary',
+  cloudinaryMediaURl: 'https://res.cloudinary.com/dmv6aukai/image/upload/v1741194325/',
+  soketServer : 'http://localhost:3051',
+  
+  
   //remoto vercel
   // baseUrl: 'https://back-ecomm-mall.vercel.app/api',
   // mediaUrl: 'https://back-ecomm-mall.vercel.app/api/uploads/',
