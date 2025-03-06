@@ -8,6 +8,7 @@ export const environment = {
     //remoto vercel
     baseUrl: 'https://back-ecomm-mall.vercel.app/api',
     mediaUrl: 'https://back-ecomm-mall.vercel.app/api/uploads/',
+    mediaUrlRemoto: 'https://res.cloudinary.com/dmv6aukai/image/upload/v1741218430/mallConnect',
     soketServer : 'https://back-ecomm-mall.vercel.app/',
     //plugins
     rapidapiKey: 'a7036a3222mshc2920e679cd1cafp141e56jsn81cbe707ac15',

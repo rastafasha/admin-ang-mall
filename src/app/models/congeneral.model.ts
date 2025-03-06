@@ -1,7 +1,7 @@
 import { environment } from "src/environments/environment";
 
 const base_url = environment.baseUrl;
-const mediaUrl = environment.mediaUrl;
+const mediaUrl = environment.mediaUrlRemoto;
 
 export class Congeneral{
   banner: any;

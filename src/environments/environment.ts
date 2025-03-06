@@ -5,11 +5,11 @@
 export const environment = {
   production: false,
   //local
-  baseUrl: 'http://localhost:3005/api',
-  mediaUrl: 'http://localhost:3005/api/uploads',
+  baseUrl: 'http://localhost:3000/api',
+  mediaUrl: 'http://localhost:3000/api/uploads',
 
-  cloudinaryMediaURl: 'https://res.cloudinary.com/dmv6aukai/image/upload/v1741194325/',
-  soketServer : 'http://localhost:3005',
+  mediaUrlRemoto: 'https://res.cloudinary.com/dmv6aukai/image/upload/v1741218430/mallConnect',
+  soketServer : 'http://localhost:3000',
   //plugins
   rapidapiKey: 'a7036a3222mshc2920e679cd1cafp141e56jsn81cbe707ac15',
   rapidapiHost: 'apidojo-17track-v1.p.rapidapi.com',

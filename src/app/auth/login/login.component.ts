@@ -71,6 +71,11 @@ ngOnInit(){
       // console.log(this.user);
       // this.getuserRol();
       // this.getuserPermisos();
+
+      if(localStorage.getItem('user')){
+        this.router.navigateByUrl('/dashboard');
+        
+      }
     }else{
       this.user = null;
     }

@@ -1,6 +1,6 @@
 import { environment } from "src/environments/environment";
 
-const base_url = environment.mediaUrl;
+const base_url = environment.mediaUrlRemoto;
 
 export class Producto{
   constructor(

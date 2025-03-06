@@ -1,6 +1,6 @@
 import { environment } from "src/environments/environment";
 
-const base_url = environment.baseUrl;
+const base_url = environment.mediaUrlRemoto;
 export class Usuario {
   constructor(
     public first_name: string,
