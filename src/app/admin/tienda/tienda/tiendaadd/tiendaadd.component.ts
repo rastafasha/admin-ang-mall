@@ -276,7 +276,7 @@ export class TiendaaddComponent implements OnInit {
 
   subirImagen(){
     this.fileUploadService
-    .actualizarFoto(this.imagenSubir, 'categorias', this.tiendaSeleccionado._id)
+    .actualizarFoto(this.imagenSubir, 'tiendas', this.tiendaSeleccionado._id)
     .then(img => { this.tiendaSeleccionado.img = img;
       Swal.fire('Guardado', 'La imagen fue actualizada', 'success');
 

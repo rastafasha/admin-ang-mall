@@ -165,17 +165,7 @@ export class CatEditComponent implements OnInit {
     }
   }
 
-  subirImagen(){
-    this.fileUploadService
-    .actualizarFoto(this.imagenSubir, 'categorias', this.categoriaSeleccionado._id)
-    .then(img => { this.categoriaSeleccionado.img = img;
-      Swal.fire('Guardado', 'La imagen fue actualizada', 'success');
-
-    }).catch(err =>{
-      Swal.fire('Error', 'No se pudo subir la imagen', 'error');
-
-    })
-  }
+  
 
   goBack() {
     this.location.back(); // <-- go back to previous location on cancel

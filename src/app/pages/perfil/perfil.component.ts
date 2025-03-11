@@ -34,6 +34,10 @@ export class PerfilComponent implements OnInit {
     
     this.user = JSON.parse(user);
 
+    this.usuario
+    console.log(this.usuario);
+    console.log(this.user);
+
     this.getUserRemoto();
     
     this.perfilForm = this.fb.group({
@@ -58,18 +62,19 @@ export class PerfilComponent implements OnInit {
     })
   }
 
-  actualizarPerfil(){
+  actualizarPerfil(){debugger
 
 
     this.usuarioService.upadateUser(this.perfilForm.value, this.user.uid)
     .subscribe((resp:any) => {
-      const {first_name, last_name, telefono, pais,  numdoc, lang,   email} = this.perfilForm.value;
+      const {first_name, last_name, telefono, pais,  numdoc, lang,   email, uid} = this.perfilForm.value;
       this.usuario.first_name = first_name;
       this.usuario.last_name = last_name;
       this.usuario.telefono = telefono;
       this.usuario.numdoc = numdoc;
       this.usuario.lang = lang;
       this.usuario.pais = pais;
+      this.user.uid = uid;
       Swal.fire('Guardado', 'Los cambios fueron actualizados', 'success');
     }, (err)=>{
       Swal.fire('Error', err.error.msg, 'error');

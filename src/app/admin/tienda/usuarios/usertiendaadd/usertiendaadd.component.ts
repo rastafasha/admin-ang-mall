@@ -203,7 +203,7 @@ export class UsertiendaaddComponent implements OnInit {
 
   subirImagen(){
     this.fileUploadService
-    .actualizarFoto(this.imagenSubir, 'categorias', this.usertiendaSeleccionado.uid)
+    .actualizarFoto(this.imagenSubir, 'usuarios', this.usertiendaSeleccionado.uid)
     .then(img => { this.usertiendaSeleccionado.img = img;
       Swal.fire('Guardado', 'La imagen fue actualizada', 'success');
 

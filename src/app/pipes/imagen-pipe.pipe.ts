@@ -8,17 +8,17 @@ const base_url = environment.mediaUrl;
 })
 export class ImagenPipePipe implements PipeTransform {
 
-  transform(img: string, tipo: 'usuarios'|'categorias'|'marcas'|'productos'|'congenerals'
+  transform(img: string, tipo: 'usuarios'|'tiendas'|'marcas'|'productos'|'congenerals'
   |'promocions'|'galerias'|'ingresos'|'facturas'|'blogs' |'pages' |'cursos'|'sliders'): string {
 
     if(!img){
-      return `${base_url}/categorias/no-image.jpg`;
+      return `${base_url}/usuarios/no-image.jpg`;
     } else if(img.includes('https')){
       return img;
     } else if(img){
       return `${base_url}/${tipo}/${img}`;
     }else {
-      return `${base_url}/marcas/no-image.jpg`;
+      return `${base_url}/usuarios/no-image.jpg`;
     }
 
 

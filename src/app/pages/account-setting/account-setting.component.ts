@@ -54,6 +54,7 @@ export class AccountSettingComponent implements OnInit {
     this.settingsService.checkCurrentTheme(); //llamamos la funccion desde el servicio
 
     this.loadCongenerals();
+    
 
   }
 
