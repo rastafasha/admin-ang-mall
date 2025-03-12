@@ -11,8 +11,12 @@
                 <div class="border-bottom mt-lg-2 pb-2">
                     <h2 class="mt-lg-4">Orden N° {{id.toUpperCase()}}</h2>
                     <div class="d-flex flex-wrap flex-md-nowrap justify-content-between">
-                        <p class="text-muted">Detalles de esta venta.</p>
-                        <button class="btn btn-outline-danger" href="javascript:void(0)" (click)="goBack()">Volver</button>
+                        <div class="col-10">
+                            <h2 class="card-title">Detalles de esta venta.</h2>
+                        </div>
+                        <div class="col-2 d-flex justify-content-end">
+                            <app-backbutton></app-backbutton>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -95,7 +99,10 @@
                             <div class="media-body pt-2 mb-4">
                                 <div class="font-size-sm content-txt-pb">
                                     <span class="text-muted mr-2">Destinatario:</span><br>
-                                    <span>{{venta.destinatario}}</span>
+                                    <span>{{venta.destinatario}}</span><br>
+                                    <span>{{user.numdoc}}</span><br>
+                                    <span>{{user.email}}</span><br>
+                                    <span>{{user.telefono}}</span><br>
                                 </div>
                                 <div class="font-size-sm content-txt-pb">
                                     <span class="text-muted mr-2">Dirección:</span><br>

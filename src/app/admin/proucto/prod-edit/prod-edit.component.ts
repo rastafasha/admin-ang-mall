@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { Location } from '@angular/common';
+
 import Swal from 'sweetalert2';
 
 import { FileUploadService } from 'src/app/services/file-upload.service';
@@ -75,7 +75,7 @@ export class ProdEditComponent implements OnInit {
     private fileUploadService: FileUploadService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private location: Location,
+    
     private _colorService: ColorService,
     private _selectorService: SelectorService,
     private sanitizer: DomSanitizer,
@@ -307,9 +307,7 @@ export class ProdEditComponent implements OnInit {
     })
   }
 
-  goBack() {
-    this.location.back(); // <-- go back to previous location on cancel
-  }
+  
 
   getVideoIframe(url) {
     var video, results;

@@ -8,6 +8,7 @@ import { ProductoService } from 'src/app/services/producto.service';
 import { UsuarioService } from '../../../services/usuario.service';
 import { Location } from '@angular/common';
 import { Venta } from 'src/app/models/ventas.model';
+import { Usuario } from 'src/app/models/usuario.model';
 
 @Component({
   selector: 'app-admin-detalleventas',
@@ -20,6 +21,7 @@ export class AdminDetalleventasComponent implements OnInit {
   public id;
   public detalle : any = {};
   public venta : Venta;
+  public user : Usuario;
   public url;
 
   constructor(
@@ -49,6 +51,7 @@ export class AdminDetalleventasComponent implements OnInit {
             console.log(resp);
             this.detalle = resp.detalle;
             this.venta = resp.venta;
+            this.user = resp.venta.user;
 
           },
           error=>{

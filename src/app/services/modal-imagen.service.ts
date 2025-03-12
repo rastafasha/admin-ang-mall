@@ -9,7 +9,7 @@ const base_url = environment.baseUrl
 export class ModalImagenService {
 
   private _ocultarModal: boolean = true;
-  public tipo: 'usuarios' |'marcas' |'productos' |'blogs' |'pages' |'cursos'|'sliders'|'promocions'|'tiendas';
+  public tipo: 'usuarios' |'marcas' |'productos' |'blogs' |'pages' |'cursos'|'sliders'|'promocions'|'locaciones';
   public id: string;
   public img: string;
 
@@ -20,7 +20,7 @@ export class ModalImagenService {
   }
 
   abrirModal(
-    tipo: 'usuarios'|'marcas'|'productos'|'blogs' |'pages' |'cursos'|'sliders'|'promocions'|'tiendas',
+    tipo: 'usuarios'|'marcas'|'productos'|'blogs' |'pages' |'cursos'|'sliders'|'promocions'|'locaciones',
     id: string,
     img: string = 'no-image'
   ){

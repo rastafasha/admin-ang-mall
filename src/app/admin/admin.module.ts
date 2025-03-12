@@ -61,6 +61,7 @@ import { TiposdepagoComponent } from './tiposdepago/tiposdepago.component';
 import { PagosEfectivoComponent } from './pagos-efectivo/pagos-efectivo.component';
 import { FacturaComponent } from './ventas/factura/factura.component';
 import { ReusablesModule } from '../reusables/reusables.module';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -160,7 +161,8 @@ import { ReusablesModule } from '../reusables/reusables.module';
     NgxPaginationModule,
     CKEditorModule,
     TiendaModule,
-    ReusablesModule
+    ReusablesModule,
+    SharedModule
   ],
   providers:[
     IconosService,

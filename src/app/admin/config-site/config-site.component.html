@@ -1,417 +1,430 @@
 <div class="row">
     <!-- <app-progress-bar [progressValue]="80"></app-progress-bar> -->
     <app-progress-bar *ngIf="progressValue" [progressValue]="100"></app-progress-bar>
-  <div class="col-12" *ngIf="!congeneral">
-    <div class="card">
-      <div class="card-body">
-        <h4 class="card-title">{{ pageTitle }}</h4>
-        <h6 class="card-subtitle">Ajustes</h6>
-        <!-- <button class="btn btn-outline-danger" href="javascript:void(0)" (click)="goBack()">Volver</button> -->
-        <form
-          class="form p-t-20 form-horizontal form-material"
-          [formGroup]="confGeneralForm"
-          (submit)="updateConfiguracion()"
-        >
-          <div class="row">
-            <div class="form-group col-xs-12 col-sm-6">
-              <label for="select-input">Language</label>
-              <select class="form-control" formControlName="lang" required>
-                <option disabled value="">Seleccione</option>
-                <option value="en">English</option>
-                <option value="es">Español</option>
-              </select>
-            </div>
-          </div>
+    <!-- *ngIf="!congeneral" -->
 
-          <div class="row">
-            <div class="form-group col-xs-12 col-sm-6">
-              <label for="exampleInputuname">Razón social</label>
-              <div class="input-group">
-                <input
-                  type="text"
-                  formControlName="titulo"
-                  class="form-control"
-                  id="exampleInputuname"
-                  placeholder="Razón social"
-                />
-              </div>
-            </div>
-            <div class="form-group col-xs-12 col-sm-6">
-              <label for="exampleInputsubcategorias">Copy Right</label>
-              <div class="input-group">
-                <input
-                  type="text"
-                  formControlName="cr"
-                  class="form-control"
-                  id="exampleInputsubcategorias"
-                  placeholder="Copy Right"
-                />
-              </div>
-            </div>
+    <!-- Nav tabs -->
+            <ul class="nav nav-tabs profile-tab" role="tablist">
+                <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#detalle" role="tab" aria-expanded="true">Detalles</a> </li>
+                <li class="nav-item"> <a class="nav-link " data-toggle="tab" href="#editar" role="tab" aria-expanded="true">Editar</a> </li>
+                <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#imagen" role="tab" aria-expanded="false">Imagenes</a> </li>
+            </ul>
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <div class="tab-pane active" id="detalle" role="tabpanel" aria-expanded="true">
+        
+      <div class="col-12">
+        <div class="card">
+          <div class="card-body" >
+            <p class="col-xs-12 col-sm-6"><b>Título:</b> {{ congeneral.titulo }}</p>
+            <p class="col-xs-12 col-sm-6"><b>CR:</b> {{ congeneral.cr }}</p>
+            <p class="col-xs-12 col-sm-6"><b>Teléfono uno:</b> {{ congeneral.telefono_uno }}</p>
+            <p class="col-xs-12 col-sm-6"><b>Teléfono dos:</b> {{ congeneral.telefono_dos }}</p>
+            <p class="col-xs-12 col-sm-6"><b>Email uno:</b> {{ congeneral.email_uno }}</p>
+            <p class="col-xs-12 col-sm-6"><b>Email dos:</b> {{ congeneral.email_dos }}</p>
+            <p class="col-xs-12 col-sm-6"><b>Dirección:</b> {{ congeneral.direccion }}</p>
+            <p class="col-xs-12 col-sm-6"><b>Horarios:</b>{{ congeneral.horarios }}</p>
+            <p class="col-xs-12 col-sm-6">
+              <b><i class="fa fa-facebook"></i> Facebook:</b>
+              {{ congeneral.facebook }}
+            </p>
+            <p>
+              <b><i class="fa fa-instagram"></i> Instagram:</b>
+              {{ congeneral.instagram }}
+            </p>
+            <p>
+              <b><i class="fa fa-youtube-play"></i> Youtube:</b>
+              {{ congeneral.youtube }}
+            </p>
+            <p>
+              <b><i class="fa fa-twitter"></i> Twitter:</b>
+              {{ congeneral.twitter }}
+            </p>
+            <p class="col-xs-12 col-sm-6"><b>Modo Paypal Sandbox (modo de pruebas):</b></p>
+            <span
+              class="badge badge-success badge-shadow"
+              *ngIf="congeneral.modoPaypal == true"
+              >{{ congeneral.modoPaypal }}</span
+            >
+            <span
+              class="badge badge-primary badge-shadow"
+              *ngIf="congeneral.modoPaypal == false"
+              >{{ congeneral.modoPaypal }}</span
+            >
+            <p class="col-xs-12 col-sm-6"><b>Sandbox:</b> {{ congeneral.sandbox }}</p>
+            <p class="col-xs-12 col-sm-6"><b>Cliente Paypal ID:</b> {{ congeneral.clientePaypal }}</p>
+            <p class="col-xs-12 col-sm-6"><b>Rapid Api Key:</b> {{ congeneral.rapidapiKey }}</p>
           </div>
-          <div class="row">
-            <div class="form-group col-xs-12 col-sm-6">
-              <label class="col-form-label font-weight-medium" for="text-input"
-                >Telefonos</label
-              >
-              <div class="col-md-12">
-                <div class="row">
-                  <div class="col">
+          <div class="col-xs-12 col-sm-6">
+            <p class="col-xs-12 col-sm-6"><b>iframe_mapa (ubicación):</b></p>
+            <!-- <iframe
+              class="mapa"
+              [src]="getMapIframe(congeneral.iframe_mapa)"
+              frameborder="0"
+              allow="accelerometer; autoplay; encrypted-media; gyroscope; "
+              allowfullscreen
+            ></iframe> -->
+  
+            <p class="col-xs-12 col-sm-6"><b>Logo:</b></p>
+            <img
+              [src]="congeneral.img | imagenPipe : 'congenerals'"
+              style="width: 150px; margin-left: 10px"
+              class="img-responsive img-thumbnail"
+              alt=""
+            />
+            <p class="col-xs-12 col-sm-6"><b>Favicon:</b></p>
+            <img
+              [src]="congeneral.favicon | imagenPipe : 'congenerals'"
+              style="width: 150px; margin-left: 10px"
+              class="img-responsive img-thumbnail"
+              alt=""
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--second tab-->
+    <div class="tab-pane " id="editar" role="tabpanel" aria-expanded="false">
+      <div class="col-12" >
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">{{ pageTitle }}</h4>
+            <h6 class="card-subtitle">Ajustes</h6>
+            <!-- <button class="btn btn-outline-danger" href="javascript:void(0)" (click)="goBack()">Volver</button> -->
+            <form
+              class="form p-t-20 form-horizontal form-material"
+              [formGroup]="confGeneralForm"
+              (submit)="updateConfiguracion()"
+            >
+              <div class="row">
+                <div class="form-group col-xs-12 col-sm-6">
+                  <label for="select-input">Language</label>
+                  <select class="form-control" formControlName="lang" required>
+                    <option disabled value="">Seleccione</option>
+                    <option value="en">English</option>
+                    <option value="es">Español</option>
+                  </select>
+                </div>
+              </div>
+    
+              <div class="row">
+                <div class="form-group col-xs-12 col-sm-6">
+                  <label for="exampleInputuname">Razón social</label>
+                  <div class="input-group">
                     <input
+                      type="text"
+                      formControlName="titulo"
                       class="form-control"
-                      type="number"
-                      placeholder="Telefono 1"
-                      formControlName="telefono_uno"
+                      id="exampleInputuname"
+                      placeholder="Razón social"
                     />
                   </div>
-                  <div class="col">
+                </div>
+                <div class="form-group col-xs-12 col-sm-6">
+                  <label for="exampleInputsubcategorias">Copy Right</label>
+                  <div class="input-group">
                     <input
+                      type="text"
+                      formControlName="cr"
                       class="form-control"
-                      type="number"
-                      placeholder="Telefono 2"
-                      formControlName="telefono_dos"
+                      id="exampleInputsubcategorias"
+                      placeholder="Copy Right"
                     />
                   </div>
                 </div>
               </div>
-            </div>
-            <div class="form-group col-xs-12 col-sm-6">
-              <label class="col-form-label font-weight-medium" for="text-input"
-                >Correos</label
-              >
-              <div class="col-md-12">
-                <div class="row">
-                  <div class="col">
-                    <input
-                      class="form-control"
-                      type="email"
-                      placeholder="Email 1"
-                      formControlName="email_uno"
-                    />
+              <div class="row">
+                <div class="form-group col-xs-12 col-sm-6">
+                  <label class="col-form-label font-weight-medium" for="text-input"
+                    >Telefonos</label
+                  >
+                  <div class="col-md-12">
+                    <div class="row">
+                      <div class="col">
+                        <input
+                          class="form-control"
+                          type="number"
+                          placeholder="Telefono 1"
+                          formControlName="telefono_uno"
+                        />
+                      </div>
+                      <div class="col">
+                        <input
+                          class="form-control"
+                          type="number"
+                          placeholder="Telefono 2"
+                          formControlName="telefono_dos"
+                        />
+                      </div>
+                    </div>
                   </div>
-                  <div class="col">
-                    <input
-                      class="form-control"
-                      type="email"
-                      placeholder="Email 2"
-                      formControlName="email_dos"
-                    />
+                </div>
+                <div class="form-group col-xs-12 col-sm-6">
+                  <label class="col-form-label font-weight-medium" for="text-input"
+                    >Correos</label
+                  >
+                  <div class="col-md-12">
+                    <div class="row">
+                      <div class="col">
+                        <input
+                          class="form-control"
+                          type="email"
+                          placeholder="Email 1"
+                          formControlName="email_uno"
+                        />
+                      </div>
+                      <div class="col">
+                        <input
+                          class="form-control"
+                          type="email"
+                          placeholder="Email 2"
+                          formControlName="email_dos"
+                        />
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="form-group col-xs-12 col-sm-6">
-              <label
-                class="col-form-label font-weight-medium"
-                for="textarea-input"
-                >Dirección</label
-              >
-              <div class="col-md-12">
-                <ckeditor
-                  [editor]="Editor"
-                  formControlName="direccion"
-                  data="<p>Hello, world!</p>"
-                  required
-                ></ckeditor>
-              </div>
-            </div>
-
-            <div class="form-group col-xs-12 col-sm-6">
-              <label
-                class="col-form-label font-weight-medium"
-                for="textarea-input"
-                >Horarios</label
-              >
-              <div class="col-md-12">
-                <textarea
-                  class="form-control"
-                  id="textarea-input"
-                  rows="2"
-                  placeholder="Horarios de atención."
-                  formControlName="horarios"
-                ></textarea>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="form-group col-xs-12 col-sm-6">
-              <label class="col-form-label font-weight-medium" for="text-input">
-                <i class="czi-facebook"></i> Facebook</label
-              >
-              <div class="input-group col-md-12 input-group">
-                <input
-                  class="form-control"
-                  type="text"
-                  placeholder="Enlace de pagina"
-                  formControlName="facebook"
-                />
-              </div>
-            </div>
-            <div class="form-group col-xs-12 col-sm-6">
-              <label class="col-form-label font-weight-medium" for="text-input"
-                ><i class="czi-instagram"></i> Instagram</label
-              >
-              <div class="col-md-12 input-group">
-                <input
-                  class="form-control"
-                  type="text"
-                  placeholder="Enlace de pagina "
-                  formControlName="instagram"
-                />
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="form-group col-xs-12 col-sm-6">
-              <label class="col-form-label font-weight-medium" for="text-input">
-                <i class="czi-youtube"></i> Youtube</label
-              >
-              <div class="col-md-12 input-group">
-                <input
-                  class="form-control"
-                  type="text"
-                  placeholder="Enlace de pagina "
-                  formControlName="youtube"
-                />
-              </div>
-            </div>
-            <div class="form-group col-xs-12 col-sm-6">
-              <label class="col-form-label font-weight-medium" for="text-input">
-                <i class="czi-twitter"></i> Twitter</label
-              >
-
-              <div class="col-md-12 input-group">
-                <input
-                  class="form-control"
-                  type="text"
-                  placeholder="Enlace de pagina "
-                  formControlName="twitter"
-                />
-              </div>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="form-group col-xs-12 col-sm-6">
-              <label
-                class="col-form-label font-weight-medium"
-                for="textarea-input"
-                >Mapa (iframe)</label
-              >
-              <div class="col-md-12">
-                <div class="row">
+              <div class="row">
+                <div class="form-group col-xs-12 col-sm-6">
+                  <label
+                    class="col-form-label font-weight-medium"
+                    for="textarea-input"
+                    >Dirección</label
+                  >
+                  <div class="col-md-12">
+                    <ckeditor
+                      [editor]="Editor"
+                      formControlName="direccion"
+                      data="<p>Hello, world!</p>"
+                      required
+                    ></ckeditor>
+                  </div>
+                </div>
+    
+                <div class="form-group col-xs-12 col-sm-6">
+                  <label
+                    class="col-form-label font-weight-medium"
+                    for="textarea-input"
+                    >Horarios</label
+                  >
                   <div class="col-md-12">
                     <textarea
                       class="form-control"
                       id="textarea-input"
-                      placeholder="Código de google maps."
-                      formControlName="iframe_mapa"
+                      rows="2"
+                      placeholder="Horarios de atención."
+                      formControlName="horarios"
                     ></textarea>
                   </div>
                 </div>
               </div>
-            </div>
-            <div class="form-group col-xs-12 col-sm-6">
-              <label for="select-input">Modo Sandbox?</label>
-              <select class="form-control" formControlName="modoPaypal">
-                <option disabled value="">SELECCIONAR</option>
-                <option [value]="true">Activo</option>
-                <option [value]="false">Inactivo</option>
-              </select>
-            </div>
+              <div class="row">
+                <div class="form-group col-xs-12 col-sm-6">
+                  <label class="col-form-label font-weight-medium" for="text-input">
+                    <i class="czi-facebook"></i> Facebook</label
+                  >
+                  <div class="input-group col-md-12 input-group">
+                    <input
+                      class="form-control"
+                      type="text"
+                      placeholder="Enlace de pagina"
+                      formControlName="facebook"
+                    />
+                  </div>
+                </div>
+                <div class="form-group col-xs-12 col-sm-6">
+                  <label class="col-form-label font-weight-medium" for="text-input"
+                    ><i class="czi-instagram"></i> Instagram</label
+                  >
+                  <div class="col-md-12 input-group">
+                    <input
+                      class="form-control"
+                      type="text"
+                      placeholder="Enlace de pagina "
+                      formControlName="instagram"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col-xs-12 col-sm-6">
+                  <label class="col-form-label font-weight-medium" for="text-input">
+                    <i class="czi-youtube"></i> Youtube</label
+                  >
+                  <div class="col-md-12 input-group">
+                    <input
+                      class="form-control"
+                      type="text"
+                      placeholder="Enlace de pagina "
+                      formControlName="youtube"
+                    />
+                  </div>
+                </div>
+                <div class="form-group col-xs-12 col-sm-6">
+                  <label class="col-form-label font-weight-medium" for="text-input">
+                    <i class="czi-twitter"></i> Twitter</label
+                  >
+    
+                  <div class="col-md-12 input-group">
+                    <input
+                      class="form-control"
+                      type="text"
+                      placeholder="Enlace de pagina "
+                      formControlName="twitter"
+                    />
+                  </div>
+                </div>
+              </div>
+    
+              <div class="row">
+                <div class="form-group col-xs-12 col-sm-6">
+                  <label
+                    class="col-form-label font-weight-medium"
+                    for="textarea-input"
+                    >Mapa (iframe)</label
+                  >
+                  <div class="col-md-12">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <textarea
+                          class="form-control"
+                          id="textarea-input"
+                          placeholder="Código de google maps."
+                          formControlName="iframe_mapa"
+                        ></textarea>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group col-xs-12 col-sm-6">
+                  <label for="select-input">Modo Sandbox?</label>
+                  <select class="form-control" formControlName="modoPaypal">
+                    <option disabled value="">SELECCIONAR</option>
+                    <option [value]="true">Activo</option>
+                    <option [value]="false">Inactivo</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col-xs-12 col-sm-4">
+                  <label
+                    class="col-form-label font-weight-medium"
+                    for="textarea-input"
+                    >Cliente Paypal</label
+                  >
+                  <div class="col-md-12">
+                    <textarea
+                      class="form-control"
+                      id="textarea-input"
+                      rows="3"
+                      placeholder="CLiente id paypal."
+                      formControlName="clientePaypal"
+                    ></textarea>
+                  </div>
+                </div>
+                <div class="form-group col-xs-12 col-sm-4">
+                  <label
+                    class="col-form-label font-weight-medium"
+                    for="textarea-input"
+                    >Sandbox Paypal</label
+                  >
+                  <div class="col-md-12">
+                    <textarea
+                      class="form-control"
+                      id="textarea-input"
+                      rows="3"
+                      placeholder="Sandbox paypal."
+                      formControlName="sandbox"
+                    ></textarea>
+                  </div>
+                </div>
+                <div class="form-group col-xs-12 col-sm-4">
+                  <label
+                    class="col-form-label font-weight-medium"
+                    for="textarea-input"
+                    >Rapid Api</label
+                  >
+                  <div class="col-md-12">
+                    <input
+                      class="form-control"
+                      type="text"
+                      placeholder="Rapid api key"
+                      formControlName="rapidapiKey"
+                    />
+                  </div>
+                </div>
+              </div>
+    
+              <button
+                type="submit"
+                [disabled]="confGeneralForm.invalid"
+                class="btn btn-success waves-effect waves-light m-r-10 btn-block"
+              >
+                <i class="fa fa-save"></i> Guardar cambios
+              </button>
+            </form>
           </div>
-          <div class="row">
-            <div class="form-group col-xs-12 col-sm-4">
-              <label
-                class="col-form-label font-weight-medium"
-                for="textarea-input"
-                >Cliente Paypal</label
-              >
-              <div class="col-md-12">
-                <textarea
-                  class="form-control"
-                  id="textarea-input"
-                  rows="3"
-                  placeholder="CLiente id paypal."
-                  formControlName="clientePaypal"
-                ></textarea>
-              </div>
-            </div>
-            <div class="form-group col-xs-12 col-sm-4">
-              <label
-                class="col-form-label font-weight-medium"
-                for="textarea-input"
-                >Sandbox Paypal</label
-              >
-              <div class="col-md-12">
-                <textarea
-                  class="form-control"
-                  id="textarea-input"
-                  rows="3"
-                  placeholder="Sandbox paypal."
-                  formControlName="sandbox"
-                ></textarea>
-              </div>
-            </div>
-            <div class="form-group col-xs-12 col-sm-4">
-              <label
-                class="col-form-label font-weight-medium"
-                for="textarea-input"
-                >Rapid Api</label
-              >
-              <div class="col-md-12">
-                <input
-                  class="form-control"
-                  type="text"
-                  placeholder="Rapid api key"
-                  formControlName="rapidapiKey"
-                />
-              </div>
-            </div>
+        </div>
+      </div>
+    </div>
+    <!--final tab-->
+    
+    <div class="tab-pane" id="imagen" role="tabpanel" aria-expanded="false">
+        
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">imagen</h4>
+          <h6 class="card-subtitle">Logo</h6>
+          <div class="text-center">
+            <img
+              *ngIf="!imgTemp"
+              [src]="congeneral.img | imagenPipe : 'congenerals'"
+              class="img-responsive img-thumbnail"
+              alt=""
+            />
+            <img *ngIf="imgTemp" [src]="imgTemp" class="img-avatar" />
           </div>
-
+          <input type="file" (change)="cambiarImagen($event.target.files[0])" />
+          <br />
+          <br />
           <button
-            type="submit"
-            [disabled]="confGeneralForm.invalid"
+            type="button"
+            [disabled]="!imagenSubir"
+            (click)="subirImagen()"
             class="btn btn-success waves-effect waves-light m-r-10 btn-block"
           >
-            <i class="fa fa-save"></i> Guardar cambios
+            <i class="fa fa-save"></i> Cambiar imagen
           </button>
-        </form>
-      </div>
-    </div>
-  </div>
-  <div class="col-md-12" *ngIf="congeneral">
-    <div class="card">
-      <div class="card-body">
-        <h4 class="card-title">imagen</h4>
-        <h6 class="card-subtitle">Logo</h6>
-        <div class="text-center">
-          <img
-            *ngIf="!imgTemp"
-            [src]="congeneral.img | imagenPipe : 'congenerals'"
-            class="img-responsive img-thumbnail"
-            alt=""
-          />
-          <img *ngIf="imgTemp" [src]="imgTemp" class="img-avatar" />
         </div>
-        <input type="file" (change)="cambiarImagen($event.target.files[0])" />
-        <br />
-        <br />
-        <button
-          type="button"
-          [disabled]="!imagenSubir"
-          (click)="subirImagen()"
-          class="btn btn-success waves-effect waves-light m-r-10 btn-block"
-        >
-          <i class="fa fa-save"></i> Cambiar imagen
-        </button>
       </div>
-    </div>
-    <div class="card">
-      <div class="card-body">
-        <h4 class="card-title">Favicon</h4>
-        <h6 class="card-subtitle">Logo de navegador</h6>
-        <div class="text-center">
-          <img
-            *ngIf="!imgTemp1"
-            [src]="congeneral.favicon | imagenPipe : 'congenerals'"
-            class="img-responsive img-thumbnail"
-            alt=""
-          />
-          <img *ngIf="imgTemp1" [src]="imgTemp1" class="img-avatar" />
-        </div>
-        <input type="file" (change)="cambiarImagen1($event.target.files[0])" />
-        <br />
-        <br />
-        <button
-          type="button"
-          [disabled]="!imagenSubir1"
-          (click)="subirImagen1()"
-          class="btn btn-success waves-effect waves-light m-r-10 btn-block"
-        >
-          <i class="fa fa-save"></i> Cambiar imagen
-        </button>
-      </div>
-    </div>
-
-    <div class="container">
       <div class="card">
-        <div class="pull-right mt-3 mr-3 mb-3">
-          <!-- <button class="btn btn-primary" [routerLink]="['/dashboard/configuracion/edit', conf._id]">
-                    <i class="fa fa-pencil"></i> Editar
-                  </button> -->
-        </div>
-        <div class="clear"></div>
-        <hr />
-        <div class="container" >
-          <p class="col-xs-12 col-sm-6"><b>Título:</b> {{ congeneral.titulo }}</p>
-          <p class="col-xs-12 col-sm-6"><b>CR:</b> {{ congeneral.cr }}</p>
-          <p class="col-xs-12 col-sm-6"><b>Teléfono uno:</b> {{ congeneral.telefono_uno }}</p>
-          <p class="col-xs-12 col-sm-6"><b>Teléfono dos:</b> {{ congeneral.telefono_dos }}</p>
-          <p class="col-xs-12 col-sm-6"><b>Email uno:</b> {{ congeneral.email_uno }}</p>
-          <p class="col-xs-12 col-sm-6"><b>Email dos:</b> {{ congeneral.email_dos }}</p>
-          <p class="col-xs-12 col-sm-6"><b>Dirección:</b> {{ congeneral.direccion }}</p>
-          <p class="col-xs-12 col-sm-6"><b>Horarios:</b>{{ congeneral.horarios }}</p>
-          <p class="col-xs-12 col-sm-6">
-            <b><i class="fa fa-facebook"></i> Facebook:</b>
-            {{ congeneral.facebook }}
-          </p>
-          <p>
-            <b><i class="fa fa-instagram"></i> Instagram:</b>
-            {{ congeneral.instagram }}
-          </p>
-          <p>
-            <b><i class="fa fa-youtube-play"></i> Youtube:</b>
-            {{ congeneral.youtube }}
-          </p>
-          <p>
-            <b><i class="fa fa-twitter"></i> Twitter:</b>
-            {{ congeneral.twitter }}
-          </p>
-          <p class="col-xs-12 col-sm-6"><b>Modo Paypal Sandbox (modo de pruebas):</b></p>
-          <span
-            class="badge badge-success badge-shadow"
-            *ngIf="congeneral.modoPaypal == true"
-            >{{ congeneral.modoPaypal }}</span
+        <div class="card-body">
+          <h4 class="card-title">Favicon</h4>
+          <h6 class="card-subtitle">Logo de navegador</h6>
+          <div class="text-center">
+            <img
+              *ngIf="!imgTemp1"
+              [src]="congeneral.favicon | imagenPipe : 'congenerals'"
+              class="img-responsive img-thumbnail"
+              alt=""
+            />
+            <img *ngIf="imgTemp1" [src]="imgTemp1" class="img-avatar" />
+          </div>
+          <input type="file" (change)="cambiarImagen1($event.target.files[0])" />
+          <br />
+          <br />
+          <button
+            type="button"
+            [disabled]="!imagenSubir1"
+            (click)="subirImagen1()"
+            class="btn btn-success waves-effect waves-light m-r-10 btn-block"
           >
-          <span
-            class="badge badge-primary badge-shadow"
-            *ngIf="congeneral.modoPaypal == false"
-            >{{ congeneral.modoPaypal }}</span
-          >
-          <p class="col-xs-12 col-sm-6"><b>Sandbox:</b> {{ congeneral.sandbox }}</p>
-          <p class="col-xs-12 col-sm-6"><b>Cliente Paypal ID:</b> {{ congeneral.clientePaypal }}</p>
-          <p class="col-xs-12 col-sm-6"><b>Rapid Api Key:</b> {{ congeneral.rapidapiKey }}</p>
-        </div>
-        <div class="col-xs-12 col-sm-6">
-          <p class="col-xs-12 col-sm-6"><b>iframe_mapa (ubicación):</b></p>
-          <iframe
-            class="mapa"
-            [src]="getMapIframe(congeneral.iframe_mapa)"
-            frameborder="0"
-            allow="accelerometer; autoplay; encrypted-media; gyroscope; "
-            allowfullscreen
-          ></iframe>
-
-          <p class="col-xs-12 col-sm-6"><b>Logo:</b></p>
-          <img
-            [src]="congeneral.img | imagenPipe : 'congenerals'"
-            style="width: 150px; margin-left: 10px"
-            class="img-responsive img-thumbnail"
-            alt=""
-          />
-          <p class="col-xs-12 col-sm-6"><b>Favicon:</b></p>
-          <img
-            [src]="congeneral.favicon | imagenPipe : 'congenerals'"
-            style="width: 150px; margin-left: 10px"
-            class="img-responsive img-thumbnail"
-            alt=""
-          />
+            <i class="fa fa-save"></i> Cambiar imagen
+          </button>
         </div>
       </div>
     </div>
-  </div>
+</div>
+
 </div>

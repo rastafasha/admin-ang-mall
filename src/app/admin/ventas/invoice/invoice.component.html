@@ -17,9 +17,12 @@
 <body>
     <div class="container-fluid invoice-container" style="padding: 20px;">
         <div class="row">
-            <div class="col-lg-6">
+            
+            <div class="col-10">
                 <a (click)="imprimir()" class="btn btn-default">Descargar</a>
-
+            </div>
+            <div class="col-2 d-flex justify-content-end">
+                <app-backbutton></app-backbutton>
             </div>
         </div>
     </div>
@@ -63,10 +66,10 @@
             <div class="col-lg-6 text-right">
                 <strong>Envio:</strong>
                 <address class="small-text">
-                    {{venta.direccion}}<br>
+                    Dirección:<br> {{venta.direccion}}<br>
                     {{venta.pais}} / {{venta.ciudad}} / {{venta.zip}}<br>
-                    {{venta.tipo_envio}}<br>
-                    {{venta.tiempo_estimado}}<br>
+                    Tipo de Envio:<br>{{venta.tipo_envio}}<br>
+                    Tiempo estimado de entrega:<br> {{venta.tiempo_estimado}}<br>
                 </address>
             </div>
 
@@ -130,21 +133,21 @@
             <div class="table-responsive">
                 <table class="table table-condensed">
                     <thead>
-                        <tr>
+                        <!-- <tr>
                             <td class="text-center"><strong>Fecha Transacción</strong></td>
                             <td class="text-center"><strong>Método/Gateway</strong></td>
                             <td class="text-center"><strong>ID Transacción</strong></td>
                             <td class="text-center"><strong>Total</strong></td>
-                        </tr>
+                        </tr> -->
                     </thead>
                     <tbody>
-                        <tr>
+                        <!-- <tr>
                             <td class="text-center" colspan="4">No se encontraron transacciones relacionadas</td>
-                        </tr>
-                        <tr>
+                        </tr> -->
+                        <!-- <tr>
                             <td class="text-right" colspan="3"><strong>Balance</strong></td>
                             <td class="text-center">${{venta.total_pagado}} USD</td>
-                        </tr>
+                        </tr> -->
                     </tbody>
                 </table>
             </div>

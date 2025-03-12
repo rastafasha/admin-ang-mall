@@ -97,7 +97,7 @@ export class TiendaListComponent implements OnInit {
       return this.loadMarcas();
     }
 
-    this.busquedaService.buscar('tiendas', termino)
+    this.busquedaService.buscar('locaciones', termino)
     .subscribe( resultados => {
       resultados;
     })

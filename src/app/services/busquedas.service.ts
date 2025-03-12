@@ -67,7 +67,7 @@ export class BusquedasService {
   }
 
 
-  buscar(tipo: 'usuarios'|'categorias' |'marcas' |'productos'|'blogs'|'pages'|'sliders'|'cursos'|'tiendas'|'trasnferencias',
+  buscar(tipo: 'usuarios'|'categorias' |'marcas' |'productos'|'blogs'|'pages'|'sliders'|'cursos'|'locaciones'|'trasnferencias',
         termino: string
         ){
     const url = `${base_url}/todo/coleccion/${tipo}/${termino}`;
@@ -96,7 +96,7 @@ export class BusquedasService {
                 case 'sliders':
                 return this.trasnformarSliders(resp.resultados)
                 
-                case 'tiendas':
+                case 'locaciones':
                 return this.trasnformarTiendas(resp.resultados)
 
                 case 'trasnferencias':

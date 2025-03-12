@@ -15,7 +15,7 @@ export class FileUploadService {
   async actualizarFoto(
     archivo: File,
     tipo: 'usuarios'|'marcas' |'productos' | 'congenerals'|'promocions' |'galerias'|'ingresos'
-    |'blogs' |'pages' |'cursos' |'sliders' | 'tiendas' |'facturas',
+    |'blogs' |'pages' |'cursos' |'sliders' | 'locaciones' |'facturas',
     id: string
   ){
 

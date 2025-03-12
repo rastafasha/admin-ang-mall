@@ -162,7 +162,7 @@ export class AtencionLocalComponent implements OnInit {
 
   loadProductos(){
     this.cargando = true;
-    this.productoService.cargarProductos().subscribe(
+    this.productoService.cargarProductosActivos().subscribe(
       productos => {
         this.cargando = false;
         this.productos = productos;

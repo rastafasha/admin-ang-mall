@@ -53,7 +53,7 @@
                         <tbody>
                             <tr *ngFor="let tienda of tiendas |  paginate: { itemsPerPage: count, currentPage: p } | orderBy:'createdAt, desc'">
                                 <td class="text-center">
-                                    <img [src]="tienda.img | imagenPipe: 'tiendas'" class="img-responsive avatar" alt="{{tienda.nombre}}">
+                                    <img [src]="tienda.img | imagenPipe: 'locaciones'" class="img-responsive avatar" alt="{{tienda.nombre}}">
                                     <!-- <img (click)="abrirModal(marca)" [src]="marca.imagenUrl | imagenPipe: 'marcas'" class="avatar cursor" alt="{{marca.nombre}}"> -->
                                 </td>
                                 <td>

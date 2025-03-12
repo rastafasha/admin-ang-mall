@@ -29,13 +29,13 @@ export class Tienda{
   get imagenUrl(){
 
     if(!this.img){
-      return `${base_url}/uploads/tiendas/no-image.jpg`;
+      return `${base_url}/uploads/locaciones/no-image.jpg`;
     } else if(this.img.includes('https')){
       return this.img;
     } else if(this.img){
-      return `${base_url}/uploads/tiendas/${this.img}`;
+      return `${base_url}/locaciones/${this.img}`;
     }else {
-      return `${base_url}/uploads/tiendas/no-image.jpg`;
+      return `${base_url}/uploads/locaciones/no-image.jpg`;
     }
 
   }
