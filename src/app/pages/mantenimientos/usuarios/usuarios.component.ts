@@ -7,6 +7,8 @@ import { Usuario } from '../../../models/usuario.model';
 import { BusquedasService } from '../../../services/busquedas.service';
 import { ModalImagenService } from '../../../services/modal-imagen.service';
 import { UsuarioService } from '../../../services/usuario.service';
+import { TiendaService } from 'src/app/services/tienda.service';
+import { Tienda } from 'src/app/models/tienda.model';
 
 @Component({
   selector: 'app-usuarios',
@@ -32,7 +34,7 @@ export class UsuariosComponent implements OnInit, OnDestroy {
   constructor(
     private usuarioService: UsuarioService,
     private busquedaService: BusquedasService,
-    private modalImagenService: ModalImagenService
+    private modalImagenService: ModalImagenService,
     ) { }
 
   ngOnInit(): void {
@@ -42,7 +44,6 @@ export class UsuariosComponent implements OnInit, OnDestroy {
       delay(100)
     )
     .subscribe(img => { this.loadUsuarios();});
-
   }
 
   ngOnDestroy(){
@@ -62,6 +63,8 @@ export class UsuariosComponent implements OnInit, OnDestroy {
       }
     )
   }
+
+  
 
 
   cambiarPagina(valor: number){

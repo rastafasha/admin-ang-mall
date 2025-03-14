@@ -32,6 +32,7 @@
                                 <th>Correo</th>
                                 <th>Nombre</th>
                                 <th>Cambiar Role</th>
+                                <th>desde</th>
                                 <th>Auth</th>
                                 <th class="text-nowrap">Acciones</th>
                             </tr>
@@ -54,9 +55,13 @@
                                   </select>
                                 </td>
                                 <td>
+                                    <span *ngIf="usuario.local" class="label label-success">{{usuario.local.nombre}}</span>
+                                </td>
+                                <td>
                                     <span *ngIf="usuario.google" class="label label-danger">Google</span>
                                     <span *ngIf="!usuario.google" class="label label-info">Email</span>
                                 </td>
+                                
                                 <td class="text-nowrap text-center">
                                     <!-- boton editar agregado por José Prados para ir a editar usuario -->
                                     <a [routerLink]="['/dashboard/tienda-user/edit/', usuario.uid]" class="cursor" data-toggle="tooltip" data-original-title="Edit">

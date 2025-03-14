@@ -29,7 +29,7 @@ export class UsuariosTiendaComponent implements OnInit {
   p: number = 1;
   count: number = 8;
 
-  roles: string[] = ['USER', 'MEDICO', 'ADMIN'];
+  roles: string[];
 
   constructor(
     private usuarioService: UsuarioService,
@@ -40,7 +40,7 @@ export class UsuariosTiendaComponent implements OnInit {
   ngOnInit(): void {
     let USER = localStorage.getItem("user");
     this.user = JSON.parse(USER ? USER: '');
-    this.localId = this.user.local;
+    this.localId = this.user.local._id;
     this.role = this.user.role;
 
     console.log('localID: ',this.localId)
