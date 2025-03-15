@@ -16,6 +16,7 @@
                         <thead class="thead-dark">
                             <tr>
                                 <th>Usuario</th>
+                                <th>Tema</th>
                                 <th>Estado</th>
                                 <th>Status</th>
                                 <th>Chat</th>
@@ -24,6 +25,7 @@
                         <tbody *ngFor="let item of tickets.tickets | orderBy:'createdAt, desc'">
                             <tr>
                                 <td>{{item.user.first_name}} {{item.user.last_name}}</td>
+                                <td>{{item.tema}}</td>
                                 <td>
                                     <span class="badge badge-success" *ngIf="item.estado == 1">Abierto</span>
                                     <span class="badge badge-danger" *ngIf="item.estado == 0">Cerrado</span>

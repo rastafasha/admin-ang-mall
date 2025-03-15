@@ -43,7 +43,7 @@ export class AdminTicketComponent implements OnInit {
         this.tickets = response;
         this.count_cat = this.tickets.tickets.length;
         this.page = 1;
-        console.log(this.tickets);
+        // console.log(this.tickets);
       },
       error=>{
         console.log(error);
