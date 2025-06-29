@@ -9,6 +9,7 @@ export class Blog{
         public video_review: string,
         public descripcion: string,
         public categoria: string,
+        public slug: string,
         public status: boolean,
         public isFeatured: boolean,
         public createdAt: Date,

@@ -6,6 +6,7 @@ export class Producto{
   constructor(
 
         public titulo: string,
+        public slug: string,
         public precio_ahora: string,
         public precio_antes: string,
         public video_review: string,

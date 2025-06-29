@@ -94,6 +94,7 @@ export class BlogEditComponent implements OnInit {
       titulo: ['',Validators.required],
       descripcion: ['',Validators.required],
       categoria: ['',Validators.required],
+      slug: [''],
       isFeatured: [''],
       video_review: [''],
     })
@@ -122,6 +123,7 @@ export class BlogEditComponent implements OnInit {
             video_review: res.video_review,
             categoria: res.categoria,
             isFeatured: res.isFeatured,
+            slug: res.slug,
             user_id: this.usuario.uid,
             img : res.img
           });

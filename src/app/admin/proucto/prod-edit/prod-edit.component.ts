@@ -183,7 +183,7 @@ export class ProdEditComponent implements OnInit {
       if(!this.producto_id){
         return this.router.navigateByUrl(`/dasboard/producto`);
       }
-        const { titulo, precio_antes,info_short,detalle, stock,categoria,subcategoria,
+        const { titulo,slug, precio_antes,info_short,detalle, stock,categoria,subcategoria,
           nombre_selector,marca,video_review,precio_ahora, isFeatured, local  } = producto;
 
           
@@ -201,6 +201,7 @@ export class ProdEditComponent implements OnInit {
         // AGREGADO POR JOSE PRADOS, ASIGNACION DE VALORES DEL PRODUCTO AL FORMULARIO
         this.productoForm.setValue({
           titulo: this.productoSeleccionado.titulo,
+          slug: this.productoSeleccionado.slug,
           detalle: this.productoSeleccionado.detalle,
           info_short: this.productoSeleccionado.info_short,
           video_review: this.productoSeleccionado.video_review,
@@ -227,6 +228,7 @@ export class ProdEditComponent implements OnInit {
       detalle: ['', Validators.required],
       info_short: ['', Validators.required],
       video_review: [''],
+      slug: [''],
       stock: ['', Validators.required],
       precio_ahora: ['', Validators.required],
       precio_antes: ['', Validators.required],
