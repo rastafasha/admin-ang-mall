@@ -88,7 +88,6 @@ export class AdminChatComponent implements OnInit {
 
         this._userService.getUserById( this.usuario).subscribe(
           response =>{
-            // console.log(response);
             this.usuariodetail = response;
             this.poster_admin = response.img;
 
