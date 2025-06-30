@@ -245,7 +245,7 @@ export class ProdEditComponent implements OnInit {
 
 
 
-  updateProducto(){debugger
+  updateProducto(){
 
     const {titulo, precio_antes,info_short, detalle, 
       stock,categoria,subcategoria, 
