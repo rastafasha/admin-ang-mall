@@ -67,6 +67,8 @@ export class SlidereditComponent implements OnInit {
       enlace: ['', Validators.required],
       status: ['', Validators.required],
       target: [''],
+      align: [''],
+      color: [''],
       mostrarInfo: [''],
       mostrarboton: [''],
     });
@@ -98,9 +100,9 @@ export class SlidereditComponent implements OnInit {
         return this.router.navigateByUrl(`/dasboard/slider`);
       }
 
-        const { first_title, subtitulo,  enlace, target, status, mostrarInfo, mostrarboton } = slider;
+        const { first_title, subtitulo, align, color,  enlace, target, status, mostrarInfo, mostrarboton } = slider;
         this.sliderSeleccionado = slider;
-        this.sliderForm.setValue({first_title, subtitulo,  enlace, target, status,mostrarInfo, mostrarboton  });
+        this.sliderForm.setValue({first_title, subtitulo, align, color,  enlace, target, status,mostrarInfo, mostrarboton  });
 
       });
 
@@ -120,7 +122,7 @@ export class SlidereditComponent implements OnInit {
 
   onSubmit(sliderForm){
     const {
-      first_title, subtitulo,  enlace, target, status,mostrarInfo, mostrarboton
+      first_title, subtitulo,  enlace, target, status,mostrarInfo, mostrarboton, align, color
      } = this.sliderForm.value;
 
     if(this.sliderSeleccionado){

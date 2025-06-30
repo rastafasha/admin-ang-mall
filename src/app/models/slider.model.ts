@@ -9,6 +9,8 @@ export class Slider{
         public subtitulo: string,
         public enlace: string,
         public target: string,
+        public align: string,
+        public color: string,
         public status: boolean,
         public mostrarInfo: boolean,
         public mostrarboton: boolean,
