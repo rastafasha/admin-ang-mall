@@ -73,7 +73,6 @@ export class GaleriaProductoComponent implements OnInit {
 
   onSelect(event) {
     this.files.push(...event.addedFiles);
-    console.log(this.files);
 
   }
 
@@ -123,13 +122,14 @@ export class GaleriaProductoComponent implements OnInit {
 
   onSubmit(galeriaForm){
 
-      const data = {
-        imagenes : this.files,
-        producto : this.producto._id
-      }
+      const formData = new FormData();
+      this.files.forEach(file => {
+        formData.append('imagenes', file);
+      });
+      formData.append('producto', this.producto._id);
 
       if(this.producto){
-        this.galeriaService.registro(data).subscribe(
+        this.galeriaService.registro(formData).subscribe(
           response =>{
             this.subirImagen();
             this.close_modal();

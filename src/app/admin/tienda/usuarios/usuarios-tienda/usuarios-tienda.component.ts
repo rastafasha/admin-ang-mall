@@ -40,20 +40,20 @@ export class UsuariosTiendaComponent implements OnInit {
   ngOnInit(): void {
     let USER = localStorage.getItem("user");
     this.user = JSON.parse(USER ? USER: '');
-    this.localId = this.user.local._id;
+    this.localId = this.user.local;
     this.role = this.user.role;
 
-    console.log('localID: ',this.localId)
+    // console.log('localID: ',this.localId)
 
     if(this.role === 'ADMIN'){
       this.loadUsuarios();
       
+    }else{
+
+      this.loadEmployeesByLocalId();
     }
     if(this.role === 'ALMACEN' || this.role === 'VENTAS'||this.role === 'TIENDA'){
-      this.loadEmployeesByLocalId();
-      
     }
-    
 
   }
 
@@ -70,8 +70,6 @@ export class UsuariosTiendaComponent implements OnInit {
         this.tiendausers = tiendausers;
         this.tiendausersTemp = tiendausers;
         this.cargando = false;
-        console.log('total: ',this.totalUsuarios);
-        console.log('tienda usuarios: ',this.tiendausers);
       }
     )
   }

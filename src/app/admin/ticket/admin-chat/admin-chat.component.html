@@ -8,16 +8,17 @@
                     <div class="card">
                         <div class="card-header">
                             <h6 style="margin-bottom: 0px;"><b>Asunto: </b> &nbsp;{{ticket.tema}} </h6>
+                            <h6 style="margin-bottom: 0px;"><b>User: </b> &nbsp;{{usuariodetail.first_name}} {{usuariodetail.last_name}}  </h6>
 
                         </div>
                         <div class="card-body" style="height: 500px;max-height: 500px;
                   overflow-y: auto;padding-top: 0px;" #scrollMe>
                             <div class="row">
                                 <ng-container *ngFor="let item of mensajes; let indice = index">
-                                    <div class="col-lg-12 p-4" *ngIf="item.de == usuario._id" style="background: #ededed;">
-                                        <div class="media border-bottom"><img class="rounded-circle" width="50" [src]="url+'user/data/'+poster_admin">
+                                    <div class="col-lg-12 p-4" *ngIf="item.de == usuariodetail._id" style="background: #ededed;">
+                                        <div class="media border-bottom"><img class="rounded-circle" width="50" [src]="poster_admin">
                                             <div class="media-body pl-3">
-                                                <h6 class="font-size-md mb-2">{{usuario.first_name}} {{usuario.last_name}}</h6>
+                                                <h6 class="font-size-md mb-2">{{usuariodetail.first_name}} {{usuariodetail.last_name}}</h6>
                                                 <p class="font-size-md mb-1">{{item.msm}}</p><span class="font-size-ms text-muted"><i class="czi-time align-middle mr-2"></i>{{item.createdAt | dateAgo}}</span>
                                             </div>
                                         </div>

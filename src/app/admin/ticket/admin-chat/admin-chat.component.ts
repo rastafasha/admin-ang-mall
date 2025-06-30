@@ -25,6 +25,7 @@ export class AdminChatComponent implements OnInit {
   public id;
   public msm = '';
   public usuario : any = {};
+  public usuariodetail : any = {};
   public msm_error=false;
   public mensajes : Array<any> = [];
   public poster_admin;
@@ -57,9 +58,10 @@ export class AdminChatComponent implements OnInit {
       this.mensajes = [];
       this._ticketService.get_ticket(this.id).subscribe(
         response =>{
+          
           this.ticket = response.ticket;
           this.estado_ticket = this.ticket.estado;
-          this._userService.get_user(this.ticket.user).subscribe(
+          this._userService.getUserById(this.ticket.user).subscribe(
             response =>{
               this.usuario = response.user;
               this.poster_admin = response.user.perfil;
@@ -81,13 +83,15 @@ export class AdminChatComponent implements OnInit {
     this._ticketService.get_ticket(this.id).subscribe(
       response =>{
         this.ticket = response.ticket;
+        this.usuario = this.ticket.user
         this.estado_ticket = this.ticket.estado;
-        this._userService.get_user(this.ticket.user).subscribe(
-          response =>{
-            this.usuario = response.user;
-            this.poster_admin = response.user.perfil;
 
-            this.listar(this.usuario._id);
+        this._userService.getUserById( this.usuario).subscribe(
+          response =>{
+            this.usuariodetail = response;
+            this.poster_admin = response.img;
+
+            this.listar();
           },
           error=>{
             console.log(error);
@@ -103,15 +107,18 @@ export class AdminChatComponent implements OnInit {
 
   }
 
-  listar(idusuario){
-    this._ticketService.data('627ec91529881af6cb899f79',idusuario).subscribe(
+  listar(){
+    this._ticketService.data(this.identity.uid,this.usuario).subscribe(
       response=>{
 
-        response.mensajes.forEach(element => {
-          if(element.ticket == this.id){
-            this.mensajes.push(element);
-          }
-        });
+        if (response.mensajes && Array.isArray(response.mensajes)) {
+            response.mensajes.forEach(element => {
+                if(element.ticket == this.id){
+                    this.mensajes.push(element);
+                }
+            });
+               
+        }
         this.scrollToBottom();
 
 
@@ -130,7 +137,7 @@ export class AdminChatComponent implements OnInit {
       if(this.close_ticket){
         //  enviar y cerrar ticket
         let data={
-          de:'627ec91529881af6cb899f79',
+          de:this.identity.uid,
           para:this.usuario._id,
           msm:msmForm.value.msm,
           ticket:this.id,
@@ -153,7 +160,7 @@ export class AdminChatComponent implements OnInit {
       }
       else{
         let data={
-          de:'627ec91529881af6cb899f79',
+          de:this.identity.uid,
           para:this.usuario._id,
           msm:msmForm.value.msm,
           ticket:this.id,
