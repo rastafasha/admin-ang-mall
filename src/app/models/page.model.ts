@@ -6,6 +6,7 @@ export class Page{
   constructor(
 
         public titulo: string,
+        public slug: string,
         public video_review: string,
         public info_short: string,
         public descripcion: string,
