@@ -11,7 +11,7 @@ import { Usuario } from 'src/app/models/usuario.model';
 import { CategoriaService } from 'src/app/services/categoria.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { IconosService } from 'src/app/services/iconos.service';
-import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+// import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { TiendaService } from 'src/app/services/tienda.service';
 import { Tienda } from 'src/app/models/tienda.model';
 
@@ -45,7 +45,7 @@ export class UsertiendaaddComponent implements OnInit {
   public localList:any;
   state_banner:boolean;
 
-  public Editor = ClassicEditor;
+  // public Editor = ClassicEditor;
   public usertiendaSeleccionado: Usuario;
 
   constructor(

@@ -10,7 +10,7 @@ import { Usuario } from 'src/app/models/usuario.model';
 import { UsuarioService } from '../../services/usuario.service';
 import { Congeneral } from 'src/app/models/congeneral.model';
 import { CongeneralService } from 'src/app/services/congeneral.service';
-import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+// import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 interface HtmlInputEvent extends Event{
   target : HTMLInputElement & EventTarget;
@@ -40,7 +40,7 @@ export class ConfigSiteComponent implements OnInit {
   public configCreated: any;
   public congeneral_id : string;
 
-  public Editor = ClassicEditor;
+  // public Editor = ClassicEditor;
 
    public redessociales: any = [];
    title:any;
@@ -98,7 +98,7 @@ getCongenerals(){
   this.congeneralService.cargarCongenerals().subscribe((resp:any)=>{
 
     this.congeneral_id = resp[0]._id;
-    console.log('congeneral_id',this.congeneral_id);
+    // console.log('congeneral_id',this.congeneral_id);
     if(this.congeneral_id ){
       
       setTimeout(()=>{

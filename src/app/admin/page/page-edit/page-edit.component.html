@@ -28,7 +28,7 @@
                             <label  for="text-input">Descripción <span class="required">*</span></label>
                             <div class=" col-12 ">
     
-                                <ckeditor [editor]="Editor" formControlName="descripcion" data="<p>Hello, world!</p>" required></ckeditor>
+                                <ckeditor formControlName="descripcion" data="<p>Hello, world!</p>" required></ckeditor>
                             </div>
                         </div>
                     </div>
@@ -55,6 +55,16 @@
                               <option  disabled value="">SELECCIONAR</option>
                               <option  [value]="true">Activo</option>
                               <option  [value]="false">Inactivo</option>
+
+                          </select>
+                        </div>
+                        <div class="form-group col-xs-12 col-sm-6">
+                            <label for="select-input">Menu</label>
+                            <select class="form-control " formControlName="origen">
+                              <option  disabled value="">SELECCIONAR</option>
+                              <option  value="header">header</option>
+                              <option  value="footer">footer</option>
+                              <option  value="ambos">ambos</option>
 
                           </select>
                         </div>

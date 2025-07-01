@@ -8,7 +8,6 @@ import { TiendaDetailComponent } from './tienda/tienda-detail/tienda-detail.comp
 import { UserDetailComponent } from './usuarios/user-detail/user-detail.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { NgxPaginationModule } from 'ngx-pagination';
@@ -17,6 +16,7 @@ import { AtencionLocalComponent } from './atencion-local/atencion-local.componen
 import { CarritoComponent } from './atencion-local/carrito/carrito.component';
 import { ProductoComponent } from './atencion-local/producto/producto.component';
 import { ComponentsAtentionModule } from './atencion-local/components/components.module';
+import { CKEditorModule } from 'ckeditor4-angular';
 
 
 @NgModule({

@@ -15,7 +15,6 @@ import { ModalImagenService } from 'src/app/services/modal-imagen.service';
 import { Page } from 'src/app/models/page.model';
 import { PageService } from 'src/app/services/page.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 
 interface HtmlInputEvent extends Event{
@@ -50,7 +49,7 @@ export class PageEditComponent implements OnInit {
   pageTitle: string;
 
   public pageSeleccionado: Page;
-  public Editor = ClassicEditor;
+  // public Editor = ClassicEditor;
 
   constructor(
     private fb: FormBuilder,
@@ -94,6 +93,7 @@ export class PageEditComponent implements OnInit {
       descripcion: ['',Validators.required],
       categoria: ['',Validators.required],
       slug: [''],
+      origen: [''],
       isFeatured: [''],
       video_review: [''],
     })
@@ -123,6 +123,7 @@ export class PageEditComponent implements OnInit {
             categoria: res.categoria,
             isFeatured: res.isFeatured,
             slug: res.slug,
+            origen: res.origen,
             user_id: this.usuario.uid,
             img : res.img
           });
@@ -142,7 +143,7 @@ export class PageEditComponent implements OnInit {
 
   updatePage(){
 
-    const {titulo, descripcion,categoria, isFeatured,slug,
+    const {titulo, descripcion,categoria, isFeatured,slug,origen,
       video_review, } = this.pageForm.value;
 
     if(this.pageSeleccionado){

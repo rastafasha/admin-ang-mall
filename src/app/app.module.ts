@@ -18,13 +18,24 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import {HttpClientModule, HttpClient, HTTP_INTERCEPTORS} from '@angular/common/http';
 
-import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
 //pwa
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { ProgressBarComponent } from './reusables/progress-bar/progress-bar.component';
+import { CKEditorModule } from 'ckeditor4-angular';
+
+interface TranslateLoaderFactory {
+  (http: HttpClient): TranslateHttpLoader;
+}
+
+interface NgModuleConfig {
+  declarations: any[];
+  imports: any[];
+  providers: any[];
+  bootstrap: any[];
+}
 
 @NgModule({
   declarations: [
@@ -39,22 +50,18 @@ import { ProgressBarComponent } from './reusables/progress-bar/progress-bar.comp
     AuthModule,
     ComponentsModule,
     PipesModule,
-    AdminModule,
     CKEditorModule,
+    AdminModule,
     TranslateModule.forRoot({
       defaultLanguage: 'es',
       loader: {
         provide: TranslateLoader,
-        useFactory: (http: HttpClient) => {
-          return new TranslateHttpLoader(http);
-        },
-        deps: [ HttpClient ]
+        useFactory: <TranslateLoaderFactory>((http: HttpClient) => new TranslateHttpLoader(http)),
+        deps: [HttpClient]
       }
     }),
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,
-      // Register the ServiceWorker as soon as the application is stable
-      // or after 30 seconds (whichever comes first).
       registrationStrategy: 'registerWhenStable:30000'
     })
   ],

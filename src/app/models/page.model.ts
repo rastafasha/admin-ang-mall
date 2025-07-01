@@ -7,6 +7,7 @@ export class Page{
 
         public titulo: string,
         public slug: string,
+        public origen: string,
         public video_review: string,
         public info_short: string,
         public descripcion: string,

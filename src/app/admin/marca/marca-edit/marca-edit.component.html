@@ -17,7 +17,7 @@
                     <div class="form-group col-12">
                         <label for="exampleInputApellido">Descripción</label>
                         <div class="col-12">
-                            <ckeditor [editor]="Editor" formControlName="descripcion" data="<p>Hello, world!</p>" required></ckeditor>
+                            <ckeditor formControlName="descripcion" data="<p>Hello, world!</p>" required></ckeditor>
                         </div>
                     </div>
                     <button type="submit" [disabled]="marcaForm.invalid" class="btn btn-success waves-effect waves-light m-r-10 btn-block">

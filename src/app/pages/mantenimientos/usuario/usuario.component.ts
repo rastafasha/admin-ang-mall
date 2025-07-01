@@ -17,7 +17,6 @@ import { DireccionService } from 'src/app/services/direccion.service';
 import { VentaService } from 'src/app/services/venta.service';
 import {Venta, Cancelacion} from '../../../models/ventas.model';
 
-import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 interface HtmlInputEvent extends Event{
   target : HTMLInputElement & EventTarget;
@@ -50,7 +49,7 @@ export class UsuarioComponent implements OnInit {
   pageTitle: string;
 
 
-  public Editor = ClassicEditor;
+  // public Editor = ClassicEditor;
 
   constructor(
     private fb: FormBuilder,

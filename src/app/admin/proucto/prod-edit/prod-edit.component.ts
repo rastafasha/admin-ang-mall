@@ -16,7 +16,7 @@ import { ModalImagenService } from 'src/app/services/modal-imagen.service';
 import { Producto } from 'src/app/models/producto.model';
 import { ProductoService } from 'src/app/services/producto.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+// import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { ColorService } from 'src/app/services/color.service';
 import { SelectorService } from 'src/app/services/selector.service';
 import { TiendaService } from 'src/app/services/tienda.service';
@@ -61,8 +61,8 @@ export class ProdEditComponent implements OnInit {
   localList: any[];
 
   public productoSeleccionado: Producto;
-  public Editor = ClassicEditor;
-  public Editor1 = ClassicEditor;
+  // public Editor = ClassicEditor;
+  // public Editor1 = ClassicEditor;
 
   constructor(
     private fb: FormBuilder,

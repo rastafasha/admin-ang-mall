@@ -10,7 +10,7 @@ import { FileUploadService } from 'src/app/services/file-upload.service';
 import { MarcaService } from 'src/app/services/marca.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { environment } from 'src/environments/environment';
-import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+// import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 
 @Component({
@@ -29,7 +29,7 @@ export class MarcaEditComponent implements OnInit {
 
   pageTitle: string;
 
-  public Editor = ClassicEditor;
+  // public Editor = ClassicEditor;
   public marcaSeleccionado: Marca;
 
   constructor(

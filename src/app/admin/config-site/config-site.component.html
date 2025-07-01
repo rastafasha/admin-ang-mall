@@ -62,7 +62,7 @@
                   </div>
                 </a>
                 <a *ngIf="red.icono === 'fa fa-whatsapp'" 
-                    href="https://wa.me/{{red.url}}?text=Estoy%20interesado%20en%20el%20producto%20en%20la%20flechaapp,%20favor%20ampliar%20informacion"
+                    href="https://wa.me/{{red.url}}?text=Estoy%20interesado%20en%20el%20producto,%20favor%20ampliar%20informacion"
                     target="_blank" rel="noopener noreferrer">
                       <div class="option-admin">
                         <i [class]="red.icono"></i>
@@ -147,7 +147,7 @@
                 <div class="form-group col-xs-12 col-sm-6">
                   <label class="col-form-label font-weight-medium" for="textarea-input">Dirección</label>
                   <div class="col-md-12">
-                    <ckeditor [editor]="Editor" formControlName="direccion" data="<p>Hello, world!</p>" required>
+                    <ckeditor  formControlName="direccion" data="<p>Hello, world!</p>" required>
                     </ckeditor>
                   </div>
                 </div>

@@ -6,12 +6,11 @@ import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
 
 import { FileUploadService } from 'src/app/services/file-upload.service';
-import { Categoria } from 'src/app/models/categoria.model';
 import { Usuario } from 'src/app/models/usuario.model';
 import { CategoriaService } from 'src/app/services/categoria.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { IconosService } from 'src/app/services/iconos.service';
-import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+// import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { Tienda } from 'src/app/models/tienda.model';
 import { TiendaService } from 'src/app/services/tienda.service';
 
@@ -43,8 +42,8 @@ export class TiendaaddComponent implements OnInit {
   state_banner:boolean;
 
 
-  public Editor = ClassicEditor;
-  public Editor1 = ClassicEditor;
+  // public Editor = ClassicEditor;
+  // public Editor1 = ClassicEditor;
   public tiendaSeleccionado?: Tienda;
 
   public redessociales:any = [];

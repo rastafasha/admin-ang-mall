@@ -15,7 +15,6 @@ import { ModalImagenService } from 'src/app/services/modal-imagen.service';
 import { Curso } from 'src/app/models/curso.model';
 import { CursoService } from 'src/app/services/curso.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 
 interface HtmlInputEvent extends Event{
@@ -50,8 +49,7 @@ export class CursoEditComponent implements OnInit {
   pageTitle: string;
 
   public cursoSeleccionado: Curso;
-  public Editor = ClassicEditor;
-  public Editor1 = ClassicEditor;
+  
 
   constructor(
     private fb: FormBuilder,

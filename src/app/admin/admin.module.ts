@@ -50,7 +50,7 @@ import { VideoIndexComponent } from './curso/video-index/video-index.component';
 import { VideoEditComponent } from './curso/video-edit/video-edit.component';
 
 //pluggins
-import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { CKEditorModule } from 'ckeditor4-angular';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { NgxPaginationModule } from 'ngx-pagination';

@@ -15,7 +15,6 @@ import { ModalImagenService } from 'src/app/services/modal-imagen.service';
 import { Blog } from 'src/app/models/blog.model';
 import { BlogService } from 'src/app/services/blog.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 
 interface HtmlInputEvent extends Event{
@@ -51,7 +50,6 @@ export class BlogEditComponent implements OnInit {
 
   public blogSeleccionado: Blog;
 
-  public Editor = ClassicEditor;
 
   constructor(
     private fb: FormBuilder,

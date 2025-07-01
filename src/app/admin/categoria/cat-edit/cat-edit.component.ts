@@ -11,7 +11,7 @@ import { Usuario } from 'src/app/models/usuario.model';
 import { CategoriaService } from 'src/app/services/categoria.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { IconosService } from 'src/app/services/iconos.service';
-import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { CKEditorModule } from 'ckeditor4-angular';
 
 interface HtmlInputEvent extends Event{
   target : HTMLInputElement & EventTarget;
@@ -40,7 +40,6 @@ export class CatEditComponent implements OnInit {
   listIcons;
   state_banner:boolean;
 
-  public Editor = ClassicEditor;
   public categoriaSeleccionado: Categoria;
 
   constructor(
