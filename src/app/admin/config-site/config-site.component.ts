@@ -27,7 +27,7 @@ declare var $:any;
 export class ConfigSiteComponent implements OnInit {
 
 
-  public progressValue:boolean = false;
+  public isLoading:boolean = false;
 
   pageTitle: string;
   public confGeneralForm: FormGroup;
@@ -66,15 +66,16 @@ export class ConfigSiteComponent implements OnInit {
   }
 
 getCongenerals(){
+  this.isLoading = true;
   this.congeneralService.cargarCongenerals().subscribe((resp:any)=>{
 
     this.congeneral_id = resp[0]._id;
     console.log('congeneral_id',this.congeneral_id);
     if(this.congeneral_id ){
-      this.progressValue = true;
+      
       setTimeout(()=>{
         this.cargarConf(this.congeneral_id);
-        this.progressValue = false;
+        this.isLoading = false;
 
       }, 2000)
     }

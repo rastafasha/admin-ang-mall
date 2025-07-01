@@ -1,22 +1,23 @@
 <div class="row">
-    <!-- <app-progress-bar [progressValue]="80"></app-progress-bar> -->
-    <app-progress-bar *ngIf="progressValue" [progressValue]="100"></app-progress-bar>
-    <!-- *ngIf="!congeneral" -->
+ <app-loading *ngIf="isLoading"></app-loading>
 
-    <!-- Nav tabs -->
-            <ul class="nav nav-tabs profile-tab" role="tablist">
-                <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#detalle" role="tab" aria-expanded="true">Detalles</a> </li>
-                <li class="nav-item"> <a class="nav-link " data-toggle="tab" href="#editar" role="tab" aria-expanded="true">Editar</a> </li>
-                <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#imagen" role="tab" aria-expanded="false">Imagenes</a> </li>
-            </ul>
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs profile-tab w-100" role="tablist" *ngIf="!isLoading">
+    <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#detalle" role="tab"
+        aria-expanded="true">Detalles</a> </li>
+    <li class="nav-item"> <a class="nav-link " data-toggle="tab" href="#editar" role="tab"
+        aria-expanded="true">Editar</a> </li>
+    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#imagen" role="tab"
+        aria-expanded="false">Imagenes</a> </li>
+  </ul>
   <!-- Tab panes -->
-  <div class="tab-content">
+  <div class="tab-content" *ngIf="!isLoading">
     <div class="tab-pane active" id="detalle" role="tabpanel" aria-expanded="true">
-        
       <div class="col-12">
-        <div class="card">
-          <div class="card-body" >
-            <p class="col-xs-12 col-sm-6"><b>Título:</b> {{ congeneral.titulo }}</p>
+        <div class="card " style="width: 100vw;">
+          <div class="card-body">
+            <div class="row">
+              <p class="col-xs-12 col-sm-6"><b>Título:</b> {{ congeneral.titulo }}</p>
             <p class="col-xs-12 col-sm-6"><b>CR:</b> {{ congeneral.cr }}</p>
             <p class="col-xs-12 col-sm-6"><b>Teléfono uno:</b> {{ congeneral.telefono_uno }}</p>
             <p class="col-xs-12 col-sm-6"><b>Teléfono dos:</b> {{ congeneral.telefono_dos }}</p>
@@ -41,16 +42,10 @@
               {{ congeneral.twitter }}
             </p>
             <p class="col-xs-12 col-sm-6"><b>Modo Paypal Sandbox (modo de pruebas):</b></p>
-            <span
-              class="badge badge-success badge-shadow"
-              *ngIf="congeneral.modoPaypal == true"
-              >{{ congeneral.modoPaypal }}</span
-            >
-            <span
-              class="badge badge-primary badge-shadow"
-              *ngIf="congeneral.modoPaypal == false"
-              >{{ congeneral.modoPaypal }}</span
-            >
+            <span class="badge badge-success badge-shadow" *ngIf="congeneral.modoPaypal == true">{{
+              congeneral.modoPaypal }}</span>
+            <span class="badge badge-primary badge-shadow" *ngIf="congeneral.modoPaypal == false">{{
+              congeneral.modoPaypal }}</span>
             <p class="col-xs-12 col-sm-6"><b>Sandbox:</b> {{ congeneral.sandbox }}</p>
             <p class="col-xs-12 col-sm-6"><b>Cliente Paypal ID:</b> {{ congeneral.clientePaypal }}</p>
             <p class="col-xs-12 col-sm-6"><b>Rapid Api Key:</b> {{ congeneral.rapidapiKey }}</p>
@@ -64,38 +59,29 @@
               allow="accelerometer; autoplay; encrypted-media; gyroscope; "
               allowfullscreen
             ></iframe> -->
-  
+
             <p class="col-xs-12 col-sm-6"><b>Logo:</b></p>
-            <img
-              [src]="congeneral.img | imagenPipe : 'congenerals'"
-              style="width: 150px; margin-left: 10px"
-              class="img-responsive img-thumbnail"
-              alt=""
-            />
+            <img [src]="congeneral.img | imagenPipe : 'congenerals'" style="width: 150px; margin-left: 10px"
+              class="img-responsive img-thumbnail" alt="" />
             <p class="col-xs-12 col-sm-6"><b>Favicon:</b></p>
-            <img
-              [src]="congeneral.favicon | imagenPipe : 'congenerals'"
-              style="width: 150px; margin-left: 10px"
-              class="img-responsive img-thumbnail"
-              alt=""
-            />
+            <img [src]="congeneral.favicon | imagenPipe : 'congenerals'" style="width: 150px; margin-left: 10px"
+              class="img-responsive img-thumbnail" alt="" />
+            </div>
           </div>
         </div>
       </div>
+
     </div>
     <!--second tab-->
     <div class="tab-pane " id="editar" role="tabpanel" aria-expanded="false">
-      <div class="col-12" >
-        <div class="card">
+      <div class="col-12">
+        <div class="card" >
           <div class="card-body">
             <h4 class="card-title">{{ pageTitle }}</h4>
             <h6 class="card-subtitle">Ajustes</h6>
             <!-- <button class="btn btn-outline-danger" href="javascript:void(0)" (click)="goBack()">Volver</button> -->
-            <form
-              class="form p-t-20 form-horizontal form-material"
-              [formGroup]="confGeneralForm"
-              (submit)="updateConfiguracion()"
-            >
+            <form class="form p-t-20 form-horizontal form-material" [formGroup]="confGeneralForm"
+              (submit)="updateConfiguracion()">
               <div class="row">
                 <div class="form-group col-xs-12 col-sm-6">
                   <label for="select-input">Language</label>
@@ -106,80 +92,48 @@
                   </select>
                 </div>
               </div>
-    
+
               <div class="row">
                 <div class="form-group col-xs-12 col-sm-6">
                   <label for="exampleInputuname">Razón social</label>
                   <div class="input-group">
-                    <input
-                      type="text"
-                      formControlName="titulo"
-                      class="form-control"
-                      id="exampleInputuname"
-                      placeholder="Razón social"
-                    />
+                    <input type="text" formControlName="titulo" class="form-control" id="exampleInputuname"
+                      placeholder="Razón social" />
                   </div>
                 </div>
                 <div class="form-group col-xs-12 col-sm-6">
                   <label for="exampleInputsubcategorias">Copy Right</label>
                   <div class="input-group">
-                    <input
-                      type="text"
-                      formControlName="cr"
-                      class="form-control"
-                      id="exampleInputsubcategorias"
-                      placeholder="Copy Right"
-                    />
+                    <input type="text" formControlName="cr" class="form-control" id="exampleInputsubcategorias"
+                      placeholder="Copy Right" />
                   </div>
                 </div>
               </div>
               <div class="row">
                 <div class="form-group col-xs-12 col-sm-6">
-                  <label class="col-form-label font-weight-medium" for="text-input"
-                    >Telefonos</label
-                  >
+                  <label class="col-form-label font-weight-medium" for="text-input">Telefonos</label>
                   <div class="col-md-12">
                     <div class="row">
                       <div class="col">
-                        <input
-                          class="form-control"
-                          type="number"
-                          placeholder="Telefono 1"
-                          formControlName="telefono_uno"
-                        />
+                        <input class="form-control" type="number" placeholder="Telefono 1"
+                          formControlName="telefono_uno" />
                       </div>
                       <div class="col">
-                        <input
-                          class="form-control"
-                          type="number"
-                          placeholder="Telefono 2"
-                          formControlName="telefono_dos"
-                        />
+                        <input class="form-control" type="number" placeholder="Telefono 2"
+                          formControlName="telefono_dos" />
                       </div>
                     </div>
                   </div>
                 </div>
                 <div class="form-group col-xs-12 col-sm-6">
-                  <label class="col-form-label font-weight-medium" for="text-input"
-                    >Correos</label
-                  >
+                  <label class="col-form-label font-weight-medium" for="text-input">Correos</label>
                   <div class="col-md-12">
                     <div class="row">
                       <div class="col">
-                        <input
-                          class="form-control"
-                          type="email"
-                          placeholder="Email 1"
-                          formControlName="email_uno"
-                        />
+                        <input class="form-control" type="email" placeholder="Email 1" formControlName="email_uno" />
                       </div>
                       <div class="col">
-                        <input
-                          class="form-control"
-                          type="email"
-                          placeholder="Email 2"
-                          formControlName="email_dos"
-                        />
+                        <input class="form-control" type="email" placeholder="Email 2" formControlName="email_dos" />
                       </div>
                     </div>
                   </div>
@@ -187,112 +141,64 @@
               </div>
               <div class="row">
                 <div class="form-group col-xs-12 col-sm-6">
-                  <label
-                    class="col-form-label font-weight-medium"
-                    for="textarea-input"
-                    >Dirección</label
-                  >
+                  <label class="col-form-label font-weight-medium" for="textarea-input">Dirección</label>
                   <div class="col-md-12">
-                    <ckeditor
-                      [editor]="Editor"
-                      formControlName="direccion"
-                      data="<p>Hello, world!</p>"
-                      required
-                    ></ckeditor>
+                    <ckeditor [editor]="Editor" formControlName="direccion" data="<p>Hello, world!</p>" required>
+                    </ckeditor>
                   </div>
                 </div>
-    
+
                 <div class="form-group col-xs-12 col-sm-6">
-                  <label
-                    class="col-form-label font-weight-medium"
-                    for="textarea-input"
-                    >Horarios</label
-                  >
+                  <label class="col-form-label font-weight-medium" for="textarea-input">Horarios</label>
                   <div class="col-md-12">
-                    <textarea
-                      class="form-control"
-                      id="textarea-input"
-                      rows="2"
-                      placeholder="Horarios de atención."
-                      formControlName="horarios"
-                    ></textarea>
+                    <textarea class="form-control" id="textarea-input" rows="2" placeholder="Horarios de atención."
+                      formControlName="horarios"></textarea>
                   </div>
                 </div>
               </div>
               <div class="row">
                 <div class="form-group col-xs-12 col-sm-6">
                   <label class="col-form-label font-weight-medium" for="text-input">
-                    <i class="czi-facebook"></i> Facebook</label
-                  >
+                    <i class="czi-facebook"></i> Facebook</label>
                   <div class="input-group col-md-12 input-group">
-                    <input
-                      class="form-control"
-                      type="text"
-                      placeholder="Enlace de pagina"
-                      formControlName="facebook"
-                    />
+                    <input class="form-control" type="text" placeholder="Enlace de pagina" formControlName="facebook" />
                   </div>
                 </div>
                 <div class="form-group col-xs-12 col-sm-6">
-                  <label class="col-form-label font-weight-medium" for="text-input"
-                    ><i class="czi-instagram"></i> Instagram</label
-                  >
+                  <label class="col-form-label font-weight-medium" for="text-input"><i class="czi-instagram"></i>
+                    Instagram</label>
                   <div class="col-md-12 input-group">
-                    <input
-                      class="form-control"
-                      type="text"
-                      placeholder="Enlace de pagina "
-                      formControlName="instagram"
-                    />
+                    <input class="form-control" type="text" placeholder="Enlace de pagina "
+                      formControlName="instagram" />
                   </div>
                 </div>
               </div>
               <div class="row">
                 <div class="form-group col-xs-12 col-sm-6">
                   <label class="col-form-label font-weight-medium" for="text-input">
-                    <i class="czi-youtube"></i> Youtube</label
-                  >
+                    <i class="czi-youtube"></i> Youtube</label>
                   <div class="col-md-12 input-group">
-                    <input
-                      class="form-control"
-                      type="text"
-                      placeholder="Enlace de pagina "
-                      formControlName="youtube"
-                    />
+                    <input class="form-control" type="text" placeholder="Enlace de pagina " formControlName="youtube" />
                   </div>
                 </div>
                 <div class="form-group col-xs-12 col-sm-6">
                   <label class="col-form-label font-weight-medium" for="text-input">
-                    <i class="czi-twitter"></i> Twitter</label
-                  >
-    
+                    <i class="czi-twitter"></i> Twitter</label>
+
                   <div class="col-md-12 input-group">
-                    <input
-                      class="form-control"
-                      type="text"
-                      placeholder="Enlace de pagina "
-                      formControlName="twitter"
-                    />
+                    <input class="form-control" type="text" placeholder="Enlace de pagina " formControlName="twitter" />
                   </div>
                 </div>
               </div>
-    
+
               <div class="row">
                 <div class="form-group col-xs-12 col-sm-6">
-                  <label
-                    class="col-form-label font-weight-medium"
-                    for="textarea-input"
-                    >Mapa (iframe)</label
-                  >
+                  <label class="col-form-label font-weight-medium" for="textarea-input">Mapa (iframe)</label>
                   <div class="col-md-12">
                     <div class="row">
                       <div class="col-md-12">
-                        <textarea
-                          class="form-control"
-                          id="textarea-input"
-                          placeholder="Código de google maps."
-                          formControlName="iframe_mapa"
-                        ></textarea>
+                        <textarea class="form-control" id="textarea-input" placeholder="Código de google maps."
+                          formControlName="iframe_mapa"></textarea>
                       </div>
                     </div>
                   </div>
@@ -308,59 +214,29 @@
               </div>
               <div class="row">
                 <div class="form-group col-xs-12 col-sm-4">
-                  <label
-                    class="col-form-label font-weight-medium"
-                    for="textarea-input"
-                    >Cliente Paypal</label
-                  >
+                  <label class="col-form-label font-weight-medium" for="textarea-input">Cliente Paypal</label>
                   <div class="col-md-12">
-                    <textarea
-                      class="form-control"
-                      id="textarea-input"
-                      rows="3"
-                      placeholder="CLiente id paypal."
-                      formControlName="clientePaypal"
-                    ></textarea>
+                    <textarea class="form-control" id="textarea-input" rows="3" placeholder="CLiente id paypal."
+                      formControlName="clientePaypal"></textarea>
                   </div>
                 </div>
                 <div class="form-group col-xs-12 col-sm-4">
-                  <label
-                    class="col-form-label font-weight-medium"
-                    for="textarea-input"
-                    >Sandbox Paypal</label
-                  >
+                  <label class="col-form-label font-weight-medium" for="textarea-input">Sandbox Paypal</label>
                   <div class="col-md-12">
-                    <textarea
-                      class="form-control"
-                      id="textarea-input"
-                      rows="3"
-                      placeholder="Sandbox paypal."
-                      formControlName="sandbox"
-                    ></textarea>
+                    <textarea class="form-control" id="textarea-input" rows="3" placeholder="Sandbox paypal."
+                      formControlName="sandbox"></textarea>
                   </div>
                 </div>
                 <div class="form-group col-xs-12 col-sm-4">
-                  <label
-                    class="col-form-label font-weight-medium"
-                    for="textarea-input"
-                    >Rapid Api</label
-                  >
+                  <label class="col-form-label font-weight-medium" for="textarea-input">Rapid Api</label>
                   <div class="col-md-12">
-                    <input
-                      class="form-control"
-                      type="text"
-                      placeholder="Rapid api key"
-                      formControlName="rapidapiKey"
-                    />
+                    <input class="form-control" type="text" placeholder="Rapid api key" formControlName="rapidapiKey" />
                   </div>
                 </div>
               </div>
-    
-              <button
-                type="submit"
-                [disabled]="confGeneralForm.invalid"
-                class="btn btn-success waves-effect waves-light m-r-10 btn-block"
-              >
+
+              <button type="submit" [disabled]="confGeneralForm.invalid"
+                class="btn btn-success waves-effect waves-light m-r-10 btn-block">
                 <i class="fa fa-save"></i> Guardar cambios
               </button>
             </form>
@@ -369,62 +245,48 @@
       </div>
     </div>
     <!--final tab-->
-    
+
     <div class="tab-pane" id="imagen" role="tabpanel" aria-expanded="false">
-        
-      <div class="card">
+      <div class="col-12">
+        <div class="card " >
         <div class="card-body">
           <h4 class="card-title">imagen</h4>
           <h6 class="card-subtitle">Logo</h6>
           <div class="text-center">
-            <img
-              *ngIf="!imgTemp"
-              [src]="congeneral.img | imagenPipe : 'congenerals'"
-              class="img-responsive img-thumbnail"
-              alt=""
-            />
+            <img *ngIf="!imgTemp" [src]="congeneral.img | imagenPipe : 'congenerals'"
+              class="img-responsive img-thumbnail" alt="" />
             <img *ngIf="imgTemp" [src]="imgTemp" class="img-avatar" />
           </div>
           <input type="file" (change)="cambiarImagen($event.target.files[0])" />
           <br />
           <br />
-          <button
-            type="button"
-            [disabled]="!imagenSubir"
-            (click)="subirImagen()"
-            class="btn btn-success waves-effect waves-light m-r-10 btn-block"
-          >
+          <button type="button" [disabled]="!imagenSubir" (click)="subirImagen()"
+            class="btn btn-success waves-effect waves-light m-r-10 btn-block">
             <i class="fa fa-save"></i> Cambiar imagen
           </button>
         </div>
       </div>
-      <div class="card">
+      <div class="card w-100">
         <div class="card-body">
           <h4 class="card-title">Favicon</h4>
           <h6 class="card-subtitle">Logo de navegador</h6>
           <div class="text-center">
-            <img
-              *ngIf="!imgTemp1"
-              [src]="congeneral.favicon | imagenPipe : 'congenerals'"
-              class="img-responsive img-thumbnail"
-              alt=""
-            />
+            <img *ngIf="!imgTemp1" [src]="congeneral.favicon | imagenPipe : 'congenerals'"
+              class="img-responsive img-thumbnail" alt="" />
             <img *ngIf="imgTemp1" [src]="imgTemp1" class="img-avatar" />
           </div>
           <input type="file" (change)="cambiarImagen1($event.target.files[0])" />
           <br />
           <br />
-          <button
-            type="button"
-            [disabled]="!imagenSubir1"
-            (click)="subirImagen1()"
-            class="btn btn-success waves-effect waves-light m-r-10 btn-block"
-          >
+          <button type="button" [disabled]="!imagenSubir1" (click)="subirImagen1()"
+            class="btn btn-success waves-effect waves-light m-r-10 btn-block">
             <i class="fa fa-save"></i> Cambiar imagen
           </button>
         </div>
       </div>
+      </div>
+      
     </div>
-</div>
+  </div>
 
 </div>
