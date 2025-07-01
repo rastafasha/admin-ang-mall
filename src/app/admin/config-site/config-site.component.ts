@@ -22,7 +22,7 @@ declare var $:any;
 @Component({
   selector: 'app-config-site',
   templateUrl: './config-site.component.html',
-  styleUrls: ['./config-site.component.css']
+  styleUrls: ['./config-site.component.scss']
 })
 export class ConfigSiteComponent implements OnInit {
 
@@ -41,6 +41,34 @@ export class ConfigSiteComponent implements OnInit {
   public congeneral_id : string;
 
   public Editor = ClassicEditor;
+
+   public redessociales: any = [];
+   title:any;
+    url:any;
+    icono:any;
+    public iswhatsapp : boolean = false;
+  selectedValueCode = '';
+
+
+   public listIcons = [
+      { icon: 'fa fa-facebook', name: 'Facebook' },
+      { icon: 'fa fa-instagram', name: 'Instagram' },
+      { icon: 'fa fa-twitter', name: 'Twitter' },
+      { icon: 'fa fa-youtube', name: 'YouTube' },
+      { icon: 'fa fa-linkedin', name: 'LinkedIn' },
+      { icon: 'fa fa-github', name: 'Github' },
+      { icon: 'fa fa-whatsapp', name: 'Whatsapp' },
+      { icon: 'fa fa-skype', name: 'Skype' },
+      { icon: 'fa fa-pinterest', name: 'Pinterest' },
+      { icon: 'fa fa-twitch', name: 'Twitch' },
+      { icon: 'fa fa-telegram', name: 'Telegram' },
+      { icon: 'fa fa-discord', name: 'Discord' },
+      { icon: 'fa fa-reddit', name: 'Reddit' },
+      { icon: 'fa fa-medium', name: 'Medium' },
+      { icon: 'fa fa-snapchat', name: 'Snapchat' },
+      { icon: 'fa fa-yahoo', name: 'Yahoo' },
+      { icon: 'fa fa-steam', name: 'Steam' },
+    ]
 
   constructor(
     private fb: FormBuilder,
@@ -102,10 +130,8 @@ getCongenerals(){
             direccion: res.direccion,
             horarios: res.horarios,
             iframe_mapa: res.iframe_mapa,
-            facebook: res.facebook,
-            instagram: res.instagram,
-            youtube: res.youtube,
-            twitter: res.twitter,
+            redessociales: res.redessociales,
+            
             lang: res.lang,
             modoPaypal: res.modoPaypal,
             sandbox: res.sandbox,
@@ -116,6 +142,7 @@ getCongenerals(){
             favicon : res.favicon
           });
           this.congeneral = res;
+          this.redessociales = this.congeneral.redessociales || [];
           console.log(this.congeneral);
         }
       );
@@ -137,10 +164,7 @@ getCongenerals(){
       direccion: ['', Validators.required],
       horarios: ['', Validators.required],
       iframe_mapa: ['', ],
-      facebook: ['', ],
-      instagram: ['', ],
-      youtube: ['', ],
-      twitter: ['', ],
+      redessociales: ['', ],
       lang: ['', Validators.required],
       modoPaypal: ['', Validators.required],
       sandbox: ['',],
@@ -149,12 +173,48 @@ getCongenerals(){
     });
   }
 
+   addRedSocial() {
+    if (this.title && this.url ) {
+      this.redessociales.push({
+        title: this.title,
+        url: this.url,
+        icono: this.icono,
+      });
+      this.title = '';
+      this.url = '';
+      this.icono = '';
+      
+    }
+  }
+
+  deletered(i:any){
+    this.redessociales.splice(i,1);
+    this.title = '';
+    this.url = '';
+    this.icono = '';
+    
+  }
+
+  onPaServiceSelect(event: any) {
+    const ic = event;
+    this.iswhatsapp = false;
+    if (ic === 'fa fa-whatsapp') {
+      this.selectedValueCode = ic;
+      this.iswhatsapp = true;
+    }
+  }
+
+
 
 
   updateConfiguracion(){debugger
+    // Update the form control 'redessociales' with the current array before saving
+    this.confGeneralForm.patchValue({
+      redessociales: this.redessociales
+    });
+
     const {titulo, cr, telefono_uno,telefono_dos, email_uno,
-      email_dos, direccion, horarios, iframe_mapa, facebook,
-      instagram, youtube, twitter, lang, modoPaypal,
+      email_dos, direccion, horarios, iframe_mapa, redessociales, lang, modoPaypal,
       sandbox,clientePaypal,rapidapiKey} = this.confGeneralForm.value;
 
       if(this.congeneral){

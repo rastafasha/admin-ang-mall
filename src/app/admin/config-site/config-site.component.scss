@@ -1,0 +1,26 @@
+.infoCong{
+    float: left; 
+    columns: 2;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.reds{
+    display: flex;
+    gap:5px;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    padding-top: 20px;
+    margin-bottom: 20px;
+    & .cont{
+        display: flex;
+        & .fa {
+            font-size: 1.3em;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            margin: 0;
+        }
+    }
+}

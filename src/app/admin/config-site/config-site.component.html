@@ -25,22 +25,7 @@
             <p class="col-xs-12 col-sm-6"><b>Email dos:</b> {{ congeneral.email_dos }}</p>
             <p class="col-xs-12 col-sm-6"><b>Dirección:</b> {{ congeneral.direccion }}</p>
             <p class="col-xs-12 col-sm-6"><b>Horarios:</b>{{ congeneral.horarios }}</p>
-            <p class="col-xs-12 col-sm-6">
-              <b><i class="fa fa-facebook"></i> Facebook:</b>
-              {{ congeneral.facebook }}
-            </p>
-            <p>
-              <b><i class="fa fa-instagram"></i> Instagram:</b>
-              {{ congeneral.instagram }}
-            </p>
-            <p>
-              <b><i class="fa fa-youtube-play"></i> Youtube:</b>
-              {{ congeneral.youtube }}
-            </p>
-            <p>
-              <b><i class="fa fa-twitter"></i> Twitter:</b>
-              {{ congeneral.twitter }}
-            </p>
+            
             <p class="col-xs-12 col-sm-6"><b>Modo Paypal Sandbox (modo de pruebas):</b></p>
             <span class="badge badge-success badge-shadow" *ngIf="congeneral.modoPaypal == true">{{
               congeneral.modoPaypal }}</span>
@@ -67,6 +52,25 @@
             <img [src]="congeneral.favicon | imagenPipe : 'congenerals'" style="width: 150px; margin-left: 10px"
               class="img-responsive img-thumbnail" alt="" />
             </div>
+            <div class="reds col-xs-12 col-sm-6" style="margin-top: 120px; padding: 15px;" *ngIf="redessociales && redessociales.length > 0">
+              <div class="cont" *ngFor="let red of redessociales;let i = index;" >
+                
+                <a  *ngIf="red.icono !== 'fa fa-whatsapp'" [href]="red.url" target="_blank" rel="noopener noreferrer">
+                  <div class="option-admin">
+                    <i [class]="red.icono"></i>
+                    <!-- <p>{{ red.title }}</p> -->
+                  </div>
+                </a>
+                <a *ngIf="red.icono === 'fa fa-whatsapp'" 
+                    href="https://wa.me/{{red.url}}?text=Estoy%20interesado%20en%20el%20producto%20en%20la%20flechaapp,%20favor%20ampliar%20informacion"
+                    target="_blank" rel="noopener noreferrer">
+                      <div class="option-admin">
+                        <i [class]="red.icono"></i>
+                        <!-- <p>{{ red.title }}</p> -->
+                      </div>
+                    </a>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -81,7 +85,7 @@
             <h6 class="card-subtitle">Ajustes</h6>
             <!-- <button class="btn btn-outline-danger" href="javascript:void(0)" (click)="goBack()">Volver</button> -->
             <form class="form p-t-20 form-horizontal form-material" [formGroup]="confGeneralForm"
-              (submit)="updateConfiguracion()">
+              >
               <div class="row">
                 <div class="form-group col-xs-12 col-sm-6">
                   <label for="select-input">Language</label>
@@ -156,40 +160,98 @@
                   </div>
                 </div>
               </div>
-              <div class="row">
-                <div class="form-group col-xs-12 col-sm-6">
-                  <label class="col-form-label font-weight-medium" for="text-input">
-                    <i class="czi-facebook"></i> Facebook</label>
-                  <div class="input-group col-md-12 input-group">
-                    <input class="form-control" type="text" placeholder="Enlace de pagina" formControlName="facebook" />
-                  </div>
-                </div>
-                <div class="form-group col-xs-12 col-sm-6">
-                  <label class="col-form-label font-weight-medium" for="text-input"><i class="czi-instagram"></i>
-                    Instagram</label>
-                  <div class="col-md-12 input-group">
-                    <input class="form-control" type="text" placeholder="Enlace de pagina "
-                      formControlName="instagram" />
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="form-group col-xs-12 col-sm-6">
-                  <label class="col-form-label font-weight-medium" for="text-input">
-                    <i class="czi-youtube"></i> Youtube</label>
-                  <div class="col-md-12 input-group">
-                    <input class="form-control" type="text" placeholder="Enlace de pagina " formControlName="youtube" />
-                  </div>
-                </div>
-                <div class="form-group col-xs-12 col-sm-6">
-                  <label class="col-form-label font-weight-medium" for="text-input">
-                    <i class="czi-twitter"></i> Twitter</label>
-
-                  <div class="col-md-12 input-group">
-                    <input class="form-control" type="text" placeholder="Enlace de pagina " formControlName="twitter" />
-                  </div>
-                </div>
-              </div>
+              <!-- redes sociales -->
+                        <div class="row " >
+                            <details class="shadowSearch cuadrosearch">
+                                <summary class="">{{'Social Networks'}}</summary>
+                                <div class="row">
+                                    <div class="col-12 col-sm-4">  
+                                        <div class="form-group input-group ">
+                                            <!-- <label >{{'formulario.Icon'}}<span class="login-danger">*</span></label> -->
+                                            <span class="input-group-text" id="basic-addon1">
+                                                <i class="fa fa-info-circle"></i>
+                                            </span>
+                                            <select class="form-control" name="icono" 
+                                            [ngModelOptions]="{standalone: true}"  [(ngModel)]="icono"
+                                            (change)="onPaServiceSelect(icono)"
+                                            >
+                                                <option *ngFor="let ic of listIcons " value="{{ic.icon}}">
+                                                {{ic.name}} <i class="{{ic.name}}"></i>
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-4">  
+                                        <label  class="labelgoogle">
+                                            <input class="form-control input" name="title" placeholder=" " [ngModelOptions]="{standalone: true}"  [(ngModel)]="title" type="text" required>
+                                            <span class="label__name">
+                                                {{'Name'}} <span class="login-danger">*</span>
+                                            </span>
+                                        </label>
+                                    </div>
+                                    <div class="col-12 col-sm-4" *ngIf="!iswhatsapp">  
+                                        <label class="labelgoogle">
+                                            <input class="form-control input" name="url" placeholder=" " [ngModelOptions]="{standalone: true}"  [(ngModel)]="url" type="text" required>
+                                            <span class="label__name">
+                                                {{'Address'}}<span class="login-danger">*</span>
+                                            </span>
+                                        </label>
+                                    </div>
+                                    <div class="col-12 col-sm-4" *ngIf="iswhatsapp">  
+                                        <div class="form-group ">
+                                        <label class="labelgoogle">
+                                            <input class="form-control input" placeholder=" " name="url" [ngModelOptions]="{standalone: true}"  [(ngModel)]="url" type="text" required>
+                                            <span class="label__name">
+                                                {{'Whatsapp Number'}}<span class="login-danger">*</span>
+    
+                                            </span>
+                                        </label>
+            
+                                        </div>
+                                    </div>
+                                    <div class="col-12 mb-3">
+                                        <button class="btn btn-primary btn-sm text-end " (click)="addRedSocial()">+ {{'Add'}}</button>
+                                        <!-- <button class="btn btn-danger btn-sm">x</button> -->
+                                    </div>
+                                </div>
+                            </details>
+                            
+                            <div class="col-xs-12 ">
+                                <div class="table-responsive">
+                                    <table class="table mb-0 table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>{{'Icon'}}</th>
+                                                <th>{{'Name'}}</th>
+                                                <th>{{'Address/Whatsapp'}}</th>
+                                                <th>{{'Action'}}</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let item of redessociales ; let i=index">
+                                                <td>
+                                                    <i [class]="'fa' +' '+ item.icono" aria-hidden="true"></i>
+                                                    
+                                                </td>
+                                                <td>
+                                                     {{item.title}}
+                                                    
+                                                </td>
+                                                <td>
+                                                    {{item.url }}
+                                                </td>
+                                                <td>
+                                                    <button class="btn btn-danger btn-sm text-end" (click)="deletered(i)">x</button>
+                                                </td>
+                                            </tr>
+                                            
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <!-- redes sociales -->
 
               <div class="row">
                 <div class="form-group col-xs-12 col-sm-6">
@@ -235,10 +297,12 @@
                 </div>
               </div>
 
-              <button type="submit" [disabled]="confGeneralForm.invalid"
+              <button type="button" [disabled]="confGeneralForm.invalid || isLoading"
+              (click)="updateConfiguracion()"
                 class="btn btn-success waves-effect waves-light m-r-10 btn-block">
                 <i class="fa fa-save"></i> Guardar cambios
               </button>
+
             </form>
           </div>
         </div>

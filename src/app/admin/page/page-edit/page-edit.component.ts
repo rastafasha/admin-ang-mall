@@ -93,6 +93,7 @@ export class PageEditComponent implements OnInit {
       titulo: ['',Validators.required],
       descripcion: ['',Validators.required],
       categoria: ['',Validators.required],
+      slug: [''],
       isFeatured: [''],
       video_review: [''],
     })
@@ -121,6 +122,7 @@ export class PageEditComponent implements OnInit {
             video_review: res.video_review,
             categoria: res.categoria,
             isFeatured: res.isFeatured,
+            slug: res.slug,
             user_id: this.usuario.uid,
             img : res.img
           });
@@ -140,7 +142,7 @@ export class PageEditComponent implements OnInit {
 
   updatePage(){
 
-    const {titulo, descripcion,categoria, isFeatured,
+    const {titulo, descripcion,categoria, isFeatured,slug,
       video_review, } = this.pageForm.value;
 
     if(this.pageSeleccionado){
