@@ -53,7 +53,7 @@ export class PageService {
 
 
   crearPage(page: Page){
-    const url = `${base_url}/pages`;
+    const url = `${base_url}/pages/store`;
     return this.http.post(url, page, this.headers);
   }
 

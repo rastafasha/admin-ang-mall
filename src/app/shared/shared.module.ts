@@ -7,6 +7,7 @@ import { HeaderComponent } from './header/header.component';
 import { FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { BackbuttonComponent } from './backbutton/backbutton.component';
+import { LoadingComponent } from './loading/loading.component';
 
 
 
@@ -15,13 +16,15 @@ import { BackbuttonComponent } from './backbutton/backbutton.component';
     BreadcrumbsComponent,
     SidebarComponent,
     HeaderComponent,
-    BackbuttonComponent
+    BackbuttonComponent,
+    LoadingComponent
   ],
   exports: [
     BreadcrumbsComponent,
     SidebarComponent,
     HeaderComponent,
-    BackbuttonComponent
+    BackbuttonComponent,
+    LoadingComponent
   ],
   imports: [
     CommonModule,

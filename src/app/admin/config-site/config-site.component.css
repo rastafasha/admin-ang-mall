@@ -1,7 +1,0 @@
-.infoCong{
-    float: left; 
-    columns: 2;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-}
