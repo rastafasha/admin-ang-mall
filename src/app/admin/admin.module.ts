@@ -62,6 +62,7 @@ import { PagosEfectivoComponent } from './pagos-efectivo/pagos-efectivo.componen
 import { FacturaComponent } from './ventas/factura/factura.component';
 import { ReusablesModule } from '../reusables/reusables.module';
 import { SharedModule } from '../shared/shared.module';
+import { ComponentsModule } from '../components/components.module';
 
 @NgModule({
   declarations: [
@@ -162,7 +163,8 @@ import { SharedModule } from '../shared/shared.module';
     CKEditorModule,
     TiendaModule,
     ReusablesModule,
-    SharedModule
+    SharedModule,
+    ComponentsModule
   ],
   providers:[
     IconosService,
