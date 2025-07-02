@@ -30,12 +30,6 @@ interface TranslateLoaderFactory {
   (http: HttpClient): TranslateHttpLoader;
 }
 
-interface NgModuleConfig {
-  declarations: any[];
-  imports: any[];
-  providers: any[];
-  bootstrap: any[];
-}
 
 @NgModule({
   declarations: [

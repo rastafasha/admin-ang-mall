@@ -5,7 +5,7 @@ import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { HeaderComponent } from './header/header.component';
 import { FormsModule } from '@angular/forms';
-// import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule } from '@ngx-translate/core';
 import { BackbuttonComponent } from './backbutton/backbutton.component';
 import { LoadingComponent } from './loading/loading.component';
 
@@ -30,7 +30,7 @@ import { LoadingComponent } from './loading/loading.component';
     CommonModule,
     RouterModule,
     FormsModule,
-    // TranslateModule,
+    TranslateModule,
   ]
 })
 export class SharedModule { }
