@@ -8,6 +8,7 @@ export class Blog{
         public titulo: string,
         public video_review: string,
         public descripcion: string,
+        public short_descripcion: string,
         public categoria: string,
         public slug: string,
         public status: boolean,
