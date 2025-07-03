@@ -40,7 +40,7 @@ ngOnInit(){
   this.getLocalStorage();
 }
 
-  login(){
+  login(){debugger
 
     this.usuarioService.login(this.loginForm.value).subscribe(
       (resp:any) =>{
