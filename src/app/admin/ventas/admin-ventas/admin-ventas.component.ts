@@ -6,6 +6,7 @@ import {environment} from 'src/environments/environment';
 import { TiendaService } from 'src/app/services/tienda.service';
 import { FacturaComponent } from '../factura/factura.component';
 import Swal from 'sweetalert2';
+import { ProductoService } from 'src/app/services/producto.service';
 
 declare var jQuery:any;
 declare var $:any;
@@ -62,6 +63,7 @@ export class AdminVentasComponent implements OnInit {
     private _router : Router,
     private _route :ActivatedRoute,
     private _ventaService : VentaService,
+    private _productoService: ProductoService, // agregado por José Prados
     private tiendaService: TiendaService, // agregado por José Prados
   ) {
     this.identity = this._userService.usuario;
@@ -281,6 +283,7 @@ export class AdminVentasComponent implements OnInit {
     this.itemSelected = item;
     // console.log('imprimiendo factura... ',id)
     this.abrirModalEnviandoFactura();
+    this.reduceStockForSale(this.itemSelected._id);
 
     // llamar al metodo cargarFactura del componente hijo FacturaComponent
     setTimeout(() => {
@@ -303,6 +306,47 @@ export class AdminVentasComponent implements OnInit {
       Swal.showLoading();
       }
     });
+  }
+
+
+  reduceStockForSale(saleId: string){
+    this._ventaService.detalle(saleId).subscribe(
+      (resp: any) => {
+        const detalles = resp.detalle;
+        detalles.forEach((detalle: any) => {
+          if(detalle.producto && detalle.cantidad){
+            this._productoService.reducir_stock(detalle.producto._id, detalle.cantidad).subscribe(
+              () => {
+                console.log(`Stock reduced for product ${detalle.producto._id} by ${detalle.cantidad}`);
+              },
+              (error) => {
+                console.error(`Error reducing stock for product ${detalle.producto._id}:`, error);
+              }
+            );
+          }
+        });
+
+        // After reducing stock, proceed with invoice generation
+        setTimeout(() => {
+          this.factura.cargarFactura(this.itemSelected._id);
+        }, 200);
+
+        setTimeout(() => {
+          this.factura.enviarFacturaCliente();
+        }, 2000);
+      },
+      (error) => {
+        console.error('Error fetching sale details:', error);
+        // Proceed with invoice generation even if stock reduction fails
+        setTimeout(() => {
+          this.factura.cargarFactura(this.itemSelected._id);
+        }, 200);
+
+        setTimeout(() => {
+          this.factura.enviarFacturaCliente();
+        }, 2000);
+      }
+    );
   }
 
   cerrarModal(evt:string){
