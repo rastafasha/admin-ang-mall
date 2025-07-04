@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { map } from 'rxjs/operators';
 import { Promocion } from '../models/promocion.model';
+import { Observable } from 'rxjs';
 
 const base_url = environment.baseUrl;
 
@@ -66,6 +67,17 @@ export class PromocionService {
     return this.http.delete(url, this.headers);
   }
 
+
+  desactivar(id:string):Observable<any>{
+      const url = `${base_url}/promocions/desactivar/`+id;
+      return this.http.get(url,  this.headers);
+    }
+  
+    activar(id:string):Observable<any>{
+      const url = `${base_url}/promocions/activar/`+id;
+      return this.http.get(url,  this.headers);
+    }
+  
 
 
 }

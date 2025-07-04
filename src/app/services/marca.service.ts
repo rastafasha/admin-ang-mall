@@ -52,7 +52,7 @@ export class MarcaService {
 
 
   crearMarca(marca: {nombre: string, descripcion: string}){
-    const url = `${base_url}/marcas`;
+    const url = `${base_url}/marcas/store`;
     return this.http.post(url, marca, this.headers);
   }
 

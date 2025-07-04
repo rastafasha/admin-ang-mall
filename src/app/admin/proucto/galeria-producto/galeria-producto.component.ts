@@ -173,7 +173,8 @@ export class GaleriaProductoComponent implements OnInit {
 
         $('#modal-'+id).modal('hide');
         $('.modal-backdrop').removeClass('show');
-        this.listar();
+      //recargamos la pagina
+      this.ngOnInit();
 
       },
       error=>{

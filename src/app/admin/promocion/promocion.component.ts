@@ -8,6 +8,8 @@ import { Promocion } from '../../models/promocion.model';
 import { PromocionService } from '../../services/promocion.service';
 import { ModalImagenService } from '../../services/modal-imagen.service';
 
+declare var jQuery:any;
+declare var $:any;
 @Component({
   selector: 'app-promocion',
   templateUrl: './promocion.component.html',
@@ -24,6 +26,7 @@ export class PromocionComponent implements OnInit {
   count: number = 8;
 
   public imgSubs: Subscription;
+  public msm_error;
 
   constructor(
     private promocionService: PromocionService,
@@ -87,6 +90,35 @@ export class PromocionComponent implements OnInit {
     .subscribe( resultados => {
       resultados;
     })
+  }
+
+  desactivar(id){
+    this.promocionService.desactivar(id).subscribe(
+      response=>{
+        $('#desactivar-'+id).modal('hide');
+        $('.modal-backdrop').removeClass('show');
+        this.loadPromocions();
+      },
+      error=>{
+        this.msm_error = 'No se pudo desactivar el producto, vuelva a intenter.'
+      }
+    )
+  }
+
+  activar(id){
+    this.promocionService.activar(id).subscribe(
+      response=>{
+
+        $('#activar-'+id).modal('hide');
+        $('.modal-backdrop').removeClass('show');
+        this.loadPromocions();
+      },
+      error=>{
+
+
+        this.msm_error = 'No se pudo activar el producto, vuelva a intenter.'
+      }
+    )
   }
 
 }

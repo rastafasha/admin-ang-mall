@@ -46,6 +46,7 @@
                                 <th>Foto</th>
                                 <th>Nombre</th>
                                 <th>Status</th>
+                                <th>Activar</th>
                                 <th>Finaliza</th>
                                 <th>Created</th>
                                 <th>Updated</th>
@@ -55,7 +56,7 @@
                         <tbody>
                             <tr *ngFor="let promocion of promocions |  paginate: { itemsPerPage: count, currentPage: p }">
                                 <td class="text-center">
-                                    <img [src]="promocion.img | imagenPipe: 'promocions'" class="img-responsive avatar" alt="{{promocion.producto_title}}">
+                                    <img [routerLink]="['/dashboard/promocion/edit',promocion._id]" [src]="promocion.img | imagenPipe: 'promocions'" class="img-responsive avatar" alt="{{promocion.producto_title}}">
                                     <!-- <img (click)="abrirModal(marca)" [src]="marca.imagenUrl | imagenPipe: 'marcas'" class="avatar cursor" alt="{{marca.nombre}}"> -->
                                 </td>
                                 <td>
@@ -67,6 +68,48 @@
                                         <span class="badge badge-success badge-shadow" *ngIf="promocion.estado == true">{{promocion.estado}}</span>
                                     </div>
                                 </td>
+                                <td>
+                                    <button type="button" class="btn btn-accent" *ngIf="promocion.estado == false" data-toggle="modal" [attr.data-target]="'#activar-'+promocion._id"><span class="czi-check"></span> Activar</button>
+
+                                    <div class="modal fade" [attr.id]="'activar-'+promocion._id" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title">Confirmación</h4>
+                                                    <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p class="font-size-sm">Al aceptar, estás confirmando que el promocion fué editado correctamente.</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button class="btn btn-secondary btn-sm" type="button" data-dismiss="modal">Cerrar</button>
+                                                    <button class="btn btn-primary btn-shadow btn-sm" type="button" (click)="activar(promocion._id)">Aceptar</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <button type="button" class="btn btn-primary" *ngIf="promocion.estado == true" data-toggle="modal" [attr.data-target]="'#desactivar-'+promocion._id"><span class="czi-close"></span> Desactivar</button>
+                                    <div class="modal fade" [attr.id]="'desactivar-'+promocion._id" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title">Confirmación</h4>
+                                                    <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p class="font-size-sm">Al aceptar el promocion, no será visible en la tienda.</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button class="btn btn-secondary btn-sm" type="button" data-dismiss="modal">Cerrar</button>
+                                                    <button class="btn btn-primary btn-shadow btn-sm" type="button" (click)="desactivar(promocion._id)">Aceptar</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+
+                                
                                 <td>
                                     {{promocion.end}}
                                 </td>
