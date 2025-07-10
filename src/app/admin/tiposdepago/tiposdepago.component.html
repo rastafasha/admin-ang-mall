@@ -20,6 +20,7 @@
                                         <option value="Transferencia Bolivares">Transferencia Bolívares</option>
                                         <option value="pagomovil">Pago Móvil</option>
                                         <option value="zelle">Zelle</option>
+                                        <option value="cheque">Cheque</option>
                                     </select>
             
                                 </div>
@@ -140,6 +141,24 @@
                                 </div>    
                             </div>
                             <!-- zelle  -->
+
+                            <!-- cheque -->
+                            <div *ngIf="pagoSeleccionado == 'cheque'" class="card p-3">
+                                <div class="card-body">
+                                    <h4>Cheque</h4>
+                                    <div class="row">
+                                        
+                                        <div class="form-group col-xs-12 ">
+                                            <label for="exampleInputEmail1">Nombre del Titular</label>
+                                            <input [(ngModel)]="username" name="username" type="text" class="form-control">
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- <input type="hidden" [(ngModel)]="id"> -->
+                                        <button (click)="save()" class="btn btn-primary">Guardar</button>
+                                </div>    
+                            </div>
+                            <!-- zelle  -->
                             </form>
                         </div>
                         <div class="col-xs-12 col-sm-7" *ngIf="!tipoSeleccionado">
@@ -160,7 +179,10 @@
                                             <ng-container *ngFor="let tipodepago of tiposdepagos">
                                                 <tr>
                                                     <td>{{tipodepago.tipo}}</td>
-                                                    <td>{{tipodepago.bankName}}</td>
+                                                    <td>
+                                                        <span *ngIf="tipodepago !== 'cheque'">{{tipodepago.bankName}}</span>
+                                                        <span *ngIf="tipodepago === 'cheque'">{{tipodepago.username}}</span>
+                                                    </td>
                                                     <td>
                                                         <span class="badge bg-success" *ngIf="tipodepago.status === 'ACTIVE'">Activo</span>
                                                         <span class="badge bg-danger" *ngIf="tipodepago.status === 'INACTIVE'">Inactivo</span>
@@ -241,6 +263,12 @@
                                             <div class="rbt-form-group">
                                                 <b > Cuenta Bancaria</b><br>
                                                 {{tipoSeleccionado.bankAccount}}
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-6 col-md-6 " *ngIf="tipoSeleccionado.username">
+                                            <div class="rbt-form-group">
+                                                <b > A nombre de</b><br>
+                                                {{tipoSeleccionado.username}}
                                             </div>
                                         </div>
                                     </div>

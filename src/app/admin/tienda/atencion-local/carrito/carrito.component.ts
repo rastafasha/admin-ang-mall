@@ -27,6 +27,8 @@ import { TransferenciaService } from 'src/app/services/transferencia.service';
 import { PagoEfectivoService } from 'src/app/services/pago-efectivo.service';
 import { Usuario } from 'src/app/models/usuario.model';
 import { TiendaService } from 'src/app/services/tienda.service';
+import { PagochequeService } from 'src/app/services/pagocheque.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-carrito',
@@ -86,6 +88,7 @@ export class CarritoComponent implements OnInit {
 
   habilitacionFormTransferencia:boolean = false;
   habilitacionFormEfectivo:boolean = false;
+  habilitacionFormCheque:boolean = false;
 
   paymentMethods:PaymentMethod[] = []; //array metodos de pago para transferencia (dolares, bolivares, movil)
   paymentSelected!:PaymentMethod; //metodo de pago seleccionado por el usuario (transferencia o efectivo)
@@ -106,6 +109,13 @@ export class CarritoComponent implements OnInit {
     phone: new FormControl('',Validators.required),
     paymentday: new FormControl('', Validators.required)
   });
+  formCheque = new FormGroup({
+    amount: new FormControl('', Validators.required),
+    name_person: new FormControl('', Validators.required),
+    ncheck: new FormControl('', Validators.required),
+    phone: new FormControl('',Validators.required),
+    paymentday: new FormControl('', Validators.required)
+  });
   
   constructor(
     private _userService: UsuarioService,
@@ -123,6 +133,7 @@ export class CarritoComponent implements OnInit {
     private _trasferencias: TransferenciaService,
     // private webSocketService: WebSocketService,
     private _pagoEfectivo: PagoEfectivoService,
+    private _pagoCheque: PagochequeService,
     private cdr: ChangeDetectorRef
   ) {
     this.identity = _userService.usuario;
@@ -263,13 +274,27 @@ export class CarritoComponent implements OnInit {
           // transferencia registrada con exito
           console.log(resultado.payment);
           alert('Transferencia registrada con exito');
+          Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: 'Transferencia registrada con exito',
+            showConfirmButton: false,
+            timer: 1500,
+          });
 
           // eliminar carrito luego de haber realzado la compra con transferencia exitosa
           this.remove_carrito();
         }
         else{
           // error al registar la transferencia
-          alert('Error al registrar la transferencia');
+          Swal.fire({
+            position: 'top-end',
+            icon: 'warning',
+            title: 'Error al registrar Transferencia' ,  
+            text: resultado.msg,
+            showConfirmButton: false,
+            timer: 1500,
+          });
           console.log(resultado.msg);
         }
       });
@@ -287,13 +312,26 @@ export class CarritoComponent implements OnInit {
           if(resultado.ok){
             // console.log(resultado.pago_efectivo);
             this.verify_dataComplete();
-            alert('Pago en efectivo registrado con éxito');
+            Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: 'Pago en efectivo registrada con exito',
+            showConfirmButton: false,
+            timer: 1500,
+          });
 
             // eliminar carrito luego de haber realzado la compra con transferencia exitosa
             this.remove_carrito();
           }
           else{
-            alert('Error al registrar el pago en efectivo');
+            Swal.fire({
+            position: 'top-end',
+            icon: 'warning',
+            title: 'Error al registrar Pago en efectivo' ,  
+            text: resultado.msg,
+            showConfirmButton: false,
+            timer: 1500,
+          });
             console.log(resultado.msg);
           }
           
@@ -302,6 +340,44 @@ export class CarritoComponent implements OnInit {
     }
   }
 
+  sendFormCheque(){
+    if(this.formCheque.valid){
+      console.log(this.formCheque.value)
+
+      this._pagoCheque.registro(this.formCheque.value).subscribe(
+        resultado => {
+          console.log('resultado: ',resultado);
+
+          if(resultado.ok){
+            // console.log(resultado.pago_efectivo);
+            this.verify_dataComplete();
+            Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: 'pago Cheque registrada con exito',
+            showConfirmButton: false,
+            timer: 1500,
+          });
+
+            // eliminar carrito luego de haber realzado la compra con transferencia exitosa
+            this.remove_carrito();
+          }
+          else{
+            Swal.fire({
+            position: 'top-end',
+            icon: 'warning',
+            title: 'Error al registrar pago Cheque' ,  
+            text: resultado.msg,
+            showConfirmButton: false,
+            timer: 1500,
+          });
+            console.log(resultado.msg);
+          }
+          
+        }
+      );
+    }
+  }
   // metodo para el cambio del select 'tipo de transferencia'
   onChangePayment(event:Event){
     const target = event.target as HTMLSelectElement; //obtengo el valor
@@ -329,10 +405,18 @@ export class CarritoComponent implements OnInit {
       // transferencia bancaria => abrir formulario (en un futuro un modal con formulario)
       this.habilitacionFormTransferencia = true;
       this.habilitacionFormEfectivo = false;
+      this.habilitacionFormCheque = false;
     }
     else if(this.selectedMethod==='efectivo'){
       // efectivo
       this.habilitacionFormEfectivo = true;
+      this.habilitacionFormTransferencia = false;
+      this.habilitacionFormCheque = false;
+    }
+    else if(this.selectedMethod==='cheque'){
+      // cheque
+      this.habilitacionFormCheque = true;
+      this.habilitacionFormEfectivo = false;
       this.habilitacionFormTransferencia = false;
     }
   }

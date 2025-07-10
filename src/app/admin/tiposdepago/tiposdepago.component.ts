@@ -49,7 +49,8 @@ export class TiposdepagoComponent implements OnInit {
   email:string;
   tipo:string;
   user:any;
-  user_id:any;
+  user_id:string;
+  username:string;
 
   constructor(
     private fb: FormBuilder,
@@ -130,6 +131,7 @@ save(){
       bankAccount: this.bankAccount,
       ciorif:this.ciorif,
       phone:this.phone,
+      username:this.username,
       email: this.email,
       user: this.user.uid
     }
@@ -141,6 +143,7 @@ save(){
       this.bankAccount = '';
       this.ciorif = '';
       this.phone = '';
+      this.username = '';
       this.email = '';
       this.ngOnInit();
     })

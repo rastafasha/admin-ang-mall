@@ -63,6 +63,7 @@ import { FacturaComponent } from './ventas/factura/factura.component';
 import { ReusablesModule } from '../reusables/reusables.module';
 import { SharedModule } from '../shared/shared.module';
 import { ComponentsModule } from '../components/components.module';
+import { PagosChequeComponent } from './pagos-cheque/pagos-cheque.component';
 
 @NgModule({
   declarations: [
@@ -106,7 +107,8 @@ import { ComponentsModule } from '../components/components.module';
     ListaTrasnferenciasComponent,
     TiposdepagoComponent,
     PagosEfectivoComponent,
-    FacturaComponent
+    FacturaComponent,
+    PagosChequeComponent
   ],
   exports: [
     MarcaIndexComponent,

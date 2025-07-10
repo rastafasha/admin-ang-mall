@@ -204,6 +204,7 @@
                             <!-- <option>Selecciona un método de pago</option> -->
                             <option value="efectivo">Efectivo</option>
                             <option value="transferencia">Transferencia Bancaria</option>
+                            <option value="cheque">Cheque</option>
                         </select>
 
                         <!-- div que contiene el formulario para pago con transferencia -->
@@ -295,6 +296,49 @@
                                 <div class="mb-3">
                                     <label for="amount" class="form-label">Monto</label>
                                     <input type="number" formControlName="amount" class="form-control" name="amount" id="amount">
+                                </div>
+
+                                <!-- teléfono de la persona que paga -->
+                                <div class="mb-3">
+                                    <label for="phone" class="form-label">Num. teléfono</label>
+                                    <input type="number" formControlName="phone" class="form-control" name="phone" id="phone">
+                                </div>
+
+                                <!-- fecha de pago -->
+                                <div class="mb-3">
+                                    <label for="paymentday" class="form-label">Fecha de Pago</label>
+                                    <input type="date" formControlName="paymentday" class="form-control" name="paymentday" id="paymentday">
+                                </div>
+
+                                <!-- botones -->
+                                <div class="d-grid gap-2">
+                                    <button class="btn btn-primary" type="submit">
+                                        Enviar
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                        <!-- div que contiene el formulario para pago en cheque -->
+                        <div *ngIf="habilitacionFormCheque">
+                            <!-- formulario -->
+                            <form [formGroup]="formCheque" (ngSubmit)="sendFormCheque()" class="mt-4">
+                                <!-- nombre de la persona que paga -->
+                                <div class="mb-3">
+                                    <label for="name_person" class="form-label">
+                                        Nombre y Apellido
+                                    </label>
+                                    <input type="text" formControlName="name_person" class="form-control" name="name_person" id="name_person">
+                                </div>
+
+                                <!-- monto -->
+                                <div class="mb-3">
+                                    <label for="amount" class="form-label">Monto</label>
+                                    <input type="number" formControlName="amount" class="form-control" name="amount" id="amount">
+                                </div>
+                                <!-- numero de cheque -->
+                                <div class="mb-3">
+                                    <label for="ncheck" class="form-label">N. Cheque</label>
+                                    <input type="number" formControlName="ncheck" class="form-control" name="ncheck" id="ncheck">
                                 </div>
 
                                 <!-- teléfono de la persona que paga -->

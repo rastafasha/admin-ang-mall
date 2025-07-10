@@ -58,6 +58,8 @@ import { ListaTrasnferenciasComponent } from '../admin/transferencias/lista-tras
 import { TiposdepagoComponent } from '../admin/tiposdepago/tiposdepago.component';
 import { ProductoComponent } from '../admin/tienda/atencion-local/producto/producto.component';
 import { PagosEfectivoComponent } from '../admin/pagos-efectivo/pagos-efectivo.component';
+import { PagochequeService } from '../services/pagocheque.service';
+import { PagosChequeComponent } from '../admin/pagos-cheque/pagos-cheque.component';
 
 
 const childRoutes: Routes = [
@@ -148,6 +150,7 @@ const childRoutes: Routes = [
             {path: 'transferencias', component: ListaTrasnferenciasComponent , data:{tituloPage:'transferencias'}},
             // ruta 'pagosefectivo' agregada por José Prados
             {path: 'pagosefectivo', component: PagosEfectivoComponent, data:{tituloPage:'Pagos en Efectivo'}},
+            {path: 'pagoscheque', component: PagosChequeComponent, data:{tituloPage:'Pagos en cheque'}},
             {path: 'tipos-de-pago', component: TiposdepagoComponent , data:{tituloPage:'tipos-de-pago'}},
             {path: 'atencion-local', component: AtencionLocalComponent , data:{tituloPage:'Atención Local'}},
             {path: 'producto/:id', component:ProductoComponent, data:{tituloPage:'Producto'} },

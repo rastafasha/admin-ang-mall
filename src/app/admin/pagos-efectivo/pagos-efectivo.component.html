@@ -21,7 +21,7 @@
                                 <tr *ngFor="let pago of pagos_efectivo; let i=index">
                                     <td>{{i}}</td>
                                     <td>{{pago.name_person}}</td>
-                                    <td>{{pago.amount}}</td>
+                                    <td>{{pago.amount|currency}}</td>
                                     <td>{{pago.phone}}</td>
                                     <td>{{pago.paymentday | date : "shortDate"}}</td>
                                 </tr>
