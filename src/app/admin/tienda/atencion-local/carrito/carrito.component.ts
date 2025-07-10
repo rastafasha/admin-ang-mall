@@ -89,9 +89,11 @@ export class CarritoComponent implements OnInit {
   habilitacionFormTransferencia:boolean = false;
   habilitacionFormEfectivo:boolean = false;
   habilitacionFormCheque:boolean = false;
-
+  
   paymentMethods:PaymentMethod[] = []; //array metodos de pago para transferencia (dolares, bolivares, movil)
   paymentSelected!:PaymentMethod; //metodo de pago seleccionado por el usuario (transferencia o efectivo)
+  paymentMethodName:string;
+  paymentMethodinfo:PaymentMethod[] = []
 
   formTransferencia = new FormGroup({
     metodo_pago: new FormControl('',Validators.required),
@@ -129,7 +131,7 @@ export class CarritoComponent implements OnInit {
     private _tiendaService :TiendaService,
     private _ventaService :VentaService,
     private _messageService: MessageService,
-    private _tipoPagos: TiposdepagoService,
+    private _tipoPagosService: TiposdepagoService,
     private _trasferencias: TransferenciaService,
     // private webSocketService: WebSocketService,
     private _pagoEfectivo: PagoEfectivoService,
@@ -389,7 +391,7 @@ export class CarritoComponent implements OnInit {
 
   // agregado por José Prados
   private obtenerMetodosdePago(){
-    this._tipoPagos.getPaymentMethods().subscribe(data => {
+    this._tipoPagosService.getPaymentsActives().subscribe(data => {
       // console.log('metodos de pago: ',data.paymentMethods)
       this.paymentMethods = data;
       console.log('metodos de pago: ',this.paymentMethods)
@@ -399,9 +401,11 @@ export class CarritoComponent implements OnInit {
   // Método que se llama cuando cambia el select
   onPaymentMethodChange(event: any) {
     this.selectedMethod = event.target.value;
-    // console.log('metodo de pago seleccionado: ',this.selectedMethod)
-
-    if(this.selectedMethod==='transferencia'){
+    console.log('metodo de pago seleccionado: ',this.selectedMethod)
+    this.getPaymentMbyName(this.selectedMethod);
+    
+    if(this.selectedMethod==='Transferencia Dólares' || this.selectedMethod==='Transferencia Bolivares'
+      || this.selectedMethod==='pagomovil' || this.selectedMethod==='zelle'){
       // transferencia bancaria => abrir formulario (en un futuro un modal con formulario)
       this.habilitacionFormTransferencia = true;
       this.habilitacionFormEfectivo = false;
@@ -418,7 +422,18 @@ export class CarritoComponent implements OnInit {
       this.habilitacionFormCheque = true;
       this.habilitacionFormEfectivo = false;
       this.habilitacionFormTransferencia = false;
+      
+      
     }
+  }
+
+
+  getPaymentMbyName(selectedMethod:string){
+    this.selectedMethod = selectedMethod
+    this._tipoPagosService.getPaymentMethodByName(selectedMethod).subscribe((resp:any)=>{
+      this.paymentMethodinfo = resp[0];
+      // console.log(this.paymentMethodinfo);
+    })
   }
 
   // modificado por Jose Prados

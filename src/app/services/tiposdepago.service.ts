@@ -39,12 +39,28 @@ export class TiposdepagoService {
       .pipe(
         map((resp:{ok: boolean, paymentMethods: PaymentMethod[]}) => resp.paymentMethods)
       )
+      
+    }
 
+  getPaymentsActives(){
+    const url = `${base_url}/tipopago/actives`;
+    return this.http.get<any>(url, this.headers)
+      .pipe(
+        map((resp:{ok: boolean, paymentMethods: PaymentMethod[]}) => resp.paymentMethods)
+      )
   }
 
 
   getPaymentMethodById(_id: string){
     const url = `${base_url}/tipopago/${_id}`;
+    return this.http.get<any>(url, this.headers)
+      .pipe(
+        map((resp:{ok: boolean, paymentMethod: PaymentMethod}) => resp.paymentMethod)
+        );
+
+  }
+  getPaymentMethodByName(name: string){
+    const url = `${base_url}/tipopago/name/${name}`;
     return this.http.get<any>(url, this.headers)
       .pipe(
         map((resp:{ok: boolean, paymentMethod: PaymentMethod}) => resp.paymentMethod)
