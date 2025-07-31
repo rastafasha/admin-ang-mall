@@ -149,19 +149,19 @@ export class TiendaaddComponent implements OnInit {
 
   validarFormulario(){
     this.tiendaForm = this.fb.group({
-      nombre: ['', Validators.required],
-      local: ['', Validators.required],
+      nombre: ['', ],
+      local: ['', ],
       telefono: ['', ],
-      categoria: ['', Validators.required],
-      direccion: ['', Validators.required],
-      pais: ['', Validators.required],
-      ciudad: ['', Validators.required],
-      zip: ['', Validators.required],
+      categoria: ['', ],
+      direccion: ['', ],
+      pais: ['', ],
+      ciudad: ['', ],
+      zip: ['', ],
       subcategoria: [''],
       redssociales: [this.redessociales],
-      status: ['false', Validators.required],
-      state_banner: ['false', Validators.required],
-      isFeatured: ['false', Validators.required],
+      status: ['false', ],
+      state_banner: ['false', ],
+      isFeatured: ['false', ],
       user: [this.usuario.uid],
     })
   }
@@ -182,7 +182,7 @@ export class TiendaaddComponent implements OnInit {
     if (_id !== null && _id !== undefined) {
       this.pageTitle = 'Edit Usuario';
       this.tiendaService.getTiendaById(_id).subscribe(
-        res => {
+        (res:any) => {
           this.tiendaForm.patchValue({
             id: res._id,
             nombre: res.nombre,
@@ -216,7 +216,7 @@ export class TiendaaddComponent implements OnInit {
 
 
 
-  saveTienda(){
+  saveTienda(){debugger
 
     const {
       nombre, 

@@ -5,7 +5,7 @@
             <div class="card-body">
                 <h4 class="card-title">{{pageTitle}}</h4>
                 <h6 class="card-subtitle">Ajustes</h6>
-                <button class="btn btn-outline-danger" href="javascript:void(0)" (click)="goBack()">Volver</button>
+                <button class="btn btn-outline-danger" href="javascript:void(0)" (click)="goBack()">{{'Volver'| translate}}</button>
                 <form [formGroup]="sliderForm" (ngSubmit)="onSubmit(sliderForm)" class="form-horizontal form-material">
                     <div class="card border-0 box-shadow">
 
@@ -14,14 +14,14 @@
                                 <div class="tab-pane fade active show">
                                     <div class="row">
                                         <div class="form-group col-xs-12 col-sm-6">
-                                            <label class=" font-weight-medium" for="text-input">Titulo</label>
+                                            <label class=" font-weight-medium" for="text-input">{{'Título'| translate}}</label>
                                             <div class="col-md-12">
                                                 <input class="form-control" type="text"
                                                     placeholder="Nombre del producto" formControlName="first_title">
                                             </div>
                                         </div>
                                         <div class="form-group col-xs-12 col-sm-6">
-                                            <label class=" font-weight-medium" for="text-input">Sub título</label>
+                                            <label class=" font-weight-medium" for="text-input">{{'Sub Título'| translate}}</label>
                                             <div class="col-md-12">
                                                 <input class="form-control" type="text" placeholder="Titulo superior"
                                                     formControlName="subtitulo">
@@ -30,7 +30,7 @@
                                     </div>
                                     <div class="row">
                                         <div class="form-group col-xs-12 col-sm-4">
-                                            <label class=" font-weight-medium" for="text-input">Enlace <span
+                                            <label class=" font-weight-medium" for="text-input"> {{'Enlace'| translate}} <span
                                                     class="required">*</span></label>
                                             <div class="col-md-12">
                                                 <input class="form-control" type="text" placeholder="enlace"
@@ -39,52 +39,52 @@
                                         </div>
                                         <div class=" form-group col-xs-12 col-sm-4">
                                             <div class="form-group">
-                                                <label for="select-input">Alineación</label>
+                                                <label for="select-input"> {{'Alineación'| translate}}</label>
                                                 <select class="form-control " formControlName="align">
-                                                    <option disabled value="">SELECCIONAR</option>
-                                                    <option value="align-items-start">Derecha</option>
-                                                    <option value="align-items-center">Centrado</option>
-                                                    <option value="align-items-end">Izquierda</option>
+                                                    <option disabled value="">{{'Selecione'| translate}}</option>
+                                                    <option value="align-items-start">{{'Derecha'| translate}}</option>
+                                                    <option value="align-items-center">{{'Centrado'| translate}}</option>
+                                                    <option value="align-items-end">{{'Izquierda'| translate}}</option>
                                                 </select>
                                             </div>
                                         </div>
                                         <div class=" form-group col-xs-12 col-sm-4">
                                             <div class="form-group">
-                                                <label for="select-input">Tono Texto</label>
+                                                <label for="select-input"> {{'Tono Texto'| translate}}</label>
                                                 <select class="form-control " formControlName="color">
-                                                    <option disabled value="">SELECCIONAR</option>
-                                                    <option value="text-light">Claro</option>
-                                                    <option value="text-dark">Oscuro</option>
+                                                    <option disabled value="">{{'Selecione'| translate}}</option>
+                                                    <option value="text-light">{{'Claro'| translate}}</option>
+                                                    <option value="text-dark">{{'Oscuro'| translate}}</option>
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="form-group col-xs-12 col-sm-6">
-                                            <label class=" font-weight-medium" for="text-input">Estado</label>
+                                            <label class=" font-weight-medium" for="text-input">{{'Status'| translate}}</label>
                                             <div class="col-md-12">
                                                 <div class="custom-control custom-checkbox">
                                                     <input class="custom-control-input" formControlName="status"
                                                         type="checkbox" id="ex-check-01">
                                                     <label class="custom-control-label" *ngIf="slider.status"
-                                                        for="ex-check-01">Desactivo</label>
+                                                        for="ex-check-01">{{'Inactivo'| translate}}</label>
                                                     <input class="custom-control-input" formControlName="status"
                                                         type="checkbox" id="ex-check-02">
                                                     <label class="custom-control-label" *ngIf="!slider.status"
-                                                        for="ex-check-02">Activo</label>
+                                                        for="ex-check-02">{{'Activo'| translate}}</label>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="form-group col-xs-12 col-sm-6">
-                                            <label class="font-weight-medium" for="text-input">Target</label>
+                                            <label class="font-weight-medium" for="text-input">{{'Target'| translate}}</label>
                                             <div class="col-md-12">
                                                 <div class="custom-control custom-checkbox">
                                                     <input class="custom-control-input" formControlName="target"
                                                         type="checkbox" id="ex-check-1">
                                                     <label class="custom-control-label" *ngIf="slider.target"
-                                                        for="ex-check-1">Self</label>
+                                                        for="ex-check-1">{{'Self'| translate}}</label>
                                                     <input class="custom-control-input" formControlName="target"
                                                         type="checkbox" id="ex-check-2">
                                                     <label class="custom-control-label" *ngIf="!slider.target"
-                                                        for="ex-check-2">Blank</label>
+                                                        for="ex-check-2">{{'Blank'| translate}}</label>
                                                 </div>
                                             </div>
                                         </div>
@@ -92,29 +92,29 @@
                                     <div class="row">
 
                                         <div class="form-group col-xs-12 ">
-                                            <label class=" col-form-label font-weight-medium" for="text-input">status
+                                            <label class=" col-form-label font-weight-medium" for="text-input">{{'Status'| translate}}
                                                 <span class="required">*</span></label>
                                             <div class="col-md-12">
                                                 <div class="row">
                                                     <div class="col-lg-6">
                                                         <div class="form-group">
-                                                            <label for="select-input">Visible</label>
+                                                            <label for="select-input">{{'Visible'| translate}}</label>
                                                             <select class="form-control " formControlName="mostrarInfo"
                                                                 required>
-                                                                <option disabled value="">SELECCIONAR</option>
-                                                                <option [value]="true">Activo</option>
-                                                                <option [value]="false">Inactivo</option>
+                                                                <option disabled value="">{{'Seleccione'| translate}}</option>
+                                                                <option [value]="true">{{'Activo'| translate}}</option>
+                                                                <option [value]="false">{{'Inactivo'| translate}}</option>
                                                             </select>
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-6">
                                                         <div class="form-group">
-                                                            <label for="select-input">Destacado?</label>
+                                                            <label for="select-input">{{'Destacado'| translate}}?</label>
                                                             <select class="form-control "
                                                                 formControlName="mostrarboton">
-                                                                <option disabled value="">SELECCIONAR</option>
-                                                                <option [value]="true">Activo</option>
-                                                                <option [value]="false">Inactivo</option>
+                                                                <option disabled value="">{{'Seleccione'| translate}}</option>
+                                                                <option [value]="true">{{'Activo'| translate}}</option>
+                                                                <option [value]="false">{{'Inactivo'| translate}}</option>
                                                             </select>
                                                         </div>
                                                     </div>
@@ -130,7 +130,7 @@
                         </div>
                         <div class="card-footer">
                             <button class="btn btn-success waves-effect waves-light m-r-10 btn-block" type="submit"><i
-                                    class="fa fa-save"></i> Guardar cambios</button>
+                                    class="fa fa-save"></i> {{'Guardar'| translate}}</button>
                         </div>
                     </div>
                 </form>
@@ -141,8 +141,8 @@
         <div class="card">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">Image</h4>
-                    <h6 class="card-subtitle">Logo de marca</h6>
+                    <h4 class="card-title">{{'Imagen'| translate}}</h4>
+                    <h6 class="card-subtitle"> {{'Logo de marca'| translate}}</h6>
                     <div class="text-center">
                         <img *ngIf="!imgTemp" [src]="sliderSeleccionado.img | imagenPipe: 'sliders'  "
                             class="img-responsive img-thumbnail" alt="">
@@ -153,7 +153,7 @@
                     <br>
                     <button type="button" [disabled]="!imagenSubir" (click)="subirImagen()"
                         class="btn btn-success waves-effect waves-light m-r-10 btn-block">
-                        <i class="fa fa-save"></i> Cambiar imagen
+                        <i class="fa fa-save"></i> {{'Cambiar Imagen'| translate}}
                     </button>
                 </div>
             </div>

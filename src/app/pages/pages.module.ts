@@ -26,6 +26,7 @@ import { NgChartsModule } from 'ng2-charts';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { UsuarioComponent } from './mantenimientos/usuario/usuario.component';
 import { AdminModule } from "../admin/admin.module";
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import { AdminModule } from "../admin/admin.module";
     PipesModule,
     NgChartsModule,
     NgxPaginationModule,
-    AdminModule
+    AdminModule,
+    TranslateModule,
 ],
   providers:[IconosService]
 })

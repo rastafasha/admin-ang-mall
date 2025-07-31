@@ -46,6 +46,7 @@ export class HeaderComponent implements OnInit {
   public activeLang = 'es';
   flag = false;
   is_visible: boolean;
+   langs: string[] = [];
 
   public socket = io(environment.soketServer);
 
@@ -62,7 +63,11 @@ export class HeaderComponent implements OnInit {
   ) {
     this.usuario = usuarioService.usuario;
     this.translate.setDefaultLang(this.activeLang);
-    this.identity = usuarioService.usuario;
+    this.translate.use('es');
+    // this.translate.addLangs(["es", "en"]);
+    // this.langs = this.translate.getLangs();
+    // this.identity = usuarioService.usuario;
+    localStorage.getItem('lang');
   }
 
   ngOnInit(): void {
@@ -120,7 +125,10 @@ export class HeaderComponent implements OnInit {
     this.translate.use(this.activeLang);
     this.flag = !this.flag;
     this.is_visible = !this.is_visible;
+    localStorage.setItem('lang', this.activeLang);
   }
+
+  
 
   logout(){
     this.usuarioService.logout();

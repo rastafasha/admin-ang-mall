@@ -64,6 +64,7 @@ import { ReusablesModule } from '../reusables/reusables.module';
 import { SharedModule } from '../shared/shared.module';
 import { ComponentsModule } from '../components/components.module';
 import { PagosChequeComponent } from './pagos-cheque/pagos-cheque.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -166,7 +167,8 @@ import { PagosChequeComponent } from './pagos-cheque/pagos-cheque.component';
     TiendaModule,
     ReusablesModule,
     SharedModule,
-    ComponentsModule
+    ComponentsModule,
+    TranslateModule
   ],
   providers:[
     IconosService,

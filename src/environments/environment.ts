@@ -9,6 +9,11 @@ export const environment = {
   soketServer : 'http://localhost:3000',
   mediaUrl: 'http://localhost:3000/api/uploads',
 
+   //remoto vercel
+  // baseUrl: 'https://back-ecomm-mall.vercel.app/api',
+  // mediaUrl: 'https://back-ecomm-mall.vercel.app/api/uploads/',
+  // soketServer : 'https://back-ecomm-mall.vercel.app/',
+
   mediaUrlRemoto: 'https://res.cloudinary.com/dmv6aukai/image/upload/v1741218430/mallConnect',
   //plugins
   rapidapiKey: 'a7036a3222mshc2920e679cd1cafp141e56jsn81cbe707ac15',

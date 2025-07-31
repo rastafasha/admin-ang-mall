@@ -2,20 +2,15 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <input type="text" class="form-control" placeholder="Buscar " #txtTermino (keyup)="buscar(txtTermino.value)">
+                <input type="text" class="form-control" placeholder="Buscar " #txtTermino
+                    (keyup)="buscar(txtTermino.value)">
             </div>
         </div>
     </div>
 </div>
 
 <div class="row animated fadeIn fast" *ngIf="cargando">
-    <div class="col-12">
-        <div class="alert alert-info text-center">
-            <div class="alert-heading">Cargando</div>
-            <i class="fa fa-spin fa-refresh fa-2x"></i>
-            <p class="mb-0">Por favor espere</p>
-        </div>
-    </div>
+    <app-loading></app-loading>
 </div>
 
 <div class="row" *ngIf="!cargando">
@@ -25,14 +20,13 @@
                 <div class="row">
                     <div class="col-9">
                         <h4 class="card-title">Blog: ({{ blogs.length}})</h4>
-                        <h6 class="card-subtitle">Blogs registrados en la app</h6>
                     </div>
                     <div class="col-3">
                         <div class="text-right">
                             <button class="btn btn-primary" [routerLink]="['/dashboard/blog/create/']">
-                      <i class="fa fa-pencil"></i>
-                      Crear Blog
-                    </button>
+                                <i class="fa fa-plus"></i>
+                                {{'Nuevo'| translate}}
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -44,70 +38,93 @@
                         <thead>
                             <tr>
                                 <th>img</th>
-                                <th>Titulo</th>
-                                <th>Status</th>
-                                <th>Destacado</th>
-                                <th>Activar</th>
-                                <th>Created</th>
-                                <th>Updated</th>
-                                <th class="text-nowrap">Acciones</th>
+                                <th>{{'Titulo'| translate}}</th>
+                                <th>{{'Status'| translate}}</th>
+                                <th>{{'Destacado'| translate}}</th>
+                                <th>{{'Activar'| translate}}</th>
+                                <th>{{'Creado'| translate}}</th>
+                                <th>{{'Actualizado'| translate}}</th>
+                                <th class="text-nowrap">{{'Acciones'| translate}} </th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let blog of blogs |  paginate: { itemsPerPage: count, currentPage: p } | orderBy:'createdAt, desc'">
+                            <tr
+                                *ngFor="let blog of blogs |  paginate: { itemsPerPage: count, currentPage: p } | orderBy:'createdAt, desc'">
                                 <td class="text-center">
                                     <!-- <img [src]="producto.img | imagenPipe: 'productos'" class="img-responsive avatar" alt="{{producto.titulo}}"> -->
-                                    <img [routerLink]="['/dashboard/blog/edit',blog._id]" [src]="blog.img | imagenPipe: 'blogs'" class="avatar cursor" alt="{{blog.titulo}}">
+                                    <img [routerLink]="['/dashboard/blog/edit',blog._id]"
+                                        [src]="blog.img | imagenPipe: 'blogs'" class="avatar cursor"
+                                        alt="{{blog.titulo}}">
                                 </td>
                                 <td>{{blog.titulo}}</td>
                                 <td>
                                     <div class="font-size-sm mb-4">
-                                        <span class="badge badge-accent badge-shadow" *ngIf="blog.status == 'Edición'">{{blog.status}}</span>
-                                        <span class="badge badge-success badge-shadow" *ngIf="blog.status == 'Activo'">{{blog.status}}</span>
-                                        <span class="badge badge-primary badge-shadow" *ngIf="blog.status == 'Desactivado'">{{blog.status}}</span>
+                                        <span class="badge badge-accent badge-shadow"
+                                            *ngIf="blog.status == 'Edición'">{{blog.status}}</span>
+                                        <span class="badge badge-success badge-shadow"
+                                            *ngIf="blog.status == 'Activo'">{{blog.status}}</span>
+                                        <span class="badge badge-primary badge-shadow"
+                                            *ngIf="blog.status == 'Desactivado'">{{blog.status}}</span>
                                     </div>
                                 </td>
                                 <td>
                                     <div class="font-size-sm mb-4">
-                                        <span class="badge badge-danger badge-shadow" *ngIf="blog.isFeatured == false">{{blog.isFeatured}}</span>
-                                        <span class="badge badge-success badge-shadow" *ngIf="blog.isFeatured == true">{{blog.isFeatured}}</span>
+                                        <span class="badge badge-danger badge-shadow"
+                                            *ngIf="blog.isFeatured == false">{{blog.isFeatured}}</span>
+                                        <span class="badge badge-success badge-shadow"
+                                            *ngIf="blog.isFeatured == true">{{blog.isFeatured}}</span>
                                     </div>
                                 </td>
                                 <td>
-                                    <button type="button" class="btn btn-accent" *ngIf="blog.status == 'Edición' || blog.status == 'Desactivado'" data-toggle="modal" [attr.data-target]="'#activar-'+blog._id"><span class="czi-check"></span> Activar</button>
+                                    <button type="button" class="btn btn-accent"
+                                        *ngIf="blog.status == 'Edición' || blog.status == 'Desactivado'"
+                                        data-toggle="modal" [attr.data-target]="'#activar-'+blog._id"><span
+                                            class="czi-check"></span> Activar</button>
 
-                                    <div class="modal fade" [attr.id]="'activar-'+blog._id" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
+                                    <div class="modal fade" [attr.id]="'activar-'+blog._id" tabindex="-1" role="dialog"
+                                        style="display: none;" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-centered" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h4 class="modal-title">Confirmación</h4>
-                                                    <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                                    <h4 class="modal-title">{{'Confirmación'| translate}} </h4>
+                                                    <button class="close" type="button" data-dismiss="modal"
+                                                        aria-label="Close"><span aria-hidden="true">×</span></button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <p class="font-size-sm">Al aceptar, estás confirmando que el blog fué editado correctamente.</p>
+                                                    <p class="font-size-sm">{{'Al aceptar, estás confirmando que fué
+                                                        editado correctamente'| translate}}.</p>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button class="btn btn-secondary btn-sm" type="button" data-dismiss="modal">Cerrar</button>
-                                                    <button class="btn btn-primary btn-shadow btn-sm" type="button" (click)="activar(blog._id)">Aceptar</button>
+                                                    <button class="btn btn-secondary btn-sm" type="button"
+                                                        data-dismiss="modal">{{'Cerrar'| translate}}</button>
+                                                    <button class="btn btn-primary btn-shadow btn-sm" type="button"
+                                                        (click)="activar(blog._id)">{{'Aceptar'| translate}}</button>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <button type="button" class="btn btn-primary" *ngIf="blog.status == 'Activo'" data-toggle="modal" [attr.data-target]="'#desactivar-'+blog._id"><span class="czi-close"></span> Desactivar</button>
-                                    <div class="modal fade" [attr.id]="'desactivar-'+blog._id" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
+                                    <button type="button" class="btn btn-primary" *ngIf="blog.status == 'Activo'"
+                                        data-toggle="modal" [attr.data-target]="'#desactivar-'+blog._id"><span
+                                            class="czi-close"></span> Desactivar</button>
+                                    <div class="modal fade" [attr.id]="'desactivar-'+blog._id" tabindex="-1"
+                                        role="dialog" style="display: none;" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-centered" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h4 class="modal-title">Confirmación</h4>
-                                                    <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                                    <h4 class="modal-title">{{'Confirmación'| translate}}</h4>
+                                                    <button class="close" type="button" data-dismiss="modal"
+                                                        aria-label="Close"><span aria-hidden="true">×</span></button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <p class="font-size-sm">Al aceptar el blog, no será visible en la tienda.</p>
+                                                    <p class="font-size-sm">{{'Al aceptar el item, no será visible en la
+                                                        tienda'| translate}}.</p>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button class="btn btn-secondary btn-sm" type="button" data-dismiss="modal">Cerrar</button>
-                                                    <button class="btn btn-primary btn-shadow btn-sm" type="button" (click)="desactivar(blog._id)">Aceptar</button>
+                                                    <button class="btn btn-secondary btn-sm" type="button"
+                                                        data-dismiss="modal">{{'Cerrar'| translate}}</button>
+                                                    <button class="btn btn-primary btn-shadow btn-sm" type="button"
+                                                        (click)="desactivar(blog._id)">{{'Aceptar'| translate}}</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -115,8 +132,12 @@
 
 
 
-                                    <span class="text-muted" *ngIf="blog.status == 'Edición'" style="font-size: 13px;">Este blog aún se encuentra en edición.</span>
-                                    <span class="text-muted" *ngIf="blog.status == 'Desactivado'" style="font-size: 13px;">Este blog aún no está disponible en la tienda.</span>
+                                    <span class="text-muted" *ngIf="blog.status == 'Edición'"
+                                        style="font-size: 13px;">{{'Este item aún se encuentra en edición'|
+                                        translate}}.</span>
+                                    <span class="text-muted" *ngIf="blog.status == 'Desactivado'"
+                                        style="font-size: 13px;">{{'Este item aún no está disponible en la tienda'|
+                                        translate}}.</span>
 
                                 </td>
                                 <td>{{ blog.createdAt | date:'MMM d, y, h:mm:ss a' }}</td>
@@ -124,12 +145,17 @@
                                 <td class="text-nowrap text-center">
 
                                     <div class="btn-group" role="group">
-                                        <button type="button" class="btn btn-dark dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                  <span class="czi-settings"></span> Opciones
-                                </button>
+                                        <button type="button" class="btn btn-dark dropdown-toggle"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <span class="czi-settings"></span> {{'Opciones'| translate}}
+                                        </button>
                                         <div class="dropdown-menu">
-                                            <a [routerLink]="['/dashboard/blog/edit',blog._id]" class="dropdown-item"><span class="czi-edit-alt"></span> &nbsp;Editar</a>
-                                            <a (click)="eliminarBlog(blog)" class="dropdown-item"><span class="czi-delete-document"></span> &nbsp;Eliminar</a>
+                                            <a [routerLink]="['/dashboard/blog/edit',blog._id]"
+                                                class="dropdown-item"><span class="czi-edit-alt"></span>
+                                                &nbsp;{{'Editar'| translate}}</a>
+                                            <a (click)="eliminarBlog(blog)" class="dropdown-item"><span
+                                                    class="czi-delete-document"></span> &nbsp;{{'Eliminar'|
+                                                translate}}</a>
                                         </div>
                                     </div>
                                 </td>
