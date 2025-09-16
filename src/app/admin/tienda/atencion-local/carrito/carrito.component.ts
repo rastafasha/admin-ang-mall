@@ -405,6 +405,7 @@ export class CarritoComponent implements OnInit {
     this.getPaymentMbyName(this.selectedMethod);
     
     if(this.selectedMethod==='Transferencia Dólares' || this.selectedMethod==='Transferencia Bolivares'
+      || this.selectedMethod==='transferencia'
       || this.selectedMethod==='pagomovil' || this.selectedMethod==='zelle'){
       // transferencia bancaria => abrir formulario (en un futuro un modal con formulario)
       this.habilitacionFormTransferencia = true;

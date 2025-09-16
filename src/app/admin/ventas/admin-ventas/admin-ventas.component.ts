@@ -414,7 +414,7 @@ export class AdminVentasComponent implements OnInit {
 
   // agregado por José Prados
   onChangeTienda(event:any){
-    // console.log(event.target.value)
+    console.log(event.target.value)
 
     if( event.target.value === 'todas' ){
       // se seleccionó la opción de todas las ventas
@@ -422,7 +422,8 @@ export class AdminVentasComponent implements OnInit {
     }
     else{
       // se seleccionó las ventas por un local
-      this.ventasFiltradas = this.ventas.filter(item => item.user?.local===event.target.value)
+      this.ventasFiltradas = this.ventas.filter(item => item.local===event.target.value)
+      console.log(this.ventasFiltradas)
     }
 
   }
