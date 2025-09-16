@@ -742,6 +742,7 @@ export class CarritoComponent implements OnInit {
 
       this.data_venta = {
         user : this.clienteSeleccionado.uid,
+        local : this.data_direccionLocal.uid,
         total_pagado : this.subtotal,
         codigo_cupon : this.cupon,
         info_cupon :  this.info_cupon_string,
@@ -810,6 +811,7 @@ export class CarritoComponent implements OnInit {
 
       this.data_venta = {
         user : this.clienteSeleccionado.uid,
+        local : this.data_direccionLocal._id,
         total_pagado : this.subtotal,
         codigo_cupon : this.cupon,
         info_cupon :  this.info_cupon_string,
