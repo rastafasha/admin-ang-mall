@@ -21,22 +21,46 @@ export class PieChart2Component implements OnChanges {
   }
 
   updateChart() {
-    const paidCount = this.ventas.filter(p => p.status_deuda !== 'DEUDA').length;
-    const debtCount = this.ventas.filter(p => p.status_deuda === 'DEUDA').length;
+    // Count ventas by estado
+    const estadoCounts = {
+      'Venta en proceso': 0,
+      'Enviado': 0,
+      'Reembolsado': 0,
+      'Finalizado': 0,
+      'Cancelado': 0
+    };
+
+    this.ventas.forEach(p => {
+      if (estadoCounts.hasOwnProperty(p.estado)) {
+        estadoCounts[p.estado]++;
+      }
+    });
 
     const data = {
-      labels: ['Pagados', 'Pendientes'],
+      labels: ['Venta en proceso', 'Enviado', 'Reembolsado', 'Finalizado', 'Cancelado' ],
       datasets: [
         {
-          label: 'Comportamiento',
-          data: [paidCount, debtCount],
+          label: 'Estados de Ventas',
+          data: [
+            estadoCounts['Venta en proceso'],
+            estadoCounts['Enviado'],
+            estadoCounts['Reembolsado'],
+            estadoCounts['Finalizado'],
+            estadoCounts['Cancelado']
+          ],
           backgroundColor: [
-            'rgba(75, 192, 192, 0.6)', // greenish for paid
-            'rgba(255, 99, 132, 0.6)'  // reddish for debt
+            'rgba(54, 162, 235, 0.6)', // blue for en proceso
+            'rgba(75, 192, 192, 0.6)', // green for enviado
+            'rgba(255, 99, 132, 0.6)', // red for reembolsado
+            'rgba(75, 192, 192, 0.6)', // green for finalizado
+            'rgba(255, 99, 132, 0.6)'  // red for cancelado
           ],
           borderColor: [
+            'rgba(54, 162, 235, 1)',
             'rgba(75, 192, 192, 1)',
-            'rgba(255, 99, 132, 1)'
+            'rgba(255, 99, 132, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(255, 99, 132, 1)',
           ],
           borderWidth: 1
         }
@@ -58,7 +82,7 @@ export class PieChart2Component implements OnChanges {
             },
             title: {
               display: true,
-              text: 'Comportamiento'
+              text: 'Estados de Ventas Mensuales'
             }
           },
           scales: {

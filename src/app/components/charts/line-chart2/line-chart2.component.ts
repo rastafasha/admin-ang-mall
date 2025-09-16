@@ -2,11 +2,12 @@ import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { Chart } from 'chart.js';
 
 @Component({
-  selector: 'app-line-chart',
-  templateUrl: './line-chart.component.html',
-  styleUrls: ['./line-chart.component.css'],
+  selector: 'app-line-chart2',
+  templateUrl: './line-chart2.component.html',
+  styleUrls: ['./line-chart2.component.css']
 })
-export class LineChartComponent implements OnChanges {
+export class LineChart2Component implements OnChanges {
+
   @Input() ventas: any[] = [];
   public chart: Chart;
 
@@ -42,30 +43,31 @@ export class LineChartComponent implements OnChanges {
       return color;
     }
 
-    // Group ventas by local (tienda)
-    const grouped: { [key: string]: number[] } = {};
+    // Aggregate sales by month
+    const salesByMonth: number[] = new Array(12).fill(0);
     if (this.ventas) {
       this.ventas.forEach((venta) => {
-        // Use tienda.nombre if available, fallback to venta.local or 'Sin Tienda'
-        const tiendaName = (venta.local && venta.local.nombre) || venta.local || 'Sin Tienda';
-        if (!grouped[tiendaName]) {
-          grouped[tiendaName] = new Array(12).fill(0);
+        // Use month field if available, else use createdAt
+        let monthIndex = 0;
+        if (venta.month !== undefined) {
+          monthIndex = venta.month - 1; // month is 1-12, index 0-11
+        } else if (venta.createdAt) {
+          const createdAt = new Date(venta.createdAt);
+          monthIndex = createdAt.getMonth();
         }
-        const dataArray = grouped[tiendaName];
-        // Use createdAt date to get month index
-        const createdAt = venta.createdAt ? new Date(venta.createdAt) : null;
-        const monthIndex = createdAt ? createdAt.getMonth() : 0;
-        dataArray[monthIndex] += venta.total_pagado || 0;
+        if (monthIndex >= 0 && monthIndex < 12) {
+          salesByMonth[monthIndex] += 1; // Count the number of sales
+        }
       });
     }
 
-    const datasets = Object.keys(grouped).map((tiendaName) => ({
-      label: tiendaName,
-      data: grouped[tiendaName],
+    const datasets = [{
+      label: 'Ventas Mensuales',
+      data: salesByMonth,
       fill: false,
       borderColor: getRandomColor(),
       tension: 0.1,
-    }));
+    }];
 
     const data = {
       labels: labels,
@@ -76,10 +78,11 @@ export class LineChartComponent implements OnChanges {
       this.chart.destroy();
     }
 
-    this.chart = new Chart('lineChart', {
+    this.chart = new Chart('lineChart2', {
       type: 'line',
       data: data,
       options: {
+        responsive: true,
         scales: {
           y: {
             beginAtZero: true,
@@ -88,4 +91,5 @@ export class LineChartComponent implements OnChanges {
       },
     });
   }
+
 }

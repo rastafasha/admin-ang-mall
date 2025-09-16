@@ -9,70 +9,97 @@
                     <h2 class="mt-lg-4">{{'Dashboard'| translate}}</h2>
 
                 </div>
-           
                 <div class="row">
+                    <div class="col-xs-12 col-sm-8 form-group">
+                        <div class="card">
+                            <div class="card-body">
+                                <app-line-chart2 [ventas]="ventasData"></app-line-chart2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-4">
+                        <div class="col">
+                            <div class="card">
+                                <div class="card-body" style="padding-bottom: 12px;">
+                                    <div class="d-flex align-items-center mx-auto py-3 px-3"
+                                        style="padding: 0px !important;">
+                                        <div class="display-2 font-weight-normal border-color mr-4">
+                                            <span class="czi-dollar-circle"></span>
+                                        </div>
+                                        <div class="pl-2">
+                                            <h6 style="margin-bottom: 0px;">${{total_mes}}
+                                                <ng-container *ngIf="total_mes > total_ganado_ant">
+                                                    <span class="text-success" style="font-size: 10px;">+{{total_mes -
+                                                        total_ganado_ant}}</span>&nbsp;
+
+                                                </ng-container>
+                                                <ng-container *ngIf="total_mes <= total_ganado_ant">
+                                                    <span class="text-danger"
+                                                        style="font-size: 10px;">-{{total_ganado_ant -
+                                                        total_mes}}</span>&nbsp;
+
+                                                </ng-container>
+                                            </h6>
+                                            <p class="mb-3 pt-1" style="font-size: 14px;">{{current_month}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card">
+                                <div class="card-body" style="padding-bottom: 12px;">
+                                    <div class="d-flex align-items-center mx-auto py-3 px-3"
+                                        style="padding: 0px !important;">
+                                        <div class="display-2 font-weight-normal border-color mr-4">
+                                            <span class="czi-basket-alt"></span>
+                                        </div>
+                                        <div class="pl-2">
+                                            <h6 style="margin-bottom: 0px;">{{total_ventas}}
+                                                <ng-container *ngIf="total_ventas > total_ventas_ant">
+                                                    <span class="text-success" style="font-size: 10px;">+{{total_ventas
+                                                        -
+                                                        total_ventas_ant}}</span>&nbsp;
+
+                                                </ng-container>
+                                                <ng-container *ngIf="total_ventas <= total_ventas_ant">
+                                                    <span class="text-danger"
+                                                        style="font-size: 10px;">-{{total_ventas_ant -
+                                                        total_ventas}}</span>&nbsp;
+
+                                                </ng-container>
+                                            </h6>
+                                            <p class="mb-3 pt-1" style="font-size: 14px;">{{'Ventas'| translate}}
+                                                {{current_month}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row">
+
                     <div class="col-lg-12 form-group">
                         <div class="row">
+
+
                             <div class="col">
                                 <div class="card">
                                     <div class="card-body" style="padding-bottom: 12px;">
-                                        <div class="d-flex align-items-center mx-auto py-3 px-3" style="padding: 0px !important;">
-                                            <div class="display-2 font-weight-normal border-color mr-4">
-                                                <span class="czi-dollar-circle"></span>
-                                            </div>
-                                            <div class="pl-2">
-                                                <h6 style="margin-bottom: 0px;">${{total_mes}}
-                                                    <ng-container *ngIf="total_mes > total_ganado_ant">
-                                                        <span class="text-success" style="font-size: 10px;">+{{total_mes - total_ganado_ant}}</span>&nbsp;
-
-                                                    </ng-container>
-                                                    <ng-container *ngIf="total_mes <= total_ganado_ant">
-                                                        <span class="text-danger" style="font-size: 10px;">-{{total_ganado_ant - total_mes}}</span>&nbsp;
-
-                                                    </ng-container>
-                                                </h6>
-                                                <p class="mb-3 pt-1" style="font-size: 14px;">{{current_month}}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="card">
-                                    <div class="card-body" style="padding-bottom: 12px;">
-                                        <div class="d-flex align-items-center mx-auto py-3 px-3" style="padding: 0px !important;">
-                                            <div class="display-2 font-weight-normal border-color mr-4">
-                                                <span class="czi-basket-alt"></span>
-                                            </div>
-                                            <div class="pl-2">
-                                                <h6 style="margin-bottom: 0px;">{{total_ventas}}
-                                                    <ng-container *ngIf="total_ventas > total_ventas_ant">
-                                                        <span class="text-success" style="font-size: 10px;">+{{total_ventas - total_ventas_ant}}</span>&nbsp;
-
-                                                    </ng-container>
-                                                    <ng-container *ngIf="total_ventas <= total_ventas_ant">
-                                                        <span class="text-danger" style="font-size: 10px;">-{{total_ventas_ant - total_ventas}}</span>&nbsp;
-
-                                                    </ng-container>
-                                                </h6>
-                                                <p class="mb-3 pt-1" style="font-size: 14px;">{{'Ventas'| translate}} {{current_month}}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="card">
-                                    <div class="card-body" style="padding-bottom: 12px;">
-                                        <div class="d-flex align-items-center mx-auto py-3 px-3" style="padding: 0px !important;">
+                                        <div class="d-flex align-items-center mx-auto py-3 px-3"
+                                            style="padding: 0px !important;">
                                             <div class="display-2 font-weight-normal border-color mr-4">
                                                 <span class="czi-user"></span>
                                             </div>
                                             <div class="pl-2">
                                                 <h6 style="margin-bottom: 0px;">{{totalUsuarios}}</h6>
-                                                <p class="mb-3 pt-1" style="font-size: 14px;">{{'All Users '| translate}}</p>
+                                                <p class="mb-3 pt-1" style="font-size: 14px;">{{'All Users '|
+                                                    translate}}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -82,47 +109,53 @@
                             <div class="col">
                                 <div class="card">
                                     <div class="card-body" style="padding-bottom: 12px;">
-                                        <div class="d-flex align-items-center mx-auto py-3 px-3" style="padding: 0px !important;">
+                                        <div class="d-flex align-items-center mx-auto py-3 px-3"
+                                            style="padding: 0px !important;">
                                             <div class="display-2 font-weight-normal border-color mr-4">
                                                 <span class="czi-user"></span>
                                             </div>
                                             <div class="pl-2">
                                                 <h6 style="margin-bottom: 0px;">{{totalEmployees}}</h6>
-                                                <p class="mb-3 pt-1" style="font-size: 14px;"> {{'Empleados '| translate}}</p>
+                                                <p class="mb-3 pt-1" style="font-size: 14px;"> {{'Empleados '|
+                                                    translate}}</p>
                                             </div>
                                         </div>
                                     </div>
 
                                 </div>
                             </div>
-                            
+
                             <div class="col">
                                 <div class="card">
                                     <div class="card-body" style="padding-bottom: 12px;">
-                                        <div class="d-flex align-items-center mx-auto py-3 px-3" style="padding: 0px !important;">
+                                        <div class="d-flex align-items-center mx-auto py-3 px-3"
+                                            style="padding: 0px !important;">
                                             <div class="display-2 font-weight-normal border-color mr-4">
                                                 <span class="czi-user"></span>
                                             </div>
                                             <div class="pl-2">
                                                 <h6 style="margin-bottom: 0px;">{{totalClients}}</h6>
-                                                <p class="mb-3 pt-1" style="font-size: 14px;">{{'Clientes '| translate}}</p>
+                                                <p class="mb-3 pt-1" style="font-size: 14px;">{{'Clientes '| translate}}
+                                                </p>
                                             </div>
                                         </div>
                                     </div>
 
                                 </div>
                             </div>
-                           
+
                             <div class="col">
                                 <div class="card">
                                     <div class="card-body" style="padding-bottom: 12px;">
-                                        <div class="d-flex align-items-center mx-auto py-3 px-3" style="padding: 0px !important;">
+                                        <div class="d-flex align-items-center mx-auto py-3 px-3"
+                                            style="padding: 0px !important;">
                                             <div class="display-2 font-weight-normal border-color mr-4">
                                                 <span class="czi-user"></span>
                                             </div>
                                             <div class="pl-2">
                                                 <h6 style="margin-bottom: 0px;">{{totalLocals}}</h6>
-                                                <p class="mb-3 pt-1" style="font-size: 14px;">{{'Tiendas '| translate}}</p>
+                                                <p class="mb-3 pt-1" style="font-size: 14px;">{{'Tiendas '| translate}}
+                                                </p>
                                             </div>
                                         </div>
                                     </div>
@@ -132,7 +165,8 @@
                             <div class="col">
                                 <div class="card">
                                     <div class="card-body" style="padding-bottom: 12px;">
-                                        <div class="d-flex align-items-center mx-auto py-3 px-3" style="padding: 0px !important;">
+                                        <div class="d-flex align-items-center mx-auto py-3 px-3"
+                                            style="padding: 0px !important;">
                                             <div class="display-2 font-weight-normal border-color mr-4">
                                                 <span class="czi-user"></span>
                                             </div>
@@ -147,37 +181,43 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-12 form-group">
-                        <div class="card">
-                            <div class="card-body">
-                                <app-line-chart id="myChart"></app-line-chart>
-                            </div>
-                        </div>
-                    </div>
+
                     <div class="col">
                         <div class="card">
                             <div class="card-body" style="max-height: 520px;
                         overflow-y: auto;">
                                 <div class="widget">
-                                    <h3 class="widget-title"> {{'Ultimas ventas'| translate}}<a style="cursor: pointer;" class="ml-2" (click)="data_ventas()"><span class="czi-compare"></span></a></h3>
+                                    <h3 class="widget-title"> {{'Ultimas ventas'| translate}}<a style="cursor: pointer;"
+                                            class="ml-2" (click)="data_ventas()"><span class="czi-compare"></span></a>
+                                    </h3>
 
                                     <!-- Item -->
-                                    <div class="media align-items-center pb-2 border-bottom" *ngFor="let item of last_sellers">
+                                    <div class="media align-items-center pb-2 border-bottom"
+                                        *ngFor="let item of last_sellers">
                                         <a class="d-block mr-2" *ngIf="item.producto">
-                                            <img width="64" [src]="item.producto.img | imagenPipe: 'productos' " alt="Product" />
+                                            <img width="64" [src]="item.producto.img | imagenPipe: 'productos' "
+                                                alt="Product" />
                                         </a>
                                         <div class="media-body">
-                                            <h6 class="card-title pt-4" *ngIf="item.producto" style="font-size: 15.2px;margin-bottom: 0px;">{{item.producto.titulo.substr(0,30)}}..</h6>
+                                            <h6 class="card-title pt-4" *ngIf="item.producto"
+                                                style="font-size: 15.2px;margin-bottom: 0px;">
+                                                {{item.producto.titulo.substr(0,30)}}..</h6>
                                             <div class="font-size-sm">
-                                                <span class="text-muted mr-2">{{'Cantidad'| translate}}:</span>{{item.cantidad}}
+                                                <span class="text-muted mr-2">{{'Cantidad'|
+                                                    translate}}:</span>{{item.cantidad}}
                                             </div>
-                                            <div class="font-size-sm" *ngIf="item.producto"><span class="text-muted mr-2">{{item.producto.nombre_selector}}:</span>{{item.selector}}</div>
-                                            <div class="font-size-sm"><span class="text-muted mr-2">{{'Color'| translate}}:</span>
-                                                <span [ngStyle]="{'background': item.color,'color': item.color}" style="font-weight: 900;">||||||||||||||||||||</span>
+                                            <div class="font-size-sm" *ngIf="item.producto"><span
+                                                    class="text-muted mr-2">{{item.producto.nombre_selector}}:</span>{{item.selector}}
+                                            </div>
+                                            <div class="font-size-sm"><span class="text-muted mr-2">{{'Color'|
+                                                    translate}}:</span>
+                                                <span [ngStyle]="{'background': item.color,'color': item.color}"
+                                                    style="font-weight: 900;">||||||||||||||||||||</span>
                                             </div>
 
                                             <div class="font-size-sm">
-                                                <span class="text-muted mr-2"> {{'Precio unitario'| translate}}:</span>${{item.precio}}
+                                                <span class="text-muted mr-2"> {{'Precio unitario'|
+                                                    translate}}:</span>${{item.precio}}
                                             </div>
 
 
@@ -213,10 +253,10 @@
                                     <tr>
                                         <td>{{'Mes actual'| translate}}</td>
                                         <td class="text-center" *ngIf="total_mes > total_ganado_ant">${{total_mes}}
-                                            <i class="fas fa-caret-up text-success"></i>
+                                            <i class="fa fa-caret-up text-success"></i>
                                         </td>
                                         <td class="text-center" *ngIf="total_mes <= total_ganado_ant">${{total_mes}}
-                                            <i class="fas fa-caret-down text-danger"></i>
+                                            <i class="fa fa-caret-down text-danger"></i>
                                         </td>
                                     </tr>
                                     <tr>
@@ -230,10 +270,11 @@
                                     <tr>
                                         <td>{{'Ventas '| translate}} {{current_month}}</td>
                                         <td class="text-center" *ngIf="total_ventas > total_ventas_ant">{{total_ventas}}
-                                            <i class="fas fa-caret-up text-success"></i>
+                                            <i class="fa fa-caret-up text-success"></i>
                                         </td>
-                                        <td class="text-center" *ngIf="total_ventas <= total_ventas_ant">{{total_ventas}}
-                                            <i class="fas fa-caret-down text-danger"></i>
+                                        <td class="text-center" *ngIf="total_ventas <= total_ventas_ant">
+                                            {{total_ventas}}
+                                            <i class="fa fa-caret-down text-danger"></i>
                                         </td>
                                     </tr>
                                     <tr>

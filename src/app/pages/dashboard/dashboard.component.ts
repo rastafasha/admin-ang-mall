@@ -75,6 +75,7 @@ export class DashboardComponent implements OnInit {
     noviembre: 0,
     diciembre:0,
   }
+  public ventasData: any[] = [];
   public identity;
 
 
@@ -91,9 +92,6 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const canvas = <HTMLCanvasElement> document.getElementById('myChart');
-        const ctx = canvas.getContext('2d');
-
         var fecha = new Date();
 
         var months = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Deciembre"];
@@ -104,6 +102,8 @@ export class DashboardComponent implements OnInit {
         this.current_year = fecha.getFullYear();
         this._ventaService.get_data_dashboard().subscribe(
           response =>{
+
+            this.ventasData = response.data;
 
             response.data.forEach(element => {
 
@@ -204,48 +204,6 @@ export class DashboardComponent implements OnInit {
               }
 
             });
-
-            new Chart('myChart', {
-              type: 'line',
-              options: {
-                scales: {
-                  yAxes: [{
-                    ticks: {
-                      maxTicksLimit: 6,
-                      min: 0,
-                      callback: function(value) {
-                        return '$' + value + 'k';
-                      }
-                    }
-                  }],
-                  xAxes:[{
-                    gridLines: { lineWidth: 0 },
-                  }]
-                }
-              },
-              data: {
-                labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
-                datasets: [{
-                  label: 'Ganado ' + this.current_year,
-                  borderColor: "rgba(44,123,229,1)",
-                  backgroundColor : 'white',
-                  fontColor : 'rgba(149, 170, 201 ,1)',
-                  pointHoverBackgroundColor: 'white',
-                  data: [this.total_ganado.enero, this.total_ganado.febrero, this.total_ganado.marzo, this.total_ganado.abril, this.total_ganado.mayo, this.total_ganado.junio, this.total_ganado.julio, this.total_ganado.agosto, this.total_ganado.septiembre, this.total_ganado.octubre, this.total_ganado.noviembre, this.total_ganado.diciembre]
-                },
-                {
-                  label: 'Ganado ' + (parseInt(this.current_year) - 1),
-                  borderColor: "#fe696a",
-                  backgroundColor : 'white',
-                  fontColor : 'rgba(149, 170, 201 ,1)',
-                  pointHoverBackgroundColor: 'white',
-                  data: [this.total_ganado_last.enero, this.total_ganado_last.febrero, this.total_ganado_last.marzo, this.total_ganado_last.abril, this.total_ganado_last.mayo, this.total_ganado_last.junio, this.total_ganado_last.julio, this.total_ganado_last.agosto, this.total_ganado_last.septiembre, this.total_ganado_last.octubre, this.total_ganado_last.noviembre, this.total_ganado_last.diciembre]
-                }]
-              }
-            });
-
-
-
 
           },
           error=>{

@@ -5,11 +5,11 @@
     <div class="pt-2 px-4 pl-lg-0 pr-xl-5">
         <div class="row mb-5">
             <div class="col-xs-12 col-sm-8">
-            <app-bar-chart [ventas]="ventas"></app-bar-chart>
-            <!-- <app-line-chart  ></app-line-chart> -->
+            <!-- <app-bar-chart [ventas]="ventas"></app-bar-chart> -->
+            <app-line-chart [ventas]="ventasFiltradas"></app-line-chart>
         </div>
         <div class="col-xs-12 col-sm-4">
-            <app-pie-chart2 [ventas]="ventas"></app-pie-chart2>
+            <app-pie-chart2 [ventas]="ventasFiltradas"></app-pie-chart2>
 
         </div>
     </div>

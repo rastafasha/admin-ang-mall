@@ -407,7 +407,7 @@ export class AdminVentasComponent implements OnInit {
       (resp:any) =>{
         this.listTiendas = resp;
 
-        console.log('locales: ',this.listTiendas)
+        // console.log('locales: ',this.listTiendas)
       }
     )
   }
@@ -419,11 +419,13 @@ export class AdminVentasComponent implements OnInit {
     if( event.target.value === 'todas' ){
       // se seleccionó la opción de todas las ventas
       this.ventasFiltradas = this.ventas;
+      console.log(this.ventasFiltradas)
     }
     else{
       // se seleccionó las ventas por un local
-      this.ventasFiltradas = this.ventas.filter(item => item.local===event.target.value)
+      this.ventasFiltradas = this.ventas.filter(item => item.local?._id===event.target.value)
       console.log(this.ventasFiltradas)
+      
     }
 
   }
