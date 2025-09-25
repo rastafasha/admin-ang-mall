@@ -7,6 +7,7 @@ import { BusquedasService } from '../../services/busquedas.service';
 import { Promocion } from '../../models/promocion.model';
 import { PromocionService } from '../../services/promocion.service';
 import { ModalImagenService } from '../../services/modal-imagen.service';
+import { FormGroup } from '@angular/forms';
 
 declare var jQuery:any;
 declare var $:any;
@@ -18,6 +19,7 @@ declare var $:any;
 export class PromocionComponent implements OnInit {
 
   public promocions: Promocion[] =[];
+  public promocion: Promocion;
   public cargando: boolean = true;
 
   public desde: number = 0;
@@ -27,6 +29,11 @@ export class PromocionComponent implements OnInit {
 
   public imgSubs: Subscription;
   public msm_error;
+
+  query:string ='';
+            searchForm!:FormGroup;
+            currentPage = 1;
+            collecion='promocions';
 
   constructor(
     private promocionService: PromocionService,
@@ -78,18 +85,16 @@ export class PromocionComponent implements OnInit {
 
   }
 
+public PageSize(): void {
+    this.query = '';
+    this.loadPromocions();
+    // this.router.navigateByUrl('/productos')
+  }
 
-
-  buscar(termino: string){
-
-    if(termino.length === 0){
-      return this.loadPromocions();
+  handleSearchEvent(event: any) {
+    if (event.promocions) {
+      this.promocions = event.promocions;
     }
-
-    this.busquedaService.buscar('marcas', termino)
-    .subscribe( resultados => {
-      resultados;
-    })
   }
 
   desactivar(id){

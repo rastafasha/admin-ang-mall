@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { Slider } from 'src/app/models/slider.model';
 import { Transferencia } from 'src/app/models/transferencia';
 import { BusquedasService } from 'src/app/services/busquedas.service';
@@ -12,7 +13,7 @@ import Swal from 'sweetalert2';
 })
 export class ListaTrasnferenciasComponent implements OnInit {
 
-  public trasnfs: Transferencia[] =[];
+  public trasnferencias: Transferencia[] =[];
   public cargando: boolean = true;
 
   public desde: number = 0;
@@ -21,6 +22,11 @@ export class ListaTrasnferenciasComponent implements OnInit {
 
   p: number = 1;
   count: number = 8;
+
+  query:string ='';
+          searchForm!:FormGroup;
+          currentPage = 1;
+          collecion='categorias';
 
 
   constructor(
@@ -39,9 +45,8 @@ export class ListaTrasnferenciasComponent implements OnInit {
     this.trasnferenciaService.getTransferencias().subscribe(
       transferencias => {
         this.cargando = false;
-        this.trasnfs = transferencias;
-        this.trasnfs = transferencias;
-        console.log(this.trasnfs);
+        this.trasnferencias = transferencias;
+        console.log(this.trasnferencias);
       }
     )
 
@@ -64,17 +69,16 @@ export class ListaTrasnferenciasComponent implements OnInit {
 
   }
 
+public PageSize(): void {
+    this.query = '';
+    this.loadTrasnferencias();
+    // this.router.navigateByUrl('/productos')
+  }
 
-  buscar(termino: string){
-
-    if(termino.length === 0){
-      return this.loadTrasnferencias();
+  handleSearchEvent(event: any) {
+    if (event.trasnferencias) {
+      this.trasnferencias = event.trasnferencias;
     }
-
-    this.busquedaService.buscar('trasnferencias', termino)
-    .subscribe( resultados => {
-      resultados;
-    })
   }
 
 }

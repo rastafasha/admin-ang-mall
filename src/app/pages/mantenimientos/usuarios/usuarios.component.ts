@@ -9,6 +9,7 @@ import { ModalImagenService } from '../../../services/modal-imagen.service';
 import { UsuarioService } from '../../../services/usuario.service';
 import { TiendaService } from 'src/app/services/tienda.service';
 import { Tienda } from 'src/app/models/tienda.model';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-usuarios',
@@ -30,6 +31,12 @@ export class UsuariosComponent implements OnInit, OnDestroy {
   count: number = 8;
 
   roles: string[] = ['USER', 'MEDICO', 'ADMIN'];
+
+  query:string ='';
+  searchForm!:FormGroup;
+  currentPage = 1;
+  collecion='usuarios';
+  public usuario : any = {};
 
   constructor(
     private usuarioService: UsuarioService,
@@ -81,17 +88,7 @@ export class UsuariosComponent implements OnInit, OnDestroy {
 
   }
 
-  buscar(termino: string){
-
-    if(termino.length === 0){
-      return this.usuarios = this.usuariosTemp;
-    }
-
-    this.busquedaService.buscar('usuarios', termino)
-    .subscribe( (resultados: Usuario[]) => {
-      this.usuarios = resultados;
-    })
-  }
+  
 
   eliminarUsuario(usuario: any){
 
@@ -133,5 +130,18 @@ export class UsuariosComponent implements OnInit, OnDestroy {
     this.modalImagenService.abrirModal('usuarios', usuario.uid, usuario.img);
 
   }
+
+  public PageSize(): void {
+    this.query = '';
+    this.loadUsuarios();
+    // this.router.navigateByUrl('/productos')
+  }
+
+  handleSearchEvent(event: any) {
+    if (event.usuarios) {
+      this.usuarios = event.usuarios;
+    }
+  }
+
 
 }

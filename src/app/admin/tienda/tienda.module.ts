@@ -17,6 +17,7 @@ import { AtencionLocalComponent } from './atencion-local/atencion-local.componen
 import { CarritoComponent } from './atencion-local/carrito/carrito.component';
 import { ProductoComponent } from './atencion-local/producto/producto.component';
 import { ComponentsAtentionModule } from './atencion-local/components/components.module';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 
 @NgModule({
@@ -51,7 +52,8 @@ import { ComponentsAtentionModule } from './atencion-local/components/components
     PdfViewerModule,
     NgxPaginationModule,
     CKEditorModule,
-    ComponentsAtentionModule
+    ComponentsAtentionModule,
+    SharedModule
     
   ]
 })

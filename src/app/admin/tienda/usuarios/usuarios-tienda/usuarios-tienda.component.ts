@@ -6,6 +6,7 @@ import { Usuario } from 'src/app/models/usuario.model';
 import { BusquedasService } from 'src/app/services/busquedas.service';
 import { ModalImagenService } from 'src/app/services/modal-imagen.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
+import { FormGroup } from '@angular/forms';
 
 
 @Component({
@@ -16,7 +17,7 @@ import { UsuarioService } from 'src/app/services/usuario.service';
 export class UsuariosTiendaComponent implements OnInit {
 
   public totalUsuarios: number = 0;
-  public tiendausers: Usuario[] = [];
+  public usuarios: Usuario[] = [];
   public tiendausersTemp: Usuario[] = [];
 
   public desde: number = 0;
@@ -30,6 +31,12 @@ export class UsuariosTiendaComponent implements OnInit {
   count: number = 8;
 
   roles: string[];
+
+  query:string ='';
+    searchForm!:FormGroup;
+    currentPage = 1;
+    collecion='usuarios';
+    public usuario : any = {};
 
   constructor(
     private usuarioService: UsuarioService,
@@ -67,7 +74,7 @@ export class UsuariosTiendaComponent implements OnInit {
     .subscribe(
       ({total, tiendausers})=>{
         this.totalUsuarios = total;
-        this.tiendausers = tiendausers;
+        this.usuarios = tiendausers;
         this.tiendausersTemp = tiendausers;
         this.cargando = false;
       }
@@ -79,9 +86,8 @@ export class UsuariosTiendaComponent implements OnInit {
     this.usuarioService.cargarEmployeesTienda(this.localId )
     .subscribe(
       local=>{
-        this.tiendausers = local;
+        this.usuarios = local;
         this.cargando = false;
-        console.log(this.tiendausers);
       }
     )
   }
@@ -101,18 +107,17 @@ export class UsuariosTiendaComponent implements OnInit {
 
   }
 
-  buscar(termino: string){
-
-    if(termino.length === 0){
-      return this.tiendausers = this.tiendausersTemp;
-    }
-
-    this.busquedaService.buscar('usuarios', termino)
-    .subscribe( (resultados: Usuario[]) => {
-      this.tiendausers = resultados;
-    })
+ public PageSize(): void {
+    this.query = '';
+    this.loadUsuarios();
+    // this.router.navigateByUrl('/productos')
   }
 
+  handleSearchEvent(event: any) {
+    if (event.usuarios) {
+      this.usuarios = event.usuarios;
+    }
+  }
   eliminarUsuario(usuario: any){
 
     if(usuario.uid === this.usuarioService.uid){

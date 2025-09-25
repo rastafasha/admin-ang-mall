@@ -2,7 +2,8 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <input type="text" class="form-control" placeholder="Buscar marca" #txtTermino (keyup)="buscar(txtTermino.value)">
+                <app-search [query]="query" [modelo]="categoria" [colleccionName]="categorias"
+        [colleccion]="'categorias'" (searchEvent)="handleSearchEvent($event)" (resetEvent)="PageSize()"></app-search>
             </div>
         </div>
     </div>

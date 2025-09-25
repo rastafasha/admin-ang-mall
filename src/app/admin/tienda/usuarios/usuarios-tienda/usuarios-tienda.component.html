@@ -2,7 +2,8 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <input type="text" class="form-control" placeholder="Buscar usuario" #txtTermino (keyup)="buscar(txtTermino.value)">
+                <app-search [query]="query" [modelo]="usuario" [colleccionName]="usuarios"
+        [colleccion]="'usuarios'" (searchEvent)="handleSearchEvent($event)" (resetEvent)="PageSize()"></app-search>
             </div>
         </div>
     </div>
@@ -49,7 +50,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let usuario of tiendausers ">
+                            <tr *ngFor="let usuario of usuarios ">
                                 <td class="text-center">
                                     <!-- <img src="{{usuario.imagenUrl}}" (click)="abrirModal(usuario)" class="img-thumbnail avatar cursor" alt=""> -->
                                     <img src="{{usuario.imagenUrl}}" [routerLink]="['/dashboard/tienda-user/edit/',usuario.uid]" class="img-thumbnail avatar cursor" alt="">
@@ -83,7 +84,7 @@
                         </tbody>
                     </table>
                 </div>
-                <div *ngIf="txtTermino.value.length === 0">
+                <div *ngIf="query.length === 0">
                     <button (click)="cambiarPagina(-5)" class="btn btn-secondary">Anterior</button> &nbsp;
                     <button (click)="cambiarPagina(5)" class="btn btn-secondary">Siguente</button>
                 </div>

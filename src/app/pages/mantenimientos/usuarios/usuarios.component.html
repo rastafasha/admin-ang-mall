@@ -2,7 +2,11 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <input type="text" class="form-control" placeholder="Buscar usuario" #txtTermino (keyup)="buscar(txtTermino.value)">
+                <!-- <input type="text" class="form-control" placeholder="Buscar usuario" #txtTermino (keyup)="buscar(txtTermino.value)"> -->
+
+                <app-search [query]="query" [modelo]="usuario" [colleccionName]="usuarios"
+        [colleccion]="'usuarios'" (searchEvent)="handleSearchEvent($event)" (resetEvent)="PageSize()"></app-search>
+
             </div>
         </div>
     </div>
@@ -76,7 +80,7 @@
                         </tbody>
                     </table>
                 </div>
-                <div *ngIf="txtTermino.value.length === 0">
+                <div *ngIf="query.length === 0">
                     <button (click)="cambiarPagina(-5)" class="btn btn-secondary">Anterior</button> &nbsp;
                     <button (click)="cambiarPagina(5)" class="btn btn-secondary">Siguente</button>
                 </div>

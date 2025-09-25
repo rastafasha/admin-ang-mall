@@ -7,6 +7,7 @@ import { BusquedasService } from '../../services/busquedas.service';
 import { Slider } from '../../models/slider.model';
 import { SliderService } from '../../services/slider.service';
 import { ModalImagenService } from '../../services/modal-imagen.service';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-slider',
@@ -25,6 +26,12 @@ export class SliderComponent implements OnInit {
   count: number = 8;
 
   public imgSubs: Subscription;
+
+  query:string ='';
+    searchForm!:FormGroup;
+    currentPage = 1;
+    collecion='sliders';
+    // public slider : any = {};
 
   constructor(
     private sliderService: SliderService,
@@ -78,16 +85,28 @@ export class SliderComponent implements OnInit {
 
 
 
-  buscar(termino: string){
+  // buscar(termino: string){
 
-    if(termino.length === 0){
-      return this.loadSliders();
+  //   if(termino.length === 0){
+  //     return this.loadSliders();
+  //   }
+
+  //   this.busquedaService.buscar('sliders', termino)
+  //   .subscribe( resultados => {
+  //     resultados;
+  //   })
+  // }
+
+  public PageSize(): void {
+    this.query = '';
+    this.loadSliders();
+    // this.router.navigateByUrl('/productos')
+  }
+
+  handleSearchEvent(event: any) {
+    if (event.sliders) {
+      this.sliders = event.sliders;
     }
-
-    this.busquedaService.buscar('sliders', termino)
-    .subscribe( resultados => {
-      resultados;
-    })
   }
 
 }

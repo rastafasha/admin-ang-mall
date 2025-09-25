@@ -11,6 +11,11 @@ import { Page } from '../models/page.model';
 import { Curso } from '../models/curso.model';
 import { Slider } from '../models/slider.model';
 import { Tienda } from '../models/tienda.model';
+import { Transferencia } from '../models/transferencia';
+import { PagoCheque } from '../models/pagoCheque.model';
+import { PagoEfectivo } from '../models/pagoEfectivo.model';
+import { Categoria } from '../models/categoria.model';
+import { Promocion } from '../models/promocion.model';
 
 const base_url = environment.baseUrl;
 
@@ -62,12 +67,28 @@ export class BusquedasService {
   private trasnformarTiendas(resultados: any[]): Tienda[]{
     return resultados;
   }
-  private trasnformarTrasnferencias(resultados: any[]): Tienda[]{
+  private trasnformarTrasnferencias(resultados: any[]): Transferencia[]{
+    return resultados;
+  }
+  private trasnformarPagoCheque(resultados: any[]): PagoCheque[]{
+    return resultados;
+  }
+  private trasnformarPagoEfectivo(resultados: any[]): PagoEfectivo[]{
+    return resultados;
+  }
+  private trasnformarCategoria(resultados: any[]): Categoria[]{
+    return resultados;
+  }
+  private trasnformarPromocion(resultados: any[]): Promocion[]{
     return resultados;
   }
 
 
-  buscar(tipo: 'usuarios'|'categorias' |'marcas' |'productos'|'blogs'|'pages'|'sliders'|'cursos'|'locaciones'|'trasnferencias',
+  buscar(tipo: 'usuarios'|'categorias' |'marcas' |'productos'|'blogs'|
+    'pages'|'sliders'|'cursos'
+    | 'tiendas'| 'trasnferencias'
+    | 'pagoecheques'| 'pagoefectivos'|'promocions'
+    ,
         termino: string
         ){
     const url = `${base_url}/todo/coleccion/${tipo}/${termino}`;
@@ -93,14 +114,26 @@ export class BusquedasService {
                 case 'cursos':
                 return this.trasnformarCursos(resp.resultados)
 
+                case 'tiendas':
+                return this.trasnformarTiendas(resp.resultados)
+
                 case 'sliders':
                 return this.trasnformarSliders(resp.resultados)
-                
-                case 'locaciones':
-                return this.trasnformarTiendas(resp.resultados)
 
                 case 'trasnferencias':
                 return this.trasnformarTrasnferencias(resp.resultados)
+
+                case 'pagoecheques':
+                return this.trasnformarPagoCheque(resp.resultados)
+
+                case 'pagoefectivos':
+                return this.trasnformarPagoEfectivo(resp.resultados)
+
+                case 'categorias':
+                return this.trasnformarCategoria(resp.resultados)
+                
+                case 'promocions':
+                return this.trasnformarPromocion(resp.resultados)
 
 
               default:
@@ -109,6 +142,7 @@ export class BusquedasService {
         })
       )
   }
+  
 
 
   searchGlobal(termino: string){

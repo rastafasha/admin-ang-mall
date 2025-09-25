@@ -8,6 +8,7 @@ import { FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { BackbuttonComponent } from './backbutton/backbutton.component';
 import { LoadingComponent } from './loading/loading.component';
+import { SearchComponent } from './search/search.component';
 
 
 
@@ -17,14 +18,16 @@ import { LoadingComponent } from './loading/loading.component';
     SidebarComponent,
     HeaderComponent,
     BackbuttonComponent,
-    LoadingComponent
+    LoadingComponent,
+    SearchComponent
   ],
   exports: [
     BreadcrumbsComponent,
     SidebarComponent,
     HeaderComponent,
     BackbuttonComponent,
-    LoadingComponent
+    LoadingComponent,
+    SearchComponent
   ],
   imports: [
     CommonModule,

@@ -7,6 +7,7 @@ import { BusquedasService } from '../../../services/busquedas.service';
 import { Marca } from '../../../models/marca.model';
 import { MarcaService } from '../../../services/marca.service';
 import { ModalImagenService } from '../../../services/modal-imagen.service';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-marca-index',
@@ -15,6 +16,7 @@ import { ModalImagenService } from '../../../services/modal-imagen.service';
 })
 export class MarcaIndexComponent implements OnInit {
   public marcas: Marca[] =[];
+  public marca: Marca;
   public cargando: boolean = true;
 
   public totalMarcas: number = 0;
@@ -24,6 +26,11 @@ export class MarcaIndexComponent implements OnInit {
   count: number = 8;
 
   public imgSubs: Subscription;
+
+  query:string ='';
+      searchForm!:FormGroup;
+      currentPage = 1;
+      collecion='marcas';
 
   constructor(
     private marcaService: MarcaService,
@@ -51,7 +58,6 @@ export class MarcaIndexComponent implements OnInit {
       marcas => {
         this.cargando = false;
         this.marcas = marcas;
-        console.log(this.marcas);
       }
     )
 
@@ -90,16 +96,16 @@ export class MarcaIndexComponent implements OnInit {
 
 
 
-  buscar(termino: string){
+  public PageSize(): void {
+    this.query = '';
+    this.loadMarcas();
+    // this.router.navigateByUrl('/productos')
+  }
 
-    if(termino.length === 0){
-      return this.loadMarcas();
+  handleSearchEvent(event: any) {
+    if (event.marcas) {
+      this.marcas = event.marcas;
     }
-
-    this.busquedaService.buscar('marcas', termino)
-    .subscribe( resultados => {
-      resultados;
-    })
   }
 
 }

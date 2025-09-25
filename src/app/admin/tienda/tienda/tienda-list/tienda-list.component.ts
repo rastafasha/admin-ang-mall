@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { Subscription, delay } from 'rxjs';
 import { Marca } from 'src/app/models/marca.model';
 import { Tienda } from 'src/app/models/tienda.model';
@@ -16,6 +17,7 @@ import Swal from 'sweetalert2';
 export class TiendaListComponent implements OnInit {
 
   public tiendas: Tienda[] =[];
+  public tienda: Tienda;
   public cargando: boolean = true;
 
   public totalTiendas: number = 0;
@@ -26,6 +28,12 @@ export class TiendaListComponent implements OnInit {
 
   public imgSubs: Subscription;
 
+  query:string ='';
+      searchForm!:FormGroup;
+      currentPage = 1;
+      collecion='tiendas';
+
+
   constructor(
     private tiendaService: TiendaService,
     private modalImagenService: ModalImagenService,
@@ -34,25 +42,25 @@ export class TiendaListComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.loadMarcas();
+    this.loadTiendas();
     this.imgSubs = this.modalImagenService.nuevaImagen
     .pipe(
       delay(100)
     )
-    .subscribe(banner => { this.loadMarcas();});
+    .subscribe(banner => { this.loadTiendas();});
   }
 
   ngOnDestroy(){
     this.imgSubs.unsubscribe();
   }
 
-  loadMarcas(){
+  loadTiendas(){
     this.cargando = true;
     this.tiendaService.cargarTiendas().subscribe(
       (resp:any) => {
         this.cargando = false;
         this.tiendas = resp;
-        console.log(this.tiendas);
+        // console.log(this.tiendas);
       }
     )
 
@@ -66,7 +74,7 @@ export class TiendaListComponent implements OnInit {
       this.desde -= valor;
     }
 
-    this.loadMarcas();
+    this.loadTiendas();
 
 
   }
@@ -83,7 +91,7 @@ export class TiendaListComponent implements OnInit {
   eliminarMarca(tienda: Marca){
     this.tiendaService.borrarTienda(tienda._id)
     .subscribe( (resp:any) => {
-      this.loadMarcas();
+      this.loadTiendas();
       Swal.fire('Borrado', tienda.nombre, 'success')
     })
 
@@ -91,16 +99,16 @@ export class TiendaListComponent implements OnInit {
 
 
 
-  buscar(termino: string){
+  public PageSize(): void {
+    this.query = '';
+    this.loadTiendas();
+    // this.router.navigateByUrl('/productos')
+  }
 
-    if(termino.length === 0){
-      return this.loadMarcas();
+  handleSearchEvent(event: any) {
+    if (event.tiendas) {
+      this.tiendas = event.tiendas;
     }
-
-    this.busquedaService.buscar('locaciones', termino)
-    .subscribe( resultados => {
-      resultados;
-    })
   }
 
 }

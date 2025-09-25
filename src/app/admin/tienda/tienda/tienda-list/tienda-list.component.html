@@ -2,7 +2,8 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <input type="text" class="form-control" placeholder="Buscar tienda" #txtTermino (keyup)="buscar(txtTermino.value)">
+                <app-search [query]="query" [modelo]="tienda" [colleccionName]="tiendas"
+        [colleccion]="'tiendas'" (searchEvent)="handleSearchEvent($event)" (resetEvent)="PageSize()"></app-search>
             </div>
         </div>
     </div>
@@ -53,7 +54,7 @@
                         <tbody>
                             <tr *ngFor="let tienda of tiendas |  paginate: { itemsPerPage: count, currentPage: p } | orderBy:'createdAt, desc'">
                                 <td class="text-center">
-                                    <img [src]="tienda.img | imagenPipe: 'locaciones'" class="img-responsive avatar" alt="{{tienda.nombre}}">
+                                    <img [src]="tienda.img | imagenPipe: 'tiendas'" class="img-responsive avatar" alt="{{tienda.nombre}}">
                                     <!-- <img (click)="abrirModal(marca)" [src]="marca.imagenUrl | imagenPipe: 'marcas'" class="avatar cursor" alt="{{marca.nombre}}"> -->
                                 </td>
                                 <td>

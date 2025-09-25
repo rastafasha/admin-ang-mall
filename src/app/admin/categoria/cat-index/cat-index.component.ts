@@ -7,6 +7,7 @@ import { Categoria } from '../../../models/categoria.model';
 import { CategoriaService } from '../../../services/categoria.service';
 import { ModalImagenService } from '../../../services/modal-imagen.service';
 import { IconosService } from 'src/app/services/iconos.service';
+import { FormGroup } from '@angular/forms';
 
 declare var jQuery:any;
 declare var $:any;
@@ -18,6 +19,7 @@ declare var $:any;
 export class CatIndexComponent implements OnInit {
 
   public categorias: Categoria[] =[];
+  public categoria: Categoria;
   public cargando: boolean = true;
 
   public totalCategorias: number = 0;
@@ -28,6 +30,11 @@ export class CatIndexComponent implements OnInit {
 
   public imgSubs: Subscription;
   listIcons;
+
+  query:string ='';
+        searchForm!:FormGroup;
+        currentPage = 1;
+        collecion='categorias';
 
   public msm_error;
 
@@ -59,7 +66,6 @@ export class CatIndexComponent implements OnInit {
       categorias => {
         this.cargando = false;
         this.categorias = categorias;
-        console.log(this.categorias);
       }
     )
 
@@ -93,18 +99,16 @@ export class CatIndexComponent implements OnInit {
 
   }
 
+public PageSize(): void {
+    this.query = '';
+    this.loadCategorias();
+    // this.router.navigateByUrl('/productos')
+  }
 
-
-  buscar(termino: string){
-
-    if(termino.length === 0){
-      return this.loadCategorias();
+  handleSearchEvent(event: any) {
+    if (event.categorias) {
+      this.categorias = event.categorias;
     }
-
-    this.busquedaService.buscar('categorias', termino)
-    .subscribe( resultados => {
-      resultados;
-    })
   }
 
   desactivar(id){

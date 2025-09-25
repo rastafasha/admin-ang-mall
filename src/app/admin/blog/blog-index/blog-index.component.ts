@@ -7,6 +7,7 @@ import Swal from 'sweetalert2';
 import { BlogService } from '../../../services/blog.service';
 import { Router } from '@angular/router';
 import { Blog } from 'src/app/models/blog.model';
+import { FormGroup } from '@angular/forms';
 
 declare var jQuery:any;
 declare var $:any;
@@ -32,6 +33,11 @@ export class BlogIndexComponent implements OnInit {
 
   public imgSubs: Subscription;
 
+  query:string ='';
+    searchForm!:FormGroup;
+    currentPage = 1;
+    collecion='blogs';
+
   constructor(
     private blogService: BlogService,
     private router: Router
@@ -55,17 +61,6 @@ export class BlogIndexComponent implements OnInit {
 
   }
 
-  guardarCambios(id: number){
-
-    // if(id){
-    //   this.blogService.updateBlog(this.blog.id)
-    //   .subscribe( resp => {
-    //     Swal.fire('Actualizado',  'success')
-    //   })
-
-    // }
-
-  }
 
 
   eliminarBlog(_id: string){
@@ -86,18 +81,17 @@ export class BlogIndexComponent implements OnInit {
 
 
 
-  buscar(termino: string){
-
-    // if(termino.length === 0){
-    //   return this.loadPromocions();
-    // }
-
-    // this.busquedaService.buscar('promocions', termino)
-    // .subscribe( resultados => {
-    //   resultados;
-    // })
+  public PageSize(): void {
+    this.query = '';
+    this.loadBlogs();
+    // this.router.navigateByUrl('/productos')
   }
 
+  handleSearchEvent(event: any) {
+    if (event.blogs) {
+      this.blogs = event.blogs;
+    }
+  }
   editarId(_id:string ) {
     this.blogService.getBlogById(_id).subscribe(
       res =>{

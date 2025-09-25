@@ -10,6 +10,7 @@ import { Producto } from '../../../models/producto.model';
 import { ProductoService } from '../../../services/producto.service';
 import { ModalImagenService } from '../../../services/modal-imagen.service';
 import { environment } from 'src/environments/environment';
+import { FormGroup } from '@angular/forms';
 
 declare var jQuery:any;
 declare var $:any;
@@ -21,6 +22,7 @@ declare var $:any;
 export class ProdIndexComponent implements OnInit {
 
   public productos: Producto[] =[];
+  public producto: Producto;
   public categorias: Categoria[] =[];
   public cargando: boolean = true;
   public url;
@@ -34,6 +36,11 @@ export class ProdIndexComponent implements OnInit {
   listIcons;
 
   public msm_error;
+
+  query:string ='';
+          searchForm!:FormGroup;
+          currentPage = 1;
+          collecion='productos';
 
   constructor(
     private productoService: ProductoService,
@@ -106,18 +113,17 @@ export class ProdIndexComponent implements OnInit {
 
   }
 
-  buscar(termino: string){
-
-    if(termino.length === 0){
-      return this.loadCategorias();
-    }
-
-    this.busquedaService.buscar('productos', termino)
-    .subscribe( resultados => {
-      resultados;
-    })
+  public PageSize(): void {
+    this.query = '';
+    this.loadProductos();
+    // this.router.navigateByUrl('/productos')
   }
 
+  handleSearchEvent(event: any) {
+    if (event.productos) {
+      this.productos = event.productos;
+    }
+  }
 
 
 

@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { Page } from '../../../models/page.model';
 
 import { PageService } from 'src/app/services/page.service';
+import { FormGroup } from '@angular/forms';
 declare var jQuery:any;
 declare var $:any;
 
@@ -29,6 +30,11 @@ export class PageIndexComponent implements OnInit {
   public msm_error;
 
   public imgSubs: Subscription;
+  
+  query:string ='';
+    searchForm!:FormGroup;
+    currentPage = 1;
+    collecion='pages';
 
   constructor(
     private pageService: PageService,
@@ -53,35 +59,6 @@ export class PageIndexComponent implements OnInit {
 
   }
 
-  guardarCambios(id: number){
-
-    // if(id){
-    //   this.blogService.updateBlog(this.blog.id)
-    //   .subscribe( resp => {
-    //     Swal.fire('Actualizado',  'success')
-    //   })
-
-    // }
-
-  }
-
-
-  // eliminarPage(id: number){
-
-  //   this.pageService.deletePage(+id).subscribe(
-  //     response =>{
-  //       this.loadPages();
-  //       $('#delete-'+id).modal('hide');
-  //       $('.modal-backdrop').removeClass('show');
-  //       $('.fix-header').removeClass('modal-open');
-  //     },
-  //     error=>{
-  //       this.msm_error = 'No se pudo eliminar el curso, vuelva a intentar.'
-  //     }
-  //   );
-
-  //   this.ngOnInit();
-  // }
 
   eliminarPage(_id: string){
 
@@ -99,19 +76,17 @@ export class PageIndexComponent implements OnInit {
   }
 
 
-
-  buscar(termino: string){
-
-    // if(termino.length === 0){
-    //   return this.loadPromocions();
-    // }
-
-    // this.busquedaService.buscar('promocions', termino)
-    // .subscribe( resultados => {
-    //   resultados;
-    // })
+ public PageSize(): void {
+    this.query = '';
+    this.loadPages();
+    // this.router.navigateByUrl('/productos')
   }
 
+  handleSearchEvent(event: any) {
+    if (event.pages) {
+      this.pages = event.pages;
+    }
+  }
   desactivar(id){
     this.pageService.desactivar(id).subscribe(
       response=>{

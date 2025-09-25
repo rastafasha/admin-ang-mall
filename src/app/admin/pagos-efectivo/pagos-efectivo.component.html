@@ -1,3 +1,13 @@
+<div class="row animated fadeIn fast">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+               <app-search [query]="query" [modelo]="pagoefectivo" [colleccionName]="pagoefectivos"
+        [colleccion]="'pagoefectivos'" (searchEvent)="handleSearchEvent($event)" (resetEvent)="PageSize()"></app-search>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="container">
 
     <div class="row">
@@ -18,14 +28,14 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let pago of pagos_efectivo; let i=index">
+                                <tr *ngFor="let pago of pagoefectivos; let i=index">
                                     <td>{{i}}</td>
                                     <td>{{pago.name_person}}</td>
                                     <td>{{pago.amount|currency}}</td>
                                     <td>{{pago.phone}}</td>
                                     <td>{{pago.paymentday | date : "shortDate"}}</td>
                                 </tr>
-                                <tr *ngIf="pagos_efectivo.length<=0">
+                                <tr *ngIf="pagoefectivos.length<=0">
                                     <td colspan="5">
                                         <div class="alert alert-danger">
                                             No hay pagos en efectivo registrados

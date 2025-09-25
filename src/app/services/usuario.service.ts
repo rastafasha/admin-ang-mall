@@ -178,9 +178,40 @@ export class UsuarioService {
     );
   }
 
+  cargarAllUsuarios(desde: number = 0) {
+    const url = `${base_url}/usuarios/all/?desde=${desde}`;
+    console.log(url);
+    return this.http.get<CargarUsuario>(url, this.headers).pipe(
+      map((resp) => {
+        const usuarios = resp.usuarios.map(
+          (user) =>
+            new Usuario(
+              user.first_name,
+              user.last_name,
+              user.pais,
+              user.telefono,
+              user.numdoc,
+              user.email,
+              user.local,
+              user.lang,
+              '',
+              user.img,
+              user.google,
+              user.role,
+              user.uid
+            )
+        );
+
+        return {
+          total: resp.total,
+          usuarios,
+        };
+      })
+    );
+  }
   cargarUsuarios(desde: number = 0) {
     const url = `${base_url}/usuarios?desde=${desde}`;
-    console.log(url);
+    // console.log(url);
     return this.http.get<CargarUsuario>(url, this.headers).pipe(
       map((resp) => {
         const usuarios = resp.usuarios.map(

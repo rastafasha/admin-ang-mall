@@ -3,7 +3,8 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <input type="text" class="form-control" placeholder="Buscar" #txtTermino (keyup)="buscar(txtTermino.value)">
+               <app-search [query]="query" [modelo]="trasnferencia" [colleccionName]="trasnferencias"
+        [colleccion]="'trasnferencias'" (searchEvent)="handleSearchEvent($event)" (resetEvent)="PageSize()"></app-search>
             </div>
         </div>
     </div>
@@ -25,7 +26,7 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-10">
-                        <h4 class="card-title">Transferencias: ({{ trasnfs.length}})</h4>
+                        <h4 class="card-title">Transferencias: ({{ trasnferencias.length}})</h4>
                         <h6 class="card-subtitle">Transferencias registrados en la app</h6>
                     </div>
                     <div class="col-2 d-flex justify-content-end">
@@ -50,7 +51,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let transf of trasnfs |  paginate: { itemsPerPage: count, currentPage: p } | orderBy:'createdAt, desc'">
+                            <tr *ngFor="let transf of trasnferencias |  paginate: { itemsPerPage: count, currentPage: p } | orderBy:'createdAt, desc'">
                                 
                                 <td>
                                     {{transf.metodo_pago.tipo}}
