@@ -58,8 +58,9 @@
                                 <td>{{usuario.first_name}}</td>
                                 <td>
                                     <select class="form-control" [(ngModel)]="usuario.role" (change)="cambiarStatus(usuario)">
-                                    <!-- <option value="ADMIN">Admin</option>
-                                    <option value="USER">User</option>-->
+                                    
+                                    <option value="USER">User</option>
+                                    <option value="ADMIN">Admin</option>
                                     <option value="VENTAS">Ventas</option> 
                                     <option value="TIENDA">Tienda</option>
                                     <option value="ALMACEN">Almacen</option>

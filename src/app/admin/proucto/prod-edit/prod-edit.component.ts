@@ -206,6 +206,7 @@ export class ProdEditComponent implements OnInit {
           info_short: this.productoSeleccionado.info_short,
           video_review: this.productoSeleccionado.video_review,
           stock: this.productoSeleccionado.stock,
+          sku: this.productoSeleccionado.sku,
           precio_ahora: this.productoSeleccionado.precio_ahora,
           precio_antes: this.productoSeleccionado.precio_antes,
           categoria: this.productoSeleccionado.categoria,
@@ -229,6 +230,7 @@ export class ProdEditComponent implements OnInit {
       info_short: ['', Validators.required],
       video_review: [''],
       slug: [''],
+      sku: ['', Validators.required],
       stock: ['', Validators.required],
       precio_ahora: ['', Validators.required],
       precio_antes: ['', Validators.required],
@@ -248,7 +250,7 @@ export class ProdEditComponent implements OnInit {
   updateProducto(){
 
     const {titulo, precio_antes,info_short, detalle, 
-      stock,categoria,subcategoria, 
+      stock,categoria,subcategoria, sku,
       nombre_selector,marca,
       video_review,precio_ahora, 
       isFeatured, local 
