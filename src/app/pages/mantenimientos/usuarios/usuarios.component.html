@@ -42,7 +42,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let usuario of usuarios ">
+                            <tr *ngFor="let usuario of usuarios |  paginate: { itemsPerPage: count, currentPage: p } | orderBy:'createdAt, desc'">
                                 <td class="text-center">
                                     <!-- <img src="{{usuario.imagenUrl}}" (click)="abrirModal(usuario)" class="img-thumbnail avatar cursor" alt=""> -->
                                     <img src="{{usuario.imagenUrl}}" [routerLink]="['/dashboard/usuario/',usuario.uid]" class="img-thumbnail avatar cursor" alt="">
@@ -80,10 +80,11 @@
                         </tbody>
                     </table>
                 </div>
-                <div *ngIf="query.length === 0">
+                <!-- <div *ngIf="query.length === 0">
                     <button (click)="cambiarPagina(-5)" class="btn btn-secondary">Anterior</button> &nbsp;
                     <button (click)="cambiarPagina(5)" class="btn btn-secondary">Siguente</button>
-                </div>
+                </div> -->
+                <pagination-controls (pageChange)="p = $event"></pagination-controls>
 
             </div>
         </div>
