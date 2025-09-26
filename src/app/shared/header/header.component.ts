@@ -90,7 +90,7 @@ export class HeaderComponent implements OnInit {
     this.congeralService.cargarCongenerals().subscribe(
       response=>{
         this.congenerals = response;
-        // console.log('header', this.congenerals);
+        console.log('header', this.congenerals);
       },
       error=>{
 
