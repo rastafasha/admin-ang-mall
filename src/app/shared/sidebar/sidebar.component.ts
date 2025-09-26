@@ -14,19 +14,21 @@ export class SidebarComponent implements OnInit {
 
   public usuario: Usuario;
   user:any;
+  role:any;
 
   constructor(
     public sidebarService: SidebarService,
     private usuarioService: UsuarioService
   ) {
 
-    this.usuario = usuarioService.usuario;
+    // this.usuario = usuarioService.usuario;
 
   }
 
   ngOnInit(): void {
-    let USER = localStorage.getItem("user");
-    this.user = JSON.parse(USER ? USER: '');
+    const user = localStorage.getItem('user');
+    this.usuario = JSON.parse(user);
+    this.role = this.usuario.role;
   }
 
   logout(){

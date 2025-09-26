@@ -1,14 +1,14 @@
 <!-- ============================================================== -->
 <!-- Left Sidebar - style you can find in sidebar.scss  -->
 <!-- ============================================================== -->
-<aside class="left-sidebar" *ngIf="user.role ==='ADMIN'">
+<aside class="left-sidebar" *ngIf="usuario.role ==='ADMIN'">
     <!-- Sidebar scroll-->
     <div class="scroll-sidebar">
         <!-- Sidebar navigation-->
         <nav class="sidebar-nav">
             <ul id="sidebarnav">
                 <li class="user-profile">
-                    <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><img [src]="usuario.imagenUrl" alt="user" /><span class="hide-menu">{{usuario.first_name}} </span></a>
+                    <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><img [src]="usuario.img" alt="{{usuario.first_name|slice:0:1}} {{usuario.last_name |slice:0:1}}" /><span class="hide-menu">{{usuario.first_name}} </span></a>
                     <ul aria-expanded="false" class="collapse">
                         <li><a routerLink="./perfil" routerLinkActive="active">{{'My Profile'| translate}} </a></li>
                         <li><a routerLink="account-settings">{{'Account Setting'| translate}}</a></li>
@@ -130,7 +130,7 @@
     <!-- End Sidebar scroll-->
 </aside>
 
-<aside class="left-sidebar" *ngIf="user.role ==='VENTAS'">
+<aside class="left-sidebar" *ngIf="usuario.role ==='VENTAS'">
     <!-- Sidebar scroll-->
     <div class="scroll-sidebar">
         <!-- Sidebar navigation-->
@@ -252,7 +252,7 @@
     <!-- End Sidebar scroll-->
 </aside>
 
-<aside class="left-sidebar" *ngIf="user.role ==='ALMACEN'">
+<aside class="left-sidebar" *ngIf="usuario.role ==='ALMACEN'">
     <!-- Sidebar scroll-->
     <div class="scroll-sidebar">
         <!-- Sidebar navigation-->
@@ -291,7 +291,7 @@
     <!-- End Sidebar scroll-->
 </aside>
 
-<aside class="left-sidebar" *ngIf="user.role ==='TIENDA'">
+<aside class="left-sidebar" *ngIf="usuario.role ==='TIENDA'">
     <!-- Sidebar scroll-->
     <div class="scroll-sidebar">
         <!-- Sidebar navigation-->

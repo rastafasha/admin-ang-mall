@@ -61,7 +61,8 @@ export class HeaderComponent implements OnInit {
     private _messageService: MessageService,
     private cdr: ChangeDetectorRef
   ) {
-    this.usuario = usuarioService.usuario;
+    // this.usuario = usuarioService.usuario;
+    
     this.translate.setDefaultLang(this.activeLang);
     this.translate.use('es');
     // this.translate.addLangs(["es", "en"]);
@@ -71,6 +72,8 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    const user = localStorage.getItem('user');
+    this.usuario = JSON.parse(user);
     this.showCliente();
     this.flag = true;
     this._contactoService.listar().subscribe(
