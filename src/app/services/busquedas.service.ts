@@ -41,9 +41,10 @@ export class BusquedasService {
   }
 
   private trasnformarUsuarios(resultados: any[]): Usuario[]{
-    return resultados.map(
-      user => new Usuario( user.first_name, user.last_name,user.telefono, user.pais, user.numdoc, user.email, '', user.img, user.google, user.role, user.uid)
-    )
+    return resultados;
+    // return resultados.map(
+    //   user => new Usuario( user.first_name, user.last_name,user.telefono, user.pais, user.numdoc, user.email, '', user.img, user.google, user.role, user.uid)
+    // )
   }
 
   private trasnformarProductos(resultados: any[]): Producto[]{
