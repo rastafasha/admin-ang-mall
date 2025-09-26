@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import { PagoCheque } from 'src/app/models/pagoCheque.model';
 import { PagochequeService } from 'src/app/services/pagocheque.service';
 import Swal from 'sweetalert2';
 
@@ -9,35 +11,54 @@ import Swal from 'sweetalert2';
 })
 export class PagosChequeComponent implements OnInit {
 
-  pagos_cheques:any[] = [];
-  
-    constructor(
-      private _pagosChequeService: PagochequeService
-    ) { }
-  
-    ngOnInit(): void {
-      this.obtenerPagosEfectivo();
-    }
-  
-    private obtenerPagosEfectivo(){
-      this._pagosChequeService.listar().subscribe(
-        response => {
-          if(response.ok){
-            console.log('pagos en cheque: ',response.pagos_cheques);
-            this.pagos_cheques = response.pagos_cheques;
-          }
-          else{
-            console.log('error al obtener los pagos en cheque')
-          }
-        }
-      );
-    }
+  pagoscheques: any[] = [];
+  pagoscheque: PagoCheque;
 
-    cambiarStatus(pago: string){
-        this._pagosChequeService.updateStatus(pago)
-        .subscribe( resp => {
-          Swal.fire('Actualizado', pago,  'success')
-        })
-    
+  query: string = '';
+  searchForm!: FormGroup;
+  currentPage = 1;
+  collecion = 'pagoscheques';
+
+  constructor(
+    private _pagosChequeService: PagochequeService
+  ) { }
+
+  ngOnInit(): void {
+    this.obtenerPagosEfectivo();
+  }
+
+  private obtenerPagosEfectivo() {
+    this._pagosChequeService.listar().subscribe(
+      (response: any) => {
+        if (response) {
+          console.log('pagos en cheque: ', response);
+          this.pagoscheques = response;
+        }
+        else {
+          console.log('error al obtener los pagos en cheque')
+        }
       }
+    );
+  }
+
+  cambiarStatus(pago: string) {
+    this._pagosChequeService.updateStatus(pago)
+      .subscribe(resp => {
+        Swal.fire('Actualizado', pago, 'success')
+      })
+
+  }
+
+  public PageSize(): void {
+    this.query = '';
+    this.obtenerPagosEfectivo();
+    // this.router.navigateByUrl('/productos')
+  }
+
+  handleSearchEvent(event: any) {
+    if (event.pagoscheques) {
+      this.pagoscheques = event.pagoscheques;
+    }
+  }
+
 }

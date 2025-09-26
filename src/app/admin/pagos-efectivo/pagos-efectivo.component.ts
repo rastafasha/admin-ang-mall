@@ -28,14 +28,9 @@ export class PagosEfectivoComponent implements OnInit {
 
   private obtenerPagosEfectivo(){
     this._pagosEfectivo.listar().subscribe(
-      response => {
-        if(response.ok){
-          // console.log('pagos en efectivo: ',response.pagoefectivos);
-          this.pagoefectivos = response.pagoefectivos;
-        }
-        else{
-          console.log('error al obtener los pagos en efectivo')
-        }
+      (resp:any) => {
+        this.pagoefectivos = resp;
+        
       }
     );
   }

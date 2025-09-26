@@ -1,3 +1,13 @@
+<div class="row animated fadeIn fast">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+               <app-search [query]="query" [modelo]="pagoscheque" [colleccionName]="pagoscheques"
+        [colleccion]="'pagoscheques'" (searchEvent)="handleSearchEvent($event)" (resetEvent)="PageSize()"></app-search>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="container">
 
     <div class="row">
@@ -21,7 +31,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let pago of pagos_cheques; let i=index">
+                                <tr *ngFor="let pago of pagoscheques; let i=index">
                                     <td>{{i}}</td>
                                     <td>{{pago.name_person}}</td>
                                     <td>{{pago.ncheck}}</td>
@@ -49,7 +59,7 @@
                                     </td>
 
                                 </tr>
-                                <tr *ngIf="pagos_cheques.length<=0">
+                                <tr *ngIf="pagoscheques.length<=0">
                                     <td colspan="5">
                                         <div class="alert alert-danger">
                                             No hay pagos en efectivo registrados

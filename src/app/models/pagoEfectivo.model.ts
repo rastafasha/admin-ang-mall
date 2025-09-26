@@ -1,9 +1,9 @@
 export class PagoEfectivo{
   constructor(
 
-        public name_person: string,
+    public amount: number,
+    public name_person: string,
         public phone: string,
-        public amount: number,
         public status: boolean,
         public paymentday: Date,
         public createdAt: Date,

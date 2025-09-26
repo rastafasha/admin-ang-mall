@@ -28,7 +28,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let pago of pagoefectivos; let i=index">
+                                <tr *ngFor="let pago of pagoefectivos | orderBy:'createdAt, desc'; let i=index ">
                                     <td>{{i}}</td>
                                     <td>{{pago.name_person}}</td>
                                     <td>{{pago.amount|currency}}</td>
