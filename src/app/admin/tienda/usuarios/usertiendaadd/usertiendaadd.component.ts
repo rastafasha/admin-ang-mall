@@ -105,9 +105,9 @@ export class UsertiendaaddComponent implements OnInit {
           password: '',
           password2: '',
           local: this.usertiendaSeleccionado.local || '',
-          role: this.usertiendaSeleccionado.role,
-          telefono: this.usertiendaSeleccionado.telefono,
-          numdoc: this.usertiendaSeleccionado.numdoc
+          role: this.usertiendaSeleccionado.role || '',
+          telefono: this.usertiendaSeleccionado.telefono || '',
+          numdoc: this.usertiendaSeleccionado.numdoc || ''
         });
       }
     )

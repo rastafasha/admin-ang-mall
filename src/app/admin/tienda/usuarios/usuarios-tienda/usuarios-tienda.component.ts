@@ -147,7 +147,7 @@ export class UsuariosTiendaComponent implements OnInit {
   }
 
 
-  cambiarStatus(data:any){debugger
+  cambiarStatus(data:any){
     let VALUE = data.role;
     // console.log(VALUE);
     

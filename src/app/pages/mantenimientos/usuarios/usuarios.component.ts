@@ -119,11 +119,24 @@ export class UsuariosComponent implements OnInit, OnDestroy {
   }
 
 
-  cambiarRole(usuario: Usuario){
-    this.usuarioService.guardarUsuario(usuario).subscribe(
-      resp =>{ console.log(resp);}
-    )
-  }
+  // cambiarRole(usuario: Usuario){
+  //   this.usuarioService.guardarUsuario(usuario).subscribe(
+  //     resp =>{ console.log(resp);}
+  //   )
+  // }
+
+  cambiarRole(data:any){
+      let VALUE = data.role;
+      // console.log(VALUE);
+      
+      this.usuarioService.upadateStatusRole(data, data.uid).subscribe(
+        resp =>{
+          // console.log(resp);
+          Swal.fire('Updated', `Client Status Updated successfully!`, 'success');
+          this.loadUsuarios();
+        }
+      )
+    }
 
 
   abrirModal(usuario: Usuario){
