@@ -89,4 +89,21 @@ export class CategoriaService {
   }
 
 
+  getCategoriesActivas() {
+    const url = `${base_url}/categorias/cat/activas`;
+    return this.http.get<any>(url, this.headers)
+      .pipe(
+        map((resp:{ok: boolean, categorias: Categoria[]}) => resp.categorias)
+      )
+  }
+
+   find_by_nombre(nombre):Observable<any>{
+    const url = `${base_url}/categorias/category_by_nombre/nombre/${nombre}`;
+    return this.http.get<any>(url)
+    .pipe(
+      map((resp:{ok: boolean, categoria: Categoria}) => resp.categoria)
+      );
+  }
+
+
 }

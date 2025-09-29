@@ -16,8 +16,8 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { VentaService } from 'src/app/services/venta.service';
 import { CarritoService } from 'src/app/services/carrito.service';
 import { ComentarioService } from 'src/app/services/comentario.service';
-import { CategoryService } from 'src/app/services/category.service';
 import { Usuario } from 'src/app/models/usuario.model';
+import { CategoriaService } from 'src/app/services/categoria.service';
 declare var jQuery:any;
 declare var $:any;
 
@@ -99,7 +99,7 @@ export class ProductoComponent implements OnInit {
 
   constructor(
     public productoService: ProductoService,
-    public categoryService: CategoryService,
+    public categoryService: CategoriaService,
     public usuarioService: UsuarioService,
     public activatedRoute: ActivatedRoute,
     private messageService: MessageService,
@@ -148,7 +148,6 @@ export class ProductoComponent implements OnInit {
         this.clienteSeleccionado = null; // O maneja el caso en que no hay cliente
     }
 
-    console.log(this.clienteSeleccionado);
   }
 
   click_img(img,id){
@@ -161,7 +160,6 @@ export class ProductoComponent implements OnInit {
 
   get_color(color){
     this.color_to_cart = color.color;
-    console.log('color elegido: ',this.color_to_cart);
   }
 
   sort_coments(){
@@ -207,7 +205,6 @@ export class ProductoComponent implements OnInit {
       response =>{
 
         this.comentarios = response.comentarios;
-        console.log(this.comentarios);
 
 
         this.count_cat = this.comentarios.length;
@@ -232,7 +229,6 @@ export class ProductoComponent implements OnInit {
               }
             );
           });
-        console.log(this.comentarios);
 
 
         this.comentarios.forEach((element,index) => {
@@ -299,7 +295,6 @@ export class ProductoComponent implements OnInit {
     this.productoService.listar_newest().subscribe(
       response =>{
         this.news_productos = response.data;
-        console.log(this.news_productos);
       },
       error=>{
 
@@ -313,13 +308,11 @@ export class ProductoComponent implements OnInit {
     this.productoService.getProductoById(_id).subscribe(
       response =>{
         this.producto = response;
-        console.log('prod obtenido: ',this.producto)
-
+        
 
         if(this.clienteSeleccionado){
           this._ventaService.evaluar_venta_user(this.clienteSeleccionado.uid,this.producto._id).subscribe(
             response =>{
-              console.log('resp venta: ',response)
               this.get_state_user_producto_coment = response.data;
             },
             error=>{
@@ -355,7 +348,6 @@ export class ProductoComponent implements OnInit {
           }
             this.galeria.push({_id:element._id,imagen : element.imagen});
         });
-        console.log(this.galeria);
       },
       error=>{
         console.log(error);
@@ -382,7 +374,6 @@ export class ProductoComponent implements OnInit {
     this._selectorService.selectorByProduct(_id).subscribe(
       response =>{
         this.selectores = response;
-        console.log(this.selectores);
 
       },
       error=>{
@@ -401,10 +392,9 @@ export class ProductoComponent implements OnInit {
   }
 
   obtenerCategorias(){
-    return this.categoryService.getCategories().subscribe(
+    return this.categoryService.cargarCategorias().subscribe(
       resp=>{
         this.categories = resp;
-        console.log(this.categories);
       }
     )
   }

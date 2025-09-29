@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output } from '@angular/core';
 import { VentaService } from 'src/app/services/venta.service';
 import { UsuarioService } from '../../services/usuario.service';
 import { ProductoService } from 'src/app/services/producto.service';
@@ -6,6 +6,7 @@ import { ComentarioService } from 'src/app/services/comentario.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import {environment} from 'src/environments/environment';
 import { Usuario } from 'src/app/models/usuario.model';
+import { Producto } from 'src/app/models/producto.model';
 declare let Chart;
 
 @Component({
@@ -15,6 +16,9 @@ declare let Chart;
   ]
 })
 export class DashboardComponent implements OnInit {
+
+  public bestsellers: Producto[] = [];
+  public populares: Producto[] = [];
 
   public total_mes = 0;
   public total_ventas = 0;
@@ -244,6 +248,13 @@ export class DashboardComponent implements OnInit {
           }
         );
 
+        this._productoService.best_seller().subscribe((resp: any) => {
+          this.bestsellers = resp.data;
+        });
+
+        this._productoService.populares().subscribe((resp: any) => {
+          this.populares = resp.data;
+        });
 
   }
 

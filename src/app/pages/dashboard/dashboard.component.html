@@ -88,94 +88,15 @@
                         <div class="row">
 
 
-                            <div class="col">
+                            <div class="col-xs-12 col-sm-6">
                                 <div class="card">
-                                    <div class="card-body" style="padding-bottom: 12px;">
-                                        <div class="d-flex align-items-center mx-auto py-3 px-3"
-                                            style="padding: 0px !important;">
-                                            <div class="display-2 font-weight-normal border-color mr-4">
-                                                <span class="czi-user"></span>
-                                            </div>
-                                            <div class="pl-2">
-                                                <h6 style="margin-bottom: 0px;">{{totalUsuarios}}</h6>
-                                                <p class="mb-3 pt-1" style="font-size: 14px;">{{'All Users '|
-                                                    translate}}</p>
-                                            </div>
-                                        </div>
-                                    </div>
+                                   <app-produc-list-featured [bestsellers]="bestsellers" ></app-produc-list-featured>
 
                                 </div>
                             </div>
-                            <div class="col">
+                            <div class="col-xs-12 col-sm-6">
                                 <div class="card">
-                                    <div class="card-body" style="padding-bottom: 12px;">
-                                        <div class="d-flex align-items-center mx-auto py-3 px-3"
-                                            style="padding: 0px !important;">
-                                            <div class="display-2 font-weight-normal border-color mr-4">
-                                                <span class="czi-user"></span>
-                                            </div>
-                                            <div class="pl-2">
-                                                <h6 style="margin-bottom: 0px;">{{totalEmployees}}</h6>
-                                                <p class="mb-3 pt-1" style="font-size: 14px;"> {{'Empleados '|
-                                                    translate}}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-
-                            <div class="col">
-                                <div class="card">
-                                    <div class="card-body" style="padding-bottom: 12px;">
-                                        <div class="d-flex align-items-center mx-auto py-3 px-3"
-                                            style="padding: 0px !important;">
-                                            <div class="display-2 font-weight-normal border-color mr-4">
-                                                <span class="czi-user"></span>
-                                            </div>
-                                            <div class="pl-2">
-                                                <h6 style="margin-bottom: 0px;">{{totalClients}}</h6>
-                                                <p class="mb-3 pt-1" style="font-size: 14px;">{{'Clientes '| translate}}
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-
-                            <div class="col">
-                                <div class="card">
-                                    <div class="card-body" style="padding-bottom: 12px;">
-                                        <div class="d-flex align-items-center mx-auto py-3 px-3"
-                                            style="padding: 0px !important;">
-                                            <div class="display-2 font-weight-normal border-color mr-4">
-                                                <span class="czi-user"></span>
-                                            </div>
-                                            <div class="pl-2">
-                                                <h6 style="margin-bottom: 0px;">{{totalLocals}}</h6>
-                                                <p class="mb-3 pt-1" style="font-size: 14px;">{{'Tiendas '| translate}}
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="card">
-                                    <div class="card-body" style="padding-bottom: 12px;">
-                                        <div class="d-flex align-items-center mx-auto py-3 px-3"
-                                            style="padding: 0px !important;">
-                                            <div class="display-2 font-weight-normal border-color mr-4">
-                                                <span class="czi-user"></span>
-                                            </div>
-                                            <div class="pl-2">
-                                                <h6 style="margin-bottom: 0px;">{{totalLocalsEmployees}}</h6>
-                                                <p class="mb-3 pt-1" style="font-size: 14px;">Empleados de tiendas</p>
-                                            </div>
-                                        </div>
-                                    </div>
+                                   <app-produc-list-featured [populares]="populares" ></app-produc-list-featured>
 
                                 </div>
                             </div>
@@ -184,12 +105,12 @@
 
                     <div class="col">
                         <div class="card">
-                            <div class="card-body" style="max-height: 520px;
-                        overflow-y: auto;">
-                                <div class="widget">
                                     <h3 class="widget-title"> {{'Ultimas ventas'| translate}}<a style="cursor: pointer;"
                                             class="ml-2" (click)="data_ventas()"><span class="czi-compare"></span></a>
                                     </h3>
+                            <div class="card-body" style="max-height: 520px;
+                        overflow-y: auto;">
+                                <div class="widget">
 
                                     <!-- Item -->
                                     <div class="media align-items-center pb-2 border-bottom"

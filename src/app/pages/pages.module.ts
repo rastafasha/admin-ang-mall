@@ -27,6 +27,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { UsuarioComponent } from './mantenimientos/usuario/usuario.component';
 import { AdminModule } from "../admin/admin.module";
 import { TranslateModule } from '@ngx-translate/core';
+import { ProducListFeaturedComponent } from '../components/produc-list-featured/produc-list-featured.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,7 @@ import { TranslateModule } from '@ngx-translate/core';
     PerfilComponent,
     UsuariosComponent,
     BusquedaComponent,
-    UsuarioComponent
+    UsuarioComponent,
   ],
   exports: [
     DashboardComponent,

@@ -1,2 +1,3 @@
-- [ ] Remove 'role' and 'uid' fields from perfilForm in ngOnInit
-- [ ] Update actualizarPerfil method to construct data payload excluding role and uid
+- [x] Modify dashboard.component.ts: Add Producto import, add bestsellers and populares properties, fetch data in ngOnInit, remove @Input() for them.
+- [x] Modify produc-list-featured.component.ts: Remove data fetching from constructor, implement ngOnChanges to set collection and title based on inputs.
+- [x] Test the changes to ensure both lists display correctly.

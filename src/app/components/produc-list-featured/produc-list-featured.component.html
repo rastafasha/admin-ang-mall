@@ -1,0 +1,40 @@
+<div class="col">
+                        <div class="card">
+                            <h3>{{title}}</h3>
+                            <div class="card-body" style="max-height: 320px;
+                        overflow-y: auto;">
+                                <div class="widget">
+                                    <!-- Item -->
+                                    <div class="media align-items-center pb-2 border-bottom"
+                                        *ngFor="let item of collection">
+                                        <a class="d-block mr-2" >
+                                            <img width="64" [src]="item.img | imagenPipe: 'productos' "
+                                                alt="Product" />
+                                        </a>
+                                        <div class="media-body">
+                                            <h6 class="card-title pt-4" 
+                                                style="font-size: 15.2px;margin-bottom: 0px;">
+                                                {{item.titulo.substr(0,30)}}..</h6>
+                                            <div class="font-size-sm">
+                                                <span class="text-muted mr-2">{{'Subcategoria'}}:</span>{{item.subcategoria}}
+                                            </div>
+                                            <div class="font-size-sm" ><span
+                                                    class="text-muted mr-2">{{'Stock'}}:</span>{{item.stock}}
+                                            </div>
+                                            <div class="font-size-sm" ><span
+                                                    class="text-muted mr-2">{{'SKU'}}:</span>{{item.sku}}
+                                            </div>
+
+                                            <div class="font-size-sm">
+                                                <span class="text-muted mr-2"> {{'Precio unitario'}}:</span>${{item.precio_ahora}}
+                                            </div>
+
+
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>

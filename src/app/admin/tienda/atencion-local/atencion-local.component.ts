@@ -20,9 +20,9 @@ import * as io from "socket.io-client";
 import { CarritoService } from 'src/app/services/carrito.service';
 import { ColorService } from 'src/app/services/color.service';
 import { SelectorService } from 'src/app/services/selector.service';
-import { CategoryService } from 'src/app/services/category.service';
 import { VentaService } from 'src/app/services/venta.service';
 import { Router } from '@angular/router';
+import { FormGroup } from '@angular/forms';
 
 declare var jQuery:any;
 declare var $:any;
@@ -91,10 +91,14 @@ export class AtencionLocalComponent implements OnInit {
 
   productNotSelected:boolean = true;
 
+  query:string ='';
+            searchForm!:FormGroup;
+            currentPage = 1;
+            collecion='productos';
+
   constructor(
     private productoService: ProductoService,
     private categoriaService: CategoriaService,
-    public categoryService: CategoryService,
     private modalImagenService: ModalImagenService,
     private busquedaService: BusquedasService,
     private messageService: MessageService,
@@ -187,6 +191,18 @@ export class AtencionLocalComponent implements OnInit {
     this.tiendaService.getTiendaById(this.local).subscribe(tienda=>{
       this.tienda = tienda;
     })
+  }
+
+   public PageSize(): void {
+    this.query = '';
+    this.loadProductos();
+    // this.router.navigateByUrl('/productos')
+  }
+
+  handleSearchEvent(event: any) {
+    if (event.productos) {
+      this.productos = event.productos;
+    }
   }
 
 
