@@ -102,7 +102,7 @@ export class ProductoService {
   }
 
   populares():Observable<any>{
-    const url = `${base_url}/productos//productos_ventas/populares`;
+    const url = `${base_url}/productos/productos_ventas/populares`;
     return this.http.get(url, this.headers);
   }
 

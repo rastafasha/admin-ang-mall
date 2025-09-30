@@ -440,8 +440,9 @@ export class ProductoComponent implements OnInit {
             // },3000);
             this.msm_success = true;
             setTimeout(()=>{
-              this.close_alert()
+              this.close_alert();
             },2500);
+            
           },
           error=>{
   
@@ -579,6 +580,7 @@ export class ProductoComponent implements OnInit {
     this.msm_error_review = '';
     this.msm_success_fav = false;
     this.msm_success = false;
+    
   }
 
 }

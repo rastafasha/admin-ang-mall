@@ -116,6 +116,16 @@ export class AtencionLocalComponent implements OnInit {
    }
 
   ngOnInit(): void {
+    // obtenemos el cliente del localstorage
+    const cliente = localStorage.getItem('cliente');
+     // Si el cliente existe, lo parseamos de JSON a un objeto
+    if (cliente) {
+        this.clienteSeleccionado = JSON.parse(cliente);
+        this.loadClienteenProceso();
+    } else {
+        this.clienteSeleccionado = null; // O maneja el caso en que no hay cliente
+    }
+
     if(!this.identity){
       this.router.navigate(['/login']);
     }
@@ -138,21 +148,12 @@ export class AtencionLocalComponent implements OnInit {
     if(!this.identity){
       this.router.navigateByUrl('/login');
     }
-    // obtenemos el cliente del localstorage
-    const cliente = localStorage.getItem('cliente');
-
-    // Si el cliente existe, lo parseamos de JSON a un objeto
-    if (cliente) {
-        this.clienteSeleccionado = JSON.parse(cliente);
-    } else {
-        this.clienteSeleccionado = null; // O maneja el caso en que no hay cliente
-    }
-
-    console.log(this.clienteSeleccionado);
+    
     
     let USER = localStorage.getItem("user");
     this.user = JSON.parse(USER ? USER: '');
     this.local = this.user.local;
+
 
     this.loadCategorias();
     this.loadProductos();
@@ -170,10 +171,29 @@ export class AtencionLocalComponent implements OnInit {
       productos => {
         this.cargando = false;
         this.productos = productos;
-        console.log(this.productos);
       }
     )
 
+  }
+
+  loadClienteenProceso(){
+    const cliente = localStorage.getItem('cliente');
+    this.clienteSeleccionado = JSON.parse(cliente);
+    
+    
+    if(this.clienteSeleccionado === 404){
+      this.clienteSeleccionado.first_name= '';
+      this.clienteSeleccionado.last_name= '';
+      this.clienteSeleccionado.email= '';
+      this.clienteSeleccionado.telefono= '';
+      this.clienteSeleccionado.numdoc= 0;
+    }else{
+      this.first_name= this.clienteSeleccionado.first_name;
+      this.last_name= this.clienteSeleccionado.last_name;
+      this.email= this.clienteSeleccionado.email;
+      this.telefono= this.clienteSeleccionado.telefono;
+      this.numdoc= this.clienteSeleccionado.numdoc;
+    }
   }
 
   loadCategorias(){
@@ -181,7 +201,6 @@ export class AtencionLocalComponent implements OnInit {
     this.categoriaService.cargarCategorias().subscribe(
       categorias => {
         this.categorias = categorias;
-        console.log('categorias obt: ',categorias)
       }
     )
 
@@ -233,20 +252,10 @@ export class AtencionLocalComponent implements OnInit {
     */
 
 
-  buscar(termino: string){
-
-    if(termino.length === 0){
-      return this.loadCategorias();
-    }
-
-    this.busquedaService.buscar('productos', termino)
-    .subscribe( resultados => {
-      resultados;
-    })
-  }
+  
 
   filterClient(){
-    localStorage.removeItem('cliente');
+    // localStorage.removeItem('cliente');
     this.userService.getClient(this.numdoc).subscribe(numdoc=>{
       console.log(numdoc);
       this.clienteSeleccionado = numdoc; // se obtiene el cliente por la cedula para relacionar la compra
@@ -271,6 +280,8 @@ export class AtencionLocalComponent implements OnInit {
   adjuntarClienteaCompra(){
      // lo salvamos temporalmente en el storage
      localStorage.setItem('cliente', JSON.stringify(this.clienteSeleccionado));
+     localStorage.getItem('cliente');
+     this.ngOnInit();
       
   }
   resetClient(){
@@ -280,6 +291,8 @@ export class AtencionLocalComponent implements OnInit {
         this.email= '';
         this.telefono= '';
         this.numdoc= 0;
+        
+        location.reload();
   }
 
 

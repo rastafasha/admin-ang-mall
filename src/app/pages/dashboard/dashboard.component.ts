@@ -81,6 +81,7 @@ export class DashboardComponent implements OnInit {
   }
   public ventasData: any[] = [];
   public identity;
+  public usuario;
 
 
   constructor(
@@ -93,9 +94,20 @@ export class DashboardComponent implements OnInit {
   ) {
     this.url = environment.baseUrl;
     this.identity = this._userService.usuario;
+    
   }
 
   ngOnInit(): void {
+    const user = localStorage.getItem('user');
+    this.usuario = JSON.parse(user);
+
+    if(this.usuario.role ==='ALMACEN'){
+      this._router.navigate(['./dashboard/producto'])
+    }
+    if(this.usuario.role ==='TIENDA'){
+      this._router.navigate(['/dashboard/atencion-local'])
+    }
+
         var fecha = new Date();
 
         var months = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Deciembre"];
