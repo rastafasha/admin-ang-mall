@@ -1,3 +1,12 @@
-- [x] Modify dashboard.component.ts: Add Producto import, add bestsellers and populares properties, fetch data in ngOnInit, remove @Input() for them.
-- [x] Modify produc-list-featured.component.ts: Remove data fetching from constructor, implement ngOnChanges to set collection and title based on inputs.
-- [x] Test the changes to ensure both lists display correctly.
+# Socket.IO Connection Fix
+
+## Completed Tasks
+- [x] Created proxy.conf.json to proxy /socket.io/* and /api/* requests to localhost:3000
+- [x] Updated angular.json to use proxy configuration for serve command
+- [x] Updated environment.ts to use relative socket server URL (empty string)
+
+## Next Steps
+- [ ] Restart Angular dev server with `ng serve` to apply proxy configuration
+- [ ] Ensure backend socket.io server is running on localhost:3000
+- [ ] Test socket.io connection in admin-chat component
+- [ ] If issues persist, check backend server logs for CORS or version compatibility issues

@@ -42,7 +42,11 @@ export class AdminChatComponent implements OnInit {
     private _ticketService : TicketService,
     private location: Location,
   ) {
-    this.identity = this._userService.usuario;
+    // this.identity = this._userService.usuario;
+     let USER = localStorage.getItem('user');
+    if(USER){
+      this.identity = JSON.parse(USER);
+    }
   }
 
   ngOnInit(): void {
@@ -58,15 +62,16 @@ export class AdminChatComponent implements OnInit {
       this.mensajes = [];
       this._ticketService.get_ticket(this.id).subscribe(
         response =>{
-          
+
           this.ticket = response.ticket;
           this.estado_ticket = this.ticket.estado;
           this._userService.getUserById(this.ticket.user).subscribe(
             response =>{
-              this.usuario = response.user;
-              this.poster_admin = response.user.perfil;
+              this.usuario = response._id;
+              this.poster_admin = response.img;
+              console.log(response)
 
-              this.listar(this.usuario._id);
+              this.listar();
             },
             error=>{
               console.log(error);
@@ -110,7 +115,7 @@ export class AdminChatComponent implements OnInit {
   listar(){
     this._ticketService.data(this.identity.uid,this.usuario).subscribe(
       response=>{
-
+        console.log(response)
         if (response.mensajes && Array.isArray(response.mensajes)) {
             response.mensajes.forEach(element => {
                 if(element.ticket == this.id){
@@ -138,7 +143,7 @@ export class AdminChatComponent implements OnInit {
         //  enviar y cerrar ticket
         let data={
           de:this.identity.uid,
-          para:this.usuario._id,
+          para:this.usuario,
           msm:msmForm.value.msm,
           ticket:this.id,
           status: 1,
@@ -161,7 +166,7 @@ export class AdminChatComponent implements OnInit {
       else{
         let data={
           de:this.identity.uid,
-          para:this.usuario._id,
+          para:this.usuario,
           msm:msmForm.value.msm,
           ticket:this.id,
           status: 1,
