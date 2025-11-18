@@ -1,0 +1,329 @@
+.darkmode{
+    
+}
+.darkmode {
+    background-color: var(--fondo-negro);
+}
+
+.darkmode h1,
+.darkmode h2,
+.darkmode h3,
+.darkmode h4,
+.darkmode h5,
+.darkmode p {
+    color: var(--blanco);
+}
+
+.darkmode #logoNuevo{
+    /* filter: drop-shadow(1px 1px 1px white); */
+    /* filter: invert(1); */
+    filter: contrast(0);
+}
+.darkmode .header .sidemenu nav li::before {
+    border-top: 1px solid var(--blanco);
+}
+
+.darkmode .header .sidemenu nav a {
+    color: var(--blanco);
+    text-transform: capitalize;
+}
+
+.darkmode .header {
+    background: var(--fondo-negro);
+    color: var(--blanco);
+}
+.darkmode .sidemenu {
+    background: var(--fondo-negro);
+    color: var(--blanco);
+    border-right: 1px solid transparent;
+    box-shadow: 0px 0 39px transparent;
+}
+.darkmode .sidemenu.active {
+    background: var(--fondo-negro);
+    color: var(--blanco);
+    border-right: 1px solid #333;
+    box-shadow: 0px 0 39px #000;
+}
+.darkmode .menu-top {
+    background: var(--fondo-negro);
+    color: var(--blanco);
+}
+.darkmode .menu-footer {
+    background: var(--fondo-negro);
+    color: var(--blanco);
+    border-top: 1px solid #333;
+}
+
+.darkmode .sidemenu .close::before,
+.darkmode .sidemenu .close::after {
+    background: rgb(255, 255, 255);
+}
+
+.darkmode .navbarM a {
+    background-color: var(--fondo-negro);
+    box-shadow: 0 2px 5px 0 rgba(165, 164, 164, 0.37)
+}
+
+.darkmode .navbarM a p {
+    color: #fff;
+}
+
+.darkmode .navbarM a img {
+    filter: invert(30%) sepia(100%) saturate(0%) hue-rotate(234deg) brightness(118%) contrast(119%);
+}
+
+.darkmode .local_categoria_item .contenido {
+    background-color: var(--black);
+    color: #fff;
+}
+
+.darkmode .info_local h3, 
+.darkmode .info_local p {
+    color: #fff;
+}
+
+.darkmode .categoria_home a p {
+    color: var(--blanco);
+}
+
+.darkmode .top h2{
+    color: #fff;
+}
+
+.darkmode .header .menuright .menu {
+    background-color: var(--black);
+    border: 1px solid var(--blanco);
+}
+.darkmode .sidemenu-toggler>span {
+    display: block;
+    background-color: #d2cece;
+    height: 2px;
+}
+
+.darkmode .header2 {
+    background: var(--black);
+}
+
+.darkmode .globoblack {
+    display: block;
+    height: 35px;
+    width: 35px;
+    margin-top: 17px;
+    
+}
+.darkmode .globowhite {
+    display: none;
+    
+}
+
+.darkmode .card {
+    background-color: var(--black);
+    /* border: 1px solid #ccc; */
+    /* border-radius: 18px; */
+    box-shadow: 0 15px 30px 0 rgba(0, 0, 0, .11), 0 5px 15px 0 rgba(0, 0, 0, .08);
+    /* min-height: 30vh;
+    padding: 20px;
+    margin-bottom: 40px;
+    width: 100%;
+    display: flex; */
+    color: var(--blanco);
+}
+.darkmode .table {
+    color: #fff;
+}
+.darkmode .clinicaname{
+    border-left: 1px solid var(--blanco);
+    
+}
+
+/* tabla */
+.darkmode .table-striped tbody tr:nth-of-type(odd) {
+    background: #232222;
+    color: var(--bs-gray);
+}
+
+.darkmode .table-striped>tbody>tr:nth-of-type(odd)>* {
+    --bs-table-accent-bg: var(--bs-table-striped-bg);
+    color: #949aa0;
+}
+
+.darkmode .table {
+    color: #fff;
+}
+.darkmode .clinicaname{
+    border-left: 1px solid var(--white);
+    
+}
+.darkmode .topbar{
+    background-color: var(--fondo-negro);
+    
+}
+
+
+/* tab-content */
+
+.darkmode .tab-content-set .active{
+    color: var(--base);
+    border-bottom: 2px solid var(--base);
+    border-bottom-width: 80%;
+    text-align: center;
+}
+
+.darkmode .tab-content-set{
+    color: var(--white);
+}
+
+.darkmode b {
+    color: var(--white);
+}
+.darkmode .navbarM a.active {
+    background: #9c9a9a;
+    color: #fff;
+}
+.darkmode .tab-content-set li a {
+    color: #fff;
+}
+
+.darkmode 
+
+.darkmode .navbarM a.active {
+    background: #9c9a9a;
+    color: #fff;
+}
+.darkmode .tab-content-set li a {
+    color: #fff;
+}
+.darkmode .btn-sm {
+    color: #fff;
+    border:1px solid #fff;
+}
+.darkmode .info_local {
+    color: #fff;
+}
+
+.darkmode .accordion-item{
+    background: var(--fondo-negro);
+    color:  var(--blanco);
+}
+.darkmode .accordion-button:not(.collapsed) {
+    color: var(--blanco);
+    background-color: #101010;
+    box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.125);
+}
+.darkmode .accordion-item .accordion-button {
+    color: var(--blanco);
+    background-color: #101010;
+}
+.darkmode .accordion-button {
+    color: #ffffff;
+    background-color: #282828;
+    
+}
+
+.darkmode .accordion-body {
+    background: #201f1f;
+}
+.darkmode .recibo,
+.darkmode .legall,
+.darkmode .legall h2,
+.darkmode .legall p {
+    color: var(--blanco);
+}
+
+.darkmode .recibo h3{
+    color: var(--blanco);
+}
+.darkmode .pago p{
+    color: var(--blanco);
+}
+
+
+.darkmode .backbotton{
+    color: var(--blanco) !important;
+    background-color: var(--fondo-negro) !important;
+}
+
+
+.darkmode .option-admin i{
+    border: 1px solid var(--gris);
+}
+
+.darkmode .user .itemFav img {
+    border: none;
+    background-color: #0000;
+    box-shadow: none;
+    filter: drop-shadow(2px 4px 6px black);
+}
+.darkmode .itemFav .fa{
+    color: var(--gris);
+}
+
+.darkmode .menu-footer ul li a .fa-search {
+    box-shadow: none;
+    color: var(--gris);
+    background-color: var(--fondo-negro);
+    border: 3px solid var(--gris);
+    filter: drop-shadow(2px 4px 6px black);
+}
+
+.darkmode .user-header-top img {
+    filter: opacity(0.5);
+}
+
+
+.darkmode .shadowSearch {
+    border: 1px solid #333;
+    background-color: var(--fondo-negro);
+    
+    border-radius: 14px;
+    box-shadow: none;
+    margin-bottom: 30px;
+    padding: 15px;
+    filter: drop-shadow(2px 4px 6px black);
+}
+.darkmode label {
+    color: var(--blanco);
+}
+.darkmode .modal-content {
+    background-color: var(--fondo-negro) !important;
+    border: 1px solid #ccc;
+    color: var(--blanco);
+}
+
+.darkmode .back .fa {
+    color: var(--gris);
+}
+
+/* .darkmode .left-image{
+    filter: invert();
+} */
+
+.darkmode .back h1::before {
+    border-top: 1px solid var(--gris);
+}
+
+.darkmode .categorylist h2 {
+    background-color: #000;
+    color: var(--fondo-footer);
+    border: 1px solid #333;
+}
+
+.darkmode .label__name{
+    color: #000 !important;
+}
+
+/* input */
+.darkmode.input:where(:focus,:not(:placeholder-shown)) + .darkmode .label__name{
+    transform: translateY(-50%) scale(.7);
+    background-color: var(--fondo-negro) !important;
+    color: #fff;
+}
+
+.darkmode input.form-control,
+.darkmode textarea.form-control {
+    background-color: #393939;
+    color: var(--white);
+}
+.darkmode .bg-light {
+    background-color: #393939 !important;
+} 

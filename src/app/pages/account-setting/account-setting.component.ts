@@ -104,5 +104,30 @@ export class AccountSettingComponent implements OnInit {
 }
 
 
+onDarkMode(dark:string){
+    var element = document.body;
+
+    const classExists = document.getElementsByClassName(
+      'darkmode'
+     ).length > 0;
+
+    var dayNight = document.getElementsByClassName("site");
+      for (var i = 0; i<dayNight.length; i++) {
+        // dayNight[i].classList.toggle("darkmode");
+        element.classList.toggle("darkmode");
+
+      }
+      // localStorage.setItem('dark', dark);
+
+      if (classExists) {
+        localStorage.removeItem('darkmode');
+        // console.log('✅ class exists on page, removido');
+      } else {
+        localStorage.setItem('darkmode', dark);
+        // console.log('⛔️ class does NOT exist on page, agregado');
+      }
+      // console.log('Pulsado');
+  }
+
 
 }

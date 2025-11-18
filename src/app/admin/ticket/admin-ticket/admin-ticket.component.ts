@@ -3,6 +3,8 @@ import { TicketService } from "src/app/services/ticket.service";
 import { ActivatedRoute, Router } from '@angular/router';
 import { UsuarioService } from '../../../services/usuario.service';
 import { Location } from '@angular/common';
+import { Ticket } from 'src/app/models/ticket.model';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-admin-ticket',
@@ -31,10 +33,7 @@ export class AdminTicketComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
-  this.listar();
-
-
+    this.listar();
   }
 
   listar(){
@@ -43,17 +42,29 @@ export class AdminTicketComponent implements OnInit {
         this.tickets = response;
         this.count_cat = this.tickets.tickets.length;
         this.page = 1;
-        // console.log(this.tickets);
       },
       error=>{
         console.log(error);
-
       }
     );
+  }
+
+  PageSize(){
+    this.listar();
   }
 
   goBack() {
     this.location.back(); // <-- go back to previous location on cancel
   }
+
+   eliminarTicket(item: Ticket){
+      this._ticketService.delete(item._id)
+      .subscribe( resp => {
+        this.listar();
+        Swal.fire('Borrado', 'success')
+        this.ngOnInit();
+      })
+  
+    }
 
 }

@@ -8,6 +8,8 @@
                     <div class="d-flex flex-wrap flex-md-nowrap justify-content-between">
                         <p class="text-muted">Todos los tickets aperturados.</p>
                     </div>
+                    <a href="javascript:;" (click)="PageSize()" class="btn btn-primary doctor-refresh ms-2 searchbtn"><i
+                  class="fa fa-refresh"></i></a>
 
                 </div>
 
@@ -20,6 +22,7 @@
                                 <th>Estado</th>
                                 <th>Status</th>
                                 <th>Chat</th>
+                                <th>option</th>
                             </tr>
                         </thead>
                         <tbody *ngFor="let item of tickets.tickets | orderBy:'createdAt, desc'">
@@ -40,6 +43,11 @@
                                     </ng-container>
                                 </td>
                                 <td class="text-center"><a [routerLink]="['/dashboard/tikets/modulo/chat/',item._id]" routerLinkActive="router-link-active"><span class="czi-message"></span></a></td>
+                                <td class="text-center">
+                                     <a (click)="eliminarTicket(item)" class="dropdown-item"><span
+                                                    class="czi-delete-document"></span> &nbsp;{{'Eliminar'}}</a>
+                                </td>
+                                
                             </tr>
                         </tbody>
                     </table>

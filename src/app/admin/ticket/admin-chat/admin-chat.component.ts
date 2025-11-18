@@ -90,6 +90,7 @@ export class AdminChatComponent implements OnInit {
         this.ticket = response.ticket;
         this.usuario = this.ticket.user
         this.estado_ticket = this.ticket.estado;
+        console.log(response)
 
         this._userService.getUserById( this.usuario).subscribe(
           response =>{
@@ -113,7 +114,7 @@ export class AdminChatComponent implements OnInit {
   }
 
   listar(){
-    this._ticketService.data(this.identity.uid,this.usuario).subscribe(
+    this._ticketService.get_ticketmensajes(this.id).subscribe(
       response=>{
         console.log(response)
         if (response.mensajes && Array.isArray(response.mensajes)) {
@@ -134,6 +135,28 @@ export class AdminChatComponent implements OnInit {
       }
     );
   }
+  // listar(){
+  //   this._ticketService.data(this.identity.uid,this.usuario).subscribe(
+  //     response=>{
+  //       console.log(response)
+  //       if (response.mensajes && Array.isArray(response.mensajes)) {
+  //           response.mensajes.forEach(element => {
+  //               if(element.ticket == this.id){
+  //                   this.mensajes.push(element);
+  //               }
+  //           });
+               
+  //       }
+  //       this.scrollToBottom();
+
+
+  //     },
+  //     error=>{
+
+
+  //     }
+  //   );
+  // }
 
 
   sendMessage(msmForm){

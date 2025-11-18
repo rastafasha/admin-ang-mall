@@ -57,7 +57,7 @@ export class UsuariosTiendaComponent implements OnInit {
       
     }else{
 
-      this.loadEmployeesByLocalId();
+      this.loadUsuarios();
     }
     if(this.role === 'ALMACEN' || this.role === 'VENTAS'||this.role === 'TIENDA'){
     }

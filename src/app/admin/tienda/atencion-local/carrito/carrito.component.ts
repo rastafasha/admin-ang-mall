@@ -10,6 +10,15 @@ import { DireccionService } from "src/app/services/direccion.service";
 import { VentaService } from "src/app/services/venta.service";
 
 declare var paypal;
+// declare var paypal: {
+//   Buttons: (arg0: {
+//     createOrder: (data: any, actions: any) => any; onApprove: (data: any, actions: any) => Promise<void>;
+
+//     // Define si el pago será con tarjeta o PayPal
+//     fundingSource: any; //agregado
+//     onError: (err: any) => void;
+//   }) => { (): any; new(): any; render: { (arg0: any): void; new(): any; }; }; FUNDING: { CARD: any; PAYPAL: any; };
+// };
 
 
 declare var jQuery:any;

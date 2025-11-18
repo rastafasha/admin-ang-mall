@@ -61,6 +61,15 @@ export class TicketService {
     let headers = new HttpHeaders().set('Content-Type','application/json');
     return this._http.get(this.url + '/tickets/'+id,{headers:headers})
   }
+  get_ticketmensajes(id:string):Observable<any>{
+    let headers = new HttpHeaders().set('Content-Type','application/json');
+    return this._http.get(this.url + '/tickets/ticket_listar/listar/'+id,{headers:headers})
+  }
+
+  delete(id:string):Observable<any>{
+    let headers = new HttpHeaders().set('Content-Type','application/json');
+    return this._http.delete(this.url + '/tickets/delete/'+id,{headers:headers})
+  }
 
   get_tickets_admin(){
 
