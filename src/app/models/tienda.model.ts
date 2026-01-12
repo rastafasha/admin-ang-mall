@@ -8,6 +8,7 @@ export class Tienda{
     public nombre: string,
     public local: string,
     public state_banner : boolean,
+    public moneda?: string,
     public redssociales?: string,
     public telefono?: string,
     public productos?: string,

@@ -1,0 +1,17 @@
+import { environment } from "src/environments/environment";
+
+const base_url = environment.mediaUrlRemoto;
+
+export class Pais{
+  constructor(
+
+        public code: string,
+        public pais: string,
+        public status: string,
+        public createdAt: Date,
+        public updatedAt: Date,
+        public _id?: string
+
+  ){}
+
+}

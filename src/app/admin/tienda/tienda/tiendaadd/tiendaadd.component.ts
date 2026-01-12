@@ -14,13 +14,15 @@ import { IconosService } from 'src/app/services/iconos.service';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { Tienda } from 'src/app/models/tienda.model';
 import { TiendaService } from 'src/app/services/tienda.service';
+import { PaisService } from 'src/app/services/pais.service';
+import { Pais } from 'src/app/models/pais.model';
 
-interface HtmlInputEvent extends Event{
-  target : HTMLInputElement & EventTarget;
+interface HtmlInputEvent extends Event {
+  target: HTMLInputElement & EventTarget;
 }
 
-declare var jQuery:any;
-declare var $:any;
+declare var jQuery: any;
+declare var $: any;
 
 @Component({
   selector: 'app-tiendaadd',
@@ -29,7 +31,7 @@ declare var $:any;
 })
 export class TiendaaddComponent implements OnInit {
 
-  
+
 
   public tiendaForm: FormGroup;
   public tienda: Tienda;
@@ -40,28 +42,31 @@ export class TiendaaddComponent implements OnInit {
   banner: string;
   pageTitle: string;
   listIcons;
-  state_banner:boolean;
+  state_banner: boolean;
 
 
   public Editor = ClassicEditor;
   public Editor1 = ClassicEditor;
   public tiendaSeleccionado?: Tienda;
+  public pais?: Pais;
+  public paises: Pais;
 
-  public redessociales:any = [];
-  public listCategorias:any = [];
-  public icono:any;
-  description:any;
-  name_red:any;
-  usuario_red:any;
+  public redessociales: any = [];
+  public listCategorias: any = [];
+  public icono: any;
+  description: any;
+  name_red: any;
+  usuario_red: any;
 
-  nombre:any; local:any; 
-  categoria:any; subcategorias:any; 
-          telefono:any; user:any; 
-          redssociales:any; status:any;  
+  nombre: any; local: any;
+  categoria: any; subcategorias: any;
+  telefono: any; user: any;
+  redssociales: any; status: any;
 
   constructor(
     private fb: FormBuilder,
     private categoriaService: CategoriaService,
+    private paisService: PaisService,
     private tiendaService: TiendaService,
     private usuarioService: UsuarioService,
     private fileUploadService: FileUploadService,
@@ -75,31 +80,42 @@ export class TiendaaddComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    window.scrollTo(0,0);
+    window.scrollTo(0, 0);
 
     this.cargar_iconos();
+    this.getPaises();
     this.getCategorias();
-    
+
     this.validarFormulario();
-    this.activatedRoute.params.subscribe( ({id}) => this.cargarTienda(id));
-    if(this.tiendaSeleccionado){
+    this.activatedRoute.params.subscribe(({ id }) => this.cargarTienda(id));
+    if (this.tiendaSeleccionado) {
       //actualizar
-    this.pageTitle = 'Edit Tienda';
-    
-    }else{
+      this.pageTitle = 'Edit Tienda';
+
+    } else {
       //crear
       this.pageTitle = 'Crear Tienda';
-      }
+    }
 
 
   }
 
 
 
-  getCategorias(){
+  getCategorias() {
     this.categoriaService.cargarCategorias().subscribe(
-      resp =>{
+      resp => {
         this.listCategorias = resp;
+        // console.log(this.listCategorias);
+
+      }
+    )
+  }
+
+  getPaises() {
+    this.paisService.getPaises().subscribe(
+      resp => {
+        this.paises = resp;
         // console.log(this.listCategorias);
 
       }
@@ -139,36 +155,37 @@ export class TiendaaddComponent implements OnInit {
     this.name_red = '';
     this.usuario_red = '';
     this.icono = '';
-    }
-
-  deleteMedical(i:any){
-    this.redssociales.splice(i,1);
   }
 
-  
+  deleteMedical(i: any) {
+    this.redssociales.splice(i, 1);
+  }
 
-  validarFormulario(){
+
+
+  validarFormulario() {
     this.tiendaForm = this.fb.group({
-      nombre: ['', ],
-      local: ['', ],
-      telefono: ['', ],
-      categoria: ['', ],
-      direccion: ['', ],
-      pais: ['', ],
-      ciudad: ['', ],
-      zip: ['', ],
+      nombre: ['',],
+      local: ['',],
+      telefono: ['',],
+      categoria: ['',],
+      direccion: ['',],
+      pais: ['',],
+      moneda: ['',],
+      ciudad: ['',],
+      zip: ['',],
       subcategoria: [''],
       redssociales: [this.redessociales],
-      status: ['false', ],
-      state_banner: ['false', ],
-      isFeatured: ['false', ],
+      status: ['false',],
+      state_banner: ['false',],
+      isFeatured: ['false',],
       user: [this.usuario.uid],
     })
   }
 
-  cargar_iconos(){
+  cargar_iconos() {
     this._iconoService.getIcons().subscribe(
-      (resp:any) =>{
+      (resp: any) => {
         this.listIcons = resp.iconos;
         // console.log(this.listIcons.iconos)
 
@@ -176,13 +193,13 @@ export class TiendaaddComponent implements OnInit {
     )
   }
 
-  cargarTienda(_id: string){
+  cargarTienda(_id: string) {
 
 
     if (_id !== null && _id !== undefined) {
       this.pageTitle = 'Edit Usuario';
       this.tiendaService.getTiendaById(_id).subscribe(
-        (res:any) => {
+        (res: any) => {
           this.tiendaForm.patchValue({
             id: res._id,
             nombre: res.nombre,
@@ -191,13 +208,14 @@ export class TiendaaddComponent implements OnInit {
             categoria: res.categoria,
             direccion: res.direccion,
             pais: res.pais,
+            moneda: res.moneda,
             ciudad: res.ciudad,
             zip: res.zip,
             subcategoria: res.subcategoria,
             redssociales: res.redssociales,
             status: res.status,
             state_banner: res.state_banner,
-            img : res.img
+            img: res.img
           });
           this.tiendaSeleccionado = res;
           console.log(this.tiendaSeleccionado);
@@ -209,23 +227,24 @@ export class TiendaaddComponent implements OnInit {
       this.pageTitle = 'Create Usuario';
     }
 
-    
+
 
   }
 
 
 
 
-  saveTienda(){debugger
+  saveTienda() {
 
     const {
-      nombre, 
+      nombre,
       local,
       telefono,
       categoria,
       direccion,
       pais,
       ciudad,
+      moneda,
       zip,
       subcategoria,
       redssociales,
@@ -233,9 +252,9 @@ export class TiendaaddComponent implements OnInit {
       state_banner,
       isFeatured,
       user,
-     } = this.tiendaForm.value;
+    } = this.tiendaForm.value;
 
-    if(this.tiendaSeleccionado){
+    if (this.tiendaSeleccionado) {
       //actualizar
       const data = {
         ...this.tiendaForm.value,
@@ -243,47 +262,48 @@ export class TiendaaddComponent implements OnInit {
         // user: this.usuario.uid
       }
       this.tiendaService.actualizarTienda(data).subscribe(
-        resp =>{
+        resp => {
           Swal.fire('Actualizado', `${nombre} actualizado correctamente`, 'success');
         });
 
-    }else{
+    } else {
       //crear
       this.tiendaService.crearTienda(this.tiendaForm.value)
-      .subscribe( (resp: any) =>{
-        Swal.fire('Creado', `${nombre} creado correctamente`, 'success');
-        this.router.navigateByUrl(`/dashboard/tienda`);
-      })
+        .subscribe((resp: any) => {
+          Swal.fire('Creado', `${nombre} creado correctamente`, 'success');
+          this.router.navigateByUrl(`/dashboard/tienda`);
+        })
     }
 
   }
 
 
-  cambiarImagen(file: File){
+  cambiarImagen(file: File) {
     this.imagenSubir = file;
 
-    if(!file){
+    if (!file) {
       return this.imgTemp = null;
     }
 
     const reader = new FileReader();
     const url64 = reader.readAsDataURL(file);
 
-    reader.onloadend = () =>{
+    reader.onloadend = () => {
       this.imgTemp = reader.result;
     }
   }
 
-  subirImagen(){
+  subirImagen() {
     this.fileUploadService
-    .actualizarFoto(this.imagenSubir, 'locaciones', this.tiendaSeleccionado._id)
-    .then(img => { this.tiendaSeleccionado.img = img;
-      Swal.fire('Guardado', 'La imagen fue actualizada', 'success');
+      .actualizarFoto(this.imagenSubir, 'locaciones', this.tiendaSeleccionado._id)
+      .then(img => {
+        this.tiendaSeleccionado.img = img;
+        Swal.fire('Guardado', 'La imagen fue actualizada', 'success');
 
-    }).catch(err =>{
-      Swal.fire('Error', 'No se pudo subir la imagen', 'error');
+      }).catch(err => {
+        Swal.fire('Error', 'No se pudo subir la imagen', 'error');
 
-    })
+      })
   }
 
   goBack() {

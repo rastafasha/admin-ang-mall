@@ -40,7 +40,13 @@
                             <label for="Pais">Pais</label>
                             <div class="input-group">
     
-                                <input type="text" formControlName="pais" class="form-control" id="Pais" placeholder="Pais">
+                                <!-- <input type="text" formControlName="pais" class="form-control" id="Pais" placeholder="Pais"> -->
+
+                                 <select class="form-control " formControlName="pais" required>
+                                                <option disabled  value="">SELECCIONAR</option>
+                                                <option *ngFor="let pais of paises" [value]="pais.pais">{{pais.pais}}</option>
+    
+                                            </select>
                             </div>
                         </div>
                         <div class="form-group col-xs-12 col-sm-6">
@@ -48,6 +54,16 @@
                             <div class="input-group">
     
                                 <input type="text" formControlName="ciudad" class="form-control" id="Ciudad" placeholder="Ciudad">
+                            </div>
+                        </div>
+                        <div class="form-group col-xs-12 col-sm-6 ">
+                            <label class=" col-form-label font-weight-medium" for="text-input">Moneda</label>
+                            <div class="input-group">
+                                <select class="form-control" formControlName="moneda">
+                                <option  disabled value="">SELECCIONAR</option>
+                                <option  value="USD">USD</option>
+                                <option  value="EUR">EUR</option>
+                              </select>
                             </div>
                         </div>
                         <div class="form-group col-xs-12 col-sm-6">
