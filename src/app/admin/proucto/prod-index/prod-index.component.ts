@@ -44,8 +44,8 @@ export class ProdIndexComponent implements OnInit {
   searchForm!: FormGroup;
   currentPage = 1;
   collecion = 'productos';
-  identity:Usuario;
-  user:Usuario;
+  identity: Usuario;
+  user: Usuario;
 
   constructor(
     private productoService: ProductoService,
@@ -62,16 +62,15 @@ export class ProdIndexComponent implements OnInit {
 
     let USER = localStorage.getItem("user");
     this.user = USER ? JSON.parse(USER) : null;
-
-    this.loadCategorias();
-
-    if(this.user.role === 'ADMIN'){
+    if (this.user.role === 'SUPERADMIN') {
       this.loadProductos();
     }
 
-    if(this.user.role === 'VENTAS'|| this.user.role === 'TIENDA' || this.user.role === 'ALMACEN'){
+    if (this.user.role === 'ADMIN' || this.user.role === 'VENTAS' || this.user.role === 'TIENDA' || this.user.role === 'ALMACEN') {
       this.getProductosbByTienda();
     }
+
+    this.loadCategorias();
     this.imgSubs = this.modalImagenService.nuevaImagen
       .pipe(
         delay(100)
@@ -89,18 +88,18 @@ export class ProdIndexComponent implements OnInit {
       productos => {
         this.cargando = false;
         this.productos = productos;
-        console.log('PRODUCTOS CARGADOS: ', this.productos);
+        // console.log('PRODUCTOS CARGADOS: ', this.productos);
       }
     )
 
   }
 
-  getProductosbByTienda(){
-     this.cargando = true;
-    this.productoService.getProductosTienda(this.user.local).subscribe(productos=>{
+  getProductosbByTienda() {
+    this.cargando = true;
+    this.productoService.getProductosTienda(this.user.local).subscribe(productos => {
       this.productos = productos;
       this.cargando = false;
-      console.log(this.productos)
+      // console.log(this.productos)
     })
   }
 
@@ -129,12 +128,16 @@ export class ProdIndexComponent implements OnInit {
   }
 
 
-
-
   eliminarProducto(producto: Producto) {
     this.productoService.borrarProducto(producto._id)
       .subscribe(resp => {
-        this.loadProductos();
+        if (this.user.role === 'SUPERADMIN') {
+          this.loadProductos();
+        }
+
+        if (this.user.role === 'ADMIN' || this.user.role === 'VENTAS' || this.user.role === 'TIENDA' || this.user.role === 'ALMACEN') {
+          this.getProductosbByTienda();
+        }
         Swal.fire('Borrado', producto.titulo, 'success')
       })
 
@@ -143,11 +146,11 @@ export class ProdIndexComponent implements OnInit {
   public PageSize(): void {
     this.query = '';
 
-    if(this.user.role === 'ADMIN'){
+    if (this.user.role === 'ADMIN') {
       this.loadProductos();
     }
 
-    if(this.user.role === 'VENTAS'|| this.user.role === 'TIENDA' || this.user.role === 'ALMACEN'){
+    if (this.user.role === 'VENTAS' || this.user.role === 'TIENDA' || this.user.role === 'ALMACEN') {
       this.getProductosbByTienda();
     }
     // this.loadProductos();
@@ -167,7 +170,13 @@ export class ProdIndexComponent implements OnInit {
       response => {
         $('#desactivar-' + id).modal('hide');
         $('.modal-backdrop').removeClass('show');
-        this.loadProductos();
+        if (this.user.role === 'SUPERADMIN') {
+          this.loadProductos();
+        }
+
+        if (this.user.role === 'ADMIN' || this.user.role === 'VENTAS' || this.user.role === 'TIENDA' || this.user.role === 'ALMACEN') {
+          this.getProductosbByTienda();
+        }
       },
       error => {
         this.msm_error = 'No se pudo desactivar el producto, vuelva a intenter.'
@@ -181,7 +190,13 @@ export class ProdIndexComponent implements OnInit {
 
         $('#activar-' + id).modal('hide');
         $('.modal-backdrop').removeClass('show');
-        this.loadProductos();
+         if(this.user.role === 'SUPERADMIN'){
+      this.loadProductos();
+    }
+
+    if(this.user.role === 'ADMIN'|| this.user.role === 'VENTAS'|| this.user.role === 'TIENDA' || this.user.role === 'ALMACEN'){
+      this.getProductosbByTienda();
+    }
       },
       error => {
 
@@ -196,7 +211,13 @@ export class ProdIndexComponent implements OnInit {
       response => {
         $('#papelera-' + id).modal('hide');
         $('.modal-backdrop').removeClass('show');
-        this.loadProductos();
+         if(this.user.role === 'SUPERADMIN'){
+      this.loadProductos();
+    }
+
+    if(this.user.role === 'ADMIN'|| this.user.role === 'VENTAS'|| this.user.role === 'TIENDA' || this.user.role === 'ALMACEN'){
+      this.getProductosbByTienda();
+    }
 
       },
       error => {

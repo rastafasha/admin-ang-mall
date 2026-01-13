@@ -51,6 +51,7 @@
                                 <td>{{usuario.first_name}}</td>
                                 <td>
                                     <select class="form-control" [(ngModel)]="usuario.role" (change)="cambiarRole(usuario)">
+                                    <option value="SUPERADMIN">Superadmin</option>
                                     <option value="ADMIN">Admin</option>
                                     <option value="USER">User</option>
                                     <option value="VENTAS">Ventas</option>

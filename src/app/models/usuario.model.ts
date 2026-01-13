@@ -14,7 +14,7 @@ export class Usuario {
     public password?: string,
     public img?: string,
     public google?: boolean,
-    public role?: 'ADMIN' | 'USER' | 'VENTAS' | 'TIENDA' | 'ALMACEN' | 'CHOFER' ,
+    public role?: 'SUPERADMIN' |'ADMIN' | 'USER' | 'VENTAS' | 'TIENDA' | 'ALMACEN' | 'CHOFER' ,
     public uid?: string
   ){}
 

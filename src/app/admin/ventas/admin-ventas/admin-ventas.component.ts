@@ -7,6 +7,7 @@ import { TiendaService } from 'src/app/services/tienda.service';
 import { FacturaComponent } from '../factura/factura.component';
 import Swal from 'sweetalert2';
 import { ProductoService } from 'src/app/services/producto.service';
+import { Usuario } from 'src/app/models/usuario.model';
 
 declare var jQuery:any;
 declare var $:any;
@@ -41,6 +42,8 @@ export class AdminVentasComponent implements OnInit {
 
   public data_ids : any = [];
   public count_selects=false;
+  usuarios:Usuario[]=[];
+  drivers:Usuario[]=[];
 
   public page;
   public pageSize = 15;
@@ -81,6 +84,7 @@ export class AdminVentasComponent implements OnInit {
 
     // Obtener locales
     this.cargar_Locales();
+    
 
     this.method_data_view(1);
     this.year = this.mydate.getFullYear();
@@ -401,6 +405,26 @@ export class AdminVentasComponent implements OnInit {
     this.option_selected = value;
   }
 
+  getDrivers(){
+    this._userService.cargarAllUsuarios().subscribe((usuarios:any) =>{
+      this.usuarios = usuarios;
+
+      // Filtrar usuarios con rol CHOFER o DRIVER
+      const usuariosFiltrados = this.usuarios.filter((usuario: any) => 
+        usuario.role === 'CHOFER' || usuario.role === 'DRIVER'
+      );
+      
+      // Filtrar por local (manejar tanto objeto._id como string directo)
+      this.drivers = usuariosFiltrados.filter((usuario: any) => {
+        const userLocal = usuario.local?._id || usuario.local;
+        const currentLocal = this.user.local?._id || this.user.local;
+        return userLocal === currentLocal;
+      });
+
+      console.log('DRIVERS FILTRADOS:', this.drivers)
+    })
+  }
+
   // agregado por José Prados
   private cargar_Locales(){
     this.tiendaService.cargarTiendas().subscribe(
@@ -415,7 +439,7 @@ export class AdminVentasComponent implements OnInit {
   // agregado por José Prados
   onChangeTienda(event:any){
     console.log(event.target.value)
-
+    this.getDrivers();
     if( event.target.value === 'todas' ){
       // se seleccionó la opción de todas las ventas
       this.ventasFiltradas = this.ventas;
@@ -426,8 +450,11 @@ export class AdminVentasComponent implements OnInit {
       this.ventasFiltradas = this.ventas.filter(item => item.local?._id===event.target.value)
       console.log(this.ventasFiltradas)
       
+      
     }
 
   }
+
+  
 
 }

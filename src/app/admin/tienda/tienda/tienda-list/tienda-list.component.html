@@ -68,7 +68,7 @@
                                 </td>
                                 <td class="text-nowrap text-center">
                                     <a [routerLink]="['/dashboard/tienda/edit/', tienda._id]" class="cursor" data-toggle="tooltip" data-original-title="Edit"> <i class="fa fa-pencil text-inverse m-r-10"></i> </a>
-                                    <a (click)="eliminarMarca(tienda)" class="cursor" data-toggle="tooltip" data-original-title="Borrar"> <i class="fa fa-close text-danger"></i> </a>
+                                    <a (click)="eliminarMarca(tienda)" *ngIf="user.role === 'SUPERADMIN'" class="cursor" data-toggle="tooltip" data-original-title="Borrar"> <i class="fa fa-close text-danger"></i> </a>
                                 </td>
                             </tr>
 

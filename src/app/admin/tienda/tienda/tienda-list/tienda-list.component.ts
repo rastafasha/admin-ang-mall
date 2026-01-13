@@ -3,6 +3,7 @@ import { FormGroup } from '@angular/forms';
 import { Subscription, delay } from 'rxjs';
 import { Marca } from 'src/app/models/marca.model';
 import { Tienda } from 'src/app/models/tienda.model';
+import { Usuario } from 'src/app/models/usuario.model';
 import { BusquedasService } from 'src/app/services/busquedas.service';
 import { MarcaService } from 'src/app/services/marca.service';
 import { ModalImagenService } from 'src/app/services/modal-imagen.service';
@@ -16,7 +17,7 @@ import Swal from 'sweetalert2';
 })
 export class TiendaListComponent implements OnInit {
 
-  public tiendas: Tienda[] =[];
+  public tiendas: Tienda;
   public tienda: Tienda;
   public cargando: boolean = true;
 
@@ -32,7 +33,7 @@ export class TiendaListComponent implements OnInit {
       searchForm!:FormGroup;
       currentPage = 1;
       collecion='tiendas';
-
+user:Usuario;
 
   constructor(
     private tiendaService: TiendaService,
@@ -41,8 +42,17 @@ export class TiendaListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    let USER = localStorage.getItem("user");
+    this.user = USER ? JSON.parse(USER) : null;
 
-    this.loadTiendas();
+    if(this.user.role === 'SUPERADMIN'){
+      this.loadTiendas();
+    }
+
+    if(this.user.role === 'ADMIN'){
+      this.loadTiendasById();
+    }
+
     this.imgSubs = this.modalImagenService.nuevaImagen
     .pipe(
       delay(100)
@@ -65,6 +75,17 @@ export class TiendaListComponent implements OnInit {
     )
 
   }
+  loadTiendasById(){
+    this.cargando = true;
+    this.tiendaService.getTiendasByUserId(this.user.uid).subscribe(
+      resp => {
+        this.cargando = false;
+        this.tiendas = resp;
+        console.log(this.tiendas);
+      }
+    )
+
+  }
   cambiarPagina(valor: number){
     this.desde += valor;
 
@@ -74,7 +95,14 @@ export class TiendaListComponent implements OnInit {
       this.desde -= valor;
     }
 
-    this.loadTiendas();
+    // this.loadTiendas();
+    if(this.user.role === 'SUPERADMIN'){
+      this.loadTiendas();
+    }
+
+    if(this.user.role === 'ADMIN'){
+      this.loadTiendasById();
+    }
 
 
   }
@@ -91,7 +119,14 @@ export class TiendaListComponent implements OnInit {
   eliminarMarca(tienda: Marca){
     this.tiendaService.borrarTienda(tienda._id)
     .subscribe( (resp:any) => {
+      // this.loadTiendas();
+      if(this.user.role === 'SUPERADMIN'){
       this.loadTiendas();
+    }
+
+    if(this.user.role === 'ADMIN'){
+      this.loadTiendasById();
+    }
       Swal.fire('Borrado', tienda.nombre, 'success')
     })
 
@@ -101,7 +136,14 @@ export class TiendaListComponent implements OnInit {
 
   public PageSize(): void {
     this.query = '';
-    this.loadTiendas();
+    if(this.user.role === 'SUPERADMIN'){
+      this.loadTiendas();
+    }
+
+    if(this.user.role === 'ADMIN'){
+      this.loadTiendasById();
+    }
+    // this.loadTiendas();
     // this.router.navigateByUrl('/productos')
   }
 

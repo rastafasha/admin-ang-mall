@@ -81,6 +81,8 @@ export class TiendaaddComponent implements OnInit {
 
   ngOnInit(): void {
     window.scrollTo(0, 0);
+    let USER = localStorage.getItem("user");
+    this.user = USER ? JSON.parse(USER) : null;
 
     this.cargar_iconos();
     this.getPaises();
@@ -179,7 +181,7 @@ export class TiendaaddComponent implements OnInit {
       status: ['false',],
       state_banner: ['false',],
       isFeatured: ['false',],
-      user: [this.usuario.uid],
+      user: [this.user.uid],
     })
   }
 
@@ -215,7 +217,8 @@ export class TiendaaddComponent implements OnInit {
             redssociales: res.redssociales,
             status: res.status,
             state_banner: res.state_banner,
-            img: res.img
+            img: res.img,
+            user: res.user
           });
           this.tiendaSeleccionado = res;
           console.log(this.tiendaSeleccionado);
@@ -234,7 +237,7 @@ export class TiendaaddComponent implements OnInit {
 
 
 
-  saveTienda() {
+  saveTienda() {debugger
 
     const {
       nombre,
@@ -258,6 +261,7 @@ export class TiendaaddComponent implements OnInit {
       //actualizar
       const data = {
         ...this.tiendaForm.value,
+        user: this.user.uid,
         _id: this.tiendaSeleccionado._id,
         // user: this.usuario.uid
       }

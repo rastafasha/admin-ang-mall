@@ -34,7 +34,7 @@ export class UsuarioService {
     return localStorage.getItem('token') || '';
   }
 
-  get role(): 'ADMIN' | 'USER' | 'VENTAS' | 'TIENDA' | 'ALMACEN' | 'CHOFER' {
+  get role(): 'SUPERADMIN'|'ADMIN' | 'USER' | 'VENTAS' | 'TIENDA' | 'ALMACEN' | 'CHOFER' {
     return this.usuario.role!;
   }
 
