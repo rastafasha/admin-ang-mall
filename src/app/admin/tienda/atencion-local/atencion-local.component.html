@@ -4,7 +4,7 @@
         <div class="card">
             <div class="card-body">
                 <form autocomplete="false">
-    
+
                     <!-- paciente -->
                     <div class="row align-items-center py-4">
                         <div class="col-xs-12 col-sm-8">
@@ -12,50 +12,49 @@
                                 <div class=" row col-12 ">
                                     <div class="form-group local-forms col-12 col-md-6 col-xl-4">
                                         <label>Id/Cédula <span class="login-danger">*</span></label>
-                                        <input class="form-control" name="numdoc" [(ngModel)]="numdoc" 
-                                            type="text">
-                                            <button type="button" class="btn btn-sm " (click)="filterClient()" >
-                                                Filtrar
-                                            </button>
-                                            <button type="button" class="btn btn-sm " (click)="resetClient()" >
-                                                Reset
-                                            </button>
+                                        <input class="form-control" name="numdoc" [(ngModel)]="numdoc" type="text">
+                                        <button type="button" class="btn btn-sm " (click)="filterClient()">
+                                            Filtrar
+                                        </button>
+                                        <button type="button" class="btn btn-sm " (click)="resetClient()">
+                                            Reset
+                                        </button>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-xl-4">
                                     <div class="form-group local-forms">
                                         <label>Nombre <span class="login-danger">*</span></label>
-                                        <input class="form-control" [(ngModel)]="first_name" name="first_name"  
+                                        <input class="form-control" [(ngModel)]="first_name" name="first_name"
                                             type="text">
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-xl-4">
                                     <div class="form-group local-forms">
                                         <label>Apellido <span class="login-danger">*</span></label>
-                                        <input class="form-control" [(ngModel)]="last_name" name="last_name"  
+                                        <input class="form-control" [(ngModel)]="last_name" name="last_name"
                                             type="text">
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-xl-4">
                                     <div class="form-group local-forms">
                                         <label>Email <span class="login-danger">*</span></label>
-                                        <input class="form-control" [(ngModel)]="email" name="email"  
-                                            type="text">
+                                        <input class="form-control" [(ngModel)]="email" name="email" type="text">
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-xl-4">
                                     <div class="form-group local-forms">
                                         <label>telefono <span class="login-danger">*</span></label>
-                                        <input class="form-control" [(ngModel)]="telefono" name="telefono"  
-                                            type="text">
+                                        <input class="form-control" [(ngModel)]="telefono" name="telefono" type="text">
                                     </div>
                                 </div>
                             </div>
 
                             <!-- estilo de grupo de botones modificado por José Prados -->
                             <div class="col-12 mb-3 btn-group">
-                                <button class="btn btn-outline-success btn-sm" (click)="addClient()">Registrar Cliente</button>
-                                <button class="btn btn-outline-primary btn-sm" (click)="adjuntarClienteaCompra()">+ Agregar a Compra</button>
+                                <button class="btn btn-outline-success btn-sm" (click)="addClient()">Registrar
+                                    Cliente</button>
+                                <button class="btn btn-outline-primary btn-sm" (click)="adjuntarClienteaCompra()">+
+                                    Agregar a Compra</button>
                                 <!-- <button class="btn btn-danger btn-sm">x</button> -->
                             </div>
                         </div>
@@ -69,14 +68,14 @@
                             <div class="form-group local-forms">
                                 <label>Locación <span class="login-danger">*</span></label>
                                 <p>{{tienda?.nombre}}</p>
-    
+
                             </div>
-                            
+
                         </div>
                     </div>
                     <!-- cliente -->
                 </form>
-    
+
             </div>
         </div>
     </div>
@@ -99,24 +98,26 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <app-search [query]="query" [modelo]="producto" [colleccionName]="productos"
-        [colleccion]="'productos'" (searchEvent)="handleSearchEvent($event)" (resetEvent)="PageSize()"></app-search>
+                <app-search [query]="query" [modelo]="producto" [colleccionName]="productos" [colleccion]="'productos'"
+                    (searchEvent)="handleSearchEvent($event)" (resetEvent)="PageSize()"></app-search>
             </div>
         </div>
     </div>
 </div>
 
+<app-cas-products [activeCategory]="'Pizzería'" [isVisible]="true" [title]="'Carta Pizza'"></app-cas-products>
+
 <!-- lista productos -->
-<section class="row" *ngIf="clienteSeleccionado && productNotSelected">
+<!-- <section class="row" *ngIf="clienteSeleccionado && productNotSelected">
     <div class="container">
         <div class="productos-atention">
             <figure class="item" *ngFor="let prod of productos |  paginate: { itemsPerPage: count, currentPage: p }">
                 <div class="product product-style-1">
                     <div class="img-wrapper">
                         <a (click)="cargarPorducto(prod)">
-                            <img class="img-responsive" [src]="prod.img | imagenPipe: 'productos'" alt="{{prod.titulo}} thumbnail" />
+                            <img class="img-responsive" [src]="prod.img | imagenPipe: 'productos'"
+                                alt="{{prod.titulo}} thumbnail" />
                         </a>
-                        
                     </div>
                     <figcaption class="desc text-center">
                         <h3>
@@ -127,21 +128,12 @@
                         <p>SKU:{{prod.sku}}</p>
                         <span class="price">${{prod.precio_ahora}}</span>
                         <span class="price precioantes">${{prod.precio_antes}}</span>
-                        <!-- <div class="button-add-cart  btn btn-outline-success" type="button " (click)="addToCart(prod) ">
-                            <i class="fa fa-shopping-bag " id="myBtn "></i>
-                        </div> -->
-                        <!-- <div class="button-add-favorite  btn btn-outline-primary" type="button " (click)="addToFavorites(prod) ">
-                            <i class="fa fa-heart " id="myBtn "></i>
-                        </div> -->
+
                     </figcaption>
                 </div>
-
-                <!-- modal de producto -->
-                
             </figure>
         </div>
         <div class="clear"></div>
-        <!-- paginador -->
         <div class="row" *ngIf="productos.length > 8">
             <div class="col-md-12 text-right">
                 <pagination-controls (pageChange)="p = $event"></pagination-controls>
@@ -149,108 +141,114 @@
             </div>
         </div>
     </div>
-</section>
+</section> -->
 
 <section class="container" *ngIf="clienteSeleccionado && !productNotSelected">
 
     <div class="row">
         <div class="col-xs-12 col-sm-6">
-            <!-- imagen y nombre del producto -->
-    <article>
-        <img class="img-fluid" [src]="productoSeleccionado.img | imagenPipe: 'productos'" alt="{{productoSeleccionado.titulo}}">
-        
-    </article>
+            <article>
+                <img class="img-fluid" [src]="productoSeleccionado.img | imagenPipe: 'productos'"
+                    alt="{{productoSeleccionado.titulo}}">
 
-    
+            </article>
         </div>
         <div class="col-xs-12 col-sm-6">
-            <!-- detalles del producto y mensajes (alerts)-->
-     <article>
-        <!-- implementar aqui la galeria de imagenes del producto -->
-        <h3 class="heading-style-3" style="color:#696262">
-            {{productoSeleccionado.titulo}}
-        </h3>
-        <!-- mensaje indicando que se agregó producto al carrito-->
-        <div class="alert alert-success alert-dismissible fade show" role="alert" *ngIf="msm_success">
-            Artículo agregado al <a [routerLink]="['/dashboard/carrito']"><b>Carrito!</b></a>.
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
+            <article>
+                <!-- implementar aqui la galeria de imagenes del producto -->
+                <h3 class="heading-style-3" style="color:#696262">
+                    {{productoSeleccionado.titulo}}
+                </h3>
+                <!-- mensaje indicando que se agregó producto al carrito-->
+                <div class="alert alert-success alert-dismissible fade show" role="alert" *ngIf="msm_success">
+                    Artículo agregado al <a [routerLink]="['/dashboard/carrito']"><b>Carrito!</b></a>.
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <!-- detalles -->
+                <!-- precio -->
+                <div class="mb-3">
+                    <span class="h3 font-weight-normal text-accent mr-2">
+                        ${{productoSeleccionado.precio_ahora}}
+                    </span>
+                    <del class="text-muted font-size-lg mr-3">
+                        ${{productoSeleccionado.precio_antes}}
+                    </del>
+                    <span class="badge badge-danger badge-shadow align-middle mt-2">Oferta</span>
+                </div>
+
+                <!-- colores -->
+                <div class="font-size-sm">
+                    <div class="text-heading font-weight-medium mr-1 d-block">
+                        Colores:
+                    </div>
+                    <div class="text-muted listacolor" id="colorOption">
+                        <ng-container *ngFor="let color of colores">
+                            <ng-container>
+                                <i [style.background]="color.color" style="cursor: pointer;"
+                                    (click)="get_color(color)"></i>
+                                <div class="d-block">{{color.titulo}}</div>
+                            </ng-container>
+                        </ng-container>
+                    </div>
+                </div>
+
+                <!-- stock -->
+                <div class="font-size-sm mb-4 mt-4">
+                    <span class="text-heading font-weight-medium mr-1">
+                        Stock:</span>
+                    <span class="text-muted">
+                        {{productoSeleccionado.stock}}
+                    </span>
+                </div>
+
+                <!-- form agregar al carrito -->
+                <form class="mb-grid-gutter" #carritoForm="ngForm" (ngSubmit)="add_to_cart(carritoForm)">
+                    <div class="form-group">
+                        <div class="d-flex justify-content-between align-items-center pb-1">
+                            <label class="font-weight-medium"
+                                for="product-size">{{productoSeleccionado.nombre_selector}}:</label>
+                            <a class="nav-link-style font-size-sm"
+                                *ngIf="productoSeleccionado.subcategoria == 'Calzado'" data-toggle="modal"
+                                data-target="#sizes-modal" style="cursor: pointer;">
+                                <i class="czi-ruler lead align-middle mr-1 mt-n1"></i>Formato de tallas
+                            </a>
+                        </div>
+                        <select class="custom-select form-control" required="" id="product-size" name="selector_to_cart"
+                            [(ngModel)]="selector_to_cart">
+                            <option value=" " selected disabled>Selecciona</option>
+                            <option value="{{selector.titulo}}" *ngFor="let selector of selectores">{{selector.titulo}}
+                            </option>
+                        </select>
+                        <div class="invalid-feedback" style="display: block;" *ngIf="selector_error">
+                            Selecciona alguna opción por favor.
+                        </div>
+                    </div>
+                    <div class="form-group d-flex align-items-center">
+                        <input type="number" class="form-control mr-3" min="1" [attr.max]="productoSeleccionado.stock"
+                            name="cantidad_to_cart" [(ngModel)]="cantidad_to_cart" style="width: 5rem;">
+                        <button class="btn btn-primary btn-shadow btn-block" disabled *ngIf="!identity" type="submit"><i
+                                class="czi-cart font-size-lg mr-2"></i>Agregar al carrito</button>
+                        <button class="btn btn-primary btn-shadow btn-block" *ngIf="identity" type="submit"><i
+                                class="czi-cart font-size-lg mr-2"></i>Agregar al carrito</button>
+                    </div>
+                    <div class="invalid-feedback" *ngIf="err_stock" style="display: block;">{{err_stock}}</div>
+                </form>
+
+                <!-- Product panels-->
+                <div class="card shadow">
+                    <!-- <p class="text-justify" style="font-size: 14px;">{{producto.info_short}}</p> -->
+                    {{productoSeleccionado.info_short}}
+                </div>
+            </article>
+            <button class="btn btn-outline-danger btn-sm mt-4" (click)="volverProductos()">
+                Volver a Productos
             </button>
         </div>
 
-        <!-- detalles -->
-        <!-- precio -->
-        <div class="mb-3">
-            <span class="h3 font-weight-normal text-accent mr-2">
-                ${{productoSeleccionado.precio_ahora}}
-            </span>
-            <del class="text-muted font-size-lg mr-3">
-                ${{productoSeleccionado.precio_antes}}
-            </del>
-            <span class="badge badge-danger badge-shadow align-middle mt-2">Oferta</span>
-        </div>
-
-        <!-- colores -->
-        <div class="font-size-sm">
-            <div class="text-heading font-weight-medium mr-1 d-block">
-                  Colores:
-            </div>
-            <div class="text-muted listacolor" id="colorOption">
-                <ng-container *ngFor="let color of colores">
-                    <ng-container>
-                        <i [style.background]="color.color" style="cursor: pointer;" (click)="get_color(color)"></i>
-                        <div class="d-block">{{color.titulo}}</div>
-                    </ng-container>
-                </ng-container>
-            </div>
-        </div>
-
-        <!-- stock -->
-        <div class="font-size-sm mb-4 mt-4">
-            <span class="text-heading font-weight-medium mr-1">
-              Stock:</span>
-            <span class="text-muted">
-                {{productoSeleccionado.stock}}
-            </span>
-        </div>
-
-        <!-- form agregar al carrito -->
-        <form class="mb-grid-gutter" #carritoForm="ngForm" (ngSubmit)="add_to_cart(carritoForm)">
-            <div class="form-group">
-                <div class="d-flex justify-content-between align-items-center pb-1">
-                    <label class="font-weight-medium" for="product-size">{{productoSeleccionado.nombre_selector}}:</label>
-                    <a class="nav-link-style font-size-sm" *ngIf="productoSeleccionado.subcategoria == 'Calzado'" data-toggle="modal" data-target="#sizes-modal" style="cursor: pointer;">
-                        <i class="czi-ruler lead align-middle mr-1 mt-n1"></i>Formato de tallas
-                    </a>
-                </div>
-                <select class="custom-select form-control" required="" id="product-size" name="selector_to_cart" [(ngModel)]="selector_to_cart">
-                  <option value=" " selected disabled>Selecciona</option>
-                  <option value="{{selector.titulo}}" *ngFor="let selector of selectores" >{{selector.titulo}}</option>
-                </select>
-                <div class="invalid-feedback" style="display: block;" *ngIf="selector_error">
-                    Selecciona alguna opción por favor.
-                </div>
-            </div>
-            <div class="form-group d-flex align-items-center">
-                <input type="number" class="form-control mr-3" min="1" [attr.max]="productoSeleccionado.stock" name="cantidad_to_cart" [(ngModel)]="cantidad_to_cart" style="width: 5rem;">
-                <button class="btn btn-primary btn-shadow btn-block" disabled *ngIf="!identity" type="submit"><i class="czi-cart font-size-lg mr-2"></i>Agregar al carrito</button>
-                <button class="btn btn-primary btn-shadow btn-block" *ngIf="identity" type="submit"><i class="czi-cart font-size-lg mr-2"></i>Agregar al carrito</button>
-            </div>
-            <div class="invalid-feedback" *ngIf="err_stock" style="display: block;">{{err_stock}}</div>
-        </form>
-
-        <!-- Product panels-->
-        <div class="card shadow">
-            <!-- <p class="text-justify" style="font-size: 14px;">{{producto.info_short}}</p> -->
-            {{productoSeleccionado.info_short}}
-        </div>
-     </article>
-     <button class="btn btn-outline-danger btn-sm mt-4" (click)="volverProductos()">
-        Volver a Productos
-    </button>
-        </div>
-        
     </div>
-    
-    
+
+
 </section>

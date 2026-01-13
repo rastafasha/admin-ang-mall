@@ -91,6 +91,13 @@ export class ProductoService {
   // }
 
 
+  getProductosTienda(tienda: any):Observable<any>{
+    const url = `${base_url}/productos/producto_by_tiendaId/${tienda}`;
+    return this.http.get<any>(url)
+    .pipe(
+      map((resp:{ok: boolean, productos: Producto}) => resp.productos)
+      );
+  }
   borrarProducto(_id:string){
     const url = `${base_url}/productos/${_id}`;
     return this.http.delete(url, this.headers);

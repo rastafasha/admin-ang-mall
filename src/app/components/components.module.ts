@@ -10,8 +10,6 @@ import { LineChart2Component } from './charts/line-chart2/line-chart2.component'
 import { ProducListFeaturedComponent } from './produc-list-featured/produc-list-featured.component';
 import { PipesModule } from '../pipes/pipes.module';
 
-
-
 @NgModule({
   declarations: [
     ModalImagenComponent,
@@ -19,7 +17,7 @@ import { PipesModule } from '../pipes/pipes.module';
     LineChartComponent,
     PieChart2Component,
     LineChart2Component,
-    ProducListFeaturedComponent
+    ProducListFeaturedComponent,
 
   ],
   imports: [
@@ -35,7 +33,7 @@ import { PipesModule } from '../pipes/pipes.module';
     LineChartComponent,
     PieChart2Component,
     LineChart2Component,
-    ProducListFeaturedComponent
+    ProducListFeaturedComponent,
   ]
 })
 export class ComponentsModule { }

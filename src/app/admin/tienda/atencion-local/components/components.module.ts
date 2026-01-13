@@ -9,17 +9,23 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { PipesModule } from 'src/app/pipes/pipes.module';
 import { ListaProductosComponent } from './lista-productos/lista-productos.component';
 import { ProductoSelectedComponent } from './productoSelected/productoSelected.component';
+import { CasProductsComponent } from './cas-products/cas-products.component';
+import { ProductItemComponent } from './product-item/product-item.component';
 
 
 
 @NgModule({
   declarations: [
     ListaProductosComponent,
-    ProductoSelectedComponent
+    ProductoSelectedComponent,
+    CasProductsComponent,
+    ProductItemComponent
   ],
   exports: [
     ListaProductosComponent,
-    ProductoSelectedComponent
+    ProductoSelectedComponent,
+    CasProductsComponent,
+    ProductItemComponent
   ],
   imports: [
     CommonModule,

@@ -156,7 +156,7 @@ export class AtencionLocalComponent implements OnInit {
 
 
     this.loadCategorias();
-    this.loadProductos();
+    // this.loadProductos();
     this.getLocal();
     this.imgSubs = this.modalImagenService.nuevaImagen
     .pipe(
@@ -209,6 +209,15 @@ export class AtencionLocalComponent implements OnInit {
   getLocal(){
     this.tiendaService.getTiendaById(this.local).subscribe(tienda=>{
       this.tienda = tienda;
+      this.getProductosbByTienda();
+    })
+  }
+
+
+  getProductosbByTienda(){
+    this.productoService.getProductosTienda(this.tienda._id).subscribe((resp:any)=>{
+      this.productos = resp.productos;
+      // console.log(this.productos)
     })
   }
 

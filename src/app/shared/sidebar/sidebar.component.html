@@ -323,6 +323,25 @@
 
                     </ul>
                 </li>
+                 <li class="nav-devider"></li>
+                <li class="nav-small-cap">{{'Productos'| translate}}</li>
+                <li>
+                    <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false">
+                        <i class="mdi mdi-store"></i>
+                        <span class="hide-menu">{{'Productos'| translate}}<span class="label label-rouded label-themecolor pull-right">4</span>
+                        </span>
+                    </a>
+                    <ul aria-expanded="false" class="collapse">
+
+                        <li><a routerLink="marca" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Marcas'| translate}} </a></li>
+                        <li><a routerLink="categoria" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Categorías'| translate}} </a></li>
+                        <!-- <li><a routerLink="curso" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Cursos </a></li> -->
+                        <li><a routerLink="producto" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Productos'| translate}} </a></li>
+                        <li><a routerLink="promocion" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Promoción'| translate}} </a></li>
+
+
+                    </ul>
+                </li>
                 <li class="nav-devider"></li>
                 <li class="nav-small-cap">Adminstración</li>
                 <li>

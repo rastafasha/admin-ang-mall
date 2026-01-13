@@ -53,7 +53,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
     NgxPaginationModule,
     CKEditorModule,
     ComponentsAtentionModule,
-    SharedModule
+    SharedModule,
     
   ]
 })
