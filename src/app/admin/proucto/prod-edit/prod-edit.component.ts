@@ -213,7 +213,7 @@ export class ProdEditComponent implements OnInit {
           subcategoria: this.productoSeleccionado.subcategoria,
           isFeatured: this.productoSeleccionado.isFeatured,
           marca: this.productoSeleccionado.marca,
-          local: this.productoSeleccionado.local || '',
+          local: this.productoSeleccionado.local|| '',
           nombre_selector: this.productoSeleccionado.nombre_selector
         });
         

@@ -1,4 +1,5 @@
 import { environment } from "src/environments/environment";
+import { Tienda } from "./tienda.model";
 
 const base_url = environment.mediaUrlRemoto;
 
