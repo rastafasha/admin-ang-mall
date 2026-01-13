@@ -13,6 +13,7 @@ import { environment } from 'src/environments/environment';
 
 import * as io from "socket.io-client";
 import { MessageService } from 'src/app/services/message.service';
+import { TiendaService } from 'src/app/services/tienda.service';
 
 @Component({
   selector: 'app-header',
@@ -49,12 +50,13 @@ export class HeaderComponent implements OnInit {
    langs: string[] = [];
 
   public socket = io(environment.soketServer);
-
+public tienda_moneda : any;
   constructor(
     private usuarioService: UsuarioService,
     private congeralService: CongeneralService,
     private router: Router,
     private _contactoService :ContactoService,
+    private _tiendaService :TiendaService,
     private translate: TranslateService,
     private storageService: StorageService,
     private _carritoService:CarritoService,
@@ -75,6 +77,7 @@ export class HeaderComponent implements OnInit {
     const user = localStorage.getItem('user');
     this.usuario = JSON.parse(user);
     this.showCliente();
+    this.getTienda();
     this.flag = true;
     this._contactoService.listar().subscribe(
       response=>{
@@ -145,6 +148,15 @@ export class HeaderComponent implements OnInit {
     }
 
     this.router.navigateByUrl(`/dashboard/buscar/${termino}`);
+
+  }
+
+  getTienda(){
+    this._tiendaService.getTiendaById(this.usuario.local).subscribe(
+      tienda =>{
+        this.tienda_moneda = tienda.moneda;
+      }
+    );
 
   }
 

@@ -143,7 +143,7 @@
                     <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <!-- <span class="navbar-tool-label">{{carrito.cantidad}}</span>  -->
                     
-                        <i class="fa fa-shopping-bag "></i> &nbsp; ${{subtotal}}
+                        <i class="fa fa-shopping-bag "></i> &nbsp; {{subtotal |currency : tienda_moneda}}
                     </a>
                     <div class="dropdown-menu dropdown-menu-right animated bounceInDown cartlist">
                         <!-- *ngIf="carrito.cantidad != 0" -->
@@ -194,7 +194,7 @@
                                     </div>
                                     <div class="media-body">
                                         <h6 class="widget-product-title"><a [routerLink]="['../producto/',item.producto._id]">{{item.producto.titulo.substr(0,25)}}</a></h6>
-                                        <div class="widget-product-meta"><span class="text-accent mr-2">${{item.precio}}</span><span class="text-muted">x {{item.cantidad}}</span></div>
+                                        <div class="widget-product-meta"><span class="text-accent mr-2">{{item.precio|currency : tienda_moneda}}</span><span class="text-muted">x {{item.cantidad}}</span></div>
                                     </div>
                                 </div>
                             </li>
@@ -205,7 +205,7 @@
                             <div class="subtotal">
                                 <div class="font-size-sm mr-2 py-2">
                                     <span class="text-muted">Subtotal:</span>
-                                    <span class="text-accent font-size-base ml-1">${{subtotal}}</span>
+                                    <span class="text-accent font-size-base ml-1">{{subtotal |currency : tienda_moneda}}</span>
                                 </div>
                             </div>
                         </li>

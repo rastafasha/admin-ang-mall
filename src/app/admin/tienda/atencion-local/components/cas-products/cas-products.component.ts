@@ -18,6 +18,7 @@ export class CasProductsComponent implements OnInit, OnDestroy {
   @Input() refreshCasProducts: EventEmitter<void> | null = null;
   @Input() activeCategory: string = 'all';
   @Input() title!: string ;
+  @Input() tienda_moneda!: string ;
   @Input() isVisible = false;
 
   option_selectedd: number = 1;

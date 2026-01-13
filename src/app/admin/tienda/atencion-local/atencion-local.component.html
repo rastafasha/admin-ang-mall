@@ -105,7 +105,66 @@
     </div>
 </div>
 
-<app-cas-products [activeCategory]="'Pizzería'" [isVisible]="true" [title]="'Carta Pizza'"></app-cas-products>
+<!-- <app-cas-products [activeCategory]="'Pizzería'" [tienda_moneda]="tienda_moneda" [isVisible]="true"
+    [title]="'Carta Pizza'"></app-cas-products> -->
+
+<section class="categories-section" id="categorias" *ngIf="clienteSeleccionado && productNotSelected">
+    <div class="container">
+
+        <app-loading *ngIf="cargando"></app-loading>
+        <div *ngIf="!cargando">
+            <div class="tab-content-set">
+                <ul class="nav" *ngFor="let category of subcategories"
+                    [class.active]="activeCategory === category.nombre">
+                    <li>
+                        <a href="#" onclick="return false;" [ngClass]="{'active': option_selectedd == 1}"
+                            (click)="selectCategory(category.nombre)">{{ category.nombre }}</a>
+                    </li>
+                </ul>
+            </div>
+             <div class="container">
+                    <div class="productos-atention">
+                        <figure class="item"
+                            *ngFor="let prod of productos |  paginate: { itemsPerPage: count, currentPage: p }; let i = index">
+                            <div class="product product-style-1">
+                                <div class="img-wrapper">
+                                    <a (click)="cargarPorducto(prod)">
+                                        <img class="img-responsive" [src]="prod.img | imagenPipe: 'productos'"
+                                            alt="{{prod.titulo}} thumbnail" />
+                                    </a>
+                                </div>
+                                <figcaption class="desc text-center">
+                                    <h3>
+                                        <a class="product-name" (click)="cargarPorducto(prod)">
+                                            {{prod.titulo}}
+                                        </a>
+                                    </h3>
+                                    <p>SKU:{{prod.sku}}</p>
+
+                                    
+                                    <span class="price">{{prod.precio_ahora |number:'1.2-2'| currency:tienda_moneda}}</span>
+                                    <span class="price precioantes" *ngIf="prod.precio_antes > prod.precio_ahora">{{prod.precio_antes |number:'1.2-2'| currency:tienda_moneda}}</span>
+
+                                </figcaption>
+                            </div>
+                        </figure>
+                    </div>
+                    <div class="clear"></div>
+                    <div class="row" *ngIf="productos.length > 8">
+                        <div class="col-md-12 text-right">
+                            <pagination-controls (pageChange)="p = $event"></pagination-controls>
+
+                        </div>
+                    </div>
+                </div>
+        </div>
+
+
+    </div>
+</section>
+<div class="clear"></div>
+
+
 
 <!-- lista productos -->
 <!-- <section class="row" *ngIf="clienteSeleccionado && productNotSelected">
@@ -171,10 +230,10 @@
                 <!-- precio -->
                 <div class="mb-3">
                     <span class="h3 font-weight-normal text-accent mr-2">
-                        ${{productoSeleccionado.precio_ahora}}
+                        {{productoSeleccionado.precio_ahora |currency : tienda_moneda}}
                     </span>
                     <del class="text-muted font-size-lg mr-3">
-                        ${{productoSeleccionado.precio_antes}}
+                        {{productoSeleccionado.precio_antes |currency : tienda_moneda}}
                     </del>
                     <span class="badge badge-danger badge-shadow align-middle mt-2">Oferta</span>
                 </div>

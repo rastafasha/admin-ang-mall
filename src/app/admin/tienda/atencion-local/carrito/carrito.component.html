@@ -1,4 +1,3 @@
-
 <div class="shop-cart" id="page">
     <section class="sub-header shop-detail-1">
         <img class="rellax bg-overlay" src="images/sub-header/013.jpg" alt="">
@@ -12,7 +11,9 @@
             <!-- List of items-->
             <section class="col-lg-8">
                 <div class="d-flex justify-content-between align-items-center pt-3 pb-2 pb-sm-5 mt-1">
-                    <h2 class="h6 text-light mb-0">Productos</h2><a class="btn btn-outline-primary btn-sm pl-2" [routerLink]="['../atencion-local']" routerLinkActive="router-link-active"><i class="czi-arrow-left mr-2"></i>Continuar comprando</a>
+                    <h2 class="h6 text-light mb-0">Productos</h2><a class="btn btn-outline-primary btn-sm pl-2"
+                        [routerLink]="['../atencion-local']" routerLinkActive="router-link-active"><i
+                            class="czi-arrow-left mr-2"></i>Continuar comprando</a>
                 </div>
                 <!-- Item-->
                 <div class="alert alert-danger alert-with-icon" role="alert" *ngIf="error_stock">
@@ -23,28 +24,35 @@
                 </div>
 
                 <ng-container *ngIf="carrito">
-                    <div *ngFor="let item of carrito" class="d-sm-flex justify-content-between align-items-center my-4 pb-3 border-bottom">
+                    <div *ngFor="let item of carrito"
+                        class="d-sm-flex justify-content-between align-items-center my-4 pb-3 border-bottom">
 
                         <div class="media media-ie-fix d-block d-sm-flex align-items-center text-center text-sm-left">
                             <div *ngIf="item.producto">
-                                <a class="d-inline-block mx-auto mr-sm-4" [routerLink]="['../producto/',item.producto._id]" style="width: 10rem;">
-                                    <img [src]="item.producto.img | imagenPipe: 'productos'" style="width: 100%;" alt="Product">
+                                <a class="d-inline-block mx-auto mr-sm-4"
+                                    [routerLink]="['../producto/',item.producto._id]" style="width: 10rem;">
+                                    <img [src]="item.producto.img | imagenPipe: 'productos'" style="width: 100%;"
+                                        alt="Product">
                                 </a>
                             </div>
                             <div class="media-body pt-2">
                                 <div *ngIf="item.producto">
                                     <h3 class="product-title font-size-base mb-2">
-                                        <a [routerLink]="['../producto/',item.producto._id]">{{item.producto.titulo}}</a>
+                                        <a
+                                            [routerLink]="['../producto/',item.producto._id]">{{item.producto.titulo}}</a>
                                     </h3>
                                 </div>
-                                
+
                                 <ng-container *ngIf="item.producto.stock > 0">
-                                    <div class="font-size-sm"><span class="text-muted mr-2">{{item.producto.nombre_selector}}:</span>{{item.selector}}</div>
+                                    <div class="font-size-sm"><span
+                                            class="text-muted mr-2">{{item.producto.nombre_selector}}:</span>{{item.selector}}
+                                    </div>
                                     <div class="font-size-sm"><span class="text-muted mr-2">COLOR:</span>
-                                        <span [ngStyle]="{'background': item.color,'color': item.color}" style="font-weight: 900;">||||||||||||||||||||</span>
+                                        <span [ngStyle]="{'background': item.color,'color': item.color}"
+                                            style="font-weight: 900;">||||||||||||||||||||</span>
 
                                     </div>
-                                    <div class="font-size-lg text-accent pt-2">${{item.precio}}</div>
+                                    <div class="font-size-lg text-accent pt-2">{{item.precio |currency : tienda_moneda}}</div>
                                 </ng-container>
 
                                 <ng-container *ngIf="item.producto.stock == 0">
@@ -54,13 +62,16 @@
 
                             </div>
                         </div>
-                        <div class="pt-2 pt-sm-0 pl-sm-3 mx-auto mx-sm-0 text-center text-sm-left" style="max-width: 9rem;">
+                        <div class="pt-2 pt-sm-0 pl-sm-3 mx-auto mx-sm-0 text-center text-sm-left"
+                            style="max-width: 9rem;">
                             <div class="form-group mb-0">
                                 <label class="font-weight-medium" for="quantity1">Cantidad</label>
-                                <input class="form-control" type="number" id="quantity1" readonly [value]="item.cantidad">
+                                <input class="form-control" type="number" id="quantity1" readonly
+                                    [value]="item.cantidad">
                             </div>
-                            <button class="btn btn-link px-0 text-danger" type="button" (click)="remove_producto(item._id)">
-                              <i class="fa fa-trash-o mr-2"></i><span class="font-size-sm">Eliminar</span>
+                            <button class="btn btn-link px-0 text-danger" type="button"
+                                (click)="remove_producto(item._id)">
+                                <i class="fa fa-trash-o mr-2"></i><span class="font-size-sm">Eliminar</span>
                             </button>
                         </div>
 
@@ -70,14 +81,15 @@
                     <!-- Alert with bakground image -->
                     <div class="row">
                         <div class="col-lg-12">
-                            <div class="alert alert-bg-image alert-dismissible fade show text-center py-5" style="background-image: url(./assets/images/background/silver-ultrabook-supermarket-trolley-yellow-background-concept-shopping-modern-online-internet-commerce-sites-copy-220746051.jpeg)"
+                            <div class="alert alert-bg-image alert-dismissible fade show text-center py-5"
+                                style="background-image: url(./assets/images/background/silver-ultrabook-supermarket-trolley-yellow-background-concept-shopping-modern-online-internet-commerce-sites-copy-220746051.jpeg)"
                                 role="alert">
                                 <i class="czi-time d-block text-white my-4" style="font-size: 3rem;"></i>
                                 <h2 class="text-white text-shadow">Tu carrito actualmente esta vacío!</h2>
                                 <h4 class="text-white font-weight-normal text-shadow mb-4 pb-2">:'(</h4>
                                 <a [routerLink]="['/atencion-local']" class="btn btn-primary mb-3">Ir a comprar</a>
                                 <button type="button" class="close text-white" data-dismiss="alert" aria-label="Close">
-                                  <span aria-hidden="true">&times;</span>
+                                    <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                         </div>
@@ -91,7 +103,7 @@
                 <div class="cz-sidebar-static rounded-lg box-shadow-lg ml-lg-auto">
                     <div class="text-center mb-4 pb-3 border-bottom">
                         <h2 class="h6 mb-3 pb-1">Subtotal</h2>
-                        <h3 class="font-weight-normal">${{subtotal}}</h3>
+                        <h3 class="font-weight-normal">{{subtotal |currency : tienda_moneda}}</h3>
                     </div>
                     <div class="card mb-4 cart-data-venta" style="padding-left: 8px;">
                         <div class="card-body">
@@ -107,22 +119,27 @@
                             <tbody *ngFor="let item of postales">
                                 <tr>
                                     <td *ngIf="item._id == radio_postal">
-                                        <input type="radio" class="form-control" style="height: 25px;width: 15px;" [attr.id]="'postal-'+item._id" name="radio" (change)="select_postal($event,item)" value="{{item._id}}" checked>
+                                        <input type="radio" class="form-control" style="height: 25px;width: 15px;"
+                                            [attr.id]="'postal-'+item._id" name="radio"
+                                            (change)="select_postal($event,item)" value="{{item._id}}" checked>
                                     </td>
                                     <td *ngIf="item._id != radio_postal">
-                                        <input type="radio" class="form-control" style="height: 25px;width: 15px;" [attr.id]="'postal-'+item._id" name="radio" (change)="select_postal($event,item)" value="{{item._id}}">
+                                        <input type="radio" class="form-control" style="height: 25px;width: 15px;"
+                                            [attr.id]="'postal-'+item._id" name="radio"
+                                            (change)="select_postal($event,item)" value="{{item._id}}">
                                     </td>
                                     <td>
                                         <!-- Blockquote -->
                                         <blockquote class="blockquote" style="margin-bottom: 0.4rem;">
-                                            <p style="font-size: 13px;margin-bottom: 0px !important;">{{item.titulo}}</p>
+                                            <p style="font-size: 13px;margin-bottom: 0px !important;">{{item.titulo}}
+                                            </p>
                                             <footer class="blockquote-footer">
                                                 {{item.tiempo}}
                                             </footer>
                                         </blockquote>
 
                                     </td>
-                                    <td>${{item.precio}}</td>
+                                    <td>{{item.precio |currency : tienda_moneda}}</td>
 
                                 </tr>
                             </tbody>
@@ -133,14 +150,19 @@
                     <div class="accordion mb-4 cart-data-venta" id="order-options" *ngIf="carrito">
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="accordion-heading"><a href="#promo-code" role="button" data-toggle="collapse" aria-expanded="true" aria-controls="promo-code">Aplicar promoción<span class="accordion-indicator"></span></a></h3>
+                                <h3 class="accordion-heading"><a href="#promo-code" role="button" data-toggle="collapse"
+                                        aria-expanded="true" aria-controls="promo-code">Aplicar promoción<span
+                                            class="accordion-indicator"></span></a></h3>
                             </div>
                             <div class="collapse show" id="promo-code" data-parent="#order-options">
                                 <form class="card-body needs-validation" method="post" novalidate>
                                     <div class="form-group">
-                                        <input class="form-control" type="text" placeholder="Cupón" name="cupon" maxlength="13" [(ngModel)]="cupon" (keyup)="get_data_cupon($event,cupon)">
-                                        <div class="invalid-feedback" *ngIf="msm_error_cupon">Este cupón no esta disponible.</div>
-                                        <div class="valid-feedback" *ngIf="msm_success_cupon" style="display: block;">Cupón aplicado exitosamente!</div>
+                                        <input class="form-control" type="text" placeholder="Cupón" name="cupon"
+                                            maxlength="13" [(ngModel)]="cupon" (keyup)="get_data_cupon($event,cupon)">
+                                        <div class="invalid-feedback" *ngIf="msm_error_cupon">Este cupón no esta
+                                            disponible.</div>
+                                        <div class="valid-feedback" *ngIf="msm_success_cupon" style="display: block;">
+                                            Cupón aplicado exitosamente!</div>
                                     </div>
 
                                 </form>
@@ -169,18 +191,25 @@
                     </div>
                     <div class="invalid-tooltip" style="display: block;" *ngIf="msm_error">{{msm_error}}</div>
 
-                    <button class="btn btn-primary btn-shadow btn-block mt-4 mb-4" *ngIf="carrito" id="btn-verify-data" (click)="verify_data()"><i class="czi-card font-size-lg mr-2"></i>Proceder a pagar</button>
+                    <button class="btn btn-primary btn-shadow btn-block mt-4 mb-4" *ngIf="carrito" id="btn-verify-data"
+                        (click)="verify_data()"><i class="czi-card font-size-lg mr-2"></i>Proceder a pagar</button>
 
-                    <button class="btn btn-primary btn-shadow btn-block mt-4 mb-4" id="btn-back-data" (click)="back_data()"><i class="czi-reply font-size-lg mr-2"></i>Regresar</button>
+                    <button class="btn btn-primary btn-shadow btn-block mt-4 mb-4" id="btn-back-data"
+                        (click)="back_data()"><i class="czi-reply font-size-lg mr-2"></i>Regresar</button>
 
                     <div class="rounded-lg px-4 pt-4 pb-2 mb-4" id="card-data-envio">
                         <div class="row">
                             <div class="col-sm-12">
                                 <h4 class="h6">Detalles de Entrega:</h4>
                                 <ul class="list-unstyled font-size-sm">
-                                    <li><span class="text-muted dt-w">Cliente:&nbsp; <br></span>{{clienteSeleccionado.first_name}} {{clienteSeleccionado.last_name}}</li>
-                                    <li><span class="text-muted dt-w">Dirección:&nbsp; <br></span>{{data_direccionLocal.direccion}}</li>
-                                    <li><span class="text-muted dt-w">País - Ciudad - ZIP:&nbsp; <br></span> {{data_direccionLocal.pais}} <span> - </span> {{data_direccionLocal.ciudad}} <span> - </span> {{data_direccionLocal.zip}}</li>
+                                    <li><span class="text-muted dt-w">Cliente:&nbsp;
+                                            <br></span>{{clienteSeleccionado.first_name}}
+                                        {{clienteSeleccionado.last_name}}</li>
+                                    <li><span class="text-muted dt-w">Dirección:&nbsp;
+                                            <br></span>{{data_direccionLocal.direccion}}</li>
+                                    <li><span class="text-muted dt-w">País - Ciudad - ZIP:&nbsp; <br></span>
+                                        {{data_direccionLocal.pais}} <span> - </span> {{data_direccionLocal.ciudad}}
+                                        <span> - </span> {{data_direccionLocal.zip}}</li>
                                 </ul>
                             </div>
 
@@ -206,23 +235,25 @@
                                             {{metodo_pago.tipo}}
                                         </option>
                         </select> -->
-                        <select id="paymentMethod" class="form-control" (change)="onPaymentMethodChange($event)" [(ngModel)]="selectedMethod">
-                           <option value="">Seleccione</option> 
+                        <select id="paymentMethod" class="form-control" (change)="onPaymentMethodChange($event)"
+                            [(ngModel)]="selectedMethod">
+                            <option value="">Seleccione</option>
                             <option value="efectivo">Efectivo</option>
                             <option value="transferencia">Transferencia Bancaria</option>
                         </select>
 
                         <!-- div que contiene el formulario para pago con transferencia -->
                         <div *ngIf="habilitacionFormTransferencia">
-                            
+
                             <form [formGroup]="formTransferencia" (ngSubmit)="sendFormTransfer()">
 
                                 <!-- metodo de pago -->
                                 <div class="mb-3 mt-2">
                                     <label form="metodo_pago" class="form-label">Tipo de Transferencia</label>
 
-                                    <select formControlName="metodo_pago" (change)="onChangePayment($event)" class="form-control" name="metodo_pago" id="metodo_pago">
-                                        <option value="">Seleccione</option> 
+                                    <select formControlName="metodo_pago" (change)="onChangePayment($event)"
+                                        class="form-control" name="metodo_pago" id="metodo_pago">
+                                        <option value="">Seleccione</option>
                                         <option [value]="metodo_pago._id" *ngFor="let metodo_pago of paymentMethods">
                                             {{metodo_pago.tipo}}
                                         </option>
@@ -230,37 +261,46 @@
                                 </div>
                                 <div class="card">
                                     <div class="card-body alert-warning" *ngIf="paymentMethodinfo">
-                                        <p *ngIf="paymentMethodinfo.bankName">Nombre del Banco:&nbsp;{{paymentMethodinfo.bankName}}</p>
-                                        <p *ngIf="paymentMethodinfo.bankAccount">Numero de Cuenta:&nbsp;{{paymentMethodinfo.bankAccount}}</p>
-                                        <p *ngIf="paymentMethodinfo.phone">Numero de Teléfono:&nbsp;{{paymentMethodinfo.phone}}</p>
+                                        <p *ngIf="paymentMethodinfo.bankName">Nombre del
+                                            Banco:&nbsp;{{paymentMethodinfo.bankName}}</p>
+                                        <p *ngIf="paymentMethodinfo.bankAccount">Numero de
+                                            Cuenta:&nbsp;{{paymentMethodinfo.bankAccount}}</p>
+                                        <p *ngIf="paymentMethodinfo.phone">Numero de
+                                            Teléfono:&nbsp;{{paymentMethodinfo.phone}}</p>
                                         <p *ngIf="paymentMethodinfo.email">Email:&nbsp;{{paymentMethodinfo.email}}</p>
-                                        <p *ngIf="paymentMethodinfo.ciorif">Ciorif:&nbsp;{{paymentMethodinfo.ciorif}}</p>
-                                        <p *ngIf="paymentMethodinfo.username">Cheque a nombre de:&nbsp;{{paymentMethodinfo.username}}</p>
+                                        <p *ngIf="paymentMethodinfo.ciorif">Ciorif:&nbsp;{{paymentMethodinfo.ciorif}}
+                                        </p>
+                                        <p *ngIf="paymentMethodinfo.username">Cheque a nombre
+                                            de:&nbsp;{{paymentMethodinfo.username}}</p>
                                     </div>
                                 </div>
 
                                 <!-- nombre del banco -->
                                 <div class="mb-3">
                                     <label for="bankName" class="form-label">Nombre del Banco</label>
-                                    <input type="text" formControlName="bankName" class="form-control" name="bankName" id="bankName">
+                                    <input type="text" formControlName="bankName" class="form-control" name="bankName"
+                                        id="bankName">
                                 </div>
 
                                 <!-- numero de referencia -->
                                 <div class="mb-3">
                                     <label for="referencia" class="form-label">Num. referencia</label>
-                                    <input type="text" formControlName="referencia" class="form-control" name="referencia" id="referencia">
+                                    <input type="text" formControlName="referencia" class="form-control"
+                                        name="referencia" id="referencia">
                                 </div>
 
                                 <!-- monto -->
                                 <div class="mb-3">
                                     <label for="amount" class="form-label">Monto</label>
-                                    <input type="number" formControlName="amount" class="form-control" name="amount" id="amount">
+                                    <input type="number" formControlName="amount" class="form-control" name="amount"
+                                        id="amount">
                                 </div>
 
                                 <!-- teléfono de la persona que hace la transferencia -->
                                 <div class="mb-3">
                                     <label for="phone" class="form-label">Num. teléfono</label>
-                                    <input type="number" formControlName="phone" class="form-control" name="phone" id="phone">
+                                    <input type="number" formControlName="phone" class="form-control" name="phone"
+                                        id="phone">
                                 </div>
 
                                 <!-- nombre de la persona que hace la transferencia -->
@@ -268,13 +308,15 @@
                                     <label for="name_person" class="form-label">
                                         Nombre y Apellido(en cuenta pagadora)
                                     </label>
-                                    <input type="text" formControlName="name_person" class="form-control" name="name_person" id="name_person">
+                                    <input type="text" formControlName="name_person" class="form-control"
+                                        name="name_person" id="name_person">
                                 </div>
 
                                 <!-- fecha de pago -->
                                 <div class="mb-3">
                                     <label for="paymentday" class="form-label">Fecha de Pago</label>
-                                    <input type="date" formControlName="paymentday" class="form-control" name="paymentday" id="paymentday">
+                                    <input type="date" formControlName="paymentday" class="form-control"
+                                        name="paymentday" id="paymentday">
                                 </div>
 
                                 <!-- botones -->
@@ -284,38 +326,42 @@
                                     </button>
                                 </div>
                             </form>
-                            
+
                         </div>
 
                         <!-- div que contiene el formulario para pago en efectivo -->
                         <div *ngIf="habilitacionFormEfectivo">
                             <!-- formulario -->
                             <form [formGroup]="formEfectivo" (ngSubmit)="sendFormEffective()" class="mt-4">
-                                
+
                                 <!-- nombre de la persona que paga -->
                                 <div class="mb-3">
                                     <label for="name_person" class="form-label">
                                         Nombre y Apellido
                                     </label>
-                                    <input type="text" formControlName="name_person" class="form-control" name="name_person" id="name_person">
+                                    <input type="text" formControlName="name_person" class="form-control"
+                                        name="name_person" id="name_person">
                                 </div>
 
                                 <!-- monto -->
                                 <div class="mb-3">
                                     <label for="amount" class="form-label">Monto</label>
-                                    <input type="number" formControlName="amount" class="form-control" name="amount" id="amount">
+                                    <input type="number" formControlName="amount" class="form-control" name="amount"
+                                        id="amount">
                                 </div>
 
                                 <!-- teléfono de la persona que paga -->
                                 <div class="mb-3">
                                     <label for="phone" class="form-label">Num. teléfono</label>
-                                    <input type="number" formControlName="phone" class="form-control" name="phone" id="phone">
+                                    <input type="number" formControlName="phone" class="form-control" name="phone"
+                                        id="phone">
                                 </div>
 
                                 <!-- fecha de pago -->
                                 <div class="mb-3">
                                     <label for="paymentday" class="form-label">Fecha de Pago</label>
-                                    <input type="date" formControlName="paymentday" class="form-control" name="paymentday" id="paymentday">
+                                    <input type="date" formControlName="paymentday" class="form-control"
+                                        name="paymentday" id="paymentday">
                                 </div>
 
                                 <!-- botones -->
@@ -332,7 +378,8 @@
                             <form [formGroup]="formCheque" (ngSubmit)="sendFormCheque()" class="mt-4">
                                 <div class="card">
                                     <div class="card-body p-2 alert-warning" *ngIf="paymentMethodinfo">
-                                        <p *ngIf="paymentMethodinfo.username">Cheque a nombre de:&nbsp;{{paymentMethodinfo.username}}</p>
+                                        <p *ngIf="paymentMethodinfo.username">Cheque a nombre
+                                            de:&nbsp;{{paymentMethodinfo.username}}</p>
                                     </div>
                                 </div>
                                 <!-- nombre de la persona que paga -->
@@ -340,30 +387,35 @@
                                     <label for="name_person" class="form-label">
                                         Nombre y Apellido
                                     </label>
-                                    <input type="text" formControlName="name_person" class="form-control" name="name_person" id="name_person">
+                                    <input type="text" formControlName="name_person" class="form-control"
+                                        name="name_person" id="name_person">
                                 </div>
 
                                 <!-- monto -->
                                 <div class="mb-3">
                                     <label for="amount" class="form-label">Monto</label>
-                                    <input type="number" formControlName="amount" class="form-control" name="amount" id="amount">
+                                    <input type="number" formControlName="amount" class="form-control" name="amount"
+                                        id="amount">
                                 </div>
                                 <!-- numero de cheque -->
                                 <div class="mb-3">
                                     <label for="ncheck" class="form-label">N. Cheque</label>
-                                    <input type="number" formControlName="ncheck" class="form-control" name="ncheck" id="ncheck">
+                                    <input type="number" formControlName="ncheck" class="form-control" name="ncheck"
+                                        id="ncheck">
                                 </div>
 
                                 <!-- teléfono de la persona que paga -->
                                 <div class="mb-3">
                                     <label for="phone" class="form-label">Num. teléfono</label>
-                                    <input type="number" formControlName="phone" class="form-control" name="phone" id="phone">
+                                    <input type="number" formControlName="phone" class="form-control" name="phone"
+                                        id="phone">
                                 </div>
 
                                 <!-- fecha de pago -->
                                 <div class="mb-3">
                                     <label for="paymentday" class="form-label">Fecha de Pago</label>
-                                    <input type="date" formControlName="paymentday" class="form-control" name="paymentday" id="paymentday">
+                                    <input type="date" formControlName="paymentday" class="form-control"
+                                        name="paymentday" id="paymentday">
                                 </div>
 
                                 <!-- botones -->
@@ -375,7 +427,7 @@
                             </form>
                         </div>
 
-                        si la respuesta es positiva 
+                        si la respuesta es positiva
                     </div>
 
                 </div>

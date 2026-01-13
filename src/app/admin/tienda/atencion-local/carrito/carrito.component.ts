@@ -92,6 +92,7 @@ export class CarritoComponent implements OnInit {
   public date_string;
   
   public data_direccionLocal : any = {};
+  public tienda_moneda : any;
 
   selectedMethod: string = '';
 
@@ -209,7 +210,7 @@ export class CarritoComponent implements OnInit {
                 purchase_units : [{
                   description : 'Compra en Linea',
                   amount : {
-                    currency_code : 'USD',
+                    currency_code : this.tienda_moneda || 'USD',
                     value: Math.round(this.subtotal),
                   }
 
@@ -539,6 +540,7 @@ export class CarritoComponent implements OnInit {
     this._tiendaService.getTiendaById(this.localId).subscribe(
       tienda =>{
         this.data_direccionLocal = tienda;
+        this.tienda_moneda = tienda.moneda;
         console.log('direccion del local', this.data_direccionLocal);
       }
     );

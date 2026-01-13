@@ -47,6 +47,7 @@ export class AtencionLocalComponent implements OnInit {
   public selector_error = false;
   public producto: Producto;
   public tienda: Tienda;
+  public tienda_moneda: any;
   // public color_to_cart = '#16537e';
 
   public numdoc: number;
@@ -64,6 +65,14 @@ export class AtencionLocalComponent implements OnInit {
   public url;
   public totalProductos: number = 0;
   public desde: number = 0;
+
+  option_selectedd: number = 1;
+  solicitud_selectedd: any = null;
+
+  categories: Categoria[] = [];
+  subcategories: any[] = [];
+  catName: any;
+  activeCategory: any;
 
   p: number = 1;
   count: number = 8;
@@ -134,6 +143,7 @@ export class AtencionLocalComponent implements OnInit {
       this.init_data();
 
     }.bind(this));
+    
 
     this.uploads();
     
@@ -201,25 +211,86 @@ export class AtencionLocalComponent implements OnInit {
     this.categoriaService.cargarCategorias().subscribe(
       categorias => {
         this.categorias = categorias;
+        this.cargando = false;
       }
     )
+    
 
   }
 
   getLocal(){
     this.tiendaService.getTiendaById(this.local).subscribe(tienda=>{
       this.tienda = tienda;
+      this.tienda_moneda = tienda.moneda;
+      this.activeCategory = tienda.categoria.nombre;
       this.getProductosbByTienda();
+      // this.getProductosCatName();
+      
     })
   }
+
+ 
+
+  // getProductosCatName() {
+  //   this.catname = this.tienda?.categoria?.nombre ?? this.activeCategory
+  //   this.cargando = true
+  //   this.categoryService.find_by_nombre(this.catname).subscribe(
+  //     (resp: any) => {
+  //       this.products = resp.productos || [];
+  //       // console.log(this.products)
+  //       this.updateTodo();
+  //       this.cargando = false
+  //     },
+  //     (error) => {
+  //       console.error('Error al obtener los productos', error);
+  //     }
+  //   );
+  // }
 
 
   getProductosbByTienda(){
-    this.productoService.getProductosTienda(this.tienda._id).subscribe((resp:any)=>{
-      this.productos = resp.productos;
+    this.cargando = true;
+    this.productoService.getProductosTienda(this.tienda._id).subscribe(productos=>{
+      this.productos = productos;
       // console.log(this.productos)
+
+      //filtramos los productos donde sea igual a la categoria Panaderia
+      const productosfiltrados = this.productos.filter((producto: any) => producto.categoria.nombre === this.tienda.subcategoria);
+      //extraemos el campo subcategoria
+      const subcategorias = productos.map((producto: any) => producto.subcategoria);
+      //eliminamos los duplicados
+      const subcategoriasUnicas = [...new Set(subcategorias)];
+      //creamos un arreglo de objetos con el nombre de la subcategoria y el arreglo de productos
+      const categorias = subcategoriasUnicas.map((subcategoria: any) => ({
+        nombre: subcategoria,
+        products: productos.filter((product: any) => product.subcategoria === subcategoria),
+      }));
+      this.subcategories = categorias || [];
+      this.cargando = false;
     })
   }
+
+  selectCategory(category: string) {
+    // console.log('selectCategory called with:', category);
+    this.activeCategory = category;
+    this.cargando = true
+    this.updateTodo();
+    this.cargando = false
+  }
+
+  updateTodo() {
+    // console.log('updateTodo called. activeCategory:', this.activeCategory, 'products:', this.products, 'subcategories:', this.subcategories);
+    this.cargando = true
+    if (this.activeCategory === 'all') {
+      this.productos = this.productos ? this.productos.slice() : [];
+    } else {
+      const selectedCategory = this.subcategories ? this.subcategories.find(subcat => subcat.nombre === this.activeCategory) : null;
+      this.productos = selectedCategory ? selectedCategory.products : [];
+    }
+    // console.log('todo updated:', this.todo);
+    this.cargando = false
+  }
+
 
    public PageSize(): void {
     this.query = '';
@@ -520,5 +591,25 @@ export class AtencionLocalComponent implements OnInit {
     this.msm_error_review = '';
     this.msm_success_fav = false;
     this.msm_success = false;
+  }
+
+
+  //obtenemos las subcategorias de los productos
+  
+  optionSelected(value: number) {
+    this.option_selectedd = value;
+    if (this.option_selectedd === 1) {
+
+      // this.ngOnInit();
+    }
+    if (this.option_selectedd === 2) {
+      this.solicitud_selectedd = null;
+    }
+    if (this.option_selectedd === 3) {
+      this.solicitud_selectedd = null;
+    }
+    if (this.option_selectedd === 4) {
+      this.solicitud_selectedd = null;
+    }
   }
 }
