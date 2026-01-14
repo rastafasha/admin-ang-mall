@@ -150,6 +150,28 @@ export class UsuarioService {
     return this.http.post(url, data, this.headers);
   }
 
+  allUsers(){
+     const url = `${base_url}/usuarios/all`;
+     return this.http.get<any>(url, this.headers)
+       .pipe(
+         map((resp:{ok: boolean, usuarios: Usuario[]}) => resp.usuarios)
+       )
+   }
+  getDrivers(){
+     const url = `${base_url}/usuarios/drivers/`;
+     return this.http.get<any>(url, this.headers)
+       .pipe(
+         map((resp:{ok: boolean, drivers: Usuario[]}) => resp.drivers)
+       )
+   }
+  getDriversLocal(local:string){
+     const url = `${base_url}/usuarios/drivers/local/${local}`;
+     return this.http.get<any>(url, this.headers)
+       .pipe(
+         map((resp:{ok: boolean, drivers: Usuario[]}) => resp.drivers)
+       )
+   }
+ 
   actualizarPerfil(data: any) {
     return this.http.put(
       `${base_url}/usuarios/update/${this.uid}`,

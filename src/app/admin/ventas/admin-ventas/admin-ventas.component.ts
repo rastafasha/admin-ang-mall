@@ -91,6 +91,11 @@ export class AdminVentasComponent implements OnInit {
     this._ventaService.init_data_admin().subscribe(
       response => {
 
+        if(this.user.role==='SUPERADMIN'){
+          this.ventas = response.data;
+          this.ventasFiltradas = response.data;
+          // this.count_cat = this.ventas.length;
+        }
         if(this.user.role==='ADMIN'){
           this.ventas = response.data;
           this.ventasFiltradas = response.data;
@@ -405,26 +410,7 @@ export class AdminVentasComponent implements OnInit {
     this.option_selected = value;
   }
 
-  getDrivers(){
-    this._userService.cargarAllUsuarios().subscribe((usuarios:any) =>{
-      this.usuarios = usuarios;
-
-      // Filtrar usuarios con rol CHOFER o DRIVER
-      const usuariosFiltrados = this.usuarios.filter((usuario: any) => 
-        usuario.role === 'CHOFER' || usuario.role === 'DRIVER'
-      );
-      
-      // Filtrar por local (manejar tanto objeto._id como string directo)
-      this.drivers = usuariosFiltrados.filter((usuario: any) => {
-        const userLocal = usuario.local?._id || usuario.local;
-        const currentLocal = this.user.local?._id || this.user.local;
-        return userLocal === currentLocal;
-      });
-
-      console.log('DRIVERS FILTRADOS:', this.drivers)
-    })
-  }
-
+ 
   // agregado por José Prados
   private cargar_Locales(){
     this.tiendaService.cargarTiendas().subscribe(
@@ -439,7 +425,6 @@ export class AdminVentasComponent implements OnInit {
   // agregado por José Prados
   onChangeTienda(event:any){
     console.log(event.target.value)
-    this.getDrivers();
     if( event.target.value === 'todas' ){
       // se seleccionó la opción de todas las ventas
       this.ventasFiltradas = this.ventas;

@@ -20,6 +20,12 @@ export class PostalComponent implements OnInit {
   public msm_error = '';
   public postales;
   public identity;
+   option_selectedd: number = 1;
+  solicitud_selectedd: any = null;
+  cargando = false;
+  crearNuevo = false;
+
+   activeCategory: any;
 
   constructor(
     private postalService : PostalService,
@@ -31,6 +37,7 @@ export class PostalComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.crearNuevo = false;
     this.listar();
   }
 
@@ -65,7 +72,7 @@ export class PostalComponent implements OnInit {
     this.postalService.listar().subscribe(
       response =>{
         this.postales = response.postales;
-        console.log(this.postales);
+        // console.log(this.postales);
 
       },
       error=>{
@@ -89,6 +96,38 @@ export class PostalComponent implements OnInit {
 
       }
     );
+  }
+
+   optionSelected(value: number) {
+    this.option_selectedd = value;
+    if (this.option_selectedd === 1) {
+
+      // this.ngOnInit();
+    }
+    if (this.option_selectedd === 2) {
+      this.solicitud_selectedd = null;
+    }
+    if (this.option_selectedd === 3) {
+      this.solicitud_selectedd = null;
+    }
+    if (this.option_selectedd === 4) {
+      this.solicitud_selectedd = null;
+    }
+  }
+
+  optionCrear(){
+    this.crearNuevo = true;
+  }
+  cerrarOptionCrear(){
+    this.crearNuevo = false;
+  }
+
+  selectCategory(category: string) {
+    // console.log('selectCategory called with:', category);
+    this.activeCategory = category;
+    this.cargando = true
+    // this.updateTodo();
+    this.cargando = false
   }
 
 }
