@@ -1,0 +1,87 @@
+<div class="row">
+
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Mi perfil de conductor</h4>
+                <h6 class="card-subtitle">{{pageTitle}} | {{usertiendaSeleccionado.first_name}} {{usertiendaSeleccionado.last_name}} </h6>
+                <h6 class="card-subtitle" *ngIf="driverSeleccionado">LicNum: {{driverSeleccionado.licencianum}}</h6>
+                <form class="form p-t-20 form-horizontal form-material" [formGroup]="driverProfileForm" >
+                    <div class="form-group">
+                        <label for="Marca">Marca</label>
+                        <div class="input-group">
+                            <input type="text" formControlName="marca" [value]="driverSeleccionado.marca" class="form-control" id="Marca" placeholder="ej:Chevrolet">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Modelo">Modelo</label>
+                        <div class="input-group">
+                            <input type="text" formControlName="modelo" [value]="driverSeleccionado.modelo" class="form-control" id="Modelo" placeholder="ej:Camaro">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Color">Color</label>
+                        <div class="input-group">
+                            <input type="text" formControlName="color" [value]="driverSeleccionado.color" class="form-control" id="Color" placeholder="ej:rojo">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="year">Año</label>
+                        <div class="input-group">
+                            <input type="text" formControlName="year" [value]="driverSeleccionado.year" class="form-control" id="año" placeholder="ej:2016">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPais">Tipo Vehículo</label>
+                        <select formControlName="tipo_vehiculo" class="form-control" 
+                        [value]="driverSeleccionado.tipo_vehiculo">
+                            <option value="">Selecione</option>
+                            <option value="carro">Carro</option>
+                            <option value="moto">Moto</option>
+                            <option value="camioneta">Camioneta</option>
+                            <option value="van">Van ó Mini-Van</option>
+                            <option value="Camion">Camión</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="placa">Placa</label>
+                        <div class="input-group">
+                            <input type="text" formControlName="placa" class="form-control" id="placa" 
+                            [value]="driverSeleccionado.placa" placeholder="Placa">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="licencianum">Licencia No.</label>
+                        <div class="input-group">
+                            <input type="text" formControlName="licencianum" class="form-control" id="licencianum"
+                            [value]="driverSeleccionado.licencianum" placeholder="Num Licencia o permiso conducir">
+                        </div>
+                    </div>
+                    <button type="submit" (submit)="actualizar()"  class="btn btn-success waves-effect waves-light m-r-10 btn-block">
+                     <i class="fa fa-save"></i> Guardar cambios
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+     <div class="col-md-6" *ngIf="driverSeleccionado">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Avatar</h4>
+                <h6 class="card-subtitle">Imagen de Vehículo</h6>
+                <div class="text-center">
+                    <img *ngIf="!imgTemp" [src]="driverSeleccionado?.img | imagenPipe: 'drivers'  "
+                        class="img-responsive img-thumbnail" alt="">
+                    <img *ngIf="imgTemp" [src]="imgTemp" class="img-avatar">
+                </div>
+                <input type="file" (change)="cambiarImagen($event.target.files[0])">
+                <br>
+                <br>
+                <button type="button" [disabled]="!imagenSubir" (click)="subirImagen()"
+                    class="btn btn-success waves-effect waves-light m-r-10 btn-block">
+                    <i class="fa fa-save"></i> Cambiar imagen
+                </button>
+            </div>
+        </div>
+    </div> 
+</div>

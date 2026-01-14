@@ -154,6 +154,7 @@
                                     class="required">*</span></label>
                             <div class="input-group">
                                 <select class="form-control " name="local" formControlName="local"  required>
+                                    <option disabled value="">SELECCIONAR</option>
                                     <option *ngFor="let tienda of listTiendas" [value]="tienda._id">
                                         {{tienda.local}} | {{tienda.nombre}}
                                     </option>

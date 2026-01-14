@@ -9,7 +9,10 @@ const base_url = environment.mediaUrl;
 export class ImagenPipePipe implements PipeTransform {
 
   transform(img: string, tipo: 'usuarios'|'tiendas'|'marcas'|'productos'|'congenerals'
-  |'promocions'|'galerias'|'ingresos'|'facturas'|'blogs' |'pages' |'cursos'|'sliders'): string {
+  |'promocions'|'galerias'|'ingresos'|
+  'facturas'|'blogs' |'pages' |'cursos'
+  |'sliders'|'drivers'
+): string {
 
     if(!img){
       return `${base_url}/usuarios/no-image.jpg`;

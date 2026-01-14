@@ -115,12 +115,7 @@ export class PostalComponent implements OnInit {
     }
   }
 
-  optionCrear(){
-    this.crearNuevo = true;
-  }
-  cerrarOptionCrear(){
-    this.crearNuevo = false;
-  }
+  
 
   selectCategory(category: string) {
     // console.log('selectCategory called with:', category);
@@ -128,6 +123,13 @@ export class PostalComponent implements OnInit {
     this.cargando = true
     // this.updateTodo();
     this.cargando = false
+  }
+
+  optionCrear(){
+    this.crearNuevo = true;
+  }
+  cerrarOptionCrear(){
+    this.crearNuevo = false;
   }
 
 }

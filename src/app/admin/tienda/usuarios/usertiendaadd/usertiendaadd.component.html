@@ -1,4 +1,17 @@
-<div class="row">
+<div class="tab-content-set">
+    <ul class="nav">
+        <li>
+            <a href="#" onclick="return false;" [ngClass]="{'active': option_selectedd == 1}"
+                (click)="optionSelected(1)"> {{'Perfil'}}</a>
+        </li>
+        <li *ngIf="isDriver">
+            <a href="#" onclick="return false;" [ngClass]="{'active': option_selectedd == 2}"
+                (click)="optionSelected(2)">{{'Driver'}}</a>
+        </li>
+    </ul>
+</div>
+<div *ngIf="option_selectedd == 1">
+    <div class="row">
 
     <div class="col-md-8">
         <div class="card">
@@ -6,84 +19,89 @@
                 <h4 class="card-title">{{pageTitle}}</h4>
                 <h6 class="card-subtitle">Ajustes</h6>
                 <button class="btn btn-outline-danger" href="javascript:void(0)" (click)="goBack()">Volver</button>
-                <form class="form p-t-20 form-horizontal form-material" [formGroup]="registerForm" >
+                <form class="form p-t-20 form-horizontal form-material" [formGroup]="registerForm">
                     <div class="row">
                         <div class="form-group col-xs-12 col-sm-6">
                             <label for="exampleInputuname">Nombres</label>
                             <div class="input-group">
-                                <input class="form-control" type="text" formControlName="first_name" placeholder="Nombre">
+                                <input class="form-control" type="text" formControlName="first_name"
+                                    placeholder="Nombre">
                             </div>
                         </div>
                         <div class="form-group col-xs-12 col-sm-6">
                             <label for="exampleInputuname">Apellidos</label>
                             <div class="input-group">
-    
-                                <input class="form-control" type="text" formControlName="last_name" placeholder="Apellido">
+
+                                <input class="form-control" type="text" formControlName="last_name"
+                                    placeholder="Apellido">
                             </div>
                         </div>
                         <div class="form-group col-xs-12 col-sm-6">
                             <label for="exampleInputuname">Télefono</label>
                             <div class="input-group">
-    
-                                <input class="form-control" type="text" formControlName="telefono" >
+
+                                <input class="form-control" type="text" formControlName="telefono">
                             </div>
                         </div>
                         <div class="form-group col-xs-12 col-sm-6">
                             <label for="exampleInputuname">IdDoc</label>
                             <div class="input-group">
-    
-                                <input class="form-control" type="text" formControlName="numdoc" >
+
+                                <input class="form-control" type="text" formControlName="numdoc">
                             </div>
                         </div>
                         <div class="form-group col-xs-12 col-sm-6">
                             <label for="exampleInputuname">Email</label>
                             <div class="input-group">
-    
+
                                 <input class="form-control" type="text" formControlName="email" placeholder="Email">
                             </div>
                         </div>
                         <div class="form-group col-xs-12 col-sm-6">
                             <label for="exampleInputuname">Password</label>
                             <div class="input-group">
-    
-                                <input class="form-control" type="password" formControlName="password" placeholder="Password">
+
+                                <input class="form-control" type="password" formControlName="password"
+                                    placeholder="Password">
                             </div>
                         </div>
                         <div class="form-group col-xs-12 col-sm-6">
                             <label for="exampleInputuname">Confirm Password</label>
                             <div class="input-group">
-    
-                                <input class="form-control" type="password" formControlName="password2" placeholder="Confirm Password">
+
+                                <input class="form-control" type="password" formControlName="password2"
+                                    placeholder="Confirm Password">
                             </div>
                         </div>
                         <div class="form-group col-xs-12 col-sm-6">
                             <label for="icono">local</label>
                             <div class="input-group">
-    
+
                                 <!-- modificado por José Prados, agregado formControlName="local" -->
-                                <select  formControlName="local" name="local" class="form-control">
+                                <select formControlName="local" name="local" class="form-control">
                                     <option *ngFor="let tienda of listTiendas" value="{{tienda._id}}">
-                                        {{tienda.local}} | {{tienda.nombre}} 
+                                        {{tienda.local}} | {{tienda.nombre}}
                                     </option>
-                              </select>
-    
+                                </select>
+
                             </div>
                         </div>
                         <div class="form-group col-xs-12 col-sm-6 ">
                             <label class=" col-form-label font-weight-medium" for="text-input">Role</label>
                             <div class="input-group">
                                 <select class="form-control" formControlName="role">
-                                <option  disabled value="">SELECCIONAR</option>
-                                <option value="VENTAS">Ventas</option> 
+                                    <option disabled value="">SELECCIONAR</option>
+                                    <option value="VENTAS">Ventas</option>
                                     <option value="TIENDA">Tienda</option>
                                     <option value="ALMACEN">Almacen</option>
                                     <option value="CHOFER">Chofer</option>
-                              </select>
+                                </select>
                             </div>
                         </div>
                     </div>
 
-                    <button type="button" (click)="guardar()" class="btn btn-success waves-effect waves-light m-r-10 btn-block">
+                    <button type="button" (click)="guardar()"
+                        class="btn btn-success waves-effect waves-light m-r-10 btn-block">
                         <i class="fa fa-save"></i> Guardar cambios
                     </button>
                 </form>
@@ -96,16 +114,23 @@
                 <h4 class="card-title">imagen</h4>
                 <h6 class="card-subtitle">Foto de Perfil</h6>
                 <div class="text-center">
-                    <img *ngIf="!imgTemp" [src]="usertiendaSeleccionado.img | imagenPipe: 'usuarios'  " class="img-responsive img-thumbnail" alt="">
+                    <img *ngIf="!imgTemp" [src]="usertiendaSeleccionado.img | imagenPipe: 'usuarios'  "
+                        class="img-responsive img-thumbnail" alt="">
                     <img *ngIf="imgTemp" [src]="imgTemp" class="img-avatar">
                 </div>
                 <input type="file" (change)="cambiarImagen($event.target.files[0])">
                 <br>
                 <br>
-                <button type="button" [disabled]="!imagenSubir" (click)="subirImagen()" class="btn btn-success waves-effect waves-light m-r-10 btn-block">
-              <i class="fa fa-save"></i> Cambiar imagen
-             </button>
+                <button type="button" [disabled]="!imagenSubir" (click)="subirImagen()"
+                    class="btn btn-success waves-effect waves-light m-r-10 btn-block">
+                    <i class="fa fa-save"></i> Cambiar imagen
+                </button>
             </div>
         </div>
     </div>
 </div>
+</div>
+<div *ngIf="option_selectedd == 2">
+    <app-driverp-edit [usertiendaSeleccionado]="usertiendaSeleccionado"></app-driverp-edit>
+</div>
+

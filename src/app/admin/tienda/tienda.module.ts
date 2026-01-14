@@ -18,6 +18,7 @@ import { CarritoComponent } from './atencion-local/carrito/carrito.component';
 import { ProductoComponent } from './atencion-local/producto/producto.component';
 import { ComponentsAtentionModule } from './atencion-local/components/components.module';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { DriverpModule } from "src/app/admin/driverp/driverp.module";
 
 
 @NgModule({
@@ -54,7 +55,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
     CKEditorModule,
     ComponentsAtentionModule,
     SharedModule,
-    
-  ]
+    DriverpModule
+]
 })
 export class TiendaModule { }

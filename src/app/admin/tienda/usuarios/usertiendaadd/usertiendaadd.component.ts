@@ -36,7 +36,7 @@ export class UsertiendaaddComponent implements OnInit {
   public imagenSubir: File;
   public imgTemp: any = null;
   public user : any = {};
-
+  cargando = false;
   banner: string;
   pageTitle: string;
   listIcons: any;
@@ -44,6 +44,10 @@ export class UsertiendaaddComponent implements OnInit {
   user_id: any;
   public localList:any;
   state_banner:boolean;
+  isDriver:boolean = false;
+
+  option_selectedd: number = 1;
+  solicitud_selectedd: any = null;
 
   public Editor = ClassicEditor;
   public usertiendaSeleccionado: Usuario;
@@ -69,10 +73,9 @@ export class UsertiendaaddComponent implements OnInit {
     // AGREGADO POR JOSÉ PRADOS
     this.validarFormulario();
     
-    // this.activatedRoute.params.subscribe( ({id}) => this.cargar_usuario(id));
     this.activatedRoute.params.subscribe((resp:any)=>{
       this.user_id = resp.id;
-      console.log('id: ',this.user_id)
+      // console.log('id: ',this.user_id)
      })
     //  this.cargar_usuario();
     this.cargar_Locales();
@@ -96,8 +99,8 @@ export class UsertiendaaddComponent implements OnInit {
       (resp:any) =>{
         // this.listIcons = resp.iconos;
         this.usertiendaSeleccionado = resp;
-        console.log('editar user: ',this.usertiendaSeleccionado)
-
+        // console.log('editar user: ',this.usertiendaSeleccionado)
+        
         this.registerForm.setValue({
           first_name: this.usertiendaSeleccionado.first_name,
           last_name: this.usertiendaSeleccionado.last_name,
@@ -109,6 +112,10 @@ export class UsertiendaaddComponent implements OnInit {
           telefono: this.usertiendaSeleccionado.telefono || '',
           numdoc: this.usertiendaSeleccionado.numdoc || ''
         });
+
+        if(this.usertiendaSeleccionado.role === 'CHOFER'){
+          this.isDriver = true;
+        }
       }
     )
     // this.validarFormulario();
@@ -132,13 +139,12 @@ export class UsertiendaaddComponent implements OnInit {
   cargar_Locales(){
     this.tiendaService.cargarTiendas().subscribe(
       (resp:any) =>{
-        console.log(resp)
+        // console.log(resp)
         this.listTiendas = resp;
 
       }
     )
   }
-
 
 
   guardar(){
@@ -216,4 +222,18 @@ export class UsertiendaaddComponent implements OnInit {
   goBack() {
     this.location.back(); // <-- go back to previous location on cancel
   }
+
+
+    optionSelected(value: number) {
+    this.option_selectedd = value;
+    if (this.option_selectedd === 1) {
+
+      // this.ngOnInit();
+    }
+    if (this.option_selectedd === 2) {
+      this.solicitud_selectedd = null;
+    }
+  }
+
+  
 }

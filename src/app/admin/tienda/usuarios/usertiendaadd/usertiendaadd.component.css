@@ -1,0 +1,32 @@
+
+.tab-content-set {
+    display: flex;
+    justify-content: space-between;
+    
+}
+
+.tab-content-set .nav {
+    align-items: center;
+    padding: 6px;
+    gap: 5px;
+
+
+}
+
+.tab-content-set .nav li {
+    padding: 5px;
+    font-size: 16px;
+    color: #333;
+}
+
+
+.tab-content-set .nav li a {
+    color: #333;
+    text-decoration: none;
+
+}
+
+
+.active {
+    color: #b02b2b !important;
+}

@@ -66,6 +66,7 @@ import { ComponentsModule } from '../components/components.module';
 import { PagosChequeComponent } from './pagos-cheque/pagos-cheque.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { PostalcompModule } from "./postal/postalcomp/postalcomp.module";
+import { DriverpModule } from './driverp/driverp.module';
 
 @NgModule({
   declarations: [
@@ -170,7 +171,8 @@ import { PostalcompModule } from "./postal/postalcomp/postalcomp.module";
     SharedModule,
     ComponentsModule,
     TranslateModule,
-    PostalcompModule
+    PostalcompModule,
+    DriverpModule
 ],
   providers:[
     IconosService,

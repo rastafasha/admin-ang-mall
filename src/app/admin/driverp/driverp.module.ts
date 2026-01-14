@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AsignarDeliveryComponent } from './asignar-delivery/asignar-delivery.component';
+import { DriverpEditComponent } from './driverp-edit/driverp-edit.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { PipesModule } from 'src/app/pipes/pipes.module';
@@ -9,17 +9,17 @@ import { PipesModule } from 'src/app/pipes/pipes.module';
 
 @NgModule({
   declarations: [
-    AsignarDeliveryComponent,
+    DriverpEditComponent
   ],
   exports: [
-    AsignarDeliveryComponent
+    DriverpEditComponent
   ],
   imports: [
-   CommonModule,
-       PipesModule,
-       ReactiveFormsModule,
-       FormsModule,
-       RouterModule,
+    CommonModule,
+    PipesModule,
+    ReactiveFormsModule,
+    FormsModule,
+    RouterModule,
   ]
 })
-export class PostalcompModule { }
+export class DriverpModule { }
