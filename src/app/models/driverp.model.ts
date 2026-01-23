@@ -3,7 +3,7 @@ import { Usuario } from "./usuario.model";
 
 export class Driver {
      constructor(
-        public user : Usuario,
+        public user: Usuario,
         public tipo_vehiculo: string,
         public placa: string,
         public color: string,

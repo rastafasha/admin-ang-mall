@@ -55,9 +55,17 @@ export class AsignardeliveryService {
           );
   
     }
+    getByTiendaId(tiendId: string){
+      const url = `${base_url}/asignardelivery/tienda/${tiendId}`;
+      return this.http.get<any>(url, this.headers)
+        .pipe(
+          map((resp:{ok: boolean, asignacions: Asignacion}) => resp.asignacions)
+          );
+  
+    }
   
   
-    create(asignacion: Asignacion){
+    create(asignacion: any){
       const url = `${base_url}/asignardelivery/store`;
       return this.http.post(url, asignacion, this.headers);
     }

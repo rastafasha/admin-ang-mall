@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Usuario } from 'src/app/models/usuario.model';
+import { Asignacion } from 'src/app/models/asignaciondelivery.model';
+import { Driver } from 'src/app/models/driverp.model';
+import { Tienda } from 'src/app/models/tienda.model';
 import { Venta } from 'src/app/models/ventas.model';
+import { AsignardeliveryService } from 'src/app/services/asignardelivery.service';
+import { DriverpService } from 'src/app/services/driverp.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { VentaService } from 'src/app/services/venta.service';
 
@@ -15,9 +19,14 @@ export class AsignarDeliveryComponent implements OnInit {
     public ventasFiltradas : Array<any> = [];
   user:any;
   usuarios:any;
-  drivers:Usuario;
+  drivers:Driver;
+  driver:Driver;
+  tienda:Tienda;
+  tiendaId:string;
+  venta:Venta;
   msm_error = false;
-  listaparaenviar:any;
+  listaparaenviar:Array<any> =[];
+  asignaciones:Asignacion;
   
    public page;
   public pageSize = 15;
@@ -25,15 +34,27 @@ export class AsignarDeliveryComponent implements OnInit {
 
   constructor(
     private ventaService: VentaService,
+    private asignacionDService: AsignardeliveryService,
     private userService: UsuarioService,
+    private driverService: DriverpService,
   ) { }
 
   ngOnInit(): void {
      // obtengo el usuario
     let USER = localStorage.getItem("user");
     this.user = JSON.parse(USER ? USER: '');
+    this.tiendaId = this.user.local;
+    console.log('tiendaId',this.tiendaId);
+    
     this.filtrarVentas();
-    this.getDrivers();
+    this.getAsignaciones();
+
+    if(this.user.role==='SUPERADMIN' ){
+      this.getDrivers();
+    }else{
+      this.tiendaId;
+      this.getDriversLocal();
+    }
   }
 
   filtrarVentas(){
@@ -74,26 +95,47 @@ export class AsignarDeliveryComponent implements OnInit {
     );
   }
 
-  getDrivers(){
-    this.userService.getDriversLocal(this.user.local).subscribe((resp:any) =>{
-       this.usuarios = resp;
-      //  console.log('drivers:', this.usuarios)
-
-      // Filtrar usuarios con rol CHOFER o DRIVER
-      // const usuariosFiltrados = this.usuarios.filter((usuario: any) => 
-      //   usuario.role === 'CHOFER'
-      // );
-      
-      // Filtrar por local (manejar tanto objeto._id como string directo)
-      this.drivers = this.usuarios.filter((usuario: any) => {
-        const userLocal = usuario.local?._id || usuario.local;
-        const currentLocal = this.user.local?._id || this.user.local;
-        // console.log('DRIVERS FILTRADOS:', this.drivers)
-        return userLocal === currentLocal;
-      });
-
-      // console.log('DRIVERS FILTRADOS:', this.drivers)
+  getDriversLocal(){
+    this.driverService.getByLocalId(this.tiendaId).subscribe((resp:any) =>{
+       this.drivers = resp;
+       console.log('drivers Local:', this.drivers)
     })
   }
+
+  getDrivers(){
+    this.driverService.gets().subscribe((resp:any) =>{
+       this.drivers = resp;
+       console.log('drivers:', this.drivers)
+    })
+  }
+
+  getAsignaciones(){
+    this.asignacionDService.getByTiendaId(this.user.local).subscribe((resp:any) =>{
+      // console.log('asignaciones:', resp)
+      this.asignaciones = resp;
+      
+    })
+  }
+  
+
+  asignarDelivery(driver:string, venta:any){
+    const data = {
+      venta: venta._id,
+      driver: driver,
+      tienda: this.tiendaId,
+      status: 'Asignado'
+    };
+    // console.log(data)
+    this.asignacionDService.create(data).subscribe(
+      (resp:any) => {
+        console.log('Asignación creada:', resp);
+        // Aquí puedes agregar lógica adicional, como mostrar un mensaje de éxito o actualizar la lista de asignaciones
+      },
+      error => {
+        console.error('Error al crear la asignación:', error);
+        // Aquí puedes manejar el error, como mostrar un mensaje de error al usuario
+      }
+    );
+  } 
 
 }

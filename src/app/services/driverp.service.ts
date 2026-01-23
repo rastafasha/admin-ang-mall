@@ -55,6 +55,14 @@ export class DriverpService {
           );
   
     }
+    getByLocalId(localId: string){
+      const url = `${base_url}/driver/tienda/${localId}`;
+      return this.http.get<any>(url, this.headers)
+        .pipe(
+          map((resp:{ok: boolean, drivers: Driver[]}) => resp.drivers)
+          );
+  
+    }
   
   
     create(driver: Driver){

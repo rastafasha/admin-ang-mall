@@ -1,5 +1,5 @@
 <div class="container">
-     <div class="row">
+    <div class="row">
         <div class="col-lg-12" *ngIf="msm_error">
             <div class="alert alert-primary alert-danger fade show" role="alert">
                 <span class="font-weight-medium">Mensaje:</span> {{msm_error}}
@@ -9,7 +9,7 @@
             </div>
         </div>
         <!-- ventasFiltradas -->
-        <div class="col-xs-12 col-md-6 card">
+        <div class="col-12  card">
             <h3>Ventas</h3>
             <div class="table-responsive table-sm">
                 <table class="table table-sm">
@@ -23,18 +23,19 @@
                             <th>OP</th>
                         </tr>
                     </thead>
-                    <tbody *ngFor="let item of listaparaenviar">
+                    <tbody *ngFor="let venta of listaparaenviar">
                         <tr>
-                            <td style="font-size: 13px;">{{item.referencia}}</td>
-                            <td style="font-size: 13px;">{{item.user.first_name}} {{item.user.last_name}}</td>
-                            <td style="font-size: 13px;">{{item.user.telefono}}</td>
-                            <td style="font-size: 13px;">{{item.estado}}</td>
+                            <td style="font-size: 13px;">{{venta.referencia}}</td>
+                            <td style="font-size: 13px;">{{venta.user.first_name}} {{venta.user.last_name}}</td>
+                            <td style="font-size: 13px;">{{venta.user.telefono}}</td>
+                            <td style="font-size: 13px;">{{venta.estado}}</td>
                             <td class="text-center">
                                 <a class="nav-link-style text-success" data-toggle="modal"
-                                    [attr.data-target]="'#asignar-'+item._id" style="cursor:pointer">
+                                    [attr.data-target]="'#asignar-'+venta._id" style="cursor:pointer">
                                     <div class="czi-share"></div>
                                 </a>
-                                <div class="modal fade" [attr.id]="'asignar-'+item._id" tabindex="-1" role="dialog"
+                                <!-- modal -->
+                                <div class="modal fade" [attr.id]="'asignar-'+venta._id" tabindex="-1" role="dialog"
                                     style="display: none;" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered" role="document">
                                         <div class="modal-content">
@@ -44,50 +45,87 @@
                                                     aria-label="Close"><span aria-hidden="true">×</span></button>
                                             </div>
                                             <div class="modal-body">
-                                                <p class="font-size-sm">¿Desea asignar el pedido?</p>
+                                                <p class="font-size-sm">¿Desea asignar el pedido a la referencia
+                                                    <b>{{venta.referencia}}</b> ?</p>
+
+
+
+                                                <table class="table table-sm">
+                                                    <thead class="thead-dark">
+                                                        <tr>
+
+                                                            <th>numdoc</th>
+                                                            <th>usuario</th>
+                                                            <th>telefono</th>
+                                                            <th>OP</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody *ngFor="let driver of drivers">
+                                                        <tr>
+                                                            <td style="font-size: 13px;">{{driver.user.numdoc}}</td>
+                                                            <td style="font-size: 13px;">{{driver.user.first_name}}
+                                                                {{driver.user.last_name}}</td>
+                                                            <td style="font-size: 13px;">{{driver.user.telefono}}</td>
+                                                            <td style="font-size: 13px;">
+                                                                <a class="nav-link-style text-success"
+                                                                    (click)="asignarDelivery(driver._id, venta)"
+                                                                    style="cursor:pointer">
+                                                                    <div class="czi-add"></div>
+                                                                </a>
+                                                            </td>
+
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
                                             </div>
                                             <div class="modal-footer">
                                                 <button class="btn btn-secondary btn-sm" type="button"
                                                     data-dismiss="modal">Cancelar</button>
                                                 <!-- <button class="btn btn-primary btn-shadow btn-sm" type="button"
-                                                    (click)="eliminar(item._id)">Suprimir</button> -->
+                                                    (click)="asignarDelivery(item._id)">Asignar</button> -->
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                                <!-- modal -->
                             </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </div>
-        <!-- drivers -->
-        <div class="col-xs-12 col-md-6 card">
-            <h3>Drivers</h3>
+        
+    </div>
+    <div class="row">
+        <!-- asignaciones -->
+        <div class="col-12  card">
+            <h3>Asignaciones</h3>
             <div class="table-responsive table-sm">
                 <table class="table table-sm">
                     <thead class="thead-dark">
                         <tr>
 
-                            <th>numdoc</th>
-                            <th>usuario</th>
-                            <th>telefono</th>
+                            <th>Driver</th>
+                            <th>Venta</th>
+                            <th>Tienda</th>
                             <th>Estado</th>
+                            <th>Fecha</th>
                             <th>OP</th>
                         </tr>
                     </thead>
-                    <tbody *ngFor="let item of drivers">
+                    <tbody *ngFor="let asignacion of asignaciones">
                         <tr>
-                            <td style="font-size: 13px;">{{item.numdoc}}</td>
-                            <td style="font-size: 13px;">{{item.first_name}} {{item.last_name}}</td>
-                            <td style="font-size: 13px;">{{item.telefono}}</td>
-                            <td style="font-size: 13px;">{{item.estado}}</td>
+                            <td style="font-size: 13px;">{{asignacion.driver.licencianum}}</td>
+                            <td style="font-size: 13px;">{{asignacion.venta}}</td>
+                            <td style="font-size: 13px;">{{asignacion.tienda.nombre}}</td>
+                            <td style="font-size: 13px;">{{asignacion.createdAt|date:'dd/mm/YYYY'}}</td>
+                            <td style="font-size: 13px;">{{asignacion.status}}</td>
                             <td class="text-center">
-                                <a class="nav-link-style text-danger" data-toggle="modal"
-                                    [attr.data-target]="'#delete-'+item._id" style="cursor:pointer">
-                                    <div class="czi-trash"></div>
+                                <a class="nav-link-style text-primary" data-toggle="modal"
+                                    [attr.data-target]="'#edit-'+asignacion._id" style="cursor:pointer">
+                                    <div class="czi-edit"></div>
                                 </a>
-                                <div class="modal fade" [attr.id]="'delete-'+item._id" tabindex="-1" role="dialog"
+                                <div class="modal fade" [attr.id]="'edit-'+asignacion._id" tabindex="-1" role="dialog"
                                     style="display: none;" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered" role="document">
                                         <div class="modal-content">
