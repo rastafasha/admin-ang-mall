@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 import { Usuario } from 'src/app/models/usuario.model';
 import { ContactoService } from 'src/app/services/contact.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
@@ -14,6 +14,8 @@ import { environment } from 'src/environments/environment';
 import * as io from "socket.io-client";
 import { MessageService } from 'src/app/services/message.service';
 import { TiendaService } from 'src/app/services/tienda.service';
+import { SidebarService } from 'src/app/services/sidebar.service';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-header',
@@ -61,7 +63,8 @@ public tienda_moneda : any;
     private storageService: StorageService,
     private _carritoService:CarritoService,
     private _messageService: MessageService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private sidebarService: SidebarService
   ) {
     // this.usuario = usuarioService.usuario;
     
@@ -167,6 +170,30 @@ public tienda_moneda : any;
          menuLateral[i].classList.toggle('active');
 
       }
+  }
+
+  /**
+   * Alterna el estado del sidebar usando el servicio
+   */
+  toggleSidebar() {
+    this.sidebarService.toggleSidebar();
+    this.updateSidebarClasses();
+  }
+
+  /**
+   * Actualiza las clases CSS del sidebar según su estado
+   */
+  private updateSidebarClasses(): void {
+    const wrapper = document.getElementById('main-wrapper');
+    if (wrapper) {
+      const isOpen = this.sidebarService.isSidebarOpen();
+      
+      if (isOpen) {
+        wrapper.classList.add('show-sidebar');
+      } else {
+        wrapper.classList.remove('show-sidebar');
+      }
+    }
   }
 
 

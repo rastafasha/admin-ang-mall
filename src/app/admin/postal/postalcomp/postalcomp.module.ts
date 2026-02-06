@@ -4,12 +4,14 @@ import { AsignarDeliveryComponent } from './asignar-delivery/asignar-delivery.co
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { PipesModule } from 'src/app/pipes/pipes.module';
+import { MapaComponent } from './mapa/mapa.component';
 
 
 
 @NgModule({
   declarations: [
     AsignarDeliveryComponent,
+    MapaComponent,
   ],
   exports: [
     AsignarDeliveryComponent

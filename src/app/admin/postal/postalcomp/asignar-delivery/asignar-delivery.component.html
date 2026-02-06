@@ -31,17 +31,17 @@
                             <td style="font-size: 13px;">{{venta.estado}}</td>
                             <td class="text-center">
                                 <a class="nav-link-style text-success" data-toggle="modal"
-                                    [attr.data-target]="'#asignar-'+venta._id" style="cursor:pointer">
+                                    [attr.data-target]="'#asignar-'+venta._id" (click)="closeModal()" style="cursor:pointer">
                                     <div class="czi-share"></div>
                                 </a>
                                 <!-- modal -->
-                                <div class="modal fade" [attr.id]="'asignar-'+venta._id" tabindex="-1" role="dialog"
+                                <div class="modal fade" *ngIf="showModal" [attr.id]="'asignar-'+venta._id" tabindex="-1" role="dialog"
                                     style="display: none;" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <h4 class="modal-title">Confirmación</h4>
-                                                <button class="close" type="button" data-dismiss="modal"
+                                                <button class="close" type="button"  (click)="closeModal()"
                                                     aria-label="Close"><span aria-hidden="true">×</span></button>
                                             </div>
                                             <div class="modal-body">
@@ -80,7 +80,7 @@
                                             </div>
                                             <div class="modal-footer">
                                                 <button class="btn btn-secondary btn-sm" type="button"
-                                                    data-dismiss="modal">Cancelar</button>
+                                                     (click)="closeModal()">Cancelar</button>
                                                 <!-- <button class="btn btn-primary btn-shadow btn-sm" type="button"
                                                     (click)="asignarDelivery(item._id)">Asignar</button> -->
                                             </div>

@@ -61,6 +61,10 @@ export class AdminVentasComponent implements OnInit {
 
   itemSelected:any;
 
+  public selectedValue: number = new Date().getFullYear();
+  public query_income_year: any = [];
+   public ventasDataYear: any[] = [];
+
   constructor(
     private _userService: UsuarioService,
     private _router : Router,
@@ -438,6 +442,30 @@ export class AdminVentasComponent implements OnInit {
       
     }
 
+  }
+
+   selectedYear() {
+    console.log(this.selectedValue);
+    this.getDashboardAdminYear();
+  }
+  selecedList: any = [
+    { value: '2022' },
+    { value: '2023' },
+    { value: '2024' },
+    { value: '2025' },
+    { value: '2026' },
+    { value: '2027' },
+    { value: '2028' },
+    { value: '2029' },
+    { value: '2030' },
+  ];
+
+  getDashboardAdminYear() {
+    this._ventaService.get_year(this.selectedValue).subscribe((resp: any) => {
+      this.ventasFiltradas = resp.data;
+      console.log(this.ventasFiltradas)
+
+    })
   }
 
   

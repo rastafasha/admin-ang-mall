@@ -9,14 +9,21 @@
                 </li>
                 <li>
                     <a href="#" onclick="return false;" [ngClass]="{'active': option_selectedd == 2}"
-                        (click)="optionSelected(2)">{{'Configuración'| translate}}</a>
+                        (click)="optionSelected(2)">{{'Mapa'| translate}}</a>
+                </li>
+                <li>
+                    <a href="#" onclick="return false;" [ngClass]="{'active': option_selectedd == 3}"
+                        (click)="optionSelected(3)">{{'Configuración'| translate}}</a>
                 </li>
             </ul>
         </div>
         <div *ngIf="option_selectedd == 1">
             <app-asignar-delivery></app-asignar-delivery>
         </div>
-        <div class="row" *ngIf="option_selectedd == 2">
+        <div *ngIf="option_selectedd == 1">
+            <app-mapa></app-mapa>
+        </div>
+        <div class="row" *ngIf="option_selectedd == 3">
             <div class="container">
                 <div class="col-xs-12 form-group">
                     <div class="card">

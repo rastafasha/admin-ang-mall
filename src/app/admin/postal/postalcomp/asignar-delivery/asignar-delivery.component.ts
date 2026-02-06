@@ -7,6 +7,7 @@ import { AsignardeliveryService } from 'src/app/services/asignardelivery.service
 import { DriverpService } from 'src/app/services/driverp.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { VentaService } from 'src/app/services/venta.service';
+// import { Modal } from 'bootstrap';
 
 @Component({
   selector: 'app-asignar-delivery',
@@ -27,6 +28,8 @@ export class AsignarDeliveryComponent implements OnInit {
   msm_error = false;
   listaparaenviar:Array<any> =[];
   asignaciones:Asignacion;
+
+  showModal:boolean = false;
   
    public page;
   public pageSize = 15;
@@ -130,6 +133,10 @@ export class AsignarDeliveryComponent implements OnInit {
       (resp:any) => {
         console.log('Asignación creada:', resp);
         // Aquí puedes agregar lógica adicional, como mostrar un mensaje de éxito o actualizar la lista de asignaciones
+        
+        //cerramos el modal
+       this.closeModal();
+        this.ngOnInit();
       },
       error => {
         console.error('Error al crear la asignación:', error);
@@ -137,5 +144,32 @@ export class AsignarDeliveryComponent implements OnInit {
       }
     );
   } 
+  openModal() {
+    this.showModal = true;
+     const modal = document.querySelector('#asignar-'+this.venta._id) as HTMLElement;
+    if (modal) {
+      modal.classList.add('show');
+      modal.style.display = 'block';
+      document.body.classList.add('modal-open');
+      const backdrop = document.createElement('div');
+      backdrop.className = 'modal-backdrop fade show';
+      document.body.appendChild(backdrop);
+    }
+  }
+
+  closeModal() {
+    this.showModal = false;
+    const modal = document.querySelector('#asignar-'+this.venta._id) as HTMLElement;
+    if (modal) {
+      modal.classList.remove('show');
+      modal.style.display = 'none';
+      document.body.classList.remove('modal-open');
+      const backdrop = document.querySelector('.modal-backdrop') as HTMLElement;
+      if (backdrop) {
+        document.body.removeChild(backdrop);
+      }
+    }
+  }
+  
 
 }

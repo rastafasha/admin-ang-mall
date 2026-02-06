@@ -105,6 +105,10 @@ export class VentaService {
     let headers = new HttpHeaders().set('Content-Type','application/json');
     return this._http.get(this.url+'/ventas/get_one_cancelacion_admin/one/'+id,{headers:headers});
   }
+  get_year(year:number):Observable<any>{
+    let headers = new HttpHeaders().set('Content-Type','application/json');
+    return this._http.get(this.url+'/ventas/venta_data/year/'+year,{headers:headers});
+  }
 
   get_token():Observable<any>{
     let headers = new HttpHeaders({
