@@ -60,6 +60,7 @@ import { ProductoComponent } from '../admin/tienda/atencion-local/producto/produ
 import { PagosEfectivoComponent } from '../admin/pagos-efectivo/pagos-efectivo.component';
 import { PagochequeService } from '../services/pagocheque.service';
 import { PagosChequeComponent } from '../admin/pagos-cheque/pagos-cheque.component';
+import { PedidosMenuComponent } from '../admin/tienda/pedidos-menu/pedidos-menu.component';
 
 
 const childRoutes: Routes = [
@@ -141,6 +142,8 @@ const childRoutes: Routes = [
             {path: 'tienda/registro', component: TiendaaddComponent , data:{tituloPage:'Tienda'}},
             {path: 'tienda/edit/:id', component: TiendaaddComponent , data:{tituloPage:'Tienda'}},
             {path: 'tienda/detalle/:id', component: DetalleIngresoComponent , data:{tituloPage:'Tienda'}},
+            
+            {path: 'tienda/pedidos', component: PedidosMenuComponent , data:{tituloPage:'Pedidos'}},
             
             {path: 'tienda-user', component: UsuariosTiendaComponent , data:{tituloPage:'Tienda-empleado'}},
             {path: 'tienda-user/registro', component: UsertiendaaddComponent , data:{tituloPage:'Tienda-empleado'}},

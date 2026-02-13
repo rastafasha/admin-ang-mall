@@ -19,6 +19,7 @@ import { ProductoComponent } from './atencion-local/producto/producto.component'
 import { ComponentsAtentionModule } from './atencion-local/components/components.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { DriverpModule } from "src/app/admin/driverp/driverp.module";
+import { PedidosMenuComponent } from './pedidos-menu/pedidos-menu.component';
 
 
 @NgModule({
@@ -32,6 +33,7 @@ import { DriverpModule } from "src/app/admin/driverp/driverp.module";
     AtencionLocalComponent,
     CarritoComponent,
     ProductoComponent,
+    PedidosMenuComponent,
 
   ],
   exports: [
@@ -40,7 +42,8 @@ import { DriverpModule } from "src/app/admin/driverp/driverp.module";
     UsuariosTiendaComponent,
     TiendaListComponent,
     TiendaDetailComponent,
-    UserDetailComponent
+    UserDetailComponent,
+     PedidosMenuComponent,
 
   ],
   imports: [

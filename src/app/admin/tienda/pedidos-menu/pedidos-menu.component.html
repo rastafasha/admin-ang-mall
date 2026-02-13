@@ -1,0 +1,135 @@
+<section>
+    <div class="pt-2 px-4 pl-lg-0 pr-xl-5">
+        <div class="row">
+
+
+            <div class="col-lg-12">
+                <div class="border-bottom mt-lg-2 pb-2">
+                    <h1 class="mt-lg-4">Mensajes</h1>
+                    <div class="d-flex flex-wrap flex-md-nowrap justify-content-between">
+                        <p class="text-muted">Mensajeria del apartado de contacto.</p>
+                    </div>
+                </div>
+                <a href="javascript:;"  (click)="PageSize()" class="btn btn-primary circle"><i
+                    class="fa fa-refresh"></i>
+            </a>
+
+            <app-loading *ngIf="cargando"></app-loading>
+                <div class="row" *ngIf="!cargando">
+
+                    <div class="col-md-6 col-lg-4"
+                        *ngFor="let item of pedidos |  paginate: { itemsPerPage: count, currentPage: p } | orderBy:'createdAt, desc'">
+
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex">
+                                    <h4 class="card-title"><span class="lstick"></span>
+                                        <span class="font-size-ms text-muted">
+                                            {{item.createdAt|date :'MMM d, y, h:mm:ss a'}}
+                                        </span>
+                                    </h4>
+                                    <!-- <span class="badge badge-success">9</span> -->
+                                    <div class="btn-group ml-auto m-t-10">
+                                        <a href="JavaScript:void(0)" class="icon-options-vertical link"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
+                                        <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end"
+                                            style="position: absolute; transform: translate3d(-184px, 32px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                            <!-- <a class="dropdown-item" [routerLink]="['/dashboard/contacto/edit',contacto._id]">Leer</a> -->
+                                            <a class="dropdown-item" href="javascript:void(0)"
+                                                (click)="eliminarPedido(item)">Eliminar</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="activity-box">
+                                <div class="card card-body">
+
+                                    <div class="row">
+                                        <div class="col-md-8 col-lg-9">
+                                            <small>Pedido:</small>
+                                            <h3 class="box-title m-b-0">{{item._id}}</h3> 
+                                            <p >{{item.pedidoList[0].subcategoria}}</p> 
+                                            <address>
+                                                <p class="font-size-md mb-1 ">{{item.status}}</p>
+                                                <span class="font-size-ms text-muted">
+                                                    <i class="czi-store align-middle mr-2"></i>
+                                                    {{item.tienda.nombre}}
+                                                </span>
+                                            </address>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                         <button type="button" class="btn btn-primary" 
+                                    *ngIf="item.status == 'PENDING' " 
+                                    data-toggle="modal" [attr.data-target]="'#ver-'+item._id">
+                                    <span class="czi-eye"></span> Ver</button>
+
+                                    <button type="button" class="btn btn-success" 
+                                    *ngIf="item.status == 'PENDING' " 
+                                    data-toggle="modal" [attr.data-target]="'#activar-'+item._id">
+                                    <span class="czi-check"></span> Activar</button>
+                                    </div>
+                                    <!-- modal activar-->
+                                    <div class="modal fade" [attr.id]="'activar-'+item._id" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title">Confirmación</h4>
+                                                    <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p class="font-size-sm">Al aceptar, estás confirmando que el item fué editado correctamente.</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button class="btn btn-secondary btn-sm" type="button" data-dismiss="modal">Cerrar</button>
+                                                    <button class="btn btn-primary btn-shadow btn-sm" type="button" (click)="activar(item._id)">Aceptar</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                     <!-- modal ver-->
+                                    <div class="modal fade" [attr.id]="'ver-'+item._id" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title">Pedido: {{item._id}}</h4>
+                                                    <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <h3>{{item.user.first_name}} {{item.user.last_name}}</h3>
+                                                    <!-- <p>{{item.user.numdoc}}</p> -->
+                                                    <p> <i class="fa fa-whatsapp"></i>
+                                                        {{item.user.telefono}}</p>
+                                                    <hr>
+                                                    <ul *ngFor="let pedidoitem of item.pedidoList;  let i = index">
+                                                        <li>
+                                                            <span class="productitemcard">
+                                                                <h4> Plato: {{pedidoitem.titulo}}</h4>
+                                                                 <p>Cant: {{pedidoitem.cantidad}}</p>
+                                                                 <p *ngIf="pedidoitem.subcategoria === 'Pastas'">Salsa: {{pedidoitem.nombre_selector}}</p>
+                                                            </span>
+
+
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button class="btn btn-secondary btn-sm" type="button" data-dismiss="modal">Cerrar</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-lg-12" *ngIf="!cargando">
+                    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
