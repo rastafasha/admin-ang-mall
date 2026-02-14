@@ -135,7 +135,7 @@ export class AsignarDeliveryComponent implements OnInit {
         // Aquí puedes agregar lógica adicional, como mostrar un mensaje de éxito o actualizar la lista de asignaciones
         
         //cerramos el modal
-       this.closeModal();
+       this.closeModal(venta);
         this.ngOnInit();
       },
       error => {
@@ -144,9 +144,9 @@ export class AsignarDeliveryComponent implements OnInit {
       }
     );
   } 
-  openModal() {
+  openModal(venta:any) {
     this.showModal = true;
-     const modal = document.querySelector('#asignar-'+this.venta._id) as HTMLElement;
+     const modal = document.querySelector('#asignar-'+venta._id) as HTMLElement;
     if (modal) {
       modal.classList.add('show');
       modal.style.display = 'block';
@@ -157,9 +157,9 @@ export class AsignarDeliveryComponent implements OnInit {
     }
   }
 
-  closeModal() {
+  closeModal(venta:any) {
     this.showModal = false;
-    const modal = document.querySelector('#asignar-'+this.venta._id) as HTMLElement;
+    const modal = document.querySelector('#asignar-'+venta._id) as HTMLElement;
     if (modal) {
       modal.classList.remove('show');
       modal.style.display = 'none';
