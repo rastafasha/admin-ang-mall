@@ -43,7 +43,7 @@
                                                 <ng-container *ngIf="total_mes <= total_ganado_ant">
                                                     <span class="text-danger"
                                                         style="font-size: 10px;">-{{total_ganado_ant -
-                                                        total_mes}}</span>&nbsp;
+                                                        total_mes |currency}}</span>&nbsp;
 
                                                 </ng-container>
                                             </h6>
@@ -199,7 +199,7 @@
                                     </tr>
                                     <tr>
                                         <td>{{'Ventas '| translate}} {{current_month}}</td>
-                                        <td class="text-center" *ngIf="total_ventas > total_ventas_ant">{{total_ventas}}
+                                        <td class="text-center" *ngIf="total_ventas > total_ventas_ant">{{total_ventas }}
                                             <i class="fa fa-caret-up text-success"></i>
                                         </td>
                                         <td class="text-center" *ngIf="total_ventas <= total_ventas_ant">
