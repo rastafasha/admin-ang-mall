@@ -4,7 +4,7 @@
         <div class="card-body">
             <h4 class="card-title">{{pageTitle}}</h4>
             <h6 class="card-subtitle">Ajustes</h6>
-            <button class="btn btn-outline-danger" href="javascript:void(0)" (click)="goBack()">Volver</button>
+            <button class="btn btn-outline-danger" href="javascript:void(0)" *ngIf="!tipoSeleccionado" (click)="goBack()">Volver</button>
             
             <div class="container">
                 <div class="tab-pane" id="address" role="tabpanel" aria-labelledby="address-tab">
@@ -18,6 +18,7 @@
                                         <option value="seleccione">Seleccione</option>
                                         <option value="Transferencia Dólares">Transferencia Dólares</option>
                                         <option value="Transferencia Bolivares">Transferencia Bolívares</option>
+                                        <option value="Transferencia Euro">Transferencia Euro</option>
                                         <option value="pagomovil">Pago Móvil</option>
                                         <option value="zelle">Zelle</option>
                                         <option value="cheque">Cheque</option>
@@ -27,7 +28,7 @@
                                 </div>
                                 <div class="clear"></div>
                                 
-                            <!-- transferencia -->
+                            <!-- Transferencia Dólares -->
                             <div *ngIf="pagoSeleccionado == 'Transferencia Dólares'"  class="card p-3">
                                 <div class="card-body">
                                     <h4>Transferencia</h4>
@@ -58,8 +59,40 @@
                                 <button (click)="save()" class="btn btn-primary">Guardar</button>
                                 </div>
                             </div>
-                            <!-- transferencia -->
-                            <!-- transferencia -->
+                            <!-- Transferencia Dólares -->
+                            <!-- Transferencia Euro -->
+                            <div *ngIf="pagoSeleccionado == 'Transferencia Euro'"  class="card p-3">
+                                <div class="card-body">
+                                    <h4>Transferencia</h4>
+                                    <div class="row">
+                                        <div class="form-group col-xs-12">
+                                            <label for="exampleInputEmail1">Tipo de Cuenta<span class="required">*</span></label>
+                                            <select name="bankAccountType" id="input" class="form-control" [(ngModel)]="bankAccountType">
+                                                <option value="">Seleccione</option>
+                                                <option value="ahorro">Ahorro</option>
+                                                <option value="corriente">Corriente</option>
+                                            </select>
+        
+                                        </div>
+                                        <div class="form-group col-xs-12">
+                                            <label for="exampleInputEmail1">Num. de Cuenta</label>
+                                            <input [(ngModel)]="bankAccount" name="bankAccount" type="text" class="form-control">
+                                        </div>
+                                        <div class="form-group col-xs-12">
+                                            <label for="exampleInputEmail1">Nombre del Banco</label>
+                                            <input [(ngModel)]="bankName" name="bankName" type="text" class="form-control">
+                                        </div>
+                                        <div class="form-group col-xs-12 ">
+                                            <label for="exampleInputEmail1">Ci/iD ó RIF</label>
+                                            <input [(ngModel)]="ciorif" name="ciorif" type="text" class="form-control">
+                                        </div>
+                                    </div>
+                                    <input type="hidden" [(ngModel)]="id">
+                                <button (click)="save()" class="btn btn-primary">Guardar</button>
+                                </div>
+                            </div>
+                            <!-- Transferencia Euro -->
+                            <!-- Transferencia Bolivares -->
                             <div *ngIf="pagoSeleccionado == 'Transferencia Bolivares'"  class="card p-3">
                                 <div class="card-body">
                                     <h4>Transferencia</h4>
@@ -90,7 +123,7 @@
                                     <button (click)="save()" class="btn btn-primary">Guardar</button>
                                 </div>
                             </div>
-                            <!-- transferencia -->
+                            <!-- Transferencia Bolivares -->
                             <!-- pagomovil -->
                             <div *ngIf="pagoSeleccionado == 'pagomovil'" class="card p-3">
                                 <div class="card-body">

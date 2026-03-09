@@ -67,6 +67,7 @@ export class TiposdepagoComponent implements OnInit {
     window.scrollTo(0, 0);
     let USER = localStorage.getItem("user");
     this.user = JSON.parse(USER ? USER : '');
+
     if (this.user.role === 'SUPERADMIN') {
       this.getTiposdePago();
     }
@@ -92,14 +93,13 @@ export class TiposdepagoComponent implements OnInit {
 
   getTiposdePago() {
     this.paymentMethodService.getPaymentMethods().subscribe(paymentMethods => {
-      console.log(paymentMethods);
       this.tiposdepagos = paymentMethods;
       // console.log(this.tiposdepagos);
     })
   }
   getTiposdePagoByLocal() {
     this.paymentMethodService.getPaymentMethodByTiendaId(this.user.local).subscribe(paymentMethods => {
-      console.log(paymentMethods);
+     
       this.tiposdepagos = paymentMethods;
       // console.log(this.tiposdepagos);
     })
@@ -141,7 +141,8 @@ export class TiposdepagoComponent implements OnInit {
       phone: this.phone,
       username: this.username,
       email: this.email,
-      user: this.user.uid
+      user: this.user.uid,
+      local: this.user.local
     }
     this.paymentMethodService.crearPaymentMethod(data).subscribe((resp: any) => {
       // console.log(resp);
@@ -153,6 +154,7 @@ export class TiposdepagoComponent implements OnInit {
       this.phone = '';
       this.username = '';
       this.email = '';
+      this.pagoSeleccionado = null;
       this.ngOnInit();
     })
   }
