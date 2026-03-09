@@ -107,9 +107,17 @@ export class ProductoService {
     const url = `${base_url}/productos/productos_ventas/best_sellers`;
     return this.http.get(url, this.headers);
   }
+  best_sellerLocal(id:string):Observable<any>{
+    const url = `${base_url}/productos/productos_ventas/best_sellers/local/`+id;
+    return this.http.get(url, this.headers);
+  }
 
   populares():Observable<any>{
     const url = `${base_url}/productos/productos_ventas/populares`;
+    return this.http.get(url, this.headers);
+  }
+  popularesLocal(id:string):Observable<any>{
+    const url = `${base_url}/productos/productos_ventas/populares/local/`+id;
     return this.http.get(url, this.headers);
   }
 

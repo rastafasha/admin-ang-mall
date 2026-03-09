@@ -159,10 +159,18 @@ export class VentaService {
     let headers = new HttpHeaders().set('Content-Type','application/json');
     return this._http.get(this.url+'/ventas/venta_data/dashboard',{headers:headers});
   }
+  get_data_dashboardLocal(id:string):Observable<any>{
+    let headers = new HttpHeaders().set('Content-Type','application/json');
+    return this._http.get(this.url+'/ventas/venta_data/dashboard/local/'+id,{headers:headers});
+  }
 
   get_detalle_hoy():Observable<any>{
     let headers = new HttpHeaders().set('Content-Type','application/json');
     return this._http.get(this.url+'/ventas/venta_data/detalles/hoy',{headers:headers});
+  }
+  get_detalle_hoyLocal(id:string):Observable<any>{
+    let headers = new HttpHeaders().set('Content-Type','application/json');
+    return this._http.get(this.url+'/ventas/venta_data/detalles/hoy/local/'+id,{headers:headers});
   }
 
   init_data_admin():Observable<any>{
