@@ -24,6 +24,7 @@
                                     <th>Nombre y Apellido</th>
                                     <th>Monto</th>
                                     <th>Teléfono</th>
+                                    <th *ngIf="user.role==='SUPERADMIN'">Local</th>
                                     <th>Fecha</th>
                                 </tr>
                             </thead>
@@ -33,6 +34,9 @@
                                     <td>{{pago.name_person}}</td>
                                     <td>{{pago.amount|currency}}</td>
                                     <td>{{pago.phone}}</td>
+                                    <td *ngIf="user.role==='SUPERADMIN'">
+                                    {{pago.local?.nombre | date}}
+                                </td>
                                     <td>{{pago.paymentday | date : "shortDate"}}</td>
                                 </tr>
                                 <tr *ngIf="pagoefectivos.length<=0">

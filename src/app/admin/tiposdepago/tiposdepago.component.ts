@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {environment} from 'src/environments/environment';
+import { environment } from 'src/environments/environment';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { Location } from '@angular/common';
@@ -12,12 +12,12 @@ import { UsuarioService } from 'src/app/services/usuario.service';
 import { TiposdepagoService } from 'src/app/services/tiposdepago.service';
 import { PaymentMethod } from 'src/app/models/paymenthmethod.model';
 
-interface HtmlInputEvent extends Event{
-  target : HTMLInputElement & EventTarget;
+interface HtmlInputEvent extends Event {
+  target: HTMLInputElement & EventTarget;
 }
 
-declare var jQuery:any;
-declare var $:any;
+declare var jQuery: any;
+declare var $: any;
 @Component({
   selector: 'app-tiposdepago',
   templateUrl: './tiposdepago.component.html',
@@ -25,36 +25,36 @@ declare var $:any;
 })
 export class TiposdepagoComponent implements OnInit {
 
-  
-  public file :File;
-  public imgSelect : String | ArrayBuffer;
+
+  public file: File;
+  public imgSelect: String | ArrayBuffer;
   public url;
   public identity;
   public msm_error = false;
   public msm_success = false;
   pageTitle: string;
 
-  public slider : any = {};
+  public slider: any = {};
 
- tipoSeleccionado:any;
-  pagoSeleccionado:any;
+  tipoSeleccionado: any;
+  pagoSeleccionado: any;
 
-  public tiposdepagos: PaymentMethod[] =[];
+  public tiposdepagos: PaymentMethod[] = [];
 
-  bankAccountType:string;
-  bankName:string;
-  bankAccount:string;
-  ciorif:string;
-  phone:string;
-  email:string;
-  tipo:string;
-  user:any;
-  user_id:string;
-  username:string;
+  bankAccountType: string;
+  bankName: string;
+  bankAccount: string;
+  ciorif: string;
+  phone: string;
+  email: string;
+  tipo: string;
+  user: any;
+  user_id: string;
+  username: string;
 
   constructor(
     private fb: FormBuilder,
-    private paymentMethodService : TiposdepagoService,
+    private paymentMethodService: TiposdepagoService,
     private userService: UsuarioService,
     private location: Location,
     private ativatedRoute: ActivatedRoute,
@@ -64,12 +64,15 @@ export class TiposdepagoComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    window.scrollTo(0,0);
+    window.scrollTo(0, 0);
     let USER = localStorage.getItem("user");
-    this.user = JSON.parse(USER ? USER: '');
-   
-    // console.log(this.user.uid);
-    this.getTiposdePagoByUser();
+    this.user = JSON.parse(USER ? USER : '');
+    if (this.user.role === 'SUPERADMIN') {
+      this.getTiposdePago();
+    }
+    if (this.user.role === 'ADMIN') {
+      this.getTiposdePagoByLocal()
+    }
   }
 
   goBack() {
@@ -77,37 +80,37 @@ export class TiposdepagoComponent implements OnInit {
   }
 
 
-  selectedTypeEdit(tipo:any){
+  selectedTypeEdit(tipo: any) {
     this.pagoSeleccionado = tipo;
     // console.log(this.pagoSeleccionado);
-}
+  }
 
-selectedType(tipodepago:any){
+  selectedType(tipodepago: any) {
     this.tipoSeleccionado = tipodepago;
     // console.log(this.tipoSeleccionado);
-}
+  }
 
-getTiposdePago(){
-    this.paymentMethodService.getPaymentMethods().subscribe(paymentMethods=>{
+  getTiposdePago() {
+    this.paymentMethodService.getPaymentMethods().subscribe(paymentMethods => {
       console.log(paymentMethods);
       this.tiposdepagos = paymentMethods;
       // console.log(this.tiposdepagos);
     })
-}
-getTiposdePagoByUser(){
-    this.paymentMethodService.getPaymentMethodByUserId(this.user.uid).subscribe(paymentMethods =>{
+  }
+  getTiposdePagoByLocal() {
+    this.paymentMethodService.getPaymentMethodByTiendaId(this.user.local).subscribe(paymentMethods => {
       console.log(paymentMethods);
       this.tiposdepagos = paymentMethods;
       // console.log(this.tiposdepagos);
     })
-}
+  }
 
-cambiarStatus(tipodepago:any){
+  cambiarStatus(tipodepago: any) {
     let VALUE = tipodepago.status;
     // console.log(VALUE);
-    
+
     this.paymentMethodService.updateStatus(tipodepago).subscribe(
-      resp =>{
+      resp => {
         // console.log(resp);
         // Swal.fire('Actualizado', `actualizado correctamente`, 'success');
         // this.toaster.open({
@@ -115,27 +118,32 @@ cambiarStatus(tipodepago:any){
         //   caption:'Mensaje de Validación',
         //   type:'success',
         // })
-        this.getTiposdePagoByUser();
+        if (this.user.role === 'SUPERADMIN') {
+          this.getTiposdePago();
+        }
+        if (this.user.role === 'ADMIN') {
+          this.getTiposdePagoByLocal()
+        }
       }
     )
   }
 
 
 
-save(){
+  save() {
 
     let data = {
       tipo: this.tipo,
       bankAccountType: this.bankAccountType,
       bankName: this.bankName,
       bankAccount: this.bankAccount,
-      ciorif:this.ciorif,
-      phone:this.phone,
-      username:this.username,
+      ciorif: this.ciorif,
+      phone: this.phone,
+      username: this.username,
       email: this.email,
       user: this.user.uid
     }
-    this.paymentMethodService.crearPaymentMethod(data).subscribe((resp:any)=>{
+    this.paymentMethodService.crearPaymentMethod(data).subscribe((resp: any) => {
       // console.log(resp);
       this.tipo = '';
       this.bankAccountType = '';
@@ -149,14 +157,19 @@ save(){
     })
   }
 
-deleteTipoPago(tiposdepago:any){
+  deleteTipoPago(tiposdepago: any) {
 
     this.paymentMethodService.borrarPaymentMethod(tiposdepago._id).subscribe(
-      (resp:any) =>{
-        this.getTiposdePagoByUser();
-        
+      (resp: any) => {
+        if (this.user.role === 'SUPERADMIN') {
+          this.getTiposdePago();
+        }
+        if (this.user.role === 'ADMIN') {
+          this.getTiposdePagoByLocal()
+        }
+
       });
-    
+
   }
 
 

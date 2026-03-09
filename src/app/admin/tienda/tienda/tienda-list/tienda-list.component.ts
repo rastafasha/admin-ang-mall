@@ -81,7 +81,6 @@ user:Usuario;
       resp => {
         this.cargando = false;
         this.tiendas = resp;
-        console.log(this.tiendas);
       }
     )
 

@@ -75,6 +75,14 @@ export class TiposdepagoService {
         );
 
   }
+  getPaymentMethodByTiendaId(_id: string){
+    const url = `${base_url}/tipopago/tienda/${_id}`;
+    return this.http.get<any>(url, this.headers)
+      .pipe(
+        map((resp:{ok: boolean, paymentMethods: PaymentMethod[]}) => resp.paymentMethods)
+        );
+
+  }
 
   crearPaymentMethod(paymentMethod: any){
     const url = `${base_url}/tipopago/store`;

@@ -101,7 +101,7 @@
                                         <select class="form-control " formControlName="categoria" name="categoria"
                                             required>
                                             <option disabled value="">SELECCIONAR</option>
-                                            <option *ngFor="let item of listCategorias" [value]="item._id">
+                                            <option *ngFor="let item of listCategorias | unique:'nombre'" [value]="item._id">
                                                 {{item.nombre}}</option>
 
                                         </select>
@@ -113,7 +113,7 @@
                                         <select class="form-control " formControlName="subcategoria"
                                             name="subcategoria">
                                             <option disabled value="">SELECCIONAR</option>
-                                            <option *ngFor="let item of listCategorias" [value]="item.subcategorias">
+                                            <option *ngFor="let item of listCategorias | unique:'nombre'" [value]="item.subcategorias">
                                                 {{item.subcategorias}}</option>
 
                                         </select>

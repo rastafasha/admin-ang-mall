@@ -517,7 +517,6 @@ export class CarritoComponent implements OnInit {
       response =>{
         // modificado: response por response.direcciones
         this.direcciones = response.direcciones;
-        console.log('Direcciones: ',this.direcciones);
       },
       error=>{
 
@@ -758,7 +757,8 @@ export class CarritoComponent implements OnInit {
         codigo_cupon : this.cupon,
         info_cupon :  this.info_cupon_string,
         idtransaccion : null,
-        metodo_pago : 'Paypal',
+        metodo_pago : this.selectedMethod,
+        // metodo_pago : 'Paypal',
 
         tipo_envio: this.medio_postal.tipo_envio,
         precio_envio: this.medio_postal.precio,

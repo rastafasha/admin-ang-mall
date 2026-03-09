@@ -53,6 +53,10 @@ export class VentaService {
     let headers = new HttpHeaders().set('Content-Type','application/json');
     return this._http.get(this.url+'/ventas/user_order/'+id,{headers:headers});
   }
+  listarporLocal(id:string):Observable<any>{
+    let headers = new HttpHeaders().set('Content-Type','application/json');
+    return this._http.get(this.url+'/ventas/by_tiendaId/'+id,{headers:headers});
+  }
 
 
   detalle(id:string):Observable<any>{
@@ -108,6 +112,10 @@ export class VentaService {
   get_year(year:number):Observable<any>{
     let headers = new HttpHeaders().set('Content-Type','application/json');
     return this._http.get(this.url+'/ventas/venta_data/year/'+year,{headers:headers});
+  }
+  get_year_bylocal(year:number, id:string):Observable<any>{
+    let headers = new HttpHeaders().set('Content-Type','application/json');
+    return this._http.get(this.url+'/ventas/venta_data/yearlocal/'+id+'/'+year,{headers:headers});
   }
 
   get_token():Observable<any>{

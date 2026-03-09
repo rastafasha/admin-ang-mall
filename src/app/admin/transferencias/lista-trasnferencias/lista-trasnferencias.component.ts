@@ -22,6 +22,7 @@ export class ListaTrasnferenciasComponent implements OnInit {
 
   p: number = 1;
   count: number = 8;
+  user:any;
 
   query:string ='';
           searchForm!:FormGroup;
@@ -35,8 +36,14 @@ export class ListaTrasnferenciasComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-
-    this.loadTrasnferencias();
+    let USER = localStorage.getItem("user");
+    this.user = JSON.parse(USER ? USER: '');
+    if(this.user.role==='SUPERADMIN'){
+      this.loadTrasnferencias();
+        }
+        if(this.user.role==='ADMIN'){
+          this.transPorLocalId()
+        }
   }
 
 
@@ -46,10 +53,18 @@ export class ListaTrasnferenciasComponent implements OnInit {
       transferencias => {
         this.cargando = false;
         this.trasnferencias = transferencias;
-        console.log(this.trasnferencias);
       }
     )
 
+  }
+
+  transPorLocalId(){
+    this.trasnferenciaService.getTransferenciaByTiendaId(this.user.local).subscribe(
+      transferencias => {
+        this.cargando = false;
+        this.trasnferencias = transferencias;
+      }
+    )
   }
 
   cambiarStatus(trasnferencia: Transferencia){
@@ -71,7 +86,12 @@ export class ListaTrasnferenciasComponent implements OnInit {
 
 public PageSize(): void {
     this.query = '';
-    this.loadTrasnferencias();
+    if(this.user.role==='SUPERADMIN'){
+      this.loadTrasnferencias();
+        }
+        if(this.user.role==='ADMIN'){
+          this.transPorLocalId()
+        }
     // this.router.navigateByUrl('/productos')
   }
 

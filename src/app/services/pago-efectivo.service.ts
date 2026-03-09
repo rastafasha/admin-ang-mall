@@ -42,4 +42,13 @@ export class PagoEfectivoService {
             map((resp:{ok: boolean, pagoefectivos: PagoEfectivo[]}) => resp.pagoefectivos)
           )
   }
+
+  getPaymentMethodByTiendaId(_id: string){
+      const url = `${base_url}/pagoefectivo/tienda/${_id}`;
+      return this.http.get<any>(url, this.headers)
+        .pipe(
+          map((resp:{ok: boolean, pagoefectivos: PagoEfectivo[]}) => resp.pagoefectivos)
+          );
+  
+    }
 }

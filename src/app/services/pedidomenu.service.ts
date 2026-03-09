@@ -54,6 +54,14 @@ export class PedidomenuService {
           );
   
     }
+    getByTiendaId(_id: string){
+      const url = `${base_url}/pedidomenu/by_tiendaId/${_id}`;
+      return this.http.get<any>(url, this.headers)
+        .pipe(
+          map((resp:{ok: boolean, pedidos: Pedido[]}) => resp.pedidos)
+          );
+  
+    }
     getByStatus(status: string){
       const url = `${base_url}/pedidomenu/status/${status}`;
       return this.http.get<any>(url, this.headers)

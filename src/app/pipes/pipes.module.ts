@@ -5,6 +5,7 @@ import { EscapeHtmlPipe } from './keep-html.pipe';
 import { ShowByPipe } from './showby.pipe';
 import { SortByPipe } from './sortby.pipe';
 import { OrderByPipe } from './orderby.pipe';
+import { UniquePipe } from './unique.pipe';
 
 
 @NgModule({
@@ -14,7 +15,8 @@ import { OrderByPipe } from './orderby.pipe';
     EscapeHtmlPipe,
     ShowByPipe,
     SortByPipe,
-    OrderByPipe
+    OrderByPipe,
+    UniquePipe
   ],
   exports:[
     ImagenPipePipe,
@@ -22,7 +24,8 @@ import { OrderByPipe } from './orderby.pipe';
     EscapeHtmlPipe,
     ShowByPipe,
     SortByPipe,
-    OrderByPipe
+    OrderByPipe,
+    UniquePipe
 
   ]
 })

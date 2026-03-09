@@ -56,6 +56,14 @@ export class TransferenciaService {
         );
 
   }
+  getTransferenciaByTiendaId(_id: string){
+    const url = `${base_url}/transferencias/tienda/${_id}`;
+    return this.http.get<any>(url, this.headers)
+      .pipe(
+        map((resp:{ok: boolean, trasnferencias: Transferencia[]}) => resp.trasnferencias)
+        );
+
+  }
 
 
   actualizarTransferencia(trasnferencia: Transferencia){

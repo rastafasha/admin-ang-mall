@@ -17,6 +17,7 @@ export class PedidosMenuComponent implements OnInit {
   public count_cat;
   p: number = 1;
   count: number = 8;
+   user:any;
 
   constructor(
     private pedidosMenuService: PedidomenuService
@@ -24,12 +25,30 @@ export class PedidosMenuComponent implements OnInit {
 
   ngOnInit(): void {
     this.getPedidos();
+     // obtengo el usuario
+    let USER = localStorage.getItem("user");
+    this.user = JSON.parse(USER ? USER: '');
+
+    if(this.user.role==='SUPERADMIN'){
+         this.getPedidos();
+        }
+        if(this.user.role==='ADMIN'){
+          this.pedidosPorLocalId()
+        }
   }
 
   getPedidos() {
     this.cargando = true;
     this.pedidosMenuService.getByStatus(this.status).subscribe((resp) => {
       this.pedidos = resp;
+      this.cargando = false;
+    })
+  }
+  pedidosPorLocalId() {
+    this.cargando = true;
+    this.pedidosMenuService.getByTiendaId(this.user.local).subscribe((resp:any) => {
+      this.pedidos = resp;
+      this.user = resp.user
       this.cargando = false;
     })
   }

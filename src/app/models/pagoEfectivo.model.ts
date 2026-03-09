@@ -1,3 +1,5 @@
+import { Tienda } from "./tienda.model";
+
 export class PagoEfectivo{
   constructor(
 
@@ -6,6 +8,7 @@ export class PagoEfectivo{
         public phone: string,
         public status: boolean,
         public paymentday: Date,
+        public local: Tienda,
         public createdAt: Date,
         public updatedAt: Date,
         public _id?: string

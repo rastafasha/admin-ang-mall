@@ -2,15 +2,16 @@ import { Component, EventEmitter, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UsuarioService } from '../../../services/usuario.service';
 import { VentaService } from 'src/app/services/venta.service';
-import {environment} from 'src/environments/environment';
+import { environment } from 'src/environments/environment';
 import { TiendaService } from 'src/app/services/tienda.service';
 import { FacturaComponent } from '../factura/factura.component';
 import Swal from 'sweetalert2';
 import { ProductoService } from 'src/app/services/producto.service';
 import { Usuario } from 'src/app/models/usuario.model';
+import { Tienda } from 'src/app/models/tienda.model';
 
-declare var jQuery:any;
-declare var $:any;
+declare var jQuery: any;
+declare var $: any;
 
 @Component({
   selector: 'app-admin-ventas',
@@ -21,7 +22,7 @@ export class AdminVentasComponent implements OnInit {
   public mydate = new Date();
   public identity;
   public filtro;
-  public dias = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31];
+  public dias = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31];
   public mes = 0;
   public dia = 0;
   public orden = 'fecha+';
@@ -30,20 +31,20 @@ export class AdminVentasComponent implements OnInit {
   public year;
   public url;
 
-  public ventas : Array<any> =[];
-  public ventasFiltradas : Array<any> = [];
+  public ventas: Array<any> = [];
+  public ventasFiltradas: Array<any> = [];
   public tipo;
 
   public track;
   public msm_error_track = false;
   public data_view = 1;
 
-  option_selected:number = 1;
+  option_selected: number = 1;
 
-  public data_ids : any = [];
-  public count_selects=false;
-  usuarios:Usuario[]=[];
-  drivers:Usuario[]=[];
+  public data_ids: any = [];
+  public count_selects = false;
+  usuarios: Usuario[] = [];
+  drivers: Usuario[] = [];
 
   public page;
   public pageSize = 15;
@@ -54,22 +55,23 @@ export class AdminVentasComponent implements OnInit {
 
   // agregado por José Prados
   listTiendas: any;
-  user:any;
+  user: any;
+  tiendaSelected: Tienda;
 
   // accedo al componente hijo FacturaComponent, agregado por José Prados
   @ViewChild(FacturaComponent) factura !: FacturaComponent;
 
-  itemSelected:any;
+  itemSelected: any;
 
   public selectedValue: number = new Date().getFullYear();
   public query_income_year: any = [];
-   public ventasDataYear: any[] = [];
+  public ventasDataYear: any[] = [];
 
   constructor(
     private _userService: UsuarioService,
-    private _router : Router,
-    private _route :ActivatedRoute,
-    private _ventaService : VentaService,
+    private _router: Router,
+    private _route: ActivatedRoute,
+    private _ventaService: VentaService,
     private _productoService: ProductoService, // agregado por José Prados
     private tiendaService: TiendaService, // agregado por José Prados
   ) {
@@ -78,56 +80,51 @@ export class AdminVentasComponent implements OnInit {
 
   }
 
-  
+
   ngOnInit(): void {
-    window.scrollTo(0,0);
+    window.scrollTo(0, 0);
 
     // obtengo el usuario
     let USER = localStorage.getItem("user");
-    this.user = JSON.parse(USER ? USER: '');
+    this.user = JSON.parse(USER ? USER : '');
 
     // Obtener locales
     this.cargar_Locales();
-    
+
 
     this.method_data_view(1);
     this.year = this.mydate.getFullYear();
     this._ventaService.init_data_admin().subscribe(
       response => {
 
-        if(this.user.role==='SUPERADMIN'){
+        if (this.user.role === 'SUPERADMIN') {
           this.ventas = response.data;
           this.ventasFiltradas = response.data;
-          // this.count_cat = this.ventas.length;
         }
-        if(this.user.role==='ADMIN'){
+        if (this.user.role === 'ADMIN') {
+          this.getTiendaId()
+          this.ventasPorLocalId()
+        }
+        else {
           this.ventas = response.data;
-          this.ventasFiltradas = response.data;
-          // this.count_cat = this.ventas.length;
+          this.ventasFiltradas = this.ventas.filter(item => item.user?.local === this.user.local)
         }
-        else{
-          this.ventas = response.data;
-          // this.ventasFiltradas = response.data;
-          this.ventasFiltradas = this.ventas.filter(item => item.user?.local===this.user.local)
-        }
-        
         this.page = 1;
-        console.log('VENTAS',this.ventasFiltradas);
 
       }
     );
 
   }
 
-  method_data_view(val){
-    if(val == 1){
+  method_data_view(val) {
+    if (val == 1) {
       this.data_view = 1;
       $('#btn-uno').removeClass('btn-secondary');
       $('#btn-uno').addClass('btn-dark');
 
       $('#btn-dos').removeClass('btn-dark');
       $('#btn-dos').addClass('btn-secondary');
-    }else if(val == 2){
+    } else if (val == 2) {
       this.data_view = 2;
 
       $('#btn-dos').removeClass('btn-secondary');
@@ -139,125 +136,122 @@ export class AdminVentasComponent implements OnInit {
   }
 
 
-  filtro_listar(filtro){
 
-  }
-
-  pills(id){
-    if(id == 'home1'){
+  pills(id) {
+    if (id == 'home1') {
       $('#home1').addClass('show active');
       $('#profile1').removeClass('show active');
       $('#messages1').removeClass('show active');
     }
-    else if(id == 'profile1'){
+    else if (id == 'profile1') {
       $('#home1').removeClass('show active');
       $('#profile1').addClass('show active');
       $('#messages1').removeClass('show active');
     }
-    else if(id == 'messages1'){
+    else if (id == 'messages1') {
       $('#home1').removeClass('show active');
       $('#profile1').removeClass('show active');
       $('#messages1').addClass('show active');
     }
   }
 
-  init_data(){
-    this.search(null,null);
+  init_data() {
+    this.search(null, null);
   }
 
 
 
-  search(tipe,orden){
+  search(tipe, orden) {
     var sortby;
 
-    if(orden == null){
+    if (orden == null) {
       sortby = 'fecha+';
     }
-    else{
+    else {
       sortby = orden;
     }
 
-    if(tipe == null && orden == null){
+    if (tipe == null && orden == null) {
 
-      this._ventaService.get_data_venta_admin(null,null,null).subscribe(
-        response=>{
+      this._ventaService.get_data_venta_admin(null, null, null).subscribe(
+        response => {
           this.ventas = response.data;
           this.orden = 'fecha+';
           this.ventas.forEach(element => {
-              element.checked = false;
+            element.checked = false;
           });
           this.count_cat = this.ventas.length;
-        this.page = 1;
+          this.page = 1;
 
         },
-        error=>{
+        error => {
 
         }
       );
-    }else{
+    } else {
 
-      if(tipe == undefined){
+      if (tipe == undefined) {
 
-        this._ventaService.get_data_venta_admin(null,sortby,null).subscribe(
-          response=>{
+        this._ventaService.get_data_venta_admin(null, sortby, null).subscribe(
+          response => {
             this.ventas = response.data;
             this.orden = 'fecha+';
             this.ventas.forEach(element => {
-                element.checked = false;
-            });
-            this.count_cat = this.ventas.length;
-        this.page = 1;
-          },
-          error=>{
-
-          }
-        );
-      }
-      if(tipe == 'fecha'){
-        let search = this.year+'-'+this.dia+'-'+this.mes;
-        this._ventaService.get_data_venta_admin(search,sortby,tipe).subscribe(
-          response=>{
-            this.tipo = 'fecha';
-            this.ventas = response.data;
-            this.ventas.forEach(element => {
-                element.checked = false;
-            });
-            this.count_cat = this.ventas.length;
-        this.page = 1;
-          },
-          error=>{
-
-          }
-        );
-      }
-      else if(tipe == 'estado'){
-        this._ventaService.get_data_venta_admin(this.estado,sortby,tipe).subscribe(
-          response=>{
-            this.tipo = 'estado';
-            this.ventas = response.data;
-            this.ventas.forEach(element => {
-                element.checked = false;
+              element.checked = false;
             });
             this.count_cat = this.ventas.length;
             this.page = 1;
           },
-          error=>{
+          error => {
 
           }
         );
       }
-      else if(tipe == 'codigo'){
-        this._ventaService.get_data_venta_admin(this.codigo,sortby,tipe).subscribe(
-          response=>{
+      if (tipe == 'fecha') {
+        let search = this.year + '-' + this.dia + '-' + this.mes;
+        this._ventaService.get_data_venta_admin(search, sortby, tipe).subscribe(
+          response => {
+            this.tipo = 'fecha';
+            this.ventas = response.data;
+            this.ventas.forEach(element => {
+              element.checked = false;
+            });
+            this.count_cat = this.ventas.length;
+            this.page = 1;
+          },
+          error => {
+
+          }
+        );
+      }
+      else if (tipe == 'estado') {
+        this._ventaService.get_data_venta_admin(this.estado, sortby, tipe).subscribe(
+          response => {
+            this.tipo = 'estado';
+            this.ventas = response.data;
+            this.ventas.forEach(element => {
+              element.checked = false;
+            });
+            this.count_cat = this.ventas.length;
+            this.page = 1;
+          },
+          error => {
+
+          }
+        );
+      }
+      else if (tipe == 'codigo') {
+        this._ventaService.get_data_venta_admin(this.codigo, sortby, tipe).subscribe(
+          response => {
             this.tipo = 'codigo';
             this.ventas = response.data;
             this.ventas.forEach(element => {
-                element.checked = false;
+              element.checked = false;
             });
             this.count_cat = this.ventas.length;
-        this.page = 1;
+            this.page = 1;
           },
-          error=>{
+          error => {
 
           }
         );
@@ -267,32 +261,32 @@ export class AdminVentasComponent implements OnInit {
 
   }
 
-  setTrack(trackForm,id){
-    if(trackForm.valid){
+  setTrack(trackForm, id) {
+    if (trackForm.valid) {
       let data = {
-        tracking_number : trackForm.value.track
+        tracking_number: trackForm.value.track
       }
-      this._ventaService.set_track(id,data).subscribe(
-        response =>{
-          this.search(null,null);
+      this._ventaService.set_track(id, data).subscribe(
+        response => {
+          this.search(null, null);
           this.track = '';
-          $('#trak-'+id).modal('hide');
+          $('#trak-' + id).modal('hide');
           $('.modal-backdrop').removeClass('show');
-        },error=>{
+        }, error => {
 
         }
       );
-    }else{
+    } else {
       this.msm_error_track = true;
     }
   }
 
-  close_alert(){
+  close_alert() {
     this.msm_error_track = false;
   }
 
 
-  imprimir_factura(item:any){
+  imprimir_factura(item: any) {
     this.itemSelected = item;
     // console.log('imprimiendo factura... ',id)
     this.abrirModalEnviandoFactura();
@@ -309,25 +303,25 @@ export class AdminVentasComponent implements OnInit {
     }, 2000);
   }
 
-  private abrirModalEnviandoFactura(){
+  private abrirModalEnviandoFactura() {
     // Abre el modal con el spinner
     Swal.fire({
       title: 'Enviando Factura...',
       text: 'Por favor, espera',
       allowOutsideClick: false,
       didOpen: () => {
-      Swal.showLoading();
+        Swal.showLoading();
       }
     });
   }
 
 
-  reduceStockForSale(saleId: string){
+  reduceStockForSale(saleId: string) {
     this._ventaService.detalle(saleId).subscribe(
       (resp: any) => {
         const detalles = resp.detalle;
         detalles.forEach((detalle: any) => {
-          if(detalle.producto && detalle.cantidad){
+          if (detalle.producto && detalle.cantidad) {
             this._productoService.reducir_stock(detalle.producto._id, detalle.cantidad).subscribe(
               () => {
                 console.log(`Stock reduced for product ${detalle.producto._id} by ${detalle.cantidad}`);
@@ -362,20 +356,20 @@ export class AdminVentasComponent implements OnInit {
     );
   }
 
-  cerrarModal(evt:string){
+  cerrarModal(evt: string) {
     Swal.close();
 
-    if(evt==='exito'){
-      
+    if (evt === 'exito') {
+
 
       // realizar update de itemSelected
       this._ventaService.update_envio(this.itemSelected._id).subscribe(
         response => {
-          if(response.venta){
-            this.itemSelected.estado='Enviado';
+          if (response.venta) {
+            this.itemSelected.estado = 'Enviado';
             console.log(response.venta);
           }
-          else{
+          else {
             console.log(response.error);
           }
         }
@@ -383,70 +377,77 @@ export class AdminVentasComponent implements OnInit {
     }
   }
 
-  select_id(){
+  select_id() {
     this.count_selects = false;
     this.ventas.forEach(element => {
-      if(element.checked){
+      if (element.checked) {
         this.count_selects = true;
       }
     });
   }
 
-  update_envio(){
+  update_envio() {
     this.ventas.forEach(element => {
-      if(element.checked){
+      if (element.checked) {
         this._ventaService.update_envio(element._id).subscribe(
-          response =>{
+          response => {
 
           },
-          error=>{
+          error => {
             console.log(error);
 
           }
         );
       }
     });
-    this.search(null,null);
+    this.search(null, null);
     this.count_selects = false;
   }
 
-  optionSelected(value:number){
+  optionSelected(value: number) {
     this.option_selected = value;
   }
 
- 
-  // agregado por José Prados
-  private cargar_Locales(){
-    this.tiendaService.cargarTiendas().subscribe(
-      (resp:any) =>{
-        this.listTiendas = resp;
 
-        // console.log('locales: ',this.listTiendas)
+  // agregado por José Prados
+  private cargar_Locales() {
+    this.tiendaService.cargarTiendas().subscribe(
+      (resp: any) => {
+        this.listTiendas = resp;
       }
     )
   }
 
+  getTiendaId() {
+    this.tiendaService.getTiendaById(this.user.local).subscribe((resp: any) => {
+      this.tiendaSelected = resp
+    })
+  }
+
   // agregado por José Prados
-  onChangeTienda(event:any){
+  onChangeTienda(event: any) {
     console.log(event.target.value)
-    if( event.target.value === 'todas' ){
+    if (event.target.value === 'todas') {
       // se seleccionó la opción de todas las ventas
       this.ventasFiltradas = this.ventas;
-      console.log(this.ventasFiltradas)
     }
-    else{
+    else {
       // se seleccionó las ventas por un local
-      this.ventasFiltradas = this.ventas.filter(item => item.local?._id===event.target.value)
-      console.log(this.ventasFiltradas)
-      
-      
+      this.ventasFiltradas = this.ventas.filter(item => item.local?._id === event.target.value)
+
     }
 
   }
 
-   selectedYear() {
-    console.log(this.selectedValue);
-    this.getDashboardAdminYear();
+  selectedYear() {
+    if (this.user.role === 'SUPERADMIN') {
+      this.getDashboardAdminYear();
+    }
+    if (this.user.role === 'ADMIN') {
+
+      this.getDashboardLocalYear()
+    }
+
   }
   selecedList: any = [
     { value: '2022' },
@@ -463,11 +464,23 @@ export class AdminVentasComponent implements OnInit {
   getDashboardAdminYear() {
     this._ventaService.get_year(this.selectedValue).subscribe((resp: any) => {
       this.ventasFiltradas = resp.data;
-      console.log(this.ventasFiltradas)
 
     })
   }
+  getDashboardLocalYear() {
+    this._ventaService.get_year_bylocal(this.selectedValue, this.user.local).subscribe((resp: any) => {
+      this.ventasFiltradas = resp.data;
+      console.log('ventasLocalAño', this.ventasFiltradas)
+    })
+  }
 
-  
+  ventasPorLocalId() {
+    this._ventaService.listarporLocal(this.user.local).subscribe((resp: any) => {
+      this.ventasFiltradas = resp.ventas;
+      console.log('ventasLocal', resp)
+    })
+  }
+
+
 
 }

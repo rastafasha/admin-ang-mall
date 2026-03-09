@@ -147,7 +147,7 @@ export class ProdEditComponent implements OnInit {
     )
   }
   getCategorias(){
-    this.categoriaService.cargarCategorias().subscribe(
+    this.categoriaService.getCategoriesActivas().subscribe(
       resp =>{
         this.listCategorias = resp;
         // console.log(this.listCategorias);

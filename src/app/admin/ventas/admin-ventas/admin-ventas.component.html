@@ -20,7 +20,7 @@
                     </div> -->
                     <div class="row">
                         <div class="col-xs-12 col-sm-6">
-                            <div *ngIf="user.role ==='SUPERADMIN' || user.role==='ADMIN' || user.role==='VENTAS' ">
+                            <div *ngIf="user.role ==='SUPERADMIN'  || user.role==='VENTAS' ">
                                 <label class=" col-form-label font-weight-medium" for="local">
                                     Filtro de Ventas por Local
                                     <span class="required">*</span></label>
@@ -34,11 +34,17 @@
                                     </select>
                                 </div>
                             </div>
+
+                             <div *ngIf="user.role ==='ADMIN' ">
+                                <label class=" col-form-label font-weight-medium" for="local">
+                                    Ventas Local: {{tiendaSelected?.nombre}}
+                                    </label> 
+                            </div>
                         </div>
                         <div class="col-xs-12 col-sm-6">
                             <label class=" col-form-label font-weight-medium" for="local">
-                                    Año
-                                    <span class="required">*</span></label>
+                                Año
+                                <span class="required">*</span></label>
                             <select [(ngModel)]="selectedValue" class="form-control select" (change)="selectedYear()"
                                 placeholder="2023">
                                 <option *ngFor="let data of selecedList" [value]="data.value">
@@ -53,7 +59,12 @@
                 <div class="row mb-5">
 
                     <div class="col-xs-12 col-sm-8"
-                        *ngIf="user.role ==='SUPERADMIN' || user.role==='ADMIN' || user.role==='VENTAS' ">
+                        *ngIf="user.role ==='SUPERADMIN'|| user.role==='VENTAS' ">
+                        <!-- <app-bar-chart [ventas]="ventas"></app-bar-chart> -->
+                        <app-line-chart [ventas]="ventasFiltradas"></app-line-chart>
+                    </div>
+                    <div class="col-xs-12 col-sm-8"
+                        *ngIf="user.role ==='ADMIN'">
                         <!-- <app-bar-chart [ventas]="ventas"></app-bar-chart> -->
                         <app-line-chart [ventas]="ventasFiltradas"></app-line-chart>
                     </div>

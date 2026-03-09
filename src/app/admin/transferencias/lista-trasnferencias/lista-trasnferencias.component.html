@@ -26,7 +26,7 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-10">
-                        <h4 class="card-title">Transferencias: ({{ trasnferencias.length}})</h4>
+                        <!-- <h4 class="card-title">Transferencias: ({{ trasnferencias.length}})</h4> -->
                         <h6 class="card-subtitle">Transferencias registrados en la app</h6>
                     </div>
                     <div class="col-2 d-flex justify-content-end">
@@ -44,6 +44,7 @@
                                 <th>Referencia</th>
                                 <th>Banco</th>
                                 <th>Monto</th>
+                                <th *ngIf="user.role==='SUPERADMIN'">Local</th>
                                 <th>Fecha</th>
                                 <th>Status</th>
                                 <th>Creada</th>
@@ -55,7 +56,6 @@
                                 
                                 <td>
                                     {{transf.metodo_pago.tipo}}
-                                    
                                 </td>
                                 <td>
                                     {{transf.referencia}}
@@ -66,9 +66,13 @@
                                 <td>
                                     {{transf.amount|currency}}
                                 </td>
+                                <td *ngIf="user.role==='SUPERADMIN'">
+                                    {{transf.local?.nombre }}
+                                </td>
                                 <td>
                                     {{transf.paymentday | date}}
                                 </td>
+                                
                                 <td>
                                     <div class="font-size-sm mb-4">
                                         <span class="badge badge-primary badge-shadow" *ngIf="transf.status == 'pending'">{{transf.status}}</span>

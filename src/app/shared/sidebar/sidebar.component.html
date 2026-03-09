@@ -148,12 +148,13 @@
                 <li>
                     <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false">
                         <i class="mdi mdi-store"></i>
-                        <span class="hide-menu">{{'Tienda'| translate}}<span class="label label-rouded label-themecolor pull-right">3</span>
+                        <span class="hide-menu">{{'Tienda'| translate}}<span class="label label-rouded label-themecolor pull-right">4</span>
                         </span>
                     </a>
                     <ul aria-expanded="false" class="collapse">
 
                         <li><a routerLink="tienda" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Tiendas'| translate}} </a></li>
+                        <li><a routerLink="tienda/pedidos" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Pedidos'| translate}} </a></li>
                         <li><a routerLink="atencion-local" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Atención Local'| translate}} </a></li>
                         <li><a routerLink="tienda-user" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Usuarios Tienda'| translate}} </a></li>
 
@@ -165,16 +166,16 @@
                 <li>
                     <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false">
                         <i class="mdi mdi-store"></i>
-                        <span class="hide-menu">{{'Productos'| translate}}<span class="label label-rouded label-themecolor pull-right">4</span>
+                        <span class="hide-menu">{{'Productos'| translate}}<span class="label label-rouded label-themecolor pull-right">2</span>
                         </span>
                     </a>
                     <ul aria-expanded="false" class="collapse">
 
-                        <li><a routerLink="marca" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Marcas'| translate}} </a></li>
+                        <!-- <li><a routerLink="marca" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Marcas'| translate}} </a></li> -->
                         <li><a routerLink="categoria" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Categorías'| translate}} </a></li>
                         <!-- <li><a routerLink="curso" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Cursos </a></li> -->
                         <li><a routerLink="producto" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Productos'| translate}} </a></li>
-                        <li><a routerLink="promocion" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Promoción'| translate}} </a></li>
+                        <!-- <li><a routerLink="promocion" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Promoción'| translate}} </a></li> -->
 
 
                     </ul>
@@ -199,20 +200,20 @@
                                  {{'Pagos en Efectivo'| translate}}
                             </a>
                         </li>
-                        <li>
+                        <li><a routerLink="postal" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Delivery '|translate}}</a></li>
+                        <!-- <li>
                             <a routerLink="pagoscheque" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
                                  {{'Pagos en Cheque'| translate}}
                             </a>
-                        </li>
-
-                        <li><a routerLink="cupon" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Cupón'|translate}} </a></li>
-                        <li><a routerLink="postal" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Delivery '|translate}}</a></li>
-                        <li><a routerLink="contacto" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Contacto'|translate}} </a></li>
+                        </li> -->
                         
+
+                        <!-- <li><a routerLink="cupon" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Cupón'|translate}} </a></li> -->
+                        <!-- <li><a routerLink="contacto" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Contacto'|translate}} </a></li> -->
                         <!-- <li><a routerLink="ingresos" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">ingresos </a></li> -->
-                        <li><a routerLink="cancelacion/modulo" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Cancelación'|translate}} </a></li>
-                        <li><a routerLink="tikets/modulo" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Ticket'|translate}} </a></li>
-                        <li><a routerLink="usuarios" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Usuarios'|translate}} </a></li>
+                        <!-- <li><a routerLink="cancelacion/modulo" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Cancelación'|translate}} </a></li> -->
+                        <!-- <li><a routerLink="tikets/modulo" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Ticket'|translate}} </a></li> -->
+                        <!-- <li><a routerLink="usuarios" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Usuarios'|translate}} </a></li> -->
 
 
                     </ul>

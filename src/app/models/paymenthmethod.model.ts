@@ -1,3 +1,5 @@
+import { Tienda } from "./tienda.model";
+
 export class PaymentMethod{
     constructor(
   
@@ -10,6 +12,7 @@ export class PaymentMethod{
           public telefono: string,
           public tipo: string,
           public status: string,
+          public local: Tienda,
           public email: string,
           public createdAt: Date,
           public updatedAt: Date,

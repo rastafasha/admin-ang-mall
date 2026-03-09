@@ -2,17 +2,12 @@
     <div class="pt-2 px-4 pl-lg-0 pr-xl-5">
         <div class="row">
 
-
             <div class="col-lg-12">
                 <div class="border-bottom mt-lg-2 pb-2">
-                    <h1 class="mt-lg-4">Mensajes</h1>
-                    <div class="d-flex flex-wrap flex-md-nowrap justify-content-between">
-                        <p class="text-muted">Mensajeria del apartado de contacto.</p>
-                    </div>
+                    <h1 class="mt-lg-4">Pedidos</h1>
                 </div>
                 <a href="javascript:;"  (click)="PageSize()" class="btn btn-primary circle"><i
-                    class="fa fa-refresh"></i>
-            </a>
+                    class="fa fa-refresh"></i></a>
 
             <app-loading *ngIf="cargando"></app-loading>
                 <div class="row" *ngIf="!cargando">
@@ -28,17 +23,17 @@
                                             {{item.createdAt|date :'MMM d, y, h:mm:ss a'}}
                                         </span>
                                     </h4>
-                                    <!-- <span class="badge badge-success">9</span> -->
-                                    <div class="btn-group ml-auto m-t-10">
-                                        <a href="JavaScript:void(0)" class="icon-options-vertical link"
-                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
-                                        <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end"
-                                            style="position: absolute; transform: translate3d(-184px, 32px, 0px); top: 0px; left: 0px; will-change: transform;">
-                                            <!-- <a class="dropdown-item" [routerLink]="['/dashboard/contacto/edit',contacto._id]">Leer</a> -->
-                                            <a class="dropdown-item" href="javascript:void(0)"
-                                                (click)="eliminarPedido(item)">Eliminar</a>
-                                        </div>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                         <button type="button" class="btn btn-primary" 
+                                            
+                                            data-toggle="modal" [attr.data-target]="'#ver-'+item._id">
+                                            <span class="czi-eye"></span> Ver</button>
+
+                                            <button type="button" class="btn btn-success" 
+                                            (click)="eliminarPedido(item)">
+                                            <span class="czi-check"></span> Eliminar</button>
                                     </div>
+                                    
                                 </div>
                             </div>
                             <div class="activity-box">
@@ -46,16 +41,17 @@
 
                                     <div class="row">
                                         <div class="col-md-8 col-lg-9">
-                                            <small>Pedido:</small>
+                                            <small>Pedido ID:</small>
                                             <h3 class="box-title m-b-0">{{item._id}}</h3> 
-                                            <p >{{item.pedidoList[0].subcategoria}}</p> 
+                                            <!-- <small>Cant Items:</small>
+                                            <h3 class="box-title m-b-0">{{pedidos[0].pedidoList.lenght}}</h3> 
                                             <address>
-                                                <p class="font-size-md mb-1 ">{{item.status}}</p>
-                                                <span class="font-size-ms text-muted">
-                                                    <i class="czi-store align-middle mr-2"></i>
-                                                    {{item.tienda.nombre}}
-                                                </span>
-                                            </address>
+                                            </address> -->
+                                            <!-- <p class="font-size-md mb-1 ">{{item.status}}</p> -->
+                                            <span class="badge badge-accent badge-shadow" *ngIf="item.status == 'PENDING'">{{item.status}}</span>
+                                        <span class="badge badge-success badge-shadow" *ngIf="item.status == 'Activo'">{{item.status}}</span>
+                                        <span class="badge badge-primary badge-shadow" *ngIf="item.status == 'INPROCESS'">{{item.status}}</span>
+                                        <span class="badge badge-primary badge-shadow" *ngIf="item.status == 'Papelera'">{{item.status}}</span>
                                         </div>
                                     </div>
                                     <div class="d-flex justify-content-between align-items-center">
