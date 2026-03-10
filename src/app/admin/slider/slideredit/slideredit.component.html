@@ -5,7 +5,8 @@
             <div class="card-body">
                 <h4 class="card-title">{{pageTitle}}</h4>
                 <h6 class="card-subtitle">Ajustes</h6>
-                <button class="btn btn-outline-danger" href="javascript:void(0)" (click)="goBack()">{{'Volver'| translate}}</button>
+                <button class="btn btn-outline-danger" href="javascript:void(0)" (click)="goBack()">{{'Volver'|
+                    translate}}</button>
                 <form [formGroup]="sliderForm" (ngSubmit)="onSubmit(sliderForm)" class="form-horizontal form-material">
                     <div class="card border-0 box-shadow">
 
@@ -14,14 +15,16 @@
                                 <div class="tab-pane fade active show">
                                     <div class="row">
                                         <div class="form-group col-xs-12 col-sm-6">
-                                            <label class=" font-weight-medium" for="text-input">{{'Título'| translate}}</label>
+                                            <label class=" font-weight-medium" for="text-input">{{'Título'|
+                                                translate}}</label>
                                             <div class="col-md-12">
                                                 <input class="form-control" type="text"
                                                     placeholder="Nombre del producto" formControlName="first_title">
                                             </div>
                                         </div>
                                         <div class="form-group col-xs-12 col-sm-6">
-                                            <label class=" font-weight-medium" for="text-input">{{'Sub Título'| translate}}</label>
+                                            <label class=" font-weight-medium" for="text-input">{{'Sub Título'|
+                                                translate}}</label>
                                             <div class="col-md-12">
                                                 <input class="form-control" type="text" placeholder="Titulo superior"
                                                     formControlName="subtitulo">
@@ -30,8 +33,8 @@
                                     </div>
                                     <div class="row">
                                         <div class="form-group col-xs-12 col-sm-4">
-                                            <label class=" font-weight-medium" for="text-input"> {{'Enlace'| translate}} <span
-                                                    class="required">*</span></label>
+                                            <label class=" font-weight-medium" for="text-input"> {{'Enlace'| translate}}
+                                                <span class="required">*</span></label>
                                             <div class="col-md-12">
                                                 <input class="form-control" type="text" placeholder="enlace"
                                                     formControlName="enlace" required>
@@ -43,7 +46,8 @@
                                                 <select class="form-control " formControlName="align">
                                                     <option disabled value="">{{'Selecione'| translate}}</option>
                                                     <option value="align-items-start">{{'Derecha'| translate}}</option>
-                                                    <option value="align-items-center">{{'Centrado'| translate}}</option>
+                                                    <option value="align-items-center">{{'Centrado'| translate}}
+                                                    </option>
                                                     <option value="align-items-end">{{'Izquierda'| translate}}</option>
                                                 </select>
                                             </div>
@@ -59,7 +63,8 @@
                                             </div>
                                         </div>
                                         <div class="form-group col-xs-12 col-sm-6">
-                                            <label class=" font-weight-medium" for="text-input">{{'Status'| translate}}</label>
+                                            <label class=" font-weight-medium" for="text-input">{{'Status'|
+                                                translate}}</label>
                                             <div class="col-md-12">
                                                 <div class="custom-control custom-checkbox">
                                                     <input class="custom-control-input" formControlName="status"
@@ -74,7 +79,8 @@
                                             </div>
                                         </div>
                                         <div class="form-group col-xs-12 col-sm-6">
-                                            <label class="font-weight-medium" for="text-input">{{'Target'| translate}}</label>
+                                            <label class="font-weight-medium" for="text-input">{{'Target'|
+                                                translate}}</label>
                                             <div class="col-md-12">
                                                 <div class="custom-control custom-checkbox">
                                                     <input class="custom-control-input" formControlName="target"
@@ -92,7 +98,8 @@
                                     <div class="row">
 
                                         <div class="form-group col-xs-12 ">
-                                            <label class=" col-form-label font-weight-medium" for="text-input">{{'Status'| translate}}
+                                            <label class=" col-form-label font-weight-medium"
+                                                for="text-input">{{'Status'| translate}}
                                                 <span class="required">*</span></label>
                                             <div class="col-md-12">
                                                 <div class="row">
@@ -101,20 +108,25 @@
                                                             <label for="select-input">{{'Visible'| translate}}</label>
                                                             <select class="form-control " formControlName="mostrarInfo"
                                                                 required>
-                                                                <option disabled value="">{{'Seleccione'| translate}}</option>
+                                                                <option disabled value="">{{'Seleccione'| translate}}
+                                                                </option>
                                                                 <option [value]="true">{{'Activo'| translate}}</option>
-                                                                <option [value]="false">{{'Inactivo'| translate}}</option>
+                                                                <option [value]="false">{{'Inactivo'| translate}}
+                                                                </option>
                                                             </select>
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-6">
                                                         <div class="form-group">
-                                                            <label for="select-input">{{'Destacado'| translate}}?</label>
+                                                            <label for="select-input">{{'Destacado'|
+                                                                translate}}?</label>
                                                             <select class="form-control "
                                                                 formControlName="mostrarboton">
-                                                                <option disabled value="">{{'Seleccione'| translate}}</option>
+                                                                <option disabled value="">{{'Seleccione'| translate}}
+                                                                </option>
                                                                 <option [value]="true">{{'Activo'| translate}}</option>
-                                                                <option [value]="false">{{'Inactivo'| translate}}</option>
+                                                                <option [value]="false">{{'Inactivo'| translate}}
+                                                                </option>
                                                             </select>
                                                         </div>
                                                     </div>
@@ -155,6 +167,15 @@
                         class="btn btn-success waves-effect waves-light m-r-10 btn-block">
                         <i class="fa fa-save"></i> {{'Cambiar Imagen'| translate}}
                     </button>
+
+                    <div class="col-xs-12">
+                <h4>{{'Especificaciones'}}:</h4>
+                <ul>
+                    <li>{{'Tamaño máximo'}}: 300px X 300px</li>
+                    <li>{{'Peso máximo'}}: 3 mega bites</li>
+                    <li>{{'Formato permitido'}}: jpg, .gif, .png</li>
+                </ul>
+            </div>
                 </div>
             </div>
         </div>

@@ -101,7 +101,8 @@
                                         <select class="form-control " formControlName="categoria" name="categoria"
                                             required>
                                             <option disabled value="">SELECCIONAR</option>
-                                            <option *ngFor="let item of listCategorias | unique:'nombre'" [value]="item._id">
+                                            <option *ngFor="let item of listCategorias | unique:'nombre'"
+                                                [value]="item._id">
                                                 {{item.nombre}}</option>
 
                                         </select>
@@ -113,7 +114,8 @@
                                         <select class="form-control " formControlName="subcategoria"
                                             name="subcategoria">
                                             <option disabled value="">SELECCIONAR</option>
-                                            <option *ngFor="let item of listCategorias | unique:'nombre'" [value]="item.subcategorias">
+                                            <option *ngFor="let item of listCategorias | unique:'nombre'"
+                                                [value]="item.subcategorias">
                                                 {{item.subcategorias}}</option>
 
                                         </select>
@@ -149,11 +151,11 @@
                     </div>
                     <!-- local -->
                     <div class="form-group row">
-                        <div class="col-xs-12 col-sm-6" *ngIf="usuario.role === 'SUPERADMIN'">
+                        <div class="col-xs-12 col-sm-6" *ngIf="user.role === 'SUPERADMIN'">
                             <label class=" col-form-label font-weight-medium" for="local">local <span
                                     class="required">*</span></label>
                             <div class="input-group">
-                                <select class="form-control " name="local" formControlName="local"  required>
+                                <select class="form-control " name="local" formControlName="local" required>
                                     <option disabled value="">SELECCIONAR</option>
                                     <option *ngFor="let tienda of listTiendas" [value]="tienda._id">
                                         {{tienda.local}} | {{tienda.nombre}}
@@ -206,6 +208,14 @@
                     class="btn btn-success waves-effect waves-light m-r-10 btn-block">
                     <i class="fa fa-save"></i> Cambiar imagen
                 </button>
+            </div>
+            <div class="col-xs-12">
+                <h4>{{'Especificaciones'}}:</h4>
+                <ul>
+                    <li>{{'Tamaño máximo'}}: 300px X 300px</li>
+                    <li>{{'Peso máximo'}}: 3 mega bites</li>
+                    <li>{{'Formato permitido'}}: jpg, .gif, .png</li>
+                </ul>
             </div>
         </div>
 

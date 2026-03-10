@@ -75,7 +75,7 @@ export class UsertiendaaddComponent implements OnInit {
     
     this.activatedRoute.params.subscribe((resp:any)=>{
       this.user_id = resp.id;
-      // console.log('id: ',this.user_id)
+      console.log('id: ',this.user_id)
      })
     //  this.cargar_usuario();
     this.cargar_Locales();
@@ -99,7 +99,7 @@ export class UsertiendaaddComponent implements OnInit {
       (resp:any) =>{
         // this.listIcons = resp.iconos;
         this.usertiendaSeleccionado = resp;
-        // console.log('editar user: ',this.usertiendaSeleccionado)
+        console.log('editar user: ',this.usertiendaSeleccionado)
         
         this.registerForm.setValue({
           first_name: this.usertiendaSeleccionado.first_name,
@@ -165,11 +165,11 @@ export class UsertiendaaddComponent implements OnInit {
       // console.log(this.localList)
       const data = {
         ...this.registerForm.value,
-        _id: this.usertiendaSeleccionado.uid,
+        uid: this.user_id,
         // local: this.usertiendaSeleccionado.local,
       }
       console.log('data: ',data)
-      this.usuarioService.upadateUser(data, this.usertiendaSeleccionado.uid).subscribe(
+      this.usuarioService.upadateUser(data, this.user_id).subscribe(
         resp =>{
           Swal.fire('Actualizado', `${first_name} actualizado correctamente`, 'success');
         }

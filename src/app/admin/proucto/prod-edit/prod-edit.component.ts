@@ -92,6 +92,9 @@ export class ProdEditComponent implements OnInit {
     // this.activatedRoute.params.subscribe( ({id}) => this.cargarProducto(id));
     // this.activatedRoute.params.subscribe( ({id}) => this.listConfig(id));
 
+    let USER = localStorage.getItem("user");
+    this.user = JSON.parse(USER ? USER : '');
+
     this.activatedRoute.params.subscribe((resp:any)=>{
       this.producto_id = resp.id;
      })
@@ -260,7 +263,7 @@ export class ProdEditComponent implements OnInit {
     } = this.productoForm.value;
 
     // Determinar el valor de local según el rol del usuario
-    const localValue = this.usuario.role === 'SUPERADMIN' ? this.localList : this.usuario.local;
+    const localValue = this.user.role === 'SUPERADMIN' ? this.localList : this.user.local;
 
     if(this.productoSeleccionado){
       //actualizar
