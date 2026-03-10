@@ -101,7 +101,7 @@ export class AdminVentasComponent implements OnInit {
           this.ventas = response.data;
           this.ventasFiltradas = response.data;
         }
-        if (this.user.role === 'ADMIN') {
+        if (this.user.role === 'ADMIN' || this.user.role === 'VENTAS') {
           this.getTiendaId()
           this.ventasPorLocalId()
         }
@@ -443,7 +443,7 @@ export class AdminVentasComponent implements OnInit {
     if (this.user.role === 'SUPERADMIN') {
       this.getDashboardAdminYear();
     }
-    if (this.user.role === 'ADMIN') {
+    if (this.user.role === 'ADMIN' || this.user.role === 'VENTAS') {
 
       this.getDashboardLocalYear()
     }
@@ -470,14 +470,12 @@ export class AdminVentasComponent implements OnInit {
   getDashboardLocalYear() {
     this._ventaService.get_year_bylocal(this.selectedValue, this.user.local).subscribe((resp: any) => {
       this.ventasFiltradas = resp.data;
-      console.log('ventasLocalAño', this.ventasFiltradas)
     })
   }
 
   ventasPorLocalId() {
     this._ventaService.listarporLocal(this.user.local).subscribe((resp: any) => {
       this.ventasFiltradas = resp.ventas;
-      console.log('ventasLocal', resp)
     })
   }
 

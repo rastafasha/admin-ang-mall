@@ -109,7 +109,7 @@ export class DashboardComponent implements OnInit {
       this.data_Dashboard();
     }
 
-    if (this.usuario.role === 'ADMIN') {
+    if (this.usuario.role === 'ADMIN' || this.usuario.role === 'VENTAS') {
       this.data_DashboardLocal();
     }
 
@@ -385,7 +385,7 @@ export class DashboardComponent implements OnInit {
       );
     }
 
-    if (this.usuario.role === 'ADMIN') {
+    if (this.usuario.role === 'ADMIN' || this.usuario.role === 'VENTAS') {
       this._ventaService.get_detalle_hoyLocal(this.usuario.local).subscribe(
         response => {
           this.last_sellers = response.data;
@@ -411,7 +411,7 @@ export class DashboardComponent implements OnInit {
       });
     }
 
-    if (this.usuario.role === 'ADMIN') {
+    if (this.usuario.role === 'ADMIN' || this.usuario.role === 'VENTAS') {
       this._productoService.best_sellerLocal(this.usuario.local).subscribe((resp: any) => {
         this.bestsellers = resp.data;
       });
@@ -425,7 +425,7 @@ export class DashboardComponent implements OnInit {
       });
     }
 
-    if (this.usuario.role === 'ADMIN') {
+    if (this.usuario.role === 'ADMIN' || this.usuario.role === 'VENTAS') {
       this._productoService.popularesLocal(this.usuario.local).subscribe((resp: any) => {
         this.populares = resp.data;
       });
@@ -450,7 +450,7 @@ export class DashboardComponent implements OnInit {
       this.getDashboardAdminYear();
     }
 
-    if (this.usuario.role === 'ADMIN') {
+    if (this.usuario.role === 'ADMIN' || this.usuario.role === 'VENTAS') {
       this.getDashboardLocalYear()
     }
 

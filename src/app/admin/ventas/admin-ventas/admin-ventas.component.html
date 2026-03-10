@@ -20,7 +20,7 @@
                     </div> -->
                     <div class="row">
                         <div class="col-xs-12 col-sm-6">
-                            <div *ngIf="user.role ==='SUPERADMIN'  || user.role==='VENTAS' ">
+                            <div *ngIf="user.role ==='SUPERADMIN'  ">
                                 <label class=" col-form-label font-weight-medium" for="local">
                                     Filtro de Ventas por Local
                                     <span class="required">*</span></label>
@@ -35,7 +35,7 @@
                                 </div>
                             </div>
 
-                             <div *ngIf="user.role ==='ADMIN' ">
+                             <div *ngIf="user.role ==='ADMIN' || user.role==='VENTAS'">
                                 <label class=" col-form-label font-weight-medium" for="local">
                                     Ventas Local: {{tiendaSelected?.nombre}}
                                     </label> 
@@ -59,12 +59,7 @@
                 <div class="row mb-5">
 
                     <div class="col-xs-12 col-sm-8"
-                        *ngIf="user.role ==='SUPERADMIN'|| user.role==='VENTAS' ">
-                        <!-- <app-bar-chart [ventas]="ventas"></app-bar-chart> -->
-                        <app-line-chart [ventas]="ventasFiltradas"></app-line-chart>
-                    </div>
-                    <div class="col-xs-12 col-sm-8"
-                        *ngIf="user.role ==='ADMIN'">
+                        *ngIf="user.role ==='SUPERADMIN'|| user.role ==='ADMIN' ||user.role==='VENTAS' ">
                         <!-- <app-bar-chart [ventas]="ventas"></app-bar-chart> -->
                         <app-line-chart [ventas]="ventasFiltradas"></app-line-chart>
                     </div>

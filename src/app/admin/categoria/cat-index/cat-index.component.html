@@ -50,7 +50,7 @@
                                 <th>Subcategorias</th>
                                 <th>Status</th>
                                 <th>Creación</th>
-                                <th class="text-nowrap">Acciones</th>
+                                <th class="text-nowrap" >Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -129,7 +129,7 @@
                                 <td>{{ categoria.createdAt | date:'MMM d, y, h:mm:ss a' }}</td>
                                 <td class="text-nowrap text-center">
                                     <a [routerLink]="['/dashboard/categoria/edit', categoria._id]" class="cursor" data-toggle="tooltip" data-original-title="Edit"> <i class="fa fa-pencil text-inverse m-r-10"></i> </a>
-                                    <a (click)="eliminarCategoria(categoria)" class="cursor" data-toggle="tooltip" data-original-title="Borrar"> <i class="fa fa-close text-danger"></i> </a>
+                                    <a *ngIf="user.role === 'SUPERADMIN'"  (click)="eliminarCategoria(categoria)" class="cursor" data-toggle="tooltip" data-original-title="Borrar"> <i class="fa fa-close text-danger"></i> </a>
                                 </td>
                             </tr>
 

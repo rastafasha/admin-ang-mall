@@ -30,6 +30,7 @@ export class CatIndexComponent implements OnInit {
 
   public imgSubs: Subscription;
   listIcons;
+  user:any;
 
   query:string ='';
         searchForm!:FormGroup;
@@ -46,6 +47,9 @@ export class CatIndexComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+
+    let USER = localStorage.getItem("user");
+    this.user = JSON.parse(USER ? USER : '');
     this.cargar_iconos();
 
     this.loadCategorias();

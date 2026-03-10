@@ -64,6 +64,8 @@ export class ProdEditComponent implements OnInit {
   public Editor = ClassicEditor;
   public Editor1 = ClassicEditor;
 
+  user:any;
+
   constructor(
     private fb: FormBuilder,
     private productoService: ProductoService,
@@ -89,6 +91,7 @@ export class ProdEditComponent implements OnInit {
     window.scrollTo(0,0);
     // this.activatedRoute.params.subscribe( ({id}) => this.cargarProducto(id));
     // this.activatedRoute.params.subscribe( ({id}) => this.listConfig(id));
+
     this.activatedRoute.params.subscribe((resp:any)=>{
       this.producto_id = resp.id;
      })
@@ -256,13 +259,18 @@ export class ProdEditComponent implements OnInit {
       isFeatured, local 
     } = this.productoForm.value;
 
+    // Determinar el valor de local según el rol del usuario
+    const localValue = this.usuario.role === 'SUPERADMIN' ? this.localList : this.usuario.local;
+
     if(this.productoSeleccionado){
       //actualizar
-      const data = {
+       const data = {
         ...this.productoForm.value,
         _id: this.productoSeleccionado._id,
-        local: this.localList,
+        local: localValue
       }
+
+      
       this.productoService.actualizarProducto(data).subscribe(
         resp =>{
           Swal.fire('Actualizado', `${titulo}  actualizado correctamente`, 'success');
@@ -272,7 +280,7 @@ export class ProdEditComponent implements OnInit {
       //crear
       const data = {
         ...this.productoForm.value,
-        local: this.localList
+        local: localValue
       }
       this.productoService.crearProducto(data)
       .subscribe( (resp: any) =>{

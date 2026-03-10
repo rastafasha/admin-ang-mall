@@ -71,7 +71,7 @@ export class TiposdepagoComponent implements OnInit {
     if (this.user.role === 'SUPERADMIN') {
       this.getTiposdePago();
     }
-    if (this.user.role === 'ADMIN') {
+    if (this.user.role === 'ADMIN' || this.user.role === 'VENTAS') {
       this.getTiposdePagoByLocal()
     }
   }
@@ -121,7 +121,7 @@ export class TiposdepagoComponent implements OnInit {
         if (this.user.role === 'SUPERADMIN') {
           this.getTiposdePago();
         }
-        if (this.user.role === 'ADMIN') {
+        if (this.user.role === 'ADMIN' || this.user.role === 'VENTAS') {
           this.getTiposdePagoByLocal()
         }
       }
@@ -166,7 +166,7 @@ export class TiposdepagoComponent implements OnInit {
         if (this.user.role === 'SUPERADMIN') {
           this.getTiposdePago();
         }
-        if (this.user.role === 'ADMIN') {
+        if (this.user.role === 'ADMIN' || this.user.role === 'VENTAS') {
           this.getTiposdePagoByLocal()
         }
 

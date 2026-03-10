@@ -41,7 +41,7 @@ export class ListaTrasnferenciasComponent implements OnInit {
     if(this.user.role==='SUPERADMIN'){
       this.loadTrasnferencias();
         }
-        if(this.user.role==='ADMIN'){
+        if(this.user.role==='ADMIN' || this.user.role === 'VENTAS'){
           this.transPorLocalId()
         }
   }
@@ -89,7 +89,7 @@ public PageSize(): void {
     if(this.user.role==='SUPERADMIN'){
       this.loadTrasnferencias();
         }
-        if(this.user.role==='ADMIN'){
+        if(this.user.role==='ADMIN' || this.user.role === 'VENTAS'){
           this.transPorLocalId()
         }
     // this.router.navigateByUrl('/productos')

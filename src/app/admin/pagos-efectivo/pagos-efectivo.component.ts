@@ -31,7 +31,7 @@ export class PagosEfectivoComponent implements OnInit {
     if (this.user.role === 'SUPERADMIN') {
       this.obtenerPagosEfectivo();
     }
-    if (this.user.role === 'ADMIN') {
+    if (this.user.role === 'ADMIN' || this.user.role === 'VENTAS') {
       this.getTiposdePagoByLocal()
     }
   }
@@ -59,7 +59,7 @@ export class PagosEfectivoComponent implements OnInit {
     if (this.user.role === 'SUPERADMIN') {
       this.obtenerPagosEfectivo();
     }
-    if (this.user.role === 'ADMIN') {
+    if (this.user.role === 'ADMIN' || this.user.role === 'VENTAS') {
       this.getTiposdePagoByLocal()
     }
   }
