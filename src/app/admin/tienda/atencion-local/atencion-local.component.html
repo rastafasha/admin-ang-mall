@@ -5,7 +5,7 @@
             <div class="card-body">
                 <form autocomplete="false">
 
-                    <!-- paciente -->
+                    <!-- cliente -->
                     <div class="row align-items-center py-4">
                         <div class="col-xs-12 col-sm-8">
                             <div class="row">
@@ -120,7 +120,13 @@
                     </li>
                 </ul>
             </div>
-             <div class="container">
+             <div class="row">
+                <div class="row" *ngIf="productos.length > 8">
+                        <div class="col-md-12 text-right">
+                            <pagination-controls (pageChange)="p = $event"></pagination-controls>
+
+                        </div>
+                    </div>
                     <div class="productos-atention">
                         <figure class="item"
                             *ngFor="let prod of productos |  paginate: { itemsPerPage: count, currentPage: p }; let i = index">
@@ -131,15 +137,11 @@
                                             alt="{{prod.titulo}} thumbnail" />
                                     </a>
                                 </div>
-                                <figcaption class="desc text-center">
-                                    <h3>
-                                        <a class="product-name" (click)="cargarPorducto(prod)">
-                                            {{prod.titulo}}
-                                        </a>
-                                    </h3>
+                                <figcaption class="desc text-center descript">
+                                    <h5>
+                                        {{prod.titulo}}
+                                    </h5>
                                     <p>SKU:{{prod.sku}}</p>
-
-                                    
                                     <span class="price">{{prod.precio_ahora |number:'1.2-2'| currency:tienda_moneda}}</span>
                                     <span class="price precioantes" *ngIf="prod.precio_antes > prod.precio_ahora">{{prod.precio_antes |number:'1.2-2'| currency:tienda_moneda}}</span>
 
@@ -164,42 +166,6 @@
 
 
 
-<!-- lista productos -->
-<!-- <section class="row" *ngIf="clienteSeleccionado && productNotSelected">
-    <div class="container">
-        <div class="productos-atention">
-            <figure class="item" *ngFor="let prod of productos |  paginate: { itemsPerPage: count, currentPage: p }">
-                <div class="product product-style-1">
-                    <div class="img-wrapper">
-                        <a (click)="cargarPorducto(prod)">
-                            <img class="img-responsive" [src]="prod.img | imagenPipe: 'productos'"
-                                alt="{{prod.titulo}} thumbnail" />
-                        </a>
-                    </div>
-                    <figcaption class="desc text-center">
-                        <h3>
-                            <a class="product-name" (click)="cargarPorducto(prod)">
-                                {{prod.titulo}}
-                            </a>
-                        </h3>
-                        <p>SKU:{{prod.sku}}</p>
-                        <span class="price">${{prod.precio_ahora}}</span>
-                        <span class="price precioantes">${{prod.precio_antes}}</span>
-
-                    </figcaption>
-                </div>
-            </figure>
-        </div>
-        <div class="clear"></div>
-        <div class="row" *ngIf="productos.length > 8">
-            <div class="col-md-12 text-right">
-                <pagination-controls (pageChange)="p = $event"></pagination-controls>
-
-            </div>
-        </div>
-    </div>
-</section> -->
-
 <section class="container" *ngIf="clienteSeleccionado && !productNotSelected">
 
     <div class="row">
@@ -211,6 +177,9 @@
             </article>
         </div>
         <div class="col-xs-12 col-sm-6">
+            <button class="btn btn-outline-danger btn-sm mt-4" (click)="volverProductos()">
+                Volver a Productos
+            </button>
             <article>
                 <!-- implementar aqui la galeria de imagenes del producto -->
                 <h3 class="heading-style-3" style="color:#696262">
@@ -300,9 +269,7 @@
                     {{productoSeleccionado.info_short}}
                 </div>
             </article>
-            <button class="btn btn-outline-danger btn-sm mt-4" (click)="volverProductos()">
-                Volver a Productos
-            </button>
+            
         </div>
 
     </div>

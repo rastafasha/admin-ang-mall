@@ -68,11 +68,12 @@ export class ProductoSelectedComponent {
         selector: this.selector_to_cart,
         precio: this.productoSeleccionado.precio_ahora,
       };
-      console.log('data product: ', data);
+      // console.log('data product: ', data);
       if (this.selector_to_cart != ' ') {
         this.selector_error = false;
         this._carritoService.registro(data).subscribe((response) => {
           this.socket.emit('save-carrito', { new: true });
+          this._carritoService.preview_carrito(this.clienteSeleccionado.uid).subscribe();
           // $('#dark-toast').removeClass('hide');
           // $('#dark-toast').addClass('show');
           // setTimeout(function() {

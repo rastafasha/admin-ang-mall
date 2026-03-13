@@ -164,10 +164,15 @@ export class AtencionLocalComponent implements OnInit {
     this.user = JSON.parse(USER ? USER : '');
     this.local = this.user.local;
 
+    if (this.user.role === 'SUPERADMIN') {
+      this.loadProductos()
+    }
+    if (this.user.role === 'ADMIN' || this.user.role === 'VENTAS') {
+      this.getLocal();
+    }
+
 
     this.loadCategorias();
-    // this.loadProductos();
-    this.getLocal();
     this.imgSubs = this.modalImagenService.nuevaImagen
       .pipe(
         delay(100)
@@ -294,7 +299,12 @@ export class AtencionLocalComponent implements OnInit {
 
   public PageSize(): void {
     this.query = '';
-    this.loadProductos();
+    if (this.user.role === 'SUPERADMIN') {
+      this.loadProductos()
+    }
+    if (this.user.role === 'ADMIN' || this.user.role === 'VENTAS') {
+      this.getLocal();
+    }
     // this.router.navigateByUrl('/productos')
   }
 
@@ -303,35 +313,6 @@ export class AtencionLocalComponent implements OnInit {
       this.productos = event.productos;
     }
   }
-
-
-  /*
-  addToCart(prod:any): void{
-    console.log('prod save: ',prod)
-    // this.productoSeleccionado = prod;
-    let data = {
-      user: this.identity.uid,
-      producto : prod._id,
-      cantidad : this.cantidad_to_cart,
-      color : this.color_to_cart,
-      selector : this.selector_to_cart,
-      precio : prod.precio_ahora
-    }
-    // this.messageService.sendMessage(this.productoSeleccionado);
-    console.log('sending item to cart...', prod);
-    
-    this._carritoService.registro(prod).subscribe(response => {
-      this.socket.emit('save-carrito', {new:true});
-    });
-    this.msm_success = true;
-    setTimeout(()=>{
-      this.close_alert()
-    },2500);
-    this.ngOnInit();
-  }
-    */
-
-
 
 
   filterClient() {
@@ -372,7 +353,7 @@ export class AtencionLocalComponent implements OnInit {
     this.telefono = '';
     this.numdoc = 0;
 
-    location.reload();
+    // location.reload();
   }
 
 

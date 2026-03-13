@@ -7,13 +7,32 @@ ul li{
     display: flex;
     padding: 5px;
 }
-
+.product{
+    background-color: #f2f2f2;
+    padding: 5px;
+    border-radius: 4px;
+}
 .productos-atention{
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     grid-template-rows: auto;
     gap: 10px;
     
+}
+.descript{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.product-name{
+    font-size: 22px;
+}
+.price{
+    font-size: 16px;
+}
+.precioantes{
+    font-size: 14px;
 }
 .product-name,.price,.precioantes{
     text-align: left;

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Observable } from "rxjs";
+import { Observable, BehaviorSubject } from "rxjs";
+import { tap } from "rxjs/operators";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import {environment} from 'src/environments/environment';
 import { Carrito } from "../models/carrito.model";
@@ -18,6 +19,8 @@ export class CarritoService {
     this.url = environment.baseUrl;
    }
 
+  public cartSubject = new BehaviorSubject<any[]>([]);
+  public cart$ = this.cartSubject.asObservable();
 
   // Load initial data from localStorage
   private loadBandejaListFromLocalStorage() {
@@ -113,7 +116,9 @@ export class CarritoService {
   preview_carrito(id:string):Observable<any>{
     let headers = new HttpHeaders().set('Content-Type','application/json');
     // se corrigió la ruta '/carrito/limit/data/', lo correcto es '/carritos/limit/data/'
-    return this._http.get(this.url + '/carritos/limit/data/'+id,{headers:headers})
+    return this._http.get(this.url + '/carritos/limit/data/'+id,{headers:headers}).pipe(
+      tap((response: any) => this.cartSubject.next(response.carrito || []))
+    );
   }
 
   remove_carrito(id:string):Observable<any>{

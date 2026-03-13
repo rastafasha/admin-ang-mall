@@ -9,7 +9,7 @@ import { PostalService } from "src/app/services/postal.service";
 import { DireccionService } from "src/app/services/direccion.service";
 import { VentaService } from "src/app/services/venta.service";
 
-declare var paypal;
+// declare var paypal;
 // declare var paypal: {
 //   Buttons: (arg0: {
 //     createOrder: (data: any, actions: any) => any; onApprove: (data: any, actions: any) => Promise<void>;
@@ -41,7 +41,7 @@ import Swal from 'sweetalert2';
 import { Tienda } from 'src/app/models/tienda.model';
 import { PaypalService } from 'src/app/services/paypal.service';
 import { Paypal } from 'src/app/models/paypal.model';
-// import { ICreateOrderRequest, IPayPalConfig, NgxPayPalModule } from 'ngx-paypal';
+import { ICreateOrderRequest, IPayPalConfig, NgxPayPalModule } from 'ngx-paypal';
 
 @Component({
   selector: 'app-carrito',
@@ -52,7 +52,7 @@ export class CarritoComponent implements OnInit {
 
   @ViewChild('paypal',{static:true}) paypalElement? : ElementRef;
 
-  // public payPalConfig ? : IPayPalConfig;
+  public payPalConfig ? : IPayPalConfig;
 
   public clienteSeleccionado: any;
 
@@ -214,80 +214,6 @@ export class CarritoComponent implements OnInit {
       $('#btn-back-data').hide();
       $('#card-data-envio').hide();
       
-
-        // paypal.Buttons({
-
-        //   createOrder: (data,actions)=>{
-        //     //VALIR STOCK DE PRODUCTOS
-        //     this.data_venta.detalles.forEach(element => {
-        //         if(element.producto.stock == 0){
-        //           this.error_stock = true;
-        //         }else{
-        //           this.error_stock = false;
-        //         }
-
-        //     });
-
-        //     if(!this.error_stock){
-        //       return actions.order.create({
-        //         purchase_units : [{
-        //           description : 'Compra en Linea',
-        //           amount : {
-        //             currency_code : this.tienda_moneda || 'USD',
-        //             value: Math.round(this.subtotal),
-        //           }
-
-        //         }]
-        //       });
-        //     }else{
-        //       this.error_stock = true;
-        //       this.listar_carrito();
-        //     }
-        //   },
-        //   onApprove : async (data,actions)=>{
-        //     const order = await actions.order.capture();
-        //     console.log(order);
-        //     this.data_venta.idtransaccion = order.purchase_units[0].payments.captures[0].id;
-        //     this._ventaService.registro(this.data_venta).subscribe(
-        //       response =>{
-        //         this.data_venta.detalles.forEach(element => {
-        //           console.log(element);
-        //           this._productoService.aumentar_ventas(element.producto._id).subscribe(
-        //             response =>{
-        //             },
-        //             error=>{
-        //               console.log(error);
-
-        //             }
-        //           );
-        //             this._productoService.reducir_stock(element.producto._id,element.cantidad).subscribe(
-        //               response =>{
-        //                 this.remove_carrito();
-        //                 this.listar_carrito();
-        //                 this.socket.emit('save-carrito', {new:true});
-        //                 this.socket.emit('save-stock', {new:true});
-        //                 this._router.navigate(['/app/cuenta/ordenes']);
-        //               },
-        //               error=>{
-        //                 console.log(error);
-
-        //               }
-        //             );
-        //         });
-
-        //       },
-        //       error=>{
-        //         console.log(error);
-
-        //       }
-        //     );
-        //   },
-        //   onError : err =>{
-        //     console.log(err);
-
-        //   }
-        // }).render(this.paypalElement.nativeElement);
-      //
       this.url = environment.baseUrl;
 
       this.carrito_real_time();
@@ -594,7 +520,6 @@ export class CarritoComponent implements OnInit {
     );
   }
 
-  
 
   // get_data_cupon(event,cupon){
   //   this.data_keyup = this.data_keyup + 1;
@@ -858,12 +783,11 @@ export class CarritoComponent implements OnInit {
     // this.paypalElement.nativeElement.innerHTML = '';
 
     if (this.selectedMethod === 'card' || this.selectedMethod === 'paypal') {
-      // deshabilitar el formulario de pago con transferencia
       this.habilitacionFormTransferencia = false;
       this.habilitacionFormEfectivo = false;
       this.paypal = true;
-      // Cargar el botón de PayPal con las opciones seleccionadas
-      // this.initPayPalConfig();
+      // Config already loaded via getPaypalByTienda()
+      this.initPayPalConfig();
     }
     else if (this.selectedMethod === 'transferencia') {
       // transferencia bancaria => abrir formulario (en un futuro un modal con formulario)
@@ -884,73 +808,74 @@ export class CarritoComponent implements OnInit {
     }
   }
 
-  // private initPayPalConfig(): void {
-  //   this.payPalConfig = {
-  //     currency: this.tienda_moneda,
-  //     clientId: this.paypalinfo.clientIdPaypal,
-  //     createOrderOnClient: (data) => <ICreateOrderRequest>{
-  //       intent: 'CAPTURE',
-  //       purchase_units: [{
-  //         amount: {
-  //           currency_code: this.tienda_moneda,
-  //           value: Math.round(this.subtotal).toString(),
-  //           breakdown: {
-  //             item_total: {
-  //               currency_code: this.tienda_moneda,
-  //               value: Math.round(this.subtotal).toString(),
-  //             }
-  //           }
-  //         },
-  //         items: this.getItemsList()
-  //       }]
-  //     },
-  //     advanced: {
-  //       commit: 'true'
-  //     },
-  //     style: {
-  //       label: 'paypal',
-  //       layout: 'vertical'
-  //     },
-  //     onApprove: (data, actions) => {
-  //       console.log('onApprove - transaction was approved, but not authorized', data, actions);
-  //       actions.order.get().then((details: any) => {
-  //         console.log('onApprove - you can get full order details inside onApprove: ', details);
-  //       });
-  //     },
-  //     onClientAuthorization: (data) => {
-  //       console.log('onClientAuthorization - you should probably inform your server about completed transaction at this point', data);
-  //       this.data_venta.idtransaccion = data.id;
-  //       this.saveVenta();
-  //     },
-  //     onCancel: (data, actions) => {
-  //       console.log('OnCancel', data, actions);
-  //     },
-  //     onError: err => {
-  //       console.log('OnError', err);
-  //     },
-  //     onClick: (data, actions) => {
-  //       console.log('onClick', data, actions);
-  //     },
-  //   };
-  // }
+  private initPayPalConfig(): void {
+    this.payPalConfig = {
+      currency: this.tienda_moneda,
+      clientId: this.paypalinfo.clientIdPaypal,
+      createOrderOnClient: (data) => <ICreateOrderRequest>{
+        intent: 'CAPTURE',
+        purchase_units: [{
+          amount: {
+            currency_code: this.tienda_moneda,
+            value: Math.round(this.subtotal).toString(),
+            breakdown: {
+              item_total: {
+                currency_code: this.tienda_moneda,
+                value: Math.round(this.subtotal).toString(),
+              }
+            }
+          },
+          items: this.getItemsList()
+        }]
+      },
+      advanced: {
+        commit: 'true'
+      },
+      style: {
+        label: 'paypal',
+        layout: 'vertical'
+      },
+      onApprove: (data, actions) => {
+        console.log('onApprove - transaction was approved, but not authorized', data, actions);
+        actions.order.get().then((details: any) => {
+          console.log('onApprove - you can get full order details inside onApprove: ', details);
+        });
+      },
+      onClientAuthorization: (data) => {
+        console.log('onClientAuthorization - you should probably inform your server about completed transaction at this point', data);
+        this.data_venta.idtransaccion = data.id;
+        this.saveVenta();
+      },
+      onCancel: (data, actions) => {
+        console.log('OnCancel', data, actions);
+      },
+      onError: err => {
+        console.log('OnError', err);
+      },
+      onClick: (data, actions) => {
+        console.log('onClick', data, actions);
+      },
+    };
+  }
 
-  // getItemsList(): any[]{
+  getItemsList(): any[] {
 
-  //   const items: any[] = [];
-  //   let item = {};
-  //   this.cartItems.forEach((it: CartItemModel)=>{
-  //     item = {
-  //       name: it.productName,
-  //       unit_amount: {
-  //         currency_code: 'USD',
-  //         value: it.productPrice,
-  //       },
-  //       quantity: it.quantity,
-  //       category: it.category,
-  //     };
-  //     items.push(item);
-  //   });
-  //   return items;
-  // }
+    const items: any[] = [];
+  
+    this.carrito.forEach((it: any) => {
+      const item = {
+        name: it.productName || 'Producto',
+        unit_amount: {
+          currency_code: this.tienda_moneda || 'USD',
+          value: it.productPrice || '0.00',
+        },
+        quantity: it.quantity || 1,
+        category: it.category || 'general',
+      };
+      items.push(item);
+    });
+    console.log('PayPal items:', items);
+    return items;
+  }
 
 }

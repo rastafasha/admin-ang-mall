@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { Usuario } from 'src/app/models/usuario.model';
 import { ContactoService } from 'src/app/services/contact.service';
@@ -12,6 +12,7 @@ import { CarritoService } from 'src/app/services/carrito.service';
 import { environment } from 'src/environments/environment';
 
 import * as io from "socket.io-client";
+import { Subscription } from 'rxjs';
 import { MessageService } from 'src/app/services/message.service';
 import { TiendaService } from 'src/app/services/tienda.service';
 import { SidebarService } from 'src/app/services/sidebar.service';
@@ -23,7 +24,7 @@ import { filter } from 'rxjs/operators';
   styles: [
   ]
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
 
   @Input() cartItem: CartItemModel;
   cartItems: any[] = [];
@@ -31,7 +32,7 @@ export class HeaderComponent implements OnInit {
   value: string;
   id:string;
   // categorias: Categoria[];
-  public clienteSeleccionado: any ={};
+  public clienteSeleccionado: any = {};
 
   public carrito : Array<any> = [];
   public subtotal : any = 0;
@@ -47,6 +48,7 @@ export class HeaderComponent implements OnInit {
   public count_cat:number;
 
   public activeLang = 'es';
+  private cartSubscription?: Subscription;
   flag = false;
   is_visible: boolean;
    langs: string[] = [];
@@ -110,9 +112,21 @@ public tienda_moneda : any;
     this.socket.on('new-carrito', function (data) {
       this.show_Carrito();
     }.bind(this));
+
+    this.cartSubscription = this._carritoService.cart$.subscribe(cart => {
+      this.carrito = cart;
+      this.subtotal = cart.reduce((acc, item) => acc + (item.precio * item.cantidad), 0);
+      this.cdr.detectChanges();
+    });
     
     this.show_Carrito();
     
+  }
+
+  ngOnDestroy(): void {
+    if (this.cartSubscription) {
+      this.cartSubscription.unsubscribe();
+    }
   }
 
   showCliente(){
@@ -211,7 +225,7 @@ public tienda_moneda : any;
             this.subtotal = this.subtotal + (element.precio*element.cantidad);
           });
   
-          // refrescar cambios en la vista del carrito del header
+          // refrescar cambios en la vista del carrito del carrito del header
           this.cdr.detectChanges();
         },
         error=>{
