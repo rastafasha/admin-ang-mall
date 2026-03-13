@@ -27,7 +27,7 @@
             
         </div>
     </div>
-    <div class="col-xs-12 ">
+    <div class="col-xs-12 " *ngIf="usuario.role ==='SUPERADMIN'">
         <app-config-site></app-config-site>
     </div>
 </div>

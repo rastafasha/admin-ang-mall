@@ -9,6 +9,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { BackbuttonComponent } from './backbutton/backbutton.component';
 import { LoadingComponent } from './loading/loading.component';
 import { SearchComponent } from './search/search.component';
+import { PipesModule } from '../pipes/pipes.module';
 
 
 
@@ -34,6 +35,7 @@ import { SearchComponent } from './search/search.component';
     RouterModule,
     FormsModule,
     TranslateModule,
+    PipesModule
   ]
 })
 export class SharedModule { }

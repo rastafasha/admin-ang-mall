@@ -31,8 +31,10 @@ export class PagoEfectivoService {
 
 
   registro(data:any){
-    return this.http.post<any>(`${this.url}/pagoefectivo/store`,data);
+    return this.http.post<any>(`${base_url}/pagoefectivo/store`,data);
   }
+
+  
 
   listar(){
     // return this._http.get<any>(`${this.url}/pagoefectivo`);

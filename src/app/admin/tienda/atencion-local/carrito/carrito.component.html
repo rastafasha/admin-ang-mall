@@ -52,7 +52,8 @@
                                             style="font-weight: 900;">||||||||||||||||||||</span>
 
                                     </div>
-                                    <div class="font-size-lg text-accent pt-2">{{item.precio |currency : tienda_moneda}}</div>
+                                    <div class="font-size-lg text-accent pt-2">{{item.precio |currency : tienda_moneda}}
+                                    </div>
                                 </ng-container>
 
                                 <ng-container *ngIf="item.producto.stock == 0">
@@ -105,10 +106,9 @@
                         <h2 class="h6 mb-3 pb-1">Subtotal</h2>
                         <h3 class="font-weight-normal">{{subtotal |currency : tienda_moneda}}</h3>
                     </div>
-                    <div class="card mb-4 cart-data-venta" style="padding-left: 8px;">
+                    <!-- <div class="card mb-4 cart-data-venta" style="padding-left: 8px;">
                         <div class="card-body">
-                            <h3 style="    font-size: 1rem;
-                margin-bottom: 0px;">Medio postal</h3>
+                            <h3 style=" font-size: 1rem; margin-bottom: 0px;">Medio postal</h3>
                         </div>
                         <table class="postal">
                             <thead>
@@ -129,7 +129,6 @@
                                             (change)="select_postal($event,item)" value="{{item._id}}">
                                     </td>
                                     <td>
-                                        <!-- Blockquote -->
                                         <blockquote class="blockquote" style="margin-bottom: 0.4rem;">
                                             <p style="font-size: 13px;margin-bottom: 0px !important;">{{item.titulo}}
                                             </p>
@@ -146,9 +145,9 @@
 
                         </table>
 
-                    </div>
+                    </div> -->
                     <div class="accordion mb-4 cart-data-venta" id="order-options" *ngIf="carrito">
-                        <div class="card">
+                        <!-- <div class="card">
                             <div class="card-header">
                                 <h3 class="accordion-heading"><a href="#promo-code" role="button" data-toggle="collapse"
                                         aria-expanded="true" aria-controls="promo-code">Aplicar promoción<span
@@ -167,7 +166,7 @@
 
                                 </form>
                             </div>
-                        </div>
+                        </div> -->
                         <!-- direcciones -->
                         <!-- <div class="card">
                             <div class="card-header">
@@ -205,11 +204,11 @@
                                     <li><span class="text-muted dt-w">Cliente:&nbsp;
                                             <br></span>{{clienteSeleccionado.first_name}}
                                         {{clienteSeleccionado.last_name}}</li>
-                                    <li><span class="text-muted dt-w">Dirección:&nbsp;
+                                    <!-- <li><span class="text-muted dt-w">Dirección:&nbsp;
                                             <br></span>{{data_direccionLocal.direccion}}</li>
                                     <li><span class="text-muted dt-w">País - Ciudad - ZIP:&nbsp; <br></span>
                                         {{data_direccionLocal.pais}} <span> - </span> {{data_direccionLocal.ciudad}}
-                                        <span> - </span> {{data_direccionLocal.zip}}</li>
+                                        <span> - </span> {{data_direccionLocal.zip}}</li> -->
                                 </ul>
                             </div>
 
@@ -250,7 +249,6 @@
                                 <!-- metodo de pago -->
                                 <div class="mb-3 mt-2">
                                     <label form="metodo_pago" class="form-label">Tipo de Transferencia</label>
-
                                     <select formControlName="metodo_pago" (change)="onChangePayment($event)"
                                         class="form-control" name="metodo_pago" id="metodo_pago">
                                         <option value="">Seleccione</option>
@@ -260,70 +258,54 @@
                                     </select>
                                 </div>
                                 <div class="card">
-                                    <div class="card-body alert-warning" *ngIf="paymentMethodinfo">
-                                        <p *ngIf="paymentMethodinfo.bankName">Nombre del
-                                            Banco:&nbsp;{{paymentMethodinfo.bankName}}</p>
-                                        <p *ngIf="paymentMethodinfo.bankAccount">Numero de
-                                            Cuenta:&nbsp;{{paymentMethodinfo.bankAccount}}</p>
-                                        <p *ngIf="paymentMethodinfo.phone">Numero de
-                                            Teléfono:&nbsp;{{paymentMethodinfo.phone}}</p>
-                                        <p *ngIf="paymentMethodinfo.email">Email:&nbsp;{{paymentMethodinfo.email}}</p>
-                                        <p *ngIf="paymentMethodinfo.ciorif">Ciorif:&nbsp;{{paymentMethodinfo.ciorif}}
+                                    <div class="card-body alert-warning" *ngIf="paymentSelected">
+                                        <p *ngIf="paymentSelected.bankName">Nombre del
+                                            Banco:&nbsp;{{paymentSelected.bankName}}</p>
+                                        <p *ngIf="paymentSelected.bankAccount">Numero de
+                                            Cuenta:&nbsp;{{paymentSelected.bankAccount}}</p>
+                                        <p *ngIf="paymentSelected.phone">Numero de
+                                            Teléfono:&nbsp;{{paymentSelected.phone}}</p>
+                                        <p *ngIf="paymentSelected.email">Email:&nbsp;{{paymentSelected.email}}</p>
+                                        <p *ngIf="paymentSelected.ciorif">Ciorif:&nbsp;{{paymentSelected.ciorif}}
                                         </p>
-                                        <p *ngIf="paymentMethodinfo.username">Cheque a nombre
-                                            de:&nbsp;{{paymentMethodinfo.username}}</p>
+                                        <p *ngIf="paymentSelected.username">Cheque a nombre
+                                            de:&nbsp;{{paymentSelected.username}}</p>
                                     </div>
                                 </div>
 
-                                <!-- nombre del banco -->
-                                <div class="mb-3">
-                                    <label for="bankName" class="form-label">Nombre del Banco</label>
-                                    <input type="text" formControlName="bankName" class="form-control" name="bankName"
-                                        id="bankName">
-                                </div>
-
-                                <!-- numero de referencia -->
-                                <div class="mb-3">
-                                    <label for="referencia" class="form-label">Num. referencia</label>
-                                    <input type="text" formControlName="referencia" class="form-control"
-                                        name="referencia" id="referencia">
-                                </div>
-
-                                <!-- monto -->
-                                <div class="mb-3">
-                                    <label for="amount" class="form-label">Monto</label>
-                                    <input type="number" formControlName="amount" class="form-control" name="amount"
-                                        id="amount">
-                                </div>
-
-                                <!-- teléfono de la persona que hace la transferencia -->
-                                <div class="mb-3">
-                                    <label for="phone" class="form-label">Num. teléfono</label>
-                                    <input type="number" formControlName="phone" class="form-control" name="phone"
-                                        id="phone">
-                                </div>
-
-                                <!-- nombre de la persona que hace la transferencia -->
-                                <div class="mb-3">
-                                    <label for="name_person" class="form-label">
-                                        Nombre y Apellido(en cuenta pagadora)
-                                    </label>
-                                    <input type="text" formControlName="name_person" class="form-control"
-                                        name="name_person" id="name_person">
-                                </div>
-
-                                <!-- fecha de pago -->
-                                <div class="mb-3">
-                                    <label for="paymentday" class="form-label">Fecha de Pago</label>
-                                    <input type="date" formControlName="paymentday" class="form-control"
-                                        name="paymentday" id="paymentday">
-                                </div>
-
-                                <!-- botones -->
-                                <div class="d-grid gap-2">
-                                    <button class="btn btn-primary" type="submit">
-                                        Enviar
-                                    </button>
+                                <!-- formularios Dólares -->
+                                <div class="row"
+                                    *ngIf="paymentSelected && paymentSelected?.tipo === 'Transferencia Dólares'|| paymentSelected && paymentSelected?.tipo === 'Transferencia Bolivares' || paymentSelected && paymentSelected?.tipo === 'Transferencia Euro'">
+                                    <!-- nombre del banco -->
+                                    <div class="mb-3 col-xs-12 col-sm-6">
+                                        <label for="bankName" class="form-label">Banco</label>
+                                        <input type="text" formControlName="bankName" class="form-control"
+                                            name="bankName" id="bankName">
+                                    </div>
+                                    <!-- monto -->
+                                    <div class="mb-3 col-xs-12 col-sm-6">
+                                        <label for="amount" class="form-label">Monto</label>
+                                        <input type="number" formControlName="amount" class="form-control" name="amount" id="amount">
+                                    </div>
+                                    <!-- numero de referencia -->
+                                    <div class="mb-3 col-xs-12 col-sm-6">
+                                        <label for="referencia" class="form-label">Num. referencia</label>
+                                        <input type="text" formControlName="referencia" class="form-control"
+                                            name="referencia" id="referencia">
+                                    </div>
+                                    
+                                    <!-- fecha de pago -->
+                                    <div class="mb-3">
+                                        <label for="paymentday" class="form-label">Fecha de Pago</label>
+                                        <input type="date" formControlName="paymentday" class="form-control"
+                                            name="paymentday" id="paymentday">
+                                    </div>
+                                    <!-- botones -->
+                                   <div class="d-grid gap-2">
+                                            <button class="btn btn-primary" type="submit">
+                                                Enviar
+                                            </button>
+                                        </div>
                                 </div>
                             </form>
 
@@ -334,27 +316,11 @@
                             <!-- formulario -->
                             <form [formGroup]="formEfectivo" (ngSubmit)="sendFormEffective()" class="mt-4">
 
-                                <!-- nombre de la persona que paga -->
-                                <div class="mb-3">
-                                    <label for="name_person" class="form-label">
-                                        Nombre y Apellido
-                                    </label>
-                                    <input type="text" formControlName="name_person" class="form-control"
-                                        name="name_person" id="name_person">
-                                </div>
-
                                 <!-- monto -->
                                 <div class="mb-3">
                                     <label for="amount" class="form-label">Monto</label>
                                     <input type="number" formControlName="amount" class="form-control" name="amount"
                                         id="amount">
-                                </div>
-
-                                <!-- teléfono de la persona que paga -->
-                                <div class="mb-3">
-                                    <label for="phone" class="form-label">Num. teléfono</label>
-                                    <input type="number" formControlName="phone" class="form-control" name="phone"
-                                        id="phone">
                                 </div>
 
                                 <!-- fecha de pago -->
@@ -427,7 +393,6 @@
                             </form>
                         </div>
 
-                        si la respuesta es positiva
                     </div>
 
                 </div>

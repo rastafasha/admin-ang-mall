@@ -13,7 +13,7 @@ import Swal from 'sweetalert2';
 })
 export class ListaTrasnferenciasComponent implements OnInit {
 
-  public trasnferencias: Transferencia[] =[];
+  public transferencias: Transferencia[] = [];
   public cargando: boolean = true;
 
   public desde: number = 0;
@@ -22,12 +22,12 @@ export class ListaTrasnferenciasComponent implements OnInit {
 
   p: number = 1;
   count: number = 8;
-  user:any;
+  user: any;
 
-  query:string ='';
-          searchForm!:FormGroup;
-          currentPage = 1;
-          collecion='categorias';
+  query: string = '';
+  searchForm!: FormGroup;
+  currentPage = 1;
+  collecion = 'categorias';
 
 
   constructor(
@@ -37,67 +37,68 @@ export class ListaTrasnferenciasComponent implements OnInit {
 
   ngOnInit(): void {
     let USER = localStorage.getItem("user");
-    this.user = JSON.parse(USER ? USER: '');
-    if(this.user.role==='SUPERADMIN'){
+    this.user = JSON.parse(USER ? USER : '');
+    if (this.user.role === 'SUPERADMIN') {
       this.loadTrasnferencias();
-        }
-        if(this.user.role==='ADMIN' || this.user.role === 'VENTAS'){
-          this.transPorLocalId()
-        }
+    }
+    if (this.user.role === 'ADMIN' || this.user.role === 'VENTAS') {
+      this.transPorLocalId()
+    }
   }
 
 
-  loadTrasnferencias(){
+  loadTrasnferencias() {
     this.cargando = true;
     this.trasnferenciaService.getTransferencias().subscribe(
       transferencias => {
         this.cargando = false;
-        this.trasnferencias = transferencias;
+        this.transferencias = transferencias;
       }
     )
 
   }
 
-  transPorLocalId(){
+  transPorLocalId() {
+    this.cargando = true;
     this.trasnferenciaService.getTransferenciaByTiendaId(this.user.local).subscribe(
-      transferencias => {
+      (resp:any) => {
+        this.transferencias = resp;
         this.cargando = false;
-        this.trasnferencias = transferencias;
       }
     )
   }
 
-  cambiarStatus(trasnferencia: Transferencia){
+  cambiarStatus(trasnferencia: Transferencia) {
     this.trasnferenciaService.updateStatus(trasnferencia)
-    .subscribe( resp => {
-      Swal.fire('Actualizado', trasnferencia._id,  'success')
-    })
+      .subscribe(resp => {
+        Swal.fire('Actualizado', trasnferencia._id, 'success')
+      })
 
   }
 
-  eliminarSlider(transf: Transferencia){
+  eliminarSlider(transf: Transferencia) {
     this.trasnferenciaService.borrarTransferencia(transf._id)
-    .subscribe( resp => {
-      this.loadTrasnferencias();
-      Swal.fire('Borrado', this.transf.referencia, 'success')
-    })
+      .subscribe(resp => {
+        this.loadTrasnferencias();
+        Swal.fire('Borrado', this.transf.referencia, 'success')
+      })
 
   }
 
-public PageSize(): void {
+  public PageSize(): void {
     this.query = '';
-    if(this.user.role==='SUPERADMIN'){
+    if (this.user.role === 'SUPERADMIN') {
       this.loadTrasnferencias();
-        }
-        if(this.user.role==='ADMIN' || this.user.role === 'VENTAS'){
-          this.transPorLocalId()
-        }
+    }
+    if (this.user.role === 'ADMIN' || this.user.role === 'VENTAS') {
+      this.transPorLocalId()
+    }
     // this.router.navigateByUrl('/productos')
   }
 
   handleSearchEvent(event: any) {
     if (event.trasnferencias) {
-      this.trasnferencias = event.trasnferencias;
+      this.transferencias = event.trasnferencias;
     }
   }
 

@@ -3,7 +3,7 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-               <app-search [query]="query" [modelo]="trasnferencia" [colleccionName]="trasnferencias"
+               <app-search [query]="query" [modelo]="trasnferencia" [colleccionName]="transferencias"
         [colleccion]="'trasnferencias'" (searchEvent)="handleSearchEvent($event)" (resetEvent)="PageSize()"></app-search>
             </div>
         </div>
@@ -52,7 +52,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let transf of trasnferencias |  paginate: { itemsPerPage: count, currentPage: p } | orderBy:'createdAt, desc'">
+                            <tr *ngFor="let transf of transferencias |  paginate: { itemsPerPage: count, currentPage: p } | orderBy:'createdAt, desc'">
                                 
                                 <td>
                                     {{transf.metodo_pago.tipo}}

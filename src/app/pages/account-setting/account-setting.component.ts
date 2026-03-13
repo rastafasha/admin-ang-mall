@@ -62,7 +62,6 @@ export class AccountSettingComponent implements OnInit {
     this.congeneralService.cargarCongenerals().subscribe(
       congenerals => {
         this.congenerals = congenerals;
-        console.log(this.congenerals);
       }
     )
 
@@ -70,7 +69,6 @@ export class AccountSettingComponent implements OnInit {
 
 
   changeTheme(theme:string){ //recibe la data del boton por medio de la clase theme:string
-
     this.settingsService.changeTheme(theme);// llamamos el servicio
   }
 

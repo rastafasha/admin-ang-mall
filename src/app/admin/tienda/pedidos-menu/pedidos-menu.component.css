@@ -1,0 +1,8 @@
+.boton-title{
+    display: flex;
+    align-items: center;
+    height: 50px;
+    align-self: anchor-center;
+    margin-bottom: 30px;
+    gap:15px
+}

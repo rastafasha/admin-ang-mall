@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Pedido } from 'src/app/models/pedido.model';
 import { PedidomenuService } from 'src/app/services/pedidomenu.service';
 
-declare var $:any;
+declare var $: any;
 @Component({
   selector: 'app-pedidos-menu',
   templateUrl: './pedidos-menu.component.html',
@@ -17,62 +17,78 @@ export class PedidosMenuComponent implements OnInit {
   public count_cat;
   p: number = 1;
   count: number = 8;
-   user:any;
+  user: any;
 
   constructor(
     private pedidosMenuService: PedidomenuService
   ) { }
 
   ngOnInit(): void {
-    this.getPedidos();
-     // obtengo el usuario
+    // obtengo el usuario
     let USER = localStorage.getItem("user");
-    this.user = JSON.parse(USER ? USER: '');
+    this.user = JSON.parse(USER ? USER : '');
 
-    if(this.user.role==='SUPERADMIN'){
-         this.getPedidos();
-        }
-        if(this.user.role==='ADMIN'){
-          this.pedidosPorLocalId()
-        }
+    if (this.user.role === 'SUPERADMIN') {
+      this.getPedidos();
+    }
+    if (this.user.role === 'ADMIN') {
+      this.pedidosPorLocalId()
+    }
   }
 
   getPedidos() {
     this.cargando = true;
     this.pedidosMenuService.getByStatus(this.status).subscribe((resp) => {
       this.pedidos = resp;
+      console.log('Pedidos loaded (getByStatus):', this.pedidos);
       this.cargando = false;
     })
   }
   pedidosPorLocalId() {
     this.cargando = true;
-    this.pedidosMenuService.getByTiendaId(this.user.local).subscribe((resp:any) => {
+    this.pedidosMenuService.getByTiendaId(this.user.local).subscribe((resp: any) => {
       this.pedidos = resp;
+      console.log('Pedidos loaded (getByTiendaId):', this.pedidos);
       this.user = resp.user
       this.cargando = false;
     })
   }
 
-   activar(id){
+  activar(id) {
     this.pedidosMenuService.activar(id).subscribe(
-      response=>{
-        $('#activar-'+id).modal('hide');
+      response => {
+        $('#activar-' + id).modal('hide');
         $('.modal-backdrop').removeClass('show');
-        this.getPedidos();
+        if (this.user.role === 'SUPERADMIN') {
+          this.getPedidos();
+        }
+        if (this.user.role === 'ADMIN') {
+          this.pedidosPorLocalId()
+        }
       }
     )
   }
 
-   eliminarPedido(pedido){
+  eliminarPedido(pedido) {
     this.pedidosMenuService.borrarPedido(pedido._id).subscribe(
-      response=>{
-        this.getPedidos();
+      response => {
+        if (this.user.role === 'SUPERADMIN') {
+          this.getPedidos();
+        }
+        if (this.user.role === 'ADMIN') {
+          this.pedidosPorLocalId()
+        }
       }
     )
   }
 
-  PageSize(){
-    this.getPedidos();
+  PageSize() {
+    if (this.user.role === 'SUPERADMIN') {
+      this.getPedidos();
+    }
+    if (this.user.role === 'ADMIN') {
+      this.pedidosPorLocalId()
+    }
   }
 
 }

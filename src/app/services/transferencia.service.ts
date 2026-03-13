@@ -60,7 +60,7 @@ export class TransferenciaService {
     const url = `${base_url}/transferencias/tienda/${_id}`;
     return this.http.get<any>(url, this.headers)
       .pipe(
-        map((resp:{ok: boolean, trasnferencias: Transferencia[]}) => resp.trasnferencias)
+        map((resp:{ok: boolean, transferencias: Transferencia[]}) => resp.transferencias)
         );
 
   }

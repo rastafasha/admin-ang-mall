@@ -8,7 +8,10 @@
         <nav class="sidebar-nav">
             <ul id="sidebarnav">
                 <li class="user-profile">
-                    <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><img [src]="usuario.img" alt="{{usuario.first_name|slice:0:1}} {{usuario.last_name |slice:0:1}}" /><span class="hide-menu">{{usuario.first_name}} </span></a>
+                    <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false">
+                        <img [src]="usuario.img | imagenPipe: 'usuarios' " alt="{{usuario.first_name|slice:0:1}} {{usuario.last_name |slice:0:1}}" />
+                        <span class="hide-menu">{{usuario.first_name}} </span>
+                    </a>
                     <ul aria-expanded="false" class="collapse">
                         <li><a routerLink="./perfil" routerLinkActive="active">{{'My Profile'| translate}} </a></li>
                         <li><a routerLink="account-settings">{{'Account Setting'| translate}}</a></li>
@@ -16,8 +19,8 @@
                     </ul>
                 </li>
                 <li class="nav-devider"></li>
-                <li class="nav-small-cap">{{'Contenido'| translate}}</li>
-                <li>
+                <li class="nav-small-cap" *ngIf="usuario.role ==='SUPERADMIN'">{{'Contenido'| translate}}</li>
+                <li >
                     <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false">
                         <i class="mdi mdi-store"></i>
                         <span class="hide-menu">{{'Contenido'| translate}}<span class="label label-rouded label-themecolor pull-right">3</span>
@@ -135,7 +138,9 @@
         <nav class="sidebar-nav">
             <ul id="sidebarnav">
                 <li class="user-profile">
-                    <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><img [src]="usuario.img" alt="{{usuario.first_name|slice:0:1}} {{usuario.last_name |slice:0:1}}" /><span class="hide-menu">{{usuario.first_name}} </span></a>
+                    <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false">
+                        <img [src]="usuario.img | imagenPipe: 'usuarios' " alt="{{usuario.first_name|slice:0:1}} {{usuario.last_name |slice:0:1}}" />
+                        <span class="hide-menu">{{usuario.first_name}} </span></a>
                     <ul aria-expanded="false" class="collapse">
                         <li><a routerLink="./perfil" routerLinkActive="active">{{'My Profile'| translate}} </a></li>
                         <li><a routerLink="account-settings">{{'Account Setting'| translate}}</a></li>
@@ -200,7 +205,7 @@
                                  {{'Pagos en Efectivo'| translate}}
                             </a>
                         </li>
-                        <li><a routerLink="postal" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Delivery '|translate}}</a></li>
+                        <!-- <li><a routerLink="postal" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Delivery '|translate}}</a></li> -->
                         <!-- <li>
                             <a routerLink="pagoscheque" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
                                  {{'Pagos en Cheque'| translate}}
@@ -250,7 +255,7 @@
         <nav class="sidebar-nav">
             <ul id="sidebarnav">
                 <li class="user-profile">
-                    <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><img [src]="usuario.imagenUrl" alt="user" /><span class="hide-menu">{{usuario.first_name}} ({{usuario.role}})</span></a>
+                    <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><img [src]="usuario.img | imagenPipe: 'usuarios' " alt="user" /><span class="hide-menu">{{usuario.first_name}} ({{usuario.role}})</span></a>
                     <ul aria-expanded="false" class="collapse">
                         <li><a routerLink="./perfil" routerLinkActive="active">{{'My Profile'| translate}} </a></li>
                         <li><a routerLink="account-settings">{{'Account Setting'| translate}}</a></li>
@@ -355,7 +360,7 @@
         <nav class="sidebar-nav">
             <ul id="sidebarnav">
                 <li class="user-profile">
-                    <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><img [src]="usuario.imagenUrl" alt="user" /><span class="hide-menu">{{usuario.first_name}} ({{usuario.role}})</span></a>
+                    <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><img [src]="usuario.img | imagenPipe: 'usuarios' " alt="user" /><span class="hide-menu">{{usuario.first_name}} ({{usuario.role}})</span></a>
                     <ul aria-expanded="false" class="collapse">
                         <li><a routerLink="./perfil" routerLinkActive="active">{{'My Profile'|translate}} </a></li>
                         <!-- <li><a routerLink="account-settings">Account Setting</a></li> -->
