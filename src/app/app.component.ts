@@ -1,11 +1,10 @@
-import { Component, Inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { CongeneralService } from './services/congeneral.service';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { PaypalService } from './services/paypal.service';
+import { UsuarioService } from './services/usuario.service';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { Meta } from '@angular/platform-browser';
-import { DOCUMENT } from '@angular/common';
 
 declare var jQuery:any;
 declare var $:any;
@@ -22,10 +21,10 @@ export class AppComponent {
 
   constructor(
     private _congeneralService : CongeneralService,
-    private http: HttpClient,
+    private paypalService: PaypalService,
+    private usuarioService: UsuarioService,
     private _router : Router,
-    private meta: Meta,
-    private document: Document
+    private meta: Meta
     ){
       this._congeneralService.cargarCongenerals().subscribe( response =>{
         this.congenerals = response; this.url = environment.baseUrl;
@@ -47,7 +46,17 @@ export class AppComponent {
 
   ngOnInit(): void{
     window.scroll(0,0);
-    // this.document.documentElement.lang = 'es';
+    
+    // Load dynamic PayPal SDK if user logged in
+    if (this.usuarioService.usuario?.local) {
+      const tiendaId = typeof this.usuarioService.usuario.local === 'string' 
+        ? this.usuarioService.usuario.local 
+        : (this.usuarioService.usuario.local as any)._id;
+      this.paypalService.loadGlobalPaypalSDK(tiendaId).subscribe({
+        next: (paypal) => console.log('Dynamic PayPal loaded:', paypal),
+        error: (err) => console.error('PayPal load failed:', err)
+      });
+    }
   }
 
 
