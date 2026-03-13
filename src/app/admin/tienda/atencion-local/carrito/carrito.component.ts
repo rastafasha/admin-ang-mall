@@ -39,6 +39,8 @@ import { TiendaService } from 'src/app/services/tienda.service';
 import { PagochequeService } from 'src/app/services/pagocheque.service';
 import Swal from 'sweetalert2';
 import { Tienda } from 'src/app/models/tienda.model';
+import { PaypalService } from 'src/app/services/paypal.service';
+import { Paypal } from 'src/app/models/paypal.model';
 // import { ICreateOrderRequest, IPayPalConfig, NgxPayPalModule } from 'ngx-paypal';
 
 @Component({
@@ -101,6 +103,8 @@ export class CarritoComponent implements OnInit {
   public tienda_moneda : any;
   public tienda : Tienda;
 
+  paypalinfo:Paypal;
+
   selectedMethod: string = '';
 
   habilitacionFormTransferencia:boolean = false;
@@ -153,6 +157,7 @@ export class CarritoComponent implements OnInit {
     // private webSocketService: WebSocketService,
     private _pagoEfectivo: PagoEfectivoService,
     private _pagoCheque: PagochequeService,
+    private _paypalService: PaypalService,
     private cdr: ChangeDetectorRef
   ) {
     this.identity = _userService.usuario;
@@ -182,10 +187,17 @@ export class CarritoComponent implements OnInit {
         this.data_direccionLocal = tienda;
         this.tienda_moneda = tienda.moneda;
         this.getTiposdePagoByLocal();
+        this.getPaypalByTienda();
         // console.log('direccion del local', this.data_direccionLocal);
       }
     );
 
+  }
+
+  getPaypalByTienda(){
+    this._paypalService.getPaypalByTiendaId(this.tienda._id).subscribe((resp:any)=>{
+      this.paypalinfo = resp;
+    })
   }
   
   private listAndIdentify(){
@@ -875,7 +887,7 @@ export class CarritoComponent implements OnInit {
   // private initPayPalConfig(): void {
   //   this.payPalConfig = {
   //     currency: this.tienda_moneda,
-  //     clientId: environment.clientIdPaypal,
+  //     clientId: this.paypalinfo.clientIdPaypal,
   //     createOrderOnClient: (data) => <ICreateOrderRequest>{
   //       intent: 'CAPTURE',
   //       purchase_units: [{

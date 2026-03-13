@@ -80,9 +80,9 @@ export class DetalleCancelacionComponent implements OnInit {
 
   reembolsar(){
 
-    this._ventaService.get_token().subscribe(
+    this._ventaService.get_token(this.venta.local._id).subscribe(
       response =>{
-        this.access_token = response.access_token;
+        this.access_token = response;
         console.log(this.access_token);
 
         this._ventaService.set_reembolso(this.access_token,this.idventa).subscribe(
