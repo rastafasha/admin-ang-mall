@@ -41,11 +41,43 @@ Login register and recover password Page
   #recoverform {
     display: none; }
   
-  .login-sidebar {
+.login-sidebar {
     padding: 0px;
     margin-top: 0px; }
     .login-sidebar .login-box {
       right: 0px;
       position: absolute;
       height: 100%; }
+
+.step-indicators {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.step-circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #ddd;
+  color: #666;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.step-circle.active {
+  background: #00c0ef;
+  color: white;
+}
+
+.step-line {
+  flex: 1;
+  height: 2px;
+  background: #ddd;
+  margin: 0 10px;
+}
   

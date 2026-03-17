@@ -9,6 +9,7 @@ import { PieChart2Component } from './charts/pie-chart2/pie-chart2.component';
 import { LineChart2Component } from './charts/line-chart2/line-chart2.component';
 import { ProducListFeaturedComponent } from './produc-list-featured/produc-list-featured.component';
 import { PipesModule } from '../pipes/pipes.module';
+import { ModalInicialComponent } from './modal-inicial/modal-inicial.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { PipesModule } from '../pipes/pipes.module';
     PieChart2Component,
     LineChart2Component,
     ProducListFeaturedComponent,
+    ModalInicialComponent
 
   ],
   imports: [
@@ -34,6 +36,7 @@ import { PipesModule } from '../pipes/pipes.module';
     PieChart2Component,
     LineChart2Component,
     ProducListFeaturedComponent,
+    ModalInicialComponent
   ]
 })
 export class ComponentsModule { }

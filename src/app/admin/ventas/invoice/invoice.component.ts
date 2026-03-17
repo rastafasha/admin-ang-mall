@@ -8,6 +8,8 @@ import { HttpClient } from '@angular/common/http';
 import { VentaService } from "src/app/services/venta.service";
 import { ComentarioService } from "src/app/services/comentario.service";
 import { ProductoService } from 'src/app/services/producto.service';
+import { TiendaService } from 'src/app/services/tienda.service';
+import { Tienda } from 'src/app/models/tienda.model';
 
 @Component({
   selector: 'app-invoice',
@@ -21,6 +23,9 @@ export class InvoiceComponent implements OnInit {
   public venta : any = {};
   public url;
   public producto_id:any;
+  public tienda:Tienda;
+  public tienda_moneda:string;
+  public local:string;
 
   constructor(
     private _userService: UsuarioService,
@@ -30,6 +35,7 @@ export class InvoiceComponent implements OnInit {
     private _ventaService: VentaService,
     private _comentarioService : ComentarioService,
     private _productoService : ProductoService,
+    private tiendaService : TiendaService,
   ) {
     this.identity = this._userService.usuario;
     this.url = environment.baseUrl;
@@ -48,15 +54,25 @@ export class InvoiceComponent implements OnInit {
   getDetalle(){
     this._ventaService.detalle(this.producto_id).subscribe(
       (response:any) =>{
-        console.log(response);
         this.detalle = response.detalle;
         this.venta = response.venta;
+        this.local= response.venta.local;
+        this.getTiendaId()
 
       },
       error=>{
       }
     );
   }
+
+  getTiendaId(){
+    this.tiendaService.getTiendaById(this.local).subscribe((resp:any)=>{
+      this.tienda = resp;
+      this.tienda_moneda = this.tienda.moneda
+    })
+  }
+
+
 
   imprimir(){
     var data = document.getElementById('contdiv');

@@ -7,6 +7,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { Usuario } from 'src/app/models/usuario.model';
 import { Producto } from 'src/app/models/producto.model';
+import { TiendaService } from 'src/app/services/tienda.service';
+import { Tienda } from 'src/app/models/tienda.model';
 declare let Chart;
 
 @Component({
@@ -53,6 +55,9 @@ export class DashboardComponent implements OnInit {
   public selectedValue: number = new Date().getFullYear();
   public query_income_year: any = [];
 
+  public tienda:Tienda;
+    public tienda_moneda:string;
+
   public total_ganado = {
     enero: 0,
     febrero: 0,
@@ -93,6 +98,7 @@ export class DashboardComponent implements OnInit {
     private _userService: UsuarioService,
     private _productoService: ProductoService,
     private _comentarioService: ComentarioService,
+    private tiendaService: TiendaService,
     private _router: Router,
     private _route: ActivatedRoute,
   ) {
@@ -391,7 +397,15 @@ export class DashboardComponent implements OnInit {
           this.last_sellers = response.data;
         }
       );
+      this.getTiendaId();
     }
+  }
+
+  getTiendaId(){
+    this.tiendaService.getTiendaById(this.usuario.local).subscribe((resp:any)=>{
+      this.tienda = resp;
+      this.tienda_moneda = this.tienda.moneda
+    })
   }
 
   getProducts() {

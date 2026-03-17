@@ -10,25 +10,28 @@
                 <!-- <a href="javascript:void(0)" class="text-center db"><img src="../assets/images/logo-icon.png" alt="Home" /><br/><img src="../assets/images/logo-text.png" alt="Home" /></a> -->
                 <div class="form-group m-t-40">
                     <div class="col-xs-12">
-                        <input class="form-control" type="email" formControlName="email" placeholder="Email">
+                        <input class="form-control" type="email" formControlName="email" placeholder="Correo Electrónico">
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-xs-12">
-                        <input class="form-control" type="password" formControlName="password" placeholder="Password">
+                        <input class="form-control" type="password" formControlName="password" placeholder="Contraseña">
                     </div>
                 </div>
                 <div class="form-group row">
                     <div class="col-md-12">
                         <div class="checkbox checkbox-primary pull-left p-t-0">
                             <input id="checkbox-signup" formControlName="remember" type="checkbox" class="filled-in chk-col-light-blue">
-                            <label for="checkbox-signup"> Remember me </label>
+                            <label for="checkbox-signup"> Recuerdame </label>
                         </div>
-                        <a href="javascript:void(0)" id="to-recover" class="text-dark pull-right"><i class="fa fa-lock m-r-5"></i> Forgot password?</a> </div>
+                        <!-- <a href="javascript:void(0)" id="to-recover" class="text-dark pull-right">
+                            <i class="fa fa-lock m-r-5"></i>¿Olvidó la Contraseña?
+                        </a>  -->
+                        </div>
                 </div>
                 <div class="form-group text-center m-t-20">
                     <div class="col-xs-12">
-                        <button class="btn btn-info btn-lg btn-block text-uppercase btn-rounded" type="submit">Log In</button>
+                        <button class="btn btn-info btn-lg btn-block text-uppercase btn-rounded" type="submit">Ingresar</button>
                     </div>
                 </div>
                 <!-- <div class="row">
@@ -38,15 +41,15 @@
                 </div> -->
                 <div class="form-group m-b-0">
                     <div class="col-sm-12 text-center">
-                        Don't have an account? <a routerLink="/register" class="text-primary m-l-5"><b>Sign Up</b></a>
+                        ¿No posee Cuenta? <a routerLink="/register" class="text-primary m-l-5"><b>Registrarme</b></a>
                     </div>
                 </div>
             </form>
             <form class="form-horizontal" id="recoverform" action="index.html">
                 <div class="form-group ">
                     <div class="col-xs-12">
-                        <h3>Recover Password</h3>
-                        <p class="text-muted">Enter your Email and instructions will be sent to you! </p>
+                        <h3>Recuperar Contraseña</h3>
+                        <p class="text-muted">Ingrese su Correo Electrónico y las instruccione serán enviadas a usted! </p>
                     </div>
                 </div>
                 <div class="form-group ">
@@ -56,7 +59,7 @@
                 </div>
                 <div class="form-group text-center m-t-20">
                     <div class="col-xs-12">
-                        <button class="btn btn-primary btn-lg btn-block text-uppercase waves-effect waves-light" type="submit">Reset</button>
+                        <button class="btn btn-primary btn-lg btn-block text-uppercase waves-effect waves-light" type="submit">Resetear</button>
                     </div>
                 </div>
             </form>

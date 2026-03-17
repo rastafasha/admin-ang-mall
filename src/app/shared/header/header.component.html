@@ -104,7 +104,7 @@
                 <!-- ============================================================== -->
                 <!-- Messages -->
                 <!-- ============================================================== -->
-                <li class="nav-item dropdown">
+                <li class="nav-item dropdown" *ngIf="usuario.role ==='SUPERADMIN' ">
                     <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" id="2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="mdi mdi-email"></i>
                         <div class="notify">
                             <div *ngIf="mensajes.length < 0"></div>
@@ -144,7 +144,7 @@
                 <!-- ============================================================== -->
 
                 <!-- Cart menu-->
-                <li class="nav-item dropdown">
+                <li class="nav-item dropdown" *ngIf="usuario.role ==='SUPERADMIN' || usuario.role ==='ADMIN' ">
                     <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <!-- <span class="navbar-tool-label">{{carrito.cantidad}}</span>  -->
                     

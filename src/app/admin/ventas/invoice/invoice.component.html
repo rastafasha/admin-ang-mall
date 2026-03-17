@@ -64,7 +64,7 @@
                 </address>
             </div>
             <div class="col-lg-6 text-right">
-                <strong>Envio:</strong>
+                <strong>Tienda:</strong>
                 <address class="small-text">
                     Dirección:<br> {{venta.direccion}}<br>
                     {{venta.pais}} / {{venta.ciudad}} / {{venta.zip}}<br>
@@ -87,7 +87,7 @@
             <div class="col-lg-6 text-right">
                 <strong>Precio de envio:</strong><br>
                 <span class="small-text">
-                    ${{venta.precio_envio}}<br><br>
+                    {{venta.precio_envio| currency:tienda_moneda}}<br><br>
                     </span>
             </div>
 
@@ -112,15 +112,15 @@
                         <tbody>
                             <tr *ngFor="let item of detalle">
                                 <td>{{item.producto.titulo}} x {{item.cantidad}}</td>
-                                <td class="text-center">${{item.precio * item.cantidad}} USD</td>
+                                <td class="text-center">{{item.precio * item.cantidad | currency:tienda_moneda}} </td>
                             </tr>
                             <tr>
                                 <td class="total-row text-right"><strong>Envio</strong></td>
-                                <td class="total-row text-center">${{venta.precio_envio}} USD</td>
+                                <td class="total-row text-center">{{venta.precio_envio | currency:tienda_moneda}} </td>
                             </tr>
                             <tr>
                                 <td class="total-row text-right"><strong>Total</strong></td>
-                                <td class="total-row text-center">${{venta.total_pagado}} USD</td>
+                                <td class="total-row text-center">{{venta.total_pagado | currency:tienda_moneda}} </td>
                             </tr>
                         </tbody>
                     </table>
@@ -146,7 +146,7 @@
                         </tr> -->
                         <!-- <tr>
                             <td class="text-right" colspan="3"><strong>Balance</strong></td>
-                            <td class="text-center">${{venta.total_pagado}} USD</td>
+                            <td class="text-center">{{venta.total_pagado | currency:tienda_moneda}} </td>
                         </tr> -->
                     </tbody>
                 </table>

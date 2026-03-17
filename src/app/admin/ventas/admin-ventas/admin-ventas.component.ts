@@ -57,6 +57,7 @@ export class AdminVentasComponent implements OnInit {
   listTiendas: any;
   user: any;
   tiendaSelected: Tienda;
+   public tienda_moneda:string;
 
   // accedo al componente hijo FacturaComponent, agregado por José Prados
   @ViewChild(FacturaComponent) factura !: FacturaComponent;
@@ -420,7 +421,8 @@ export class AdminVentasComponent implements OnInit {
 
   getTiendaId() {
     this.tiendaService.getTiendaById(this.user.local).subscribe((resp: any) => {
-      this.tiendaSelected = resp
+      this.tiendaSelected = resp;
+      this.tienda_moneda = this.tiendaSelected.moneda
     })
   }
 

@@ -34,16 +34,17 @@
                                             <span class="czi-dollar-circle"></span>
                                         </div>
                                         <div class="pl-2">
-                                            <h6 style="margin-bottom: 0px;">{{total_mes | currency}}
+                                            <h6 style="margin-bottom: 0px;">{{total_mes | currency:tienda_moneda}}
+                                                <br>
                                                 <ng-container *ngIf="total_mes > total_ganado_ant">
                                                     <span class="text-success" style="font-size: 10px;">+{{total_mes -
-                                                        total_ganado_ant| currency}}</span>&nbsp;
+                                                        total_ganado_ant| currency:tienda_moneda}}</span>&nbsp;
 
                                                 </ng-container>
                                                 <ng-container *ngIf="total_mes <= total_ganado_ant">
                                                     <span class="text-danger"
                                                         style="font-size: 10px;">-{{total_ganado_ant -
-                                                        total_mes |currency}}</span>&nbsp;
+                                                        total_mes | currency:tienda_moneda}}</span>&nbsp;
 
                                                 </ng-container>
                                             </h6>
@@ -66,6 +67,7 @@
                                         </div>
                                         <div class="pl-2">
                                             <h6 style="margin-bottom: 0px;">{{total_ventas}}
+                                                <br>
                                                 <ng-container *ngIf="total_ventas > total_ventas_ant">
                                                     <span class="text-success" style="font-size: 10px;">+{{total_ventas
                                                         -
@@ -147,7 +149,7 @@
 
                                             <div class="font-size-sm">
                                                 <span class="text-muted mr-2"> {{'Precio unitario'|
-                                                    translate}}:</span>${{item.precio}}
+                                                    translate}}:</span>{{item.precio | currency:tienda_moneda}}
                                             </div>
 
 
@@ -174,18 +176,18 @@
                                 <tbody>
                                     <tr>
                                         <td> {{'Total ganado'| translate}}</td>
-                                        <td class="text-center">{{dinero_ganado |currency}}</td>
+                                        <td class="text-center">{{dinero_ganado | currency:tienda_moneda}}</td>
                                     </tr>
                                     <tr>
                                         <td>{{'Mes anterior'| translate}}</td>
-                                        <td class="text-center">{{total_ganado_ant |currency}}</td>
+                                        <td class="text-center">{{total_ganado_ant | currency:tienda_moneda}}</td>
                                     </tr>
                                     <tr>
                                         <td>{{'Mes actual'| translate}}</td>
-                                        <td class="text-center" *ngIf="total_mes > total_ganado_ant">{{total_mes |currency}}
+                                        <td class="text-center" *ngIf="total_mes > total_ganado_ant">{{total_mes | currency:tienda_moneda}}
                                             <i class="fa fa-caret-up text-success"></i>
                                         </td>
-                                        <td class="text-center" *ngIf="total_mes <= total_ganado_ant">{{total_mes |currency}}
+                                        <td class="text-center" *ngIf="total_mes <= total_ganado_ant">{{total_mes | currency:tienda_moneda}}
                                             <i class="fa fa-caret-down text-danger"></i>
                                         </td>
                                     </tr>
@@ -229,5 +231,7 @@
 
     </div>
 </section>
+
+<app-modal-inicial></app-modal-inicial>
 
 

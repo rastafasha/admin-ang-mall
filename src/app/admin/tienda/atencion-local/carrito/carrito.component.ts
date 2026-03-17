@@ -447,7 +447,6 @@ export class CarritoComponent implements OnInit {
     this._carritoService.preview_carrito(this.clienteSeleccionado.uid).subscribe(
       response =>{
         this.carrito = response.carrito;
-        console.log('CARRITO: ',this.carrito)
         this.subtotal = 0;
         this.carrito.forEach(element => {
           this.subtotal = Math.round(this.subtotal + (element.precio * element.cantidad));
@@ -762,8 +761,10 @@ export class CarritoComponent implements OnInit {
         );
           this._productoService.reducir_stock(element.producto._id,element.cantidad).subscribe(
             response =>{
+              //removemos los datos del carrito y del usuario
               this.remove_carrito();
               this.listar_carrito();
+              localStorage.removeItem('cliente');
               this.socket.emit('save-carrito', {new:true});
               this.socket.emit('save-stock', {new:true});
               this._router.navigate(['/dashboard/ventas/modulo']);

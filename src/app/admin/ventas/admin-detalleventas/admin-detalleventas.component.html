@@ -52,7 +52,7 @@
                                 <div class="media-tab-media mr-3"><i class="czi-dollar"></i></div>
                                 <div class="media-body">
                                     <div class="media-tab-subtitle text-muted font-size-xs mb-1">Total pagado</div>
-                                    <h6 class="media-tab-title text-nowrap mb-0">{{venta.total_pagado}} USD</h6>
+                                    <h6 class="media-tab-title text-nowrap mb-0">{{venta.total_pagado| currency:tienda_moneda}} </h6>
                                 </div>
                             </div>
                         </div>
@@ -80,7 +80,7 @@
                                 </div>
 
                                 <div class="font-size-sm">
-                                    <span class="text-muted mr-2">Precio unitario:</span>${{item.precio}}
+                                    <span class="text-muted mr-2">Precio unitario:</span>{{item.precio | currency:tienda_moneda}}
                                 </div>
 
 
@@ -140,7 +140,7 @@
                                 </div>
                                 <div class="font-size-sm content-txt-pb">
                                     <span class="text-muted mr-2">Precio:</span><br>
-                                    <span>${{venta.precio_envio}}USD</span>
+                                    <span>{{venta.precio_envio| currency:tienda_moneda}}</span>
                                 </div>
                             </div>
                         </div>
