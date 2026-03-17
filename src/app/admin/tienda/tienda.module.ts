@@ -20,6 +20,9 @@ import { ComponentsAtentionModule } from './atencion-local/components/components
 import { SharedModule } from 'src/app/shared/shared.module';
 import { DriverpModule } from "src/app/admin/driverp/driverp.module";
 import { PedidosMenuComponent } from './pedidos-menu/pedidos-menu.component';
+import { Modal } from 'bootstrap';
+import { ModalinfoTiendasComponent } from 'src/app/components/modalinfo-tiendas/modalinfo-tiendas.component';
+import { ComponentsModule } from 'src/app/components/components.module';
 
 
 @NgModule({
@@ -58,7 +61,8 @@ import { PedidosMenuComponent } from './pedidos-menu/pedidos-menu.component';
     CKEditorModule,
     ComponentsAtentionModule,
     SharedModule,
-    DriverpModule
+    DriverpModule, 
+    ComponentsModule
 ]
 })
 export class TiendaModule { }

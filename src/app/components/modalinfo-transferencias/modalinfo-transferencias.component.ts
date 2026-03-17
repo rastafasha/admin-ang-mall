@@ -1,15 +1,13 @@
 import { Component, AfterViewInit } from '@angular/core';
-
 declare var $: any;
 declare var bootstrap: any;
-
 @Component({
-  selector: 'app-modal-inicial',
-  templateUrl: './modal-inicial.component.html',
-  styleUrls: ['./modal-inicial.component.css']
+  selector: 'app-modalinfo-transferencias',
+  templateUrl: './modalinfo-transferencias.component.html',
+  styleUrls: ['./modalinfo-transferencias.component.css']
 })
-export class ModalInicialComponent implements AfterViewInit {
-  
+export class ModalinfoTransferenciasComponent implements AfterViewInit {
+
   isLogued: boolean = false;
 
    currentStep = 1;
@@ -33,13 +31,4 @@ export class ModalInicialComponent implements AfterViewInit {
     $('#exampleModal').modal('hide');
   }
 
-  nextStep() {
-    this.currentStep = 2;
-
-  }
-
-  prevStep() {
-    this.currentStep = 1;
-  }
- 
 }
