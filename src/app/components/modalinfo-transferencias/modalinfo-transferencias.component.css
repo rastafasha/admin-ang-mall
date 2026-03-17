@@ -1,0 +1,12 @@
+.botonesmodal{
+  display: flex;
+  flex-direction: row;
+  gap:10px
+}
+
+@media (max-width:780px) {
+  .botonesmodal{
+  display: flex;
+  flex-direction: column;
+}
+}

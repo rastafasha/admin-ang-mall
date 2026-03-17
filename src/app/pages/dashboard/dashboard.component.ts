@@ -113,10 +113,12 @@ export class DashboardComponent implements OnInit {
 
     if (this.usuario.role === 'SUPERADMIN') {
       this.data_Dashboard();
+      this.getDashboardAdminYear();
     }
 
     if (this.usuario.role === 'ADMIN' || this.usuario.role === 'VENTAS') {
       this.data_DashboardLocal();
+      this.getDashboardLocalYear();
     }
 
     if (this.usuario.role === 'ALMACEN') {
@@ -126,14 +128,9 @@ export class DashboardComponent implements OnInit {
       this._router.navigate(['/dashboard/atencion-local'])
     }
 
-
     this.data_ventas();
-    this.getDashboardAdminYear();
-
-    // this.getProducts();
     this.getProductsBstSll();
     this.getProductsPop();
-    // this.getComentarios();
 
   }
 
@@ -484,13 +481,14 @@ export class DashboardComponent implements OnInit {
   getDashboardAdminYear() {
     this._ventaService.get_year(this.selectedValue).subscribe((resp: any) => {
       this.ventasDataYear = resp.data;
-      console.log(this.ventasDataYear)
+      // console.log(this.ventasDataYear)
 
     })
   }
   getDashboardLocalYear() {
     this._ventaService.get_year_bylocal(this.selectedValue, this.usuario.local).subscribe((resp: any) => {
       this.ventasDataYear = resp.data;
+      console.log(this.ventasDataYear)
     })
   }
 }
