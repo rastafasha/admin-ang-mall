@@ -254,6 +254,12 @@ export class ProdEditComponent implements OnInit {
 
 
   updateProducto(){
+     if(!this.productoForm.valid){
+      //mostramos las alertas de los campos requeridos
+      this.productoForm.markAllAsTouched(); // Esto activa las validaciones visuales
+      return
+    }
+
 
     const {titulo, precio_antes,info_short, detalle, 
       stock,categoria,subcategoria, sku,

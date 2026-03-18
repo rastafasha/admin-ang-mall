@@ -61,7 +61,7 @@ export class ListaTrasnferenciasComponent implements OnInit {
   transPorLocalId() {
     this.cargando = true;
     this.trasnferenciaService.getTransferenciaByTiendaId(this.user.local).subscribe(
-      (resp:any) => {
+      (resp: any) => {
         this.transferencias = resp;
         this.cargando = false;
       }
@@ -76,12 +76,29 @@ export class ListaTrasnferenciasComponent implements OnInit {
 
   }
 
-  eliminarSlider(transf: Transferencia) {
-    this.trasnferenciaService.borrarTransferencia(transf._id)
-      .subscribe(resp => {
-        this.loadTrasnferencias();
-        Swal.fire('Borrado', this.transf.referencia, 'success')
-      })
+  eliminarTramsf(transf: Transferencia) {
+    Swal.fire({
+      title: 'Estas Seguro?',
+      text: 'No podras recuperarlo!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, Borrar!',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.trasnferenciaService.borrarTransferencia(transf._id)
+          .subscribe(resp => {
+            if (this.user.role === 'SUPERADMIN') {
+              this.loadTrasnferencias();
+            }
+            if (this.user.role === 'ADMIN' || this.user.role === 'VENTAS') {
+              this.transPorLocalId()
+            }
+          })
+        Swal.fire('Borrado!', 'El Archivo fue borrado.', 'success');
+      }
+    });
 
   }
 

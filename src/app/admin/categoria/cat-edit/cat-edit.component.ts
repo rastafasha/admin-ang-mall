@@ -125,6 +125,12 @@ export class CatEditComponent implements OnInit {
 
   updateCategoria(){
 
+     if(!this.categoriaForm.valid){
+      //mostramos las alertas de los campos requeridos
+      this.categoriaForm.markAllAsTouched(); // Esto activa las validaciones visuales
+      return
+    }
+
     const {nombre, subcategorias } = this.categoriaForm.value;
 
     if(this.categoriaSeleccionado){

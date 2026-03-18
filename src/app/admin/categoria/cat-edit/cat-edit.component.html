@@ -6,21 +6,41 @@
                 <h4 class="card-title">{{pageTitle}}</h4>
                 <h6 class="card-subtitle">Ajustes</h6>
                 <button class="btn btn-outline-danger" href="javascript:void(0)" (click)="goBack()">Volver</button>
-                <form class="form p-t-20 form-horizontal form-material" [formGroup]="categoriaForm" (submit)="updateCategoria()">
+                <form class="form p-t-20 form-horizontal form-material" [formGroup]="categoriaForm"
+                    (submit)="updateCategoria()">
                     <div class="row">
                         <div class="form-group col-xs-12 col-sm-6">
-                            <label for="exampleInputuname">Titulo Categoria</label>
+                            <label for="exampleInputuname">Titulo Categoria <span class="required">*</span></label>
                             <div class="input-group">
-    
-                                <input type="text" formControlName="nombre" class="form-control" id="exampleInputuname" placeholder="nombre">
+
+                                <input type="text" formControlName="nombre" class="form-control" id="exampleInputuname"
+                                    placeholder="nombre">
+                                <div *ngIf="categoriaForm.get('nombre')?.touched && categoriaForm.get('nombre')?.invalid"
+                                    class="text-danger">
+                                    <div *ngIf="categoriaForm.get('nombre')?.errors?.['required']">
+                                        Campo Requerido
+                                    </div>
+                                    <div *ngIf="categoriaForm.get('nombre')?.errors?.['minlength']">
+                                        Mínimo 3 Caracteres
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="form-group col-xs-12 col-sm-6">
-                            <label for="exampleInputsubcategorias">Subcategoría</label>
-    
+                            <label for="exampleInputsubcategorias">Subcategoría <span class="required">*</span></label>
+
                             <div class="col-12">
-                                <textarea name="subcategorias" class="form-control" formControlName="subcategorias" id=""></textarea>
-                                <!-- <ckeditor [editor]="Editor" formControlName="subcategorias" data="<p>Hello, world!</p>" required></ckeditor> -->
+                                <textarea name="subcategorias" class="form-control" formControlName="subcategorias"
+                                    id=""></textarea>
+                                <div *ngIf="categoriaForm.get('subcategorias')?.touched && categoriaForm.get('subcategorias')?.invalid"
+                                    class="text-danger">
+                                    <div *ngIf="categoriaForm.get('subcategorias')?.errors?.['required']">
+                                        Campo Requerido
+                                    </div>
+                                    <div *ngIf="categoriaForm.get('subcategorias')?.errors?.['minlength']">
+                                        Mínimo 3 Caracteres
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -29,29 +49,39 @@
                             <label class=" col-form-label font-weight-medium" for="text-input">Mostrar en slide</label>
                             <div class="input-group">
                                 <select class="form-control" formControlName="state_banner">
-                                <option  disabled value="">SELECCIONAR</option>
-                                <option  [value]="true">Activo</option>
-                                <option  [value]="false">Inactivo</option>
-                              </select>
+                                    <option disabled value="">SELECCIONAR</option>
+                                    <option [value]="true">Activo</option>
+                                    <option [value]="false">Inactivo</option>
+                                </select>
                             </div>
                         </div>
                         <div class="form-group col-xs-12 col-sm-6">
-                            <label for="icono">Icono</label>
+                            <label for="icono">Icono <span class="required">*</span></label>
                             <div class="input-group">
-    
+
                                 <select formControlName="icono" class="form-control">
-                                <option *ngFor="let ic of listIcons" value="{{ic.icono}}">
-                                  {{ic.name}} <i class="{{ic.icono}}"></i>
-                                </option>
-                              </select>
-    
+                                    <option *ngFor="let ic of listIcons" value="{{ic.icono}}">
+                                        {{ic.name}} <i class="{{ic.icono}}"></i>
+                                    </option>
+                                </select>
+
+                            </div>
+                            <div *ngIf="categoriaForm.get('icono')?.touched && categoriaForm.get('icono')?.invalid"
+                                class="text-danger">
+                                <div *ngIf="categoriaForm.get('icono')?.errors?.['required']">
+                                    Campo Requerido
+                                </div>
+                                <div *ngIf="categoriaForm.get('icono')?.errors?.['minlength']">
+                                    Seleccione una opción
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <button type="submit" [disabled]="categoriaForm.invalid" class="btn btn-success waves-effect waves-light m-r-10 btn-block">
-                 <i class="fa fa-save"></i> Guardar cambios
-                </button>
+                    <button type="submit" [disabled]="categoriaForm.invalid"
+                        class="btn btn-success waves-effect waves-light m-r-10 btn-block">
+                        <i class="fa fa-save"></i> Guardar cambios
+                    </button>
                 </form>
             </div>
         </div>
@@ -62,23 +92,25 @@
                 <h4 class="card-title">imagen</h4>
                 <h6 class="card-subtitle">Logo de marca</h6>
                 <div class="text-center">
-                    <img *ngIf="!imgTemp" [src]="categoriaSeleccionado.img | imagenPipe: 'categorias'  " class="img-responsive img-thumbnail" alt="">
+                    <img *ngIf="!imgTemp" [src]="categoriaSeleccionado.img | imagenPipe: 'categorias'  "
+                        class="img-responsive img-thumbnail" alt="">
                     <img *ngIf="imgTemp" [src]="imgTemp" class="img-avatar">
                 </div>
                 <input type="file" (change)="cambiarImagen($event.target.files[0])">
                 <br>
                 <br>
-                <button type="button" [disabled]="!imagenSubir" (click)="subirImagen()" class="btn btn-success waves-effect waves-light m-r-10 btn-block">
-              <i class="fa fa-save"></i> Cambiar imagen
-             </button>
-             <div class="col-xs-12">
-                <h4>{{'Especificaciones'}}:</h4>
-                <ul>
-                    <li>{{'Tamaño máximo'}}: 300px X 300px</li>
-                    <li>{{'Peso máximo'}}: 3 mega bites</li>
-                    <li>{{'Formato permitido'}}: jpg, .gif, .png</li>
-                </ul>
-            </div>
+                <button type="button" [disabled]="!imagenSubir" (click)="subirImagen()"
+                    class="btn btn-success waves-effect waves-light m-r-10 btn-block">
+                    <i class="fa fa-save"></i> Cambiar imagen
+                </button>
+                <div class="col-xs-12">
+                    <h4>{{'Especificaciones'}}:</h4>
+                    <ul>
+                        <li>{{'Tamaño máximo'}}: 300px X 300px</li>
+                        <li>{{'Peso máximo'}}: 3 mega bites</li>
+                        <li>{{'Formato permitido'}}: jpg, .gif, .png</li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>

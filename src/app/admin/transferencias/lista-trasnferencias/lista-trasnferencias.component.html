@@ -47,7 +47,7 @@
                                 <th *ngIf="user.role==='SUPERADMIN'">Local</th>
                                 <th>Fecha</th>
                                 <th>Status</th>
-                                <th>Creada</th>
+                                <th>Actualizada</th>
                                 <th class="text-nowrap">Acciones</th>
                             </tr>
                         </thead>
@@ -82,7 +82,7 @@
                                     </div>
                                 </td>
                                 <td>
-                                    {{transf.createdAt | date:'mediumDate'}}
+                                    {{transf.updatedAt | date:'mediumDate'}}
                                 </td>
                                 <td class="text-nowrap text-center">
                                     <select
@@ -96,7 +96,7 @@
                                       <option value="no">Rechazado</option>
                                       </select>
 
-                                      <a (click)="eliminarSlider(transf)" class="btn btn-outline-danger " data-toggle="tooltip" data-original-title="Borrar"> <i class="fa fa-trash text-danger"></i> </a>
+                                      <a (click)="eliminarTramsf(transf)" class="btn btn-outline-danger " data-toggle="tooltip" data-original-title="Borrar"> <i class="fa fa-trash text-danger"></i> </a>
                                    
                                 </td>
                             </tr>

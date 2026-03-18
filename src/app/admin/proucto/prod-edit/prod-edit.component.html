@@ -16,6 +16,17 @@
 
                                     <input type="text" formControlName="titulo" class="form-control"
                                         id="exampleInputuname" placeholder="titulo" required>
+                                        
+                                    <div *ngIf="productoForm.get('titulo')?.touched && productoForm.get('titulo')?.invalid"
+                                        class="text-danger">
+                                        <div *ngIf="productoForm.get('titulo')?.errors?.['required']">
+                                            Campo Requerido
+                                        </div>
+                                        <div *ngIf="productoForm.get('titulo')?.errors?.['minlength']">
+                                            Mínimo 3 Caracteres
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
                             <div class="form-group col-12 ">
@@ -30,6 +41,16 @@
 
                                     <input type="text" formControlName="sku" class="form-control" id="exampleInputuname"
                                         placeholder="codigo personalizado" required>
+
+                                    <div *ngIf="productoForm.get('sku')?.touched && productoForm.get('sku')?.invalid"
+                                        class="text-danger">
+                                        <div *ngIf="productoForm.get('sku')?.errors?.['required']">
+                                            Campo Requerido
+                                        </div>
+                                        <div *ngIf="productoForm.get('sku')?.errors?.['minlength']">
+                                            Mínimo 3 Caracteres
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -41,6 +62,15 @@
                         <div class="col-md-12">
                             <ckeditor formControlName="detalle" [editor]="Editor" data="<p>Hello, world!</p>" required>
                             </ckeditor>
+                            <div *ngIf="productoForm.get('detalle')?.touched && productoForm.get('detalle')?.invalid"
+                                class="text-danger">
+                                <div *ngIf="productoForm.get('detalle')?.errors?.['required']">
+                                    Campo Requerido
+                                </div>
+                                <div *ngIf="productoForm.get('detalle')?.errors?.['minlength']">
+                                    Mínimo 3 Caracteres
+                                </div>
+                            </div>
 
                         </div>
                     </div>
@@ -50,6 +80,16 @@
                         <div class="col-md-12">
                             <ckeditor formControlName="info_short" [editor]="Editor1" data="<p>Hello, world!</p>"
                                 required></ckeditor>
+
+                            <div *ngIf="productoForm.get('info_short')?.touched && productoForm.get('info_short')?.invalid"
+                                class="text-danger">
+                                <div *ngIf="productoForm.get('info_short')?.errors?.['required']">
+                                    Campo Requerido
+                                </div>
+                                <div *ngIf="productoForm.get('info_short')?.errors?.['minlength']">
+                                    Mínimo 3 Caracteres
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <!-- Descripción -->
@@ -74,18 +114,46 @@
                                             class="required">*</span></label>
                                     <input class="form-control" type="number" placeholder="Stock del producto"
                                         formControlName="stock" min="0" required>
+                                    <div *ngIf="productoForm.get('stock')?.touched && productoForm.get('stock')?.invalid"
+                                        class="text-danger">
+                                        <div *ngIf="productoForm.get('stock')?.errors?.['required']">
+                                            Campo Requerido
+                                        </div>
+                                        <div *ngIf="productoForm.get('stock')?.errors?.['minlength']">
+                                            Mínimo 100
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <label class=" col-form-label font-weight-medium">Precio Actual <span
                                             class="required">*</span></label>
                                     <input class="form-control" type="number" placeholder="Precio actual"
                                         formControlName="precio_ahora" min="0" required>
+                                    <div *ngIf="productoForm.get('precio_ahora')?.touched && productoForm.get('precio_ahora')?.invalid"
+                                        class="text-danger">
+                                        <div *ngIf="productoForm.get('precio_ahora')?.errors?.['required']">
+                                            Campo Requerido
+                                        </div>
+                                        <div *ngIf="productoForm.get('precio_ahora')?.errors?.['minlength']">
+                                            Mínimo 1
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <label class=" col-form-label font-weight-medium">Precio Antes <span
                                             class="required">*</span></label>
                                     <input class="form-control" type="number" placeholder="Precio antes"
                                         formControlName="precio_antes" min="0" required>
+
+                                    <div *ngIf="productoForm.get('precio_antes')?.touched && productoForm.get('precio_antes')?.invalid"
+                                        class="text-danger">
+                                        <div *ngIf="productoForm.get('precio_antes')?.errors?.['required']">
+                                            Campo Requerido
+                                        </div>
+                                        <div *ngIf="productoForm.get('precio_antes')?.errors?.['minlength']">
+                                            Si no tiene variacion el monto debe ser igual a Precio Actual
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -106,6 +174,15 @@
                                                 {{item.nombre}}</option>
 
                                         </select>
+                                        <div *ngIf="productoForm.get('categoria')?.touched && productoForm.get('categoria')?.invalid"
+                                            class="text-danger">
+                                            <div *ngIf="productoForm.get('categoria')?.errors?.['required']">
+                                                Campo Requerido
+                                            </div>
+                                            <div *ngIf="productoForm.get('categoria')?.errors?.['minlength']">
+                                                Seleccione una opción
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -119,6 +196,7 @@
                                                 {{item.subcategorias}}</option>
 
                                         </select>
+
                                     </div>
                                 </div>
 
@@ -147,6 +225,15 @@
 
                                 </select>
                             </div>
+                            <div *ngIf="productoForm.get('marca')?.touched && productoForm.get('marca')?.invalid"
+                                class="text-danger">
+                                <div *ngIf="productoForm.get('marca')?.errors?.['required']">
+                                    Campo Requerido
+                                </div>
+                                <div *ngIf="productoForm.get('marca')?.errors?.['minlength']">
+                                    Seleccione una opción, si no existe comunicarse con servicio técnico
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <!-- local -->
@@ -172,9 +259,21 @@
                                     <div class="col-lg-12">
                                         <input class="form-control" type="text" placeholder="Nombre del selector"
                                             formControlName="nombre_selector" min="0">
+
+                                        <div *ngIf="productoForm.get('nombre_selector')?.touched && productoForm.get('nombre_selector')?.invalid"
+                                            class="text-danger">
+                                            <div *ngIf="productoForm.get('nombre_selector')?.errors?.['required']">
+                                                Campo Requerido
+                                            </div>
+                                            <div *ngIf="productoForm.get('nombre_selector')?.errors?.['minlength']">
+                                                Si no existe variación, colocar unico
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="col-lg-12">
-                                        <span class="text-muted">Por ejemplo: Para calzados el selector es
+                                        <span class="text-muted">
+                                            Por ejemplo: Si el producto, no tiene sabores, colocar <b>Sabores</b>.  
+                                            Para calzados el selector es
                                             <b>TALLAS</b></span>
                                     </div>
 

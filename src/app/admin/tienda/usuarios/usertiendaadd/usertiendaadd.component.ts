@@ -148,6 +148,11 @@ export class UsertiendaaddComponent implements OnInit {
 
 
   guardar(){
+    if(!this.registerForm.valid){
+      //mostramos las alertas de los campos requeridos
+      this.registerForm.markAllAsTouched(); // Esto activa las validaciones visuales
+      return
+    }
 
     const {first_name, last_name,
       email,
@@ -168,7 +173,6 @@ export class UsertiendaaddComponent implements OnInit {
         uid: this.user_id,
         // local: this.usertiendaSeleccionado.local,
       }
-      console.log('data: ',data)
       this.usuarioService.upadateUser(data, this.user_id).subscribe(
         resp =>{
           Swal.fire('Actualizado', `${first_name} actualizado correctamente`, 'success');
@@ -180,7 +184,6 @@ export class UsertiendaaddComponent implements OnInit {
         ...this.registerForm.value,
         // local: this.localList
       }
-      console.log('crear');
       //crear
       this.usuarioService.crearUsuario(data)
       .subscribe( (resp: any) =>{

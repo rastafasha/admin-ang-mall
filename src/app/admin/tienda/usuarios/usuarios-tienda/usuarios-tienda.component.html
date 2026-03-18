@@ -25,7 +25,7 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-9">
-                        <h4 class="card-title">Total de Usuarios de Tienda: ({{totalUsuarios}})</h4>
+                        <h4 class="card-title">Total de Usuarios de Tienda</h4>
                         <h6 class="card-subtitle">Empleados registrados en la app</h6>
                     </div>
                     <div class="col-3">
@@ -50,7 +50,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let usuario of usuarios ">
+                            <tr *ngFor="let usuario of usuarios |  paginate: { itemsPerPage: count, currentPage: p }">
                                 <td class="text-center">
                                     <!-- <img src="{{usuario.imagenUrl}}" (click)="abrirModal(usuario)" class="img-thumbnail avatar cursor" alt=""> -->
                                     <img src="{{usuario.imagenUrl}}" [routerLink]="['/dashboard/tienda-user/edit/',usuario.uid]" class="img-thumbnail avatar cursor" alt="">
@@ -86,8 +86,7 @@
                     </table>
                 </div>
                 <div *ngIf="query.length === 0">
-                    <button (click)="cambiarPagina(-5)" class="btn btn-secondary">Anterior</button> &nbsp;
-                    <button (click)="cambiarPagina(5)" class="btn btn-secondary">Siguente</button>
+                    <pagination-controls (pageChange)="p = $event"></pagination-controls>
                 </div>
 
             </div>

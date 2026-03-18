@@ -167,15 +167,15 @@ export class TiendaaddComponent implements OnInit {
 
   validarFormulario() {
     this.tiendaForm = this.fb.group({
-      nombre: ['',],
-      local: ['',],
-      telefono: ['',],
-      categoria: ['',],
-      direccion: ['',],
-      pais: ['',],
-      moneda: ['',],
-      ciudad: ['',],
-      zip: ['',],
+      nombre: ['', Validators.required],
+      local: ['', Validators.required],
+      telefono: ['', Validators.required],
+      categoria: ['', Validators.required],
+      direccion: ['', Validators.required],
+      pais: ['', Validators.required],
+      moneda: ['', Validators.required],
+      ciudad: ['', Validators.required],
+      zip: ['', Validators.required],
       subcategoria: [''],
       redssociales: [this.redessociales],
       status: ['false',],
@@ -237,7 +237,13 @@ export class TiendaaddComponent implements OnInit {
 
 
 
-  saveTienda() {debugger
+  saveTienda() {
+
+    if(!this.tiendaForm.valid){
+      //mostramos las alertas de los campos requeridos
+      this.tiendaForm.markAllAsTouched(); // Esto activa las validaciones visuales
+      return
+    }
 
     const {
       nombre,

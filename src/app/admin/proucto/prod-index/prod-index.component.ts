@@ -129,17 +129,33 @@ export class ProdIndexComponent implements OnInit {
 
 
   eliminarProducto(producto: Producto) {
-    this.productoService.borrarProducto(producto._id)
-      .subscribe(resp => {
-        if (this.user.role === 'SUPERADMIN') {
-          this.loadProductos();
-        }
 
-        if (this.user.role === 'ADMIN' || this.user.role === 'VENTAS' || this.user.role === 'TIENDA' || this.user.role === 'ALMACEN') {
-          this.getProductosbByTienda();
-        }
-        Swal.fire('Borrado', producto.titulo, 'success')
-      })
+    Swal.fire({
+      title: 'Estas Seguro?',
+      text: 'No podras recuperarlo!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, Borrar!',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.cargando = true;
+        this.productoService.borrarProducto(producto._id)
+          .subscribe(resp => {
+            if (this.user.role === 'SUPERADMIN') {
+              this.cargando = false;
+              this.loadProductos();
+            }
+
+            if (this.user.role === 'ADMIN' || this.user.role === 'VENTAS' || this.user.role === 'TIENDA' || this.user.role === 'ALMACEN') {
+              this.getProductosbByTienda();
+               this.cargando = false;
+            }
+          })
+        Swal.fire('Borrado!', 'El Archivo fue borrado.', 'success');
+      }
+    });
 
   }
 
@@ -190,13 +206,13 @@ export class ProdIndexComponent implements OnInit {
 
         $('#activar-' + id).modal('hide');
         $('.modal-backdrop').removeClass('show');
-         if(this.user.role === 'SUPERADMIN'){
-      this.loadProductos();
-    }
+        if (this.user.role === 'SUPERADMIN') {
+          this.loadProductos();
+        }
 
-    if(this.user.role === 'ADMIN'|| this.user.role === 'VENTAS'|| this.user.role === 'TIENDA' || this.user.role === 'ALMACEN'){
-      this.getProductosbByTienda();
-    }
+        if (this.user.role === 'ADMIN' || this.user.role === 'VENTAS' || this.user.role === 'TIENDA' || this.user.role === 'ALMACEN') {
+          this.getProductosbByTienda();
+        }
       },
       error => {
 
@@ -211,13 +227,13 @@ export class ProdIndexComponent implements OnInit {
       response => {
         $('#papelera-' + id).modal('hide');
         $('.modal-backdrop').removeClass('show');
-         if(this.user.role === 'SUPERADMIN'){
-      this.loadProductos();
-    }
+        if (this.user.role === 'SUPERADMIN') {
+          this.loadProductos();
+        }
 
-    if(this.user.role === 'ADMIN'|| this.user.role === 'VENTAS'|| this.user.role === 'TIENDA' || this.user.role === 'ALMACEN'){
-      this.getProductosbByTienda();
-    }
+        if (this.user.role === 'ADMIN' || this.user.role === 'VENTAS' || this.user.role === 'TIENDA' || this.user.role === 'ALMACEN') {
+          this.getProductosbByTienda();
+        }
 
       },
       error => {

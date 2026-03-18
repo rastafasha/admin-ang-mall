@@ -51,7 +51,7 @@ export class RegisterComponent implements OnInit {
     }
 
     this.formSumitted = true;
-    console.log(this.registerForm.value);
+    // console.log(this.registerForm.value);
 
     if(this.registerForm.invalid){
       return;
@@ -60,7 +60,7 @@ export class RegisterComponent implements OnInit {
     //realizar el posteo del usuario
     this.usuarioService.crearUsuario(this.registerForm.value).subscribe(
       resp =>{
-        console.log(resp);
+        // console.log(resp);
         this.router.navigateByUrl('/login');
       },(err) => {
         Swal.fire('Error', err.error.msg, 'error');

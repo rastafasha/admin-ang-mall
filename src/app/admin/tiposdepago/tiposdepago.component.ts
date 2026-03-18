@@ -38,9 +38,9 @@ export class TiposdepagoComponent implements OnInit {
 
   public slider: any = {};
   paypal: Paypal;
-  clientIdPaypal:string = '';
-  clientSecret:string = '';
-  mode:string = '';
+  clientIdPaypal: string = '';
+  clientSecret: string = '';
+  mode: string = '';
 
   tipoSeleccionado: any;
   pagoSeleccionado: any;
@@ -119,7 +119,7 @@ export class TiposdepagoComponent implements OnInit {
     this.editingPayment = { ...tipodepago };
     this.isEditMode = true;
     this.tipoSeleccionado = null;
-    
+
     // Set main fields
     this.tipo = this.editingPayment!.tipo;
     this.pagoSeleccionado = this.tipo;
@@ -251,8 +251,26 @@ export class TiposdepagoComponent implements OnInit {
   }
 
   deleteTipoPago(tiposdepago: PaymentMethod) {
-    this.paymentMethodService.borrarPaymentMethod(tiposdepago._id!).subscribe((resp: any) => {
-      this.reloadList();
+
+    Swal.fire({
+      title: 'Estas Seguro?',
+      text: 'No podras recuperarlo!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, Borrar!',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.paymentMethodService.borrarPaymentMethod(tiposdepago._id!).subscribe((resp: any) => {
+          if (this.user.role === 'SUPERADMIN') {
+            this.getTiposdePago();
+          } else {
+            this.getTiposdePagoByLocal();
+          }
+        });
+        Swal.fire('Borrado!', 'El Archivo fue borrado.', 'success');
+      }
     });
   }
 }

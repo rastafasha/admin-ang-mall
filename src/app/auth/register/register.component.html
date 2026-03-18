@@ -5,23 +5,24 @@
     style="background-image:url(../assets/images/background/login-register.jpg);">
     <div class="login-box card">
         <div class="card-body">
-                <form [formGroup]="registerForm" (ngSubmit)="crearUsuario()" autocapitalize="off"
+            <form [formGroup]="registerForm" (ngSubmit)="crearUsuario()" autocapitalize="off"
                 class="form-horizontal form-material" id="loginform">
                 <img src="../assets/svg/logo_Mallconnect_tipo2.svg" alt="Home" />
                 <p class="text-center">Admin</p>
 
                 <h3 class="box-title m-t-40 m-b-0">Register Now</h3>
-                
+
                 <!-- Step Indicators -->
                 <div class="step-indicators text-center mb-4">
-                  <span class="step-circle {{currentStep >= 1 ? 'active' : ''}}">1</span>
-                  <span class="step-line"></span>
-                  <span class="step-circle {{currentStep >= 2 ? 'active' : ''}}">2</span>
+                    <span class="step-circle {{currentStep >= 1 ? 'active' : ''}}">1</span>
+                    <span class="step-line"></span>
+                    <span class="step-circle {{currentStep >= 2 ? 'active' : ''}}">2</span>
                 </div>
-<div class="form-group m-t-20" *ngIf="currentStep === 1">
+                <div class="form-group m-t-20" *ngIf="currentStep === 1">
                     <div class="col-xs-12">
                         <input class="form-control" type="text" formControlName="first_name" placeholder="Nombre">
-                        <div *ngIf="registerForm.get('first_name')?.touched && registerForm.get('first_name')?.invalid" class="text-danger">
+                        <div *ngIf="registerForm.get('first_name')?.touched && registerForm.get('first_name')?.invalid"
+                            class="text-danger">
                             <div *ngIf="registerForm.get('first_name')?.errors?.['required']">
                                 Campo Requerido
                             </div>
@@ -34,7 +35,8 @@
                 <div class="form-group m-t-20" *ngIf="currentStep === 1">
                     <div class="col-xs-12">
                         <input class="form-control" type="text" formControlName="last_name" placeholder="Apellido">
-                         <div *ngIf="registerForm.get('last_name')?.touched && registerForm.get('last_name')?.invalid" class="text-danger">
+                        <div *ngIf="registerForm.get('last_name')?.touched && registerForm.get('last_name')?.invalid"
+                            class="text-danger">
                             <div *ngIf="registerForm.get('last_name')?.errors?.['required']">
                                 Campo Requerido
                             </div>
@@ -47,7 +49,8 @@
                 <div class="form-group " *ngIf="currentStep === 2">
                     <div class="col-xs-12">
                         <input class="form-control" type="email" formControlName="email" placeholder="Email">
-                         <div *ngIf="registerForm.get('email')?.touched && registerForm.get('email')?.invalid" class="text-danger">
+                        <div *ngIf="registerForm.get('email')?.touched && registerForm.get('email')?.invalid"
+                            class="text-danger">
                             <div *ngIf="registerForm.get('email')?.errors?.['required']">
                                 Campo Requerido
                             </div>
@@ -63,7 +66,8 @@
                 <div class="form-group " *ngIf="currentStep === 2">
                     <div class="col-xs-12">
                         <input class="form-control" type="password" formControlName="password" placeholder="Password">
-                        <div *ngIf="registerForm.get('password')?.touched && registerForm.get('password')?.invalid" class="text-danger">
+                        <div *ngIf="registerForm.get('password')?.touched && registerForm.get('password')?.invalid"
+                            class="text-danger">
                             <div *ngIf="registerForm.get('password')?.errors?.['required']">
                                 Campo Requerido
                             </div>
@@ -78,7 +82,8 @@
                         <input class="form-control" type="password" formControlName="password2"
                             placeholder="Confirm Password">
 
-                            <div *ngIf="registerForm.get('password2')?.touched && registerForm.get('password2')?.invalid" class="text-danger">
+                        <div *ngIf="registerForm.get('password2')?.touched && registerForm.get('password2')?.invalid"
+                            class="text-danger">
                             <div *ngIf="registerForm.get('password2')?.errors?.['required']">
                                 Campo Requerido
                             </div>
