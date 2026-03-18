@@ -72,11 +72,8 @@ export class PostalComponent implements OnInit {
     this.postalService.listar().subscribe(
       response =>{
         this.postales = response.postales;
-        // console.log(this.postales);
-
       },
       error=>{
-
       }
     );
   }
@@ -118,11 +115,7 @@ export class PostalComponent implements OnInit {
   
 
   selectCategory(category: string) {
-    // console.log('selectCategory called with:', category);
     this.activeCategory = category;
-    this.cargando = true
-    // this.updateTodo();
-    this.cargando = false
   }
 
   optionCrear(){

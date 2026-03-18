@@ -188,6 +188,10 @@ export class VentaService {
     let headers = new HttpHeaders().set('Content-Type','application/json');
     return this._http.get(this.url+'/ventas/venta_admin_init/init_data',{headers:headers});
   }
+  init_data_adminLocal(localid:string):Observable<any>{
+    let headers = new HttpHeaders().set('Content-Type','application/json');
+    return this._http.get(this.url+'/ventas/venta_admin_init/init_data_local/'+localid,{headers:headers});
+  }
 
   //tracking
 
