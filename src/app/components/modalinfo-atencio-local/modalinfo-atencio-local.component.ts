@@ -3,6 +3,7 @@ declare var $: any;
 declare var bootstrap: any;
 @Component({
   selector: 'app-modalinfo-atencio-local',
+  standalone:false,
   templateUrl: './modalinfo-atencio-local.component.html',
   styleUrls: ['./modalinfo-atencio-local.component.css']
 })

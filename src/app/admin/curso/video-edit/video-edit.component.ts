@@ -24,6 +24,7 @@ declare var $:any;
 
 @Component({
   selector: 'app-video-edit',
+  standalone:false,
   templateUrl: './video-edit.component.html',
   styleUrls: ['./video-edit.component.css']
 })

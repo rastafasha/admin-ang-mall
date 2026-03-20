@@ -27,6 +27,7 @@ declare var $:any;
 
 @Component({
   selector: 'app-page-edit',
+  standalone:false,
   templateUrl: './page-edit.component.html',
   styleUrls: ['./page-edit.component.css'],
   providers:[

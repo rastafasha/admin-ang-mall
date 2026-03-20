@@ -11,7 +11,7 @@ import { StorageService } from 'src/app/services/storage.service';
 import { CarritoService } from 'src/app/services/carrito.service';
 import { environment } from 'src/environments/environment';
 
-import * as io from "socket.io-client";
+import { io } from "socket.io-client";
 import { Subscription } from 'rxjs';
 import { MessageService } from 'src/app/services/message.service';
 import { TiendaService } from 'src/app/services/tienda.service';
@@ -20,6 +20,7 @@ import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-header',
+  standalone:false,
   templateUrl: './header.component.html',
   styles: [
   ]

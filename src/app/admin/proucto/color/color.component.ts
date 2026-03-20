@@ -15,6 +15,7 @@ declare var $:any;
 
 @Component({
   selector: 'app-color',
+  standalone:false,
   templateUrl: './color.component.html',
   styleUrls: ['./color.component.css']
 })

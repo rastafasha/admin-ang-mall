@@ -8,6 +8,7 @@ import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-admin-ticket',
+  standalone:false,
   templateUrl: './admin-ticket.component.html',
   styleUrls: ['./admin-ticket.component.css']
 })

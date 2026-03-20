@@ -5,6 +5,7 @@ declare var bootstrap: any;
 
 @Component({
   selector: 'app-modal-inicial',
+  standalone:false,
   templateUrl: './modal-inicial.component.html',
   styleUrls: ['./modal-inicial.component.css']
 })

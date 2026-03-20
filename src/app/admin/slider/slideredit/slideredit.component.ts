@@ -19,6 +19,7 @@ declare var $:any;
 
 @Component({
   selector: 'app-slideredit',
+  standalone:false,
   templateUrl: './slideredit.component.html',
   styleUrls: ['./slideredit.component.css']
 })

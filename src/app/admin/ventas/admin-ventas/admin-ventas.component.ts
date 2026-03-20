@@ -15,6 +15,7 @@ declare var $: any;
 
 @Component({
   selector: 'app-admin-ventas',
+  standalone:false,
   templateUrl: './admin-ventas.component.html',
   styleUrls: ['./admin-ventas.component.css']
 })

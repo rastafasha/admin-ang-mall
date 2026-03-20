@@ -13,6 +13,7 @@ declare var jQuery:any;
 declare var $:any;
 @Component({
   selector: 'app-cat-index',
+  standalone:false,
   templateUrl: './cat-index.component.html',
   styleUrls: ['./cat-index.component.css']
 })

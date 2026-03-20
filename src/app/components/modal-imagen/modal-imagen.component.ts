@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-modal-imagen',
+  standalone:false,
   templateUrl: './modal-imagen.component.html',
   styles: [
   ]

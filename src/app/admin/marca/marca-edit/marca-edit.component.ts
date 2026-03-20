@@ -15,6 +15,7 @@ import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 @Component({
   selector: 'app-marca-edit',
+  standalone:false,
   templateUrl: './marca-edit.component.html',
   styleUrls: ['./marca-edit.component.css']
 })

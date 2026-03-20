@@ -31,6 +31,7 @@ declare var $:any;
 
 @Component({
   selector: 'app-prod-edit',
+  standalone:false,
   templateUrl: './prod-edit.component.html',
   styleUrls: ['./prod-edit.component.css'],
   providers:[

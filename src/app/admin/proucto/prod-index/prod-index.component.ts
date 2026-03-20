@@ -19,6 +19,7 @@ declare var jQuery: any;
 declare var $: any;
 @Component({
   selector: 'app-prod-index',
+  standalone:false,
   templateUrl: './prod-index.component.html',
   styleUrls: ['./prod-index.component.css']
 })

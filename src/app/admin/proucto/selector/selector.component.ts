@@ -11,6 +11,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-selector',
+  standalone:false,
   templateUrl: './selector.component.html',
   styleUrls: ['./selector.component.css']
 })

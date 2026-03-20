@@ -5,9 +5,9 @@ import { MessageService } from 'src/app/services/message.service';
 import { CartItemModel } from '../../models/cart-item-model';
 import { StorageService } from '../../services/storage.service';
 import { environment } from '../../../environments/environment';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalPagoComponent } from '../modal-pago/modal-pago.component';
-import { CartItemCurso } from 'src/app/models/cart-item-curso';
+// import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+// import { CartItemCurso } from 'src/app/models/cart-item-curso';
 
 @Component({
   selector: 'app-cart',
@@ -32,7 +32,7 @@ export class CartComponent implements OnInit {
   constructor(
     private messageService: MessageService,
     private storageService: StorageService,
-    private modalService: NgbModal,
+    // private modalService: NgbModal,
     // private spinner: NgxSpinnerService
 
     ) {
@@ -40,7 +40,7 @@ export class CartComponent implements OnInit {
     }
 
   ngOnInit(): void {
-    this.initConfig();//paypal
+    // this.initConfig();//paypal
     if(this.storageService.existCart()){
       this.cartItems = this.storageService.getCart();
     }
@@ -51,66 +51,65 @@ export class CartComponent implements OnInit {
 
   private initConfig(): void {
 
-    this.payPalConfig = {
-      currency: 'USD',
-      clientId: environment.sandboxPaypal,
-      // clientId: 'sb',
-      createOrderOnClient: (data) => < ICreateOrderRequest > {
+    // this.payPalConfig = {
+    //   currency: 'USD',
+    //   clientId: environment.sandboxPaypal,
+    //   createOrderOnClient: (data) => < ICreateOrderRequest > {
 
 
-          intent: 'CAPTURE',
-          purchase_units: [{
-              amount: {
-                  currency_code: 'USD',
-                  value: this.getTotal().toString(),
-                  breakdown: {
-                      item_total: {
-                          currency_code: 'USD',
-                          value: this.getTotal().toString(),
-                      }
-                  }
-              },
-              items: this.getItemsList(),
-          }]
-        },
-        advanced: {
-            commit: 'true'
-        },
-        style: {
-            label: 'paypal',
-            layout: 'vertical'
-        },
-        onApprove: (data, actions) => {
-            // this.spinner.show();
-            console.log('onApprove - transaction was approved, but not authorized', data, actions);
-            actions.order.get().then((details: any) => {
-                console.log('onApprove - you can get full order details inside onApprove: ', details);
-            });
+    //       intent: 'CAPTURE',
+    //       purchase_units: [{
+    //           amount: {
+    //               currency_code: 'USD',
+    //               value: this.getTotal().toString(),
+    //               breakdown: {
+    //                   item_total: {
+    //                       currency_code: 'USD',
+    //                       value: this.getTotal().toString(),
+    //                   }
+    //               }
+    //           },
+    //           items: this.getItemsList(),
+    //       }]
+    //     },
+    //     advanced: {
+    //         commit: 'true'
+    //     },
+    //     style: {
+    //         label: 'paypal',
+    //         layout: 'vertical'
+    //     },
+    //     onApprove: (data, actions) => {
+    //         this.spinner.show();
+    //         console.log('onApprove - transaction was approved, but not authorized', data, actions);
+    //         actions.order.get().then((details: any) => {
+    //             console.log('onApprove - you can get full order details inside onApprove: ', details);
+    //         });
 
-        },
-        onClientAuthorization: (data) => {
-            console.log('onClientAuthorization - you should probably inform your server about completed transaction at this point',
-            JSON.stringify(data));
-            this.openModal(
-              data.purchase_units[0].items,
-              data.purchase_units[0].amount.value,
-            );
-            this.emptyCart();
-            // this.spinner.hide();
+    //     },
+    //     onClientAuthorization: (data) => {
+    //         console.log('onClientAuthorization - you should probably inform your server about completed transaction at this point',
+    //         JSON.stringify(data));
+    //         this.openModal(
+    //           data.purchase_units[0].items,
+    //           data.purchase_units[0].amount.value,
+    //         );
+    //         this.emptyCart();
+    //         this.spinner.hide();
 
-        },
-        onCancel: (data, actions) => {
-            console.log('OnCancel', data, actions);
-        },
-        onError: err => {
-            console.log('OnError', err);
+    //     },
+    //     onCancel: (data, actions) => {
+    //         console.log('OnCancel', data, actions);
+    //     },
+    //     onError: err => {
+    //         console.log('OnError', err);
 
-        },
-        onClick: (data, actions) => {
-            console.log('onClick', data, actions);
+    //     },
+    //     onClick: (data, actions) => {
+    //         console.log('onClick', data, actions);
 
-        },
-    };
+    //     },
+    // };
 }
 
   getItem():void{
@@ -185,9 +184,9 @@ export class CartComponent implements OnInit {
   }
 
   openModal(items: ITransactionItem[], amount: string): void{
-    const modalRef = this.modalService.open(ModalPagoComponent);
-    modalRef.componentInstance.items = items;
-    modalRef.componentInstance.amount = amount;
+    // const modalRef = this.modalService.open(ModalPagoComponent);
+    // modalRef.componentInstance.items = items;
+    // modalRef.componentInstance.amount = amount;
 
   }
 

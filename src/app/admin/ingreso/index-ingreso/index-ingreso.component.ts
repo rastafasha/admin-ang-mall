@@ -9,6 +9,7 @@ declare var $:any;
 
 @Component({
   selector: 'app-index-ingreso',
+  standalone:false,
   templateUrl: './index-ingreso.component.html',
   styleUrls: ['./index-ingreso.component.css']
 })

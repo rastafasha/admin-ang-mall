@@ -3,6 +3,7 @@ import { Chart } from 'chart.js';
 
 @Component({
   selector: 'app-bar-chart',
+  standalone:false,
   templateUrl: './bar-chart.component.html',
   styleUrls: ['./bar-chart.component.css']
 })

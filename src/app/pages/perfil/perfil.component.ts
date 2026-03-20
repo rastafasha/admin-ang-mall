@@ -7,6 +7,7 @@ import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-perfil',
+  standalone:false,
   templateUrl: './perfil.component.html',
   styles: [
   ]

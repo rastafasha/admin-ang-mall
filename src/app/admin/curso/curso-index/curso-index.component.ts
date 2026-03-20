@@ -15,6 +15,7 @@ declare var jQuery:any;
 declare var $:any;
 @Component({
   selector: 'app-curso-index',
+  standalone:false,
   templateUrl: './curso-index.component.html',
   styleUrls: ['./curso-index.component.css']
 })

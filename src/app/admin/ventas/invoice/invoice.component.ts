@@ -13,6 +13,7 @@ import { Tienda } from 'src/app/models/tienda.model';
 
 @Component({
   selector: 'app-invoice',
+  standalone:false,
   templateUrl: './invoice.component.html',
   styleUrls: ['./invoice.component.css']
 })

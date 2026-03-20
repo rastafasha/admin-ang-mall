@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-comentariosapp',
+  standalone:false,
   templateUrl: './comentariosapp.component.html',
   styleUrls: ['./comentariosapp.component.css']
 })

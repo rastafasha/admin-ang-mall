@@ -28,6 +28,7 @@ declare var $:any;
 
 @Component({
   selector: 'app-usuario',
+  standalone:false,
   templateUrl: './usuario.component.html',
   styleUrls: ['./usuario.component.css']
 })

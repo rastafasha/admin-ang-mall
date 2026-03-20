@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Page } from 'ngx-pagination/dist/pagination-controls.directive';
 import { Blog } from 'src/app/models/blog.model';
 import { Curso } from 'src/app/models/curso.model';
 import { Producto } from 'src/app/models/producto.model';
@@ -8,9 +7,11 @@ import { Slider } from 'src/app/models/slider.model';
 
 import { Usuario } from '../../models/usuario.model';
 import { BusquedasService } from '../../services/busquedas.service';
+import { Page } from 'src/app/models/page.model';
 
 @Component({
   selector: 'app-busqueda',
+  standalone:false,
   templateUrl: './busqueda.component.html',
   styleUrls: ['./busqueda.component.css']
 })

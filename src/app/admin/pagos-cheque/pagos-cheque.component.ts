@@ -6,6 +6,7 @@ import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-pagos-cheque',
+  standalone:false,
   templateUrl: './pagos-cheque.component.html',
   styleUrls: ['./pagos-cheque.component.css']
 })

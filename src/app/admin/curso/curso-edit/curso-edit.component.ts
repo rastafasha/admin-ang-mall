@@ -27,6 +27,7 @@ declare var $:any;
 
 @Component({
   selector: 'app-curso-edit',
+  standalone:false,
   templateUrl: './curso-edit.component.html',
   styleUrls: ['./curso-edit.component.css'],
   providers:[

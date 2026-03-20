@@ -12,6 +12,7 @@ declare var $:any;
 
 @Component({
   selector: 'app-page-index',
+  standalone:false,
   templateUrl: './page-index.component.html',
   styleUrls: ['./page-index.component.css']
 })

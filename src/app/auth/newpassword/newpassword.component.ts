@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 import { AccountService } from 'src/app/services/account.service';
 @Component({
   selector: 'app-newpassword',
+  standalone:false,
   templateUrl: './newpassword.component.html',
   styleUrls: ['./newpassword.component.css']
 })

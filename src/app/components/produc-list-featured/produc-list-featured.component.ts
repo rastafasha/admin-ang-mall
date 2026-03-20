@@ -3,6 +3,7 @@ import { Producto } from 'src/app/models/producto.model';
 
 @Component({
   selector: 'app-produc-list-featured',
+  standalone:false,
   templateUrl: './produc-list-featured.component.html',
   styleUrls: ['./produc-list-featured.component.css']
 })

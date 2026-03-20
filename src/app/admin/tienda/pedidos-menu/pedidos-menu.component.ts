@@ -6,6 +6,7 @@ import Swal from 'sweetalert2';
 declare var $: any;
 @Component({
   selector: 'app-pedidos-menu',
+  standalone:false,
   templateUrl: './pedidos-menu.component.html',
   styleUrls: ['./pedidos-menu.component.css']
 })

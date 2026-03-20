@@ -9,6 +9,7 @@ import { Usuario } from 'src/app/models/usuario.model';
 
 @Component({
   selector: 'app-index-cancelacion',
+  standalone:false,
   templateUrl: './index-cancelacion.component.html',
   styleUrls: ['./index-cancelacion.component.css']
 })

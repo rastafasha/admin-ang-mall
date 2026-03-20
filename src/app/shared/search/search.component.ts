@@ -3,6 +3,7 @@ import { BusquedasService } from '../../services/busquedas.service';
 
 @Component({
     selector: 'app-search',
+    standalone:false,
     templateUrl: './search.component.html',
     styleUrls: ['./search.component.scss']
 })

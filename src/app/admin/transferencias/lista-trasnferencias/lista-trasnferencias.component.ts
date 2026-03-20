@@ -8,6 +8,7 @@ import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-lista-trasnferencias',
+  standalone:false,
   templateUrl: './lista-trasnferencias.component.html',
   styleUrls: ['./lista-trasnferencias.component.css']
 })
