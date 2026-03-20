@@ -25,7 +25,7 @@ declare var jQuery:any;
 declare var $:any;
 
 // import { WebSocketService } from 'src/app/services/web-socket.service';
-import * as io from "socket.io-client";
+import { io } from "socket.io-client";
 // import { Direccion } from '../../models/direccion.model';
 import { ProductoService } from 'src/app/services/producto.service';
 import { MessageService } from 'src/app/services/message.service';

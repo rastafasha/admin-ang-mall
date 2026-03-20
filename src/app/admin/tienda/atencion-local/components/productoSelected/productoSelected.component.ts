@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { Producto } from 'src/app/models/producto.model';
 import { CarritoService } from 'src/app/services/carrito.service';
 import { environment } from 'src/environments/environment';
-import * as io from 'socket.io-client';
+import { io } from 'socket.io-client';
 import Swal from 'sweetalert2';
 import { ColorService } from 'src/app/services/color.service';
 import { SelectorService } from 'src/app/services/selector.service';

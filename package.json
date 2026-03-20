@@ -13,17 +13,17 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "^15.2.10",
-    "@angular/common": "^15.2.10",
-    "@angular/compiler": "^15.2.10",
-    "@angular/core": "^15.2.10",
-    "@angular/forms": "^15.2.10",
-    "@angular/platform-browser": "^15.2.10",
-    "@angular/platform-browser-dynamic": "^15.2.10",
-    "@angular/router": "^15.2.10",
-    "@angular/service-worker": "^15.2.10",
+    "@angular/animations": "^19.2.20",
+    "@angular/common": "^19.2.20",
+    "@angular/compiler": "^19.2.20",
+    "@angular/core": "^19.2.20",
+    "@angular/forms": "^19.2.20",
+    "@angular/platform-browser": "^19.2.20",
+    "@angular/platform-browser-dynamic": "^19.2.20",
+    "@angular/router": "^19.2.20",
+    "@angular/service-worker": "^19.2.20",
     "@ckeditor/ckeditor5-angular": "^4.0.0",
-    "@ckeditor/ckeditor5-build-classic": "^35.2.0",
+    "@ckeditor/ckeditor5-build-classic": "^28.0.0",
     "@ng-web-apis/common": "^5.0.3",
     "@ng-web-apis/geolocation": "^5.0.3",
     "@ngx-translate/core": "^14.0.0",
@@ -33,7 +33,7 @@
     "jquery": "^3.5.1",
     "leaflet": "^1.9.4",
     "ng2-charts": "^4.0.1",
-    "ng2-pdf-viewer": "^6.3.2",
+    "ng2-pdf-viewer": "^10.4.0",
     "ngx-dropzone": "^3.1.0",
     "ngx-loading": "^2.0.1",
     "ngx-pagination": "^5.0.0",
@@ -46,9 +46,9 @@
     "zone.js": "~0.11.4"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^15.2.11",
-    "@angular/cli": "~15.2.11",
-    "@angular/compiler-cli": "^15.2.10",
+    "@angular-devkit/build-angular": "^19.2.22",
+    "@angular/cli": "^19.2.22",
+    "@angular/compiler-cli": "^19.2.20",
     "@types/bootstrap": "^5.2.10",
     "@types/jasmine": "~4.0.0",
     "@types/node": "^16",
@@ -59,6 +59,6 @@
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.0.0",
     "lite-server": "^2.6.1",
-    "typescript": "~4.9.5"
+    "typescript": "^5.6.2"
   }
 }

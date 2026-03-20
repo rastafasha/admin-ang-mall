@@ -16,7 +16,7 @@ import { Usuario } from 'src/app/models/usuario.model';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { TiendaService } from 'src/app/services/tienda.service';
 import { Tienda } from 'src/app/models/tienda.model';
-import * as io from "socket.io-client";
+import { io } from "socket.io-client";
 import { CarritoService } from 'src/app/services/carrito.service';
 import { ColorService } from 'src/app/services/color.service';
 import { SelectorService } from 'src/app/services/selector.service';

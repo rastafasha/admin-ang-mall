@@ -8,7 +8,7 @@ import { ProductoService } from 'src/app/services/producto.service';
 import { SelectorService } from 'src/app/services/selector.service';
 import { environment } from 'src/environments/environment';
 
-import * as io from "socket.io-client";
+import { io } from "socket.io-client";
 import { Favorite } from 'src/app/models/favorite.model';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { MessageService } from 'src/app/services/message.service';

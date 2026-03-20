@@ -4,7 +4,7 @@ import {environment} from 'src/environments/environment';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { TicketService } from "src/app/services/ticket.service";
-import * as io from "socket.io-client";
+import { io } from "socket.io-client";
 import { Location } from '@angular/common';
 
 declare var jQuery:any;
