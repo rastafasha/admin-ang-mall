@@ -45,6 +45,7 @@ import { ICreateOrderRequest, IPayPalConfig, NgxPayPalModule } from 'ngx-paypal'
 
 @Component({
   selector: 'app-carrito',
+  standalone:false,
   templateUrl: './carrito.component.html',
   styleUrls: ['./carrito.component.css']
 })

@@ -8,6 +8,7 @@ import { Contacto } from 'src/app/models/contacto.model';
 
 @Component({
   selector: 'app-contacto',
+  standalone:false,
   templateUrl: './contacto.component.html',
   styleUrls: ['./contacto.component.css']
 })

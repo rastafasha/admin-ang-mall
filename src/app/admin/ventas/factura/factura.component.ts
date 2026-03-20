@@ -13,6 +13,7 @@ declare let jsPDF;
 
 @Component({
   selector: 'app-factura',
+  standalone:false,
   templateUrl: './factura.component.html',
   styleUrls: ['./factura.component.css']
 })

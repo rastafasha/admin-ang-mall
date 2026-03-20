@@ -12,6 +12,7 @@ declare var $:any;
 
 @Component({
   selector: 'app-admin-chat',
+  standalone:false,
   templateUrl: './admin-chat.component.html',
   styleUrls: ['./admin-chat.component.css']
 })

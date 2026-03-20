@@ -11,6 +11,7 @@ import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-marca-index',
+  standalone:false,
   templateUrl: './marca-index.component.html',
   styleUrls: ['./marca-index.component.css']
 })

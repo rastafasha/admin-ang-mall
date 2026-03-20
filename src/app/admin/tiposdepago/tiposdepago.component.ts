@@ -23,6 +23,7 @@ declare var $: any;
 
 @Component({
   selector: 'app-tiposdepago',
+  standalone:false,
   templateUrl: './tiposdepago.component.html',
   styleUrls: ['./tiposdepago.component.css']
 })

@@ -24,6 +24,7 @@ declare var $:any;
 
 @Component({
   selector: 'app-usertiendaadd',
+  standalone:false,
   templateUrl: './usertiendaadd.component.html',
   styleUrls: ['./usertiendaadd.component.css']
 })

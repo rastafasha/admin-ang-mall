@@ -5,6 +5,7 @@ import { PagoEfectivoService } from 'src/app/services/pago-efectivo.service';
 
 @Component({
   selector: 'app-pagos-efectivo',
+  standalone:false,
   templateUrl: './pagos-efectivo.component.html',
   styleUrls: ['./pagos-efectivo.component.css']
 })

@@ -19,6 +19,7 @@ declare var $:any;
 
 @Component({
   selector: 'app-promoedit',
+  standalone:false,
   templateUrl: './promoedit.component.html',
   styleUrls: ['./promoedit.component.css']
 })

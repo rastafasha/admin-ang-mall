@@ -10,6 +10,7 @@ declare var $:any;
 
 @Component({
   selector: 'app-papelera',
+  standalone:false,
   templateUrl: './papelera.component.html',
   styleUrls: ['./papelera.component.css']
 })

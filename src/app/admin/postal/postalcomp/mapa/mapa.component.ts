@@ -12,6 +12,7 @@ import { Tienda } from 'src/app/models/tienda.model';
 
 @Component({
   selector: 'app-mapa',
+  standalone:false,
   templateUrl: './mapa.component.html',
   styleUrls: ['./mapa.component.css'],
   providers: [WaGeolocationService],

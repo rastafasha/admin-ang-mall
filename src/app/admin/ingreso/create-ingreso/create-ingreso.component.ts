@@ -21,6 +21,7 @@ declare var $:any;
 
 @Component({
   selector: 'app-create-ingreso',
+  standalone:false,
   templateUrl: './create-ingreso.component.html',
   styleUrls: ['./create-ingreso.component.css']
 })

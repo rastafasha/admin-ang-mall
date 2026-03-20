@@ -26,6 +26,7 @@ declare var $: any;
 
 @Component({
   selector: 'app-tiendaadd',
+  standalone:false,
   templateUrl: './tiendaadd.component.html',
   styleUrls: ['./tiendaadd.component.css']
 })

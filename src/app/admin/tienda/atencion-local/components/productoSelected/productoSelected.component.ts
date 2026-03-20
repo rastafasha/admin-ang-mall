@@ -10,6 +10,7 @@ import { UsuarioService } from 'src/app/services/usuario.service';
 
 @Component({
   selector: 'app-productoSelected',
+  standalone:false,
   templateUrl: './productoSelected.component.html',
   styleUrls: ['./productoSelected.component.css'],
 })

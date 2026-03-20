@@ -11,6 +11,7 @@ import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-usuarios-tienda',
+  standalone:false,
   templateUrl: './usuarios-tienda.component.html',
   styleUrls: ['./usuarios-tienda.component.css']
 })

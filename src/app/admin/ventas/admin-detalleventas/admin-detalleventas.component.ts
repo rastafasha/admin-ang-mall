@@ -14,6 +14,7 @@ import { TiendaService } from 'src/app/services/tienda.service';
 
 @Component({
   selector: 'app-admin-detalleventas',
+  standalone:false,
   templateUrl: './admin-detalleventas.component.html',
   styleUrls: ['./admin-detalleventas.component.css']
 })

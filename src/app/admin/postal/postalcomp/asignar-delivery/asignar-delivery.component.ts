@@ -12,6 +12,7 @@ import { VentaService } from 'src/app/services/venta.service';
 
 @Component({
   selector: 'app-asignar-delivery',
+  standalone:false,
   templateUrl: './asignar-delivery.component.html',
   styleUrls: ['./asignar-delivery.component.css']
 })

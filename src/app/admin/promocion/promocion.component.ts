@@ -13,6 +13,7 @@ declare var jQuery:any;
 declare var $:any;
 @Component({
   selector: 'app-promocion',
+  standalone:false,
   templateUrl: './promocion.component.html',
   styleUrls: ['./promocion.component.css']
 })

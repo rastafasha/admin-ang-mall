@@ -12,6 +12,7 @@ declare var $:any;
 
 @Component({
   selector: 'app-cupon',
+  standalone:false,
   templateUrl: './cupon.component.html',
   styleUrls: ['./cupon.component.css']
 })

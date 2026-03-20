@@ -14,6 +14,7 @@ declare var $:any;
 
 @Component({
   selector: 'app-video-index',
+  standalone:false,
   templateUrl: './video-index.component.html',
   styleUrls: ['./video-index.component.css']
 })

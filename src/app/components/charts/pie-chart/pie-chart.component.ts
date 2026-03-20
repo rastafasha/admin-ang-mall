@@ -3,6 +3,7 @@ import { single } from './data';
 import { GraficoService } from 'src/app/services/grafico.service';
 @Component({
   selector: 'app-pie-chart',
+  standalone:false,
   templateUrl: './pie-chart.component.html',
   styleUrls: ['./pie-chart.component.scss']
 })

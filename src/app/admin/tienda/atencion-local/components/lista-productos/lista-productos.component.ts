@@ -9,6 +9,7 @@ import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-lista-productos',
+  standalone:false,
   templateUrl: './lista-productos.component.html',
   styleUrls: ['./lista-productos.component.css'],
 })

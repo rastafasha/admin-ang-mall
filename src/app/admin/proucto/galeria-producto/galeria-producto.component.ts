@@ -12,6 +12,7 @@ declare var $:any;
 
 @Component({
   selector: 'app-galeria-producto',
+  standalone:false,
   templateUrl: './galeria-producto.component.html',
   styleUrls: ['./galeria-producto.component.css']
 })

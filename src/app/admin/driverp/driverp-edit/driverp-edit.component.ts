@@ -25,6 +25,7 @@ const defaultDriver: Driver = {
 
 @Component({
   selector: 'app-driverp-edit',
+  standalone:false,
   templateUrl: './driverp-edit.component.html',
   styleUrls: ['./driverp-edit.component.css']
 })

@@ -21,6 +21,7 @@ declare var $:any;
 
 @Component({
   selector: 'app-config-site',
+  standalone:false,
   templateUrl: './config-site.component.html',
   styleUrls: ['./config-site.component.scss']
 })

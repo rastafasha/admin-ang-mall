@@ -11,6 +11,7 @@ declare var $:any;
 
 @Component({
   selector: 'app-postal',
+  standalone:false,
   templateUrl: './postal.component.html',
   styleUrls: ['./postal.component.css']
 })

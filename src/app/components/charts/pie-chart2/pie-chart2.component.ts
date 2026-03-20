@@ -3,6 +3,7 @@ import Chart from 'chart.js/auto';
 
 @Component({
   selector: 'app-pie-chart2',
+  standalone:false,
   templateUrl: './pie-chart2.component.html',
   styleUrls: ['./pie-chart2.component.css']
 })

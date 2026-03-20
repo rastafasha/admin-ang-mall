@@ -11,6 +11,7 @@ import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-slider',
+  standalone:false,
   templateUrl: './slider.component.html',
   styleUrls: ['./slider.component.css']
 })

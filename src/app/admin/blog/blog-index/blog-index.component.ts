@@ -14,6 +14,7 @@ declare var $:any;
 
 @Component({
   selector: 'app-blog-index',
+  standalone:false,
   templateUrl: './blog-index.component.html',
   styleUrls: ['./blog-index.component.css']
 })

@@ -27,6 +27,7 @@ declare var $:any;
 
 @Component({
   selector: 'app-blog-edit',
+  standalone:false,
   templateUrl: './blog-edit.component.html',
   styleUrls: ['./blog-edit.component.css'],
   providers:[

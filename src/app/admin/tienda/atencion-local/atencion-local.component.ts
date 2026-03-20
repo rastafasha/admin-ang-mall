@@ -29,6 +29,7 @@ declare var $: any;
 
 @Component({
   selector: 'app-atencion-local',
+  standalone:false,
   templateUrl: './atencion-local.component.html',
   styleUrls: ['./atencion-local.component.css']
 })

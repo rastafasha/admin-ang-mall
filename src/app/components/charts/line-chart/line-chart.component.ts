@@ -3,6 +3,7 @@ import { Chart } from 'chart.js';
 
 @Component({
   selector: 'app-line-chart',
+  standalone:false,
   templateUrl: './line-chart.component.html',
   styleUrls: ['./line-chart.component.css'],
 })

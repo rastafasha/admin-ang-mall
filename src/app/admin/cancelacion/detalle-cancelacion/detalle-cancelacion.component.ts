@@ -14,6 +14,7 @@ declare var $:any;
 
 @Component({
   selector: 'app-detalle-cancelacion',
+  standalone:false,
   templateUrl: './detalle-cancelacion.component.html',
   styleUrls: ['./detalle-cancelacion.component.css']
 })

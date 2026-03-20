@@ -23,6 +23,7 @@ declare var $:any;
 
 @Component({
   selector: 'app-producto',
+  standalone:false,
   templateUrl: './producto.component.html',
   styleUrls: ['./producto.component.css']
 })
