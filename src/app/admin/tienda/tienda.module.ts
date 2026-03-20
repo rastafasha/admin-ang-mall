@@ -23,6 +23,7 @@ import { PedidosMenuComponent } from './pedidos-menu/pedidos-menu.component';
 import { Modal } from 'bootstrap';
 import { ModalinfoTiendasComponent } from 'src/app/components/modalinfo-tiendas/modalinfo-tiendas.component';
 import { ComponentsModule } from 'src/app/components/components.module';
+import { ComentariosappComponent } from './comentariosapp/comentariosapp.component';
 
 
 @NgModule({
@@ -37,6 +38,7 @@ import { ComponentsModule } from 'src/app/components/components.module';
     CarritoComponent,
     ProductoComponent,
     PedidosMenuComponent,
+    ComentariosappComponent
 
   ],
   exports: [
@@ -47,6 +49,7 @@ import { ComponentsModule } from 'src/app/components/components.module';
     TiendaDetailComponent,
     UserDetailComponent,
      PedidosMenuComponent,
+     ComentariosappComponent
 
   ],
   imports: [

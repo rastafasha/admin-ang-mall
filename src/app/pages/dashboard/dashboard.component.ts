@@ -488,7 +488,6 @@ export class DashboardComponent implements OnInit {
   getDashboardLocalYear() {
     this._ventaService.get_year_bylocal(this.selectedValue, this.usuario.local).subscribe((resp: any) => {
       this.ventasDataYear = resp.data;
-      console.log(this.ventasDataYear)
     })
   }
 }

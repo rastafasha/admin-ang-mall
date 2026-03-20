@@ -8,7 +8,11 @@ export class Asignacion {
         public tienda : Tienda,
         public venta: Venta,
         public status: string,
-        public _id?: string
+        public driverPosition: string,
+        public deliveryPosition: string,
+        public _id?: string,
+        public createdAt?: Date,
+        public updatedAt?: Date
     
       ){
       }

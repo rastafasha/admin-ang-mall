@@ -98,7 +98,7 @@ public tienda_moneda : any;
     this.congeralService.cargarCongenerals().subscribe(
       response=>{
         this.congenerals = response;
-        console.log('header', this.congenerals);
+        // console.log('header', this.congenerals);
       },
       error=>{
 
@@ -163,7 +163,6 @@ public tienda_moneda : any;
     if(termino.length === 0){
       return;
     }
-
     this.router.navigateByUrl(`/dashboard/buscar/${termino}`);
 
   }
@@ -219,8 +218,6 @@ public tienda_moneda : any;
       this._carritoService.preview_carrito(this.clienteSeleccionado.uid).subscribe(
         response =>{
           this.carrito = response.carrito;
-          console.log('CARRITO header: ',this.carrito);
-  
           this.carrito.forEach(element => {
             this.subtotal = this.subtotal + (element.precio*element.cantidad);
           });

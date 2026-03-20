@@ -80,5 +80,10 @@ export class AsignardeliveryService {
       return this.http.delete(url, this.headers);
     }
 
+    actualizarCoords(asignacion: any) {
+    const url = `${base_url}/asignardelivery/update/coord/${asignacion._id}`;
+    return this.http.put(url, asignacion, this.headers);
+  }
+
 
 }

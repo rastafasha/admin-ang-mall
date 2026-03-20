@@ -30,8 +30,8 @@ export class AppComponent {
         this.congenerals = response; this.url = environment.baseUrl;
         $('#favicon_icon').attr('href',this.url+'/congenerals/'+this.congenerals[0].favicon);
         $('#title_general').text(this.congenerals[0].titulo);
-        console.log(this.congenerals);
-        console.log(this.congenerals[0].titulo);
+        // console.log(this.congenerals);
+        // console.log(this.congenerals[0].titulo);
       },
          error=>{ } );
         this._congeneralService.cargarCongenerals().subscribe( response =>{

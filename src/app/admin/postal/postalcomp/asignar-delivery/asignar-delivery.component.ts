@@ -140,7 +140,6 @@ export class AsignarDeliveryComponent implements OnInit {
 
   getAsignaciones() {
     this.asignacionDService.getByTiendaId(this.user.local).subscribe((resp: any) => {
-      console.log('asignaciones:', resp)
       this.asignaciones = resp;
 
     })

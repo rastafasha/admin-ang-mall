@@ -1,1 +1,91 @@
-<p>mapa works!</p>
+<section class="pt-lg-4 pb-4 mb-3">
+    <div class="pt-2 px-4 pl-lg-0 pr-xl-5">
+        <div class="container">
+                <div class="saludo">
+                    <h2 *ngIf="user.role !== 'ADMIN' && user.role !== 'SUPERADMIN'">Ruta de Entrega</h2>
+                    <h2 *ngIf="user.role === 'ADMIN' || user.role === 'SUPERADMIN'">📍 Panel de Drivers ({{allDrivers.length}} total, {{activeDriverCount}} activos)</h2>
+                    
+                    <!-- Admin toggle -->
+                    <ng-container *ngIf="user.role === 'ADMIN' || user.role === 'SUPERADMIN'">
+                        <button class="btn-toggle" (click)="toggleDriversList()">
+                            {{showDriversList ? '❌' : '📋'}} Lista Drivers
+                        </button>
+                    </ng-container>
+                </div>
+            <div class="mostrarmapa">
+                <!-- Contenedor del mapa Leaflet -->
+                <div #mapContainer class="map-container"></div>
+
+                <!-- Coords for non-admin, Legend for admin -->
+                <ng-container *ngIf="!loading && user.role !== 'ADMIN' && user.role !== 'SUPERADMIN'">
+                    <div class="coords-info">
+                        <div class="coord-item" *ngIf="driverPosition">
+                            <span class="label">📍 Repartidor:</span>
+                            <span class="value">{{ (driverPosition.lat || 0).toFixed(6) }}, {{ (driverPosition.lng || 0).toFixed(6) }}</span>
+                        </div>
+                        <div class="coord-item" *ngIf="deliveryPosition">
+                            <span class="label">🏠 Entrega:</span>
+                            <span class="value">{{ (deliveryPosition.lat || 0).toFixed(6) }}, {{ (deliveryPosition.lng || 0).toFixed(6) }}</span>
+                        </div>
+                        <div class="share-section">
+                            <button class="share-btn btn" (click)="shareCoordinates()">
+                                <span class="share-icon">📤</span>
+                                <span>Compartir</span>
+                            </button>
+                        </div>
+                    </div>
+                </ng-container>
+
+                <!-- Admin Legend -->
+                <ng-container *ngIf=" !loading && user.role === 'ADMIN' || user.role === 'SUPERADMIN'">
+                    <div class="legend">
+                        <div><span class="marker-green"></span> Driver Activo</div>
+                        <div><span class="marker-red"></span> Entregas</div>
+                        <div><span class="marker-blue"></span> Mi Posición (CHOFER)</div>
+                        <div>🔄 Actualiza cada 5s</div>
+                    </div>
+                </ng-container>
+
+                <!-- Loading -->
+                <div class="loading-overlay" *ngIf="loading">
+                    <div class="spinner"></div>
+                    <p>Obteniendo ubicación...</p>
+                </div>
+
+                <!-- Error -->
+                <div class="error-message" *ngIf="errorMessage">
+                    <p>⚠️ {{ errorMessage }}</p>
+                    <p>Usando ubicación de demostración</p>
+                </div>
+                <!-- Admin Drivers List Sidebar -->
+                <div class="drivers-sidebar" *ngIf=" !loading && showDriversList && (user.role === 'ADMIN' || user.role === 'SUPERADMIN')">
+                    <div class="sidebar-header">
+                        <h3>Drivers ({{allDrivers.length}})</h3>
+                        <button (click)="toggleDriversList()" class="close-btn">❌</button>
+                    </div>
+                    <div class="drivers-list">
+                        <div class="driver-row" *ngFor="let driver of allDrivers" 
+                             [class.active]="driver.status === 'active' || driver.status === 'disponible'">
+                            <div class="driver-info">
+                                <strong>{{driver.nombre || driver.user?.nombre || 'N/D'}}</strong>
+                                <span>ID: {{driver._id?.substring(0,8)}}...</span>
+                                <span>Status: {{driver.status}}</span>
+                            </div>
+                            <div class="driver-pos">
+                                📍 <span *ngIf="parsePosition(driver.asignaciones?.driverPosition); else noPos">
+                                    {{parsePosition(driver.asignaciones?.driverPosition)?.lat?.toFixed(4)}}, 
+                                    {{parsePosition(driver.asignaciones?.driverPosition)?.lng?.toFixed(4)}}
+                                </span>
+                                <ng-template #noPos>N/A</ng-template>
+                            </div>
+                        </div>
+                        <div *ngIf="allDrivers.length === 0" class="no-drivers">
+                            No hay drivers disponibles
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,30 +1,8 @@
 <!-- Content-->
 <section class="pt-lg-4 pb-4 mb-3">
     <div class="pt-2 px-4 pl-lg-0 pr-xl-5">
-        <div class="tab-content-set">
-            <ul class="nav">
-                <li>
-                    <a href="#" onclick="return false;" [ngClass]="{'active': option_selectedd == 1}"
-                        (click)="optionSelected(1)"> {{'Asignar Entrega'| translate}}</a>
-                </li>
-                <li>
-                    <a href="#" onclick="return false;" [ngClass]="{'active': option_selectedd == 2}"
-                        (click)="optionSelected(2)">{{'Mapa'| translate}}</a>
-                </li>
-                <li>
-                    <a href="#" onclick="return false;" [ngClass]="{'active': option_selectedd == 3}"
-                        (click)="optionSelected(3)">{{'Configuración'| translate}}</a>
-                </li>
-            </ul>
-        </div>
-        <div *ngIf="option_selectedd == 1">
-            <app-asignar-delivery></app-asignar-delivery>
-        </div>
-        <div *ngIf="option_selectedd == 1">
-            <app-mapa></app-mapa>
-        </div>
-        <div class="row" *ngIf="option_selectedd == 3">
-            <div class="container">
+        
+        <div class="container">
                 <div class="col-xs-12 form-group">
                     <div class="card">
                         <div class="col-lg-12" *ngIf="msm_error">
@@ -142,8 +120,5 @@
                     </form>
                 </div>
             </div>
-
-        </div>
-
     </div>
 </section>

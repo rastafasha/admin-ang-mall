@@ -11,8 +11,8 @@
         <!-- ventasFiltradas -->
         <div class="col-12  card">
             <h3>Ventas</h3>
-            <a href="javascript:;" (click)="PageSize()" class="btn btn-primary d-flex">
-                        <i class="fa fa-refresh"></i></a>
+            <a href="javascript:;" (click)="PageSize()" class="btn btn-primary ">
+                <i class="fa fa-refresh"></i></a>
             <div class="table-responsive table-sm">
                 <table class="table table-sm">
                     <thead class="thead-dark">
@@ -33,22 +33,24 @@
                             <td style="font-size: 13px;">{{venta.estado}}</td>
                             <td class="text-center">
                                 <a class="nav-link-style text-success" data-toggle="modal"
-                                    [attr.data-target]="'#asignar-'+venta._id" (click)="openModal(venta)" style="cursor:pointer">
+                                    [attr.data-target]="'#asignar-'+venta._id" (click)="openModal(venta)"
+                                    style="cursor:pointer">
                                     <div class="czi-share"></div>
                                 </a>
                                 <!-- modal -->
-                                <div class="modal fade" *ngIf="showModal" [attr.id]="'asignar-'+venta._id" tabindex="-1" role="dialog"
-                                    style="display: none;" aria-hidden="true">
+                                <div class="modal fade" *ngIf="showModal" [attr.id]="'asignar-'+venta._id" tabindex="-1"
+                                    role="dialog" style="display: none;" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <h4 class="modal-title">Confirmación</h4>
-                                                <button class="close" type="button"  (click)="closeModal(venta)"
+                                                <button class="close" type="button" (click)="closeModal(venta)"
                                                     aria-label="Close"><span aria-hidden="true">×</span></button>
                                             </div>
                                             <div class="modal-body">
                                                 <p class="font-size-sm">¿Desea asignar el pedido a la referencia
-                                                    <b>{{venta.referencia}}</b> ?</p>
+                                                    <b>{{venta.referencia}}</b> ?
+                                                </p>
 
 
 
@@ -82,7 +84,7 @@
                                             </div>
                                             <div class="modal-footer">
                                                 <button class="btn btn-secondary btn-sm" type="button"
-                                                     (click)="closeModal(venta)">Cancelar</button>
+                                                    (click)="closeModal(venta)">Cancelar</button>
                                                 <!-- <button class="btn btn-primary btn-shadow btn-sm" type="button"
                                                     (click)="asignarDelivery(item._id)">Asignar</button> -->
                                             </div>
@@ -96,7 +98,7 @@
                 </table>
             </div>
         </div>
-        
+
     </div>
     <div class="row">
         <!-- asignaciones -->
@@ -120,12 +122,28 @@
                             <td style="font-size: 13px;">{{asignacion.driver.licencianum}}</td>
                             <td style="font-size: 13px;">{{asignacion.venta}}</td>
                             <td style="font-size: 13px;">{{asignacion.tienda.nombre}}</td>
-                            <td style="font-size: 13px;">{{asignacion.createdAt|date:'dd/mm/YYYY'}}</td>
-                            <td style="font-size: 13px;">{{asignacion.status}}</td>
+                            <td style="font-size: 13px;">
+                                <span class="badge badge-accent badge-shadow"
+                                    *ngIf="(asignacion.status || '').toUpperCase() === 'POR-ASIGNAR'">{{asignacion.status
+                                    ||
+                                    'N/A'}}</span>
+                                <span class="badge badge-success badge-shadow"
+                                    *ngIf="(asignacion.status || '').toUpperCase() === 'ASIGNADO'">{{asignacion.status
+                                    ||
+                                    'N/A'}}</span>
+                                <span class="badge badge-primary badge-shadow"
+                                    *ngIf="(asignacion.status || '').toUpperCase() === 'CONFIRMADO'">{{asignacion.status
+                                    ||
+                                    'N/A'}}</span>
+                                <span class="badge badge-secondary badge-shadow"
+                                    *ngIf="!(asignacion.status || '').toUpperCase()">N/A</span>
+
+                            </td>
+                            <td style="font-size: 13px;">{{asignacion.updatedAt|date:'dd/mm/YYYY'}}</td>
                             <td class="text-center">
                                 <a class="nav-link-style text-primary" data-toggle="modal"
                                     [attr.data-target]="'#edit-'+asignacion._id" style="cursor:pointer">
-                                    <div class="czi-edit"></div>
+                                    <div class="czi-trash"></div>
                                 </a>
                                 <div class="modal fade" [attr.id]="'edit-'+asignacion._id" tabindex="-1" role="dialog"
                                     style="display: none;" aria-hidden="true">

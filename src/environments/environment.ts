@@ -6,8 +6,8 @@ export const environment = {
   production: false,
   //local
   baseUrl: 'http://localhost:3000/api',
-  soketServer : '',
   mediaUrl: 'http://localhost:3000/api/uploads',
+  soketServer : 'http://localhost:3000',
 
    //remoto vercel
   // baseUrl: 'https://back-ecomm-mall.onrender.com/api',

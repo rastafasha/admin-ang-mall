@@ -34,8 +34,6 @@ export class ComentarioService {
   }
 
   get_data(id:string,orden:any):Observable<any>{
-
-
     let headers = new HttpHeaders().set('Content-Type','application/json');
     return this._http.get(this.url + '/comentarios/comentarios_client/obtener/'+id+'/'+orden,{headers:headers})
   }
