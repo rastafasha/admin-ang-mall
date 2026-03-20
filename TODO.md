@@ -1,4 +1,4 @@
-# Angular 18 Update TODO
+u# Angular 18 Update TODO
 
 ## Status: In Progress
 
@@ -6,13 +6,12 @@
 - Created git branch `blackboxai/angular-update-18`
 - Committed TODO.md
 
-### 2. [FAILED] Update to Angular 15 ❌
-- `ng update @angular/cli@15 @angular/core@15` failed: "Repository is not clean. Commit/stash changes first"
-- Committed TODO.md edit
-- Retry after clean state
-- `ng update @angular/cli@15 @angular/core@15`
-- `npm install`
-- Fix errors, test `ng serve`
+### 2. [PARTIAL] Update to Angular 15 ⚠️
+- package.json updated to Angular 15.2.10, CLI 15.2.11, TS ~4.9.5
+- npm install failed: peer dep conflict with @angular-devkit/build-angular@15.2.11 & typescript@4.9.5 (use --legacy-peer-deps)
+- Peer @ng-web-apis ignored
+- angular.json unchanged (schematics ran?)
+- Next: `npm install --legacy-peer-deps`, commit, test ng serve, proceed to v16
 
 ### 3. [PENDING] Update to Angular 16
 - `ng update @angular/cli@16 @angular/core@16`
