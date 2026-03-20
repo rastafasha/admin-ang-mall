@@ -13,12 +13,11 @@ u# Angular 18 Update TODO
 - Committed
 
 ### 3. [DONE] Update to Angular 16 ✅
-- Angular 16 upgrade complete (schematics, npm i --legacy-peer-deps success)
-- 72 vulns (run `npm audit fix`)
-- v17 next
+- Angular 16 complete
 
-### 4. [PENDING] Update to Angular 17
-- `ng update @angular/cli@17 @angular/core@17 --force`
+### 4. [FAILED] Update to Angular 17 ❌
+- `ng update` error: Multiple major versions not supported; do individually
+- Next: manual or skip to v18 direct from v16
 
 
 ### 3. [PENDING] Update to Angular 16
