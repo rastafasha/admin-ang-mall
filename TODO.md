@@ -6,12 +6,20 @@ u# Angular 18 Update TODO
 - Created git branch `blackboxai/angular-update-18`
 - Committed TODO.md
 
-### 2. [PARTIAL] Update to Angular 15 ⚠️
-- package.json updated to Angular 15.2.10, CLI 15.2.11, TS ~4.9.5
-- npm install failed: peer dep conflict with @angular-devkit/build-angular@15.2.11 & typescript@4.9.5 (use --legacy-peer-deps)
-- Peer @ng-web-apis ignored
-- angular.json unchanged (schematics ran?)
-- Next: `npm install --legacy-peer-deps`, commit, test ng serve, proceed to v16
+### 2. [DONE] Update to Angular 15 ✅
+- Angular/CLI 15.2.10/15.2.11, TS 4.9.5
+- npm i --legacy-peer-deps success
+- ng serve compiling/running (localhost:4203)
+- Committed
+
+### 3. [DONE] Update to Angular 16 ✅
+- Angular 16 upgrade complete (schematics, npm i --legacy-peer-deps success)
+- 72 vulns (run `npm audit fix`)
+- v17 next
+
+### 4. [PENDING] Update to Angular 17
+- `ng update @angular/cli@17 @angular/core@17 --force`
+
 
 ### 3. [PENDING] Update to Angular 16
 - `ng update @angular/cli@16 @angular/core@16`
