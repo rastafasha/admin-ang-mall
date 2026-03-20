@@ -2,11 +2,14 @@
 
 ## Status: In Progress
 
-### 1. [PENDING] Backup & Branch
-- Create git branch `blackboxai/angular-update-18`
-- Commit current state if needed
+### 1. [DONE] Backup & Branch ✅
+- Created git branch `blackboxai/angular-update-18`
+- Committed TODO.md
 
-### 2. [PENDING] Update to Angular 15
+### 2. [FAILED] Update to Angular 15 ❌
+- `ng update @angular/cli@15 @angular/core@15` failed: "Repository is not clean. Commit/stash changes first"
+- Committed TODO.md edit
+- Retry after clean state
 - `ng update @angular/cli@15 @angular/core@15`
 - `npm install`
 - Fix errors, test `ng serve`
