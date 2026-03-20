@@ -11,6 +11,7 @@ import { BusquedasService } from '../../services/busquedas.service';
 
 @Component({
   selector: 'app-busqueda',
+  standalone:false,
   templateUrl: './busqueda.component.html',
   styleUrls: ['./busqueda.component.css']
 })

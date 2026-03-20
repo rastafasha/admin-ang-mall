@@ -7,6 +7,7 @@ declare function customInitFunctions(); //llamammos a la funcion que carga los j
 
 @Component({
   selector: 'app-pages',
+  standalone:false,
   templateUrl: './pages.component.html',
   styles: [
   ]

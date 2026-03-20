@@ -1,7 +1,8 @@
 import {Pipe, PipeTransform} from '@angular/core';
 
 @Pipe({
-    name: 'showBy'
+    name: 'showBy',
+    standalone:false,
 })
 export class ShowByPipe implements PipeTransform{
 

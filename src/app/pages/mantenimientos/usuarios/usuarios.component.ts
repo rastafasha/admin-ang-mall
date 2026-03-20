@@ -13,6 +13,7 @@ import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-usuarios',
+  standalone:false,
   templateUrl: './usuarios.component.html',
   styles: [
   ]

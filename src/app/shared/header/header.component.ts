@@ -20,6 +20,7 @@ import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-header',
+  standalone:false,
   templateUrl: './header.component.html',
   styles: [
   ]

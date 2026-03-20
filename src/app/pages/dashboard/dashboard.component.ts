@@ -13,6 +13,7 @@ declare let Chart;
 
 @Component({
   selector: 'app-dashboard',
+  standalone:false,
   templateUrl: './dashboard.component.html',
   styles: [
   ]

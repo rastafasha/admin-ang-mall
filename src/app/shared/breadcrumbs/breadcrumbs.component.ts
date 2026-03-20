@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-breadcrumbs',
+  standalone:false,
   templateUrl: './breadcrumbs.component.html',
   styles: [
   ]

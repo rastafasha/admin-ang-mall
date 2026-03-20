@@ -3,6 +3,7 @@ declare var $: any;
 declare var bootstrap: any;
 @Component({
   selector: 'app-modalinfo-transferencias',
+  standalone:false,
   templateUrl: './modalinfo-transferencias.component.html',
   styleUrls: ['./modalinfo-transferencias.component.css']
 })

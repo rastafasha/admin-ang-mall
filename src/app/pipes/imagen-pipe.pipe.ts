@@ -4,7 +4,8 @@ import { environment } from '../../environments/environment';
 const base_url = environment.mediaUrl;
 
 @Pipe({
-  name: 'imagenPipe'
+  name: 'imagenPipe',
+  standalone:false,
 })
 export class ImagenPipePipe implements PipeTransform {
 
