@@ -122,9 +122,9 @@ const childRoutes: Routes = [
             { path: 'promocion/create', component: PromoeditComponent, data:{tituloPage:'Promocion '} },
             { path: 'promocion/edit/:id', component: PromoeditComponent, data:{tituloPage:'Promocion '} },
 
-            { path: 'postal', component: PostalComponent, data:{tituloPage:'Postal'} },
-            { path: 'postal/asignaciones', component: AsignarDeliveryComponent, data:{tituloPage:'Postal'} },
-            { path: 'postal/mapa', component: MapaComponent, data:{tituloPage:'Postal'} },
+            { path: 'postal', component: PostalComponent, data:{tituloPage:'Configurar Delivery'} },
+            { path: 'postal/asignaciones', component: AsignarDeliveryComponent, data:{tituloPage:'Asignar Delivery'} },
+            { path: 'postal/mapa', component: MapaComponent, data:{tituloPage:'Mapa Delivery'} },
 
             { path: 'contacto', component: ContactoComponent, data:{tituloPage:'Contacto'} },
             { path: 'contacto/:id', component: ContactodetailsComponent, data:{tituloPage:'Contacto'} },

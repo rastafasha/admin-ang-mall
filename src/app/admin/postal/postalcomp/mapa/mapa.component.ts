@@ -637,4 +637,10 @@ drivers: Driver[] = [];
     // and should NOT be changed by the USER's GPS
   }
 
+  toggleDriversList(){
+    this.showDriversList = !this.showDriversList;
+  // console.log('toggleDriversList:', this.showDriversList ? 'showing' : 'hiding');
+  this.cdr.markForCheck();
+  }
+
 }
