@@ -7,10 +7,12 @@
         <div class="card-body">
             <form [formGroup]="registerForm" (ngSubmit)="crearUsuario()" autocapitalize="off"
                 class="form-horizontal form-material" id="loginform">
-                <img src="../assets/svg/logo_Mallconnect_tipo2.svg" alt="Home" />
+                <div class="logologin">
+                    <img src="../assets/svg/logo-zlipmenu_logotipo.svg" alt="Home" />
+                </div>
                 <p class="text-center">Admin</p>
 
-                <h3 class="box-title m-t-40 m-b-0">Register Now</h3>
+                <h3 class="box-title m-t-40 m-b-0">Registro</h3>
 
                 <!-- Step Indicators -->
                 <div class="step-indicators text-center mb-4">
@@ -124,7 +126,7 @@
                 </div>
                 <div class="form-group m-b-0">
                     <div class="col-sm-12 text-center">
-                        <p>Already have an account? <a routerLink="/login" class="text-info m-l-5"><b>Sign In</b></a>
+                        <p>¿Ya posee una cuenta? <a routerLink="/login" class="text-info m-l-5"><b>Ingresar</b></a>
                         </p>
                     </div>
                 </div>

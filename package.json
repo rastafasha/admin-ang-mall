@@ -8,6 +8,7 @@
     "start:prod": "ng build  && lite-server --baseDir dist/adminpwa",
     "build": "ng build",
     "build:adminecom": "ng build --configuration adminecommerce",
+    "build:zlipmenu": "ng build --configuration zlipmenu",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },

@@ -64,3 +64,13 @@ Login register and recover password Page
     margin: auto;
     padding: 35px;
 }
+
+.logologin{
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+}
+
+.logologin img{
+  height: 120px;
+}

@@ -560,7 +560,7 @@ drivers: Driver[] = [];
    * Construye el objeto de datos para compartir
    */
   private buildShareData(): ShareData {
-    let title = '📍 Coordenadas de Entrega - MallConnect';
+    let title = '📍 Coordenadas de Entrega - Zlipmenu';
     let text = this.buildCoordinateText();
 
     // Crear URL con coordenadas para abrir en Google Maps
@@ -580,7 +580,7 @@ drivers: Driver[] = [];
    * Construye el texto con las coordenadas formateadas
    */
   private buildCoordinateText(): string {
-    let text = '🛵 **Ruta de Entrega - MallConnect**\n\n';
+    let text = '🛵 **Ruta de Entrega - Zlipmenu**\n\n';
 
     if (this.driverPosition) {
       text += `📍 **Repartidor:** ${this.driverPosition.lat.toFixed(6)}, ${this.driverPosition.lng.toFixed(6)}\n`;
@@ -592,7 +592,7 @@ drivers: Driver[] = [];
       text += `[Ver en Google Maps](https://www.google.com/maps?q=${this.deliveryPosition.lat},${this.deliveryPosition.lng})`;
     }
 
-    text += '\n\n📱 Compartido desde MallConnect Delivery';
+    text += '\n\n📱 Compartido desde Zlipmenu Delivery';
     return text;
   }
 
