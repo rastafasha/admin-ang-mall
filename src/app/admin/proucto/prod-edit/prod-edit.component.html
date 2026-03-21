@@ -60,8 +60,10 @@
                         <label class=" col-form-label font-weight-medium" for="text-input">Descripción <span
                                 class="required">*</span></label>
                         <div class="col-md-12">
-                            <ckeditor formControlName="detalle" [editor]="Editor" data="<p>Hello, world!</p>" required>
-                            </ckeditor>
+                            <!-- <ckeditor formControlName="detalle" [editor]="Editor" data="<p>Hello, world!</p>" required>
+                            </ckeditor> -->
+                            <textarea formControlName="detalle" id="detalle" cols="30" rows="4"
+                                                class="form-control"></textarea>
                             <div *ngIf="productoForm.get('detalle')?.touched && productoForm.get('detalle')?.invalid"
                                 class="text-danger">
                                 <div *ngIf="productoForm.get('detalle')?.errors?.['required']">
@@ -78,8 +80,11 @@
                         <label class=" col-form-label font-weight-medium" for="textarea-input">Descripción corta <span
                                 class="required">*</span></label>
                         <div class="col-md-12">
-                            <ckeditor formControlName="info_short" [editor]="Editor1" data="<p>Hello, world!</p>"
-                                required></ckeditor>
+                            <!-- <ckeditor formControlName="info_short" [editor]="Editor1" data="<p>Hello, world!</p>"
+                                required></ckeditor> -->
+
+                                <textarea formControlName="info_short" id="info_short" cols="30" rows="4"
+                                                class="form-control"></textarea>
 
                             <div *ngIf="productoForm.get('info_short')?.touched && productoForm.get('info_short')?.invalid"
                                 class="text-danger">

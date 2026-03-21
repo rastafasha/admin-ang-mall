@@ -47,8 +47,10 @@
                             <label class=" col-form-label font-weight-medium" for="text-input">Direccion <span
                                     class="required">*</span></label>
                             <div class="col-md-12">
-                                <ckeditor formControlName="direccion" [editor]="Editor1" data="<p>Hello, world!</p>"
-                                    required></ckeditor>
+                                <!-- <ckeditor formControlName="direccion" [editor]="Editor1" data="<p>Hello, world!</p>"
+                                    required></ckeditor> -->
+                                    <textarea formControlName="direccion" id="direccion" cols="30" rows="4"
+                                                class="form-control"></textarea>
                                 <div *ngIf="tiendaForm.get('direccion')?.touched && tiendaForm.get('direccion')?.invalid"
                                     class="text-danger">
                                     <div *ngIf="tiendaForm.get('direccion')?.errors?.['required']">
