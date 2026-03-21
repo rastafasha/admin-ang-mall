@@ -1,0 +1,851 @@
+{
+    "iconos": [{
+            "icono": "czi-add-circle",
+            "name": "czi-add-circle"
+        },
+        {
+            "icono": "czi-add-document",
+            "name": "czi-add-document"
+        },
+        {
+            "icono": "czi-add-location",
+            "name": "czi-add-location"
+        },
+        {
+            "icono": "czi-add",
+            "name": "czi-add"
+        },
+        {
+            "icono": "czi-add-user",
+            "name": "czi-add-user"
+        },
+        {
+            "icono": "czi-announcement",
+            "name": "czi-announcement"
+        },
+        {
+            "icono": "czi-arrow-down-circle",
+            "name": "czi-arrow-down-circle"
+        },
+        {
+            "icono": "czi-arrow-down",
+            "name": "czi-arrow-down"
+        },
+        {
+            "icono": "czi-arrow-left-circle",
+            "name": "czi-arrow-left-circle"
+        },
+        {
+            "icono": "czi-arrow-left",
+            "name": "czi-arrow-left"
+        },
+        {
+            "icono": "czi-arrow-right-circle",
+            "name": "czi-arrow-right-circle"
+        },
+        {
+            "icono": "czi-arrow-right",
+            "name": "czi-arrow-right"
+        },
+        {
+            "icono": "czi-arrow-up-circle",
+            "name": "czi-arrow-up-circle"
+        },
+        {
+            "icono": "czi-arrow-up",
+            "name": "czi-arrow-up"
+        },
+        {
+            "icono": "czi-arrows-horizontal",
+            "name": "czi-arrows-horizontal"
+        },
+        {
+            "icono": "czi-arrows-vertical",
+            "name": "czi-arrows-vertical"
+        },
+        {
+            "icono": "czi-bag",
+            "name": "czi-bag"
+        },
+        {
+            "icono": "czi-basket",
+            "name": "czi-basket"
+        },
+        {
+            "icono": "czi-behance",
+            "name": "czi-behance"
+        },
+        {
+            "icono": "czi-bell",
+            "name": "czi-bell"
+        },
+        {
+            "icono": "czi-bluetooth",
+            "name": "czi-bluetooth"
+        },
+        {
+            "icono": "czi-bluetooth-circle",
+            "name": "czi-bluetooth-circle"
+        },
+        {
+            "icono": "czi-battery",
+            "name": "czi-battery"
+        },
+        {
+            "icono": "czi-book",
+            "name": "czi-book"
+        },
+        {
+            "icono": "czi-bookmark",
+            "name": "czi-bookmark"
+        },
+        {
+            "icono": "czi-briefcase",
+            "name": "czi-briefcase"
+        },
+        {
+            "icono": "czi-calculator",
+            "name": "czi-calculator"
+        },
+        {
+            "icono": "czi-camera",
+            "name": "czi-camera"
+        },
+        {
+            "icono": "czi-card",
+            "name": "czi-card"
+        },
+        {
+            "icono": "czi-cart",
+            "name": "czi-cart"
+        },
+        {
+            "icono": "czi-chat",
+            "name": "czi-chat"
+        },
+        {
+            "icono": "czi-check-circle",
+            "name": "czi-check-circle"
+        },
+        {
+            "icono": "czi-check",
+            "name": "czi-check"
+        },
+        {
+            "icono": "czi-clip",
+            "name": "czi-clip"
+        },
+        {
+            "icono": "czi-close-circle",
+            "name": "czi-close-circle"
+        },
+        {
+            "icono": "czi-close",
+            "name": "czi-close"
+        },
+        {
+            "icono": "czi-cloud-check",
+            "name": "czi-cloud-check"
+        },
+        {
+            "icono": "czi-cloud-download",
+            "name": "czi-cloud-download"
+        },
+        {
+            "icono": "czi-cloud-upload",
+            "name": "czi-cloud-upload"
+        },
+        {
+            "icono": "czi-cloud",
+            "name": "czi-cloud"
+        },
+        {
+            "icono": "czi-coin",
+            "name": "czi-coin"
+        },
+        {
+            "icono": "czi-coins",
+            "name": "czi-coins"
+        },
+        {
+            "icono": "czi-compare",
+            "name": "czi-compare"
+        },
+        {
+            "icono": "czi-currency-exchange",
+            "name": "czi-currency-exchange"
+        },
+        {
+            "icono": "czi-delete-document",
+            "name": "czi-delete-document"
+        },
+        {
+            "icono": "czi-delete-folder",
+            "name": "czi-delete-folder"
+        },
+        {
+            "icono": "czi-delete-location",
+            "name": "czi-delete-location"
+        },
+        {
+            "icono": "czi-delivery",
+            "name": "czi-delivery"
+        },
+        {
+            "icono": "czi-diamond",
+            "name": "czi-diamond"
+        },
+        {
+            "icono": "czi-document-alt",
+            "name": "czi-document-alt"
+        },
+        {
+            "icono": "czi-document",
+            "name": "czi-document"
+        },
+        {
+            "icono": "czi-dollar-circle",
+            "name": "czi-dollar-circle"
+        },
+        {
+            "icono": "czi-dollar",
+            "name": "czi-dollar"
+        },
+        {
+            "icono": "czi-download",
+            "name": "czi-download"
+        },
+        {
+            "icono": "czi-dribbble",
+            "name": "czi-dribbble"
+        },
+        {
+            "icono": "czi-earphones",
+            "name": "czi-earphones"
+        },
+        {
+            "icono": "czi-edit-alt",
+            "name": "czi-edit-alt"
+        },
+        {
+            "icono": "czi-edit",
+            "name": "czi-edit"
+        },
+        {
+            "icono": "czi-euro-circle",
+            "name": "czi-euro-circle"
+        },
+        {
+            "icono": "czi-euro",
+            "name": "czi-euro"
+        },
+        {
+            "icono": "czi-exit-full-screen",
+            "name": "czi-exit-full-screen"
+        },
+        {
+            "icono": "czi-eye",
+            "name": "czi-eye"
+        },
+        {
+            "icono": "czi-facebook",
+            "name": "czi-facebook"
+        },
+        {
+            "icono": "czi-filter-alt",
+            "name": "czi-filter-alt"
+        },
+        {
+            "icono": "czi-filter",
+            "name": "czi-filter"
+        },
+        {
+            "icono": "czi-flag",
+            "name": "czi-flag"
+        },
+        {
+            "icono": "czi-folder",
+            "name": "czi-folder"
+        },
+        {
+            "icono": "czi-forward",
+            "name": "czi-forward"
+        },
+        {
+            "icono": "czi-full-screen",
+            "name": "czi-full-screen"
+        },
+        {
+            "icono": "czi-gift",
+            "name": "czi-gift"
+        },
+        {
+            "icono": "czi-globe",
+            "name": "czi-globe"
+        },
+        {
+            "icono": "czi-google",
+            "name": "czi-google"
+        },
+        {
+            "icono": "czi-hangouts",
+            "name": "czi-hangouts"
+        },
+        {
+            "icono": "czi-heart-circle",
+            "name": "czi-heart-circle"
+        },
+        {
+            "icono": "czi-heart",
+            "name": "czi-heart"
+        },
+        {
+            "icono": "czi-help",
+            "name": "czi-help"
+        },
+        {
+            "icono": "czi-home",
+            "name": "czi-home"
+        },
+        {
+            "icono": "czi-idea",
+            "name": "czi-idea"
+        },
+        {
+            "icono": "czi-image",
+            "name": "czi-image"
+        },
+        {
+            "icono": "czi-increase",
+            "name": "czi-increase"
+        },
+        {
+            "icono": "czi-instagram",
+            "name": "czi-instagram"
+        },
+        {
+            "icono": "czi-joystick",
+            "name": "czi-joystick"
+        },
+        {
+            "icono": "czi-key",
+            "name": "czi-key"
+        },
+        {
+            "icono": "czi-lable",
+            "name": "czi-lable"
+        },
+        {
+            "icono": "czi-laptop",
+            "name": "czi-laptop"
+        },
+        {
+            "icono": "czi-lightning",
+            "name": "czi-lightning"
+        },
+        {
+            "icono": "czi-link",
+            "name": "czi-link"
+        },
+        {
+            "icono": "czi-linkedin",
+            "name": "czi-linkedin"
+        },
+        {
+            "icono": "czi-list",
+            "name": "czi-list"
+        },
+        {
+            "icono": "czi-loading",
+            "name": "czi-loading"
+        },
+        {
+            "icono": "czi-location",
+            "name": "czi-location"
+        },
+        {
+            "icono": "czi-locked",
+            "name": "czi-locked"
+        },
+        {
+            "icono": "czi-loudspeaker",
+            "name": "czi-loudspeaker"
+        },
+        {
+            "icono": "czi-mail",
+            "name": "czi-mail"
+        },
+        {
+            "icono": "czi-map",
+            "name": "czi-map"
+        },
+        {
+            "icono": "czi-menu-circle",
+            "name": "czi-menu-circle"
+        },
+        {
+            "icono": "czi-menu",
+            "name": "czi-menu"
+        },
+        {
+            "icono": "czi-message",
+            "name": "czi-message"
+        },
+        {
+            "icono": "czi-messenger",
+            "name": "czi-messenger"
+        },
+        {
+            "icono": "czi-mobile",
+            "name": "czi-mobile"
+        },
+        {
+            "icono": "czi-money-bag",
+            "name": "czi-money-bag"
+        },
+        {
+            "icono": "czi-money-box",
+            "name": "czi-money-box"
+        },
+        {
+            "icono": "czi-monitor",
+            "name": "czi-monitor"
+        },
+        {
+            "icono": "czi-moon",
+            "name": "czi-moon"
+        },
+        {
+            "icono": "czi-music",
+            "name": "czi-music"
+        },
+        {
+            "icono": "czi-navigation",
+            "name": "czi-navigation"
+        },
+        {
+            "icono": "czi-odnoklassniki",
+            "name": "czi-odnoklassniki"
+        },
+        {
+            "icono": "czi-package",
+            "name": "czi-package"
+        },
+        {
+            "icono": "czi-percent",
+            "name": "czi-percent"
+        },
+        {
+            "icono": "czi-phone",
+            "name": "czi-phone"
+        },
+        {
+            "icono": "czi-pinterest",
+            "name": "czi-pinterest"
+        },
+        {
+            "icono": "czi-plane",
+            "name": "czi-plane"
+        },
+        {
+            "icono": "czi-play-circle",
+            "name": "czi-play-circle"
+        },
+        {
+            "icono": "czi-play",
+            "name": "czi-play"
+        },
+        {
+            "icono": "czi-printer",
+            "name": "czi-printer"
+        },
+        {
+            "icono": "czi-reduce",
+            "name": "czi-reduce"
+        },
+        {
+            "icono": "czi-reload",
+            "name": "czi-reload"
+        },
+        {
+            "icono": "czi-remove-document",
+            "name": "czi-remove-document"
+        },
+        {
+            "icono": "czi-remove-folder",
+            "name": "czi-remove-folder"
+        },
+        {
+            "icono": "czi-reply",
+            "name": "czi-reply"
+        },
+        {
+            "icono": "czi-rocket",
+            "name": "czi-rocket"
+        },
+        {
+            "icono": "czi-ruler",
+            "name": "czi-ruler"
+        },
+        {
+            "icono": "czi-scroll",
+            "name": "czi-scroll"
+        },
+        {
+            "icono": "czi-search",
+            "name": "czi-search"
+        },
+        {
+            "icono": "czi-security-announcement",
+            "name": "czi-security-announcement"
+        },
+        {
+            "icono": "czi-security-check",
+            "name": "czi-security-check"
+        },
+        {
+            "icono": "czi-security-close",
+            "name": "czi-security-close"
+        },
+        {
+            "icono": "czi-security-prohibition",
+            "name": "czi-security-prohibition"
+        },
+        {
+            "icono": "czi-send",
+            "name": "czi-send"
+        },
+        {
+            "icono": "czi-server-alt",
+            "name": "czi-server-alt"
+        },
+        {
+            "icono": "czi-server",
+            "name": "czi-server"
+        },
+        {
+            "icono": "czi-settings",
+            "name": "czi-settings"
+        },
+        {
+            "icono": "czi-share-alt",
+            "name": "czi-share-alt"
+        },
+        {
+            "icono": "czi-share",
+            "name": "czi-share"
+        },
+        {
+            "icono": "czi-sign-in",
+            "name": "czi-sign-in"
+        },
+        {
+            "icono": "czi-sign-out",
+            "name": "czi-sign-out"
+        },
+        {
+            "icono": "czi-skype",
+            "name": "czi-skype"
+        },
+        {
+            "icono": "czi-smile",
+            "name": "czi-smile"
+        },
+        {
+            "icono": "czi-speaker",
+            "name": "czi-speaker"
+        },
+        {
+            "icono": "czi-star-filled",
+            "name": "czi-star-filled"
+        },
+        {
+            "icono": "czi-star",
+            "name": "czi-star"
+        },
+        {
+            "icono": "czi-sun",
+            "name": "czi-sun"
+        },
+        {
+            "icono": "czi-support",
+            "name": "czi-support"
+        },
+        {
+            "icono": "czi-target",
+            "name": "czi-target"
+        },
+        {
+            "icono": "czi-telegram",
+            "name": "czi-telegram"
+        },
+        {
+            "icono": "czi-thumb-up",
+            "name": "czi-thumb-up"
+        },
+        {
+            "icono": "czi-time",
+            "name": "czi-time"
+        },
+        {
+            "icono": "czi-trash",
+            "name": "czi-trash"
+        },
+        {
+            "icono": "czi-tumblr",
+            "name": "czi-tumblr"
+        },
+        {
+            "icono": "czi-turn-off",
+            "name": "czi-turn-off"
+        },
+        {
+            "icono": "czi-twitter",
+            "name": "czi-twitter"
+        },
+        {
+            "icono": "czi-unlocked",
+            "name": "czi-unlocked"
+        },
+        {
+            "icono": "czi-upload",
+            "name": "czi-upload"
+        },
+        {
+            "icono": "czi-user-circle",
+            "name": "czi-user-circle"
+        },
+        {
+            "icono": "czi-user",
+            "name": "czi-user"
+        },
+        {
+            "icono": "czi-viber",
+            "name": "czi-viber"
+        },
+        {
+            "icono": "czi-video",
+            "name": "czi-video"
+        },
+        {
+            "icono": "czi-view-grid",
+            "name": "czi-view-grid"
+        },
+        {
+            "icono": "czi-view-list",
+            "name": "czi-view-list"
+        },
+        {
+            "icono": "czi-vimeo",
+            "name": "czi-vimeo"
+        },
+        {
+            "icono": "czi-vk",
+            "name": "czi-vk"
+        },
+        {
+            "icono": "czi-wallet",
+            "name": "czi-wallet"
+        },
+        {
+            "icono": "czi-watch",
+            "name": "czi-watch"
+        },
+        {
+            "icono": "czi-weather",
+            "name": "czi-weather"
+        },
+        {
+            "icono": "czi-wechat",
+            "name": "czi-wechat"
+        },
+        {
+            "icono": "czi-youtube-outline",
+            "name": "czi-youtube-outline"
+        },
+        {
+            "icono": "czi-youtube",
+            "name": "czi-youtube"
+        },
+        {
+            "icono": "czi-caret",
+            "name": "czi-caret"
+        },
+        {
+            "icono": "czi-paypal",
+            "name": "czi-paypal"
+        },
+        {
+            "icono": "czi-wash",
+            "name": "czi-wash"
+        },
+        {
+            "icono": "czi-bleach",
+            "name": "czi-bleach"
+        },
+        {
+            "icono": "czi-hand-wash",
+            "name": "czi-hand-wash"
+        },
+        {
+            "icono": "czi-ironing",
+            "name": "czi-ironing"
+        },
+        {
+            "icono": "czi-sound-waves",
+            "name": "czi-sound-waves"
+        },
+        {
+            "icono": "czi-paprika",
+            "name": "czi-paprika"
+        },
+        {
+            "icono": "czi-chili",
+            "name": "czi-chili"
+        },
+        {
+            "icono": "czi-canned-food",
+            "name": "czi-canned-food"
+        },
+        {
+            "icono": "czi-toothbrush",
+            "name": "czi-toothbrush"
+        },
+        {
+            "icono": "czi-pumpkin",
+            "name": "czi-pumpkin"
+        },
+        {
+            "icono": "czi-orange",
+            "name": "czi-orange"
+        },
+        {
+            "icono": "czi-broccoli",
+            "name": "czi-broccoli"
+        },
+        {
+            "icono": "czi-sauce",
+            "name": "czi-sauce"
+        },
+        {
+            "icono": "czi-soap",
+            "name": "czi-soap"
+        },
+        {
+            "icono": "czi-toilet-paper",
+            "name": "czi-toilet-paper"
+        },
+        {
+            "icono": "czi-lemon",
+            "name": "czi-lemon"
+        },
+        {
+            "icono": "czi-bread",
+            "name": "czi-bread"
+        },
+        {
+            "icono": "czi-jam",
+            "name": "czi-jam"
+        },
+        {
+            "icono": "czi-fish",
+            "name": "czi-fish"
+        },
+        {
+            "icono": "czi-wine",
+            "name": "czi-wine"
+        },
+        {
+            "icono": "czi-truck",
+            "name": "czi-truck"
+        },
+        {
+            "icono": "czi-tag",
+            "name": "czi-tag"
+        },
+        {
+            "icono": "czi-eggs",
+            "name": "czi-eggs"
+        },
+        {
+            "icono": "czi-store",
+            "name": "czi-store"
+        },
+        {
+            "icono": "czi-ham-leg",
+            "name": "czi-ham-leg"
+        },
+        {
+            "icono": "czi-discount",
+            "name": "czi-discount"
+        },
+        {
+            "icono": "czi-open",
+            "name": "czi-open"
+        },
+        {
+            "icono": "czi-juice",
+            "name": "czi-juice"
+        },
+        {
+            "icono": "czi-cheese",
+            "name": "czi-cheese"
+        },
+        {
+            "icono": "czi-milk",
+            "name": "czi-milk"
+        },
+        {
+            "icono": "czi-cashier",
+            "name": "czi-cashier"
+        },
+        {
+            "icono": "czi-avocado",
+            "name": "czi-avocado"
+        },
+        {
+            "icono": "czi-apple",
+            "name": "czi-apple"
+        },
+        {
+            "icono": "czi-pizza",
+            "name": "czi-pizza"
+        },
+        {
+            "icono": "czi-scale",
+            "name": "czi-scale"
+        },
+        {
+            "icono": "czi-ice-cream",
+            "name": "czi-ice-cream"
+        },
+        {
+            "icono": "czi-water-bottle",
+            "name": "czi-water-bottle"
+        },
+        {
+            "icono": "czi-carrot",
+            "name": "czi-carrot"
+        },
+        {
+            "icono": "czi-basket-alt",
+            "name": "czi-basket-alt"
+        },
+        {
+            "icono": "czi-corn",
+            "name": "czi-corn"
+        },
+        {
+            "icono": "czi-frozen",
+            "name": "czi-frozen"
+        },
+        {
+            "icono": "czi-lollipop",
+            "name": "czi-lollipop"
+        },
+        {
+            "icono": "czi-pot",
+            "name": "czi-pot"
+        }
+    ]
+}
