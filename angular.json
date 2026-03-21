@@ -65,7 +65,6 @@
                 }
               ],
               "assets": [
-                "src/.htaccess",
                 "src/assets",
                 "src/manifest.webmanifest",
                 {
@@ -74,9 +73,14 @@
                   "output": "/"
                 },
                 {
-                  "glob": "**.*",
-                  "input": "src/env/admin_ecommerce/manifest.webmanifest",
-                  "output": "src/manifest.webmanifest"
+                  "glob": "**/*",
+                  "input": "src/env/adminecommerce/assets",
+                  "output": "/assets"
+                },
+                {
+                  "glob": "manifest.webmanifest", 
+                  "input": "src/env/adminecommerce/", 
+                  "output": "/"
                 }
               ],
               "budgets": [

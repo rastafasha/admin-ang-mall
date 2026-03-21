@@ -56,8 +56,9 @@ export class AsignarDeliveryComponent implements OnInit {
     this.filtrarVentas();
     if (this.user.role === 'SUPERADMIN') {
       this.getDrivers();
-    } else {
-      this.tiendaId;
+
+    } 
+    if (this.user.role === 'ADMIN') {
       this.getDriversLocal();
     }
   }
@@ -79,24 +80,11 @@ export class AsignarDeliveryComponent implements OnInit {
       this.ventaService.init_data_admin().subscribe(
         response => {
 
-          if (this.user.role === 'SUPERADMIN') {
-            this.ventas = response.data;
-            this.ventasFiltradas = response.data;
-            const paraenviar = this.ventas.filter((venta: any) => venta.estado === 'Enviado');
+          this.ventas = response.data;
+          this.ventasFiltradas = response.data;
+          const paraenviar = this.ventas.filter((venta: any) => venta.estado === 'Enviado');
 
-            this.listaparaenviar = paraenviar
-            // this.count_cat = this.ventas.length;
-          }
-          else {
-            this.ventas = response.data;
-            // this.ventasFiltradas = response.data;
-            this.ventasFiltradas = this.ventas.filter(item => item.user?.local === this.user.local)
-            const paraenviar = this.ventas.filter((venta: any) => venta.estado === 'Enviado');
-
-            this.listaparaenviar = paraenviar
-
-          }
-
+          this.listaparaenviar = paraenviar
           this.page = 1;
 
         }
@@ -106,17 +94,11 @@ export class AsignarDeliveryComponent implements OnInit {
       this.ventaService.init_data_adminLocal(this.user.local).subscribe(
         (response:any) => {
 
-          
-          if (this.user.role === 'ADMIN') {
-            this.ventas = response.data;
-            
-            this.ventasFiltradas = response.data;
-            const paraenviar = this.ventas.filter((venta: any) => venta.estado === 'Enviado');
+          this.ventas = response.data;
+          this.ventasFiltradas = response.data;
+          const paraenviar = this.ventas.filter((venta: any) => venta.estado === 'Enviado');
 
-            this.listaparaenviar = paraenviar
-          }
-          
-
+          this.listaparaenviar = paraenviar
           this.page = 1;
 
         }
@@ -142,6 +124,7 @@ export class AsignarDeliveryComponent implements OnInit {
   getAsignaciones() {
     this.asignacionDService.getByTiendaId(this.user.local).subscribe((resp: any) => {
       this.asignaciones = resp;
+      console.log(this.asignaciones)
 
     })
   }

@@ -20,6 +20,7 @@ import { ModalinfoVentasComponent } from './modalinfo-ventas/modalinfo-ventas.co
 import { ModalinfoTiposPagoComponent } from './modalinfo-tipos-pago/modalinfo-tipos-pago.component';
 import { ModalinfoTransferenciasComponent } from './modalinfo-transferencias/modalinfo-transferencias.component';
 import { ModalinfoPagoEfectivoComponent } from './modalinfo-pago-efectivo/modalinfo-pago-efectivo.component';
+import { ModalinfoDeliveryComponent } from './modalinfo-delivery/modalinfo-delivery.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { ModalinfoPagoEfectivoComponent } from './modalinfo-pago-efectivo/modali
     ModalinfoVentasComponent,
     ModalinfoTiposPagoComponent,
     ModalinfoTransferenciasComponent,
-    ModalinfoPagoEfectivoComponent
+    ModalinfoPagoEfectivoComponent,
+    ModalinfoDeliveryComponent
 
   ],
   imports: [
@@ -66,7 +68,8 @@ import { ModalinfoPagoEfectivoComponent } from './modalinfo-pago-efectivo/modali
     ModalinfoVentasComponent,
     ModalinfoTiposPagoComponent,
     ModalinfoTransferenciasComponent,
-    ModalinfoPagoEfectivoComponent
+    ModalinfoPagoEfectivoComponent,
+    ModalinfoDeliveryComponent
   ]
 })
 export class ComponentsModule { }
