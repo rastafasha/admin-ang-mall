@@ -25,7 +25,7 @@
                 <li *ngIf="usuario.role ==='SUPERADMIN'">
                     <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false">
                         <i class="mdi mdi-store"></i>
-                        <span class="hide-menu">{{'Contenido'| translate}}<span class="label label-rouded label-themecolor pull-right">3</span>
+                        <span class="hide-menu">{{'Contenido'| translate}}
                         </span>
                     </a>
                     <ul aria-expanded="false" class="collapse" *ngIf="usuario.role ==='SUPERADMIN'">
@@ -42,7 +42,7 @@
                 <li *ngIf="usuario.role ==='SUPERADMIN' || usuario.role ==='ADMIN' || usuario.role ==='TIENDA'">
                     <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false">
                         <i class="mdi mdi-store"></i>
-                        <span class="hide-menu">{{'Tienda'| translate}}<span class="label label-rouded label-themecolor pull-right">3</span>
+                        <span class="hide-menu">{{'Tienda'| translate}}
                         </span>
                     </a>
                     <ul aria-expanded="false" class="collapse">
@@ -59,7 +59,7 @@
                 <li *ngIf="usuario.role ==='SUPERADMIN' || usuario.role ==='ADMIN' || usuario.role ==='ALMACEN' || usuario.role ==='VENTAS'">
                     <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false">
                         <i class="mdi mdi-store"></i>
-                        <span class="hide-menu">{{'Productos'| translate}}<span class="label label-rouded label-themecolor pull-right">4</span>
+                        <span class="hide-menu">{{'Productos'| translate}}
                         </span>
                     </a>
                     <ul aria-expanded="false" class="collapse">
@@ -72,13 +72,13 @@
 
                     </ul>
                 </li>
-                <li class="nav-devider"></li>
+                <li class="nav-devider" *ngIf="usuario.role ==='SUPERADMIN' || usuario.role ==='ADMIN' || usuario.role ==='ALMACEN' || usuario.role ==='VENTAS'"></li>
                 <!-- delivery -->
                  <li class="nav-small-cap" *ngIf="usuario.role ==='SUPERADMIN' ">{{'Delivery'| translate}}</li>
                 <li *ngIf="usuario.role ==='SUPERADMIN' ">
                     <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false">
                         <i class="mdi mdi-store"></i>
-                        <span class="hide-menu">{{'Delivery'| translate}}<span class="label label-rouded label-themecolor pull-right">3</span>
+                        <span class="hide-menu">{{'Delivery'| translate}}
                         </span>
                     </a>
                     <ul aria-expanded="false" class="collapse">
@@ -90,10 +90,10 @@
                 <li class="nav-devider" *ngIf="usuario.role ==='SUPERADMIN'"></li>
                 <!-- administracion -->
                 <li class="nav-small-cap" *ngIf="usuario.role ==='SUPERADMIN' || usuario.role ==='ADMIN' || usuario.role ==='VENTAS'">{{'Adminstración'| translate}}</li>
-                <li *ngIf="usuario.role ==='SUPERADMIN' || usuario.role ==='ADMIN'">
+                <li *ngIf="usuario.role ==='SUPERADMIN' || usuario.role ==='ADMIN' || usuario.role ==='VENTAS'">
                     <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false">
                         <i class="mdi mdi-store"></i>
-                        <span class="hide-menu">{{'Adminstración'| translate}}<span class="label label-rouded label-themecolor pull-right">8</span>
+                        <span class="hide-menu">{{'Adminstración'| translate}}
                         </span>
                     </a>
                     <ul aria-expanded="false" class="collapse">
