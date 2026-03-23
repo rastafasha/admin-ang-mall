@@ -64,7 +64,8 @@
                                     {{transf.bankName}}
                                 </td>
                                 <td>
-                                    {{transf.amount|currency}}
+                                    {{transf.amount | currency:tienda_moneda}}
+                                    <!-- {{transf.amount | currency:getCurrencySymbol(transf.metodo_pago?.tipo):'symbol':'1.2-2':'es'}} -->
                                 </td>
                                 <td *ngIf="user.role==='SUPERADMIN'">
                                     {{transf.local?.nombre }}

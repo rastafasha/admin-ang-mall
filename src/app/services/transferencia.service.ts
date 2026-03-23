@@ -76,7 +76,7 @@ export class TransferenciaService {
     return this.http.delete(url, this.headers);
   }
 
-  updateStatus(trasnferencia: Transferencia){
+  updateStatus(trasnferencia: any){
     const url = `${base_url}/transferencias/statusupdate/${trasnferencia._id}`;
     return this.http.put(url, trasnferencia, this.headers);
   }

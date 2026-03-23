@@ -3,6 +3,7 @@ import { FormGroup } from '@angular/forms';
 import { Slider } from 'src/app/models/slider.model';
 import { Transferencia } from 'src/app/models/transferencia';
 import { BusquedasService } from 'src/app/services/busquedas.service';
+import { TiendaService } from 'src/app/services/tienda.service';
 import { TransferenciaService } from 'src/app/services/transferencia.service';
 import Swal from 'sweetalert2';
 
@@ -20,6 +21,7 @@ export class ListaTrasnferenciasComponent implements OnInit {
   public desde: number = 0;
   trasnferencia: Transferencia;
   transf: Transferencia;
+  tienda_moneda:string;
 
   p: number = 1;
   count: number = 8;
@@ -34,6 +36,7 @@ export class ListaTrasnferenciasComponent implements OnInit {
   constructor(
     private trasnferenciaService: TransferenciaService,
     private busquedaService: BusquedasService,
+    private tiendaService: TiendaService,
   ) { }
 
   ngOnInit(): void {
@@ -44,6 +47,7 @@ export class ListaTrasnferenciasComponent implements OnInit {
     }
     if (this.user.role === 'ADMIN' || this.user.role === 'VENTAS') {
       this.transPorLocalId()
+      this.getTienda();
     }
   }
 
@@ -59,6 +63,12 @@ export class ListaTrasnferenciasComponent implements OnInit {
 
   }
 
+  getTienda(){
+    this.tiendaService.getTiendaById(this.user.local).subscribe((resp:any)=>{
+      this.tienda_moneda = resp.moneda;
+    })
+  }
+
   transPorLocalId() {
     this.cargando = true;
     this.trasnferenciaService.getTransferenciaByTiendaId(this.user.local).subscribe(
@@ -70,7 +80,13 @@ export class ListaTrasnferenciasComponent implements OnInit {
   }
 
   cambiarStatus(trasnferencia: Transferencia) {
-    this.trasnferenciaService.updateStatus(trasnferencia)
+    const data ={
+      ...trasnferencia,
+      local: this.user.local,
+      updatedAt: Date.now
+    }
+
+    this.trasnferenciaService.updateStatus(data)
       .subscribe(resp => {
         Swal.fire('Actualizado', trasnferencia._id, 'success')
       })
@@ -117,6 +133,15 @@ export class ListaTrasnferenciasComponent implements OnInit {
   handleSearchEvent(event: any) {
     if (event.trasnferencias) {
       this.transferencias = event.trasnferencias;
+    }
+  }
+
+  getCurrencySymbol(tipo: string): string {
+    switch (tipo) {
+      case 'Transferencia Euro': return '€';
+      case 'Transferencia Dólares': return '$';
+      case 'Transferencia Bolivares': return 'Bs.';
+      default: return '$';
     }
   }
 

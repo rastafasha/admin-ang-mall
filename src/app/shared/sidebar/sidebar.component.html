@@ -1,12 +1,13 @@
 <!-- ============================================================== -->
 <!-- Left Sidebar - style you can find in sidebar.scss  -->
 <!-- ============================================================== -->
-<aside class="left-sidebar" *ngIf="usuario.role ==='SUPERADMIN'">
+<aside class="left-sidebar" >
     <!-- Sidebar scroll-->
     <div class="scroll-sidebar">
         <!-- Sidebar navigation-->
         <nav class="sidebar-nav">
             <ul id="sidebarnav">
+                <!-- profile -->
                 <li class="user-profile">
                     <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false">
                         <img [src]="usuario.img | imagenPipe: 'usuarios' " alt="{{usuario.first_name|slice:0:1}} {{usuario.last_name |slice:0:1}}" />
@@ -19,14 +20,15 @@
                     </ul>
                 </li>
                 <li class="nav-devider"></li>
+                <!-- contenido, blog, page -->
                 <li class="nav-small-cap" *ngIf="usuario.role ==='SUPERADMIN'">{{'Contenido'| translate}}</li>
-                <li >
+                <li *ngIf="usuario.role ==='SUPERADMIN'">
                     <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false">
                         <i class="mdi mdi-store"></i>
                         <span class="hide-menu">{{'Contenido'| translate}}<span class="label label-rouded label-themecolor pull-right">3</span>
                         </span>
                     </a>
-                    <ul aria-expanded="false" class="collapse">
+                    <ul aria-expanded="false" class="collapse" *ngIf="usuario.role ==='SUPERADMIN'">
                         <li><a routerLink="slider" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Slider Home'| translate}} </a></li>
                         <li><a routerLink="blog" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Blog'| translate}} </a></li>
                         <li><a routerLink="page" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Page'| translate}} </a></li>
@@ -34,9 +36,10 @@
 
                     </ul>
                 </li>
-                <li class="nav-devider"></li>
-                <li class="nav-small-cap">{{'Tienda'| translate}}</li>
-                <li>
+                <li class="nav-devider" *ngIf="usuario.role ==='SUPERADMIN'"></li>
+                <!-- tienda -->
+                <li class="nav-small-cap" *ngIf="usuario.role ==='SUPERADMIN' || usuario.role ==='ADMIN'|| usuario.role ==='TIENDA'"  >{{'Tienda'| translate}}</li>
+                <li *ngIf="usuario.role ==='SUPERADMIN' || usuario.role ==='ADMIN' || usuario.role ==='TIENDA'">
                     <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false">
                         <i class="mdi mdi-store"></i>
                         <span class="hide-menu">{{'Tienda'| translate}}<span class="label label-rouded label-themecolor pull-right">3</span>
@@ -51,8 +54,9 @@
                     </ul>
                 </li>
                 <li class="nav-devider"></li>
-                <li class="nav-small-cap">{{'Productos'| translate}}</li>
-                <li>
+                <!-- productos -->
+                <li class="nav-small-cap" *ngIf="usuario.role ==='SUPERADMIN' || usuario.role ==='ADMIN' || usuario.role ==='ALMACEN' || usuario.role ==='VENTAS'">{{'Productos'| translate}}</li>
+                <li *ngIf="usuario.role ==='SUPERADMIN' || usuario.role ==='ADMIN' || usuario.role ==='ALMACEN' || usuario.role ==='VENTAS'">
                     <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false">
                         <i class="mdi mdi-store"></i>
                         <span class="hide-menu">{{'Productos'| translate}}<span class="label label-rouded label-themecolor pull-right">4</span>
@@ -62,16 +66,16 @@
 
                         <li><a routerLink="marca" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Marcas'| translate}} </a></li>
                         <li><a routerLink="categoria" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Categorías'| translate}} </a></li>
-                        <!-- <li><a routerLink="curso" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Cursos </a></li> -->
                         <li><a routerLink="producto" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Productos'| translate}} </a></li>
-                        <li><a routerLink="promocion" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Promoción'| translate}} </a></li>
+                        <li *ngIf="usuario.role ==='SUPERADMIN' "><a routerLink="promocion" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Promoción'| translate}} </a></li>
 
 
                     </ul>
                 </li>
                 <li class="nav-devider"></li>
-                 <li class="nav-small-cap">{{'Delivery'| translate}}</li>
-                <li>
+                <!-- delivery -->
+                 <li class="nav-small-cap" *ngIf="usuario.role ==='SUPERADMIN' ">{{'Delivery'| translate}}</li>
+                <li *ngIf="usuario.role ==='SUPERADMIN' ">
                     <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false">
                         <i class="mdi mdi-store"></i>
                         <span class="hide-menu">{{'Delivery'| translate}}<span class="label label-rouded label-themecolor pull-right">3</span>
@@ -83,9 +87,10 @@
                         <li><a routerLink="postal/mapa" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Mapa '|translate}}</a></li>
                     </ul>
                 </li>
-                <li class="nav-devider"></li>
-                <li class="nav-small-cap">{{'Adminstración'| translate}}</li>
-                <li>
+                <li class="nav-devider" *ngIf="usuario.role ==='SUPERADMIN'"></li>
+                <!-- administracion -->
+                <li class="nav-small-cap" *ngIf="usuario.role ==='SUPERADMIN' || usuario.role ==='ADMIN' || usuario.role ==='VENTAS'">{{'Adminstración'| translate}}</li>
+                <li *ngIf="usuario.role ==='SUPERADMIN' || usuario.role ==='ADMIN'">
                     <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false">
                         <i class="mdi mdi-store"></i>
                         <span class="hide-menu">{{'Adminstración'| translate}}<span class="label label-rouded label-themecolor pull-right">8</span>
@@ -102,16 +107,16 @@
                                  {{'Pagos en Efectivo'| translate}}
                             </a>
                         </li>
-                        <li>
+                        <li *ngIf="usuario.role ==='SUPERADMIN' ">
                             <a routerLink="pagoscheque" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
                                  {{'Pagos en Cheque'| translate}}
                             </a>
                         </li>
-                        <li><a routerLink="cupon" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Cupón'|translate}} </a></li>
-                        <li><a routerLink="contacto" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Contacto'|translate}} </a></li>                  
+                        <li *ngIf="usuario.role ==='SUPERADMIN' "><a routerLink="cupon" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Cupón'|translate}} </a></li>
+                        <li *ngIf="usuario.role ==='SUPERADMIN' "><a routerLink="contacto" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Contacto'|translate}} </a></li>                  
                         <!-- <li><a routerLink="ingresos" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">ingresos </a></li> -->
-                        <li><a routerLink="cancelacion/modulo" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Cancelación'|translate}} </a></li>
-                        <li><a routerLink="tikets/modulo" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Ticket'|translate}} </a></li>
+                        <li *ngIf="usuario.role ==='SUPERADMIN' "><a routerLink="cancelacion/modulo" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Cancelación'|translate}} </a></li>
+                        <li *ngIf="usuario.role ==='SUPERADMIN' "><a routerLink="tikets/modulo" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Ticket'|translate}} </a></li>
                         <li><a routerLink="usuarios" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Usuarios'|translate}} </a></li>
 
 
@@ -141,284 +146,8 @@
     </div>
     <!-- End Sidebar scroll-->
 </aside>
-<aside class="left-sidebar" *ngIf="usuario.role ==='ADMIN'">
-    <!-- Sidebar scroll-->
-    <div class="scroll-sidebar">
-        <!-- Sidebar navigation-->
-        <nav class="sidebar-nav">
-            <ul id="sidebarnav">
-                <li class="user-profile">
-                    <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false">
-                        <img [src]="usuario.img | imagenPipe: 'usuarios' " alt="{{usuario.first_name|slice:0:1}} {{usuario.last_name |slice:0:1}}" />
-                        <span class="hide-menu">{{usuario.first_name}} </span></a>
-                    <ul aria-expanded="false" class="collapse">
-                        <li><a routerLink="./perfil" routerLinkActive="active">{{'My Profile'| translate}} </a></li>
-                        <li><a routerLink="account-settings">{{'Account Setting'| translate}}</a></li>
-                        
-                    </ul>
-                </li>
-               
-                <li class="nav-devider"></li>
-                <li class="nav-small-cap">{{'Tienda'| translate}}</li>
-                <li>
-                    <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false">
-                        <i class="mdi mdi-store"></i>
-                        <span class="hide-menu">{{'Tienda'| translate}}<span class="label label-rouded label-themecolor pull-right">4</span>
-                        </span>
-                    </a>
-                    <ul aria-expanded="false" class="collapse">
-
-                        <li><a routerLink="tienda" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Tiendas'| translate}} </a></li>
-                        <li><a routerLink="tienda/pedidos" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Pedidos'| translate}} </a></li>
-                        <li><a routerLink="atencion-local" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Atención Local'| translate}} </a></li>
-                        <li><a routerLink="tienda/comentariosapp" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Comentarios App'| translate}} </a></li>
-                        <li><a routerLink="tienda-user" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Usuarios Tienda'| translate}} </a></li>
 
 
-                    </ul>
-                </li>
-                <li class="nav-devider"></li>
-                <li class="nav-small-cap">{{'Productos'| translate}}</li>
-                <li>
-                    <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false">
-                        <i class="mdi mdi-store"></i>
-                        <span class="hide-menu">{{'Productos'| translate}}<span class="label label-rouded label-themecolor pull-right">2</span>
-                        </span>
-                    </a>
-                    <ul aria-expanded="false" class="collapse">
-
-                        <!-- <li><a routerLink="marca" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Marcas'| translate}} </a></li> -->
-                        <li><a routerLink="categoria" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Categorías'| translate}} </a></li>
-                        <!-- <li><a routerLink="curso" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Cursos </a></li> -->
-                        <li><a routerLink="producto" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Productos'| translate}} </a></li>
-                        <!-- <li><a routerLink="promocion" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Promoción'| translate}} </a></li> -->
-
-
-                    </ul>
-                </li>
-                <li class="nav-devider"></li>
-                <li class="nav-small-cap">{{'Delivery'| translate}}</li>
-                <li>
-                    <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false">
-                        <i class="mdi mdi-store"></i>
-                        <span class="hide-menu">{{'Delivery'| translate}}<span class="label label-rouded label-themecolor pull-right">3</span>
-                        </span>
-                    </a>
-                    <ul aria-expanded="false" class="collapse">
-                        <li><a routerLink="postal" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Delivery '|translate}}</a></li>
-                        <li><a routerLink="postal/asignaciones" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Asignaciones '|translate}}</a></li>
-                        <li><a routerLink="postal/mapa" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Mapa '|translate}}</a></li>
-                    </ul>
-                </li>
-                <li class="nav-devider"></li>
-                <li class="nav-small-cap">{{'Adminstración'| translate}}</li>
-                <li>
-                    <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false">
-                        <i class="mdi mdi-store"></i>
-                        <span class="hide-menu">{{'Adminstración'| translate}}<span class="label label-rouded label-themecolor pull-right">8</span>
-                        </span>
-                    </a>
-                    <ul aria-expanded="false" class="collapse">
-
-                        <!-- <li><a routerLink="configuracion" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Configuración </a></li> -->
-                        <li><a routerLink="ventas/modulo" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Ventas'| translate}} </a></li>
-                        <li><a routerLink="tipos-de-pago" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Tipos de Pago'| translate}} </a></li>
-                        <li><a routerLink="transferencias" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Transferencias'| translate}} </a></li>
-                        <!-- opcion de pagos en efectivo agregado por José Prados -->
-                        <li>
-                            <a routerLink="pagosefectivo" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
-                                 {{'Pagos en Efectivo'| translate}}
-                            </a>
-                        </li>
-                        
-                        <!-- <li>
-                            <a routerLink="pagoscheque" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
-                                 {{'Pagos en Cheque'| translate}}
-                            </a>
-                        </li> -->
-                        
-
-                        <!-- <li><a routerLink="cupon" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Cupón'|translate}} </a></li> -->
-                        <!-- <li><a routerLink="contacto" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Contacto'|translate}} </a></li> -->
-                        <!-- <li><a routerLink="ingresos" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">ingresos </a></li> -->
-                        <!-- <li><a routerLink="cancelacion/modulo" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Cancelación'|translate}} </a></li> -->
-                        <!-- <li><a routerLink="tikets/modulo" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Ticket'|translate}} </a></li> -->
-                        <!-- <li><a routerLink="usuarios" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Usuarios'|translate}} </a></li> -->
-
-
-                    </ul>
-                </li>
-                <li><a (click)="logout()" class="cursor">{{'Logout'|translate}}</a></li>
-                <!-- <li class="nav-small-cap">Menu Dinámico</li>
-
-                <li *ngFor="let item of sidebarService.menu">
-                    <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false">
-                        <i [class]="item.icono"></i>
-                        <span class="hide-menu">{{item.titulo}}<span class="label label-rouded label-themecolor pull-right">
-                          {{item.submenu.length}}
-                        </span>
-                        </span>
-                    </a>
-                    <ul aria-expanded="false" class="collapse">
-                        <li *ngFor="let subMenuItem of item.submenu">
-                            <a [routerLink]="subMenuItem.url" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{subMenuItem.titulo}} </a>
-                        </li>
-                    </ul>
-                </li> -->
-
-            </ul>
-        </nav>
-        <!-- End Sidebar navigation -->
-    </div>
-    <!-- End Sidebar scroll-->
-</aside>
-
-<aside class="left-sidebar" *ngIf="usuario.role ==='VENTAS'">
-    <!-- Sidebar scroll-->
-    <div class="scroll-sidebar">
-        <!-- Sidebar navigation-->
-        <nav class="sidebar-nav">
-            <ul id="sidebarnav">
-                <li class="user-profile">
-                    <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><img [src]="usuario.img | imagenPipe: 'usuarios' " alt="user" /><span class="hide-menu">{{usuario.first_name}} ({{usuario.role}})</span></a>
-                    <ul aria-expanded="false" class="collapse">
-                        <li><a routerLink="./perfil" routerLinkActive="active">{{'My Profile'| translate}} </a></li>
-                        <li><a routerLink="account-settings">{{'Account Setting'| translate}}</a></li>
-                        
-                    </ul>
-                </li>
-                <li class="nav-devider"></li>
-                <li class="nav-small-cap">{{'Tienda'|translate}}</li>
-                <li>
-                    <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false">
-                        <i class="mdi mdi-store"></i>
-                        <span class="hide-menu">{{'Tienda'|translate}}<span class="label label-rouded label-themecolor pull-right">1</span>
-                        </span>
-                    </a>
-                    <ul aria-expanded="false" class="collapse">
-                        <li><a routerLink="atencion-local" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Atención Local'|translate}} </a></li>
-                     </ul>
-                </li>
-              
-                <li class="nav-devider"></li>
-                <li class="nav-small-cap">{{'Adminstración'|translate}}</li>
-                <li>
-                    <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false">
-                        <i class="mdi mdi-store"></i>
-                        <span class="hide-menu">{{'Adminstración'|translate}}<span class="label label-rouded label-themecolor pull-right">6</span>
-                        </span>
-                    </a>
-                    <ul aria-expanded="false" class="collapse">
-
-                        <!-- <li><a routerLink="configuracion" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Configuración </a></li> -->
-                        <li><a routerLink="ventas/modulo" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Ventas'| translate}} </a></li>
-                        <li><a routerLink="transferencias" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Transferencias'| translate}}</a></li>
-                        <!-- opcion de pagos en efectivo agregado por José Prados -->
-                        <li>
-                            <a routerLink="pagosefectivo" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
-                                Pagos en Efectivo
-                            </a>
-                        </li>
-                        <li><a routerLink="contacto" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Contacto '| translate}}</a></li>
-                        <!-- <li><a routerLink="cupon" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Cupón '| translate}}</a></li> -->
-                        <li><a routerLink="postal" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Delivery'| translate}} </a></li>
-                        <!-- <li><a routerLink="ingresos" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"> {{'ingresos'| translate}} </a></li> -->
-                        <li><a routerLink="cancelacion/modulo" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Cancelación'| translate}} </a></li>
-                        <!-- <li><a routerLink="tikets/modulo" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Ticket '| translate}}</a></li> -->
-                        <!-- <li><a routerLink="usuarios" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Usuarios'| translate}} </a></li> -->
-
-
-                    </ul>
-                </li>
-                <li><a (click)="logout()" class="cursor">{{'Logout'| translate}}</a></li>
-
-            </ul>
-        </nav>
-        <!-- End Sidebar navigation -->
-    </div>
-    <!-- End Sidebar scroll-->
-</aside>
-
-<aside class="left-sidebar" *ngIf="usuario.role ==='ALMACEN'">
-    <!-- Sidebar scroll-->
-    <div class="scroll-sidebar">
-        <!-- Sidebar navigation-->
-        <nav class="sidebar-nav">
-            <ul id="sidebarnav">
-                <li class="user-profile">
-                    <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><img [src]="usuario.imagenUrl" alt="user" /><span class="hide-menu">{{usuario.first_name}} ({{usuario.role}})</span></a>
-                    <ul aria-expanded="false" class="collapse">
-                        <li><a routerLink="./perfil" routerLinkActive="active">{{'My Profile '| translate}}</a></li>
-                    </ul>
-                </li>
-                <li class="nav-devider"></li>
-                <li class="nav-small-cap">{{'Productos'| translate}}</li>
-                <li>
-                    <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false">
-                        <i class="mdi mdi-store"></i>
-                        <span class="hide-menu">{{'Productos'| translate}}<span class="label label-rouded label-themecolor pull-right">4</span>
-                        </span>
-                    </a>
-                    <ul aria-expanded="false" class="collapse">
-
-                        <li><a routerLink="marca" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Marcas '| translate}}</a></li>
-                        <li><a routerLink="categoria" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Categorías '| translate}}</a></li>
-                        <li><a routerLink="producto" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Productos'| translate}} </a></li>
-
-
-                    </ul>
-                </li>
-                
-                <li><a (click)="logout()" class="cursor">{{'Logout'| translate}}</a></li>
-
-            </ul>
-        </nav>
-        <!-- End Sidebar navigation -->
-    </div>
-    <!-- End Sidebar scroll-->
-</aside>
-
-<aside class="left-sidebar" *ngIf="usuario.role ==='TIENDA'">
-    <!-- Sidebar scroll-->
-    <div class="scroll-sidebar">
-        <!-- Sidebar navigation-->
-        <nav class="sidebar-nav">
-            <ul id="sidebarnav">
-                <li class="user-profile">
-                    <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><img [src]="usuario.img | imagenPipe: 'usuarios' " alt="user" /><span class="hide-menu">{{usuario.first_name}} ({{usuario.role}})</span></a>
-                    <ul aria-expanded="false" class="collapse">
-                        <li><a routerLink="./perfil" routerLinkActive="active">{{'My Profile'|translate}} </a></li>
-                        <!-- <li><a routerLink="account-settings">Account Setting</a></li> -->
-                        
-                    </ul>
-                </li>
-                
-                <li class="nav-devider"></li>
-                <li class="nav-small-cap">{{'Tienda'|translate}}</li>
-                <li>
-                    <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false">
-                        <i class="mdi mdi-store"></i>
-                        <span class="hide-menu">{{'Tienda'|translate}}<span class="label label-rouded label-themecolor pull-right">1</span>
-                        </span>
-                    </a>
-                    <ul aria-expanded="false" class="collapse">
-
-                        <li><a routerLink="atencion-local" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Atención Local'|translate}} </a></li>
-             
-                    </ul>
-                </li>
-                
-                
-                
-                <li><a (click)="logout()" class="cursor">{{'Logout'|translate}}</a></li>
-                
-
-            </ul>
-        </nav>
-        <!-- End Sidebar navigation -->
-    </div>
-    <!-- End Sidebar scroll-->
-</aside>
 <!-- ============================================================== -->
 <!-- End Left Sidebar - style you can find in sidebar.scss  -->
 <!-- ============================================================== -->
