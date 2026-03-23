@@ -385,7 +385,7 @@ drivers: Driver[] = [];
     this.updateAsignacion();
   }
 
-  private initMap(): void {
+   private initMap(): void {
     let centerLat = 10.4806;
     let centerLng = -66.9036;
 
@@ -412,6 +412,9 @@ drivers: Driver[] = [];
       zoom: this.user.role === 'ADMIN' || this.user.role === 'SUPERADMIN' ? 12 : 15, // Wider zoom for admin
       zoomControl: true
     });
+
+    // Call onMapReady to fix potential sizing issues
+    this.onMapReady(this.map);
 
     // Agregar tiles de OpenStreetMap
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -642,5 +645,11 @@ drivers: Driver[] = [];
   // console.log('toggleDriversList:', this.showDriversList ? 'showing' : 'hiding');
   this.cdr.markForCheck();
   }
+
+   onMapReady(map: L.Map) {
+      setTimeout(() => {
+        map.invalidateSize();
+      }, 200);
+    }
 
 }

@@ -44,7 +44,7 @@
                     </ng-container>
 
                     <!-- Admin Legend -->
-                    <ng-container *ngIf=" !loading && user.role === 'ADMIN' || user.role === 'SUPERADMIN'">
+                    <ng-container *ngIf=" user.role === 'ADMIN' || user.role === 'SUPERADMIN'">
                         <div class="legend">
                             <div><span class="marker-green"></span> Driver Activo</div>
                             <div><span class="marker-red"></span> Entregas</div>
