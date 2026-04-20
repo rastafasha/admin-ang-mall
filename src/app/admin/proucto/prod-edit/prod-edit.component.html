@@ -196,7 +196,7 @@
                                         <select class="form-control " formControlName="subcategoria"
                                             name="subcategoria">
                                             <option disabled value="">SELECCIONAR</option>
-                                            <option *ngFor="let item of listCategorias | unique:'nombre'"
+                                            <option *ngFor="let item of listCategorias | unique:'subcategorias'"
                                                 [value]="item.subcategorias">
                                                 {{item.subcategorias}}</option>
 
