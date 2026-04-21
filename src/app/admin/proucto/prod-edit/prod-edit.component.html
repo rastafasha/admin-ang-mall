@@ -296,9 +296,9 @@
             </div>
         </div>
     </div>
-    <app-loading *ngIf="cargandoImagen"></app-loading>
-    <div class=" col-xs-12 col-md-4 animated fadeIn fast" *ngIf="productoSeleccionado && !cargandoImagen">
-        <div class="card">
+    <div class=" col-xs-12 col-md-4 animated fadeIn fast" *ngIf="productoSeleccionado ">
+        <app-loading *ngIf="cargandoImagen"></app-loading>
+        <div class="card" *ngIf="!cargandoImagen">
             <div class="card-body">
                 <h4 class="card-title">Image</h4>
                 <div class="text-center">

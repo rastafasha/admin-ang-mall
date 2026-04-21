@@ -21,7 +21,8 @@ import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 })
 export class MarcaEditComponent implements OnInit {
 
-
+  cargando=false;
+  cargandoImagen=false;
   public marcaForm: FormGroup;
   public marca: Marca;
   public usuario: Usuario;
@@ -70,7 +71,7 @@ export class MarcaEditComponent implements OnInit {
   }
 
   cargarMarca(_id: string){
-
+    this.cargando = true;
     if(_id === 'nuevo'){
       return;
     }
@@ -89,6 +90,7 @@ export class MarcaEditComponent implements OnInit {
         const { nombre, descripcion } = marca;
         this.marcaSeleccionado = marca;
         this.marcaForm.setValue({nombre, descripcion});
+        this.cargando = false;
 
       });
 
@@ -98,7 +100,7 @@ export class MarcaEditComponent implements OnInit {
 
 
   updateMarca(){
-
+    this.cargando = true;
     const {nombre, descripcion } = this.marcaForm.value;
 
     if(this.marcaSeleccionado){
@@ -109,6 +111,7 @@ export class MarcaEditComponent implements OnInit {
       }
       this.marcaService.actualizarMarca(data).subscribe(
         resp =>{
+          this.cargando = false;
           Swal.fire('Actualizado', `${nombre} actualizado correctamente`, 'success');
         });
 
@@ -116,6 +119,7 @@ export class MarcaEditComponent implements OnInit {
       //crear
       this.marcaService.crearMarca(this.marcaForm.value)
       .subscribe( (resp: any) =>{
+        this.cargando = false;
         Swal.fire('Creado', `${nombre} creado correctamente`, 'success');
         this.router.navigateByUrl(`/dashboard/marca`);
       })
@@ -140,12 +144,15 @@ export class MarcaEditComponent implements OnInit {
   }
 
   subirImagen(){
+    this.cargandoImagen = true;
     this.fileUploadService
     .actualizarFoto(this.imagenSubir, 'marcas', this.marcaSeleccionado._id)
     .then(img => { this.marcaSeleccionado.img = img;
+      this.cargandoImagen = false;
       Swal.fire('Guardado', 'La imagen fue actualizada', 'success');
 
     }).catch(err =>{
+      this.cargandoImagen = false;
       Swal.fire('Error', 'No se pudo subir la imagen', 'error');
 
     })

@@ -117,7 +117,7 @@
                         <!-- <li><a routerLink="ingresos" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">ingresos </a></li> -->
                         <li *ngIf="usuario.role ==='SUPERADMIN' "><a routerLink="cancelacion/modulo" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Cancelación'|translate}} </a></li>
                         <li *ngIf="usuario.role ==='SUPERADMIN' "><a routerLink="tikets/modulo" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Ticket'|translate}} </a></li>
-                        <li><a routerLink="usuarios" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Usuarios'|translate}} </a></li>
+                        <li *ngIf="usuario.role ==='SUPERADMIN' "><a routerLink="usuarios" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Usuarios'|translate}} </a></li>
 
 
                     </ul>

@@ -33,7 +33,8 @@ declare var $: any;
 export class TiendaaddComponent implements OnInit {
 
 
-
+  cargando=false;
+  cargandoImagen=false;
   public tiendaForm: FormGroup;
   public tienda: Tienda;
   public usuario: Usuario;
@@ -198,7 +199,7 @@ export class TiendaaddComponent implements OnInit {
 
   cargarTienda(_id: string) {
 
-
+    this.cargando = true;
     if (_id !== null && _id !== undefined) {
       this.pageTitle = 'Edit Usuario';
       this.tiendaService.getTiendaById(_id).subscribe(
@@ -222,7 +223,7 @@ export class TiendaaddComponent implements OnInit {
             user: res.user
           });
           this.tiendaSeleccionado = res;
-          console.log(this.tiendaSeleccionado);
+          this.cargando = false;
           // console.log(this.tiendaSeleccionado.redssociales);
           this.redssociales = this.tiendaSeleccionado.redssociales;
         }
@@ -239,7 +240,7 @@ export class TiendaaddComponent implements OnInit {
 
 
   saveTienda() {
-
+    this.cargando = true;
     if(!this.tiendaForm.valid){
       //mostramos las alertas de los campos requeridos
       this.tiendaForm.markAllAsTouched(); // Esto activa las validaciones visuales
@@ -274,6 +275,7 @@ export class TiendaaddComponent implements OnInit {
       }
       this.tiendaService.actualizarTienda(data).subscribe(
         resp => {
+          this.cargando = false;
           Swal.fire('Actualizado', `${nombre} actualizado correctamente`, 'success');
         });
 
@@ -281,6 +283,7 @@ export class TiendaaddComponent implements OnInit {
       //crear
       this.tiendaService.crearTienda(this.tiendaForm.value)
         .subscribe((resp: any) => {
+          this.cargando = false;
           Swal.fire('Creado', `${nombre} creado correctamente`, 'success');
           this.router.navigateByUrl(`/dashboard/tienda`);
         })
@@ -305,13 +308,16 @@ export class TiendaaddComponent implements OnInit {
   }
 
   subirImagen() {
+    this.cargandoImagen = true;
     this.fileUploadService
       .actualizarFoto(this.imagenSubir, 'locaciones', this.tiendaSeleccionado._id)
       .then(img => {
         this.tiendaSeleccionado.img = img;
+        this.cargandoImagen = false;
         Swal.fire('Guardado', 'La imagen fue actualizada', 'success');
 
       }).catch(err => {
+        this.cargandoImagen = false;
         Swal.fire('Error', 'No se pudo subir la imagen', 'error');
 
       })
