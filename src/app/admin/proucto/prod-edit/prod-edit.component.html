@@ -1,6 +1,6 @@
 <div class="row">
-
-    <div class=" col-xs-12 col-md-8">
+<app-loading *ngIf="cargando"></app-loading>
+    <div class=" col-xs-12 col-md-8" *ngIf="!cargando">
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title">{{pageTitle}}</h4>
@@ -296,7 +296,8 @@
             </div>
         </div>
     </div>
-    <div class=" col-xs-12 col-md-4 animated fadeIn fast" *ngIf="productoSeleccionado">
+    <app-loading *ngIf="cargandoImagen"></app-loading>
+    <div class=" col-xs-12 col-md-4 animated fadeIn fast" *ngIf="productoSeleccionado && !cargandoImagen">
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title">Image</h4>
@@ -323,14 +324,14 @@
             </div>
         </div>
 
-        <!-- <div *ngIf="productoSeleccionado.video_review">
+        <div *ngIf="productoSeleccionado.video_review">
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title">Video</h4>
                     <iframe class="videom" [src]="getVideoIframe(productoSeleccionado.video_review)" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; " allowfullscreen></iframe>
                 </div>
             </div>
-        </div> -->
+        </div>
 
         <!-- <div class="font-size-sm">
             <span class="text-heading font-weight-medium mr-1">

@@ -54,6 +54,8 @@ export class ProdEditComponent implements OnInit {
   public colores:any;
   public color_to_cart:any;
   public selectores:any;
+  cargando=false;
+  cargandoImagen=false;
 
   banner: string;
   pageTitle: string;
@@ -177,7 +179,7 @@ export class ProdEditComponent implements OnInit {
 
 
   cargarProducto(){
-
+    this.cargando = true;
     if(this.producto_id === 'nuevo'){
       return;
     }
@@ -196,7 +198,7 @@ export class ProdEditComponent implements OnInit {
           
 
         this.productoSeleccionado = producto;
-        console.log('producto seleccionado: ',this.productoSeleccionado);
+        this.cargando = false;
 
         // CODIGO COMENTADO POR JOSE PRADOS
         // this.productoForm.setValue({
@@ -245,7 +247,7 @@ export class ProdEditComponent implements OnInit {
       subcategoria: [''],
       isFeatured: [''],
       marca: ['', Validators.required],
-      local: ['', Validators.required],
+      local: [''],
       nombre_selector: ['', Validators.required]
     })
   }
@@ -255,6 +257,7 @@ export class ProdEditComponent implements OnInit {
 
 
   updateProducto(){
+    this.cargando = true;
      if(!this.productoForm.valid){
       //mostramos las alertas de los campos requeridos
       this.productoForm.markAllAsTouched(); // Esto activa las validaciones visuales
@@ -283,6 +286,7 @@ export class ProdEditComponent implements OnInit {
       
       this.productoService.actualizarProducto(data).subscribe(
         resp =>{
+          this.cargando = false;
           Swal.fire('Actualizado', `${titulo}  actualizado correctamente`, 'success');
         });
 
@@ -294,6 +298,7 @@ export class ProdEditComponent implements OnInit {
       }
       this.productoService.crearProducto(data)
       .subscribe( (resp: any) =>{
+         this.cargando = false;
         Swal.fire('Creado', `${titulo} creado correctamente`, 'success');
         this.router.navigateByUrl(`/dashboard/producto`);
       })
@@ -318,12 +323,15 @@ export class ProdEditComponent implements OnInit {
   }
 
   subirImagen(){
+    this.cargandoImagen = true;
     this.fileUploadService
     .actualizarFoto(this.imagenSubir, 'productos', this.productoSeleccionado._id)
     .then(img => { this.productoSeleccionado.img = img;
+      this.cargandoImagen = false;
       Swal.fire('Guardado', 'La imagen fue actualizada', 'success');
 
     }).catch(err =>{
+      this.cargandoImagen = false;
       Swal.fire('Error', 'No se pudo subir la imagen', 'error');
 
     })
