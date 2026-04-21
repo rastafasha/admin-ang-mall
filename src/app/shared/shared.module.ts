@@ -10,6 +10,7 @@ import { BackbuttonComponent } from './backbutton/backbutton.component';
 import { LoadingComponent } from './loading/loading.component';
 import { SearchComponent } from './search/search.component';
 import { PipesModule } from '../pipes/pipes.module';
+import { PwaNotifInstallerComponent } from './pwa-notif-installer/pwa-notif-installer.component';
 
 
 
@@ -20,7 +21,8 @@ import { PipesModule } from '../pipes/pipes.module';
     HeaderComponent,
     BackbuttonComponent,
     LoadingComponent,
-    SearchComponent
+    SearchComponent,
+    PwaNotifInstallerComponent
   ],
   exports: [
     BreadcrumbsComponent,
@@ -28,7 +30,8 @@ import { PipesModule } from '../pipes/pipes.module';
     HeaderComponent,
     BackbuttonComponent,
     LoadingComponent,
-    SearchComponent
+    SearchComponent,
+    PwaNotifInstallerComponent
   ],
   imports: [
     CommonModule,
