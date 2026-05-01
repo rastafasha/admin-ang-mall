@@ -1,218 +1,265 @@
-import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { Location } from '@angular/common';
 import Swal from 'sweetalert2';
-
 import { FileUploadService } from 'src/app/services/file-upload.service';
-import { environment } from 'src/environments/environment';
-
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { Usuario } from 'src/app/models/usuario.model';
 import { CategoriaService } from 'src/app/services/categoria.service';
-import { ModalImagenService } from 'src/app/services/modal-imagen.service';
-
 import { Blog } from 'src/app/models/blog.model';
 import { BlogService } from 'src/app/services/blog.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 
-interface HtmlInputEvent extends Event{
-  target : HTMLInputElement & EventTarget;
+interface HtmlInputEvent extends Event {
+  target: HTMLInputElement & EventTarget;
 }
 
-declare var jQuery:any;
-declare var $:any;
+declare var jQuery: any;
+declare var $: any;
+declare var bootstrap: any;
 
 @Component({
   selector: 'app-blog-edit',
-  standalone:false,
+  standalone: false,
   templateUrl: './blog-edit.component.html',
   styleUrls: ['./blog-edit.component.css'],
-  providers:[
+  providers: [
     CategoriaService
   ]
 })
-export class BlogEditComponent implements OnInit {
+export class BlogEditComponent implements OnInit, OnChanges {
 
+  @Input() postSeleccionado;
+  @Output() closeModal: EventEmitter<void> = new EventEmitter<void>();
+  @Output() refreshPostList: EventEmitter<void> = new EventEmitter<void>();
 
   public blogForm: FormGroup;
   public blog: Blog;
   public usuario: Usuario;
   public imagenSubir: File;
   public imgTemp: any = null;
-  public file :File;
-  public imgSelect : String | ArrayBuffer;
+  public file: File;
+  public imgSelect: String | ArrayBuffer;
   public listMarcas;
   public listCategorias;
+  isLoadingImage = false;
+  isLoading = false;
 
   banner: string;
   pageTitle: string;
 
-  public blogSeleccionado: Blog;
 
   public Editor = ClassicEditor;
+
+  currentStep = 1;
 
   constructor(
     private fb: FormBuilder,
     private blogService: BlogService,
     private usuarioService: UsuarioService,
-    private modalImagenService: ModalImagenService,
     private categoriaService: CategoriaService,
     private fileUploadService: FileUploadService,
-    private router: Router,
-    private activatedRoute: ActivatedRoute,
-    private location: Location,
     private sanitizer: DomSanitizer
   ) {
     this.usuario = usuarioService.usuario;
-    const base_url = environment.baseUrl;
   }
 
   ngOnInit(): void {
-    this.activatedRoute.params.subscribe( ({id}) => this.cargarBlog(id));
 
-    window.scrollTo(0,0);
+    window.scrollTo(0, 0);
     this.getCategorias();
     this.validarFormulario();
 
-    if(this.blogSeleccionado){
-      //actualizar
-      this.pageTitle = 'Create Blog';
-
-    }else{
-      //crear
-      this.pageTitle = 'Edit Blog';
-    }
-
-
-
   }
 
-  validarFormulario(){
+  ngOnChanges(changes: SimpleChanges): void {
+
+    if (
+      changes['postSeleccionado'] &&
+      changes['postSeleccionado'].currentValue
+    ) {
+      this.pageTitle = 'Editando Post';
+      const post = changes['postSeleccionado'].currentValue;
+      this.blogForm.patchValue({
+        id: post._id,
+        titulo: post.titulo,
+        descripcion: post.descripcion,
+        video_review: post.video_review,
+        categoria: post.categoria,
+        isFeatured: post.isFeatured,
+        slug: post.slug,
+        user_id: this.usuario.uid,
+        img: post.img
+      });
+      this.postSeleccionado = post;
+      this.pageTitle = 'Editando Post';
+    } else {
+      this.pageTitle = 'Creando Post';
+    }
+  }
+
+  onClose() {
+    this.postSeleccionado = null;
+    this.currentStep = 1;
+    this.blogForm.reset();
+    this.pageTitle = 'Creando Proyecto';
+    // Also reset default values if needed
+    this.blogForm.patchValue({
+      id: null,
+      titulo: null,
+      descripcion: null,
+      video_review: null,
+      categoria: null,
+      isFeatured: null,
+      slug: null,
+      user_id: null,
+      img: null
+    });
+    // Emit event to parent to reset the projectSeleccionado variable
+
+    this.closeModal.emit();
+  }
+
+  nextStep() {
+    const titulo = this.blogForm.get('titulo');
+    const descripcion = this.blogForm.get('descripcion');
+    const categoria = this.blogForm.get('categoria');
+    const video_review = this.blogForm.get('video_review');
+    const isFeatured = this.blogForm.get('isFeatured');
+
+    if (titulo?.invalid || descripcion?.invalid ||
+      categoria?.invalid || video_review?.invalid ||
+      isFeatured?.invalid 
+
+    ) {
+      titulo?.markAsTouched();
+      descripcion?.markAsTouched();
+      categoria?.markAsTouched();
+      video_review?.markAsTouched();
+      isFeatured?.markAsTouched();
+      return;
+    }
+    this.currentStep = 2;
+  }
+
+  prevStep() {
+    this.currentStep = 1;
+  }
+
+
+  validarFormulario() {
     this.blogForm = this.fb.group({
-      titulo: ['',Validators.required],
-      descripcion: ['',Validators.required],
-      categoria: ['',Validators.required],
+      titulo: ['', Validators.required],
+      descripcion: ['', Validators.required],
+      categoria: ['', Validators.required],
       slug: [''],
       isFeatured: [''],
       video_review: [''],
     })
   }
 
-  getCategorias(){
+  getCategorias() {
     this.categoriaService.cargarCategorias().subscribe(
-      resp =>{
+      resp => {
         this.listCategorias = resp;
-        console.log(this.listCategorias)
 
       }
     )
   }
 
-  cargarBlog(_id: string){
+  updateBlog() {
 
-    if (_id) {
-      this.pageTitle = 'Edit Blog';
-      this.blogService.getBlogById(_id).subscribe(
-        res => {
-          this.blogForm.patchValue({
-            id: res._id,
-            titulo: res.titulo,
-            descripcion: res.descripcion,
-            video_review: res.video_review,
-            categoria: res.categoria,
-            isFeatured: res.isFeatured,
-            slug: res.slug,
-            user_id: this.usuario.uid,
-            img : res.img
-          });
-          this.blogSeleccionado = res;
-          console.log(this.blogSeleccionado);
-        }
-      );
-    } else {
-      this.pageTitle = 'Create Blog';
+    if (!this.blogForm.valid) {
+      //mostramos las alertas de los campos requeridos
+      this.blogForm.markAllAsTouched(); // Esto activa las validaciones visuales
+      return
     }
 
-  }
-
-
-
-
-
-  updateBlog(){
-
-    const {titulo, descripcion,categoria, isFeatured,
+    const { titulo, descripcion, categoria, isFeatured,
       video_review, } = this.blogForm.value;
 
-    if(this.blogSeleccionado){
+    if (this.postSeleccionado) {
       //actualizar
       const data = {
         ...this.blogForm.value,
-        _id: this.blogSeleccionado._id
+        _id: this.postSeleccionado._id
       }
       this.blogService.actualizarBlog(data).subscribe(
-        resp =>{
+        resp => {
           Swal.fire('Actualizado', `${titulo}  actualizado correctamente`, 'success');
-          console.log(this.blogSeleccionado);
+          // Close modal programmatically
+          const modalElement = document.getElementById('editPost');
+          const modal = bootstrap.Modal.getInstance(modalElement);
+          if (modal) {
+            modal.hide();
+
+          }
+          // Emit event to refresh project list
+          this.refreshPostList.emit();
+          this.ngOnInit()
         });
 
-    }else{
+    } else {
       //crear
       this.blogService.crearBlog(this.blogForm.value)
-      .subscribe( (resp: any) =>{
-        Swal.fire('Creado', `${titulo} creado correctamente`, 'success');
-        this.router.navigateByUrl(`/dashboard/blog`);
-      })
+        .subscribe((resp: any) => {
+           this.postSeleccionado = resp.blog;
+           Swal.fire('¡Paso 1 completado!', 'Post creado. Ahora sube la imagen.', 'success');
+          // Como estmos creando, al finalizar debe ir al paso 2 para subir la imagen
+          this.currentStep = 2;
+        },
+       err => {
+          Swal.fire('Error', 'No se pudo crear el post', 'error');
+        })
     }
 
   }
 
 
-  cambiarImagen(file: File){
+  cambiarImagen(file: File) {
     this.imagenSubir = file;
 
-    if(!file){
+    if (!file) {
       return this.imgTemp = null;
     }
 
     const reader = new FileReader();
     const url64 = reader.readAsDataURL(file);
 
-    reader.onloadend = () =>{
+    reader.onloadend = () => {
       this.imgTemp = reader.result;
     }
   }
 
-  subirImagen(){
+  subirImagen() {
+    this.isLoadingImage = true;
     this.fileUploadService
-    .actualizarFoto(this.imagenSubir, 'blogs', this.blogSeleccionado._id)
-    .then(img => { this.blogSeleccionado.img = img;
-      Swal.fire('Guardado', 'La imagen fue actualizada', 'success');
+      .actualizarFoto(this.imagenSubir, 'blogs', this.postSeleccionado._id)
+      .then(img => {
+        this.postSeleccionado.img = img;
+        this.isLoadingImage = false;
+        Swal.fire('Guardado', 'La imagen fue actualizada', 'success');
 
-    }).catch(err =>{
-      Swal.fire('Error', 'No se pudo subir la imagen', 'error');
+      }).catch(err => {
+        Swal.fire('Error', 'No se pudo subir la imagen', 'error');
 
-    })
+      })
   }
 
-  goBack() {
-    this.location.back(); // <-- go back to previous location on cancel
-  }
+ 
 
   getVideoIframe(url) {
     var video, results;
 
     if (url === null) {
-        return '';
+      return '';
     }
     results = url.match('[\\?&]v=([^&#]*)');
-    video   = (results === null) ? url : results[1];
+    video = (results === null) ? url : results[1];
 
     return this.sanitizer.bypassSecurityTrustResourceUrl('https://www.youtube.com/embed/' + video);
-}
+  }
 
 
 }

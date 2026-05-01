@@ -31,6 +31,7 @@ export class PageIndexComponent implements OnInit {
   public msm_error;
 
   public imgSubs: Subscription;
+  pageSeleccionado:Page;
   
   query:string ='';
     searchForm!:FormGroup;
@@ -54,7 +55,6 @@ export class PageIndexComponent implements OnInit {
       pages => {
         this.cargando = false;
         this.pages = pages;
-        console.log(this.pages);
       }
     )
 
@@ -116,6 +116,20 @@ export class PageIndexComponent implements OnInit {
       }
     )
   }
+
+   onEditProject(page: Page) {
+      this.pageSeleccionado = page;
+    }
+  
+    openEditModal(): void {
+      this.pageSeleccionado = null;
+    }
+  
+    onCloseModal(): void {
+      this.pageSeleccionado = null;
+    }
+  
+    onClose() { }
 
 
 }

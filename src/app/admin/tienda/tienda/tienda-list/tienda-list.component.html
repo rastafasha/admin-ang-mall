@@ -2,8 +2,8 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <app-search [query]="query" [modelo]="tienda" [colleccionName]="tiendas"
-        [colleccion]="'tiendas'" (searchEvent)="handleSearchEvent($event)" (resetEvent)="PageSize()"></app-search>
+                <app-search [query]="query" [modelo]="tienda" [colleccionName]="tiendas" [colleccion]="'tiendas'"
+                    (searchEvent)="handleSearchEvent($event)" (resetEvent)="PageSize()"></app-search>
             </div>
         </div>
     </div>
@@ -31,8 +31,8 @@
                     <div class="col-3">
                         <div class="text-right">
                             <button class="btn btn-primary" [routerLink]="['/dashboard/tienda/registro/']">
-                              <i class="fa fa-pencil"></i>
-                              Crear Tienda
+                                <i class="fa fa-pencil"></i>
+                                Crear Tienda
                             </button>
                         </div>
                     </div>
@@ -52,9 +52,11 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let tienda of tiendas |  paginate: { itemsPerPage: count, currentPage: p } | orderBy:'createdAt, desc'">
+                            <tr
+                                *ngFor="let tienda of tiendas |  paginate: { itemsPerPage: count, currentPage: p } | orderBy:'createdAt, desc'">
                                 <td class="text-center">
-                                    <img [src]="tienda.img | imagenPipe: 'tiendas'" class="img-responsive avatar" alt="{{tienda.nombre}}">
+                                    <img [src]="tienda.img | imagenPipe: 'tiendas'" class="img-responsive avatar"
+                                        alt="{{tienda.nombre}}">
                                     <!-- <img (click)="abrirModal(marca)" [src]="marca.imagenUrl | imagenPipe: 'marcas'" class="avatar cursor" alt="{{marca.nombre}}"> -->
                                 </td>
                                 <td>
@@ -67,8 +69,12 @@
                                     {{tienda.categoria.nombre}}
                                 </td>
                                 <td class="text-nowrap text-center">
-                                    <a [routerLink]="['/dashboard/tienda/edit/', tienda._id]" class="cursor" data-toggle="tooltip" data-original-title="Edit"> <i class="fa fa-pencil text-inverse m-r-10"></i> </a>
-                                    <a (click)="eliminarMarca(tienda)" *ngIf="user.role === 'SUPERADMIN'" class="cursor" data-toggle="tooltip" data-original-title="Borrar"> <i class="fa fa-close text-danger"></i> </a>
+                                    <a [routerLink]="['/dashboard/tienda/edit/', tienda._id]" class="cursor"
+                                        data-toggle="tooltip" data-original-title="Edit"> <i
+                                            class="fa fa-pencil text-inverse m-r-10"></i> </a>
+                                    <a (click)="eliminarMarca(tienda)" *ngIf="user.role === 'SUPERADMIN'" class="cursor"
+                                        data-toggle="tooltip" data-original-title="Borrar"> <i
+                                            class="fa fa-close text-danger"></i> </a>
                                 </td>
                             </tr>
 
@@ -92,8 +98,8 @@
                     <div class="col-3">
                         <div class="text-right">
                             <button class="btn btn-primary" [routerLink]="['/dashboard/tienda/registro/']">
-                              <i class="fa fa-pencil"></i>
-                              Crear Tienda
+                                <i class="fa fa-pencil"></i>
+                                Crear Tienda
                             </button>
                         </div>
                     </div>
@@ -113,9 +119,11 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let tienda of tiendas |  paginate: { itemsPerPage: count, currentPage: p } | orderBy:'createdAt, desc'">
+                            <tr
+                                *ngFor="let tienda of tiendas |  paginate: { itemsPerPage: count, currentPage: p } | orderBy:'createdAt, desc'">
                                 <td class="text-center">
-                                    <img [src]="tienda.img | imagenPipe: 'tiendas'" class="img-responsive avatar" alt="{{tienda.nombre}}">
+                                    <img [src]="tienda.img | imagenPipe: 'tiendas'" class="img-responsive avatar"
+                                        alt="{{tienda.nombre}}">
                                     <!-- <img (click)="abrirModal(marca)" [src]="marca.imagenUrl | imagenPipe: 'marcas'" class="avatar cursor" alt="{{marca.nombre}}"> -->
                                 </td>
                                 <td>
@@ -128,8 +136,12 @@
                                     {{tienda.categoria.nombre}}
                                 </td>
                                 <td class="text-nowrap text-center">
-                                    <a [routerLink]="['/dashboard/tienda/edit/', tienda._id]" class="cursor" data-toggle="tooltip" data-original-title="Edit"> <i class="fa fa-pencil text-inverse m-r-10"></i> </a>
-                                    <a (click)="eliminarMarca(tienda)" *ngIf="user.role === 'SUPERADMIN'" class="cursor" data-toggle="tooltip" data-original-title="Borrar"> <i class="fa fa-close text-danger"></i> </a>
+                                    <a [routerLink]="['/dashboard/tienda/edit/', tienda._id]" class="cursor"
+                                        data-toggle="tooltip" data-original-title="Edit"> <i
+                                            class="fa fa-pencil text-inverse m-r-10"></i> </a>
+                                    <a (click)="eliminarMarca(tienda)" *ngIf="user.role === 'SUPERADMIN'" class="cursor"
+                                        data-toggle="tooltip" data-original-title="Borrar"> <i
+                                            class="fa fa-close text-danger"></i> </a>
                                 </td>
                             </tr>
 

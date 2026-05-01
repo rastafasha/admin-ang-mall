@@ -1,13 +1,8 @@
 <div class="row animated fadeIn fast">
     <div class="col-12">
-        <div class="card">
-            <div class="card-body">
-                <!-- <input type="text" class="form-control" placeholder="Buscar" #txtTermino (keyup)="buscar(txtTermino.value)"> -->
-
-                <app-search [query]="query" [modelo]="slider" [colleccionName]="sliders"
-        [colleccion]="'sliders'" (searchEvent)="handleSearchEvent($event)" (resetEvent)="PageSize()"></app-search>
-            </div>
-        </div>
+        <app-search [query]="query" [modelo]="slider" [colleccionName]="sliders"
+    [colleccion]="'sliders'" (searchEvent)="handleSearchEvent($event)" (resetEvent)="PageSize()"></app-search>
+       
     </div>
 </div>
 
@@ -20,15 +15,15 @@
         <div class="card">
             <div class="card-body">
                 <div class="row">
-                    <div class="col-9">
+                    <div class="col-11">
                         <h4 class="card-title">Slider: ({{ sliders.length}})</h4>
                     </div>
-                    <div class="col-3">
+                    <div class="col-1">
                         <div class="text-right">
-                            <button class="btn btn-primary" [routerLink]="['/dashboard/slider/create/']">
-                            <i class="fa fa-plus"></i>
-                            {{'Nuevo'| translate}}
-                          </button>
+                            <button (click)="openEditModal()" class="btn btn-outline-success" data-toggle="tooltip"
+                                data-original-title="Edit" data-bs-toggle="modal" data-bs-target="#editSlider">
+                                <i class="fa fa-plus"></i>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -36,7 +31,7 @@
                 <hr>
 
                 <div class="table-responsive">
-                    <table class="table table-bordered">
+                    <table class="table table-borderless">
                         <thead>
                             <tr>
                                 <th>{{'Imagen'| translate}}</th>
@@ -50,7 +45,8 @@
                         <tbody>
                             <tr *ngFor="let slider of sliders |  paginate: { itemsPerPage: count, currentPage: p } | orderBy:'createdAt, desc'">
                                 <td class="text-center">
-                                    <img [routerLink]="['/dashboard/slider/edit', slider._id]"  [src]="slider.img | imagenPipe: 'sliders'" class="img-responsive avatar cursor" alt="{{slider.title}}">
+                                    <img (click)="onEditProject(slider)" data-bs-toggle="modal"
+                                        data-bs-target="#editSlider" [src]="slider.img | imagenPipe: 'sliders'" class="img-responsive avatar cursor" alt="{{slider.title}}">
                                     <!-- <img (click)="abrirModal(marca)" [src]="marca.imagenUrl | imagenPipe: 'marcas'" class="avatar cursor" alt="{{marca.nombre}}"> -->
                                 </td>
                                 <td>
@@ -71,21 +67,16 @@
                                 </td>
                                 
                                  <td class="text-nowrap text-center">
-
-                                    <div class="btn-group" role="group">
-                                        <button type="button" class="btn btn-dark dropdown-toggle"
-                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <span class="czi-settings"></span> {{'Opciones'| translate}}
-                                        </button>
-                                        <div class="dropdown-menu">
-                                            <a [routerLink]="['/dashboard/slider/edit', slider._id]"
-                                                class="dropdown-item"><span class="czi-edit-alt"></span>
-                                                &nbsp;{{'Editar'| translate}}</a>
-                                            <a (click)="eliminarSlider(slider)" class="dropdown-item"><span
-                                                    class="czi-delete-document"></span> &nbsp;{{'Eliminar'|
-                                                translate}}</a>
-                                        </div>
-                                    </div>
+                                    <button class="btn btn-outline-success" data-toggle="tooltip"
+                                        data-original-title="Edit" (click)="onEditProject(slider)" data-bs-toggle="modal"
+                                        data-bs-target="#editSlider">
+                                        <i class="fa fa-edit"></i>
+                                    </button>
+                                    &nbsp;
+                                    <button (click)="eliminarSlider(slider)" class="btn btn-outline-danger"
+                                        data-toggle="tooltip" data-original-title="Borrar">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
                                 </td>
                             </tr>
 
@@ -97,3 +88,5 @@
         </div>
     </div>
 </div>
+<app-slideredit (refreshSliderList)="loadSliders()" [sliderSeleccionado]="sliderSeleccionado" (closeModal)="onClose()"
+    #editSlider></app-slideredit>

@@ -26,15 +26,15 @@ declare var $: any;
 
 @Component({
   selector: 'app-tiendaadd',
-  standalone:false,
+  standalone: false,
   templateUrl: './tiendaadd.component.html',
   styleUrls: ['./tiendaadd.component.css']
 })
 export class TiendaaddComponent implements OnInit {
 
 
-  cargando=false;
-  cargandoImagen=false;
+  cargando = false;
+  cargandoImagen = false;
   public tiendaForm: FormGroup;
   public tienda: Tienda;
   public usuario: Usuario;
@@ -241,7 +241,7 @@ export class TiendaaddComponent implements OnInit {
 
   saveTienda() {
     this.cargando = true;
-    if(!this.tiendaForm.valid){
+    if (!this.tiendaForm.valid) {
       //mostramos las alertas de los campos requeridos
       this.tiendaForm.markAllAsTouched(); // Esto activa las validaciones visuales
       return

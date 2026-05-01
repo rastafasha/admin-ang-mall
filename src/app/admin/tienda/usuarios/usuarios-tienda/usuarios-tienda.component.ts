@@ -50,37 +50,11 @@ export class UsuariosTiendaComponent implements OnInit {
     this.user = JSON.parse(USER ? USER: '');
     this.localId = this.user.local;
     this.role = this.user.role;
-
-    // console.log('localID: ',this.localId)
-
-    if(this.role === 'ADMIN'){
-      this.loadUsuarios();
-      
-    }else{
-
-      this.loadUsuarios();
-    }
-    if(this.role === 'ALMACEN' || this.role === 'VENTAS'||this.role === 'TIENDA'){
-    }
+    this.loadUsuarios();
 
   }
 
-  // ngOnDestroy(){
-  //   this.imgSubs.unsubscribe();
-  // }
-
-  loadEmployeesByLocalId(){
-    this.cargando = true;
-    this.usuarioService.cargarUsuariosTienda(this.localId)
-    .subscribe(
-      ({total, tiendausers})=>{
-        this.totalUsuarios = total;
-        this.usuarios = tiendausers;
-        this.tiendausersTemp = tiendausers;
-        this.cargando = false;
-      }
-    )
-  }
+ 
 
   loadUsuarios(){
     this.cargando = true;
@@ -161,10 +135,5 @@ export class UsuariosTiendaComponent implements OnInit {
     )
   }
 
-
-  abrirModal(usuario: Usuario){
-    this.modalImagenService.abrirModal('usuarios', usuario.uid, usuario.img);
-
-  }
 
 }

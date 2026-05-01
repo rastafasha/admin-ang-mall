@@ -1,14 +1,8 @@
 <div class="row animated fadeIn fast">
     <div class="col-12">
-        <div class="card">
-            <div class="card-body">
-                <!-- <input type="text" class="form-control" placeholder="Buscar " #txtTermino
-                    (keyup)="buscar(txtTermino.value)"> -->
-
-                    <app-search [query]="query" [modelo]="blog" [colleccionName]="blogs"
-        [colleccion]="'blogs'" (searchEvent)="handleSearchEvent($event)" (resetEvent)="PageSize()"></app-search>
-            </div>
-        </div>
+        <app-search [query]="query" [modelo]="blog" [colleccionName]="blogs" [colleccion]="'blogs'"
+            (searchEvent)="handleSearchEvent($event)" (resetEvent)="PageSize()"></app-search>
+       
     </div>
 </div>
 
@@ -21,14 +15,14 @@
         <div class="card">
             <div class="card-body">
                 <div class="row">
-                    <div class="col-9">
+                    <div class="col-11">
                         <h4 class="card-title">Blog: ({{ blogs.length}})</h4>
                     </div>
-                    <div class="col-3">
+                    <div class="col-1">
                         <div class="text-right">
-                            <button class="btn btn-primary" [routerLink]="['/dashboard/blog/create/']">
+                            <button (click)="openEditModal()" class="btn btn-outline-success" data-toggle="tooltip"
+                                data-original-title="Edit" data-bs-toggle="modal" data-bs-target="#editPost">
                                 <i class="fa fa-plus"></i>
-                                {{'Nuevo'| translate}}
                             </button>
                         </div>
                     </div>
@@ -37,7 +31,7 @@
                 <hr>
 
                 <div class="table-responsive">
-                    <table class="table table-bordered">
+                    <table class="table table-borderless">
                         <thead>
                             <tr>
                                 <th>img</th>
@@ -55,7 +49,9 @@
                                 *ngFor="let blog of blogs |  paginate: { itemsPerPage: count, currentPage: p } | orderBy:'createdAt, desc'">
                                 <td class="text-center">
                                     <!-- <img [src]="producto.img | imagenPipe: 'productos'" class="img-responsive avatar" alt="{{producto.titulo}}"> -->
-                                    <img [routerLink]="['/dashboard/blog/edit',blog._id]"
+                                    <img (click)="onEditProject(blog)"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#editPost"
                                         [src]="blog.img | imagenPipe: 'blogs'" class="avatar cursor"
                                         alt="{{blog.titulo}}">
                                 </td>
@@ -132,35 +128,28 @@
                                             </div>
                                         </div>
                                     </div>
-
-
-
                                     <span class="text-muted" *ngIf="blog.status == 'Edición'"
                                         style="font-size: 13px;">{{'Este item aún se encuentra en edición'|
                                         translate}}.</span>
                                     <span class="text-muted" *ngIf="blog.status == 'Desactivado'"
-                                        style="font-size: 13px;">{{'Este item aún no está disponible en la tienda'|
-                                        translate}}.</span>
+                                        style="font-size: 13px;">{{'Este item aún no está disponible en la tienda'| translate}}.</span>
 
                                 </td>
                                 <td>{{ blog.createdAt | date:'MMM d, y, h:mm:ss a' }}</td>
                                 <td>{{ blog.updatedAt | date:'MMM d, y, h:mm:ss a' }}</td>
                                 <td class="text-nowrap text-center">
-
-                                    <div class="btn-group" role="group">
-                                        <button type="button" class="btn btn-dark dropdown-toggle"
-                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <span class="czi-settings"></span> {{'Opciones'| translate}}
+                                    <button  class="btn btn-outline-success"
+                                            data-toggle="tooltip" data-original-title="Edit"
+                                            (click)="onEditProject(blog)"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#editPost">
+                                            <i class="fa fa-edit"></i>
                                         </button>
-                                        <div class="dropdown-menu">
-                                            <a [routerLink]="['/dashboard/blog/edit',blog._id]"
-                                                class="dropdown-item"><span class="czi-edit-alt"></span>
-                                                &nbsp;{{'Editar'| translate}}</a>
-                                            <a (click)="eliminarBlog(blog)" class="dropdown-item"><span
-                                                    class="czi-delete-document"></span> &nbsp;{{'Eliminar'|
-                                                translate}}</a>
-                                        </div>
-                                    </div>
+                                         &nbsp;
+                                        <button (click)="eliminarBlog(blog)" class="btn btn-outline-danger" data-toggle="tooltip"
+                                            data-original-title="Borrar">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
                                 </td>
                             </tr>
 
@@ -172,3 +161,5 @@
         </div>
     </div>
 </div>
+<app-blog-edit (refreshPostList)="loadBlogs()" [postSeleccionado]="postSeleccionado" (closeModal)="onClose()"
+    #editPost></app-blog-edit>

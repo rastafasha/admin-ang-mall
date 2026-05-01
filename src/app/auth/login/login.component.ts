@@ -4,7 +4,7 @@ import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 import { UsuarioService } from 'src/app/services/usuario.service';
 
-declare const gapi: any;
+// declare const gapi: any;
 
 
 @Component({
@@ -95,31 +95,31 @@ ngOnInit(){
   //   this.startApp();
   // }
 
-  async startApp(){
-    this.usuarioService.googleInit();
-    this.auth2 = this.usuarioService.auth2;
+  // async startApp(){
+  //   this.usuarioService.googleInit();
+  //   this.auth2 = this.usuarioService.auth2;
 
-    this.attachSignin(document.getElementById('my-signin2'));
-  }
+  //   this.attachSignin(document.getElementById('my-signin2'));
+  // }
 
-  attachSignin(element) {
-    this.auth2.attachClickHandler(element, {},
-        (googleUser) =>{
-          const id_token = googleUser.getAuthResponse().id_token;
+  // attachSignin(element) {
+  //   this.auth2.attachClickHandler(element, {},
+  //       (googleUser) =>{
+  //         const id_token = googleUser.getAuthResponse().id_token;
 
-          this.usuarioService.loginGoogle(id_token).subscribe(
-            resp=>{
+  //         this.usuarioService.loginGoogle(id_token).subscribe(
+  //           resp=>{
 
-              this.ngZone.run(()=>{
-                this.router.navigateByUrl('/dashboard');
-              })
-            }
-          );
+  //             this.ngZone.run(()=>{
+  //               this.router.navigateByUrl('/dashboard');
+  //             })
+  //           }
+  //         );
 
 
-        }, (error) =>{
-          alert(JSON.stringify(error, undefined, 2));
-        });
-  }
+  //       }, (error) =>{
+  //         alert(JSON.stringify(error, undefined, 2));
+  //       });
+  // }
 
 }

@@ -1,105 +1,222 @@
-<div class="row">
-
-    <div class="col-md-8">
-        <div class="card">
-            <div class="card-body">
-                <h4 class="card-title">{{pageTitle}}</h4>
-                <h6 class="card-subtitle">Ajustes</h6>
-                <button class="btn btn-outline-danger" href="javascript:void(0)" (click)="goBack()">Volver</button>
-                <form class="form p-t-20 form-horizontal form-material" [formGroup]="pageForm" (submit)="updatePage()">
-                    <div class="row">
-                        
-                        <div class="form-group col-12 ">
-                            <label for="exampleInputuname">Título<span class="required">*</span></label>
-                            <div class="input-group">
-    
-                                <input type="text" formControlName="titulo" class="form-control" id="exampleInputuname" placeholder="titulo" required>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row" >
-                        
-                        <div class="form-group col-12 ">
-                            <input class="form-control form-control-sm" type="text" placeholder="slug" formControlName="slug" readonly>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="form-group col-12 ">
-                            <label  for="text-input">Descripción <span class="required">*</span></label>
-                            <div class=" col-12 ">
-    
-                                <ckeditor [editor]="Editor" formControlName="descripcion" data="<p>Hello, world!</p>" required></ckeditor>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="form-group col-12 ">
-                            <label  for="text-input">video de youtube</label>
-                            <div class="input-group">
-                                <input type="text" formControlName="video_review" class="form-control" id="exampleInputuname" placeholder="Codigo de insercion de vídeo">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="form-group col-xs-12 col-sm-6">
-                            <label for="select-input">Categoría <span class="required">*</span></label>
-                            <select class="form-control " formControlName="categoria" required>
-                            <option disabled  value="">SELECCIONAR</option>
-                            <option *ngFor="let item of listCategorias" [value]="item._id">{{item.nombre}}</option>
-
-                        </select>
-                        </div>
-                        <div class="form-group col-xs-12 col-sm-6">
-                            <label for="select-input">Destacado?</label>
-                            <select class="form-control " formControlName="isFeatured">
-                              <option  disabled value="">SELECCIONAR</option>
-                              <option  [value]="true">Activo</option>
-                              <option  [value]="false">Inactivo</option>
-
-                          </select>
-                        </div>
-                        <div class="form-group col-xs-12 col-sm-6">
-                            <label for="select-input">Menu</label>
-                            <select class="form-control " formControlName="origen">
-                              <option  disabled value="">SELECCIONAR</option>
-                              <option  value="header">Header</option>
-                              <option  value="footer">Footer</option>
-                              <option  value="ambos">Ambos</option>
-
-                          </select>
-                        </div>
-                    </div>
-
-
-                    <button type="submit" [disabled]="pageForm.invalid" class="btn btn-success waves-effect waves-light m-r-10 btn-block">
-           <i class="fa fa-save"></i> Guardar cambios
-          </button>
-                </form>
+<div class="modal fade" id="editPage" tabindex="-1" aria-labelledby="pageModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="pageModalLabel">{{pageTitle}}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                    (click)="onClose()"></button>
             </div>
-        </div>
-    </div>
-    <div class="col-md-4 animated fadeIn fast" *ngIf="pageSeleccionado">
-        <div class="card">
-            <div class="card-body">
-                <h4 class="card-title">Image</h4>
-                <div class="text-center">
-                    <img *ngIf="!imgTemp" [src]="pageSeleccionado.img | imagenPipe: 'pages'  " class="img-responsive img-thumbnail" alt="">
-                    <img *ngIf="imgTemp" [src]="imgTemp" class="img-avatar">
+            <div class="modal-body">
+                <!-- <app-loading *ngIf="isLoading"></app-loading> -->
+                <div class="container">
+                    <div class="row">
+
+                        <!-- Step Indicator -->
+                        <div class="step-indicator m-t-20 m-b-20">
+                            <div class="step" [ngClass]="{'active': currentStep >= 1, 'completed': currentStep > 1}">
+                                <span class="step-number">1</span>
+                                <span class="step-label">Datos</span>
+                            </div>
+                            <div class="step-line"></div>
+                            <div class="step" [ngClass]="{'active': currentStep >= 2}">
+                                <span class="step-number">2</span>
+                                <span class="step-label">Imagen</span>
+                            </div>
+                        </div>
+                        <!-- editar/crear post -->
+                        <div *ngIf="currentStep === 1">
+                            <form class="form p-t-20 form-horizontal form-material" [formGroup]="pageForm">
+                                <div class="row">
+
+                                    <div class="form-group col-12 ">
+                                        <label for="exampleInputuname">Título<span class="required">*</span></label>
+                                        <div class="input-group">
+
+                                            <input type="text" formControlName="titulo" class="form-control"
+                                                id="exampleInputuname" placeholder="titulo" required>
+                                            <div *ngIf="pageForm.get('titulo')?.touched && pageForm.get('titulo')?.invalid"
+                                                class="text-danger">
+                                                <div *ngIf="pageForm.get('titulo')?.touched && pageForm.get('titulo')?.invalid"
+                                                    class="text-danger">
+                                                    <div *ngIf="pageForm.get('titulo')?.errors?.['required']">
+                                                        Campo Requerido
+                                                    </div>
+                                                    <div *ngIf="pageForm.get('titulo')?.errors?.['minlength']">
+                                                        Coloque un Titulo
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+
+                                    <div class="form-group col-12 ">
+                                        <input class="form-control form-control-sm" type="text" placeholder="slug"
+                                            formControlName="slug" readonly>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-12 ">
+                                        <label for="text-input">Descripción <span class="required">*</span></label>
+                                        <div class=" col-12 ">
+
+                                            <!-- <ckeditor [editor]="Editor" formControlName="descripcion"
+                                                data="<p>Hello, world!</p>" required></ckeditor> -->
+                                                <textarea formControlName="descripcion" id="descripcion" cols="30" rows="4"
+                                                class="form-control"></textarea>
+                                            <div *ngIf="pageForm.get('descripcion')?.touched && pageForm.get('descripcion')?.invalid"
+                                                class="text-danger">
+                                                <div *ngIf="pageForm.get('descripcion')?.errors?.['required']">
+                                                    Campo Requerido
+                                                </div>
+                                                <div *ngIf="pageForm.get('descripcion')?.errors?.['minlength']">
+                                                    Coloque una Descripción
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-12 ">
+                                        <label for="text-input">video de youtube</label>
+                                        <div class="input-group">
+                                            <input type="text" formControlName="video_review" class="form-control"
+                                                id="exampleInputuname" placeholder="Codigo de insercion de vídeo">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-xs-12 col-sm-6">
+                                        <label for="select-input">Categoría <span class="required">*</span></label>
+                                        <select class="form-control " formControlName="categoria" required>
+                                            <option disabled value="">SELECCIONAR</option>
+                                            <option *ngFor="let item of listCategorias" [value]="item._id">
+                                                {{item.nombre}}</option>
+
+                                        </select>
+                                        <div *ngIf="pageForm.get('categoria')?.touched && pageForm.get('categoria')?.invalid"
+                                            class="text-danger">
+                                            <div *ngIf="pageForm.get('categoria')?.errors?.['required']">
+                                                Campo Requerido
+                                            </div>
+                                            <div *ngIf="pageForm.get('categoria')?.errors?.['minlength']">
+                                                Seleccione una opción
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-xs-12 col-sm-6">
+                                        <label for="select-input">Destacado? <span class="required">*</span></label>
+                                        <select class="form-control " formControlName="isFeatured" required>
+                                            <option disabled value="">SELECCIONAR</option>
+                                            <option [value]="true">Activo</option>
+                                            <option [value]="false">Inactivo</option>
+
+                                        </select>
+                                        <div *ngIf="pageForm.get('isFeatured')?.touched && pageForm.get('isFeatured')?.invalid"
+                                            class="text-danger">
+                                            <div *ngIf="pageForm.get('isFeatured')?.errors?.['required']">
+                                                Campo Requerido
+                                            </div>
+                                            <div *ngIf="pageForm.get('isFeatured')?.errors?.['minlength']">
+                                                Seleccione una opción
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-xs-12 col-sm-6">
+                                        <label for="select-input">Menu <span class="required">*</span></label>
+                                        <select class="form-control " formControlName="origen" required>
+                                            <option disabled value="">SELECCIONAR</option>
+                                            <option value="header">Header</option>
+                                            <option value="footer">Footer</option>
+                                            <option value="ambos">Ambos</option>
+
+                                        </select>
+                                        <div *ngIf="pageForm.get('categoria')?.touched && pageForm.get('categoria')?.invalid"
+                                            class="text-danger">
+                                            <div *ngIf="pageForm.get('categoria')?.errors?.['required']">
+                                                Campo Requerido
+                                            </div>
+                                            <div *ngIf="pageForm.get('categoria')?.errors?.['minlength']">
+                                                Seleccione una opción
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="col-6">
+                                        <button class="btn btn-success waves-effect waves-light m-r-10 btn-block"
+                                            type="button" (click)="nextStep()">Siguiente</button>
+                                    </div>
+                                    <div class="col-6">
+                                        <button (click)="updatePage()" class="btn btn-outline-success">
+                                            {{ pageSeleccionado ? 'Actualizar y Continuar' : 'Crear y Continuar' }}
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div *ngIf="currentStep === 2">
+                            <app-loading *ngIf="isLoadingImage"></app-loading>
+                            <div *ngIf="!isLoadingImage">
+                                <label> Anexe su foto</label>
+                                <br>
+                                <div class="row">
+                                    <div class="especificaciones col-xs-12" *ngIf="!postSeleccionado">
+                                        <h4>Debe Crear un post para agregar la imagen</h4>
+                                    </div>
+                                    <div class="especificaciones col-xs-12 col-sm-6" *ngIf="postSeleccionado">
+                                        <h4>Especificaciones:</h4>
+                                        <ul>
+                                            <li>Tamaño máximo: 300px X 300px</li>
+                                            <li>Peso máximo: 2 mb</li>
+                                            <li>Formato permitido: jpg, .gif, .png</li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6" *ngIf="postSeleccionado ">
+                                        <div class="text-center">
+                                            <img *ngIf="!imgTemp " [src]="postSeleccionado.img | imagenPipe: 'blogs'"
+                                                class="img-responsive img-thumbnail" alt="">
+                                            <!-- <img *ngIf="post.img" [src]="post.img | imagenPipe: 'blogs'" class="img-responsive img-thumbnail" alt=""> -->
+                                            <img *ngIf="imgTemp" [src]="imgTemp" class="img-responsive">
+                                            <div class="form-group ">
+
+                                            </div>
+                                        </div>
+                                        <input type="file" (change)="cambiarImagen($event.target.files[0])">
+                                        <br>
+                                        <br>
+
+
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <button
+                                                    class="btn btn-success waves-effect waves-light m-r-10 btn-block"
+                                                    type="button" (click)="prevStep()">Anterior</button>
+                                            </div>
+                                            <div class="col-6">
+                                                <button type="button" [disabled]="!imagenSubir" (click)="subirImagen()"
+                                                    class="btn btn-success waves-effect waves-light m-r-10 btn-block">
+                                                    <i class="fa fa-save"></i> Subir imagen
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+
                 </div>
-                <input type="file" (change)="cambiarImagen($event.target.files[0])">
-                <br>
-                <br>
-                <button type="button" [disabled]="!imagenSubir" (click)="subirImagen()" class="btn btn-success waves-effect waves-light m-r-10 btn-block">
-        <i class="fa fa-save"></i> Cambiar imagen
-       </button>
             </div>
-        </div>
-        <div *ngIf="pageSeleccionado.video_review">
-            <div class="card">
-                <div class="card-body">
-                    <h4 class="card-title">Video</h4>
-                    <iframe class="videom" [src]="getVideoIframe(pageSeleccionado.video_review)" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; " allowfullscreen></iframe>
-                </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                    (click)="onClose()">Cerrar</button>
             </div>
         </div>
     </div>

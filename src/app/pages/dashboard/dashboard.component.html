@@ -25,6 +25,7 @@
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-4">
+                        <!-- total mes -->
                         <div class="col">
                             <div class="card">
                                 <div class="card-body" style="padding-bottom: 12px;">
@@ -55,6 +56,7 @@
 
                             </div>
                         </div>
+                        <!-- ventas mes -->
                         <div class="col">
                             <div class="card">
                                 <div class="card-body" style="padding-bottom: 12px;">
@@ -83,6 +85,28 @@
                                             </h6>
                                             <p class="mb-3 pt-1" style="font-size: 14px;">{{'Ventas'| translate}}
                                                 {{current_month}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <!-- usuarios -->
+                        <div class="col" *ngIf="usuario.role === 'SUPERADMIN'">
+                            <div class="card">
+                                <div class="card-body" style="padding-bottom: 12px;">
+                                    <div class="d-flex align-items-center mx-auto py-3 px-3"
+                                        style="padding: 0px !important;">
+                                        <div class="display-2 font-weight-normal border-color mr-4">
+                                            <a routerLink="usuarios">
+                                                <span class="czi-users"></span>
+                                            </a>
+                                        </div>
+                                        <div class="pl-2">
+                                            <h6 style="margin-bottom: 0px;">
+                                                Usuarios
+                                            </h6>
+                                            
                                         </div>
                                     </div>
                                 </div>

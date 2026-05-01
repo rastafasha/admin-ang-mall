@@ -15,8 +15,7 @@ declare let Chart;
   selector: 'app-dashboard',
   standalone:false,
   templateUrl: './dashboard.component.html',
-  styles: [
-  ]
+  styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
 

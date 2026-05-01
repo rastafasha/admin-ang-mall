@@ -1,4 +1,4 @@
-import { Component,  OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { delay } from 'rxjs/operators';
 import Swal from 'sweetalert2';
@@ -9,12 +9,12 @@ import { Router } from '@angular/router';
 import { Blog } from 'src/app/models/blog.model';
 import { FormGroup } from '@angular/forms';
 
-declare var jQuery:any;
-declare var $:any;
+declare var jQuery: any;
+declare var $: any;
 
 @Component({
   selector: 'app-blog-index',
-  standalone:false,
+  standalone: false,
   templateUrl: './blog-index.component.html',
   styleUrls: ['./blog-index.component.css']
 })
@@ -34,10 +34,12 @@ export class BlogIndexComponent implements OnInit {
 
   public imgSubs: Subscription;
 
-  query:string ='';
-    searchForm!:FormGroup;
-    currentPage = 1;
-    collecion='blogs';
+  query: string = '';
+  searchForm!: FormGroup;
+  currentPage = 1;
+  collecion = 'blogs';
+
+  postSeleccionado: Blog;
 
   constructor(
     private blogService: BlogService,
@@ -45,39 +47,33 @@ export class BlogIndexComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-
     this.loadBlogs();
-
   }
 
-  loadBlogs(){
+  loadBlogs() {
     this.cargando = true;
     this.blogService.getBlogs().subscribe(
       blogs => {
         this.cargando = false;
         this.blogs = blogs;
-        console.log(this.blogs);
       }
     )
 
   }
 
-
-
-  eliminarBlog(_id: string){
-
+  eliminarBlog(_id: string) {
     this.blogService.borrarBlog(_id).subscribe(
-      response =>{
+      (response:any) => {
         this.loadBlogs();
-        $('#delete-'+_id).modal('hide');
+        $('#delete-' + _id).modal('hide');
         $('.modal-backdrop').removeClass('show');
         $('.fix-header').removeClass('modal-open');
       },
-      error=>{
+      error => {
         this.msm_error = 'No se pudo eliminar el curso, vuelva a intentar.'
       }
-      );
-      this.ngOnInit();
+    );
+    this.ngOnInit();
   }
 
 
@@ -93,42 +89,54 @@ export class BlogIndexComponent implements OnInit {
       this.blogs = event.blogs;
     }
   }
-  editarId(_id:string ) {
+  editarId(_id: string) {
     this.blogService.getBlogById(_id).subscribe(
-      res =>{
-        this.router.navigateByUrl('/dashboard/blog/edit/'+_id);
+      res => {
+        this.router.navigateByUrl('/dashboard/blog/edit/' + _id);
 
       }
     );
   }
 
-  desactivar(id){
+  desactivar(id) {
     this.blogService.desactivar(id).subscribe(
-      response=>{
-        $('#desactivar-'+id).modal('hide');
+      response => {
+        $('#desactivar-' + id).modal('hide');
         $('.modal-backdrop').removeClass('show');
         this.loadBlogs();
       },
-      error=>{
+      error => {
         this.msm_error = 'No se pudo desactivar el curso, vuelva a intenter.'
       }
     )
   }
 
-  activar(id){
+  activar(id) {
     this.blogService.activar(id).subscribe(
-      response=>{
+      response => {
 
-        $('#activar-'+id).modal('hide');
+        $('#activar-' + id).modal('hide');
         $('.modal-backdrop').removeClass('show');
         this.loadBlogs();
       },
-      error=>{
-
-
+      error => {
         this.msm_error = 'No se pudo activar el curso, vuelva a intenter.'
       }
     )
   }
+
+  onEditProject(blog: Blog) {
+    this.postSeleccionado = blog;
+  }
+
+  openEditModal(): void {
+    this.postSeleccionado = null;
+  }
+
+  onCloseModal(): void {
+    this.postSeleccionado = null;
+  }
+
+  onClose() { }
 
 }

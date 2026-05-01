@@ -27,6 +27,7 @@ export class SliderComponent implements OnInit {
   count: number = 8;
 
   public imgSubs: Subscription;
+  sliderSeleccionado:Slider;
 
   query:string ='';
     searchForm!:FormGroup;
@@ -109,5 +110,19 @@ export class SliderComponent implements OnInit {
       this.sliders = event.sliders;
     }
   }
+
+  onEditProject(slider: Slider) {
+        this.sliderSeleccionado = slider;
+      }
+    
+      openEditModal(): void {
+        this.sliderSeleccionado = null;
+      }
+    
+      onCloseModal(): void {
+        this.sliderSeleccionado = null;
+      }
+    
+      onClose() { }
 
 }

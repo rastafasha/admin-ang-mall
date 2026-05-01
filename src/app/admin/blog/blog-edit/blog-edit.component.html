@@ -1,111 +1,206 @@
-<div class="row">
-
-    <div class="col-md-8">
-        <div class="card">
-            <div class="card-body">
-                <h4 class="card-title">{{pageTitle}}</h4>
-                <h6 class="card-subtitle">Ajustes</h6>
-                <app-backbutton></app-backbutton>
-                <form class="form p-t-20 form-horizontal form-material" [formGroup]="blogForm" (submit)="updateBlog()">
-                    <div class="row">
-
-                        <div class="form-group col-12 ">
-                            <label for="exampleInputuname"> {{'Título'| translate}}<span
-                                    class="required">*</span></label>
-                            <div class="input-group">
-
-                                <input type="text" formControlName="titulo" class="form-control" id="exampleInputuname"
-                                    placeholder="titulo" required>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-
-                        <div class="form-group col-12 ">
-                            <input class="form-control form-control-sm" type="text" placeholder="slug"
-                                formControlName="slug" readonly>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="form-group col-12 ">
-                            <label for="text-input">{{'Descripción'| translate}} <span class="required">*</span></label>
-                            <div class=" col-12 ">
-
-                                <ckeditor [editor]="Editor" formControlName="descripcion" data="<p>Hello, world!</p>"
-                                    required></ckeditor>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="form-group col-12 ">
-                            <label for="text-input">Video </label>
-                            <div class="input-group">
-                                <input type="text" formControlName="video_review" class="form-control"
-                                    id="exampleInputuname" placeholder="Codigo de insercion de vídeo">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="form-group col-xs-12 col-sm-6 ">
-                            <label for="select-input">{{'Destacado'| translate}}?</label>
-                            <select class="form-control " formControlName="isFeatured">
-                                <option disabled value="">{{'Seleccione'| translate}}</option>
-                                <option [value]="true">{{'Activo'| translate}}</option>
-                                <option [value]="false">{{'Inactivo'| translate}}</option>
-                            </select>
-                        </div>
-                        <div class="form-group col-xs-12 col-sm-6">
-                            <label for="select-input">{{'Categoría'| translate}} <span class="required">*</span></label>
-                            <select class="form-control " formControlName="categoria" required>
-                                <option disabled value="">{{'Seleccione'| translate}}</option>
-                                <option *ngFor="let item of listCategorias" [value]="item._id">{{item.nombre}}</option>
-
-                            </select>
-                        </div>
-                    </div>
-
-
-                    <button type="submit" [disabled]="blogForm.invalid"
-                        class="btn btn-success waves-effect waves-light m-r-10 btn-block">
-                        <i class="fa fa-save"></i> {{'Guardar'| translate}}
-                    </button>
-                </form>
+<div class="modal fade" id="editPost" tabindex="-1" aria-labelledby="postModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="postModalLabel">{{pageTitle}}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                    (click)="onClose()"></button>
             </div>
-        </div>
-    </div>
-    <div class="col-md-4 animated fadeIn fast" *ngIf="blogSeleccionado">
-        <div class="card">
-            <div class="card-body">
-                <h4 class="card-title"> {{'Imagen'| translate}}</h4>
-                <div class="text-center">
-                    <img *ngIf="!imgTemp" [src]="blogSeleccionado.img | imagenPipe: 'blogs'  "
-                        class="img-responsive img-thumbnail" alt="">
-                    <img *ngIf="imgTemp" [src]="imgTemp" class="img-avatar">
+            <div class="modal-body">
+                <app-loading *ngIf="isLoading"></app-loading>
+                <div class="container">
+                    <div class="row">
+
+                        <!-- Step Indicator -->
+                        <div class="step-indicator m-t-20 m-b-20">
+                            <div class="step" [ngClass]="{'active': currentStep >= 1, 'completed': currentStep > 1}">
+                                <span class="step-number">1</span>
+                                <span class="step-label">Datos</span>
+                            </div>
+                            <div class="step-line"></div>
+                            <div class="step" [ngClass]="{'active': currentStep >= 2}">
+                                <span class="step-number">2</span>
+                                <span class="step-label">Imagen</span>
+                            </div>
+                        </div>
+                        <!-- editar/crear post -->
+                        <div *ngIf="currentStep === 1">
+                            <form class="form p-t-20 form-horizontal form-material" [formGroup]="blogForm">
+                                <div class="row">
+
+                                    <div class="form-group col-12 ">
+                                        <label for="exampleInputuname"> {{'Título'| translate}}<span
+                                                class="required">*</span></label>
+                                        <div class="input-group">
+
+                                            <input type="text" formControlName="titulo" class="form-control"
+                                                id="exampleInputuname" placeholder="titulo" required>
+                                            <div *ngIf="blogForm.get('titulo')?.touched && blogForm.get('titulo')?.invalid"
+                                                class="text-danger">
+                                                <div *ngIf="blogForm.get('titulo')?.touched && blogForm.get('titulo')?.invalid"
+                                                    class="text-danger">
+                                                    <div *ngIf="blogForm.get('titulo')?.errors?.['required']">
+                                                        Campo Requerido
+                                                    </div>
+                                                    <div *ngIf="blogForm.get('titulo')?.errors?.['minlength']">
+                                                        Coloque un Titulo
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+
+                                    <div class="form-group col-12 ">
+                                        <input class="form-control form-control-sm" type="text" placeholder="slug"
+                                            formControlName="slug" readonly>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-12 ">
+                                        <label for="text-input">{{'Descripción'| translate}} <span
+                                                class="required">*</span></label>
+                                        <div class=" col-12 ">
+
+                                            <!-- <ckeditor [editor]="Editor" formControlName="descripcion"
+                                                data="<p>Hello, world!</p>" required></ckeditor> -->
+
+                                            <textarea formControlName="descripcion" id="descripcion" cols="30" rows="4"
+                                                class="form-control"></textarea>
+                                            <div *ngIf="blogForm.get('descripcion')?.touched && blogForm.get('descripcion')?.invalid"
+                                                class="text-danger">
+                                                <div *ngIf="blogForm.get('descripcion')?.errors?.['required']">
+                                                    Campo Requerido
+                                                </div>
+                                                <div *ngIf="blogForm.get('descripcion')?.errors?.['minlength']">
+                                                    Coloque una Descripción
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-12 ">
+                                        <label for="text-input">Video </label>
+                                        <div class="input-group">
+                                            <input type="text" formControlName="video_review" class="form-control"
+                                                id="exampleInputuname" placeholder="Codigo de insercion de vídeo">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-xs-12 col-sm-6 ">
+                                        <label for="select-input">{{'Destacado'| translate}}?</label>
+                                        <select class="form-control " formControlName="isFeatured">
+                                            <option disabled value="">{{'Seleccione'| translate}}</option>
+                                            <option [value]="true">{{'Activo'| translate}}</option>
+                                            <option [value]="false">{{'Inactivo'| translate}}</option>
+                                        </select>
+                                        <div *ngIf="blogForm.get('isFeatured')?.touched && blogForm.get('isFeatured')?.invalid"
+                                            class="text-danger">
+                                            <div *ngIf="blogForm.get('isFeatured')?.errors?.['required']">
+                                                Campo Requerido
+                                            </div>
+                                            <div *ngIf="blogForm.get('isFeatured')?.errors?.['minlength']">
+                                                Seleccione una opción
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-xs-12 col-sm-6">
+                                        <label for="select-input">{{'Categoría'| translate}} <span
+                                                class="required">*</span></label>
+                                        <select class="form-control " formControlName="categoria" required>
+                                            <option disabled value="">{{'Seleccione'| translate}}</option>
+                                            <option *ngFor="let item of listCategorias" [value]="item._id">
+                                                {{item.nombre}}</option>
+
+                                        </select>
+                                        <div *ngIf="blogForm.get('categoria')?.touched && blogForm.get('categoria')?.invalid"
+                                            class="text-danger">
+                                            <div *ngIf="blogForm.get('categoria')?.errors?.['required']">
+                                                Campo Requerido
+                                            </div>
+                                            <div *ngIf="blogForm.get('categoria')?.errors?.['minlength']">
+                                                Seleccione una opción
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="col-6">
+                                        <button class="btn btn-success waves-effect waves-light m-r-10 btn-block"
+                                            type="button" (click)="nextStep()">Siguiente</button>
+                                    </div>
+                                    <div class="col-6">
+                                        <button (click)="updateBlog()" class="btn btn-outline-success">
+                                            {{ postSeleccionado ? 'Actualizar y Continuar' : 'Crear y Continuar' }}
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div *ngIf="currentStep === 2">
+                            <app-loading *ngIf="isLoadingImage"></app-loading>
+                            <div *ngIf="!isLoadingImage">
+                                <label> Anexe su foto</label>
+                                <br>
+                                <div class="row">
+                                    <div class="especificaciones col-xs-12" *ngIf="!postSeleccionado">
+                                        <h4>Debe Crear un post para agregar la imagen</h4>
+                                    </div>
+                                    <div class="especificaciones col-xs-12 col-sm-6" *ngIf="postSeleccionado">
+                                        <h4>Especificaciones:</h4>
+                                        <ul>
+                                            <li>Tamaño máximo: 300px X 300px</li>
+                                            <li>Peso máximo: 2 mb</li>
+                                            <li>Formato permitido: jpg, .gif, .png</li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6" *ngIf="postSeleccionado ">
+                                        <div class="text-center">
+                                            <img *ngIf="!imgTemp " [src]="postSeleccionado.img | imagenPipe: 'blogs'"
+                                                class="img-responsive img-thumbnail" alt="">
+                                            <!-- <img *ngIf="post.img" [src]="post.img | imagenPipe: 'blogs'" class="img-responsive img-thumbnail" alt=""> -->
+                                            <img *ngIf="imgTemp" [src]="imgTemp" class="img-responsive">
+                                            <div class="form-group ">
+
+                                            </div>
+                                        </div>
+                                        <input type="file" (change)="cambiarImagen($event.target.files[0])">
+                                        <br>
+                                        <br>
+
+
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <button
+                                                    class="btn btn-success waves-effect waves-light m-r-10 btn-block"
+                                                    type="button" (click)="prevStep()">Anterior</button>
+                                            </div>
+                                            <div class="col-6">
+                                                <button type="button" [disabled]="!imagenSubir" (click)="subirImagen()"
+                                                    class="btn btn-success waves-effect waves-light m-r-10 btn-block">
+                                                    <i class="fa fa-save"></i> Subir imagen
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+
                 </div>
-                <input type="file" (change)="cambiarImagen($event.target.files[0])">
-                <br>
-                <br>
-                <button type="button" [disabled]="!imagenSubir" (click)="subirImagen()"
-                    class="btn btn-success waves-effect waves-light m-r-10 btn-block">
-                    <i class="fa fa-save"></i> {{'Cambiar Imagen'| translate}}
-                </button>
-                <div class="col-xs-12">
-                <h4>{{'Especificaciones'}}:</h4>
-                <ul>
-                    <li>{{'Tamaño máximo'}}: 300px X 300px</li>
-                    <li>{{'Peso máximo'}}: 3 mega bites</li>
-                    <li>{{'Formato permitido'}}: jpg, .gif, .png</li>
-                </ul>
             </div>
-            </div>
-            <div *ngIf="blogSeleccionado.video_review">
-                <div class="card">
-                    <div class="card-body">
-                        <h4 class="card-title">Video</h4>
-                        <iframe class="videom" [src]="getVideoIframe(blogSeleccionado.video_review)" frameborder="0"
-                            allow="accelerometer; autoplay; encrypted-media; gyroscope; " allowfullscreen></iframe>
-                    </div>
-                </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                    (click)="onClose()">Cerrar</button>
             </div>
         </div>
     </div>

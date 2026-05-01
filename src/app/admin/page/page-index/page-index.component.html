@@ -1,11 +1,8 @@
 <div class="row animated fadeIn fast">
     <div class="col-12">
-        <div class="card">
-            <div class="card-body">
-                <app-search [query]="query" [modelo]="page" [colleccionName]="pages"
-        [colleccion]="'pages'" (searchEvent)="handleSearchEvent($event)" (resetEvent)="PageSize()"></app-search>
-            </div>
-        </div>
+        <app-search [query]="query" [modelo]="page" [colleccionName]="pages" [colleccion]="'pages'"
+            (searchEvent)="handleSearchEvent($event)" (resetEvent)="PageSize()"></app-search>
+        
     </div>
 </div>
 
@@ -18,15 +15,15 @@
         <div class="card">
             <div class="card-body">
                 <div class="row">
-                    <div class="col-9">
+                    <div class="col-11">
                         <h4 class="card-title">Page: ({{ pages.length}})</h4>
                     </div>
-                    <div class="col-3">
+                    <div class="col-1">
                         <div class="text-right">
-                            <button class="btn btn-primary" [routerLink]="['/dashboard/page/create/']">
-                    <i class="fa fa-plus"></i>
-                    {{'Nuevo'| translate}}
-                  </button>
+                            <button (click)="openEditModal()" class="btn btn-outline-success" data-toggle="tooltip"
+                                data-original-title="Edit" data-bs-toggle="modal" data-bs-target="#editPage">
+                                <i class="fa fa-plus"></i>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -34,7 +31,7 @@
                 <hr>
 
                 <div class="table-responsive">
-                    <table class="table table-bordered">
+                    <table class="table table-borderless">
                         <thead>
                             <tr>
                                 <th>{{'Imagen'| translate}}</th>
@@ -51,57 +48,80 @@
                             <tr *ngFor="let page of pages | paginate: { itemsPerPage: count, currentPage: p }">
                                 <td class="text-center">
                                     <!-- <img [src]="producto.img | imagenPipe: 'productos'" class="img-responsive avatar" alt="{{producto.titulo}}"> -->
-                                    <img [routerLink]="['/dashboard/page/edit',page._id]" [src]="page.img | imagenPipe: 'pages'" class="avatar cursor" alt="{{page.titulo}}">
+                                    <img (click)="onEditProject(page)" data-bs-toggle="modal"
+                                        data-bs-target="#editPage"
+                                        [src]="page.img | imagenPipe: 'pages'" class="avatar cursor"
+                                        alt="{{page.titulo}}">
                                 </td>
                                 <td>{{page.titulo}}</td>
                                 <td>
                                     <div class="font-size-sm mb-4">
-                                        <span class="badge badge-accent badge-shadow" *ngIf="page.status == 'Edición'"> {{page.status| translate}}</span>
-                                        <span class="badge badge-success badge-shadow" *ngIf="page.status == 'Activo'"> {{page.status| translate}}</span>
-                                        <span class="badge badge-primary badge-shadow" *ngIf="page.status == 'Desactivado'"> {{page.status| translate}}</span>
+                                        <span class="badge badge-accent badge-shadow" *ngIf="page.status == 'Edición'">
+                                            {{page.status| translate}}</span>
+                                        <span class="badge badge-success badge-shadow" *ngIf="page.status == 'Activo'">
+                                            {{page.status| translate}}</span>
+                                        <span class="badge badge-primary badge-shadow"
+                                            *ngIf="page.status == 'Desactivado'"> {{page.status| translate}}</span>
                                     </div>
                                 </td>
                                 <td>
                                     <div class="font-size-sm mb-4">
-                                        <span class="badge badge-danger badge-shadow" *ngIf="page.isFeatured == false"> {{page.isFeatured| translate}}</span>
-                                        <span class="badge badge-success badge-shadow" *ngIf="page.isFeatured == true"> {{page.isFeatured| translate}}</span>
+                                        <span class="badge badge-danger badge-shadow" *ngIf="page.isFeatured == false">
+                                            {{page.isFeatured| translate}}</span>
+                                        <span class="badge badge-success badge-shadow" *ngIf="page.isFeatured == true">
+                                            {{page.isFeatured| translate}}</span>
                                     </div>
                                 </td>
                                 <td>
-                                    <button type="button" class="btn btn-accent" *ngIf="page.status == 'Edición' || page.status == 'Desactivado'" data-toggle="modal" [attr.data-target]="'#activar-'+page._id"><span class="czi-check"></span> {{'Activar'| translate}}</button>
+                                    <button type="button" class="btn btn-accent"
+                                        *ngIf="page.status == 'Edición' || page.status == 'Desactivado'"
+                                        data-toggle="modal" [attr.data-target]="'#activar-'+page._id"><span
+                                            class="czi-check"></span> {{'Activar'| translate}}</button>
 
-                                    <div class="modal fade" [attr.id]="'activar-'+page._id" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
+                                    <div class="modal fade" [attr.id]="'activar-'+page._id" tabindex="-1" role="dialog"
+                                        style="display: none;" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-centered" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <h4 class="modal-title">{{'Confirmación'| translate}}</h4>
-                                                    <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                                    <button class="close" type="button" data-dismiss="modal"
+                                                        aria-label="Close"><span aria-hidden="true">×</span></button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <p class="font-size-sm">{{'Al aceptar, estás confirmando que fué editado correctamente'| translate}}</p>
+                                                    <p class="font-size-sm">{{'Al aceptar, estás confirmando que fué
+                                                        editado correctamente'| translate}}</p>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button class="btn btn-secondary btn-sm" type="button" data-dismiss="modal">{{'Cerrar'| translate}}</button>
-                                                    <button class="btn btn-primary btn-shadow btn-sm" type="button" (click)="activar(page._id)">{{'Aceptar'| translate}}</button>
+                                                    <button class="btn btn-secondary btn-sm" type="button"
+                                                        data-dismiss="modal">{{'Cerrar'| translate}}</button>
+                                                    <button class="btn btn-primary btn-shadow btn-sm" type="button"
+                                                        (click)="activar(page._id)">{{'Aceptar'| translate}}</button>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <button type="button" class="btn btn-primary" *ngIf="page.status == 'Activo'" data-toggle="modal" [attr.data-target]="'#desactivar-'+page._id"><span class="czi-close"></span> {{'Desactivar'| translate}}</button>
-                                    <div class="modal fade" [attr.id]="'desactivar-'+page._id" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
+                                    <button type="button" class="btn btn-primary" *ngIf="page.status == 'Activo'"
+                                        data-toggle="modal" [attr.data-target]="'#desactivar-'+page._id"><span
+                                            class="czi-close"></span> {{'Desactivar'| translate}}</button>
+                                    <div class="modal fade" [attr.id]="'desactivar-'+page._id" tabindex="-1"
+                                        role="dialog" style="display: none;" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-centered" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <h4 class="modal-title">{{'Confirmación'| translate}}</h4>
-                                                    <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                                    <button class="close" type="button" data-dismiss="modal"
+                                                        aria-label="Close"><span aria-hidden="true">×</span></button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <p class="font-size-sm">{{'Al aceptar el page, no será visible en la tienda'| translate}}.</p>
+                                                    <p class="font-size-sm">{{'Al aceptar el page, no será visible en la
+                                                        tienda'| translate}}.</p>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button class="btn btn-secondary btn-sm" type="button" data-dismiss="modal">{{'Cerrar'| translate}}</button>
-                                                    <button class="btn btn-primary btn-shadow btn-sm" type="button" (click)="desactivar(page._id)">{{'Aceptar'| translate}}</button>
+                                                    <button class="btn btn-secondary btn-sm" type="button"
+                                                        data-dismiss="modal">{{'Cerrar'| translate}}</button>
+                                                    <button class="btn btn-primary btn-shadow btn-sm" type="button"
+                                                        (click)="desactivar(page._id)">{{'Aceptar'| translate}}</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -109,23 +129,27 @@
 
 
 
-                                    <span class="text-muted" *ngIf="page.status == 'Edición'" style="font-size: 13px;">{{'Este item aún se encuentra en edición'| translate}}.</span>
-                                    <span class="text-muted" *ngIf="page.status == 'Desactivado'" style="font-size: 13px;">{{'Este item aún no está disponible en la tienda'| translate}}.</span>
+                                    <span class="text-muted" *ngIf="page.status == 'Edición'"
+                                        style="font-size: 13px;">{{'Este item aún se encuentra en edición'|
+                                        translate}}.</span>
+                                    <span class="text-muted" *ngIf="page.status == 'Desactivado'"
+                                        style="font-size: 13px;">{{'Este item aún no está disponible en la tienda'|
+                                        translate}}.</span>
 
                                 </td>
                                 <td>{{ page.createdAt | date:'MMM d, y, h:mm:ss a' }}</td>
                                 <td>{{ page.updatedAt | date:'MMM d, y, h:mm:ss a' }}</td>
                                 <td class="text-nowrap text-center">
-
-                                    <div class="btn-group" role="group">
-                                        <button type="button" class="btn btn-dark dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="czi-settings"></span> {{'Opciones'| translate}}
-                              </button>
-                                        <div class="dropdown-menu">
-                                            <a [routerLink]="['/dashboard/page/edit',page._id]" class="dropdown-item"><span class="czi-edit-alt"></span> &nbsp;{{'Editar'| translate}}</a>
-                                            <a (click)="eliminarPage(page)" class="dropdown-item"><span class="czi-delete-document"></span> &nbsp;{{'Eliminar'| translate}}</a>
-                                        </div>
-                                    </div>
+                                    <button class="btn btn-outline-success" data-toggle="tooltip"
+                                        data-original-title="Edit" (click)="onEditProject(page)" data-bs-toggle="modal"
+                                        data-bs-target="#editPage">
+                                        <i class="fa fa-edit"></i>
+                                    </button>
+                                    &nbsp;
+                                    <button (click)="eliminarPage(page)" class="btn btn-outline-danger"
+                                        data-toggle="tooltip" data-original-title="Borrar">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
                                 </td>
                             </tr>
 
@@ -137,3 +161,5 @@
         </div>
     </div>
 </div>
+<app-page-edit (refreshPageList)="loadPages()" [pageSeleccionado]="pageSeleccionado" (closeModal)="onClose()"
+    #editPage></app-page-edit>
