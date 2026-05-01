@@ -1,38 +1,27 @@
 <div class="row animated fadeIn fast">
     <div class="col-12">
-        <div class="card">
-            <div class="card-body">
-                <app-search [query]="query" [modelo]="tienda" [colleccionName]="tiendas" [colleccion]="'tiendas'"
-                    (searchEvent)="handleSearchEvent($event)" (resetEvent)="PageSize()"></app-search>
-            </div>
-        </div>
+        <app-search [query]="query" [modelo]="tienda" [colleccionName]="tiendas" [colleccion]="'tiendas'"
+            (searchEvent)="handleSearchEvent($event)" (resetEvent)="PageSize()"></app-search>
     </div>
 </div>
+<app-skeleton-loader *ngIf="cargando" [rows]="1" [columns]="3"></app-skeleton-loader>
+<app-skeleton-loader *ngIf="cargando" [rows]="3" [columns]="5"></app-skeleton-loader>
 
-<div class="row animated fadeIn fast" *ngIf="cargando">
-    <div class="col-12">
-        <div class="alert alert-info text-center">
-            <div class="alert-heading">Cargando</div>
-            <i class="fa fa-spin fa-refresh fa-2x"></i>
-            <p class="mb-0">Por favor espere</p>
-        </div>
-    </div>
-</div>
 
 <div class="row" *ngIf="!cargando && user.role ==='SUPERADMIN'">
     <div class="col-12">
         <div class="card">
             <div class="card-body">
                 <div class="row">
-                    <div class="col-9">
+                    <div class="col-11">
                         <h4 class="card-title">Tiendas: ({{ tiendas.length}})</h4>
                         <h6 class="card-subtitle">Tiendas registrados en la app</h6>
                     </div>
-                    <div class="col-3">
+                    <div class="col-1">
                         <div class="text-right">
-                            <button class="btn btn-primary" [routerLink]="['/dashboard/tienda/registro/']">
-                                <i class="fa fa-pencil"></i>
-                                Crear Tienda
+                            <button (click)="openEditModal()" class="btn btn-outline-success" data-toggle="tooltip"
+                                data-original-title="Edit" data-bs-toggle="modal" data-bs-target="#editTienda">
+                                <i class="fa fa-plus"></i>
                             </button>
                         </div>
                     </div>
@@ -69,79 +58,16 @@
                                     {{tienda.categoria.nombre}}
                                 </td>
                                 <td class="text-nowrap text-center">
-                                    <a [routerLink]="['/dashboard/tienda/edit/', tienda._id]" class="cursor"
-                                        data-toggle="tooltip" data-original-title="Edit"> <i
-                                            class="fa fa-pencil text-inverse m-r-10"></i> </a>
-                                    <a (click)="eliminarMarca(tienda)" *ngIf="user.role === 'SUPERADMIN'" class="cursor"
-                                        data-toggle="tooltip" data-original-title="Borrar"> <i
-                                            class="fa fa-close text-danger"></i> </a>
-                                </td>
-                            </tr>
-
-                        </tbody>
-                    </table>
-                </div>
-                <pagination-controls (pageChange)="p = $event"></pagination-controls>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="row" *ngIf="!cargando && user.role ==='ADMIN'">
-    <div class="col-12">
-        <div class="card">
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-9">
-                        <h4 class="card-title">Tiendas: ({{ tiendas.length}})</h4>
-                        <h6 class="card-subtitle">Tiendas registrados en la app</h6>
-                    </div>
-                    <div class="col-3">
-                        <div class="text-right">
-                            <button class="btn btn-primary" [routerLink]="['/dashboard/tienda/registro/']">
-                                <i class="fa fa-pencil"></i>
-                                Crear Tienda
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <br>
-                <hr>
-
-                <div class="table-responsive">
-                    <table class="table table-borderless">
-                        <thead>
-                            <tr>
-                                <th>Img</th>
-                                <th>Nombre</th>
-                                <th>Local</th>
-                                <th>Categoria</th>
-                                <th class="text-nowrap">Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr
-                                *ngFor="let tienda of tiendas |  paginate: { itemsPerPage: count, currentPage: p } | orderBy:'createdAt, desc'">
-                                <td class="text-center">
-                                    <img [src]="tienda.img | imagenPipe: 'tiendas'" class="img-responsive avatar"
-                                        alt="{{tienda.nombre}}">
-                                    <!-- <img (click)="abrirModal(marca)" [src]="marca.imagenUrl | imagenPipe: 'marcas'" class="avatar cursor" alt="{{marca.nombre}}"> -->
-                                </td>
-                                <td>
-                                    {{tienda.nombre}}
-                                </td>
-                                <td>
-                                    {{tienda.local}}
-                                </td>
-                                <td>
-                                    {{tienda.categoria.nombre}}
-                                </td>
-                                <td class="text-nowrap text-center">
-                                    <a [routerLink]="['/dashboard/tienda/edit/', tienda._id]" class="cursor"
-                                        data-toggle="tooltip" data-original-title="Edit"> <i
-                                            class="fa fa-pencil text-inverse m-r-10"></i> </a>
-                                    <a (click)="eliminarMarca(tienda)" *ngIf="user.role === 'SUPERADMIN'" class="cursor"
-                                        data-toggle="tooltip" data-original-title="Borrar"> <i
-                                            class="fa fa-close text-danger"></i> </a>
+                                    <button class="btn btn-outline-success" data-toggle="tooltip"
+                                        data-original-title="Edit" (click)="onEditProject(tienda)" data-bs-toggle="modal"
+                                        data-bs-target="#editTienda">
+                                        <i class="fa fa-edit"></i>
+                                    </button>
+                                    &nbsp;
+                                    <button *ngIf="user.role === 'SUPERADMIN'" (click)="eliminarTienda(tienda)" class="btn btn-outline-danger"
+                                        data-toggle="tooltip" data-original-title="Borrar">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
                                 </td>
                             </tr>
 
@@ -154,3 +80,5 @@
     </div>
 </div>
 <app-modalinfo-tiendas></app-modalinfo-tiendas>
+<app-tiendaadd (refreshTiendaList)="loadTiendas()" [tiendaSeleccionado]="tiendaSeleccionado" (closeModal)="onClose()"
+    #editTienda></app-tiendaadd>

@@ -112,17 +112,17 @@ export class SliderComponent implements OnInit {
   }
 
   onEditProject(slider: Slider) {
-        this.sliderSeleccionado = slider;
-      }
-    
-      openEditModal(): void {
-        this.sliderSeleccionado = null;
-      }
-    
-      onCloseModal(): void {
-        this.sliderSeleccionado = null;
-      }
-    
-      onClose() { }
+    this.sliderSeleccionado = slider;
+  }
+
+  openEditModal(): void {
+    this.sliderSeleccionado = null;
+  }
+
+  onCloseModal(): void {
+    this.sliderSeleccionado = null;
+  }
+
+  onClose() { }
 
 }

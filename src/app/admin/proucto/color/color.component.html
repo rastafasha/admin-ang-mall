@@ -7,7 +7,6 @@
                     (click)="onClose()"></button>
             </div>
             <div class="modal-body">
-                <!-- <app-loading *ngIf="isLoading"></app-loading> -->
                 <div class="container">
                     <div class="row">
                         <form #colorForm="ngForm" >
@@ -17,9 +16,8 @@
                                     style="padding-left: 10px;width: 100%" required autocomplete="off"
                                     placeholder="Titulo">
                                 <input type="color" id="color-data" name="color" [(ngModel)]="color">
-                                <!-- <input id="color-picker" value="#2986cc" required/> -->
                                 <button type="submit" class="btn btn-info" (click)="onSubmit(colorForm)">
-                                    <i class="czi-add"></i> Agregar
+                                    <i class="czi-add"></i>
                                 </button>
                             </div>
                         </form>

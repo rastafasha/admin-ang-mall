@@ -1,361 +1,394 @@
-<div class="row">
-<app-loading *ngIf="cargando"></app-loading>
-    <div class=" col-xs-12 col-md-8" *ngIf="!cargando">
-        <div class="card">
-            <div class="card-body">
-                <h4 class="card-title">{{pageTitle}}</h4>
-                <h6 class="card-subtitle">Ajustes</h6>
-                <app-backbutton></app-backbutton>
-                <form class="form p-t-20 form-horizontal form-material" [formGroup]="productoForm">
-                    <!-- basico -->
+<div class="modal fade" id="editProducto" tabindex="-1" aria-labelledby="productonModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="productonModalLabel">{{pageTitle}}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                    (click)="onClose()"></button>
+            </div>
+            <div class="modal-body">
+                <!-- <app-loading *ngIf="isLoading"></app-loading> -->
+                <div class="container">
                     <div class="row">
-                        <div class="col-xs-12 col-sm-6">
-                            <div class="form-group">
-                                <label for="exampleInputuname">Título <span class="required">*</span> </label>
-                                <div class="input-group">
 
-                                    <input type="text" formControlName="titulo" class="form-control"
-                                        id="exampleInputuname" placeholder="titulo" required>
-                                        
-                                    <div *ngIf="productoForm.get('titulo')?.touched && productoForm.get('titulo')?.invalid"
-                                        class="text-danger">
-                                        <div *ngIf="productoForm.get('titulo')?.errors?.['required']">
-                                            Campo Requerido
-                                        </div>
-                                        <div *ngIf="productoForm.get('titulo')?.errors?.['minlength']">
-                                            Mínimo 3 Caracteres
-                                        </div>
-                                    </div>
-
-                                </div>
+                        <!-- Step Indicator -->
+                        <div class="step-indicator m-t-20 m-b-20">
+                            <div class="step" [ngClass]="{'active': currentStep >= 1, 'completed': currentStep > 1}">
+                                <span class="step-number">1</span>
+                                <span class="step-label">Datos</span>
                             </div>
-                            <div class="form-group col-12 ">
-                                <input class="form-control form-control-sm" type="text" placeholder="slug"
-                                    formControlName="slug" readonly>
+                            <div class="step-line"></div>
+                            <div class="step" [ngClass]="{'active': currentStep >= 2}">
+                                <span class="step-number">2</span>
+                                <span class="step-label">Imagen</span>
                             </div>
                         </div>
-                        <div class="col-xs-12 col-sm-6">
-                            <div class="form-group">
-                                <label for="exampleInputuname">Sku <span class="required">*</span></label>
-                                <div class="input-group">
+                        <!-- editar/crear post -->
+                        <div *ngIf="currentStep === 1">
+                            <form class="form p-t-20 form-horizontal form-material" [formGroup]="productoForm">
+                                <!-- basico -->
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-6">
+                                        <div class="form-group">
+                                            <label for="exampleInputuname">Título <span class="required">*</span>
+                                            </label>
+                                            <div class="input-group">
 
-                                    <input type="text" formControlName="sku" class="form-control" id="exampleInputuname"
-                                        placeholder="codigo personalizado" required>
+                                                <input type="text" formControlName="titulo" class="form-control"
+                                                    id="exampleInputuname" placeholder="titulo" required>
 
-                                    <div *ngIf="productoForm.get('sku')?.touched && productoForm.get('sku')?.invalid"
-                                        class="text-danger">
-                                        <div *ngIf="productoForm.get('sku')?.errors?.['required']">
-                                            Campo Requerido
+                                                <div *ngIf="productoForm.get('titulo')?.touched && productoForm.get('titulo')?.invalid"
+                                                    class="text-danger">
+                                                    <div *ngIf="productoForm.get('titulo')?.errors?.['required']">
+                                                        Campo Requerido
+                                                    </div>
+                                                    <div *ngIf="productoForm.get('titulo')?.errors?.['minlength']">
+                                                        Mínimo 3 Caracteres
+                                                    </div>
+                                                </div>
+
+                                            </div>
                                         </div>
-                                        <div *ngIf="productoForm.get('sku')?.errors?.['minlength']">
-                                            Mínimo 3 Caracteres
+                                        <div class="form-group col-12 ">
+                                            <input class="form-control form-control-sm" type="text" placeholder="slug"
+                                                formControlName="slug" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6">
+                                        <div class="form-group">
+                                            <label for="exampleInputuname">Sku <span class="required">*</span></label>
+                                            <div class="input-group">
+
+                                                <input type="text" formControlName="sku" class="form-control"
+                                                    id="exampleInputuname" placeholder="codigo personalizado" required>
+
+                                                <div *ngIf="productoForm.get('sku')?.touched && productoForm.get('sku')?.invalid"
+                                                    class="text-danger">
+                                                    <div *ngIf="productoForm.get('sku')?.errors?.['required']">
+                                                        Campo Requerido
+                                                    </div>
+                                                    <div *ngIf="productoForm.get('sku')?.errors?.['minlength']">
+                                                        Mínimo 3 Caracteres
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Descripción -->
-                    <div class="form-group ">
-                        <label class=" col-form-label font-weight-medium" for="text-input">Descripción <span
-                                class="required">*</span></label>
-                        <div class="col-md-12">
-                            <!-- <ckeditor formControlName="detalle" [editor]="Editor" data="<p>Hello, world!</p>" required>
+                                <!-- Descripción -->
+                                <div class="row">
+                                    <div class="form-group col-xs-12 col-sm-6">
+                                        <label class=" col-form-label font-weight-medium" for="text-input">Descripción
+                                            <span class="required">*</span></label>
+                                        <div class="col-md-12">
+                                            <!-- <ckeditor formControlName="detalle" [editor]="Editor" data="<p>Hello, world!</p>" required>
                             </ckeditor> -->
-                            <textarea formControlName="detalle" id="detalle" cols="30" rows="4"
+                                            <textarea formControlName="detalle" id="detalle" cols="30" rows="4"
                                                 class="form-control"></textarea>
-                            <div *ngIf="productoForm.get('detalle')?.touched && productoForm.get('detalle')?.invalid"
-                                class="text-danger">
-                                <div *ngIf="productoForm.get('detalle')?.errors?.['required']">
-                                    Campo Requerido
-                                </div>
-                                <div *ngIf="productoForm.get('detalle')?.errors?.['minlength']">
-                                    Mínimo 3 Caracteres
-                                </div>
-                            </div>
+                                            <div *ngIf="productoForm.get('detalle')?.touched && productoForm.get('detalle')?.invalid"
+                                                class="text-danger">
+                                                <div *ngIf="productoForm.get('detalle')?.errors?.['required']">
+                                                    Campo Requerido
+                                                </div>
+                                                <div *ngIf="productoForm.get('detalle')?.errors?.['minlength']">
+                                                    Mínimo 3 Caracteres
+                                                </div>
+                                            </div>
 
-                        </div>
-                    </div>
-                    <div class="form-group ">
-                        <label class=" col-form-label font-weight-medium" for="textarea-input">Descripción corta <span
-                                class="required">*</span></label>
-                        <div class="col-md-12">
-                            <!-- <ckeditor formControlName="info_short" [editor]="Editor1" data="<p>Hello, world!</p>"
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-xs-12 col-sm-6">
+                                        <label class=" col-form-label font-weight-medium"
+                                            for="textarea-input">Descripción
+                                            corta <span class="required">*</span></label>
+                                        <div class="col-md-12">
+                                            <!-- <ckeditor formControlName="info_short" [editor]="Editor1" data="<p>Hello, world!</p>"
                                 required></ckeditor> -->
 
-                                <textarea formControlName="info_short" id="info_short" cols="30" rows="4"
+                                            <textarea formControlName="info_short" id="info_short" cols="30" rows="4"
                                                 class="form-control"></textarea>
 
-                            <div *ngIf="productoForm.get('info_short')?.touched && productoForm.get('info_short')?.invalid"
-                                class="text-danger">
-                                <div *ngIf="productoForm.get('info_short')?.errors?.['required']">
-                                    Campo Requerido
-                                </div>
-                                <div *ngIf="productoForm.get('info_short')?.errors?.['minlength']">
-                                    Mínimo 3 Caracteres
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Descripción -->
-                    <!-- video -->
-                    <div class="form-group ">
-                        <label class=" col-form-label font-weight-medium" for="text-input">video de youtube </label>
-                        <div class="col-md-12">
-                            <input type="text" formControlName="video_review" class="form-control"
-                                id="exampleInputuname" placeholder="Codigo de insercion de vídeo.">
-
-                        </div>
-                    </div>
-
-                    <!-- precio y stock -->
-                    <div class="form-group ">
-                        <label class=" col-form-label font-weight-medium" for="text-input">Detalles Valor <span
-                                class="required">*</span></label>
-                        <div class="col-md-12">
-                            <div class="row">
-                                <div class="col-lg-4">
-                                    <label class=" col-form-label font-weight-medium">Stock <span
-                                            class="required">*</span></label>
-                                    <input class="form-control" type="number" placeholder="Stock del producto"
-                                        formControlName="stock" min="0" required>
-                                    <div *ngIf="productoForm.get('stock')?.touched && productoForm.get('stock')?.invalid"
-                                        class="text-danger">
-                                        <div *ngIf="productoForm.get('stock')?.errors?.['required']">
-                                            Campo Requerido
-                                        </div>
-                                        <div *ngIf="productoForm.get('stock')?.errors?.['minlength']">
-                                            Mínimo 100
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <label class=" col-form-label font-weight-medium">Precio Actual <span
-                                            class="required">*</span></label>
-                                    <input class="form-control" type="number" placeholder="Precio actual"
-                                        formControlName="precio_ahora" min="0" required>
-                                    <div *ngIf="productoForm.get('precio_ahora')?.touched && productoForm.get('precio_ahora')?.invalid"
-                                        class="text-danger">
-                                        <div *ngIf="productoForm.get('precio_ahora')?.errors?.['required']">
-                                            Campo Requerido
-                                        </div>
-                                        <div *ngIf="productoForm.get('precio_ahora')?.errors?.['minlength']">
-                                            Mínimo 1
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <label class=" col-form-label font-weight-medium">Precio Antes <span
-                                            class="required">*</span></label>
-                                    <input class="form-control" type="number" placeholder="Precio antes"
-                                        formControlName="precio_antes" min="0" required>
-
-                                    <div *ngIf="productoForm.get('precio_antes')?.touched && productoForm.get('precio_antes')?.invalid"
-                                        class="text-danger">
-                                        <div *ngIf="productoForm.get('precio_antes')?.errors?.['required']">
-                                            Campo Requerido
-                                        </div>
-                                        <div *ngIf="productoForm.get('precio_antes')?.errors?.['minlength']">
-                                            Si no tiene variacion el monto debe ser igual a Precio Actual
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Categorías -->
-                    <div class="form-group ">
-                        <label class=" col-form-label font-weight-medium" for="text-input">Categorías </label>
-                        <div class="col-md-12">
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label for="select-input">Categoría <span class="required">*</span></label>
-                                        <select class="form-control " formControlName="categoria" name="categoria"
-                                            required>
-                                            <option disabled value="">SELECCIONAR</option>
-                                            <option *ngFor="let item of listCategorias | unique:'nombre'"
-                                                [value]="item._id">
-                                                {{item.nombre}}</option>
-
-                                        </select>
-                                        <div *ngIf="productoForm.get('categoria')?.touched && productoForm.get('categoria')?.invalid"
-                                            class="text-danger">
-                                            <div *ngIf="productoForm.get('categoria')?.errors?.['required']">
-                                                Campo Requerido
-                                            </div>
-                                            <div *ngIf="productoForm.get('categoria')?.errors?.['minlength']">
-                                                Seleccione una opción
+                                            <div *ngIf="productoForm.get('info_short')?.touched && productoForm.get('info_short')?.invalid"
+                                                class="text-danger">
+                                                <div *ngIf="productoForm.get('info_short')?.errors?.['required']">
+                                                    Campo Requerido
+                                                </div>
+                                                <div *ngIf="productoForm.get('info_short')?.errors?.['minlength']">
+                                                    Mínimo 3 Caracteres
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label for="select-input">Subcategoría</label>
-                                        <select class="form-control " formControlName="subcategoria"
-                                            name="subcategoria">
-                                            <option disabled value="">SELECCIONAR</option>
-                                            <option *ngFor="let item of listCategorias | unique:'subcategorias'"
-                                                [value]="item.subcategorias">
-                                                {{item.subcategorias}}</option>
-
-                                        </select>
+                                <!-- Descripción -->
+                                <!-- video -->
+                                <div class="form-group ">
+                                    <label class=" col-form-label font-weight-medium" for="text-input">video de youtube
+                                    </label>
+                                    <div class="col-md-12">
+                                        <input type="text" formControlName="video_review" class="form-control"
+                                            id="exampleInputuname" placeholder="Codigo de insercion de vídeo.">
 
                                     </div>
                                 </div>
 
-                            </div>
-                        </div>
-                    </div>
-                    <!-- aparece en -->
-                    <div class="form-group row">
-                        <div class="col-xs-12 col-sm-6">
-                            <div class="form-group">
-                                <label for="select-input">Destacado?</label>
-                                <select class="form-control " formControlName="isFeatured" name="isFeatured">
-                                    <option disabled value="">SELECCIONAR</option>
-                                    <option [value]="true">Activo</option>
-                                    <option [value]="false">Inactivo</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-xs-12 col-sm-6">
-                            <label class=" col-form-label font-weight-medium" for="text-input">Marca <span
-                                    class="required">*</span></label>
-                            <div class="input-group">
-                                <select class="form-control " name="marca" formControlName="marca" required>
-                                    <option disabled value="">SELECCIONAR</option>
-                                    <option *ngFor="let item of listMarcas" [value]="item._id">{{item.nombre}}</option>
+                                <!-- precio y stock -->
+                                <div class="form-group ">
+                                    <label class=" col-form-label font-weight-medium" for="text-input">Detalles Valor
+                                        <span class="required">*</span></label>
+                                    <div class="col-md-12">
+                                        <div class="row">
+                                            <div class="col-lg-4">
+                                                <label class=" col-form-label font-weight-medium">Stock <span
+                                                        class="required">*</span></label>
+                                                <input class="form-control" type="number"
+                                                    placeholder="Stock del producto" formControlName="stock" min="0"
+                                                    required>
+                                                <div *ngIf="productoForm.get('stock')?.touched && productoForm.get('stock')?.invalid"
+                                                    class="text-danger">
+                                                    <div *ngIf="productoForm.get('stock')?.errors?.['required']">
+                                                        Campo Requerido
+                                                    </div>
+                                                    <div *ngIf="productoForm.get('stock')?.errors?.['minlength']">
+                                                        Mínimo 100
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <label class=" col-form-label font-weight-medium">Precio Actual <span
+                                                        class="required">*</span></label>
+                                                <input class="form-control" type="number" placeholder="Precio actual"
+                                                    formControlName="precio_ahora" min="0" required>
+                                                <div *ngIf="productoForm.get('precio_ahora')?.touched && productoForm.get('precio_ahora')?.invalid"
+                                                    class="text-danger">
+                                                    <div *ngIf="productoForm.get('precio_ahora')?.errors?.['required']">
+                                                        Campo Requerido
+                                                    </div>
+                                                    <div
+                                                        *ngIf="productoForm.get('precio_ahora')?.errors?.['minlength']">
+                                                        Mínimo 1
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <label class=" col-form-label font-weight-medium">Precio Antes <span
+                                                        class="required">*</span></label>
+                                                <input class="form-control" type="number" placeholder="Precio antes"
+                                                    formControlName="precio_antes" min="0" required>
 
-                                </select>
-                            </div>
-                            <div *ngIf="productoForm.get('marca')?.touched && productoForm.get('marca')?.invalid"
-                                class="text-danger">
-                                <div *ngIf="productoForm.get('marca')?.errors?.['required']">
-                                    Campo Requerido
+                                                <div *ngIf="productoForm.get('precio_antes')?.touched && productoForm.get('precio_antes')?.invalid"
+                                                    class="text-danger">
+                                                    <div *ngIf="productoForm.get('precio_antes')?.errors?.['required']">
+                                                        Campo Requerido
+                                                    </div>
+                                                    <div
+                                                        *ngIf="productoForm.get('precio_antes')?.errors?.['minlength']">
+                                                        Si no tiene variacion el monto debe ser igual a Precio Actual
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div *ngIf="productoForm.get('marca')?.errors?.['minlength']">
-                                    Seleccione una opción, si no existe comunicarse con servicio técnico
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- local -->
-                    <div class="form-group row">
-                        <div class="col-xs-12 col-sm-6" *ngIf="user.role === 'SUPERADMIN'">
-                            <label class=" col-form-label font-weight-medium" for="local">local <span
-                                    class="required">*</span></label>
-                            <div class="input-group">
-                                <select class="form-control " name="local" formControlName="local" required>
-                                    <option disabled value="">SELECCIONAR</option>
-                                    <option *ngFor="let tienda of listTiendas" [value]="tienda._id">
-                                        {{tienda.local}} | {{tienda.nombre}}
-                                    </option>
-                                </select>
-
-                            </div>
-                        </div>
-                        <div class="col-xs-12 col-sm-6">
-                            <label class="col-form-label font-weight-medium" for="text-input">Tipo <span
-                                    class="required">*</span></label>
-                            <div class="col-md-12">
                                 <div class="row">
-                                    <div class="col-lg-12">
-                                        <input class="form-control" type="text" placeholder="Nombre del selector"
-                                            formControlName="nombre_selector" min="0">
+                                    <!-- Categorías -->
+                                    <div class="col-xs-12 col-sm-3">
+                                        <div class="form-group">
+                                            <label for="select-input">Categoría <span class="required">*</span></label>
+                                            <select class="form-control " formControlName="categoria" name="categoria"
+                                                required>
+                                                <option disabled value="">SELECCIONAR</option>
+                                                <option *ngFor="let item of listCategorias | unique:'nombre'"
+                                                    [value]="item._id">
+                                                    {{item.nombre}}</option>
 
-                                        <div *ngIf="productoForm.get('nombre_selector')?.touched && productoForm.get('nombre_selector')?.invalid"
-                                            class="text-danger">
-                                            <div *ngIf="productoForm.get('nombre_selector')?.errors?.['required']">
-                                                Campo Requerido
-                                            </div>
-                                            <div *ngIf="productoForm.get('nombre_selector')?.errors?.['minlength']">
-                                                Si no existe variación, colocar unico
+                                            </select>
+                                            <div *ngIf="productoForm.get('categoria')?.touched && productoForm.get('categoria')?.invalid"
+                                                class="text-danger">
+                                                <div *ngIf="productoForm.get('categoria')?.errors?.['required']">
+                                                    Campo Requerido
+                                                </div>
+                                                <div *ngIf="productoForm.get('categoria')?.errors?.['minlength']">
+                                                    Seleccione una opción
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-12">
-                                        <span class="text-muted">
-                                            Por ejemplo: Si el producto, no tiene sabores, colocar <b>Sabores</b>.  
-                                            Para calzados el selector es
-                                            <b>TALLAS</b></span>
-                                    </div>
+                                    <div class="col-xs-12 col-sm-3">
+                                        <div class="form-group">
+                                            <label for="select-input">Subcategoría <span class="required">*</span></label>
+                                            <select class="form-control " formControlName="subcategoria"
+                                                name="subcategoria">
+                                                <option disabled value="">SELECCIONAR</option>
+                                                <option *ngFor="let item of listCategorias | unique:'subcategorias'"
+                                                    [value]="item.subcategorias">
+                                                    {{item.subcategorias}}</option>
 
+                                            </select>
+                                            <div *ngIf="productoForm.get('subcategoria')?.touched && productoForm.get('subcategoria')?.invalid"
+                                                class="text-danger">
+                                                <div *ngIf="productoForm.get('subcategoria')?.errors?.['required']">
+                                                    Campo Requerido
+                                                </div>
+                                                <div *ngIf="productoForm.get('subcategoria')?.errors?.['minlength']">
+                                                    Seleccione una opción
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <!-- Destacado -->
+                                    <div class="col-xs-12 col-sm-3">
+                                        <div class="form-group">
+                                            <label for="select-input">Destacado?</label>
+                                            <select class="form-control " formControlName="isFeatured"
+                                                name="isFeatured">
+                                                <option disabled value="">SELECCIONAR</option>
+                                                <option [value]="true">Activo</option>
+                                                <option [value]="false">Inactivo</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <!-- marca -->
+                                    <div class="col-xs-12 col-sm-3">
+                                        <label for="text-input">Marca <span class="required">*</span></label>
+                                        <div class="input-group">
+                                            <select class="form-control " name="marca" formControlName="marca" required>
+                                                <option disabled value="">SELECCIONAR</option>
+                                                <option *ngFor="let item of listMarcas" [value]="item._id">
+                                                    {{item.nombre}}</option>
+                                            </select>
+                                        </div>
+                                        <div *ngIf="productoForm.get('marca')?.touched && productoForm.get('marca')?.invalid"
+                                            class="text-danger">
+                                            <div *ngIf="productoForm.get('marca')?.errors?.['required']">
+                                                Campo Requerido
+                                            </div>
+                                            <div *ngIf="productoForm.get('marca')?.errors?.['minlength']">
+                                                Seleccione una opción, si no existe comunicarse con servicio técnico
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- local -->
+                                <div class="form-group row">
+                                    <div class="col-xs-12 col-sm-6" *ngIf="user.role === 'SUPERADMIN'">
+                                        <label class=" col-form-label font-weight-medium" for="local">local <span
+                                                class="required">*</span></label>
+                                        <div class="input-group">
+                                            <select class="form-control " name="local" formControlName="local" required>
+                                                <option disabled value="">SELECCIONAR</option>
+                                                <option *ngFor="let tienda of listTiendas" [value]="tienda._id">
+                                                    {{tienda.local}} | {{tienda.nombre}}
+                                                </option>
+                                            </select>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6">
+                                        <label class="col-form-label font-weight-medium" for="text-input">Tipo <span
+                                                class="required">*</span></label>
+                                        <div class="col-md-12">
+                                            <div class="row">
+                                                <div class="col-lg-12">
+                                                    <input class="form-control" type="text"
+                                                        placeholder="Nombre del selector"
+                                                        formControlName="nombre_selector" min="0">
+
+                                                    <div *ngIf="productoForm.get('nombre_selector')?.touched && productoForm.get('nombre_selector')?.invalid"
+                                                        class="text-danger">
+                                                        <div
+                                                            *ngIf="productoForm.get('nombre_selector')?.errors?.['required']">
+                                                            Campo Requerido
+                                                        </div>
+                                                        <div
+                                                            *ngIf="productoForm.get('nombre_selector')?.errors?.['minlength']">
+                                                            Si no existe variación, colocar unico
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <span class="text-muted">
+                                                        Por ejemplo: Si el producto, no tiene sabores, colocar
+                                                        <b>Sabores</b>.
+                                                        Para calzados el selector es
+                                                        <b>TALLAS</b></span>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-6">
+                                        <button class="btn btn-success waves-effect waves-light m-r-10 btn-block"
+                                            type="button" (click)="nextStep()">Siguiente</button>
+                                    </div>
+                                    <div class="col-6">
+                                        <button (click)="updateProducto()" class="btn btn-outline-success">
+                                            {{ productoSeleccionado ? 'Actualizar y Continuar' : 'Crear y Continuar' }}
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div *ngIf="currentStep === 2">
+                            <app-loading *ngIf="isLoadingImage"></app-loading>
+                            <div *ngIf="!isLoadingImage">
+                                <label> Anexe su foto</label>
+                                <br>
+                                <div class="row">
+                                    <div class="especificaciones col-xs-12" *ngIf="!productoSeleccionado">
+                                        <h4>Debe Crear un post para agregar la imagen</h4>
+                                    </div>
+                                    <div class="especificaciones col-xs-12 col-sm-6" *ngIf="productoSeleccionado">
+                                        <h4>Especificaciones:</h4>
+                                        <ul>
+                                            <li>Tamaño máximo: 300px X 300px</li>
+                                            <li>Peso máximo: 2 mb</li>
+                                            <li>Formato permitido: jpg, .gif, .png</li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6" *ngIf="productoSeleccionado ">
+                                        <div class="text-center">
+                                            <img *ngIf="!imgTemp "
+                                                [src]="productoSeleccionado.img | imagenPipe: 'productos'"
+                                                class="img-responsive img-thumbnail" alt="">
+                                            <img *ngIf="imgTemp" [src]="imgTemp" class="img-responsive">
+                                            <div class="form-group ">
+
+                                            </div>
+                                        </div>
+                                        <input type="file" (change)="cambiarImagen($event.target.files[0])">
+                                        <br>
+                                        <br>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <button
+                                                    class="btn btn-success waves-effect waves-light m-r-10 btn-block"
+                                                    type="button" (click)="prevStep()">Anterior</button>
+                                            </div>
+                                            <div class="col-6">
+                                                <button type="button" [disabled]="!imagenSubir" (click)="subirImagen()"
+                                                    class="btn btn-success waves-effect waves-light m-r-10 btn-block">
+                                                    <i class="fa fa-save"></i> Subir imagen
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-
-                    <button type="submit" class="btn btn-success waves-effect waves-light m-r-10 btn-block"
-                        (click)="updateProducto()">
-                        <i class="fa fa-save"></i> Guardar cambios
-                    </button>
-                </form>
-            </div>
-        </div>
-    </div>
-    <div class=" col-xs-12 col-md-4 animated fadeIn fast" *ngIf="productoSeleccionado ">
-        <app-loading *ngIf="cargandoImagen"></app-loading>
-        <div class="card" *ngIf="!cargandoImagen">
-            <div class="card-body">
-                <h4 class="card-title">Image</h4>
-                <div class="text-center">
-                    <img *ngIf="!imgTemp" [src]="productoSeleccionado?.img | imagenPipe: 'productos'  "
-                        class="img-responsive img-thumbnail" alt="">
-                    <img *ngIf="imgTemp" [src]="imgTemp" class="img-avatar">
-                </div>
-                <input type="file" (change)="cambiarImagen($event.target.files[0])">
-                <br>
-                <br>
-                <button type="button" [disabled]="!imagenSubir" (click)="subirImagen()"
-                    class="btn btn-success waves-effect waves-light m-r-10 btn-block">
-                    <i class="fa fa-save"></i> Cambiar imagen
-                </button>
-            </div>
-            <div class="col-xs-12">
-                <h4>{{'Especificaciones'}}:</h4>
-                <ul>
-                    <li>{{'Tamaño máximo'}}: 300px X 300px</li>
-                    <li>{{'Peso máximo'}}: 3 mega bites</li>
-                    <li>{{'Formato permitido'}}: jpg, .gif, .png</li>
-                </ul>
-            </div>
-        </div>
-
-        <div *ngIf="productoSeleccionado.video_review">
-            <div class="card">
-                <div class="card-body">
-                    <h4 class="card-title">Video</h4>
-                    <iframe class="videom" [src]="getVideoIframe(productoSeleccionado.video_review)" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; " allowfullscreen></iframe>
                 </div>
             </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                    (click)="onClose()">Cerrar</button>
+            </div>
         </div>
-
-        <!-- <div class="font-size-sm">
-            <span class="text-heading font-weight-medium mr-1">
-            Colores:</span><br><br>
-            <span class="text-muted listacolor" id="colorOption">
-                <ng-container *ngFor="let color of colores; let indice = first">
-                <ng-container *ngIf="indice"><i  [style.background]="color.color"></i>{{color.titulo}}</ng-container>
-                <ng-container *ngIf="!indice"> / <i  [style.background]="color.color"></i> {{color.titulo}}</ng-container>
-                </ng-container>
-            </span>
-        </div>
-        <div class="font-size-sm">
-            <span class="text-heading font-weight-medium mr-1">
-                Selector 
-                {{productoSeleccionado.nombre_selector}}:
-            </span>
-            <span class="text-muted listaselector" id="selectorOption">
-                <ng-container *ngFor="let selector of selectores; let indice = first">
-                <ng-container *ngIf="indice">{{selector.titulo}}</ng-container>
-                <ng-container *ngIf="!indice"> /  {{selector.titulo}}</ng-container>
-                </ng-container>
-            </span>
-        </div> -->
-
-
     </div>
 </div>

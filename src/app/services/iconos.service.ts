@@ -29,6 +29,9 @@ export class IconosService {
   getIcons() {
     return this.http.get<Icons>('assets/data/data-iconos.json');
   }
+  getIconsSocial() {
+    return this.http.get<Icons>('assets/data/data-iconos-social.json');
+  }
 
 
 }

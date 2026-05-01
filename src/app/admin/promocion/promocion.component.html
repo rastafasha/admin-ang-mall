@@ -1,40 +1,28 @@
 <div class="row animated fadeIn fast">
     <div class="col-12">
-        <div class="card">
-            <div class="card-body">
-                
-                <app-search [query]="query" [modelo]="promocion" [colleccionName]="promocions"
-        [colleccion]="'promocions'" (searchEvent)="handleSearchEvent($event)" (resetEvent)="PageSize()"></app-search>
-            </div>
-        </div>
+        <app-search [query]="query" [modelo]="promocion" [colleccionName]="promocions"
+[colleccion]="'promocions'" (searchEvent)="handleSearchEvent($event)" (resetEvent)="PageSize()"></app-search>
     </div>
 </div>
+<app-skeleton-loader *ngIf="cargando" [rows]="1" [columns]="3"></app-skeleton-loader>
+<app-skeleton-loader *ngIf="cargando" [rows]="4" [columns]="8"></app-skeleton-loader>
 
-<div class="row animated fadeIn fast" *ngIf="cargando">
-    <div class="col-12">
-        <div class="alert alert-info text-center">
-            <div class="alert-heading">Cargando</div>
-            <i class="fa fa-spin fa-refresh fa-2x"></i>
-            <p class="mb-0">Por favor espere</p>
-        </div>
-    </div>
-</div>
 
 <div class="row" *ngIf="!cargando">
     <div class="col-12">
         <div class="card">
             <div class="card-body">
                 <div class="row">
-                    <div class="col-8">
+                    <div class="col-11">
                         <h4 class="card-title">Promocion: ({{ promocions.length}})</h4>
                         <h6 class="card-subtitle">Promocion registrados en la app</h6>
                     </div>
-                    <div class="col-4">
+                    <div class="col-1">
                         <div class="text-right">
-                            <button class="btn btn-primary" [routerLink]="['/dashboard/promocion/create/']">
-                            <i class="fa fa-user-o"></i>
-                            Crear Promocion
-                          </button>
+                          <button (click)="openEditModal()" class="btn btn-outline-success" data-toggle="tooltip"
+                                data-original-title="Edit" data-bs-toggle="modal" data-bs-target="#editPromocion">
+                                <i class="fa fa-plus"></i>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -42,7 +30,7 @@
                 <hr>
 
                 <div class="table-responsive">
-                    <table class="table table-bordered">
+                    <table class="table table-borderless">
                         <thead>
                             <tr>
                                 <th>Foto</th>
@@ -58,8 +46,8 @@
                         <tbody>
                             <tr *ngFor="let promocion of promocions |  paginate: { itemsPerPage: count, currentPage: p }">
                                 <td class="text-center">
-                                    <img [routerLink]="['/dashboard/promocion/edit',promocion._id]" [src]="promocion.img | imagenPipe: 'promocions'" class="img-responsive avatar" alt="{{promocion.producto_title}}">
-                                    <!-- <img (click)="abrirModal(marca)" [src]="marca.imagenUrl | imagenPipe: 'marcas'" class="avatar cursor" alt="{{marca.nombre}}"> -->
+                                    <img (click)="onEditProject(promocion)" data-bs-toggle="modal"
+                                        data-bs-target="#editPromocion" [src]="promocion.img | imagenPipe: 'promocions'" class="img-responsive avatar" alt="{{promocion.producto_title}}">
                                 </td>
                                 <td>
                                     {{promocion.producto_title}}
@@ -71,39 +59,41 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <button type="button" class="btn btn-accent" *ngIf="promocion.estado == false" data-toggle="modal" [attr.data-target]="'#activar-'+promocion._id"><span class="czi-check"></span> Activar</button>
+                                    <button type="button" class="btn btn-accent" *ngIf="promocion.estado == false" data-bs-toggle="modal" [attr.data-bs-target]="'#activar-'+promocion._id">
+                                        <span class="czi-check"></span> Activar
+                                    </button>
 
-                                    <div class="modal fade" [attr.id]="'activar-'+promocion._id" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal fade" [attr.id]="'activar-'+promocion._id" tabindex="-1"   aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" >
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <h4 class="modal-title">Confirmación</h4>
-                                                    <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
                                                     <p class="font-size-sm">Al aceptar, estás confirmando que el promocion fué editado correctamente.</p>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button class="btn btn-secondary btn-sm" type="button" data-dismiss="modal">Cerrar</button>
+                                                    <button class="btn btn-secondary btn-sm" type="button" data-bs-dismiss="modal">Cerrar</button>
                                                     <button class="btn btn-primary btn-shadow btn-sm" type="button" (click)="activar(promocion._id)">Aceptar</button>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <button type="button" class="btn btn-primary" *ngIf="promocion.estado == true" data-toggle="modal" [attr.data-target]="'#desactivar-'+promocion._id"><span class="czi-close"></span> Desactivar</button>
-                                    <div class="modal fade" [attr.id]="'desactivar-'+promocion._id" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <button type="button" class="btn btn-primary" *ngIf="promocion.estado == true" data-bs-toggle="modal" [attr.data-bs-target]="'#desactivar-'+promocion._id"><span class="czi-close"></span> Desactivar</button>
+                                    <div class="modal fade" [attr.id]="'desactivar-'+promocion._id" tabindex="-1"   aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" >
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <h4 class="modal-title">Confirmación</h4>
-                                                    <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
                                                     <p class="font-size-sm">Al aceptar el promocion, no será visible en la tienda.</p>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button class="btn btn-secondary btn-sm" type="button" data-dismiss="modal">Cerrar</button>
+                                                    <button class="btn btn-secondary btn-sm" type="button" data-bs-dismiss="modal">Cerrar</button>
                                                     <button class="btn btn-primary btn-shadow btn-sm" type="button" (click)="desactivar(promocion._id)">Aceptar</button>
                                                 </div>
                                             </div>
@@ -122,8 +112,16 @@
                                     {{promocion.updatedAt | date:'mediumDate'}}
                                 </td>
                                 <td class="text-nowrap text-center">
-                                    <a [routerLink]="['/dashboard/promocion/edit', promocion._id]" class="cursor" data-toggle="tooltip" data-original-title="Edit"> <i class="fa fa-pencil text-inverse m-r-10"></i> </a>
-                                    <a (click)="eliminarPromocion(promocion)" class="cursor" data-toggle="tooltip" data-original-title="Borrar"> <i class="fa fa-close text-danger"></i> </a>
+                                    <button class="btn btn-outline-success" data-toggle="tooltip"
+                                        data-original-title="Edit" (click)="onEditProject(promocion)" data-bs-toggle="modal"
+                                        data-bs-target="#editPromocion">
+                                        <i class="fa fa-edit"></i>
+                                    </button>
+                                    &nbsp;
+                                    <button (click)="eliminarPromocion(promocion)" class="btn btn-outline-danger"
+                                        data-toggle="tooltip" data-original-title="Borrar">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
                                 </td>
                             </tr>
 
@@ -135,3 +133,5 @@
         </div>
     </div>
 </div>
+<app-promoedit (refreshPromoList)="loadPromocions()" [promocionSeleccionado]="promocionSeleccionado" (closeModal)="onClose()"
+    #editPromocion></app-promoedit>

@@ -20,14 +20,16 @@
                     </div>
                     <div class="col-1">
                         <div class="text-right">
-                            <button class="btn btn-primary" [routerLink]="['/dashboard/producto/create/']">
+                            <button (click)="openEditModal()" class="btn btn-outline-success" data-toggle="tooltip"
+                                data-original-title="Edit" data-bs-toggle="modal" data-bs-target="#editProducto">
                                 <i class="fa fa-plus"></i>
                             </button>
                         </div>
                     </div>
                     <div class="col-1">
                         <div class="text-right">
-                            <button class="btn btn-primary" [routerLink]="['/dashboard/producto/papelera/']">
+                            <button (click)="openEditProductPapelera()" class="btn btn-outline-success" data-toggle="tooltip"
+                                data-original-title="Edit" data-bs-toggle="modal" data-bs-target="#editProdPapelera">
                                 <i class="fa fa-trash"></i>
                             </button>
                         </div>
@@ -37,6 +39,7 @@
                 <hr>
 
                 <div class="table-responsive">
+                    <pagination-controls (pageChange)="p = $event"></pagination-controls>
                     <table class="table table-borderless">
                         <thead>
                             <tr>
@@ -52,6 +55,7 @@
                                 <th class="text-nowrap">Acciones</th>
                             </tr>
                         </thead>
+                        
                         <tbody>
                             <tr
                                 *ngFor="let producto of productos |  paginate: { itemsPerPage: count, currentPage: p } | orderBy:'createdAt, desc' ">
@@ -87,17 +91,18 @@
                                 <td>
                                     <button type="button" class="btn btn-accent"
                                         *ngIf="producto.status == 'Edición' || producto.status == 'Desactivado'"
-                                        data-toggle="modal" [attr.data-target]="'#activar-'+producto._id"><span
-                                            class="czi-check"></span> Activar</button>
+                                        data-bs-toggle="modal" [attr.data-bs-target]="'#activar-'+producto._id">
+                                        <span class="czi-check"></span> 
+                                        Activar
+                                    </button>
 
                                     <div class="modal fade" [attr.id]="'activar-'+producto._id" tabindex="-1"
-                                        role="dialog" style="display: none;" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                        aria-labelledby="coloModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" >
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <h4 class="modal-title">Confirmación</h4>
-                                                    <button class="close" type="button" data-dismiss="modal"
-                                                        aria-label="Close"><span aria-hidden="true">×</span></button>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
                                                     <p class="font-size-sm">Al aceptar, estás confirmando que el
@@ -105,7 +110,7 @@
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button class="btn btn-secondary btn-sm" type="button"
-                                                        data-dismiss="modal">Cerrar</button>
+                                                        data-bs-dismiss="modal">Cerrar</button>
                                                     <button class="btn btn-primary btn-shadow btn-sm" type="button"
                                                         (click)="activar(producto._id)">Aceptar</button>
                                                 </div>
@@ -114,16 +119,17 @@
                                     </div>
 
                                     <button type="button" class="btn btn-primary" *ngIf="producto.status == 'Activo'"
-                                        data-toggle="modal" [attr.data-target]="'#desactivar-'+producto._id"><span
-                                            class="czi-close"></span> Desactivar</button>
+                                        data-bs-toggle="modal" [attr.data-bs-target]="'#desactivar-'+producto._id"><span
+                                            class="czi-close"></span> Desactivar
+                                        </button>
+
                                     <div class="modal fade" [attr.id]="'desactivar-'+producto._id" tabindex="-1"
-                                        role="dialog" style="display: none;" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                         style="display: none;" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" >
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <h4 class="modal-title">Confirmación</h4>
-                                                    <button class="close" type="button" data-dismiss="modal"
-                                                        aria-label="Close"><span aria-hidden="true">×</span></button>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
                                                     <p class="font-size-sm">Al aceptar el producto, no será visible en
@@ -131,7 +137,7 @@
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button class="btn btn-secondary btn-sm" type="button"
-                                                        data-dismiss="modal">Cerrar</button>
+                                                        data-bs-dismiss="modal">{{'Cerrar'| translate}}</button>
                                                     <button class="btn btn-primary btn-shadow btn-sm" type="button"
                                                         (click)="desactivar(producto._id)">Aceptar</button>
                                                 </div>
@@ -139,18 +145,18 @@
                                         </div>
                                     </div>
 
-                                    <button type="button" class="btn btn-secondary" data-toggle="modal"
-                                        [attr.data-target]="'#papelera-'+producto._id"><span class="czi-remove-folder
-                                    "></span> Papelera</button>
+                                    <button type="button" class="btn btn-secondary" data-bs-toggle="modal"
+                                        [attr.data-bs-target]="'#papelera-'+producto._id">
+                                        <span class="czi-remove-folder"></span> Papelera
+                                    </button>
 
                                     <div class="modal fade" [attr.id]="'papelera-'+producto._id" tabindex="-1"
-                                        role="dialog" style="display: none;" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                         style="display: none;" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" >
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <h4 class="modal-title">Confirmación</h4>
-                                                    <button class="close" type="button" data-dismiss="modal"
-                                                        aria-label="Close"><span aria-hidden="true">×</span></button>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
                                                     <p class="font-size-sm">El producto se moverá a la papelera de
@@ -158,7 +164,7 @@
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button class="btn btn-secondary btn-sm" type="button"
-                                                        data-dismiss="modal">Cerrar</button>
+                                                        data-bs-dismiss="modal">{{'Cerrar'| translate}}</button>
                                                     <button class="btn btn-primary btn-shadow btn-sm" type="button"
                                                         (click)="papelera(producto._id)">Aceptar</button>
                                                 </div>
@@ -173,42 +179,26 @@
                                         tienda.</span>
 
                                 </td>
-                                <td>{{ producto.createdAt | date:'MMM d, y, h:mm:ss a' }}</td>
+                                <td>{{ producto.createdAt | date:'MMM d, y' }}</td>
                                 <td>{{ producto.stock }}</td>
                                 <td class="text-nowrap text-center">
-
-                                    <!-- <div class="btn-group" role="group">
-                                        <button type="button" class="btn btn-dark dropdown-toggle"
-                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <span class="czi-settings"></span> Opciones
-                                        </button>
-                                        <div class="dropdown-menu">
-                                            <a [routerLink]="['/dashboard/producto/edit',producto._id]"
-                                                class="dropdown-item"><span class="czi-edit-alt"></span>
-                                                &nbsp;Editar</a>
-                                            <a [routerLink]="['/dashboard/producto/galeria', producto._id]"
-                                                class="dropdown-item"><span class="czi-image"></span> &nbsp;Galería</a>
-                                            <a [routerLink]="['/dashboard/producto/selector', producto._id]"
-                                                class="dropdown-item"><span class="czi-menu-circle"></span>
-                                                &nbsp;Selectores</a>
-                                            <a [routerLink]="['/dashboard/producto/color', producto._id]"
-                                                class="dropdown-item"><span class="czi-diamond"></span>
-                                                &nbsp;Colores</a>
-
-                                        </div>
-                                    </div> -->
-
                                     <div class="btn-group" role="group">
                                         <button type="button" class="btn btn-info" data-bs-toggle="tooltip"
-                                            title="Edit">
+                                            title="Edit"
+                                            (click)="onEditProject(producto)" data-bs-toggle="modal"
+                                        data-bs-target="#editProducto">
                                             <span class="czi-edit-alt"></span>
                                         </button>
                                         <button type="button" class="btn btn-warning" data-bs-toggle="tooltip"
-                                            title="Galeria">
+                                            title="Galeria"
+                                            (click)="onEditGaleria(producto)" data-bs-toggle="modal"
+                                        data-bs-target="#editGaleria">
                                             <span class="czi-image"></span>
                                         </button>
                                         <button type="button" class="btn btn-success" data-bs-toggle="tooltip"
-                                            title="Selectores"><span class="czi-menu-circle"></span>
+                                            title="Selectores"
+                                            (click)="onEditSelector(producto)" data-bs-toggle="modal"
+                                        data-bs-target="#editSelector"><span class="czi-menu-circle"></span>
                                         </button>
                                         <button type="button" class="btn btn-primary" data-bs-toggle="tooltip"
                                             title="Colores"
@@ -235,3 +225,11 @@
 <app-modalinfo-productos></app-modalinfo-productos>
 <app-color (refreshProductList)="loadProductos()" [productoSeleccionado]="productoSeleccionado" (closeModal)="onClose()"
     #editColor></app-color>
+<app-selector (refreshProductList)="loadProductos()" [productoSeleccionado]="productoSeleccionado" (closeModal)="onClose()"
+    #editSelector></app-selector>
+<app-galeria-producto (refreshProductList)="loadProductos()" [productoSeleccionado]="productoSeleccionado" (closeModal)="onClose()"
+    #editGaleria></app-galeria-producto>
+<app-prod-edit (refreshProductList)="loadProductos()" [productoSeleccionado]="productoSeleccionado" (closeModal)="onClose()"
+    #editProducto></app-prod-edit>
+<app-papelera (refreshProductList)="loadProductos()" [productoSeleccionado]="productoSeleccionado" (closeModal)="onClose()"
+    #editProdPapelera></app-papelera>

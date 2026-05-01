@@ -1,12 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { ProductoService } from "../../../services/producto.service";
-import {environment} from 'src/environments/environment';
 import { CategoriaService } from "../../../services/categoria.service";
 import { ActivatedRoute, Router } from '@angular/router';
 import { UsuarioService } from '../../../services/usuario.service';
+import { FormGroup } from '@angular/forms';
+import Swal from 'sweetalert2';
 
 declare var jQuery:any;
 declare var $:any;
+
+declare var bootstrap: any;
 
 @Component({
   selector: 'app-papelera',
@@ -14,7 +17,11 @@ declare var $:any;
   templateUrl: './papelera.component.html',
   styleUrls: ['./papelera.component.css']
 })
-export class PapeleraComponent implements OnInit {
+export class PapeleraComponent implements OnInit, OnChanges {
+
+  @Input() productoSeleccionado;
+  @Output() closeModal: EventEmitter<void> = new EventEmitter<void>();
+  @Output() refreshProductList: EventEmitter<void> = new EventEmitter<void>();
 
   public productos;
   public count_cat;
@@ -29,6 +36,8 @@ export class PapeleraComponent implements OnInit {
 
   p: number = 1;
   count: number = 8;
+  searchForm:FormGroup;
+  pageTitle:string;
 
   constructor(
     private usuarioService: UsuarioService,
@@ -46,11 +55,30 @@ export class PapeleraComponent implements OnInit {
 
   }
 
+   ngOnChanges(changes: SimpleChanges): void {
+
+    if (
+      changes['productoSeleccionado'] &&
+      changes['productoSeleccionado'].currentValue
+    ) {
+      this.pageTitle = 'Editando Producto';
+      const producto = changes['productoSeleccionado'].currentValue;
+      
+      this.productoSeleccionado = producto;
+      this.pageTitle = 'Editando Producto';
+    } else {
+      this.pageTitle = 'Creando Producto';
+    }
+  }
+
+  onClose() {
+    this.closeModal.emit();
+  }
+
   getCategorias(){
     this.categoriaService.cargarCategorias().subscribe(
       resp =>{
         this.listCategorias = resp;
-        console.log(this.listCategorias)
 
       }
     )
@@ -63,11 +91,6 @@ export class PapeleraComponent implements OnInit {
         this.productos = response.productos;
         this.count_cat = this.productos.length;
         this.search_categoria = '';
-        console.log(this.productos);
-
-      },
-      error =>{
-
       }
     );
   }
@@ -75,15 +98,10 @@ export class PapeleraComponent implements OnInit {
 
 
   search(searchForm){
-    console.log(this.filtro);
     this._productoService.listar_papelera(this.filtro).subscribe(
       response=>{
         this.productos = response.productos;
         this.count_cat = this.productos.length;
-
-      },
-      error =>{
-
       }
     );
   }
@@ -101,22 +119,25 @@ export class PapeleraComponent implements OnInit {
     );
   }
 
-  desactivar(id){
-    this._productoService.desactivar(id).subscribe(
-      response=>{
-        $('#mover-'+id).modal('hide');
-        $('.modal-backdrop').removeClass('show');
-        this.resetSearch();
-      },
-      error=>{
-        this.msm_error = 'No se pudo activar el producto, vuelva a intenter.'
-      }
-    )
-  }
-
-  close_toast(){
-    /* $('#dark-toast').removeClass('show');
-        $('#dark-toast').addClass('hide'); */
-  }
+ 
+   desactivar(id) {
+      Swal.fire({
+        title: 'Estas Seguro?',
+        text: 'Al aceptar, estás confirmando que el producto regresará a las entradas en estado <b>DESACTIVADO</b>',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si, Aceptar!',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this._productoService.desactivar(id)
+            .subscribe(resp => {
+              this.resetSearch();
+            })
+          Swal.fire('Borrado!', 'El Archivo fue borrado.', 'success');
+        }
+      });
+    }
 
 }

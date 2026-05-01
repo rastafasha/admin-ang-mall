@@ -1,334 +1,381 @@
-<div class="row">
-    <app-loading *ngIf="cargando"></app-loading>
-    <div class="col-md-8" *ngIf="!cargando">
-        <div class="card">
-            <div class="card-body">
-                <h4 class="card-title">{{pageTitle}}</h4>
-                <h6 class="card-subtitle">Ajustes</h6>
-                <button class="btn btn-outline-danger" href="javascript:void(0)" (click)="goBack()">Volver</button>
-                <form class="form p-t-20 form-horizontal form-material" [formGroup]="tiendaForm">
+<div class="modal fade" id="editTienda" tabindex="-1" aria-labelledby="tienaModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="tienaModalLabel">{{pageTitle}}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                    (click)="onClose()"></button>
+            </div>
+            <div class="modal-body">
+                <!-- <app-loading *ngIf="isLoading"></app-loading> -->
+                <div class="container">
                     <div class="row">
-                        <div class="form-group col-xs-12 col-sm-6">
-                            <label for="Tienda">Nombre Local <span class="required">*</span></label>
-                            <div class="input-group">
 
-                                <input type="text" formControlName="nombre" class="form-control" id="Tienda"
-                                    placeholder="nombre">
-                                <div *ngIf="tiendaForm.get('nombre')?.touched && tiendaForm.get('nombre')?.invalid"
-                                    class="text-danger">
-                                    <div *ngIf="tiendaForm.get('nombre')?.errors?.['required']">
-                                        Campo Requerido
-                                    </div>
-                                    <div *ngIf="tiendaForm.get('nombre')?.errors?.['minlength']">
-                                        Mínimo 3 Caracteres
-                                    </div>
-                                </div>
-
+                        <!-- Step Indicator -->
+                        <div class="step-indicator m-t-20 m-b-20">
+                            <div class="step" [ngClass]="{'active': currentStep >= 1, 'completed': currentStep > 1}">
+                                <span class="step-number">1</span>
+                                <span class="step-label">Datos</span>
+                            </div>
+                            <div class="step-line"></div>
+                            <div class="step" [ngClass]="{'active': currentStep >= 2}">
+                                <span class="step-number">2</span>
+                                <span class="step-label">Imagen</span>
                             </div>
                         </div>
-                        <div class="form-group col-xs-12 col-sm-6">
-                            <label for="Local">Local <span class="required">*</span></label>
-                            <div class="input-group">
-
-                                <input type="text" formControlName="local" class="form-control" id="Local"
-                                    placeholder="local">
-                                <div *ngIf="tiendaForm.get('local')?.touched && tiendaForm.get('local')?.invalid"
-                                    class="text-danger">
-                                    <div *ngIf="tiendaForm.get('local')?.errors?.['required']">
-                                        Campo Requerido
-                                    </div>
-                                    <div *ngIf="tiendaForm.get('local')?.errors?.['minlength']">
-                                        Mínimo 3 Caracteres
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group ">
-                            <label class=" col-form-label font-weight-medium" for="text-input">Direccion <span
-                                    class="required">*</span></label>
-                            <div class="col-md-12">
-                                <!-- <ckeditor formControlName="direccion" [editor]="Editor1" data="<p>Hello, world!</p>"
-                                    required></ckeditor> -->
-                                    <textarea formControlName="direccion" id="direccion" cols="30" rows="4"
-                                                class="form-control"></textarea>
-                                <div *ngIf="tiendaForm.get('direccion')?.touched && tiendaForm.get('direccion')?.invalid"
-                                    class="text-danger">
-                                    <div *ngIf="tiendaForm.get('direccion')?.errors?.['required']">
-                                        Campo Requerido
-                                    </div>
-                                    <div *ngIf="tiendaForm.get('direccion')?.errors?.['minlength']">
-                                        Mínimo 3 Caracteres
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="form-group col-xs-12 col-sm-6">
-                            <label for="telefono">Teléfono (whatsapp) <span class="required">*</span></label>
-                            <div class="input-group">
-
-                                <input type="text" formControlName="telefono" class="form-control" id="telefono"
-                                    placeholder="telefono">
-                                <div *ngIf="tiendaForm.get('telefono')?.touched && tiendaForm.get('telefono')?.invalid"
-                                    class="text-danger">
-                                    <div *ngIf="tiendaForm.get('telefono')?.errors?.['required']">
-                                        Campo Requerido
-                                    </div>
-                                    <div *ngIf="tiendaForm.get('telefono')?.errors?.['minlength']">
-                                        Mínimo 3 Caracteres
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="form-group col-xs-12 col-sm-6">
-                            <label for="Pais">Pais <span class="required">*</span></label>
-                            <div class="input-group">
-
-                                <select class="form-control " formControlName="pais" required>
-                                    <option disabled value="">SELECCIONAR</option>
-                                    <option *ngFor="let pais of paises" [value]="pais.pais">{{pais.pais}}</option>
-
-                                </select>
-
-                                <div *ngIf="tiendaForm.get('pais')?.touched && tiendaForm.get('pais')?.invalid"
-                                    class="text-danger">
-                                    <div *ngIf="tiendaForm.get('pais')?.errors?.['required']">
-                                        Campo Requerido
-                                    </div>
-                                    <div *ngIf="tiendaForm.get('pais')?.errors?.['minlength']">
-                                        Seleccione una opción
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="form-group col-xs-12 col-sm-6">
-                            <label for="Ciudad">Ciudad <span class="required">*</span></label>
-                            <div class="input-group">
-
-                                <input type="text" formControlName="ciudad" class="form-control" id="Ciudad"
-                                    placeholder="Ciudad">
-                                <div *ngIf="tiendaForm.get('ciudad')?.touched && tiendaForm.get('ciudad')?.invalid"
-                                    class="text-danger">
-                                    <div *ngIf="tiendaForm.get('ciudad')?.errors?.['required']">
-                                        Campo Requerido
-                                    </div>
-                                    <div *ngIf="tiendaForm.get('ciudad')?.errors?.['minlength']">
-                                        Mínimo 3 Caracteres
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group col-xs-12 col-sm-6 ">
-                            <label class=" col-form-label font-weight-medium" for="text-input">Moneda <span
-                                    class="required">*</span></label>
-                            <div class="input-group">
-                                <select class="form-control" formControlName="moneda">
-                                    <option disabled value="">SELECCIONAR</option>
-                                    <option value="USD">USD</option>
-                                    <option value="EUR">EUR</option>
-                                </select>
-
-                                <div *ngIf="tiendaForm.get('ciudad')?.touched && tiendaForm.get('ciudad')?.invalid"
-                                    class="text-danger">
-                                    <div *ngIf="tiendaForm.get('ciudad')?.errors?.['required']">
-                                        Campo Requerido
-                                    </div>
-                                    <div *ngIf="tiendaForm.get('ciudad')?.errors?.['minlength']">
-                                        Seleccione una opción
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group col-xs-12 col-sm-6">
-                            <label for="zip">Codigo postal <span class="required">*</span></label>
-                            <div class="input-group">
-
-                                <input type="text" formControlName="zip" class="form-control" id="zip"
-                                    placeholder="1010G">
-                                <div *ngIf="tiendaForm.get('zip')?.touched && tiendaForm.get('zip')?.invalid"
-                                    class="text-danger">
-                                    <div *ngIf="tiendaForm.get('zip')?.errors?.['required']">
-                                        Campo Requerido
-                                    </div>
-                                    <div *ngIf="tiendaForm.get('zip')?.errors?.['minlength']">
-                                        minimo 3
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group ">
-                            <label class=" col-form-label font-weight-medium" for="text-input">Categorías </label>
-                            <div class="col-md-12">
+                        <!-- editar/crear post -->
+                        <div *ngIf="currentStep === 1">
+                            <form class="form p-t-20 form-horizontal form-material" [formGroup]="tiendaForm">
+                                <!-- Local -->
                                 <div class="row">
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label for="select-input">Categoría <span class="required">*</span></label>
-                                            <select class="form-control " formControlName="categoria" required>
+                                    <div class="form-group col-xs-12 col-sm-4">
+                                        <label for="Tienda">Nombre Local <span class="required">*</span></label>
+                                        <div class="input-group">
+
+                                            <input type="text" formControlName="nombre" class="form-control" id="Tienda"
+                                                placeholder="nombre">
+                                            <div *ngIf="tiendaForm.get('nombre')?.touched && tiendaForm.get('nombre')?.invalid"
+                                                class="text-danger">
+                                                <div *ngIf="tiendaForm.get('nombre')?.errors?.['required']">
+                                                    Campo Requerido
+                                                </div>
+                                                <div *ngIf="tiendaForm.get('nombre')?.errors?.['minlength']">
+                                                    Mínimo 3 Caracteres
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="form-group  col-xs-12 col-sm-4">
+                                        <label for="Local">Local <span class="required">*</span></label>
+                                        <div class="input-group">
+
+                                            <input type="text" formControlName="local" class="form-control" id="Local"
+                                                placeholder="local">
+                                            <div *ngIf="tiendaForm.get('local')?.touched && tiendaForm.get('local')?.invalid"
+                                                class="text-danger">
+                                                <div *ngIf="tiendaForm.get('local')?.errors?.['required']">
+                                                    Campo Requerido
+                                                </div>
+                                                <div *ngIf="tiendaForm.get('local')?.errors?.['minlength']">
+                                                    Mínimo 3 Caracteres
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group  col-xs-12 col-sm-4">
+                                        <label for="telefono">Teléfono (whatsapp) <span
+                                                class="required">*</span></label>
+                                        <div class="input-group">
+
+                                            <input type="text" formControlName="telefono" class="form-control"
+                                                id="telefono" placeholder="telefono">
+                                            <div *ngIf="tiendaForm.get('telefono')?.touched && tiendaForm.get('telefono')?.invalid"
+                                                class="text-danger">
+                                                <div *ngIf="tiendaForm.get('telefono')?.errors?.['required']">
+                                                    Campo Requerido
+                                                </div>
+                                                <div *ngIf="tiendaForm.get('telefono')?.errors?.['minlength']">
+                                                    Mínimo 3 Caracteres
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <!-- Pais -->
+                                <div class="row">
+                                    <div class="form-group col-xs-12 col-sm-3">
+                                        <label for="Pais">Pais <span class="required">*</span></label>
+                                        <div class="input-group">
+
+                                            <select class="form-control " formControlName="pais" required>
                                                 <option disabled value="">SELECCIONAR</option>
-                                                <option *ngFor="let item of listCategorias | unique:'nombre'"
-                                                    [value]="item._id">
-                                                    {{item.nombre}}</option>
+                                                <option *ngFor="let pais of paises" [value]="pais.pais">
+                                                    {{pais.pais}}
+                                                </option>
 
                                             </select>
+
+                                            <div *ngIf="tiendaForm.get('pais')?.touched && tiendaForm.get('pais')?.invalid"
+                                                class="text-danger">
+                                                <div *ngIf="tiendaForm.get('pais')?.errors?.['required']">
+                                                    Campo Requerido
+                                                </div>
+                                                <div *ngIf="tiendaForm.get('pais')?.errors?.['minlength']">
+                                                    Seleccione una opción
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-xs-12 col-sm-3">
+                                        <label for="Ciudad">Ciudad <span class="required">*</span></label>
+                                        <div class="input-group">
+
+                                            <input type="text" formControlName="ciudad" class="form-control" id="Ciudad"
+                                                placeholder="Ciudad">
+                                            <div *ngIf="tiendaForm.get('ciudad')?.touched && tiendaForm.get('ciudad')?.invalid"
+                                                class="text-danger">
+                                                <div *ngIf="tiendaForm.get('ciudad')?.errors?.['required']">
+                                                    Campo Requerido
+                                                </div>
+                                                <div *ngIf="tiendaForm.get('ciudad')?.errors?.['minlength']">
+                                                    Mínimo 3 Caracteres
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-xs-12 col-sm-3 ">
+                                        <label for="text-input">Moneda <span class="required">*</span></label>
+                                        <div class="input-group">
+                                            <select class="form-control" formControlName="moneda">
+                                                <option disabled value="">SELECCIONAR</option>
+                                                <option value="USD">USD</option>
+                                                <option value="EUR">EUR</option>
+                                            </select>
+
+                                            <div *ngIf="tiendaForm.get('ciudad')?.touched && tiendaForm.get('ciudad')?.invalid"
+                                                class="text-danger">
+                                                <div *ngIf="tiendaForm.get('ciudad')?.errors?.['required']">
+                                                    Campo Requerido
+                                                </div>
+                                                <div *ngIf="tiendaForm.get('ciudad')?.errors?.['minlength']">
+                                                    Seleccione una opción
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-xs-12 col-sm-3">
+                                        <label for="zip">Codigo postal <span class="required">*</span></label>
+                                        <div class="input-group">
+
+                                            <input type="text" formControlName="zip" class="form-control" id="zip"
+                                                placeholder="1010G">
                                             <div *ngIf="tiendaForm.get('zip')?.touched && tiendaForm.get('zip')?.invalid"
                                                 class="text-danger">
                                                 <div *ngIf="tiendaForm.get('zip')?.errors?.['required']">
                                                     Campo Requerido
                                                 </div>
                                                 <div *ngIf="tiendaForm.get('zip')?.errors?.['minlength']">
-                                                    Mínimo 3 Caracteres
+                                                    minimo 3
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label for="select-input">Subcategoría</label>
-                                            <select class="form-control " formControlName="subcategoria">
-                                                <option disabled value="">SELECCIONAR</option>
-                                                <option *ngFor="let item of listCategorias | unique:'nombre'"
-                                                    [value]="item.subcategorias">{{item.subcategorias}}</option>
+                                </div>
+                                <!-- categoria -->
+                                <div class="row">
+                                    <div class="form-group col-xs-12 col-sm-3">
+                                        <label for="select-input">Categoría <span class="required">*</span></label>
+                                        <select class="form-control " formControlName="categoria" required>
+                                            <option disabled value="">SELECCIONAR</option>
+                                            <option *ngFor="let item of listCategorias | unique:'nombre'"
+                                                [value]="item._id">
+                                                {{item.nombre}}</option>
 
-                                            </select>
+                                        </select>
+                                        <div *ngIf="tiendaForm.get('zip')?.touched && tiendaForm.get('zip')?.invalid"
+                                            class="text-danger">
+                                            <div *ngIf="tiendaForm.get('zip')?.errors?.['required']">
+                                                Campo Requerido
+                                            </div>
+                                            <div *ngIf="tiendaForm.get('zip')?.errors?.['minlength']">
+                                                Mínimo 3 Caracteres
+                                            </div>
                                         </div>
                                     </div>
+                                    <div class="form-group col-xs-12 col-sm-3">
+                                        <label for="select-input">Subcategoría</label>
+                                        <select class="form-control " formControlName="subcategoria">
+                                            <option disabled value="">SELECCIONAR</option>
+                                            <option *ngFor="let item of listCategorias | unique:'nombre'"
+                                                [value]="item.subcategorias">{{item.subcategorias}}
+                                            </option>
 
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="form-group col-xs-12 col-sm-6 ">
-                            <label class=" col-form-label font-weight-medium" for="text-input">Mostrar en slide</label>
-                            <div class="input-group">
-                                <select class="form-control" formControlName="state_banner">
-                                    <option disabled value="">SELECCIONAR</option>
-                                    <option [value]="true">Activo</option>
-                                    <option [value]="false">Inactivo</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group col-xs-12 col-sm-6 ">
-                            <label class=" col-form-label font-weight-medium" for="text-input">Destacado?</label>
-                            <div class="input-group">
-                                <select class="form-control" formControlName="isFeatured">
-                                    <option disabled value="">SELECCIONAR</option>
-                                    <option [value]="true">Activo</option>
-                                    <option [value]="false">Inactivo</option>
-                                </select>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="row align-items-center">
-                        <div class="col-xs-12 col-sm-6">
-                            <div class="row">
-                                <label>Redes Sociales</label>
-                                <div class="col-12 ">
-                                    <div class="form-group local-forms">
-                                        <label>Nombre de la Red<span class="login-danger">*</span></label>
-                                        <input class="form-control" name="name_red" [(ngModel)]="name_red"
-                                            [ngModelOptions]="{standalone: true}" type="text">
+                                        </select>
                                     </div>
-                                </div>
-                                <div class="col-12 ">
-                                    <div class="form-group local-forms">
-                                        <label>Usuario<span class="login-danger">*</span></label>
-                                        <input class="form-control" name="usuario_red" [(ngModel)]="usuario_red"
-                                            [ngModelOptions]="{standalone: true}" type="text">
-                                    </div>
-                                </div>
-                                <div class="col-12 ">
-                                    <div class="form-group col-xs-12 col-sm-6">
-                                        <label for="icono">Icono</label>
+                                    <div class="form-group col-xs-12 col-sm-3 ">
+                                        <label  for="text-input">Mostrar en
+                                            slide</label>
                                         <div class="input-group">
-
-                                            <select [(ngModel)]="icono" name="icono" class="form-control"
-                                                [ngModelOptions]="{standalone: true}">
-                                                <option *ngFor="let ic of listIcons" value="{{ic.icono}}">
-                                                    {{ic.name}} <i class="{{ic.icono}}"></i>
-                                                </option>
+                                            <select class="form-control" formControlName="state_banner">
+                                                <option disabled value="">SELECCIONAR</option>
+                                                <option [value]="true">Activo</option>
+                                                <option [value]="false">Inactivo</option>
                                             </select>
-
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-xs-12 col-sm-3 ">
+                                        <label for="text-input">Destacado?</label>
+                                        <div class="input-group">
+                                            <select class="form-control" formControlName="isFeatured">
+                                                <option disabled value="">SELECCIONAR</option>
+                                                <option [value]="true">Activo</option>
+                                                <option [value]="false">Inactivo</option>
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
+                                <div class="form-group ">
+                                    <label class=" col-form-label font-weight-medium" for="text-input">Direccion
+                                        <span class="required">*</span></label>
+                                    <div class="col-md-12">
+                                        <!-- <ckeditor formControlName="direccion" [editor]="Editor1" data="<p>Hello, world!</p>"
+                                    required></ckeditor> -->
+                                        <textarea formControlName="direccion" id="direccion" cols="30" rows="4"
+                                            class="form-control"></textarea>
+                                        <div *ngIf="tiendaForm.get('direccion')?.touched && tiendaForm.get('direccion')?.invalid"
+                                            class="text-danger">
+                                            <div *ngIf="tiendaForm.get('direccion')?.errors?.['required']">
+                                                Campo Requerido
+                                            </div>
+                                            <div *ngIf="tiendaForm.get('direccion')?.errors?.['minlength']">
+                                                Mínimo 3 Caracteres
+                                            </div>
+                                        </div>
 
-                                <div class="col-12 mb-3">
-                                    <button class="btn btn-primary btn-sm" (click)="addRedSocial()">+ Agregar</button>
-                                    <!-- <button class="btn btn-danger btn-sm">x</button> -->
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <label>Redes Sociales</label>
+                                    <div class="row">
+                                        <div class="form-group  col-xs-12 col-sm-3 ">
+                                            <label>Nombre de la Red<span class="login-danger">*</span></label>
+                                            <input class="form-control" name="name_red" [(ngModel)]="name_red"
+                                                [ngModelOptions]="{standalone: true}" type="text">
+                                        </div>
+                                        <div class="form-group  col-xs-12 col-sm-3">
+                                            <label>Usuario<span class="login-danger">*</span></label>
+                                            <input class="form-control" name="usuario_red"
+                                                [(ngModel)]="usuario_red" [ngModelOptions]="{standalone: true}"
+                                                type="text">
+                                        </div>
+                                        <div class="form-group col-xs-12 col-sm-3 ">
+                                            <label for="icono">Icono</label>
+                                            <div class="input-group">
+
+                                                <select [(ngModel)]="icono" name="icono" class="form-control"
+                                                    [ngModelOptions]="{standalone: true}">
+                                                    <option *ngFor="let ic of listIcons" value="{{ic.icono}}">
+                                                        {{ic.name}} <i class="{{ic.icono}}"></i>
+                                                    </option>
+                                                </select>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group col-xs-12 col-sm-3 ">
+                                            <button class="btn btn-primary btn-sm" (click)="addRedSocial()">+
+                                                Agregar</button>
+                                            <!-- <button class="btn btn-danger btn-sm">x</button> -->
+                                        </div>
+                                    </div>
+                                    <div class="row mt-4 mb-4">
+                                        <div class="table-responsive">
+                                            <table class="table table-borderless">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Descripción</th>
+                                                        <th>Acción</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let reds of redssociales; let i = index">
+                                                        <td>
+                                                            Red: {{reds.name_red}}
+                                                            <br>
+                                                            Usuario: {{reds.usuario_red}}
+                                                            <br>
+                                                            Icono: <span class="{{reds.icono}}"></span>
+                                                        </td>
+                                                        <td>
+                                                            <button class="btn btn-danger btn-sm"
+                                                                (click)="deleteMedical(i)">x</button>
+                                                        </td>
+                                                    </tr>
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-6">
+                                        <button class="btn btn-success waves-effect waves-light m-r-10 btn-block"
+                                            type="button" (click)="nextStep()">Siguiente</button>
+                                    </div>
+                                    <div class="col-6">
+                                        <button (click)="saveTienda()" class="btn btn-outline-success">
+                                            {{ tiendaSeleccionado ? 'Actualizar y Continuar' : 'Crear y Continuar' }}
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div *ngIf="currentStep === 2">
+                            <app-loading *ngIf="isLoadingImage"></app-loading>
+                            <div *ngIf="!isLoadingImage">
+                                <label> Anexe su foto</label>
+                                <br>
+                                <div class="row">
+                                    <div class="especificaciones col-xs-12" *ngIf="!tiendaSeleccionado">
+                                        <h4>Debe Crear un post para agregar la imagen</h4>
+                                    </div>
+                                    <div class="especificaciones col-xs-12 col-sm-6" *ngIf="tiendaSeleccionado">
+                                        <h4>Especificaciones:</h4>
+                                        <ul>
+                                            <li>Tamaño máximo: 300px X 300px</li>
+                                            <li>Peso máximo: 2 mb</li>
+                                            <li>Formato permitido: jpg, .gif, .png</li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6" *ngIf="tiendaSeleccionado ">
+                                        <div class="text-center">
+                                            <img *ngIf="!imgTemp "
+                                                [src]="tiendaSeleccionado.img | imagenPipe: 'tiendas'"
+                                                class="img-responsive img-thumbnail" alt="">
+                                            <img *ngIf="imgTemp" [src]="imgTemp" class="img-responsive">
+                                            <div class="form-group ">
+
+                                            </div>
+                                        </div>
+                                        <input type="file" (change)="cambiarImagen($event.target.files[0])">
+                                        <br>
+                                        <br>
+
+
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <button
+                                                    class="btn btn-success waves-effect waves-light m-r-10 btn-block"
+                                                    type="button" (click)="prevStep()">Anterior</button>
+                                            </div>
+                                            <div class="col-6">
+                                                <button type="button" [disabled]="!imagenSubir" (click)="subirImagen()"
+                                                    class="btn btn-success waves-effect waves-light m-r-10 btn-block">
+                                                    <i class="fa fa-save"></i> Subir imagen
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-xs-12 col-sm-6">
 
-                            <div class="table-responsive">
-                                <table class="table mb-0">
-                                    <thead>
-                                        <tr>
-                                            <th>Descripción</th>
-                                            <th>Acción</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr *ngFor="let reds of redssociales; let i = index">
-                                            <td>
-                                                Red: {{reds.name_red}}
-                                                <br>
-                                                Usuario: {{reds.usuario_red}}
-                                                <br>
-                                                Icono: <span class="{{reds.icono}}"></span>
-                                            </td>
-                                            <td>
-                                                <button class="btn btn-danger btn-sm"
-                                                    (click)="deleteMedical(i)">x</button>
-                                            </td>
-                                        </tr>
 
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
 
                     </div>
 
-                    <button [disabled]="tiendaForm.invalid" (click)="saveTienda()"
-                        class="btn btn-success waves-effect waves-light m-r-10 btn-block">
-                        <i class="fa fa-save"></i> Guardar cambios
-                    </button>
-                </form>
+                </div>
             </div>
-        </div>
-    </div>
-    <!--  -->
-    <div class="col-md-4" *ngIf="tiendaSeleccionado ">
-        <app-loading *ngIf="cargandoImagen"></app-loading>
-        <div class="card" *ngIf="!cargandoImagen">
-            <div class="card-body">
-                <h4 class="card-title">imagen</h4>
-                <h6 class="card-subtitle">Logo de marca</h6>
-                <div class="text-center">
-                    <img *ngIf="!imgTemp" [src]="tiendaSeleccionado.img | imagenPipe: 'tiendas'  "
-                        class="img-responsive img-thumbnail" alt="">
-                    <img *ngIf="imgTemp" [src]="imgTemp" class="img-avatar">
-                </div>
-                <input type="file" (change)="cambiarImagen($event.target.files[0])">
-                <br>
-                <br>
-                <button type="button" [disabled]="!imagenSubir" (click)="subirImagen()"
-                    class="btn btn-success waves-effect waves-light m-r-10 btn-block">
-                    <i class="fa fa-save"></i> Cambiar imagen
-                </button>
-                <div class="col-xs-12">
-                    <h4>{{'Especificaciones'}}:</h4>
-                    <ul>
-                        <li>{{'Tamaño máximo'}}: 300px X 300px</li>
-                        <li>{{'Peso máximo'}}: 3 mega bites</li>
-                        <li>{{'Formato permitido'}}: jpg, .gif, .png</li>
-                    </ul>
-                </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                    (click)="onClose()">Cerrar</button>
             </div>
         </div>
     </div>

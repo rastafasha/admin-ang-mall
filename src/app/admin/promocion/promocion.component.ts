@@ -1,4 +1,4 @@
-import { Component,  OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { delay } from 'rxjs/operators';
 import Swal from 'sweetalert2';
@@ -9,17 +9,17 @@ import { PromocionService } from '../../services/promocion.service';
 import { ModalImagenService } from '../../services/modal-imagen.service';
 import { FormGroup } from '@angular/forms';
 
-declare var jQuery:any;
-declare var $:any;
+declare var jQuery: any;
+declare var $: any;
 @Component({
   selector: 'app-promocion',
-  standalone:false,
+  standalone: false,
   templateUrl: './promocion.component.html',
   styleUrls: ['./promocion.component.css']
 })
 export class PromocionComponent implements OnInit {
 
-  public promocions: Promocion[] =[];
+  public promocions: Promocion[] = [];
   public promocion: Promocion;
   public cargando: boolean = true;
 
@@ -31,10 +31,11 @@ export class PromocionComponent implements OnInit {
   public imgSubs: Subscription;
   public msm_error;
 
-  query:string ='';
-            searchForm!:FormGroup;
-            currentPage = 1;
-            collecion='promocions';
+  query: string = '';
+  searchForm!: FormGroup;
+  currentPage = 1;
+  collecion = 'promocions';
+  promocionSeleccionado: Promocion;
 
   constructor(
     private promocionService: PromocionService,
@@ -46,50 +47,47 @@ export class PromocionComponent implements OnInit {
 
     this.loadPromocions();
     this.imgSubs = this.modalImagenService.nuevaImagen
-    .pipe(
-      delay(100)
-    )
-    .subscribe(img => { this.loadPromocions();});
+      .pipe(
+        delay(100)
+      )
+      .subscribe(img => { this.loadPromocions(); });
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     this.imgSubs.unsubscribe();
   }
 
-  loadPromocions(){
+  loadPromocions() {
     this.cargando = true;
     this.promocionService.cargarPromocions().subscribe(
       promocions => {
         this.cargando = false;
         this.promocions = promocions;
-        console.log(this.promocions);
       }
     )
 
   }
 
-  guardarCambios(promocion: Promocion){
+  guardarCambios(promocion: Promocion) {
     this.promocionService.actualizarPromocion(promocion)
-    .subscribe( resp => {
-      Swal.fire('Actualizado', promocion.producto_title,  'success')
-    })
+      .subscribe(resp => {
+        Swal.fire('Actualizado', promocion.producto_title, 'success')
+      })
 
   }
 
-
-  eliminarPromocion(promocion: Promocion){
+  eliminarPromocion(promocion: Promocion) {
     this.promocionService.borrarPromocion(promocion._id)
-    .subscribe( resp => {
-      this.loadPromocions();
-      Swal.fire('Borrado', promocion.producto_title, 'success')
-    })
+      .subscribe(resp => {
+        this.loadPromocions();
+        Swal.fire('Borrado', promocion.producto_title, 'success')
+      })
 
   }
 
-public PageSize(): void {
+  public PageSize(): void {
     this.query = '';
     this.loadPromocions();
-    // this.router.navigateByUrl('/productos')
   }
 
   handleSearchEvent(event: any) {
@@ -98,33 +96,45 @@ public PageSize(): void {
     }
   }
 
-  desactivar(id){
+  desactivar(id) {
     this.promocionService.desactivar(id).subscribe(
-      response=>{
-        $('#desactivar-'+id).modal('hide');
+      response => {
+        $('#desactivar-' + id).modal('hide');
         $('.modal-backdrop').removeClass('show');
         this.loadPromocions();
       },
-      error=>{
+      error => {
         this.msm_error = 'No se pudo desactivar el producto, vuelva a intenter.'
       }
     )
   }
 
-  activar(id){
+  activar(id) {
     this.promocionService.activar(id).subscribe(
-      response=>{
+      response => {
 
-        $('#activar-'+id).modal('hide');
+        $('#activar-' + id).modal('hide');
         $('.modal-backdrop').removeClass('show');
         this.loadPromocions();
       },
-      error=>{
-
-
+      error => {
         this.msm_error = 'No se pudo activar el producto, vuelva a intenter.'
       }
     )
   }
+
+  onEditProject(promocion: Promocion) {
+    this.promocionSeleccionado = promocion;
+  }
+
+  openEditModal(): void {
+    this.promocionSeleccionado = null;
+  }
+
+  onCloseModal(): void {
+    this.promocionSeleccionado = null;
+  }
+
+  onClose() { }
 
 }

@@ -1,130 +1,241 @@
-<section class="pt-lg-4 pb-4 mb-3">
-    <div class="pt-2 px-4 pl-lg-0 pr-xl-5">
-        <div class="row">
-
-
-            <div class="col-lg-12">
-                <div class="border-bottom mt-lg-2 pb-2 mb-5">
-                    <h1 class="mt-lg-4">Banner promocional</h1>
-                    <div class="d-flex flex-wrap flex-md-nowrap justify-content-between">
-                        <p class="text-muted">Datos del banner de la página de inicio.</p>
-                        <button class="btn btn-outline-danger" href="javascript:void(0)" (click)="goBack()">Volver</button>
-                    </div>
-
-                </div>
+<div class="modal fade" id="editPromocion" tabindex="-1" aria-labelledby="promocionModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="promocionModalLabel">{{pageTitle}}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                    (click)="onClose()"></button>
             </div>
-            <div class="col-lg-12 form-group" *ngIf="msm_success">
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    Se actualizó los datos de las configuraciones correctamente.
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-                </div>
-            </div>
-            <div class="col-lg-12 form-group" *ngIf="msm_error">
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    Ocurrió un error al guardar las configuraciones.
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-                </div>
-            </div>
-            <div class="col-lg-8">
-                <form [formGroup]="promocionForm" (ngSubmit)="onSubmit(promocionForm)" class="form-horizontal form-material">
-                    <div class="card border-0 box-shadow">
+            <div class="modal-body">
+                <!-- <app-loading *ngIf="isLoading"></app-loading> -->
+                <div class="container">
+                    <div class="row">
 
-                        <div class="card-body">
-                            <div class="tab-content" style="margin-top: 20px;">
-                                <div class="tab-pane fade active show ">
-                                    <div class="row">
-                                        <div class="form-group col-xs-12 col-sm-6">
-                                            <label class=" col-form-label font-weight-medium" for="text-input">Pre título</label>
-                                            <div class="input-group">
-                                                <input class="form-control" required type="text" placeholder="Titulo superior" formControlName="first_title">
-                                            </div>
-                                        </div>
-                                        <div class="form-group col-xs-12 col-sm-6">
-                                            <label class=" col-form-label font-weight-medium" for="text-input">Título</label>
-                                            <div class="input-group">
-                                                <input class="form-control" required type="text" placeholder="Nombre del producto" formControlName="producto_title">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="row">
-                                        <div class="form-group col-xs-12 col-sm-6">
-                                            <label class=" col-form-label font-weight-medium" for="text-input">Etiqueta</label>
-                                            <div class="input-group">
-                                                <input class="form-control" required type="text" placeholder="Etiqueta del banner" formControlName="etiqueta">
-                                            </div>
-                                        </div>
-                                        <div class="form-group col-xs-12 col-sm-6">
-                                            <label class=" col-form-label font-weight-medium" for="text-input">Subtítulo</label>
-                                            <div class="input-group">
-                                                <input class="form-control" required type="text" placeholder="Subtitulo del banner" formControlName="subtitulo">
-                                            </div>
-                                        </div>
-                                        <div class="form-group col-xs-12 col-sm-6">
-                                            <label class=" col-form-label font-weight-medium" for="text-input">Color Fondo</label>
-                                            <div class="input-group">
-                                                <input class="form-control"  type="color" placeholder="Color del fondo" formControlName="colorfondo">
-                                            </div>
-                                        </div>
-                                    </div>
-                                   <div class="row">
-                                    <div class="form-group col-xs-12 col-sm-4">
-                                        <label class=" col-form-label font-weight-medium" for="text-input">Fecha de termino</label>
+                        <!-- Step Indicator -->
+                        <div class="step-indicator m-t-20 m-b-20">
+                            <div class="step" [ngClass]="{'active': currentStep >= 1, 'completed': currentStep > 1}">
+                                <span class="step-number">1</span>
+                                <span class="step-label">Datos</span>
+                            </div>
+                            <div class="step-line"></div>
+                            <div class="step" [ngClass]="{'active': currentStep >= 2}">
+                                <span class="step-number">2</span>
+                                <span class="step-label">Imagen</span>
+                            </div>
+                        </div>
+                        <!-- editar/crear post -->
+                        <div *ngIf="currentStep === 1">
+                            <form [formGroup]="promocionForm" (ngSubmit)="onSubmit()"
+                                class="form-horizontal form-material">
+                                <div class="row">
+                                    <div class="form-group col-xs-12 col-sm-6">
+                                        <label class=" col-form-label font-weight-medium" for="text-input">Pre
+                                            título <span class="required">*</span></label>
                                         <div class="input-group">
-                                            <input class="form-control" required type="date" placeholder="2020/12/25" formControlName="end">
+                                            <input class="form-control" required type="text"
+                                                placeholder="Titulo superior" formControlName="first_title" >
+                                            <div *ngIf="promocionForm.get('first_title')?.touched && promocionForm.get('first_title')?.invalid"
+                                                class="text-danger">
+                                                <div *ngIf="promocionForm.get('first_title')?.errors?.['required']">
+                                                    Campo Requerido
+                                                </div>
+                                                <div *ngIf="promocionForm.get('first_title')?.errors?.['minlength']">
+                                                    Seleccione una opción
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="form-group col-xs-12 col-sm-4">
-                                        <label class=" col-form-label font-weight-medium" for="text-input">Slug del producto</label>
+                                    <div class="form-group col-xs-12 col-sm-6">
+                                        <label class=" col-form-label font-weight-medium"
+                                            for="text-input">Título <span class="required">*</span></label>
                                         <div class="input-group">
-                                            <input class="form-control" required type="text" placeholder="Slug del producto promocional" formControlName="enlace">
+                                            <input class="form-control" required type="text"
+                                                placeholder="Nombre del producto" formControlName="producto_title">
+                                                 <div *ngIf="promocionForm.get('producto_title')?.touched && promocionForm.get('producto_title')?.invalid"
+                                                class="text-danger">
+                                                <div *ngIf="promocionForm.get('producto_title')?.errors?.['required']">
+                                                    Campo Requerido
+                                                </div>
+                                                <div *ngIf="promocionForm.get('producto_title')?.errors?.['minlength']">
+                                                    Seleccione una opción
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="form-group col-xs-12 col-sm-4">
+                                        <label class=" col-form-label font-weight-medium"
+                                            for="text-input">Etiqueta <span class="required">*</span></label>
+                                        <div class="input-group">
+                                            <input class="form-control" required type="text"
+                                                placeholder="Etiqueta del banner" formControlName="etiqueta">
+                                                <div *ngIf="promocionForm.get('etiqueta')?.touched && promocionForm.get('etiqueta')?.invalid"
+                                                class="text-danger">
+                                                <div *ngIf="promocionForm.get('etiqueta')?.errors?.['required']">
+                                                    Campo Requerido
+                                                </div>
+                                                <div *ngIf="promocionForm.get('etiqueta')?.errors?.['minlength']">
+                                                    Seleccione una opción
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="form-group col-xs-12 col-sm-4">
-                                        <label class=" col-form-label font-weight-medium" for="text-input">Estado</label>
+                                        <label class=" col-form-label font-weight-medium"
+                                            for="text-input">Subtítulo <span class="required">*</span></label>
+                                        <div class="input-group">
+                                            <input class="form-control" required type="text"
+                                                placeholder="Subtitulo del banner" formControlName="subtitulo">
+                                                <div *ngIf="promocionForm.get('subtitulo')?.touched && promocionForm.get('subtitulo')?.invalid"
+                                                class="text-danger">
+                                                <div *ngIf="promocionForm.get('subtitulo')?.errors?.['required']">
+                                                    Campo Requerido
+                                                </div>
+                                                <div *ngIf="promocionForm.get('subtitulo')?.errors?.['minlength']">
+                                                    Seleccione una opción
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-xs-12 col-sm-4">
+                                        <label class=" col-form-label font-weight-medium" for="text-input">Color
+                                            Fondo <span class="required">*</span></label>
+                                        <div class="input-group">
+                                            <input class="form-control" type="color" placeholder="Color del fondo"
+                                                formControlName="colorfondo" required>
+
+                                                <div *ngIf="promocionForm.get('colorfondo')?.touched && promocionForm.get('colorfondo')?.invalid"
+                                                class="text-danger">
+                                                <div *ngIf="promocionForm.get('colorfondo')?.errors?.['required']">
+                                                    Campo Requerido
+                                                </div>
+                                                <div *ngIf="promocionForm.get('colorfondo')?.errors?.['minlength']">
+                                                    Seleccione una opción
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-xs-12 col-sm-4">
+                                        <label class=" col-form-label font-weight-medium" for="text-input">Fecha de
+                                            termino <span class="required">*</span></label>
+                                        <div class="input-group">
+                                            <input class="form-control" required type="date" placeholder="2020/12/25"
+                                                formControlName="end">
+                                                <div *ngIf="promocionForm.get('end')?.touched && promocionForm.get('end')?.invalid"
+                                                class="text-danger">
+                                                <div *ngIf="promocionForm.get('end')?.errors?.['required']">
+                                                    Campo Requerido
+                                                </div>
+                                                <div *ngIf="promocionForm.get('end')?.errors?.['minlength']">
+                                                    Seleccione una fecha de finalización
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-xs-12 col-sm-4">
+                                        <label class=" col-form-label font-weight-medium" for="text-input">Slug del
+                                            producto <span class="required">*</span></label>
+                                        <div class="input-group">
+                                            <input class="form-control" required type="text"
+                                                placeholder="Slug del producto promocional" formControlName="enlace">
+                                                <div *ngIf="promocionForm.get('enlace')?.touched && promocionForm.get('enlace')?.invalid"
+                                                class="text-danger">
+                                                <div *ngIf="promocionForm.get('enlace')?.errors?.['required']">
+                                                    Campo Requerido
+                                                </div>
+                                                <div *ngIf="promocionForm.get('enlace')?.errors?.['minlength']">
+                                                    Coloque una url o slug del producto
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-xs-12 col-sm-4">
+                                        <label class=" col-form-label font-weight-medium"
+                                            for="text-input">Estado </label>
                                         <div class="input-group">
                                             <div class="custom-control custom-checkbox">
-                                                <input class="custom-control-input" formControlName="estado" type="checkbox" id="ex-check-1">
-                                                <label class="custom-control-label" *ngIf="promocion.estado" for="ex-check-1">Activo</label>
-                                                <label class="custom-control-label" *ngIf="!promocion.estado" for="ex-check-1">Desactivado</label>
+                                                <input class="custom-control-input" formControlName="estado"
+                                                    type="checkbox" id="ex-check-1">
+                                                <label class="custom-control-label" *ngIf="promocion.estado"
+                                                    for="ex-check-1">Desactivado</label>
+                                                <label class="custom-control-label" *ngIf="!promocion.estado"
+                                                    for="ex-check-1"> Activo</label>
                                             </div>
                                         </div>
                                     </div>
-                                   </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <button class="btn btn-success waves-effect waves-light m-r-10 btn-block"
+                                            type="button" (click)="nextStep()">Siguiente</button>
+                                    </div>
+                                    <div class="col-6">
+                                        <button (click)="onSubmit()" class="btn btn-outline-success">
+                                            {{ promocionSeleccionado ? 'Actualizar y Continuar' : 'Crear y Continuar' }}
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div *ngIf="currentStep === 2">
+                            <app-loading *ngIf="isLoadingImage"></app-loading>
+                            <div *ngIf="!isLoadingImage">
+                                <label> Anexe su foto</label>
+                                <br>
+                                <div class="row">
+                                    <div class="especificaciones col-xs-12" *ngIf="!promocionSeleccionado">
+                                        <h4>Debe Crear un post para agregar la imagen</h4>
+                                    </div>
+                                    <div class="especificaciones col-xs-12 col-sm-6" *ngIf="promocionSeleccionado">
+                                        <h4>Especificaciones:</h4>
+                                        <ul>
+                                            <li>Tamaño máximo: 300px X 300px</li>
+                                            <li>Peso máximo: 2 mb</li>
+                                            <li>Formato permitido: jpg, .gif, .png</li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6" *ngIf="promocionSeleccionado ">
+                                        <div class="text-center">
+                                            <img *ngIf="!imgTemp "
+                                                [src]="promocionSeleccionado.img | imagenPipe: 'promocions'"
+                                                class="img-responsive img-thumbnail" alt="">
+                                            <img *ngIf="imgTemp" [src]="imgTemp" class="img-responsive">
+                                            <div class="form-group ">
 
+                                            </div>
+                                        </div>
+                                        <input type="file" (change)="cambiarImagen($event.target.files[0])">
+                                        <br>
+                                        <br>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <button
+                                                    class="btn btn-success waves-effect waves-light m-r-10 btn-block"
+                                                    type="button" (click)="prevStep()">Anterior</button>
+                                            </div>
+                                            <div class="col-6">
+                                                <button type="button" [disabled]="!imagenSubir" (click)="subirImagen()"
+                                                    class="btn btn-success waves-effect waves-light m-r-10 btn-block">
+                                                    <i class="fa fa-save"></i> Subir imagen
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="card-footer ">
-                            <button class="btn btn-success waves-effect waves-light m-r-10 btn-block" type="submit">
-                              <i class="fa fa-save"></i> Guardar cambios
-                            </button>
-                        </div>
                     </div>
-                </form>
-            </div>
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h4 class="card-title">Image</h4>
-                        <div class="text-center">
-                            <img *ngIf="!imgTemp" [src]="promoSeleccionado.img | imagenPipe: 'promocions'  " class="img-responsive img-thumbnail" alt="">
-                            <img *ngIf="imgTemp" [src]="imgTemp" class="img-avatar">
-                        </div>
-                        <input type="file" (change)="cambiarImagen($event.target.files[0])">
-                        <br>
-                        <br>
-                        <button type="button" [disabled]="!imagenSubir" (click)="subirImagen()" class="btn btn-success waves-effect waves-light m-r-10 btn-block">
-                    <i class="fa fa-save"></i> Cambiar imagen
-                   </button>
-                    </div>
+
                 </div>
             </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                    (click)="onClose()">Cerrar</button>
+            </div>
         </div>
-
     </div>
-</section>
+</div>

@@ -1,12 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { Location } from '@angular/common';
 import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
 
 import { FileUploadService } from 'src/app/services/file-upload.service';
-import { Categoria } from 'src/app/models/categoria.model';
 import { Usuario } from 'src/app/models/usuario.model';
 import { CategoriaService } from 'src/app/services/categoria.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
@@ -24,14 +21,19 @@ interface HtmlInputEvent extends Event {
 declare var jQuery: any;
 declare var $: any;
 
+declare var bootstrap: any;
+
 @Component({
   selector: 'app-tiendaadd',
   standalone: false,
   templateUrl: './tiendaadd.component.html',
   styleUrls: ['./tiendaadd.component.css']
 })
-export class TiendaaddComponent implements OnInit {
+export class TiendaaddComponent implements OnInit, OnChanges {
 
+  @Input() tiendaSeleccionado;
+  @Output() closeModal: EventEmitter<void> = new EventEmitter<void>();
+  @Output() refreshTiendaList: EventEmitter<void> = new EventEmitter<void>();
 
   cargando = false;
   cargandoImagen = false;
@@ -45,11 +47,11 @@ export class TiendaaddComponent implements OnInit {
   pageTitle: string;
   listIcons;
   state_banner: boolean;
+  currentStep = 1;
 
 
   public Editor = ClassicEditor;
   public Editor1 = ClassicEditor;
-  public tiendaSeleccionado?: Tienda;
   public pais?: Pais;
   public paises: Pais;
 
@@ -72,9 +74,6 @@ export class TiendaaddComponent implements OnInit {
     private tiendaService: TiendaService,
     private usuarioService: UsuarioService,
     private fileUploadService: FileUploadService,
-    private router: Router,
-    private activatedRoute: ActivatedRoute,
-    private location: Location,
     private _iconoService: IconosService,
   ) {
     this.usuario = usuarioService.usuario;
@@ -85,24 +84,142 @@ export class TiendaaddComponent implements OnInit {
     window.scrollTo(0, 0);
     let USER = localStorage.getItem("user");
     this.user = USER ? JSON.parse(USER) : null;
-
     this.cargar_iconos();
     this.getPaises();
     this.getCategorias();
-
     this.validarFormulario();
-    this.activatedRoute.params.subscribe(({ id }) => this.cargarTienda(id));
-    if (this.tiendaSeleccionado) {
-      //actualizar
-      this.pageTitle = 'Edit Tienda';
-
-    } else {
-      //crear
-      this.pageTitle = 'Crear Tienda';
-    }
-
-
   }
+
+  validarFormulario() {
+    this.tiendaForm = this.fb.group({
+      nombre: ['', Validators.required],
+      local: ['', Validators.required],
+      telefono: ['', Validators.required],
+      categoria: ['', Validators.required],
+      direccion: ['', Validators.required],
+      pais: ['', Validators.required],
+      moneda: ['', Validators.required],
+      ciudad: ['', Validators.required],
+      zip: ['', Validators.required],
+      subcategoria: [''],
+      redssociales: [this.redessociales],
+      status: ['false',],
+      state_banner: ['false',],
+      isFeatured: ['false',],
+      user: [this.user.uid],
+    })
+  }
+
+
+  ngOnChanges(changes: SimpleChanges): void {
+
+    if (
+      changes['tiendaSeleccionado'] &&
+      changes['tiendaSeleccionado'].currentValue
+    ) {
+      this.pageTitle = 'Editando Tienda';
+      const tienda = changes['tiendaSeleccionado'].currentValue;
+      this.tiendaForm.patchValue({
+        id: tienda._id,
+        nombre: tienda.nombre,
+        local: tienda.local,
+        telefono: tienda.telefono,
+        categoria: tienda.categoria,
+        direccion: tienda.direccion,
+        pais: tienda.pais,
+        moneda: tienda.moneda,
+        ciudad: tienda.ciudad,
+        zip: tienda.zip,
+        subcategoria: tienda.subcategoria,
+        redssociales: tienda.redssociales,
+        status: tienda.status,
+        state_banner: tienda.state_banner,
+        img: tienda.img,
+        user: tienda.user
+      });
+      this.tiendaSeleccionado = tienda;
+      this.redssociales = this.tiendaSeleccionado.redssociales;
+      this.pageTitle = 'Editando Tienda';
+    } else {
+      this.pageTitle = 'Creando Tienda';
+    }
+  }
+
+  onClose() {
+    this.tiendaSeleccionado = null;
+    this.currentStep = 1;
+    this.tiendaForm.reset();
+    this.pageTitle = 'Creando Tienda';
+    // Also reset default values if needed
+    this.tiendaForm.patchValue({
+      id: null,
+      nombre: null,
+      local: null,
+      telefono: null,
+      categoria: null,
+      direccion: null,
+      pais: null,
+      moneda: null,
+      ciudad: null,
+      zip: null,
+      subcategoria: null,
+      redssociales: null,
+      status: null,
+      state_banner: null,
+      img: null,
+      user: null
+    });
+    // Emit event to parent to reset the projectSeleccionado variable
+
+    this.closeModal.emit();
+  }
+
+  nextStep() {
+    const nombre = this.tiendaForm.get('nombre');
+    const local = this.tiendaForm.get('local');
+    const telefono = this.tiendaForm.get('telefono');
+    const categoria = this.tiendaForm.get('categoria');
+    const direccion = this.tiendaForm.get('direccion');
+    const pais = this.tiendaForm.get('pais');
+    const moneda = this.tiendaForm.get('moneda');
+    const ciudad = this.tiendaForm.get('ciudad');
+    const zip = this.tiendaForm.get('zip');
+    const subcategoria = this.tiendaForm.get('subcategoria');
+    const redssociales = this.tiendaForm.get('redssociales');
+    const status = this.tiendaForm.get('status');
+    const state_banner = this.tiendaForm.get('state_banner');
+
+    if (nombre?.invalid || local?.invalid ||
+      telefono?.invalid || categoria?.invalid ||
+      direccion?.invalid || pais?.invalid ||
+      moneda?.invalid || ciudad?.invalid ||
+      zip?.invalid || subcategoria?.invalid ||
+      redssociales?.invalid || status?.invalid ||
+      state_banner?.invalid
+
+    ) {
+      nombre?.markAsTouched();
+      local?.markAsTouched();
+      telefono?.markAsTouched();
+      categoria?.markAsTouched();
+      direccion?.markAsTouched();
+      pais?.markAsTouched();
+      moneda?.markAsTouched();
+      ciudad?.markAsTouched();
+      zip?.markAsTouched();
+      subcategoria?.markAsTouched();
+      redssociales?.markAsTouched();
+      status?.markAsTouched();
+      state_banner?.markAsTouched();
+      return;
+    }
+    this.currentStep = 2;
+  }
+
+  prevStep() {
+    this.currentStep = 1;
+  }
+
 
 
 
@@ -125,17 +242,6 @@ export class TiendaaddComponent implements OnInit {
       }
     )
   }
-
-  // addRedSocial(){
-  //   this.redssociales.push({
-  //     name_red: this.name_red,
-  //     usuario_red: this.usuario_red,
-  //     icono: this.icono
-  //   })
-  //   this.name_red = '';
-  //   this.usuario_red = '';
-  //   this.icono = '';
-  // }
 
 
   addRedSocial() {
@@ -165,30 +271,8 @@ export class TiendaaddComponent implements OnInit {
     this.redssociales.splice(i, 1);
   }
 
-
-
-  validarFormulario() {
-    this.tiendaForm = this.fb.group({
-      nombre: ['', Validators.required],
-      local: ['', Validators.required],
-      telefono: ['', Validators.required],
-      categoria: ['', Validators.required],
-      direccion: ['', Validators.required],
-      pais: ['', Validators.required],
-      moneda: ['', Validators.required],
-      ciudad: ['', Validators.required],
-      zip: ['', Validators.required],
-      subcategoria: [''],
-      redssociales: [this.redessociales],
-      status: ['false',],
-      state_banner: ['false',],
-      isFeatured: ['false',],
-      user: [this.user.uid],
-    })
-  }
-
   cargar_iconos() {
-    this._iconoService.getIcons().subscribe(
+    this._iconoService.getIconsSocial().subscribe(
       (resp: any) => {
         this.listIcons = resp.iconos;
         // console.log(this.listIcons.iconos)
@@ -197,44 +281,6 @@ export class TiendaaddComponent implements OnInit {
     )
   }
 
-  cargarTienda(_id: string) {
-
-    this.cargando = true;
-    if (_id !== null && _id !== undefined) {
-      this.pageTitle = 'Edit Usuario';
-      this.tiendaService.getTiendaById(_id).subscribe(
-        (res: any) => {
-          this.tiendaForm.patchValue({
-            id: res._id,
-            nombre: res.nombre,
-            local: res.local,
-            telefono: res.telefono,
-            categoria: res.categoria,
-            direccion: res.direccion,
-            pais: res.pais,
-            moneda: res.moneda,
-            ciudad: res.ciudad,
-            zip: res.zip,
-            subcategoria: res.subcategoria,
-            redssociales: res.redssociales,
-            status: res.status,
-            state_banner: res.state_banner,
-            img: res.img,
-            user: res.user
-          });
-          this.tiendaSeleccionado = res;
-          this.cargando = false;
-          // console.log(this.tiendaSeleccionado.redssociales);
-          this.redssociales = this.tiendaSeleccionado.redssociales;
-        }
-      );
-    } else {
-      this.pageTitle = 'Create Usuario';
-    }
-
-
-
-  }
 
 
 
@@ -277,6 +323,16 @@ export class TiendaaddComponent implements OnInit {
         resp => {
           this.cargando = false;
           Swal.fire('Actualizado', `${nombre} actualizado correctamente`, 'success');
+          // Close modal programmatically
+          const modalElement = document.getElementById('editTienda');
+          const modal = bootstrap.Modal.getInstance(modalElement);
+          if (modal) {
+            modal.hide();
+
+          }
+          // Emit event to refresh project list
+          this.refreshTiendaList.emit();
+          this.ngOnInit()
         });
 
     } else {
@@ -284,8 +340,10 @@ export class TiendaaddComponent implements OnInit {
       this.tiendaService.crearTienda(this.tiendaForm.value)
         .subscribe((resp: any) => {
           this.cargando = false;
-          Swal.fire('Creado', `${nombre} creado correctamente`, 'success');
-          this.router.navigateByUrl(`/dashboard/tienda`);
+          this.tiendaSeleccionado = resp.tienda;
+          Swal.fire('¡Paso 1 completado!', 'Post creado. Ahora sube la imagen.', 'success');
+          // Como estmos creando, al finalizar debe ir al paso 2 para subir la imagen
+          this.currentStep = 2;
         })
     }
 
@@ -323,7 +381,4 @@ export class TiendaaddComponent implements OnInit {
       })
   }
 
-  goBack() {
-    this.location.back(); // <-- go back to previous location on cancel
-  }
 }

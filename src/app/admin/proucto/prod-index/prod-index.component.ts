@@ -1,17 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import Swal from 'sweetalert2';
-import { delay } from 'rxjs/operators';
-
-import { BusquedasService } from '../../../services/busquedas.service';
 import { Categoria } from '../../../models/categoria.model';
 import { CategoriaService } from '../../../services/categoria.service';
 import { Producto } from '../../../models/producto.model';
 import { ProductoService } from '../../../services/producto.service';
-import { ModalImagenService } from '../../../services/modal-imagen.service';
-import { environment } from 'src/environments/environment';
 import { FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
 import { Usuario } from 'src/app/models/usuario.model';
 import { UsuarioService } from 'src/app/services/usuario.service';
 
@@ -52,12 +46,8 @@ export class ProdIndexComponent implements OnInit {
   constructor(
     private productoService: ProductoService,
     private categoriaService: CategoriaService,
-    private modalImagenService: ModalImagenService,
     private usuarioService: UsuarioService,
-    private router: Router,
-    private busquedaService: BusquedasService,
   ) {
-    this.url = environment.baseUrl;
   }
 
   ngOnInit(): void {
@@ -74,9 +64,7 @@ export class ProdIndexComponent implements OnInit {
     this.loadCategorias();
   }
 
-  ngOnDestroy() {
-    this.imgSubs.unsubscribe();
-  }
+ 
 
   loadProductos() {
     this.cargando = true;
@@ -135,7 +123,7 @@ export class ProdIndexComponent implements OnInit {
 
   public PageSize(): void {
     this.query = '';
-    if (this.user.role === 'ADMIN') {
+    if (this.user.role === 'ADMIN' || this.user.role === 'SUPERADMIN') {
       this.loadProductos();
     }
     if (this.user.role === 'VENTAS' || this.user.role === 'TIENDA' || this.user.role === 'ALMACEN') {
@@ -208,10 +196,18 @@ export class ProdIndexComponent implements OnInit {
 
   onEditColor(producto: Producto) {
     this.productoSeleccionado = producto;
-    console.log(this.productoSeleccionado)
+  }
+  onEditSelector(producto: Producto) {
+    this.productoSeleccionado = producto;
+  }
+  onEditGaleria(producto: Producto) {
+    this.productoSeleccionado = producto;
   }
   onEditProject(producto: Producto) {
     this.productoSeleccionado = producto;
+  }
+  openEditProductPapelera() {
+    this.productoSeleccionado = null;
   }
 
   openEditModal(): void {

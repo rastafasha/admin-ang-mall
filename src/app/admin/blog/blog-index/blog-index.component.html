@@ -77,25 +77,22 @@
                                 <td>
                                     <button type="button" class="btn btn-accent"
                                         *ngIf="blog.status == 'Edición' || blog.status == 'Desactivado'"
-                                        data-toggle="modal" [attr.data-target]="'#activar-'+blog._id"><span
+                                        data-bs-toggle="modal" [attr.data-bs-target]="'#activar-'+blog._id"><span
                                             class="czi-check"></span> Activar</button>
 
-                                    <div class="modal fade" [attr.id]="'activar-'+blog._id" tabindex="-1" role="dialog"
-                                        style="display: none;" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal fade" [attr.id]="'activar-'+blog._id" tabindex="-1" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" >
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <h4 class="modal-title">{{'Confirmación'| translate}} </h4>
-                                                    <button class="close" type="button" data-dismiss="modal"
-                                                        aria-label="Close"><span aria-hidden="true">×</span></button>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <p class="font-size-sm">{{'Al aceptar, estás confirmando que fué
-                                                        editado correctamente'| translate}}.</p>
+                                                    <p class="font-size-sm">{{'Al aceptar, estás confirmando que fué editado correctamente'| translate}}.</p>
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button class="btn btn-secondary btn-sm" type="button"
-                                                        data-dismiss="modal">{{'Cerrar'| translate}}</button>
+                                                        data-bs-dismiss="modal">{{'Cerrar'| translate}}</button>
                                                     <button class="btn btn-primary btn-shadow btn-sm" type="button"
                                                         (click)="activar(blog._id)">{{'Aceptar'| translate}}</button>
                                                 </div>
@@ -103,25 +100,23 @@
                                         </div>
                                     </div>
 
-                                    <button type="button" class="btn btn-primary" *ngIf="blog.status == 'Activo'"
-                                        data-toggle="modal" [attr.data-target]="'#desactivar-'+blog._id"><span
-                                            class="czi-close"></span> Desactivar</button>
+                                    <button type="button" class="btn btn-primary" *ngIf="blog.status == 'Activo'" data-bs-toggle="modal" [attr.data-bs-target]="'#desactivar-'+blog._id">
+                                        <span class="czi-close"></span> Desactivar
+                                    </button>
                                     <div class="modal fade" [attr.id]="'desactivar-'+blog._id" tabindex="-1"
-                                        role="dialog" style="display: none;" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                          aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" >
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <h4 class="modal-title">{{'Confirmación'| translate}}</h4>
-                                                    <button class="close" type="button" data-dismiss="modal"
-                                                        aria-label="Close"><span aria-hidden="true">×</span></button>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <p class="font-size-sm">{{'Al aceptar el item, no será visible en la
-                                                        tienda'| translate}}.</p>
+                                                    <p class="font-size-sm">{{'Al aceptar el item, no será visible en la tienda'| translate}}.</p>
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button class="btn btn-secondary btn-sm" type="button"
-                                                        data-dismiss="modal">{{'Cerrar'| translate}}</button>
+                                                        data-bs-dismiss="modal">{{'Cerrar'| translate}}</button>
                                                     <button class="btn btn-primary btn-shadow btn-sm" type="button"
                                                         (click)="desactivar(blog._id)">{{'Aceptar'| translate}}</button>
                                                 </div>
@@ -129,14 +124,13 @@
                                         </div>
                                     </div>
                                     <span class="text-muted" *ngIf="blog.status == 'Edición'"
-                                        style="font-size: 13px;">{{'Este item aún se encuentra en edición'|
-                                        translate}}.</span>
+                                        style="font-size: 13px;">{{'Este item aún se encuentra en edición'| translate}}.</span>
                                     <span class="text-muted" *ngIf="blog.status == 'Desactivado'"
                                         style="font-size: 13px;">{{'Este item aún no está disponible en la tienda'| translate}}.</span>
 
                                 </td>
-                                <td>{{ blog.createdAt | date:'MMM d, y, h:mm:ss a' }}</td>
-                                <td>{{ blog.updatedAt | date:'MMM d, y, h:mm:ss a' }}</td>
+                                <td>{{ blog.createdAt | date:'MMM d, y' }}</td>
+                                <td>{{ blog.updatedAt | date:'MMM d, y' }}</td>
                                 <td class="text-nowrap text-center">
                                     <button  class="btn btn-outline-success"
                                             data-toggle="tooltip" data-original-title="Edit"

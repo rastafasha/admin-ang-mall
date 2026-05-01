@@ -7,7 +7,7 @@
     </div>
 </div>
 <app-skeleton-loader *ngIf="cargando" [rows]="1" [columns]="3"></app-skeleton-loader>
-<app-skeleton-loader *ngIf="cargando" [rows]="2" [columns]="2"></app-skeleton-loader>
+<app-skeleton-loader *ngIf="cargando" [rows]="4" [columns]="9"></app-skeleton-loader>
 
 
 
@@ -39,6 +39,7 @@
                                 <th>Fecha</th>
                                 <th>Status</th>
                                 <th>Actualizada</th>
+                                <th>Aprobar</th>
                                 <th class="text-nowrap">Acciones</th>
                             </tr>
                         </thead>
@@ -77,18 +78,19 @@
                                     {{transf.updatedAt | date:'mediumDate'}}
                                 </td>
                                 <td class="text-nowrap text-center">
-                                    <select
-                                    class="form-control form-select-solid fw-bolder"
-
-                                    name="state" [(ngModel)]="transf.status" (change)="cambiarStatus(transf)"
-                                    placeholder="state">
-                                    <option>-- Select --</option>
+                                    <select class="form-control form-select-solid fw-bolder" name="state" 
+                                    [(ngModel)]="transf.status" (change)="cambiarStatus(transf)">
+                                    <option value="">-- Select --</option>
                                     <option value="pending">Pendiente</option>
                                       <option value="ok">Aprobado</option>
                                       <option value="no">Rechazado</option>
-                                      </select>
+                                    </select>
 
-                                      <a (click)="eliminarTramsf(transf)" class="btn btn-outline-danger " data-toggle="tooltip" data-original-title="Borrar"> <i class="fa fa-trash text-danger"></i> </a>
+                                </td>
+                                <td class="text-nowrap text-center">
+                                      <a (click)="eliminarTramsf(transf)" class="btn btn-outline-danger " > 
+                                        <i class="fa fa-trash text-danger"></i> 
+                                    </a>
                                    
                                 </td>
                             </tr>

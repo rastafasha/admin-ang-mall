@@ -118,6 +118,75 @@
                 </div>
 
                 <div class="row">
+                        <!-- productos -->
+                        <div class="col" *ngIf="usuario.role === 'SUPERADMIN'">
+                            <div class="card">
+                                <div class="card-body" style="padding-bottom: 12px;">
+                                    <div class="d-flex align-items-center mx-auto py-3 px-3"
+                                        style="padding: 0px !important;">
+                                        <div class="display-2 font-weight-normal border-color mr-4">
+                                            <a routerLink="producto">
+                                                <span class="mdi mdi-store"></span>
+                                            </a>
+                                        </div>
+                                        <div class="pl-2">
+                                            <h6 style="margin-bottom: 0px;">
+                                                producto
+                                            </h6>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <!-- transferencias -->
+                        <div class="col" *ngIf="usuario.role === 'SUPERADMIN'">
+                            <div class="card">
+                                <div class="card-body" style="padding-bottom: 12px;">
+                                    <div class="d-flex align-items-center mx-auto py-3 px-3"
+                                        style="padding: 0px !important;">
+                                        <div class="display-2 font-weight-normal border-color mr-4">
+                                            <a routerLink="transferencias">
+                                                <span class="mdi mdi-store"></span>
+                                            </a>
+                                        </div>
+                                        <div class="pl-2">
+                                            <h6 style="margin-bottom: 0px;">
+                                                transferencias
+                                            </h6>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <!-- tikets/modulo -->
+                        <div class="col" *ngIf="usuario.role === 'SUPERADMIN'">
+                            <div class="card">
+                                <div class="card-body" style="padding-bottom: 12px;">
+                                    <div class="d-flex align-items-center mx-auto py-3 px-3"
+                                        style="padding: 0px !important;">
+                                        <div class="display-2 font-weight-normal border-color mr-4">
+                                            <a routerLink="tikets/modulo">
+                                                <span class="mdi mdi-store"></span>
+                                            </a>
+                                        </div>
+                                        <div class="pl-2">
+                                            <h6 style="margin-bottom: 0px;">
+                                                tikets/modulo
+                                            </h6>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                <div class="row">
 
                     <div class="col-lg-12 form-group">
                         <div class="row">

@@ -12,7 +12,7 @@ import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-tienda-list',
-  standalone:false,
+  standalone: false,
   templateUrl: './tienda-list.component.html',
   styleUrls: ['./tienda-list.component.css']
 })
@@ -30,11 +30,12 @@ export class TiendaListComponent implements OnInit {
 
   public imgSubs: Subscription;
 
-  query:string ='';
-      searchForm!:FormGroup;
-      currentPage = 1;
-      collecion='tiendas';
-user:Usuario;
+  query: string = '';
+  searchForm!: FormGroup;
+  currentPage = 1;
+  collecion = 'tiendas';
+  user: Usuario;
+  tiendaSeleccionado: Tienda;
 
   constructor(
     private tiendaService: TiendaService,
@@ -46,29 +47,29 @@ user:Usuario;
     let USER = localStorage.getItem("user");
     this.user = USER ? JSON.parse(USER) : null;
 
-    if(this.user.role === 'SUPERADMIN'){
+    if (this.user.role === 'SUPERADMIN') {
       this.loadTiendas();
     }
 
-    if(this.user.role === 'ADMIN'){
+    if (this.user.role === 'ADMIN') {
       this.loadTiendasById();
     }
 
     this.imgSubs = this.modalImagenService.nuevaImagen
-    .pipe(
-      delay(100)
-    )
-    .subscribe(banner => { this.loadTiendas();});
+      .pipe(
+        delay(100)
+      )
+      .subscribe(banner => { this.loadTiendas(); });
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     this.imgSubs.unsubscribe();
   }
 
-  loadTiendas(){
+  loadTiendas() {
     this.cargando = true;
     this.tiendaService.cargarTiendas().subscribe(
-      (resp:any) => {
+      (resp: any) => {
         this.cargando = false;
         this.tiendas = resp;
         // console.log(this.tiendas);
@@ -76,7 +77,7 @@ user:Usuario;
     )
 
   }
-  loadTiendasById(){
+  loadTiendasById() {
     this.cargando = true;
     this.tiendaService.getTiendasByUserId(this.user.uid).subscribe(
       resp => {
@@ -86,65 +87,73 @@ user:Usuario;
     )
 
   }
-  cambiarPagina(valor: number){
+  cambiarPagina(valor: number) {
     this.desde += valor;
 
-    if(this.desde < 0){
+    if (this.desde < 0) {
       this.desde = 0
-    }else if( this.desde > this.totalTiendas){
+    } else if (this.desde > this.totalTiendas) {
       this.desde -= valor;
     }
 
     // this.loadTiendas();
-    if(this.user.role === 'SUPERADMIN'){
+    if (this.user.role === 'SUPERADMIN') {
       this.loadTiendas();
     }
 
-    if(this.user.role === 'ADMIN'){
+    if (this.user.role === 'ADMIN') {
       this.loadTiendasById();
     }
 
 
   }
 
-  guardarCambios(tienda: Tienda){
+  guardarCambios(tienda: Tienda) {
     this.tiendaService.actualizarTienda(tienda)
-    .subscribe( (resp:any) => {
-      Swal.fire('Actualizado', tienda.nombre,  'success')
-    })
+      .subscribe((resp: any) => {
+        Swal.fire('Actualizado', tienda.nombre, 'success')
+      })
 
   }
 
 
-  eliminarMarca(tienda: Marca){
-    this.tiendaService.borrarTienda(tienda._id)
-    .subscribe( (resp:any) => {
-      // this.loadTiendas();
-      if(this.user.role === 'SUPERADMIN'){
-      this.loadTiendas();
+  
+  eliminarTienda(tienda: Marca) {
+      Swal.fire({
+        title: 'Estas Seguro?',
+        text: 'No podras recuperarlo!',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si, Borrar!',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.cargando = true;
+          this.tiendaService.borrarTienda(tienda._id)
+            .subscribe(resp => {
+              if (this.user.role === 'SUPERADMIN') {
+                this.loadTiendas();
+              }
+
+              if (this.user.role === 'ADMIN') {
+                this.loadTiendasById();
+              }
+            })
+          Swal.fire('Borrado!', 'El Archivo fue borrado.', 'success');
+        }
+      });
     }
-
-    if(this.user.role === 'ADMIN'){
-      this.loadTiendasById();
-    }
-      Swal.fire('Borrado', tienda.nombre, 'success')
-    })
-
-  }
-
 
 
   public PageSize(): void {
     this.query = '';
-    if(this.user.role === 'SUPERADMIN'){
+    if (this.user.role === 'SUPERADMIN') {
       this.loadTiendas();
     }
-
-    if(this.user.role === 'ADMIN'){
+    if (this.user.role === 'ADMIN') {
       this.loadTiendasById();
     }
-    // this.loadTiendas();
-    // this.router.navigateByUrl('/productos')
   }
 
   handleSearchEvent(event: any) {
@@ -152,5 +161,19 @@ user:Usuario;
       this.tiendas = event.tiendas;
     }
   }
+
+  onEditProject(tienda: Tienda) {
+    this.tiendaSeleccionado = tienda;
+  }
+
+  openEditModal(): void {
+    this.tiendaSeleccionado = null;
+  }
+
+  onCloseModal(): void {
+    this.tiendaSeleccionado = null;
+  }
+
+  onClose() { }
 
 }

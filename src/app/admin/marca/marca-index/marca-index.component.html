@@ -36,6 +36,7 @@
                             <tr>
                                 <th>Foto</th>
                                 <th>Nombre</th>
+                                <th>Creado</th>
                                 <th class="text-nowrap">Acciones</th>
                             </tr>
                         </thead>
@@ -48,6 +49,7 @@
                                 <td>
                                     {{marca.nombre}}
                                 </td>
+                                <td>{{ marca.createdAt | date:'MMM d, y' }}</td>
                                 <td class="text-nowrap text-center">
                                    
                                      <button class="btn btn-outline-success" data-toggle="tooltip"

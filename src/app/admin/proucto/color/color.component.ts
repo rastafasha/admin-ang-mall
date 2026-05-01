@@ -7,8 +7,8 @@ import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { Usuario } from 'src/app/models/usuario.model';
 import { environment } from 'src/environments/environment';
 import { Color } from 'src/app/models/color.model';
+import { Producto } from 'src/app/models/producto.model';
 
-declare var jQuery: any;
 declare var $: any;
 declare var bootstrap: any;
 
@@ -59,13 +59,8 @@ export class ColorComponent implements OnInit, OnChanges {
       togglePaletteOnly: "true",
       change: function (color) {
         $('#color-data').val(color.toHexString());
-
       }
     });
-
-    
-
-    
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -82,29 +77,19 @@ export class ColorComponent implements OnInit, OnChanges {
         producto: producto.producto,
         color: producto.color
       });
-
-      // this._colorService.colorByProduct(this.productoSeleccionado._id).subscribe(
-      //   response => {
-      //     this.color = response;
-      //     this.titulo = this.color.titulo
-      //     this.color = this.color.color
-      //     console.log(response)
-      //   }
-      // );
       this.productoSeleccionado = producto;
       this.pageTitle = 'Editando Color';
     } else {
       this.pageTitle = 'Creando Color';
     }
     this.listar();
-    // this.activatedRoute.params.subscribe(({ id }) => this.get_color(id));
     this.get_color()
   }
 
   onClose() {
     this.productoSeleccionado = null;
     this.colorForm.reset();
-    this.pageTitle = 'Creando Proyecto';
+    this.pageTitle = 'Creando Color';
     // Also reset default values if needed
     this.colorForm.patchValue({
       id: null,
