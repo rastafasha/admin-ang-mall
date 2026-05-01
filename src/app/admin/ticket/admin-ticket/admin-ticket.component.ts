@@ -19,6 +19,7 @@ export class AdminTicketComponent implements OnInit {
   public pageSize = 30;
   public count_cat;
   public identity;
+  cargando = false;
 
   p: Number = 1;
   count: Number = 8;
@@ -38,11 +39,13 @@ export class AdminTicketComponent implements OnInit {
   }
 
   listar(){
+    this.cargando = true;
     this._ticketService.get_tickets_admin().subscribe(
       response =>{
         this.tickets = response;
         this.count_cat = this.tickets.tickets.length;
         this.page = 1;
+        this.cargando = false;
       },
       error=>{
         console.log(error);

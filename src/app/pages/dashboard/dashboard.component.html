@@ -1,13 +1,13 @@
 <!-- Content-->
-<section class="pt-lg-4 mb-3" *ngIf="usuario.role === 'SUPERADMIN' ||  usuario.role === 'ADMIN' ||usuario.role === 'VENTAS'">
+ <app-skeleton-loader *ngIf="isLoading" [rows]="1" [columns]="3"></app-skeleton-loader>
+ <app-skeleton-loader *ngIf="isLoading" [rows]="1" [columns]="1"></app-skeleton-loader>
+<app-skeleton-loader *ngIf="isLoading" [rows]="4" [columns]="2"></app-skeleton-loader>
+<section class="pt-lg-4 mb-3" *ngIf="!isLoading && usuario.role === 'SUPERADMIN' ||  usuario.role === 'ADMIN' ||usuario.role === 'VENTAS'">
     <div class="pt-2 px-4 pl-lg-0 pr-xl-5">
         <div class="row">
-
-
             <div class="col-lg-12">
                 <div class="mt-lg-2 pb-2">
                     <h2 class="mt-lg-4">{{'Dashboard'| translate}}</h2>
-
                 </div>
                 <div class="row">
                     <div class="col-xs-12 col-sm-8 form-group">
@@ -99,7 +99,7 @@
                                         style="padding: 0px !important;">
                                         <div class="display-2 font-weight-normal border-color mr-4">
                                             <a routerLink="usuarios">
-                                                <span class="czi-users"></span>
+                                                <span class="czi-user"></span>
                                             </a>
                                         </div>
                                         <div class="pl-2">

@@ -164,10 +164,10 @@
                                 <label> Anexe su foto</label>
                                 <br>
                                 <div class="row">
-                                    <div class="especificaciones col-xs-12" *ngIf="!postSeleccionado">
+                                    <div class="especificaciones col-xs-12" *ngIf="!pageSeleccionado">
                                         <h4>Debe Crear un post para agregar la imagen</h4>
                                     </div>
-                                    <div class="especificaciones col-xs-12 col-sm-6" *ngIf="postSeleccionado">
+                                    <div class="especificaciones col-xs-12 col-sm-6" *ngIf="pageSeleccionado">
                                         <h4>Especificaciones:</h4>
                                         <ul>
                                             <li>Tamaño máximo: 300px X 300px</li>
@@ -175,9 +175,9 @@
                                             <li>Formato permitido: jpg, .gif, .png</li>
                                         </ul>
                                     </div>
-                                    <div class="col-xs-12 col-sm-6" *ngIf="postSeleccionado ">
+                                    <div class="col-xs-12 col-sm-6" *ngIf="pageSeleccionado ">
                                         <div class="text-center">
-                                            <img *ngIf="!imgTemp " [src]="postSeleccionado.img | imagenPipe: 'pages'"
+                                            <img *ngIf="!imgTemp " [src]="pageSeleccionado.img | imagenPipe: 'pages'"
                                                 class="img-responsive img-thumbnail" alt="">
                                             <img *ngIf="imgTemp" [src]="imgTemp" class="img-responsive">
                                             <div class="form-group ">

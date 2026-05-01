@@ -57,6 +57,7 @@ export class DashboardComponent implements OnInit {
 
   public tienda:Tienda;
     public tienda_moneda:string;
+    isLoading = false;
 
   public total_ganado = {
     enero: 0,
@@ -136,6 +137,7 @@ export class DashboardComponent implements OnInit {
 
 
   data_Dashboard() {
+    this.isLoading = true;
     var fecha = new Date();
 
     var months = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Deciembre"];
@@ -146,7 +148,7 @@ export class DashboardComponent implements OnInit {
     this.current_year = fecha.getFullYear();
     this._ventaService.get_data_dashboard().subscribe(
       response => {
-
+        
         this.ventasData = response.data;
 
         response.data.forEach(element => {
@@ -248,6 +250,7 @@ export class DashboardComponent implements OnInit {
           }
 
         });
+        this.isLoading = false;
 
       },
       error => {

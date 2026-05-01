@@ -24,6 +24,8 @@ export class IndexCancelacionComponent implements OnInit {
   p: number = 1;
   count: number = 8;
 
+  cargando = false;
+
   constructor(
     private _userService: UsuarioService,
     private _router : Router,
@@ -54,11 +56,12 @@ export class IndexCancelacionComponent implements OnInit {
   }
 
   listar(){
+    this.cargando = true;
     this._ventaService.listar_cancelacion(' ').subscribe(
       response =>{
         this.cancelaciones = response.cancelaciones;
         this.count_cat = this.cancelaciones.length;
-        console.log(this.cancelaciones);
+        this.cargando = false;
       },
       error=>{
 

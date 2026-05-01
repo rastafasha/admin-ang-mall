@@ -1,7 +1,10 @@
 <!-- Content-->
+<app-skeleton-loader *ngIf="isLoading" [rows]="1" [columns]="3"></app-skeleton-loader>
+ <app-skeleton-loader *ngIf="isLoading" [rows]="1" [columns]="1"></app-skeleton-loader>
+<app-skeleton-loader *ngIf="isLoading" [rows]="4" [columns]="2"></app-skeleton-loader>
+<app-skeleton-loader *ngIf="isLoading" [rows]="2" [columns]="1"></app-skeleton-loader>
 
-
-<section class="pt-lg-4 mb-3">
+<section class="pt-lg-4 mb-3" *ngIf="!isLoading">
     <div class="pt-2 px-4 pl-lg-0 pr-xl-5">
 
         <div class="row">

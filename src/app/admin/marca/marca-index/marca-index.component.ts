@@ -27,6 +27,7 @@ export class MarcaIndexComponent implements OnInit {
   count: number = 8;
 
   public imgSubs: Subscription;
+  marcaSeleccionada:Marca;
 
   query:string ='';
       searchForm!:FormGroup;
@@ -108,5 +109,20 @@ export class MarcaIndexComponent implements OnInit {
       this.marcas = event.marcas;
     }
   }
+
+
+     onEditProject(marca: Marca) {
+        this.marcaSeleccionada = marca;
+      }
+    
+      openEditModal(): void {
+        this.marcaSeleccionada = null;
+      }
+    
+      onCloseModal(): void {
+        this.marcaSeleccionada = null;
+      }
+    
+      onClose() { }
 
 }

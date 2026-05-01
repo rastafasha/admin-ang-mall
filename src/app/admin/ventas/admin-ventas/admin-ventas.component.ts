@@ -69,6 +69,8 @@ export class AdminVentasComponent implements OnInit {
   public query_income_year: any = [];
   public ventasDataYear: any[] = [];
 
+  isLoading = false;
+
   constructor(
     private _userService: UsuarioService,
     private _router: Router,
@@ -96,6 +98,7 @@ export class AdminVentasComponent implements OnInit {
 
     this.method_data_view(1);
     this.year = this.mydate.getFullYear();
+    this.isLoading = true;
     this._ventaService.init_data_admin().subscribe(
       response => {
 
@@ -112,7 +115,7 @@ export class AdminVentasComponent implements OnInit {
           this.ventasFiltradas = this.ventas.filter(item => item.user?.local === this.user.local)
         }
         this.page = 1;
-
+        this.isLoading = false;
       }
     );
 

@@ -19,7 +19,7 @@ declare var jQuery: any;
 declare var $: any;
 @Component({
   selector: 'app-prod-index',
-  standalone:false,
+  standalone: false,
   templateUrl: './prod-index.component.html',
   styleUrls: ['./prod-index.component.css']
 })
@@ -47,6 +47,7 @@ export class ProdIndexComponent implements OnInit {
   collecion = 'productos';
   identity: Usuario;
   user: Usuario;
+  productoSeleccionado: Producto;
 
   constructor(
     private productoService: ProductoService,
@@ -70,13 +71,7 @@ export class ProdIndexComponent implements OnInit {
     if (this.user.role === 'ADMIN' || this.user.role === 'VENTAS' || this.user.role === 'TIENDA' || this.user.role === 'ALMACEN') {
       this.getProductosbByTienda();
     }
-
     this.loadCategorias();
-    this.imgSubs = this.modalImagenService.nuevaImagen
-      .pipe(
-        delay(100)
-      )
-      .subscribe(img => { this.loadProductos(); });
   }
 
   ngOnDestroy() {
@@ -89,10 +84,7 @@ export class ProdIndexComponent implements OnInit {
       productos => {
         this.cargando = false;
         this.productos = productos;
-        // console.log('PRODUCTOS CARGADOS: ', this.productos);
-      }
-    )
-
+      })
   }
 
   getProductosbByTienda() {
@@ -100,7 +92,6 @@ export class ProdIndexComponent implements OnInit {
     this.productoService.getProductosTienda(this.user.local).subscribe(productos => {
       this.productos = productos;
       this.cargando = false;
-      // console.log(this.productos)
     })
   }
 
@@ -109,28 +100,11 @@ export class ProdIndexComponent implements OnInit {
     this.categoriaService.cargarCategorias().subscribe(
       categorias => {
         this.categorias = categorias;
-      }
-    )
-
-  }
-
-  cambiarPagina(valor: number) {
-    this.desde += valor;
-
-    if (this.desde < 0) {
-      this.desde = 0
-    } else if (this.desde > this.totalProductos) {
-      this.desde -= valor;
-    }
-
-    this.loadCategorias();
-
-
+      })
   }
 
 
   eliminarProducto(producto: Producto) {
-
     Swal.fire({
       title: 'Estas Seguro?',
       text: 'No podras recuperarlo!',
@@ -151,27 +125,22 @@ export class ProdIndexComponent implements OnInit {
 
             if (this.user.role === 'ADMIN' || this.user.role === 'VENTAS' || this.user.role === 'TIENDA' || this.user.role === 'ALMACEN') {
               this.getProductosbByTienda();
-               this.cargando = false;
+              this.cargando = false;
             }
           })
         Swal.fire('Borrado!', 'El Archivo fue borrado.', 'success');
       }
     });
-
   }
 
   public PageSize(): void {
     this.query = '';
-
     if (this.user.role === 'ADMIN') {
       this.loadProductos();
     }
-
     if (this.user.role === 'VENTAS' || this.user.role === 'TIENDA' || this.user.role === 'ALMACEN') {
       this.getProductosbByTienda();
     }
-    // this.loadProductos();
-    // this.router.navigateByUrl('/productos')
   }
 
   handleSearchEvent(event: any) {
@@ -179,8 +148,6 @@ export class ProdIndexComponent implements OnInit {
       this.productos = event.productos;
     }
   }
-
-
 
   desactivar(id) {
     this.productoService.desactivar(id).subscribe(
@@ -190,7 +157,6 @@ export class ProdIndexComponent implements OnInit {
         if (this.user.role === 'SUPERADMIN') {
           this.loadProductos();
         }
-
         if (this.user.role === 'ADMIN' || this.user.role === 'VENTAS' || this.user.role === 'TIENDA' || this.user.role === 'ALMACEN') {
           this.getProductosbByTienda();
         }
@@ -216,8 +182,6 @@ export class ProdIndexComponent implements OnInit {
         }
       },
       error => {
-
-
         this.msm_error = 'No se pudo activar el producto, vuelva a intenter.'
       }
     )
@@ -235,13 +199,30 @@ export class ProdIndexComponent implements OnInit {
         if (this.user.role === 'ADMIN' || this.user.role === 'VENTAS' || this.user.role === 'TIENDA' || this.user.role === 'ALMACEN') {
           this.getProductosbByTienda();
         }
-
       },
       error => {
         this.msm_error = 'No se pudo mover a papelera el producto, vuelva a intenter.'
       }
     )
   }
+
+  onEditColor(producto: Producto) {
+    this.productoSeleccionado = producto;
+    console.log(this.productoSeleccionado)
+  }
+  onEditProject(producto: Producto) {
+    this.productoSeleccionado = producto;
+  }
+
+  openEditModal(): void {
+    this.productoSeleccionado = null;
+  }
+
+  onCloseModal(): void {
+    this.productoSeleccionado = null;
+  }
+
+  onClose() { }
 
 
 

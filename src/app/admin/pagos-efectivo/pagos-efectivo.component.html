@@ -1,16 +1,14 @@
 <div class="row animated fadeIn fast">
     <div class="col-12">
-        <div class="card">
-            <div class="card-body">
-               <app-search [query]="query" [modelo]="pagoefectivo" [colleccionName]="pagoefectivos"
-        [colleccion]="'pagoefectivos'" (searchEvent)="handleSearchEvent($event)" (resetEvent)="PageSize()"></app-search>
-            </div>
-        </div>
+        <app-search [query]="query" [modelo]="pagoefectivo" [colleccionName]="pagoefectivos"
+ [colleccion]="'pagoefectivos'" (searchEvent)="handleSearchEvent($event)" (resetEvent)="PageSize()"></app-search>
+       
     </div>
 </div>
 <div class="container">
-
-    <div class="row">
+    <app-skeleton-loader *ngIf="cargando" [rows]="1" [columns]="3"></app-skeleton-loader>
+<app-skeleton-loader *ngIf="cargando" [rows]="2" [columns]="2"></app-skeleton-loader>
+    <div class="row" *ngIf="!cargando">
         <div class="col">
 
             <div class="card">

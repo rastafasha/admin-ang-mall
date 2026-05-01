@@ -62,6 +62,7 @@ export class TiposdepagoComponent implements OnInit {
   // Edit mode properties
   isEditMode: boolean = false;
   editingPayment: PaymentMethod | null = null;
+  isLoading = false;
 
   constructor(
     private fb: FormBuilder,
@@ -158,18 +159,23 @@ export class TiposdepagoComponent implements OnInit {
   }
 
   getTiposdePago() {
+    this.isLoading = true;
     this.paymentMethodService.getPaymentMethods().subscribe(paymentMethods => {
       this.tiposdepagos = paymentMethods;
+      this.isLoading = false;
     });
   }
 
   getTiposdePagoByLocal() {
+    this.isLoading = true;
     this.paymentMethodService.getPaymentMethodByTiendaId(this.user.local).subscribe(paymentMethods => {
       this.tiposdepagos = paymentMethods;
+      this.isLoading = false;
     });
   }
 
   cambiarStatus(tipodepago: PaymentMethod) {
+    
     this.paymentMethodService.updateStatus(tipodepago).subscribe(resp => {
       this.reloadList();
     });

@@ -1,5 +1,6 @@
 <div class="row">
- <app-loading *ngIf="isLoading"></app-loading>
+ <app-skeleton-loader *ngIf="isLoading" [rows]="1" [columns]="3"></app-skeleton-loader>
+<app-skeleton-loader *ngIf="isLoading" [rows]="4" [columns]="2"></app-skeleton-loader>
 
   <!-- Nav tabs -->
   <ul class="nav nav-tabs profile-tab w-100" role="tablist" *ngIf="!isLoading">

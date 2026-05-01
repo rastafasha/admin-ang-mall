@@ -1,25 +1,28 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { ColorService } from "../../../services/color.service";
 import { ActivatedRoute, Router, ChildActivationStart } from '@angular/router';
 import Swal from 'sweetalert2';
-import { Location } from '@angular/common';
-
 import { UsuarioService } from '../../../services/usuario.service';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { Usuario } from 'src/app/models/usuario.model';
 import { environment } from 'src/environments/environment';
 import { Color } from 'src/app/models/color.model';
 
-declare var jQuery:any;
-declare var $:any;
+declare var jQuery: any;
+declare var $: any;
+declare var bootstrap: any;
 
 @Component({
   selector: 'app-color',
-  standalone:false,
+  standalone: false,
   templateUrl: './color.component.html',
   styleUrls: ['./color.component.css']
 })
-export class ColorComponent implements OnInit {
+export class ColorComponent implements OnInit, OnChanges {
+
+  @Input() productoSeleccionado;
+  @Output() closeModal: EventEmitter<void> = new EventEmitter<void>();
+  @Output() refreshProductList: EventEmitter<void> = new EventEmitter<void>();
 
   public color;
   public usuario: Usuario;
@@ -33,119 +36,150 @@ export class ColorComponent implements OnInit {
   public pageSize = 12;
   public titulo;
   public msm_error;
+  public pageTitle;
 
   public select_producto;
 
   constructor(
     private fb: FormBuilder,
     private usuarioService: UsuarioService,
-    private _colorService : ColorService,
-    private router: Router,
+    private _colorService: ColorService,
     private activatedRoute: ActivatedRoute,
-    private location: Location,
   ) {
     this.usuario = usuarioService.usuario;
     const base_url = environment.baseUrl;
-   }
+  }
 
   ngOnInit(): void {
-    window.scrollTo(0,0);
+    window.scrollTo(0, 0);
+    this.validarFormulario()
+    
+    $('#color-picker').spectrum({
+      type: "text",
+      togglePaletteOnly: "true",
+      change: function (color) {
+        $('#color-data').val(color.toHexString());
 
+      }
+    });
+
+    
+
+    
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+
+    if (
+      changes['productoSeleccionado'] &&
+      changes['productoSeleccionado'].currentValue
+    ) {
+      this.pageTitle = 'Editando Color';
+      const producto = changes['productoSeleccionado'].currentValue;
+      this.colorForm.patchValue({
+        id: producto._id,
+        titulo: producto.titulo,
+        producto: producto.producto,
+        color: producto.color
+      });
+
+      // this._colorService.colorByProduct(this.productoSeleccionado._id).subscribe(
+      //   response => {
+      //     this.color = response;
+      //     this.titulo = this.color.titulo
+      //     this.color = this.color.color
+      //     console.log(response)
+      //   }
+      // );
+      this.productoSeleccionado = producto;
+      this.pageTitle = 'Editando Color';
+    } else {
+      this.pageTitle = 'Creando Color';
+    }
     this.listar();
-        $('#color-picker').spectrum({
-          type: "text",
-          togglePaletteOnly: "true",
-          change: function(color) {
-            $('#color-data').val(color.toHexString());
+    // this.activatedRoute.params.subscribe(({ id }) => this.get_color(id));
+    this.get_color()
+  }
 
-          }
-        });
+  onClose() {
+    this.productoSeleccionado = null;
+    this.colorForm.reset();
+    this.pageTitle = 'Creando Proyecto';
+    // Also reset default values if needed
+    this.colorForm.patchValue({
+      id: null,
+      titulo: null,
+      producto: null,
+      color: null
+    });
+    // Emit event to parent to reset the projectSeleccionado variable
+    this.refreshProductList.emit();
+    this.closeModal.emit();
 
+  }
+
+
+  get_color() {
+    this.color = [];
+    this._colorService.colorByProduct(this.productoSeleccionado._id).subscribe(
+      response => {
+        this.color = response;
+      }
+    );
+   
+  }
+
+
+
+  listar() {
+    this._colorService.listar(this.productoSeleccionado._id).subscribe(
+      response => {
+        this.colores = response.colores;
+        this.count_color = this.colores.length;
+        this.page = 1;
+      },
+      error => { }
+    )
+  }
+
+  validarFormulario(){
     this.colorForm = this.fb.group({
       titulo: ['', Validators.required],
       producto: ['', Validators.required],
       color: ['', Validators.required],
     })
-
-    this.activatedRoute.params.subscribe( ({id}) => this.get_color(id));
-  }
-
-  get_color(_id: string){
-    this.color = [];
-    this.select_producto = _id;
-
-
-    if(_id){
-      this._colorService.colorByProduct(this.select_producto).subscribe(
-        response =>{
-
-          this.color = response;
-          console.log(this.color);
-        }
-      );
-    }else{
-      return;
-    }
   }
 
 
-
-  listar(){
-    this.activatedRoute.params.subscribe(
-      params=>{
-        this.id = params['id'];
-        this._colorService.listar(this.id).subscribe(
-          response=>{
-            this.colores = response.colores;
-            this.count_color = this.colores.length;
-            this.page = 1;
-            console.log(this.colores);
-
-
-          },
-          error=>{
-
-          }
-        )
-      }
-    );
-  }
-
-
-  onSubmit(colorForm){
-
-
-    if(colorForm.valid){
-      this._colorService.crearColor({titulo: this.titulo,producto:this.id,color:$('#color-data').val()}).subscribe(
-        response =>{
+  onSubmit(colorForm) {
+    if (colorForm.valid) {
+      this._colorService.crearColor({ titulo: this.titulo, producto: this.productoSeleccionado._id, color: $('#color-data').val() }).subscribe(
+        response => {
           this.color;
-          this.titulo = '';
-          this.listar();
-          this.msm_error = '';
-          this.ngOnInit();
+           Swal.fire('Color Agregado!', 'Color agregado al producto', 'success');
+           this.get_color();
+           this.listar();
         },
-        error=>{
+        error => {
           this.msm_error = 'Complete correctamente el formulario por favor.'
         }
       )
 
-    }else{
+    } else {
       this.msm_error = 'Complete correctamente el formulario por favor.'
     }
   }
 
 
-  eliminarColor(_id: string){
+  eliminarColor(_id: string) {
     this._colorService.borrarColor(_id)
-    .subscribe( resp => {
-      Swal.fire('Borrado', this.color.titulo, 'success')
-      this.ngOnInit();
-    });
+      .subscribe(resp => {
+        Swal.fire('Borrado', this.color.titulo, 'success')
+        this.get_color();
+        this.listar();
+      });
 
   }
 
-  goBack() {
-    this.location.back(); // <-- go back to previous location on cancel
-  }
 
 }

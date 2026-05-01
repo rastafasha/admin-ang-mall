@@ -14,6 +14,7 @@ export class PagosEfectivoComponent implements OnInit {
   pagoefectivos:PagoEfectivo[] = [];
   pagoefectivo:PagoEfectivo;
   user:any;
+  cargando = false;
 
    query:string ='';
           searchForm!:FormGroup;
@@ -38,19 +39,21 @@ export class PagosEfectivoComponent implements OnInit {
   }
 
   private obtenerPagosEfectivo(){
+    this.cargando = true;
     this._pagosEfectivo.listar().subscribe(
       (resp:any) => {
         this.pagoefectivos = resp;
-        
+        this.cargando = false;
       }
     );
   }
 
   getTiposdePagoByLocal() {
+    this.cargando = true;
     this._pagosEfectivo.getPaymentMethodByTiendaId(this.user.local).subscribe(
       (resp:any) => {
         this.pagoefectivos = resp;
-        
+        this.cargando = false;
       }
     );
   }

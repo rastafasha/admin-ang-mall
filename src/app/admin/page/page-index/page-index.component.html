@@ -6,9 +6,8 @@
     </div>
 </div>
 
-<div class="row animated fadeIn fast" *ngIf="cargando">
-    <app-loading></app-loading>
-</div>
+<app-skeleton-loader *ngIf="cargando" [rows]="1" [columns]="3"></app-skeleton-loader>
+<app-skeleton-loader *ngIf="cargando" [rows]="4" [columns]="8"></app-skeleton-loader>
 
 <div class="row" *ngIf="!cargando">
     <div class="col-12">

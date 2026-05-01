@@ -17,17 +17,20 @@ export class PasswordresetComponent implements OnInit {
   errors:any = null;
 
   public formSumitted = false;
-  public resetpaswordForm = this.fb.group({
-    email: [ null, [Validators.required] ],
-    // terminos: [false, Validators.required],
-
-  });
+  public resetpaswordForm!: FormGroup;
 
   constructor(
     private fb: FormBuilder,
     private accountService: AccountService,
     private router: Router,
-  ) { }
+  ) {
+    this.resetpaswordForm = this.fb.group({
+      email: [ null, [Validators.required] ],
+      // terminos: [false, Validators.required],
+
+    });
+  }
+
 
   ngOnInit(): void {
 

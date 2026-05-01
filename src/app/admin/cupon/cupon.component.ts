@@ -26,6 +26,7 @@ export class CuponComponent implements OnInit {
   public identity;
 
   listCategorias;
+  cargando = false;
 
   constructor(
     private categoriaService : CategoriaService,
@@ -44,11 +45,11 @@ export class CuponComponent implements OnInit {
   }
 
   getCategorias(){
+    this.cargando = true;
     this.categoriaService.cargarCategorias().subscribe(
       resp =>{
         this.listCategorias = resp;
-        console.log(this.listCategorias)
-
+        this.cargando = false;
       }
     )
   }
@@ -71,9 +72,11 @@ export class CuponComponent implements OnInit {
   }
 
   listar(){
+    this.cargando = true;
     this._cuponService.listar().subscribe(
       response =>{
         this.cupones = response.cupones;
+        this.cargando = false;
       }
     );
   }
