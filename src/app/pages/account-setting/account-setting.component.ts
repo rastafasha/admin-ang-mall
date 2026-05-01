@@ -34,20 +34,15 @@ export class AccountSettingComponent implements OnInit {
   public usuario: Usuario;
 
   public congenerals: Congeneral[] =[];
+  isLoading = false;
 
   constructor(
-    private fb: FormBuilder,
-    private fileUploadService: FileUploadService,
     private settingsService: SettingsService,
     private congeneralService: CongeneralService,
     private usuarioService: UsuarioService,
-    private router: Router,
-    private activatedRoute: ActivatedRoute,
-    private location: Location,
     public sanitizer: DomSanitizer
   ) {
     this.usuario = usuarioService.usuario;
-    const base_url = environment.baseUrl;
   }
 
   ngOnInit(): void {
@@ -55,14 +50,18 @@ export class AccountSettingComponent implements OnInit {
     this.settingsService.checkCurrentTheme(); //llamamos la funccion desde el servicio
 
     this.loadCongenerals();
+    const user = localStorage.getItem('user');
+    this.usuario = JSON.parse(user);
     
 
   }
 
   loadCongenerals(){
+    this.isLoading = true
     this.congeneralService.cargarCongenerals().subscribe(
       congenerals => {
         this.congenerals = congenerals;
+        this.isLoading = false
       }
     )
 

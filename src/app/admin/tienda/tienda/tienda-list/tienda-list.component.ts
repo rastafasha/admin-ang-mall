@@ -47,11 +47,12 @@ export class TiendaListComponent implements OnInit {
     let USER = localStorage.getItem("user");
     this.user = USER ? JSON.parse(USER) : null;
 
+
     if (this.user.role === 'SUPERADMIN') {
       this.loadTiendas();
     }
 
-    if (this.user.role === 'ADMIN') {
+    if (this.user.role !== 'SUPERADMIN' ) {
       this.loadTiendasById();
     }
 

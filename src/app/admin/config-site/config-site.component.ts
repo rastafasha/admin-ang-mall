@@ -1,7 +1,5 @@
 import { Component, OnInit, DoCheck } from '@angular/core';
 import {environment} from 'src/environments/environment';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Location } from '@angular/common';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import Swal from 'sweetalert2';
 
@@ -50,6 +48,9 @@ export class ConfigSiteComponent implements OnInit {
     public iswhatsapp : boolean = false;
   selectedValueCode = '';
 
+  option_selectedd: number = 1;
+    solicitud_selectedd: any = 1;
+
 
    public listIcons = [
       { icon: 'fa fa-facebook', name: 'Facebook' },
@@ -76,9 +77,6 @@ export class ConfigSiteComponent implements OnInit {
     private fileUploadService: FileUploadService,
     private congeneralService: CongeneralService,
     private usuarioService: UsuarioService,
-    private router: Router,
-    private activatedRoute: ActivatedRoute,
-    private location: Location,
   ) {
     this.usuario = usuarioService.usuario;
     this.congeneral = congeneralService.congeneral;
@@ -302,9 +300,28 @@ getCongenerals(){
 
   }
 
-  goBack() {
-    this.location.back(); // <-- go back to previous location on cancel
-  }
+   optionSelected(value: number) {
+      this.option_selectedd = value;
+      if (this.option_selectedd === 1) {
+  
+        // this.ngOnInit();
+      }
+      if (this.option_selectedd === 2) {
+        this.solicitud_selectedd = null;
+      }
+      if (this.option_selectedd === 3) {
+        this.solicitud_selectedd = null;
+      }
+      if (this.option_selectedd === 4) {
+        this.solicitud_selectedd = null;
+      }
+      if (this.option_selectedd === 5) {
+        this.solicitud_selectedd = null;
+      }
+      if (this.option_selectedd === 6) {
+        this.solicitud_selectedd = null;
+      }
+    }
 
 
 }

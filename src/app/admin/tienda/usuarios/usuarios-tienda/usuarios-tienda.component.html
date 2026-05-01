@@ -6,15 +6,8 @@
     </div>
 </div>
 
-<div class="row animated fadeIn fast" *ngIf="cargando">
-    <div class="col-12">
-        <div class="alert alert-info text-center">
-            <div class="alert-heading">Cargando</div>
-            <i class="fa fa-spin fa-refresh fa-2x"></i>
-            <p class="mb-0">Por favor espere</p>
-        </div>
-    </div>
-</div>
+<app-skeleton-loader *ngIf="cargando" [rows]="1" [columns]="2"></app-skeleton-loader>
+<app-skeleton-loader *ngIf="cargando" [rows]="4" [columns]="7"></app-skeleton-loader>
 
 <div class="row animated fadeIn fast" *ngIf="!cargando ">
     <div class="col-12">
@@ -50,8 +43,7 @@
                         <tbody>
                             <tr *ngFor="let usuario of usuarios |  paginate: { itemsPerPage: count, currentPage: p }">
                                 <td class="text-center">
-                                    <!-- <img src="{{usuario.imagenUrl}}" (click)="abrirModal(usuario)" class="img-thumbnail avatar cursor" alt=""> -->
-                                    <img src="{{usuario.imagenUrl}}" [routerLink]="['/dashboard/tienda-user/edit/',usuario.uid]" class="img-thumbnail avatar cursor" alt="">
+                                    <img [src]="usuario.img | imagenPipe: 'usuarios'" [routerLink]="['/dashboard/tienda-user/edit/',usuario.uid]" class="img-thumbnail avatar cursor" alt="">
                                 </td>
                                 <td>{{usuario.email}}</td>
                                 <td>{{usuario.first_name}}</td>

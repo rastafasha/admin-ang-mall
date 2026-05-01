@@ -31,6 +31,7 @@
                                     <div class="card-body">
                                         <div class="tab-content" style="margin-top: 20px;">
                                             <div class="tab-pane fade active show">
+                                                <!-- Título -->
                                                 <div class="row">
                                                     <div class="form-group col-xs-12 col-sm-6">
                                                         <label class=" font-weight-medium" for="text-input">{{'Título'|
@@ -52,6 +53,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <!-- Enlace -->
                                                 <div class="row">
                                                     <div class="form-group col-xs-12 col-sm-4">
                                                         <label class=" font-weight-medium" for="text-input"> {{'Enlace'|
@@ -93,7 +95,9 @@
                                                             </select>
                                                         </div>
                                                     </div>
-                                                    <div class="form-group col-xs-12 col-sm-6">
+                                                </div>
+                                                <div class="row">
+                                                    <div class="form-group col-xs-12 col-sm-3">
                                                         <label class=" font-weight-medium" for="text-input">{{'Status'|
                                                             translate}}</label>
                                                         <div class="col-md-12">
@@ -113,7 +117,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="form-group col-xs-12 col-sm-6">
+                                                    <div class="form-group col-xs-12 col-sm-3">
                                                         <label class="font-weight-medium" for="text-input">{{'Target'|
                                                             translate}}</label>
                                                         <div class="col-md-12">
@@ -133,54 +137,37 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="row">
-
-                                                    <div class="form-group col-xs-12 ">
-                                                        <label class=" col-form-label font-weight-medium"
-                                                            for="text-input">{{'Status'| translate}}
-                                                            <span class="required">*</span></label>
-                                                        <div class="col-md-12">
-                                                            <div class="row">
-                                                                <div class="col-lg-6">
-                                                                    <div class="form-group">
-                                                                        <label for="select-input">{{'Visible'|
-                                                                            translate}}</label>
-                                                                        <select class="form-control "
-                                                                            formControlName="mostrarInfo" required>
-                                                                            <option disabled value="">{{'Seleccione'|
-                                                                                translate}}
-                                                                            </option>
-                                                                            <option [value]="true">{{'Activo'|
-                                                                                translate}}</option>
-                                                                            <option [value]="false">{{'Inactivo'|
-                                                                                translate}}
-                                                                            </option>
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-lg-6">
-                                                                    <div class="form-group">
-                                                                        <label for="select-input">{{'Destacado'|
-                                                                            translate}}?</label>
-                                                                        <select class="form-control "
-                                                                            formControlName="mostrarboton">
-                                                                            <option disabled value="">{{'Seleccione'|
-                                                                                translate}}
-                                                                            </option>
-                                                                            <option [value]="true">{{'Activo'|
-                                                                                translate}}</option>
-                                                                            <option [value]="false">{{'Inactivo'|
-                                                                                translate}}
-                                                                            </option>
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-
-
-                                                            </div>
-                                                        </div>
+                                                    <div class="form-group col-xs-12 col-sm-3">
+                                                        <label for="select-input">{{'Visible'|
+                                                            translate}}</label>
+                                                        <select class="form-control " formControlName="mostrarInfo"
+                                                            required>
+                                                            <option disabled value="">{{'Seleccione'|
+                                                                translate}}
+                                                            </option>
+                                                            <option [value]="true">{{'Activo'|
+                                                                translate}}</option>
+                                                            <option [value]="false">{{'Inactivo'|
+                                                                translate}}
+                                                            </option>
+                                                        </select>
                                                     </div>
+                                                    <div class="form-group col-xs-12 col-sm-3">
+                                                        <label for="select-input">{{'Destacado'|
+                                                            translate}}?</label>
+                                                        <select class="form-control "
+                                                            formControlName="mostrarboton">
+                                                            <option disabled value="">{{'Seleccione'|
+                                                                translate}}
+                                                            </option>
+                                                            <option [value]="true">{{'Activo'|
+                                                                translate}}</option>
+                                                            <option [value]="false">{{'Inactivo'|
+                                                                translate}}
+                                                            </option>
+                                                        </select>
+                                                    </div>
+
                                                 </div>
 
                                             </div>
@@ -220,7 +207,8 @@
                                     </div>
                                     <div class="col-xs-12 col-sm-6" *ngIf="sliderSeleccionado ">
                                         <div class="text-center">
-                                            <img *ngIf="!imgTemp " [src]="sliderSeleccionado.img | imagenPipe: 'sliders'"
+                                            <img *ngIf="!imgTemp "
+                                                [src]="sliderSeleccionado.img | imagenPipe: 'sliders'"
                                                 class="img-responsive img-thumbnail" alt="">
                                             <img *ngIf="imgTemp" [src]="imgTemp" class="img-responsive">
                                             <div class="form-group ">

@@ -10,8 +10,7 @@ import { Subscription } from 'rxjs';
   selector: 'app-sidebar',
   standalone:false,
   templateUrl: './sidebar.component.html',
-  styles: [
-  ]
+  styleUrls: ['./sidebar.component.css']
 })
 export class SidebarComponent implements OnInit, OnDestroy {
 

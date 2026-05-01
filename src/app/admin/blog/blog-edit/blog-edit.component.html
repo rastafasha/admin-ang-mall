@@ -57,6 +57,51 @@
                                             formControlName="slug" readonly>
                                     </div>
                                 </div>
+                                 <div class="row">
+                                    <div class="form-group col-xs-12 col-sm-4 ">
+                                        <label for="text-input">Video </label>
+                                        <div class="input-group">
+                                            <input type="text" formControlName="video_review" class="form-control"
+                                                id="exampleInputuname" placeholder="Codigo de insercion de vídeo">
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-xs-12 col-sm-4 ">
+                                        <label for="select-input">{{'Destacado'| translate}}?</label>
+                                        <select class="form-control " formControlName="isFeatured">
+                                            <option disabled value="">{{'Seleccione'| translate}}</option>
+                                            <option [value]="true">{{'Activo'| translate}}</option>
+                                            <option [value]="false">{{'Inactivo'| translate}}</option>
+                                        </select>
+                                        <div *ngIf="blogForm.get('isFeatured')?.touched && blogForm.get('isFeatured')?.invalid"
+                                            class="text-danger">
+                                            <div *ngIf="blogForm.get('isFeatured')?.errors?.['required']">
+                                                Campo Requerido
+                                            </div>
+                                            <div *ngIf="blogForm.get('isFeatured')?.errors?.['minlength']">
+                                                Seleccione una opción
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-xs-12 col-sm-4">
+                                        <label for="select-input">{{'Categoría'| translate}} <span
+                                                class="required">*</span></label>
+                                        <select class="form-control " formControlName="categoria" required>
+                                            <option disabled value="">{{'Seleccione'| translate}}</option>
+                                            <option *ngFor="let item of listCategorias" [value]="item._id">
+                                                {{item.nombre}}</option>
+
+                                        </select>
+                                        <div *ngIf="blogForm.get('categoria')?.touched && blogForm.get('categoria')?.invalid"
+                                            class="text-danger">
+                                            <div *ngIf="blogForm.get('categoria')?.errors?.['required']">
+                                                Campo Requerido
+                                            </div>
+                                            <div *ngIf="blogForm.get('categoria')?.errors?.['minlength']">
+                                                Seleccione una opción
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="row">
                                     <div class="form-group col-12 ">
                                         <label for="text-input">{{'Descripción'| translate}} <span
@@ -80,53 +125,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="form-group col-12 ">
-                                        <label for="text-input">Video </label>
-                                        <div class="input-group">
-                                            <input type="text" formControlName="video_review" class="form-control"
-                                                id="exampleInputuname" placeholder="Codigo de insercion de vídeo">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="form-group col-xs-12 col-sm-6 ">
-                                        <label for="select-input">{{'Destacado'| translate}}?</label>
-                                        <select class="form-control " formControlName="isFeatured">
-                                            <option disabled value="">{{'Seleccione'| translate}}</option>
-                                            <option [value]="true">{{'Activo'| translate}}</option>
-                                            <option [value]="false">{{'Inactivo'| translate}}</option>
-                                        </select>
-                                        <div *ngIf="blogForm.get('isFeatured')?.touched && blogForm.get('isFeatured')?.invalid"
-                                            class="text-danger">
-                                            <div *ngIf="blogForm.get('isFeatured')?.errors?.['required']">
-                                                Campo Requerido
-                                            </div>
-                                            <div *ngIf="blogForm.get('isFeatured')?.errors?.['minlength']">
-                                                Seleccione una opción
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group col-xs-12 col-sm-6">
-                                        <label for="select-input">{{'Categoría'| translate}} <span
-                                                class="required">*</span></label>
-                                        <select class="form-control " formControlName="categoria" required>
-                                            <option disabled value="">{{'Seleccione'| translate}}</option>
-                                            <option *ngFor="let item of listCategorias" [value]="item._id">
-                                                {{item.nombre}}</option>
-
-                                        </select>
-                                        <div *ngIf="blogForm.get('categoria')?.touched && blogForm.get('categoria')?.invalid"
-                                            class="text-danger">
-                                            <div *ngIf="blogForm.get('categoria')?.errors?.['required']">
-                                                Campo Requerido
-                                            </div>
-                                            <div *ngIf="blogForm.get('categoria')?.errors?.['minlength']">
-                                                Seleccione una opción
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                               
 
 
                                 <div class="row">

@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { Usuario } from 'src/app/models/usuario.model';
 import { ContactoService } from 'src/app/services/contact.service';
@@ -22,8 +22,7 @@ import { filter } from 'rxjs/operators';
   selector: 'app-header',
   standalone:false,
   templateUrl: './header.component.html',
-  styles: [
-  ]
+  styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit, OnDestroy {
 
@@ -53,6 +52,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
   flag = false;
   is_visible: boolean;
    langs: string[] = [];
+
+  // Dropdown visibility flags
+  showMessagesDropdown = false;
+  showCartDropdown = false;
+  showLanguageDropdown = false;
+  showProfileDropdown = false;
 
   public socket = io(environment.soketServer);
 public tienda_moneda : any;
@@ -124,9 +129,53 @@ public tienda_moneda : any;
     
   }
 
-  ngOnDestroy(): void {
+ngOnDestroy(): void {
     if (this.cartSubscription) {
       this.cartSubscription.unsubscribe();
+    }
+  }
+
+  // Toggle methods for dropdowns
+  toggleMessagesDropdown(event: Event): void {
+    event.preventDefault();
+    event.stopPropagation();
+    this.closeAllDropdowns();
+    this.showMessagesDropdown = !this.showMessagesDropdown;
+  }
+
+  toggleCartDropdown(event: Event): void {
+    event.preventDefault();
+    event.stopPropagation();
+    this.closeAllDropdowns();
+    this.showCartDropdown = !this.showCartDropdown;
+  }
+
+  toggleLanguageDropdown(event: Event): void {
+    event.preventDefault();
+    event.stopPropagation();
+    this.closeAllDropdowns();
+    this.showLanguageDropdown = !this.showLanguageDropdown;
+  }
+
+  toggleProfileDropdown(event: Event): void {
+    event.preventDefault();
+    event.stopPropagation();
+    this.showProfileDropdown = !this.showProfileDropdown;
+  }
+
+  closeAllDropdowns(): void {
+    this.showMessagesDropdown = false;
+    this.showCartDropdown = false;
+    this.showLanguageDropdown = false;
+    this.showProfileDropdown = false;
+  }
+
+  // Close dropdowns when clicking outside
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent): void {
+    const target = event.target as HTMLElement;
+    if (!target.closest('.dropdown')) {
+      this.closeAllDropdowns();
     }
   }
 

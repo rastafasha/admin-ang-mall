@@ -3,6 +3,7 @@ import { Postal } from "src/app/models/postal.model";
 import { PostalService } from "src/app/services/postal.service";
 import { ActivatedRoute, Router } from '@angular/router';
 import { UsuarioService } from 'src/app/services/usuario.service';
+import Swal from 'sweetalert2';
 
 
 declare var jQuery:any;
@@ -83,18 +84,26 @@ export class PostalComponent implements OnInit {
     this.msm_error = '';
   }
 
-  eliminar(id){
-    this.postalService.eliminar(id).subscribe(
-      response =>{
-        this.listar();
-        $('#delete-'+id).modal('hide');
-        $('.modal-backdrop').removeClass('show');
-      },
-      error=>{
-
-      }
-    );
-  }
+  eliminar(id) {
+      Swal.fire({
+        title: 'Estas Seguro?',
+        text: 'No podras recuperarlo!',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si, Borrar!',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.cargando = true;
+          this.postalService.eliminar(id)
+            .subscribe(resp => {
+              this.listar();
+            })
+          Swal.fire('Borrado!', 'El Archivo fue borrado.', 'success');
+        }
+      });
+    }
 
    optionSelected(value: number) {
     this.option_selectedd = value;
