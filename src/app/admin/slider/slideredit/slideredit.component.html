@@ -220,9 +220,8 @@
                                     </div>
                                     <div class="col-xs-12 col-sm-6" *ngIf="sliderSeleccionado ">
                                         <div class="text-center">
-                                            <img *ngIf="!imgTemp " [src]="sliderSeleccionado.img | imagenPipe: 'blogs'"
+                                            <img *ngIf="!imgTemp " [src]="sliderSeleccionado.img | imagenPipe: 'sliders'"
                                                 class="img-responsive img-thumbnail" alt="">
-                                            <!-- <img *ngIf="post.img" [src]="post.img | imagenPipe: 'blogs'" class="img-responsive img-thumbnail" alt=""> -->
                                             <img *ngIf="imgTemp" [src]="imgTemp" class="img-responsive">
                                             <div class="form-group ">
 

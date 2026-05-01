@@ -39,6 +39,7 @@ export class CatIndexComponent implements OnInit {
         collecion='categorias';
 
   public msm_error;
+  categoriaSeleccionado: Categoria;
 
   constructor(
     private categoriaService: CategoriaService,
@@ -138,11 +139,23 @@ public PageSize(): void {
         this.loadCategorias();
       },
       error=>{
-
-
         this.msm_error = 'No se pudo activar el producto, vuelva a intenter.'
       }
     )
   }
+
+  onEditProject(categoria: Categoria) {
+      this.categoriaSeleccionado = categoria;
+    }
+  
+    openEditModal(): void {
+      this.categoriaSeleccionado = null;
+    }
+  
+    onCloseModal(): void {
+      this.categoriaSeleccionado = null;
+    }
+  
+    onClose() { }
 
 }

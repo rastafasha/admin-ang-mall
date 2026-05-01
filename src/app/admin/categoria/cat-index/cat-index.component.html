@@ -1,11 +1,8 @@
 <div class="row animated fadeIn fast">
     <div class="col-12">
-        <div class="card">
-            <div class="card-body">
-                <app-search [query]="query" [modelo]="categoria" [colleccionName]="categorias"
-        [colleccion]="'categorias'" (searchEvent)="handleSearchEvent($event)" (resetEvent)="PageSize()"></app-search>
-            </div>
-        </div>
+        <app-search [query]="query" [modelo]="categoria" [colleccionName]="categorias"
+[colleccion]="'categorias'" (searchEvent)="handleSearchEvent($event)" (resetEvent)="PageSize()"></app-search>
+        
     </div>
 </div>
 
@@ -24,16 +21,16 @@
         <div class="card">
             <div class="card-body">
                 <div class="row">
-                    <div class="col-9">
+                    <div class="col-11">
                         <h4 class="card-title">Categoría: ({{ categorias.length}})</h4>
                         <h6 class="card-subtitle">Categoría registrados en la app</h6>
                     </div>
-                    <div class="col-3">
+                    <div class="col-1">
                         <div class="text-right">
-                            <button class="btn btn-primary" [routerLink]="['/dashboard/categoria/create/']">
-                            <i class="fa fa-pencil"></i>
-                            Crear Categoría
-                          </button>
+                          <button (click)="openEditModal()" class="btn btn-outline-success" data-toggle="tooltip"
+                                data-original-title="Edit" data-bs-toggle="modal" data-bs-target="#editCategoria">
+                                <i class="fa fa-plus"></i>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -41,7 +38,7 @@
                 <hr>
 
                 <div class="table-responsive">
-                    <table class="table table-bordered">
+                    <table class="table table-borderless">
                         <thead>
                             <tr>
                                 <th>#</th>
@@ -57,7 +54,9 @@
                             <tr *ngFor="let categoria of categorias |  paginate: { itemsPerPage: count, currentPage: p } | orderBy:'createdAt, desc'">
                                 <th scope="row"><span class="{{categoria.icono}}"></span></th>
                                 <td class="text-center">
-                                    <img [routerLink]="['/dashboard/categoria/edit',categoria._id]" [src]="categoria.img | imagenPipe: 'categorias'" class="avatar cursor" alt="{{categoria.titulo}}">
+                                    <img (click)="onEditProject(categoria)"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#editCategoria" [src]="categoria.img | imagenPipe: 'categorias'" class="avatar cursor" alt="{{categoria.titulo}}">
                                 </td>
                                 <td>{{categoria.nombre}}</td>
                                 <td>{{categoria.subcategorias}}...</td>
@@ -128,8 +127,19 @@
                                 </td>
                                 <td>{{ categoria.createdAt | date:'MMM d, y, h:mm:ss a' }}</td>
                                 <td class="text-nowrap text-center">
-                                    <a [routerLink]="['/dashboard/categoria/edit', categoria._id]" class="cursor" data-toggle="tooltip" data-original-title="Edit"> <i class="fa fa-pencil text-inverse m-r-10"></i> </a>
-                                    <a *ngIf="user.role === 'SUPERADMIN'"  (click)="eliminarCategoria(categoria)" class="cursor" data-toggle="tooltip" data-original-title="Borrar"> <i class="fa fa-close text-danger"></i> </a>
+                                 
+                                    <button  class="btn btn-outline-success"
+                                            data-toggle="tooltip" data-original-title="Edit"
+                                            (click)="onEditProject(categoria)"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#editCategoria">
+                                            <i class="fa fa-edit"></i>
+                                        </button>
+                                         &nbsp;
+                                        <button *ngIf="user.role === 'SUPERADMIN'" (click)="eliminarCategoria(categoria)" class="btn btn-outline-danger" data-toggle="tooltip"
+                                            data-original-title="Borrar">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
                                 </td>
                             </tr>
 
@@ -142,3 +152,4 @@
     </div>
 </div>
 <app-modalinfo-categorias></app-modalinfo-categorias>
+<app-cat-edit (refreshCatList)="loadCategorias()" [categoriaSeleccionado]="categoriaSeleccionado" (closeModal)="onClose()" #editCategoria></app-cat-edit>

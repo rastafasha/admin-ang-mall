@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { Location } from '@angular/common';
@@ -12,23 +12,24 @@ import { CategoriaService } from 'src/app/services/categoria.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { IconosService } from 'src/app/services/iconos.service';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-
-interface HtmlInputEvent extends Event{
-  target : HTMLInputElement & EventTarget;
+interface HtmlInputEvent extends Event {
+  target: HTMLInputElement & EventTarget;
 }
 
-declare var jQuery:any;
-declare var $:any;
+declare var bootstrap: any;
 
 @Component({
   selector: 'app-cat-edit',
-  standalone:false,
+  standalone: false,
   templateUrl: './cat-edit.component.html',
   styleUrls: ['./cat-edit.component.css'],
   providers: [IconosService]
 })
-export class CatEditComponent implements OnInit {
+export class CatEditComponent implements OnInit, OnChanges {
 
+  @Input() categoriaSeleccionado;
+  @Output() closeModal: EventEmitter<void> = new EventEmitter<void>();
+  @Output() refreshCatList: EventEmitter<void> = new EventEmitter<void>();
 
   public categoriaForm: FormGroup;
   public categoria: Categoria;
@@ -39,10 +40,11 @@ export class CatEditComponent implements OnInit {
   banner: string;
   pageTitle: string;
   listIcons;
-  state_banner:boolean;
+  state_banner: boolean;
 
   public Editor = ClassicEditor;
-  public categoriaSeleccionado: Categoria;
+
+  currentStep = 1;
 
   constructor(
     private fb: FormBuilder,
@@ -59,25 +61,76 @@ export class CatEditComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    window.scrollTo(0,0);
-
+    window.scrollTo(0, 0);
     this.cargar_iconos();
-    
     this.validarFormulario();
-    this.activatedRoute.params.subscribe( ({id}) => this.cargarCategoria(id));
-    if(this.categoriaSeleccionado){
-      //actualizar
-    this.pageTitle = 'Edit Categoría';
-    
-    }else{
-      //crear
-      this.pageTitle = 'Create Categoría';
-      }
-
-
   }
 
-  validarFormulario(){
+  ngOnChanges(changes: SimpleChanges): void {
+
+    if (
+      changes['categoriaSeleccionado'] &&
+      changes['categoriaSeleccionado'].currentValue
+    ) {
+      this.pageTitle = 'Editando Categoria';
+      const categoria = changes['categoriaSeleccionado'].currentValue;
+      this.categoriaForm.patchValue({
+        id: categoria._id,
+        nombre: categoria.nombre,
+        subcategorias: categoria.subcategorias,
+        icono: categoria.icono,
+        state_banner: categoria.state_banner,
+      });
+      this.categoriaSeleccionado = categoria;
+      this.pageTitle = 'Editando Categoria';
+    } else {
+      this.pageTitle = 'Creando Categoria';
+    }
+  }
+
+  onClose() {
+    this.categoriaSeleccionado = null;
+    this.currentStep = 1;
+    this.categoriaForm.reset();
+    this.pageTitle = 'Creando Proyecto';
+    // Also reset default values if needed
+    this.categoriaForm.patchValue({
+      id: null,
+      nombre: null,
+      subcategorias: null,
+      icono: null,
+      state_banner: null,
+    });
+    // Emit event to parent to reset the projectSeleccionado variable
+
+    this.closeModal.emit();
+  }
+
+  nextStep() {
+    const nombre = this.categoriaForm.get('nombre');
+    const subcategorias = this.categoriaForm.get('subcategorias');
+    const icono = this.categoriaForm.get('icono');
+    const state_banner = this.categoriaForm.get('state_banner');
+
+    if (nombre?.invalid || subcategorias?.invalid ||
+      icono?.invalid || state_banner?.invalid
+
+    ) {
+      nombre?.markAsTouched();
+      subcategorias?.markAsTouched();
+      icono?.markAsTouched();
+      state_banner?.markAsTouched();
+      return;
+    }
+    this.currentStep = 2;
+  }
+
+  prevStep() {
+    this.currentStep = 1;
+  }
+
+
+  validarFormulario() {
     this.categoriaForm = this.fb.group({
       nombre: ['', Validators.required],
       subcategorias: ['', Validators.required],
@@ -86,9 +139,9 @@ export class CatEditComponent implements OnInit {
     })
   }
 
-  cargar_iconos(){
+  cargar_iconos() {
     this._iconoService.getIcons().subscribe(
-      (resp:any) =>{
+      (resp: any) => {
         this.listIcons = resp.iconos;
         // console.log(this.listIcons.iconos)
 
@@ -96,94 +149,78 @@ export class CatEditComponent implements OnInit {
     )
   }
 
-  cargarCategoria(_id: string){
+  updateCategoria() {
 
-    if(_id === 'nuevo'){
-      return;
-    }
-
-    this.categoriaService.getCategoriaById(_id)
-    .pipe(
-      // delay(100)
-      )
-      .subscribe( categoria =>{
-
-
-      if(!categoria){
-        return this.router.navigateByUrl(`/dasboard/categoria`);
-      }
-
-        const { nombre, subcategorias, icono, state_banner } = categoria;
-        this.categoriaSeleccionado = categoria;
-        this.categoriaForm.setValue({nombre, subcategorias, icono, state_banner});
-
-      });
-
-  }
-
-
-
-
-  updateCategoria(){
-
-     if(!this.categoriaForm.valid){
+    if (!this.categoriaForm.valid) {
       //mostramos las alertas de los campos requeridos
       this.categoriaForm.markAllAsTouched(); // Esto activa las validaciones visuales
       return
     }
 
-    const {nombre, subcategorias } = this.categoriaForm.value;
+    const { nombre, subcategorias } = this.categoriaForm.value;
 
-    if(this.categoriaSeleccionado){
+    if (this.categoriaSeleccionado) {
       //actualizar
       const data = {
         ...this.categoriaForm.value,
         _id: this.categoriaSeleccionado._id
       }
       this.categoriaService.actualizarCategoria(data).subscribe(
-        resp =>{
+        resp => {
           Swal.fire('Actualizado', `${nombre} actualizado correctamente`, 'success');
+          const modalElement = document.getElementById('editCategoria');
+          const modal = bootstrap.Modal.getInstance(modalElement);
+          if (modal) {
+            modal.hide();
+
+          }
+          // Emit event to refresh project list
+          this.refreshCatList.emit();
+          this.ngOnInit()
         });
 
-    }else{
+    } else {
       //crear
       this.categoriaService.crearCategoria(this.categoriaForm.value)
-      .subscribe( (resp: any) =>{
-        Swal.fire('Creado', `${nombre} creado correctamente`, 'success');
-        this.router.navigateByUrl(`/dashboard/categoria`);
-      })
+        .subscribe((resp: any) => {
+          this.categoriaSeleccionado = resp.categoria;
+          Swal.fire('¡Paso 1 completado!', 'Post creado. Ahora sube la imagen.', 'success');
+          // Como estmos creando, al finalizar debe ir al paso 2 para subir la imagen
+          this.currentStep = 2;
+        })
     }
 
   }
 
 
-  cambiarImagen(file: File){
+  cambiarImagen(file: File) {
     this.imagenSubir = file;
 
-    if(!file){
+    if (!file) {
       return this.imgTemp = null;
     }
 
     const reader = new FileReader();
     const url64 = reader.readAsDataURL(file);
 
-    reader.onloadend = () =>{
+    reader.onloadend = () => {
       this.imgTemp = reader.result;
     }
   }
 
-  subirImagen(){
-      this.fileUploadService
+  subirImagen() {
+    this.fileUploadService
       .actualizarFoto(this.imagenSubir, 'categorias', this.categoriaSeleccionado._id)
-      .then(img => { this.categoriaSeleccionado.img = img;
+      .then(img => {
+        this.categoriaSeleccionado.img = img;
         Swal.fire('Guardado', 'La imagen fue actualizada', 'success');
-  
-      }).catch(err =>{
+
+      }).catch(err => {
         Swal.fire('Error', 'No se pudo subir la imagen', 'error');
-  
+
       })
-    }
-  
+  }
+
 
   goBack() {
     this.location.back(); // <-- go back to previous location on cancel

@@ -9,14 +9,10 @@ import { Blog } from 'src/app/models/blog.model';
 import { BlogService } from 'src/app/services/blog.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-
-
 interface HtmlInputEvent extends Event {
   target: HTMLInputElement & EventTarget;
 }
 
-declare var jQuery: any;
-declare var $: any;
 declare var bootstrap: any;
 
 @Component({
