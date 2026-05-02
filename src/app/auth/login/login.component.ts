@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit {
   public auth2: any;
   public user:any;
   loginForm: FormGroup;
-
+  isLoading = false;
 
 
   constructor(
@@ -42,7 +42,7 @@ ngOnInit(){
 }
 
   login(){
-
+    this.isLoading = true;
     this.usuarioService.login(this.loginForm.value).subscribe(
       (resp:any) =>{
         if(this.loginForm.get('remember').value){
@@ -52,11 +52,13 @@ ngOnInit(){
         }
         // this.getLocalStorage();
         if(localStorage.getItem('user')){
+          this.isLoading = false;
           setTimeout(()=>{
             this.router.navigateByUrl('/dashboard');
-          },500);
-        }
+          },100);
+          }
       } ,(err) => {
+        this.isLoading = false;
         Swal.fire('Error', err.error.msg, 'error');
       }
     )

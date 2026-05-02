@@ -4,7 +4,8 @@
 <section id="wrapper" class="login-register login-sidebar" style="background-image:url(../assets/images/background/login-register.jpg);">
     <div class="login-box card">
         <div class="card-body">
-            <form class="form-horizontal form-material" id="loginform" [formGroup]="loginForm" (ngSubmit)="login()" autocapitalize="off">
+            <app-loading *ngIf="isLoading"></app-loading>
+            <form *ngIf="!isLoading" class="form-horizontal form-material" id="loginform" [formGroup]="loginForm" (ngSubmit)="login()" autocapitalize="off">
                 <div class="logologin">
                     <img src="../assets/svg/logo_tipo.svg" alt="Home" />
                 </div>

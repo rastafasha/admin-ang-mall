@@ -17,7 +17,7 @@ export class RegisterComponent implements OnInit {
 
   registerForm:FormGroup;
 
-
+  isLoading = false;
 
 
   constructor(
@@ -47,6 +47,7 @@ export class RegisterComponent implements OnInit {
   }
 
   crearUsuario(){
+    this.isLoading = true;
     if (this.currentStep !== 2) {
       return;
     }
@@ -62,8 +63,10 @@ export class RegisterComponent implements OnInit {
     this.usuarioService.crearUsuario(this.registerForm.value).subscribe(
       resp =>{
         // console.log(resp);
+        this.isLoading = false;
         this.router.navigateByUrl('/login');
       },(err) => {
+        this.isLoading = false;
         Swal.fire('Error', err.error.msg, 'error');
       }
     );

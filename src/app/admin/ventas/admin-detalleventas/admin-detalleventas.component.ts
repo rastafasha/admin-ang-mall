@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {environment} from 'src/environments/environment';
+import { environment } from 'src/environments/environment';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { VentaService } from "src/app/services/venta.service";
@@ -14,7 +14,7 @@ import { TiendaService } from 'src/app/services/tienda.service';
 
 @Component({
   selector: 'app-admin-detalleventas',
-  standalone:false,
+  standalone: false,
   templateUrl: './admin-detalleventas.component.html',
   styleUrls: ['./admin-detalleventas.component.css']
 })
@@ -22,21 +22,22 @@ export class AdminDetalleventasComponent implements OnInit {
 
   public identity;
   public id;
-  public detalle : any = {};
-  public venta : Venta;
-  public user : Usuario;
+  public detalle: any = {};
+  public venta: Venta;
+  public user: Usuario;
   public url;
-  public tienda:Tienda;
-    public tienda_moneda:string;
-    public local:string;
+  public tienda: Tienda;
+  public tienda_moneda: string;
+  public local: string;
+  isLoading = false;
 
   constructor(
     private _userService: UsuarioService,
-    private _router : Router,
-    private _route :ActivatedRoute,
+    private _router: Router,
+    private _route: ActivatedRoute,
     private http: HttpClient,
     private _ventaService: VentaService,
-    private tiendaService : TiendaService,
+    private tiendaService: TiendaService,
     private location: Location,
   ) {
     this.identity = this._userService.usuario;
@@ -44,32 +45,33 @@ export class AdminDetalleventasComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    window.scrollTo(0,0);
+    window.scrollTo(0, 0);
     this.url = environment.baseUrl;
-        this._route.params.subscribe(
-          params=>{
-            this.id = params['id'];
-          }
-        );
-        this._ventaService.detalle(this.id).subscribe(
-          (resp:any) =>{
-            console.log(resp);
-            this.detalle = resp.detalle;
-            this.venta = resp.venta;
-            this.user = resp.venta.user;
+    this._route.params.subscribe(
+      params => {
+        this.id = params['id'];
+      }
+    );
+    this.isLoading = true;
+    this._ventaService.detalle(this.id).subscribe(
+      (resp: any) => {
+        this.detalle = resp.detalle;
+        this.venta = resp.venta;
+        this.user = resp.venta.user;
 
-            this.local= resp.venta.local;
+        this.local = resp.venta.local;
+        this.isLoading = false;
         this.getTiendaId()
 
-          },
-          error=>{
-          }
-        );
+      },
+      error => {
+      }
+    );
 
   }
 
-  getTiendaId(){
-    this.tiendaService.getTiendaById(this.local).subscribe((resp:any)=>{
+  getTiendaId() {
+    this.tiendaService.getTiendaById(this.local).subscribe((resp: any) => {
       this.tienda = resp;
       this.tienda_moneda = this.tienda.moneda
     })

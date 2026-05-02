@@ -70,6 +70,7 @@ export class AdminVentasComponent implements OnInit {
   public ventasDataYear: any[] = [];
 
   isLoading = false;
+  
 
   constructor(
     private _userService: UsuarioService,
