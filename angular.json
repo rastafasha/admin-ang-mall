@@ -82,6 +82,11 @@
                   "glob": "manifest.webmanifest", 
                   "input": "src/env/adminecommerce/", 
                   "output": "/"
+                },
+                {
+                  "glob": "favicon.ico", 
+                  "input": "src/env/adminecommerce/", 
+                  "output": "/"
                 }
               ],
               "budgets": [
@@ -113,6 +118,7 @@
              "assets": [
                 "src/assets",
                 "src/manifest.webmanifest",
+                
                 {
                   "glob": "_redirects",
                   "input": "src",
@@ -125,6 +131,11 @@
                 },
                 {
                   "glob": "manifest.webmanifest", 
+                  "input": "src/env/zlipmenu/", 
+                  "output": "/"
+                },
+                {
+                  "glob": "favicon.ico", 
                   "input": "src/env/zlipmenu/", 
                   "output": "/"
                 }
