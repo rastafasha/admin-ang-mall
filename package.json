@@ -9,7 +9,6 @@
     "build": "ng build",
     "build:adminecom": "ng build --configuration adminecommerce",
     "build:zlipmenu": "ng build --configuration zlipmenu",
-    "build:zlipmenuvercel": "ng build --configuration zlipmenuvercel",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
