@@ -16,7 +16,7 @@ export class ImagenPipePipe implements PipeTransform {
 ): string {
 
     if(!img){
-      return `${base_url}/usuarios/no-image.jpg`;
+      return `assets/image/no-image.jpg`;
     } else if(img.includes('https')){
       return img;
     } else if(img){

@@ -31,6 +31,7 @@
                     <table class="table table-borderless">
                         <thead>
                             <tr>
+                                <th>Img</th>
                                 <th>Metodo</th>
                                 <th>Referencia</th>
                                 <th>Banco</th>
@@ -47,10 +48,15 @@
                             <tr *ngFor="let transf of transferencias |  paginate: { itemsPerPage: count, currentPage: p } | orderBy:'createdAt, desc'">
                                 
                                 <td>
+                                    <img [src]="transf.img | imagenPipe: 'transferencias' " class="avatar cursor"
+                                        alt="{{transf.referencia}}">
+                                </td>
+                                <td>
                                     {{transf.metodo_pago.tipo}}
                                 </td>
                                 <td>
-                                    {{transf.referencia}}
+                                    <a (click)="onViewPago(transf)" data-bs-toggle="modal" class="cursor"
+                                            data-bs-target="#viewPago">{{transf.referencia}}</a>
                                 </td>
                                 <td>
                                     {{transf.bankName}}
@@ -104,3 +110,4 @@
     </div>
 </div>
 <app-modalinfo-transferencias></app-modalinfo-transferencias>
+ <app-payment-details  [pagoSeleccionado]="pagoSeleccionado" (closeModal)="onClose()" #viewPago></app-payment-details>

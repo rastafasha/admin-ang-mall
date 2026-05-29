@@ -67,6 +67,7 @@ import { PagosChequeComponent } from './pagos-cheque/pagos-cheque.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { PostalcompModule } from "./postal/postalcomp/postalcomp.module";
 import { DriverpModule } from './driverp/driverp.module';
+import { PaymentDetailsComponent } from './transferencias/payment-details/payment-details.component';
 
 @NgModule({
   declarations: [
@@ -111,7 +112,9 @@ import { DriverpModule } from './driverp/driverp.module';
     TiposdepagoComponent,
     PagosEfectivoComponent,
     FacturaComponent,
-    PagosChequeComponent
+    PagosChequeComponent,
+    PaymentDetailsComponent
+
   ],
   exports: [
     MarcaIndexComponent,
@@ -151,7 +154,9 @@ import { DriverpModule } from './driverp/driverp.module';
     VideoIndexComponent,
     VideoEditComponent,
     ContactodetailsComponent,
-    TiposdepagoComponent
+    TiposdepagoComponent,
+    PaymentDetailsComponent
+
   ],
 
 

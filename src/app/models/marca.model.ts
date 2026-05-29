@@ -12,7 +12,7 @@ export class Marca {
   get imagenUrl(){
 
     if(!this.img){
-      return `${base_url}/uploads/marcas/no-image.jpg`;
+      return `assets/image/no-image.jpg`;
     } else if(this.img.includes('https')){
       return this.img;
     } else if(this.img){

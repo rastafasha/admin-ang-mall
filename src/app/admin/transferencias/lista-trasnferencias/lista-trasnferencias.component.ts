@@ -9,7 +9,7 @@ import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-lista-trasnferencias',
-  standalone:false,
+  standalone: false,
   templateUrl: './lista-trasnferencias.component.html',
   styleUrls: ['./lista-trasnferencias.component.css']
 })
@@ -21,7 +21,7 @@ export class ListaTrasnferenciasComponent implements OnInit {
   public desde: number = 0;
   trasnferencia: Transferencia;
   transf: Transferencia;
-  tienda_moneda:string;
+  tienda_moneda: string;
 
   p: number = 1;
   count: number = 8;
@@ -31,6 +31,7 @@ export class ListaTrasnferenciasComponent implements OnInit {
   searchForm!: FormGroup;
   currentPage = 1;
   collecion = 'categorias';
+  pagoSeleccionado: Transferencia;
 
 
   constructor(
@@ -63,8 +64,8 @@ export class ListaTrasnferenciasComponent implements OnInit {
 
   }
 
-  getTienda(){
-    this.tiendaService.getTiendaById(this.user.local).subscribe((resp:any)=>{
+  getTienda() {
+    this.tiendaService.getTiendaById(this.user.local).subscribe((resp: any) => {
       this.tienda_moneda = resp.moneda;
     })
   }
@@ -80,7 +81,7 @@ export class ListaTrasnferenciasComponent implements OnInit {
   }
 
   cambiarStatus(trasnferencia: Transferencia) {
-    const data ={
+    const data = {
       ...trasnferencia,
       local: this.user.local,
       updatedAt: Date.now
@@ -144,5 +145,16 @@ export class ListaTrasnferenciasComponent implements OnInit {
       default: return '$';
     }
   }
+
+  onViewPago(transf: Transferencia) {
+    this.pagoSeleccionado = transf;
+  }
+
+
+  onCloseModal(): void {
+    this.pagoSeleccionado = null;
+  }
+
+  onClose() { }
 
 }

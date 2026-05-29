@@ -1,0 +1,91 @@
+<div class="modal fade" id="viewPago" tabindex="-1" aria-labelledby="pagoModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="pagoModalLabel">{{title}} | {{pagoSeleccionado?.referencia}}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                    (click)="onClose()"></button>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-4">
+                            <p><b>bankName:</b> {{pagoSeleccionado?.bankName}}</p>
+                            <p><b>Referencia:</b> {{pagoSeleccionado?.referencia}}</p>
+                            <p><b>Monto:</b> {{pagoSeleccionado?.amount | currency:tienda_moneda}}</p>
+                            <p><b>metodo_pago:</b> {{pagoSeleccionado?.metodo_pago.tipo}}</p>
+                            <p><b>Nombre de la cuenta:</b>&nbsp;
+                                {{pagoSeleccionado?.name_person}}
+                                <!-- <a [routerLink]="['/dashboard/user/', pagoSeleccionado?.user]">
+                                    {{pagoSeleccionado?.name_person}}</a> -->
+                            </p>
+                            <p><b>phone:</b> {{pagoSeleccionado?.phone}}</p>
+                            
+                            
+                            <p><b>Fecha | Hora:</b> {{pagoSeleccionado?.createdAt | date:'MMM d, y, h:mm:ss a'}}</p>
+                            <p><b>Status:</b>&nbsp;
+                                <span class="badge bg-success"
+                                    *ngIf="pagoSeleccionado?.status === 'ok'">Completado</span>
+                                <span class="badge bg-primary"
+                                    *ngIf="pagoSeleccionado?.status === 'pending'">Pendiente</span>
+                                <span class="badge bg-danger"
+                                    *ngIf="pagoSeleccionado?.status === 'no'">Rechazado</span>
+                            </p>
+                            
+
+
+                        </div>
+                        <div class="col-xs-12 col-sm-4">
+                            <div class="pedidolista">
+                                <div  *ngFor="let pedidoitem of pagoSeleccionado?.pedido?.pedidoList;  let i = index">
+                                <div class="bg-light rounded-4 p-3 mb-4" style="border-radius: 15px;">
+
+                                    <div class="d-flex justify-content-between mb-3 border-bottom pb-2">
+                                        <span class="text-muted small">Categoria</span>
+                                        <span class="fw-bold small">{{ pedidoitem.subcategoria
+                                            }}</span>
+                                    </div>
+                                    <div class="d-flex justify-content-between mb-3 border-bottom pb-2">
+                                        <span class="text-muted small">Nombre</span>
+                                        <span class="fw-bold small">{{ pedidoitem.titulo }}</span>
+                                    </div>
+                                    
+
+                                    <div class="d-flex justify-content-between">
+                                        <span class="text-muted small">Cantidad</span>
+                                        <span class="fw-bold small">{{ pedidoitem.cantidad }}</span>
+                                    </div>
+
+                                    <div class="d-flex justify-content-between">
+                                        <span class="text-muted small">Precio</span>
+                                        <span class="fw-bold small">{{ +pedidoitem.precio_ahora |
+                                            currency:tienda_moneda }}</span>
+                                    </div>
+
+                                    <div class="d-flex justify-content-between">
+                                        <span class="text-muted small">Total</span>
+                                        <!-- El símbolo + convierte el texto "20" y "10" en números reales antes de multiplicar -->
+                                        <span class="fw-bold small">{{ (+pedidoitem.precio_ahora) *
+                                            (+pedidoitem.cantidad) | currency:tienda_moneda
+                                            }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                            
+                            
+                        </div>
+                        <div class="col-xs-12 col-sm-4">
+                            <img [src]="pagoSeleccionado?.img | imagenPipe: 'transferencias' " class="img-responsive shadow-sm">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                    (click)="onClose()">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>

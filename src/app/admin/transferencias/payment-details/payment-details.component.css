@@ -1,0 +1,18 @@
+.pagodetail {
+    display: flex;
+    padding: 20px;
+    flex-flow: row;
+    font-size: 15px;
+}
+
+.pagodetail p {
+    margin: 0;
+    padding: 0;
+}
+
+.pedidolista{
+    height:auto;
+    max-height: 400px;
+    overflow: hidden;
+    overflow-y: scroll;
+}
