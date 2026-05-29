@@ -1,8 +1,74 @@
-.boton-title{
+.boton-title {
     display: flex;
     align-items: center;
     height: 50px;
     align-self: anchor-center;
     margin-bottom: 30px;
-    gap:15px
+    gap: 15px
+}
+
+.topepedido {
+    display: grid;
+    grid-template-columns: 70% 20%;
+}
+
+
+/* tab-conten */
+
+
+
+.tab-content-set {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+
+}
+
+.tab-content-set .nav {
+    display: flex;
+    align-items: center;
+    padding: 6px;
+    gap: 15px;
+
+}
+
+.tab-content-set .nav li {
+    display: flex;
+    padding: 5px;
+    font-size: 14px;
+    color: #333;
+    gap: 15px;
+}
+
+.tab-content-set .nav li a {
+    color: #333;
+    text-decoration: none;
+}
+
+.tab-content-set .active {
+    color: green;
+}
+
+
+
+/* // Estilo base para todas las pestañas cuando NO están seleccionadas */
+.nav li a h3.btn {
+    border: 1px solid var(--vinotinto);
+    color: var(--vinotinto);
+    background-color: transparent;
+    transition: all 0.3s ease;
+}
+
+/* // Estilo automático cuando el enlace 'a' recibe la clase .active */
+.nav li a.active h3.btn {
+    background-color: green !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 6px rgba(65, 65, 65, 0.2);
+}
+
+/* // Efecto visual al pasar el mouse por encima (opcional) */
+.nav li a:hover h3.btn {
+    background-color: rgba(23, 162, 184, 0.1);
 }

@@ -62,7 +62,8 @@ import { ComentariosappComponent } from './comentariosapp/comentariosapp.compone
     ComponentsAtentionModule,
     SharedModule,
     DriverpModule,
-    ComponentsModule
+    ComponentsModule,
+    PipesModule
   ]
 })
 export class TiendaModule { }

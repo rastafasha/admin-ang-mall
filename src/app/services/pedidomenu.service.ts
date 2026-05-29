@@ -73,7 +73,11 @@ export class PedidomenuService {
 
     activar(id:string):Observable<any>{
         const url = `${base_url}/pedidomenu/activar/`+id;
-        return this.http.get(url,  this.headers);
+        return this.http.put(url,  this.headers);
+      }
+    finalizado(id:string):Observable<any>{
+        const url = `${base_url}/pedidomenu/finalizado/`+id;
+        return this.http.put(url,  this.headers);
       }
   
   

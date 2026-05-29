@@ -6,6 +6,8 @@ import { ShowByPipe } from './showby.pipe';
 import { SortByPipe } from './sortby.pipe';
 import { OrderByPipe } from './orderby.pipe';
 import { UniquePipe } from './unique.pipe';
+import { SafePipe } from './safe.pipe';
+import { PedidoStatusPipe } from './pedido-status.pipe';
 
 
 @NgModule({
@@ -16,7 +18,9 @@ import { UniquePipe } from './unique.pipe';
     ShowByPipe,
     SortByPipe,
     OrderByPipe,
-    UniquePipe
+    UniquePipe,
+    SafePipe,
+    PedidoStatusPipe
   ],
   exports:[
     ImagenPipePipe,
@@ -25,7 +29,9 @@ import { UniquePipe } from './unique.pipe';
     ShowByPipe,
     SortByPipe,
     OrderByPipe,
-    UniquePipe
+    UniquePipe,
+    SafePipe,
+    PedidoStatusPipe
 
   ]
 })

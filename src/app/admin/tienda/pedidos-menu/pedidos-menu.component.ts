@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Pedido } from 'src/app/models/pedido.model';
+import { SafePipe } from 'src/app/pipes/safe.pipe';
 import { PedidomenuService } from 'src/app/services/pedidomenu.service';
 import Swal from 'sweetalert2';
 
 declare var $: any;
 @Component({
   selector: 'app-pedidos-menu',
-  standalone:false,
+  standalone: false,
   templateUrl: './pedidos-menu.component.html',
   styleUrls: ['./pedidos-menu.component.css']
 })
@@ -20,6 +21,8 @@ export class PedidosMenuComponent implements OnInit {
   p: number = 1;
   count: number = 8;
   user: any;
+  option_selectedd: number = 1;
+  solicitud_selectedd: any = 1;
 
   constructor(
     private pedidosMenuService: PedidomenuService
@@ -38,6 +41,30 @@ export class PedidosMenuComponent implements OnInit {
     }
   }
 
+  optionSelected(value: number) {
+    this.option_selectedd = value;
+    if (this.option_selectedd === 1) {
+
+      if (this.user.role === 'SUPERADMIN') {
+        this.getPedidos();
+      }
+      if (this.user.role === 'ADMIN') {
+        this.pedidosPorLocalId()
+      }
+    }
+    if (this.option_selectedd === 2) {
+      if (this.user.role === 'SUPERADMIN') {
+        this.getPedidos();
+      }
+      if (this.user.role === 'ADMIN') {
+        this.pedidosPorLocalId()
+      }
+    }
+  }
+
+  PageSize() {
+    this.ngOnInit()
+  }
   getPedidos() {
     this.cargando = true;
     this.pedidosMenuService.getByStatus(this.status).subscribe((resp) => {
@@ -50,7 +77,6 @@ export class PedidosMenuComponent implements OnInit {
     this.cargando = true;
     this.pedidosMenuService.getByTiendaId(this.user.local).subscribe((resp: any) => {
       this.pedidos = resp;
-
       this.user = resp.user
       this.cargando = false;
     })
@@ -60,16 +86,15 @@ export class PedidosMenuComponent implements OnInit {
     this.cargando = true;
     this.pedidosMenuService.activar(id).subscribe(
       response => {
-        $('#activar-' + id).modal('hide');
-        $('.modal-backdrop').removeClass('show');
-        if (this.user.role === 'SUPERADMIN') {
-          this.cargando = false;
-          this.getPedidos();
-        }
-        if (this.user.role === 'ADMIN') {
-          this.cargando = false;
-          this.pedidosPorLocalId()
-        }
+        this.ngOnInit()
+      }
+    )
+  }
+  finalizar(id) {
+    this.cargando = true;
+    this.pedidosMenuService.finalizado(id).subscribe(
+      response => {
+        this.ngOnInit()
       }
     )
   }
@@ -109,13 +134,6 @@ export class PedidosMenuComponent implements OnInit {
 
   }
 
-  PageSize() {
-    if (this.user.role === 'SUPERADMIN') {
-      this.getPedidos();
-    }
-    if (this.user.role === 'ADMIN') {
-      this.pedidosPorLocalId()
-    }
-  }
+
 
 }
