@@ -30,7 +30,7 @@ import { ProductoSelectedComponent } from './productoSelected/productoSelected.c
         NgxDropzoneModule,
         PdfViewerModule,
         NgxPaginationModule,
-        CKEditorModule,
+        // CKEditorModule,
   ]
 })
 export class ComponentsAtentionModule { }
