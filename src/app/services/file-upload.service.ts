@@ -16,13 +16,17 @@ export class FileUploadService {
     archivo: File,
     tipo: 'usuarios'|'marcas' |'productos' | 'congenerals'|'promocions' |'galerias'|'ingresos'
     |'blogs' |'pages' |'cursos' |'sliders' | 'locaciones' 
-    |'facturas' | 'categorias' | 'drivers'
-    ,id: string
+    |'facturas' | 'categorias' | 'drivers',
+    id: string,
+    campo?: 'img' | 'img_hero' // 🛠️ Nuevo parámetro opcional
   ){
 
     try{
 
-      const url = `${base_url}/${tipo}/${id}`;
+      let url = `${base_url}/${tipo}/${id}`;
+      if (campo) {
+        url += `?campo=${campo}`; // 👉 Esto genera /api/upload/locaciones/ID?campo=img_hero
+      }
       const formData = new FormData();
       formData.append('imagen', archivo);
 

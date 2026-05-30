@@ -42,6 +42,7 @@ export class TiendaaddComponent implements OnInit, OnChanges {
   public usuario: Usuario;
   public imagenSubir: File;
   public imgTemp: any = null;
+  public imgHeroTemp: any = null;
 
   banner: string;
   pageTitle: string;
@@ -103,9 +104,15 @@ export class TiendaaddComponent implements OnInit, OnChanges {
       zip: ['', Validators.required],
       subcategoria: [''],
       redssociales: [this.redessociales],
-      status: ['false',],
-      state_banner: ['false',],
-      isFeatured: ['false',],
+      status: ['Desactivado',],
+      state_banner: [false,],
+      texto_hero_uno: ['', Validators.required],
+      texto_hero_dos: ['', Validators.required],
+      texto_hero_destacado: ['', Validators.required],
+      descripcion_hero: ['', Validators.required],
+      color_primario: ['',],
+      color_fondo: ['',],
+      isFeatured: [false,],
       user: [this.user.uid],
     })
   }
@@ -134,7 +141,14 @@ export class TiendaaddComponent implements OnInit, OnChanges {
         redssociales: tienda.redssociales,
         status: tienda.status,
         state_banner: tienda.state_banner,
+        texto_hero_uno: tienda.texto_hero_uno,
+        texto_hero_dos: tienda.texto_hero_dos,
+        texto_hero_destacado: tienda.texto_hero_destacado,
+        descripcion_hero: tienda.descripcion_hero,
+        color_primario: tienda.color_primario,
+        color_fondo: tienda.color_fondo,
         img: tienda.img,
+        img_hero: tienda.img_hero,
         user: tienda.user
       });
       this.tiendaSeleccionado = tienda;
@@ -166,7 +180,14 @@ export class TiendaaddComponent implements OnInit, OnChanges {
       redssociales: null,
       status: null,
       state_banner: null,
+      texto_hero_uno: null,
+      texto_hero_dos: null,
+      texto_hero_destacado: null,
+      descripcion_hero: null,
+      color_primario: null,
+      color_fondo: null,
       img: null,
+      img_hero: null,
       user: null
     });
     // Emit event to parent to reset the projectSeleccionado variable
@@ -211,13 +232,46 @@ export class TiendaaddComponent implements OnInit, OnChanges {
       redssociales?.markAsTouched();
       status?.markAsTouched();
       state_banner?.markAsTouched();
+      this.tiendaForm.markAllAsTouched(); // Esto activa las validaciones visuales
       return;
     }
     this.currentStep = 2;
+
+
   }
+  nextStepApp() {
+    const texto_hero_uno = this.tiendaForm.get('texto_hero_uno');
+    const texto_hero_dos = this.tiendaForm.get('texto_hero_dos');
+    const texto_hero_destacado = this.tiendaForm.get('texto_hero_destacado');
+    const descripcion_hero = this.tiendaForm.get('descripcion_hero');
+    const color_primario = this.tiendaForm.get('color_primario');
+    const color_fondo = this.tiendaForm.get('color_fondo');
+
+    if (texto_hero_uno?.invalid || texto_hero_dos?.invalid ||
+      texto_hero_destacado?.invalid || descripcion_hero?.invalid ||
+      color_primario?.invalid || color_fondo?.invalid
+
+    ) {
+      texto_hero_uno?.markAsTouched();
+      texto_hero_dos?.markAsTouched();
+      texto_hero_destacado?.markAsTouched();
+      descripcion_hero?.markAsTouched();
+      color_primario?.markAsTouched();
+      color_fondo?.markAsTouched();
+      this.tiendaForm.markAllAsTouched(); // Esto activa las validaciones visuales
+      return;
+    }
+    this.currentStep = 3;
+  }
+
+
 
   prevStep() {
     this.currentStep = 1;
+  }
+
+  prevStep2() {
+    this.currentStep = 2;
   }
 
 
@@ -227,8 +281,6 @@ export class TiendaaddComponent implements OnInit, OnChanges {
     this.categoriaService.cargarCategorias().subscribe(
       resp => {
         this.listCategorias = resp;
-        // console.log(this.listCategorias);
-
       }
     )
   }
@@ -237,13 +289,11 @@ export class TiendaaddComponent implements OnInit, OnChanges {
     this.paisService.getPaises().subscribe(
       resp => {
         this.paises = resp;
-        // console.log(this.listCategorias);
-
       }
     )
   }
 
-
+  // addRedSocial
   addRedSocial() {
     if (this.redssociales) {
       this.redssociales.push({
@@ -275,15 +325,10 @@ export class TiendaaddComponent implements OnInit, OnChanges {
     this._iconoService.getIconsSocial().subscribe(
       (resp: any) => {
         this.listIcons = resp.iconos;
-        // console.log(this.listIcons.iconos)
-
       }
     )
   }
-
-
-
-
+  // addRedSocial
 
   saveTienda() {
     this.cargando = true;
@@ -322,17 +367,17 @@ export class TiendaaddComponent implements OnInit, OnChanges {
       this.tiendaService.actualizarTienda(data).subscribe(
         resp => {
           this.cargando = false;
-          Swal.fire('Actualizado', `${nombre} actualizado correctamente`, 'success');
+          Swal.fire('Actualizado', `${nombre} actualizado correctamente, Ahora Agrega la info para el menu y sube la imagen.`, 'success');
           // Close modal programmatically
-          const modalElement = document.getElementById('editTienda');
-          const modal = bootstrap.Modal.getInstance(modalElement);
-          if (modal) {
-            modal.hide();
+          // const modalElement = document.getElementById('editTienda');
+          // const modal = bootstrap.Modal.getInstance(modalElement);
+          // if (modal) {
+          //   modal.hide();
 
-          }
-          // Emit event to refresh project list
-          this.refreshTiendaList.emit();
-          this.ngOnInit()
+          // }
+          // // Emit event to refresh project list
+          // this.refreshTiendaList.emit();
+          // this.ngOnInit()
         });
 
     } else {
@@ -341,7 +386,7 @@ export class TiendaaddComponent implements OnInit, OnChanges {
         .subscribe((resp: any) => {
           this.cargando = false;
           this.tiendaSeleccionado = resp.tienda;
-          Swal.fire('¡Paso 1 completado!', 'Post creado. Ahora sube la imagen.', 'success');
+          Swal.fire('¡Paso 1 completado!', 'Tienda creada. Ahora Agrega la info para el menu y sube la imagen.', 'success');
           // Como estmos creando, al finalizar debe ir al paso 2 para subir la imagen
           this.currentStep = 2;
         })
@@ -350,35 +395,59 @@ export class TiendaaddComponent implements OnInit, OnChanges {
   }
 
 
-  cambiarImagen(file: File) {
-    this.imagenSubir = file;
+  cambiarImagen(file: File, campo: 'img' | 'img_hero') {
+  this.imagenSubir = file;
 
-    if (!file) {
+  if (!file) {
+    if (campo === 'img_hero') {
+      return this.imgHeroTemp = null;
+    } else {
       return this.imgTemp = null;
     }
+  }
 
-    const reader = new FileReader();
-    const url64 = reader.readAsDataURL(file);
+  const reader = new FileReader();
+  
+  // Solo ejecutamos el método (sin asignarlo a una constante)
+  reader.readAsDataURL(file);
 
-    reader.onloadend = () => {
+  reader.onloadend = () => {
+    // Asignamos la vista previa al campo correspondiente de forma independiente
+    if (campo === 'img_hero') {
+      this.imgHeroTemp = reader.result;
+    } else {
       this.imgTemp = reader.result;
     }
   }
+}
 
-  subirImagen() {
-    this.cargandoImagen = true;
-    this.fileUploadService
-      .actualizarFoto(this.imagenSubir, 'locaciones', this.tiendaSeleccionado._id)
-      .then(img => {
-        this.tiendaSeleccionado.img = img;
-        this.cargandoImagen = false;
-        Swal.fire('Guardado', 'La imagen fue actualizada', 'success');
 
-      }).catch(err => {
-        this.cargandoImagen = false;
-        Swal.fire('Error', 'No se pudo subir la imagen', 'error');
-
-      })
+  // 🛠️ Ahora la función recibe si es 'img' o 'img_hero'
+  subirImagen(campo: 'img' | 'img_hero') {
+  if (!this.imagenSubir) {
+    Swal.fire('Atención', 'Por favor, selecciona una imagen primero', 'warning');
+    return;
   }
+
+  this.cargandoImagen = true;
+
+  // PASAMOS EL CAMPO AL SERVICIO
+  this.fileUploadService.actualizarFoto(this.imagenSubir, 'locaciones', this.tiendaSeleccionado._id, campo)
+    .then(img => {
+      if (campo === 'img_hero') {
+        this.tiendaSeleccionado.img_hero = img;
+      } else {
+        this.tiendaSeleccionado.img = img;
+      }
+
+      this.cargandoImagen = false;
+      this.imgTemp = null; 
+      Swal.fire('Guardado', 'La imagen fue actualizada y optimizada', 'success');
+
+    }).catch(err => {
+      this.cargandoImagen = false;
+      Swal.fire('Error', 'No se pudo subir la imagen', 'error');
+    });
+}
 
 }

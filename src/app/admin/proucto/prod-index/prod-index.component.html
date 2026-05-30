@@ -89,13 +89,18 @@
                                 <!-- <td>{{producto.precio_ahora}}...</td>
                                 <td>{{producto.precio_antes}}...</td> -->
                                 <td>
+
+                                    
+
+                                    
                                     <button type="button" class="btn btn-accent"
                                         *ngIf="producto.status == 'Edición' || producto.status == 'Desactivado'"
                                         data-bs-toggle="modal" [attr.data-bs-target]="'#activar-'+producto._id">
                                         <span class="czi-check"></span> 
                                         Activar
                                     </button>
-
+                                    <!-- modal activar -->
+                                    
                                     <div class="modal fade" [attr.id]="'activar-'+producto._id" tabindex="-1"
                                         aria-labelledby="coloModalLabel" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-centered" >
@@ -117,12 +122,12 @@
                                             </div>
                                         </div>
                                     </div>
-
+                                   
                                     <button type="button" class="btn btn-primary" *ngIf="producto.status == 'Activo'"
                                         data-bs-toggle="modal" [attr.data-bs-target]="'#desactivar-'+producto._id"><span
                                             class="czi-close"></span> Desactivar
                                         </button>
-
+                                        <!-- modal desactivar -->
                                     <div class="modal fade" [attr.id]="'desactivar-'+producto._id" tabindex="-1"
                                          style="display: none;" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-centered" >

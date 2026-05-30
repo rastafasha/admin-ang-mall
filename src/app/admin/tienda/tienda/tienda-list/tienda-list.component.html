@@ -36,6 +36,7 @@
                                 <th>Img</th>
                                 <th>Nombre</th>
                                 <th>Local</th>
+                                <th>status</th>
                                 <th>Categoria</th>
                                 <th class="text-nowrap">Acciones</th>
                             </tr>
@@ -55,17 +56,31 @@
                                     {{tienda.local}}
                                 </td>
                                 <td>
+                                    <!-- Botón que se muestra SOLO cuando la tienda está Desactivada (para poder Activarla) -->
+                                    <button type="button" class="btn btn-outline-success" *ngIf="tienda.status === 'Desactivado'"
+                                        (click)="activar(tienda._id, 'Activo')">
+                                        <span class="czi-check"></span> Activo
+                                    </button>
+
+                                    <!-- Botón que se muestra SOLO cuando la tienda está Activa (para poder Desactivarla) -->
+                                    <button type="button" class="btn btn-primary" *ngIf="tienda.status === 'Activo'"
+                                        (click)="desactivar(tienda._id, 'Desactivado')">
+                                        <span class="czi-close"></span> Desactivar
+                                    </button>
+                                </td>
+                                <td>
                                     {{tienda.categoria.nombre}}
                                 </td>
                                 <td class="text-nowrap text-center">
                                     <button class="btn btn-outline-success" data-toggle="tooltip"
-                                        data-original-title="Edit" (click)="onEditProject(tienda)" data-bs-toggle="modal"
-                                        data-bs-target="#editTienda">
+                                        data-original-title="Edit" (click)="onEditProject(tienda)"
+                                        data-bs-toggle="modal" data-bs-target="#editTienda">
                                         <i class="fa fa-edit"></i>
                                     </button>
                                     &nbsp;
-                                    <button *ngIf="user.role === 'SUPERADMIN'" (click)="eliminarTienda(tienda)" class="btn btn-outline-danger"
-                                        data-toggle="tooltip" data-original-title="Borrar">
+                                    <button *ngIf="user.role === 'SUPERADMIN'" (click)="eliminarTienda(tienda)"
+                                        class="btn btn-outline-danger" data-toggle="tooltip"
+                                        data-original-title="Borrar">
                                         <i class="fa fa-trash"></i>
                                     </button>
                                 </td>

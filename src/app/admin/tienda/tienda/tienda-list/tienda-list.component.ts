@@ -116,6 +116,17 @@ export class TiendaListComponent implements OnInit {
       })
 
   }
+desactivar(id) {
+    this.tiendaService.desactivar(id).subscribe((resp:any)=>{
+      this.ngOnInit();
+    })
+  }
+
+  activar(id) {
+    this.tiendaService.activar(id).subscribe((resp:any)=>{
+      this.ngOnInit();
+    })
+  }
 
 
   
