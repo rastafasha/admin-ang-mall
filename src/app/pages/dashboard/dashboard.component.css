@@ -9,3 +9,13 @@
     transform: translateY(-8px);
     box-shadow: 0 15px 30px rgba(0,0,0,0.15) !important;
 }
+.infotasa{
+    display: flex;
+    flex-direction: column;
+    padding-left: 15px;
+}
+
+.infotasa p{
+    padding: 0;
+    margin: 0;
+}

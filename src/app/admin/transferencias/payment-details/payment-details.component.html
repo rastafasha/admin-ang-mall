@@ -13,6 +13,7 @@
                             <p><b>bankName:</b> {{pagoSeleccionado?.bankName}}</p>
                             <p><b>Referencia:</b> {{pagoSeleccionado?.referencia}}</p>
                             <p><b>Monto:</b> {{pagoSeleccionado?.amount | currency:tienda_moneda}}</p>
+                            <p><b>Tasa BCV:</b> {{pagoSeleccionado?.tasa | currency:'Bs.'}}</p>
                             <p><b>metodo_pago:</b> {{pagoSeleccionado?.metodo_pago.tipo}}</p>
                             <p><b>Nombre de la cuenta:</b>&nbsp;
                                 {{pagoSeleccionado?.name_person}}

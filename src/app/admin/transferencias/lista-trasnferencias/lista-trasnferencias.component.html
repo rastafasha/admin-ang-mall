@@ -36,6 +36,7 @@
                                 <th>Referencia</th>
                                 <th>Banco</th>
                                 <th>Monto</th>
+                                <th>Tasa Bcv</th>
                                 <th *ngIf="user.role==='SUPERADMIN'">Local</th>
                                 <th>Fecha</th>
                                 <th>Status</th>
@@ -63,6 +64,10 @@
                                 </td>
                                 <td>
                                     {{transf.amount | currency:tienda_moneda}}
+                                    <!-- {{transf.amount | currency:getCurrencySymbol(transf.metodo_pago?.tipo):'symbol':'1.2-2':'es'}} -->
+                                </td>
+                                <td>
+                                    {{transf.tasa | currency:'Bs.'}}
                                     <!-- {{transf.amount | currency:getCurrencySymbol(transf.metodo_pago?.tipo):'symbol':'1.2-2':'es'}} -->
                                 </td>
                                 <td *ngIf="user.role==='SUPERADMIN'">

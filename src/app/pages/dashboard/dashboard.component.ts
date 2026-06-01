@@ -9,6 +9,8 @@ import { Usuario } from 'src/app/models/usuario.model';
 import { Producto } from 'src/app/models/producto.model';
 import { TiendaService } from 'src/app/services/tienda.service';
 import { Tienda } from 'src/app/models/tienda.model';
+import { TasadollarbcvService } from 'src/app/services/tasadollarbcv.service';
+import { TasaeurobcvService } from 'src/app/services/tasaeurobcv.service';
 declare let Chart;
 
 @Component({
@@ -92,6 +94,8 @@ export class DashboardComponent implements OnInit {
   public ventasDataYear: any[] = [];
   public identity;
   public usuario;
+  public tasadollar;
+  public tasaeuro;
 
 
   constructor(
@@ -100,6 +104,8 @@ export class DashboardComponent implements OnInit {
     private _productoService: ProductoService,
     private _comentarioService: ComentarioService,
     private tiendaService: TiendaService,
+    private tasaDollarService: TasadollarbcvService,
+    private tasaEuroService: TasaeurobcvService,
     private _router: Router,
     private _route: ActivatedRoute,
   ) {
@@ -132,7 +138,22 @@ export class DashboardComponent implements OnInit {
     this.data_ventas();
     this.getProductsBstSll();
     this.getProductsPop();
+    this.getTasaDollarUltima();
+    this.getTasaEuroUltima();
 
+  }
+
+  getTasaDollarUltima(){
+    this.tasaDollarService.getUltimaTasa().subscribe((resp:any)=>{
+      this.tasadollar = resp;
+      console.log(resp)
+    })
+  }
+  getTasaEuroUltima(){
+    this.tasaEuroService.getUltimaTasa().subscribe((resp:any)=>{
+      this.tasaeuro = resp;
+      console.log(resp)
+    })
   }
 
 

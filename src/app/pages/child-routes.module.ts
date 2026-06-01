@@ -49,6 +49,8 @@ import { PedidosMenuComponent } from '../admin/tienda/pedidos-menu/pedidos-menu.
 import { AsignarDeliveryComponent } from '../admin/postal/postalcomp/asignar-delivery/asignar-delivery.component';
 import { MapaComponent } from '../admin/postal/postalcomp/mapa/mapa.component';
 import { ComentariosappComponent } from '../admin/tienda/comentariosapp/comentariosapp.component';
+import { TasabcvComponent } from '../admin/tasas/tasabcv/tasabcv.component';
+import { TasaeurobcvComponent } from '../admin/tasas/tasaeurobcv/tasaeurobcv.component';
 
 
 const childRoutes: Routes = [
@@ -129,7 +131,9 @@ const childRoutes: Routes = [
             {path: 'carrito', component: CarritoComponent , data:{tituloPage:'Tienda Carrito'}},
             {path: 'tienda-user/edit/:id', component: UsertiendaaddComponent , data:{tituloPage:'Tienda-empleado-edit'}},
             {path: 'tienda-user/detalle/:id', component: UserDetailComponent , data:{tituloPage:'Tienda-empleado-detail'}},
-
+            
+            {path: 'tasadollarbcv', component: TasabcvComponent , data:{tituloPage:'Tasa Dollar Bcv'}},
+            {path: 'tasaeurobcv', component: TasaeurobcvComponent , data:{tituloPage:'Tasa Euro Bcv'}},
             //mantenimientos
 
 

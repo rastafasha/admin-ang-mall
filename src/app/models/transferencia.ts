@@ -9,6 +9,7 @@ export class Transferencia{
         public bankName: string,
         public metodo_pago: string,
         public amount: number,
+        public tasa: number,
         public referencia: string,
         public paymentday: Date,
         public status: boolean,

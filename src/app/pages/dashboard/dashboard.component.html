@@ -187,7 +187,55 @@
                         </div>
                     </div>
                 </div>
+                <!-- tasas -->
+                 <div class="row">
+                    <!-- dollar -->
+                    <div class="col" >
+                        <div class="card">
+                            <div class="card-body" style="padding-bottom: 12px;">
+                                <div class="d-flex align-items-center mx-auto py-3 px-3"
+                                    style="padding: 0px !important;">
+                                    <div class="display-2 font-weight-normal border-color mr-4">
+                                        <a routerLink="tasadollarbcv">
+                                            <span class="fa fa-dollar"></span>
+                                        </a>
+                                    </div>
+                                    <div class="infotasa ">
+                                        <h6 style="margin-bottom: 0px;">
+                                            {{'Tasa Dollar BCV'| translate}}
+                                        </h6>
+                                        <p>Bs.{{tasadollar.precio_dia}}</p>
+                                        <p>Fecha:&nbsp;{{tasadollar.createdAt|date}}</p>
+                                    </div>
+                                </div>
+                            </div>
 
+                        </div>
+                    </div>
+                    <!-- euro -->
+                    <div class="col" >
+                        <div class="card">
+                            <div class="card-body" style="padding-bottom: 12px;">
+                                <div class="d-flex align-items-center mx-auto py-3 px-3"
+                                    style="padding: 0px !important;">
+                                    <div class="display-2 font-weight-normal border-color mr-4">
+                                        <a routerLink="tasaeurobcv">
+                                            <span class="fa fa-euro"></span>
+                                        </a>
+                                    </div>
+                                    <div class="infotasa ">
+                                        <h6 style="margin-bottom: 0px;">
+                                            {{'Tasa Euro BCV'| translate}}
+                                        </h6>
+                                        <p>Bs.{{tasaeuro.precio_dia}}</p>
+                                        <p>Fecha:&nbsp;{{tasaeuro.createdAt|date}}</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
                 <div class="row">
 
                     <div class="col-lg-12 form-group">

@@ -68,6 +68,8 @@ import { TranslateModule } from '@ngx-translate/core';
 import { PostalcompModule } from "./postal/postalcomp/postalcomp.module";
 import { DriverpModule } from './driverp/driverp.module';
 import { PaymentDetailsComponent } from './transferencias/payment-details/payment-details.component';
+import { TasabcvComponent } from './tasas/tasabcv/tasabcv.component';
+import { TasaeurobcvComponent } from './tasas/tasaeurobcv/tasaeurobcv.component';
 
 @NgModule({
   declarations: [
@@ -113,7 +115,9 @@ import { PaymentDetailsComponent } from './transferencias/payment-details/paymen
     PagosEfectivoComponent,
     FacturaComponent,
     PagosChequeComponent,
-    PaymentDetailsComponent
+    PaymentDetailsComponent,
+    TasabcvComponent,
+    TasaeurobcvComponent
 
   ],
   exports: [
@@ -155,7 +159,9 @@ import { PaymentDetailsComponent } from './transferencias/payment-details/paymen
     VideoEditComponent,
     ContactodetailsComponent,
     TiposdepagoComponent,
-    PaymentDetailsComponent
+    PaymentDetailsComponent,
+    TasabcvComponent,
+    TasaeurobcvComponent
 
   ],
 

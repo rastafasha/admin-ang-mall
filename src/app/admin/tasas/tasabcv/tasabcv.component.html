@@ -1,0 +1,86 @@
+<!-- =======| Main |======= -->
+<div class="container animated fadeInUp" id="main" class="main" role="main" name="users">
+
+    <div class="col-xs-12">
+        <div class="leftside">
+            <!-- Page Title -->
+            <!-- <app-back-button [title]="title"></app-back-button> -->
+        </div>
+
+        <div class="clear"></div>
+        <section class="section dashboard">
+
+            <!-- Recent Categorias -->
+            <div class="container">
+                <div class="row animated fadeInUp" *ngIf="!isLoading">
+                    <div class="tab-pane" id="address" role="tabpanel" aria-labelledby="address-tab">
+
+                        <div class="card border-radio  ">
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-5">
+                                    <form class="">
+
+                                        <div class="clear"></div>
+                                        <!-- transferencia -->
+                                        <div class="card-body">
+                                            <div class="row">
+
+                                                <div class="form-group col-xs-12 col-sm-6">
+                                                    <label for="exampleInputEmail1">Precio</label>
+                                                    <input [(ngModel)]="precio_dia" name="precio_dia" type="text"
+                                                        class="form-control" [ngModelOptions]="{standalone: true}">
+                                                </div>
+
+                                            </div>
+                                            <!-- <input type="hidden" [(ngModel)]="id"> -->
+                                            <button (click)="save()" class="btn btn-primary">Guardar</button>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="col-xs-12 col-sm-7">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <table class="rbt-table table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Monto</th>
+                                                        <th>Fecha</th>
+                                                        <th>Opciones</th>
+                                                    </tr>
+                                                </thead>
+
+                                                <tbody>
+                                                    <ng-container *ngFor="let tipodepago of tasasbcv">
+                                                        <tr>
+                                                            <td>{{tipodepago.precio_dia}}</td>
+                                                            <td>{{tipodepago.createdAt|date}}</td>
+
+                                                            <td>
+
+                                                                <a class="btn btn-outline-danger btn-sm" href="#"
+                                                                    onclick="return false;"
+                                                                    (click)="deleteTipoPago(tipodepago)" title="Edit"><i
+                                                                        class="fa fa-trash pl--0"></i></a>
+                                                            </td>
+                                                        </tr>
+                                                    </ng-container>
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Recent Categorias -->
+
+        </section>
+    </div>
+
+</div>
+<!--/main-->
