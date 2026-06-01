@@ -89,13 +89,18 @@
                                     {{transf.updatedAt | date:'mediumDate'}}
                                 </td>
                                 <td class="text-nowrap text-center">
-                                    <select class="form-control form-select-solid fw-bolder" name="state" 
-                                    [(ngModel)]="transf.status" (change)="cambiarStatus(transf)">
-                                    <option value="">-- Select --</option>
-                                    <option value="pending">Pendiente</option>
-                                      <option value="ok">Aprobado</option>
-                                      <option value="no">Rechazado</option>
-                                    </select>
+                                   
+
+                                    <select class="form-select fw-bolder" [(ngModel)]="transf.status"
+                                                (change)="cambiarStatus(transf)" [ngClass]="{
+                                                'border-success text-success': transf.status === 'ok',
+                                                'border-warning text-warning': transf.status === 'pending',
+                                                'border-danger text-danger': transf.status === 'no'
+                                            }">
+                                                <option value="ok">Aprobado</option>
+                                                <option value="pending">Pendiente</option>
+                                                <option value="no">Rechazado</option>
+                                            </select>
 
                                 </td>
                                 <td class="text-nowrap text-center">

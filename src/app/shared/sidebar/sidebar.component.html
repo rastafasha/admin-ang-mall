@@ -9,7 +9,7 @@
             <ul id="sidebarnav">
                 <!-- profile -->
                 <li class="user-profile">
-                    <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false">
+                    <a class="has-arrow waves-effect waves-dark" href="javascript:void(0);" aria-expanded="false">
                         <img [src]="usuario.img | imagenPipe: 'usuarios' " alt="{{usuario.first_name|slice:0:1}} {{usuario.last_name |slice:0:1}}" />
                         <span class="hide-menu">{{usuario.first_name}} </span>
                     </a>
@@ -23,7 +23,7 @@
                 <!-- contenido, blog, page -->
                 <li class="nav-small-cap" *ngIf="usuario.role ==='SUPERADMIN'">{{'Contenido'| translate}}</li>
                 <li *ngIf="usuario.role ==='SUPERADMIN'">
-                    <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false">
+                    <a class="has-arrow waves-effect waves-dark" href="javascript:void(0);" aria-expanded="false">
                         <i class="mdi mdi-store"></i>
                         <span class="hide-menu">{{'Contenido'| translate}}
                         </span>
@@ -40,7 +40,7 @@
                 <!-- tienda -->
                 <li class="nav-small-cap" *ngIf="usuario.role ==='SUPERADMIN' || usuario.role ==='ADMIN'|| usuario.role ==='TIENDA'"  >{{'Tienda'| translate}}</li>
                 <li *ngIf="usuario.role ==='SUPERADMIN' || usuario.role ==='ADMIN' || usuario.role ==='TIENDA'">
-                    <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false">
+                    <a class="has-arrow waves-effect waves-dark" href="javascript:void(0);" aria-expanded="false">
                         <i class="mdi mdi-store"></i>
                         <span class="hide-menu">{{'Tienda'| translate}}
                         </span>
@@ -57,7 +57,7 @@
                 <!-- productos -->
                 <li class="nav-small-cap" *ngIf="usuario.role ==='SUPERADMIN' || usuario.role ==='ADMIN' || usuario.role ==='ALMACEN' || usuario.role ==='VENTAS'">{{'Productos'| translate}}</li>
                 <li *ngIf="usuario.role ==='SUPERADMIN' || usuario.role ==='ADMIN' || usuario.role ==='ALMACEN' || usuario.role ==='VENTAS'">
-                    <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false">
+                    <a class="has-arrow waves-effect waves-dark" href="javascript:void(0);" aria-expanded="false">
                         <i class="mdi mdi-store"></i>
                         <span class="hide-menu">{{'Productos'| translate}}
                         </span>
@@ -76,7 +76,7 @@
                 <!-- delivery -->
                  <li class="nav-small-cap" *ngIf="usuario.role ==='SUPERADMIN' ">{{'Delivery'| translate}}</li>
                 <li *ngIf="usuario.role ==='SUPERADMIN' ">
-                    <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false">
+                    <a class="has-arrow waves-effect waves-dark" href="javascript:void(0);" aria-expanded="false">
                         <i class="mdi mdi-store"></i>
                         <span class="hide-menu">{{'Delivery'| translate}}
                         </span>
@@ -91,7 +91,7 @@
                 <!-- administracion -->
                 <li class="nav-small-cap" *ngIf="usuario.role ==='SUPERADMIN' || usuario.role ==='ADMIN' || usuario.role ==='VENTAS'">{{'Adminstración'| translate}}</li>
                 <li *ngIf="usuario.role ==='SUPERADMIN' || usuario.role ==='ADMIN' || usuario.role ==='VENTAS'">
-                    <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false">
+                    <a class="has-arrow waves-effect waves-dark" href="javascript:void(0);" aria-expanded="false">
                         <i class="mdi mdi-store"></i>
                         <span class="hide-menu">{{'Adminstración'| translate}}
                         </span>
@@ -126,7 +126,7 @@
                 <!-- <li class="nav-small-cap">Menu Dinámico</li>
 
                 <li *ngFor="let item of sidebarService.menu">
-                    <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false">
+                    <a class="has-arrow waves-effect waves-dark" href="javascript:void(0);" aria-expanded="false">
                         <i [class]="item.icono"></i>
                         <span class="hide-menu">{{item.titulo}}<span class="label label-rouded label-themecolor pull-right">
                           {{item.submenu.length}}

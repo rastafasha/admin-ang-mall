@@ -11,6 +11,7 @@ export class Transferencia{
         public amount: number,
         public tasa: number,
         public referencia: string,
+        public observaciones: string,
         public paymentday: Date,
         public status: boolean,
         public local: Tienda,

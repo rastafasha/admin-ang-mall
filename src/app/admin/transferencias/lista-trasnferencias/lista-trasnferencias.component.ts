@@ -80,18 +80,101 @@ export class ListaTrasnferenciasComponent implements OnInit {
     )
   }
 
-  cambiarStatus(trasnferencia: Transferencia) {
-    const data = {
-      ...trasnferencia,
-      local: this.user.local,
-      updatedAt: Date.now
+  // cambiarStatus(trasnferencia: Transferencia) {
+  //   const data = {
+  //     ...trasnferencia,
+  //     local: this.user.local,
+  //     updatedAt: Date.now
+  //   }
+
+  //   this.trasnferenciaService.updateStatus(data)
+  //     .subscribe(resp => {
+  //       Swal.fire('Actualizado pago referencia y Venta Generada! ', trasnferencia.referencia, 'success')
+  //     })
+
+  // }
+
+
+  cambiarStatus(data: any) {
+    const status = data.status;
+    const id = data._id;
+
+    // 1. Caso: RECHAZADO (Pide motivo)
+    if (status === 'no') {
+      Swal.fire({
+        title: 'Motivo del Rechazo',
+        input: 'text',
+        inputPlaceholder: 'Ej: Capture borroso, monto incompleto...',
+        showCancelButton: true,
+        confirmButtonText: 'Rechazar y Notificar',
+        confirmButtonColor: '#d33', // Rojo para peligro
+        cancelButtonText: 'Cancelar',
+        inputValidator: (value) => {
+          if (!value) return '¡Debes escribir un motivo para el usuario!';
+          return null;
+        }
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.ejecutarUpdateStatus(id, status, result.value);
+        } else {
+          this.ngOnInit(); // Revierte el select si cancela
+        }
+      });
+
+      // 2. Caso: APROBADO (Confirmación de seguridad)
+    } else if (status === 'ok') {
+      Swal.fire({
+        title: '¿Confirmar Pago?',
+        text: `¿Estás seguro de marcar como APROBADO el pago de ${data.amount}?`,
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonText: 'Sí, Aprobar',
+        confirmButtonColor: '#198754', // Verde para éxito
+        cancelButtonText: 'No, revisar'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.ejecutarUpdateStatus(id, status);
+        } else {
+          this.ngOnInit(); // Revierte el select si se arrepiente
+        }
+      });
+
+    } else {
+      // 3. Caso: PENDIENTE (Cambio directo)
+      this.ejecutarUpdateStatus(id, status);
     }
+  }
 
-    this.trasnferenciaService.updateStatus(data)
-      .subscribe(resp => {
-        Swal.fire('Actualizado', trasnferencia._id, 'success')
-      })
 
+  // Función auxiliar para no repetir código del subscribe
+  private ejecutarUpdateStatus(id: string, status: string, observaciones: string = '') {
+    const payload = {
+      _id: id,
+      status: status,
+      local: this.user.local,
+      updatedAt: Date.now(),
+      observaciones: observaciones // Esto llegará a tu backend para el mensaje del Push/Toastr
+    };
+
+
+
+    this.trasnferenciaService.updateStatus(payload).subscribe({
+      next: (resp) => {
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: status === 'APROBADO' ? '✅ Pago Aprobado' : '❌ Pago Rechazado',
+          color: 'gray',
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        this.ngOnInit();
+      },
+      error: (err) => {
+        Swal.fire('Error', 'No se pudo actualizar el pago', 'error');
+        this.ngOnInit();
+      }
+    });
   }
 
   eliminarTramsf(transf: Transferencia) {
