@@ -335,8 +335,8 @@
                             </form>
                         </div>
                         <div *ngIf="currentStep === 2">
-                            <app-loading *ngIf="isLoadingImage"></app-loading>
-                            <div *ngIf="!isLoadingImage">
+                            <app-loading *ngIf="cargandoImagen"></app-loading>
+                            <div *ngIf="!cargandoImagen">
                                 <label> Anexe su foto</label>
                                 <br>
                                 <div class="row">

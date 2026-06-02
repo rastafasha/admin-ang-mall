@@ -54,7 +54,9 @@
                                 <td>{{categoria.nombre}}</td>
                                 <td>{{categoria.subcategorias}}...</td>
                                 <td>
-                                    <button type="button" class="btn btn-accent" *ngIf="categoria.status == 'Edición' || categoria.status == 'Desactivado'" data-toggle="modal" [attr.data-target]="'#activar-'+categoria._id"><span class="czi-check"></span> Activar</button>
+                                    <button type="button" class="btn btn-accent" *ngIf="categoria.status == 'Edición' || categoria.status == 'Desactivado'" data-bs-toggle="modal" [attr.data-bs-target]="'#activar-'+categoria._id">
+                                        <span class="czi-check"></span> Activar
+                                    </button>
 
                                     <div class="modal fade" [attr.id]="'activar-'+categoria._id" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-centered" role="document">

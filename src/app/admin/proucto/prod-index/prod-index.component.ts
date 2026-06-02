@@ -123,12 +123,7 @@ export class ProdIndexComponent implements OnInit {
 
   public PageSize(): void {
     this.query = '';
-    if (this.user.role === 'ADMIN' || this.user.role === 'SUPERADMIN') {
-      this.loadProductos();
-    }
-    if (this.user.role === 'VENTAS' || this.user.role === 'TIENDA' || this.user.role === 'ALMACEN') {
-      this.getProductosbByTienda();
-    }
+    this.ngOnInit();
   }
 
   handleSearchEvent(event: any) {

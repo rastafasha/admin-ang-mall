@@ -45,6 +45,7 @@ export class UsertiendaaddComponent implements OnInit {
   user_id: any;
   public localList:any;
   state_banner:boolean;
+  cargandoImagen:boolean;
   isDriver:boolean = false;
 
   option_selectedd: number = 1;
@@ -212,12 +213,15 @@ export class UsertiendaaddComponent implements OnInit {
   }
 
   subirImagen(){
+    this.cargandoImagen = true;
     this.fileUploadService
     .actualizarFoto(this.imagenSubir, 'usuarios', this.usertiendaSeleccionado.uid)
     .then(img => { this.usertiendaSeleccionado.img = img;
+      this.cargandoImagen = false;
       Swal.fire('Guardado', 'La imagen fue actualizada', 'success');
 
     }).catch(err =>{
+      this.cargandoImagen = false;
       Swal.fire('Error', 'No se pudo subir la imagen', 'error');
 
     })

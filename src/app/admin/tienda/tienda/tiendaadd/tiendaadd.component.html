@@ -477,8 +477,9 @@
 
                                 </div>
                                 <div class="row">
-                                    <div class="col-xs-12 col-sm-6" *ngIf="tiendaSeleccionado ">
-                                        <div class="text-center">
+                                    <app-loading *ngIf="cargandoImagen"></app-loading>
+                                    <div class="col-xs-12 col-sm-6" *ngIf="tiendaSeleccionado && !cargandoImagen">
+                                        <div class="text-center" >
                                             <img *ngIf="!imgTemp "
                                                 [src]="tiendaSeleccionado.img | imagenPipe: 'tiendas'"
                                                 class="img-responsive img-thumbnail" alt="">
@@ -497,7 +498,8 @@
                                             </button>
                                         </div>
                                     </div>
-                                    <div class="col-xs-12 col-sm-6" *ngIf="tiendaSeleccionado ">
+                                    <app-loading *ngIf="cargandoImagen"></app-loading>
+                                    <div class="col-xs-12 col-sm-6" *ngIf="tiendaSeleccionado && !cargandoImagen">
                                         <div class="text-center">
                                             <img *ngIf="!imgHeroTemp "
                                                 [src]="tiendaSeleccionado.img_hero | imagenPipe: 'tiendas'"

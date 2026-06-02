@@ -228,13 +228,13 @@
     </div>
 </div>
 <app-modalinfo-productos></app-modalinfo-productos>
-<app-color (refreshProductList)="loadProductos()" [productoSeleccionado]="productoSeleccionado" (closeModal)="onClose()"
+<app-color (refreshProductList)="ngOnInit()" [productoSeleccionado]="productoSeleccionado" (closeModal)="onClose()"
     #editColor></app-color>
-<app-selector (refreshProductList)="loadProductos()" [productoSeleccionado]="productoSeleccionado" (closeModal)="onClose()"
+<app-selector (refreshProductList)="ngOnInit()" [productoSeleccionado]="productoSeleccionado" (closeModal)="onClose()"
     #editSelector></app-selector>
-<app-galeria-producto (refreshProductList)="loadProductos()" [productoSeleccionado]="productoSeleccionado" (closeModal)="onClose()"
+<app-galeria-producto (refreshProductList)="ngOnInit()" [productoSeleccionado]="productoSeleccionado" (closeModal)="onClose()"
     #editGaleria></app-galeria-producto>
-<app-prod-edit (refreshProductList)="loadProductos()" [productoSeleccionado]="productoSeleccionado" (closeModal)="onClose()"
+<app-prod-edit (refreshProductList)="ngOnInit()" [productoSeleccionado]="productoSeleccionado" (closeModal)="onClose()"
     #editProducto></app-prod-edit>
-<app-papelera (refreshProductList)="loadProductos()" [productoSeleccionado]="productoSeleccionado" (closeModal)="onClose()"
+<app-papelera (refreshProductList)="ngOnInit()" [productoSeleccionado]="productoSeleccionado" (closeModal)="onClose()"
     #editProdPapelera></app-papelera>

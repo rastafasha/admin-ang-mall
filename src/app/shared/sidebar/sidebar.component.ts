@@ -19,6 +19,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
   user:any;
   role:any;
   private routeSubscription: Subscription;
+  public menuActivo: string = '';
 
   constructor(
     public sidebarService: SidebarService,
@@ -76,5 +77,11 @@ export class SidebarComponent implements OnInit, OnDestroy {
   logout(){
     this.usuarioService.logout();
   }
+
+  toggleMenu(nombreMenu: string) {
+  // Si vuelven a presionar la pestaña que ya está abierta, la cierra.
+  // Si presionan una nueva, cierra la anterior y abre la actual.
+  this.menuActivo = this.menuActivo === nombreMenu ? '' : nombreMenu;
+}
 
 }
