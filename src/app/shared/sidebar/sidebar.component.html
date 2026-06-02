@@ -81,7 +81,7 @@
                         <span class="hide-menu">{{'Productos'| translate}}</span>
                     </a>
                     <ul class="collapse" [ngClass]="{'show': menuActivo === 'productos'}">
-                        <li><a routerLink="marca" routerLinkActive="active"
+                        <li *ngIf="usuario.role ==='SUPERADMIN' "><a routerLink="marca" routerLinkActive="active"
                                 [routerLinkActiveOptions]="{exact:true}">{{'Marcas'| translate}} </a></li>
                         <li><a routerLink="categoria" routerLinkActive="active"
                                 [routerLinkActiveOptions]="{exact:true}">{{'Categorías'| translate}} </a></li>
