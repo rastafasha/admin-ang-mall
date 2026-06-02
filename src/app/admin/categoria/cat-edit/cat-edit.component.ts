@@ -91,23 +91,31 @@ export class CatEditComponent implements OnInit, OnChanges {
     }
   }
 
-  onClose() {
+ onClose() {
     this.categoriaSeleccionado = null;
     this.currentStep = 1;
-    this.categoriaForm.reset();
-    this.pageTitle = 'Creando Proyecto';
-    // Also reset default values if needed
-    this.categoriaForm.patchValue({
+    this.pageTitle = 'Creando Producto';
+    
+    // 1. Reseteamos el formulario pasándole los valores iniciales limpios de un solo golpe
+    this.categoriaForm.reset({
       id: null,
-      nombre: null,
-      subcategorias: null,
-      icono: null,
-      state_banner: null,
+      nombre: '',
+      subcategorias: '',
+      icono: '',
+      state_banner: false, // Inicializa los booleanos en false
+      
     });
-    // Emit event to parent to reset the projectSeleccionado variable
 
+    // 2. 🚀 LA CLAVE: Forzamos a Angular a limpiar los estados de validación visuales (los bordes rojos/verdes)
+    this.categoriaForm.markAsPristine();
+    this.categoriaForm.markAsUntouched();
+    this.categoriaForm.updateValueAndValidity();
+
+    // Emitimos el evento al padre para limpiar cualquier variable externa
     this.closeModal.emit();
-  }
+}
+
+  
 
   nextStep() {
     const nombre = this.categoriaForm.get('nombre');
