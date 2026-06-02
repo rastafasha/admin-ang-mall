@@ -142,7 +142,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group col-xs-12 col-sm-6">
+                            <div class="form-group col-xs-12 col-sm-6" *ngIf="user.role === 'SUPERADMIN'">
                                 <label for="icono">local <span class="required">*</span></label>
                                 <div class="input-group">
 
@@ -164,28 +164,7 @@
 
                                 </div>
                             </div>
-                            <div class="form-group col-xs-12 col-sm-6 ">
-                                <label class=" col-form-label font-weight-medium" for="text-input">Role <span
-                                        class="required">*</span></label>
-                                <div class="input-group">
-                                    <select class="form-control" formControlName="role">
-                                        <option disabled value="">SELECCIONAR</option>
-                                        <option value="VENTAS">Ventas</option>
-                                        <option value="TIENDA">Tienda</option>
-                                        <option value="ALMACEN">Almacen</option>
-                                        <option value="CHOFER">Chofer</option>
-                                    </select>
-                                    <div *ngIf="registerForm.get('role')?.touched && registerForm.get('role')?.invalid"
-                                        class="text-danger">
-                                        <div *ngIf="registerForm.get('role')?.errors?.['required']">
-                                            Campo Requerido
-                                        </div>
-                                        <div *ngIf="registerForm.get('role')?.errors?.['minlength']">
-                                            Seleccione una opción
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            
                         </div>
 
                         <button type="button" (click)="guardar()"

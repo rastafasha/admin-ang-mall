@@ -15,38 +15,38 @@ import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { TiendaService } from 'src/app/services/tienda.service';
 import { Tienda } from 'src/app/models/tienda.model';
 
-interface HtmlInputEvent extends Event{
-  target : HTMLInputElement & EventTarget;
+interface HtmlInputEvent extends Event {
+  target: HTMLInputElement & EventTarget;
 }
 
-declare var jQuery:any;
-declare var $:any;
+declare var jQuery: any;
+declare var $: any;
 
 @Component({
   selector: 'app-usertiendaadd',
-  standalone:false,
+  standalone: false,
   templateUrl: './usertiendaadd.component.html',
   styleUrls: ['./usertiendaadd.component.css']
 })
 export class UsertiendaaddComponent implements OnInit {
 
-  
+
   public registerForm: FormGroup;
   public categoria: Categoria;
   public usuario: Usuario;
   public imagenSubir: File;
   public imgTemp: any = null;
-  public user : any = {};
+  public user: any = {};
   cargando = false;
   banner: string;
   pageTitle: string;
   listIcons: any;
   listTiendas: any;
   user_id: any;
-  public localList:any;
-  state_banner:boolean;
-  cargandoImagen:boolean;
-  isDriver:boolean = false;
+  public localList: any;
+  state_banner: boolean;
+  cargandoImagen: boolean;
+  isDriver: boolean = false;
 
   option_selectedd: number = 1;
   solicitud_selectedd: any = null;
@@ -70,24 +70,24 @@ export class UsertiendaaddComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    window.scrollTo(0,0);
+    window.scrollTo(0, 0);
 
     // AGREGADO POR JOSÉ PRADOS
     this.validarFormulario();
-    
-    this.activatedRoute.params.subscribe((resp:any)=>{
+
+    this.activatedRoute.params.subscribe((resp: any) => {
       this.user_id = resp.id;
-      console.log('id: ',this.user_id)
-     })
+      console.log('id: ', this.user_id)
+    })
     //  this.cargar_usuario();
     this.cargar_Locales();
-    
-    if( this.user_id ){
+
+    if (this.user_id) {
       //actualizar
       this.pageTitle = 'Edit Empleado';
       this.cargar_usuario();
     }
-    else{
+    else {
       //crear
       this.pageTitle = 'Create Empleado';
     }
@@ -95,14 +95,14 @@ export class UsertiendaaddComponent implements OnInit {
 
   }
 
- 
-  cargar_usuario(){
+
+  cargar_usuario() {
     this.usuarioService.getUserById(this.user_id).subscribe(
-      (resp:any) =>{
+      (resp: any) => {
         // this.listIcons = resp.iconos;
         this.usertiendaSeleccionado = resp;
-        console.log('editar user: ',this.usertiendaSeleccionado)
-        
+        console.log('editar user: ', this.usertiendaSeleccionado)
+
         this.registerForm.setValue({
           first_name: this.usertiendaSeleccionado.first_name,
           last_name: this.usertiendaSeleccionado.last_name,
@@ -115,7 +115,7 @@ export class UsertiendaaddComponent implements OnInit {
           numdoc: this.usertiendaSeleccionado.numdoc || ''
         });
 
-        if(this.usertiendaSeleccionado.role === 'CHOFER'){
+        if (this.usertiendaSeleccionado.role === 'CHOFER') {
           this.isDriver = true;
         }
       }
@@ -123,14 +123,14 @@ export class UsertiendaaddComponent implements OnInit {
     // this.validarFormulario();
   }
 
-  validarFormulario(){
+  validarFormulario() {
     this.registerForm = this.fb.group({
       first_name: ['', Validators.required],
       last_name: ['', Validators.required],
-      email: [ '', [Validators.required, Validators.email] ],
+      email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
       password2: ['', Validators.required],
-      local: ['', Validators.required],
+      local: [''],
       role: ['', Validators.required],
       telefono: ['', Validators.required],
       numdoc: ['', Validators.required],
@@ -138,9 +138,9 @@ export class UsertiendaaddComponent implements OnInit {
     })
   }
 
-  cargar_Locales(){
+  cargar_Locales() {
     this.tiendaService.cargarTiendas().subscribe(
-      (resp:any) =>{
+      (resp: any) => {
         // console.log(resp)
         this.listTiendas = resp;
 
@@ -149,14 +149,14 @@ export class UsertiendaaddComponent implements OnInit {
   }
 
 
-  guardar(){
-    if(!this.registerForm.valid){
+  guardar() {
+    if (!this.registerForm.valid) {
       //mostramos las alertas de los campos requeridos
       this.registerForm.markAllAsTouched(); // Esto activa las validaciones visuales
       return
     }
 
-    const {first_name, last_name,
+    const { first_name, last_name,
       email,
       password,
       password2,
@@ -166,65 +166,67 @@ export class UsertiendaaddComponent implements OnInit {
       telefono,
       numdoc } = this.registerForm.value;
 
-    if(this.usertiendaSeleccionado){
-      // console.log('actualizar')
-      //actualizar
-      // console.log(this.localList)
+    if (this.usertiendaSeleccionado) {
       const data = {
         ...this.registerForm.value,
         uid: this.user_id,
-        // local: this.usertiendaSeleccionado.local,
+        local: this.usuario.local,
       }
       this.usuarioService.upadateUser(data, this.user_id).subscribe(
-        resp =>{
+        resp => {
           Swal.fire('Actualizado', `${first_name} actualizado correctamente`, 'success');
         }
       );
 
-    }else{
+    } else {
+      // Determinamos qué ID de local enviar según el rol
+      const localId = this.usuario.role === 'SUPERADMIN'
+        ? this.registerForm.value.local
+        : this.usuario.local;
       const data = {
         ...this.registerForm.value,
-        // local: this.localList
+        local: localId
       }
       //crear
       this.usuarioService.crearUsuario(data)
-      .subscribe( (resp: any) =>{
-        Swal.fire('Creado', `${first_name} creado correctamente`, 'success');
-        this.router.navigateByUrl(`/dashboard/tienda-user`);
-      })
+        .subscribe((resp: any) => {
+          Swal.fire('Creado', `${first_name} creado correctamente`, 'success');
+          this.router.navigateByUrl(`/dashboard/tienda-user`);
+        })
     }
 
   }
 
 
-  cambiarImagen(file: File){
+  cambiarImagen(file: File) {
     this.imagenSubir = file;
 
-    if(!file){
+    if (!file) {
       return this.imgTemp = null;
     }
 
     const reader = new FileReader();
     const url64 = reader.readAsDataURL(file);
 
-    reader.onloadend = () =>{
+    reader.onloadend = () => {
       this.imgTemp = reader.result;
     }
   }
 
-  subirImagen(){
+  subirImagen() {
     this.cargandoImagen = true;
     this.fileUploadService
-    .actualizarFoto(this.imagenSubir, 'usuarios', this.usertiendaSeleccionado.uid)
-    .then(img => { this.usertiendaSeleccionado.img = img;
-      this.cargandoImagen = false;
-      Swal.fire('Guardado', 'La imagen fue actualizada', 'success');
+      .actualizarFoto(this.imagenSubir, 'usuarios', this.usertiendaSeleccionado.uid)
+      .then(img => {
+        this.usertiendaSeleccionado.img = img;
+        this.cargandoImagen = false;
+        Swal.fire('Guardado', 'La imagen fue actualizada', 'success');
 
-    }).catch(err =>{
-      this.cargandoImagen = false;
-      Swal.fire('Error', 'No se pudo subir la imagen', 'error');
+      }).catch(err => {
+        this.cargandoImagen = false;
+        Swal.fire('Error', 'No se pudo subir la imagen', 'error');
 
-    })
+      })
   }
 
   goBack() {
@@ -232,7 +234,7 @@ export class UsertiendaaddComponent implements OnInit {
   }
 
 
-    optionSelected(value: number) {
+  optionSelected(value: number) {
     this.option_selectedd = value;
     if (this.option_selectedd === 1) {
 
@@ -243,5 +245,5 @@ export class UsertiendaaddComponent implements OnInit {
     }
   }
 
-  
+
 }
