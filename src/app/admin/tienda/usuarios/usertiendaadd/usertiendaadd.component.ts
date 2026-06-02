@@ -71,17 +71,11 @@ export class UsertiendaaddComponent implements OnInit {
 
   ngOnInit(): void {
     window.scrollTo(0, 0);
-
-    // AGREGADO POR JOSÉ PRADOS
     this.validarFormulario();
-
     this.activatedRoute.params.subscribe((resp: any) => {
       this.user_id = resp.id;
-      console.log('id: ', this.user_id)
     })
-    //  this.cargar_usuario();
     this.cargar_Locales();
-
     if (this.user_id) {
       //actualizar
       this.pageTitle = 'Edit Empleado';
