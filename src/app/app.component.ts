@@ -5,6 +5,7 @@ import { UsuarioService } from './services/usuario.service';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { Meta } from '@angular/platform-browser';
+import { SwUpdate } from '@angular/service-worker';
 
 declare var jQuery:any;
 declare var $:any;
@@ -24,6 +25,7 @@ export class AppComponent {
     private _congeneralService : CongeneralService,
     private paypalService: PaypalService,
     private usuarioService: UsuarioService,
+    private swUpdate: SwUpdate,
     private _router : Router,
     private meta: Meta
     ){
@@ -47,6 +49,14 @@ export class AppComponent {
 
   ngOnInit(): void{
     window.scroll(0,0);
+    if (this.swUpdate.isEnabled) {
+      // Fuerza a la app a buscar actualizaciones en el servidor de Vercel apenas abre
+      this.swUpdate.checkForUpdate().then(hasUpdate => {
+        if (hasUpdate) {
+          console.log('Nueva versión detectada y descargándose...');
+        }
+      });
+    }
     
     // Load dynamic PayPal SDK if user logged in
     if (this.usuarioService.usuario?.local) {

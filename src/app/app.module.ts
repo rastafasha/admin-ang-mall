@@ -16,7 +16,7 @@ import { AdminModule } from './admin/admin.module';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
-import {HttpClientModule, HttpClient, HTTP_INTERCEPTORS} from '@angular/common/http';
+import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
@@ -47,14 +47,13 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
         useFactory: (http: HttpClient) => {
           return new TranslateHttpLoader(http);
         },
-        deps: [ HttpClient ]
+        deps: [HttpClient]
       }
     }),
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,
-      // Register the ServiceWorker as soon as the application is stable
-      // or after 30 seconds (whichever comes first).
-      registrationStrategy: 'registerWhenStable:30000'
+      // Cambiamos a registro inmediato para evitar bloqueos por peticiones en segundo plano
+      registrationStrategy: 'registerImmediately'
     })
   ],
   providers: [
