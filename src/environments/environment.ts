@@ -5,14 +5,14 @@
 export const environment = {
   production: false,
   //local
-  // baseUrl: 'http://localhost:3000/api',
-  // mediaUrl: 'http://localhost:3000/api/uploads',
-  // soketServer : 'http://localhost:3000',
+  baseUrl: 'http://localhost:3000/api',
+  mediaUrl: 'http://localhost:3000/api/uploads',
+  soketServer : 'http://localhost:3000',
 
    //remoto vercel
-  baseUrl: 'https://back-ecomm-mall.onrender.com/api',
-  mediaUrl: 'https://back-ecomm-mall.onrender.com/api/uploads/',
-  soketServer : 'https://back-ecomm-mall.onrender.com',
+  // baseUrl: 'https://back-ecomm-mall.onrender.com/api',
+  // mediaUrl: 'https://back-ecomm-mall.onrender.com/api/uploads/',
+  // soketServer : 'https://back-ecomm-mall.onrender.com',
 
   mediaUrlRemoto: 'https://res.cloudinary.com/dmv6aukai/image/upload/v1741218430/mallConnect',
   //plugins

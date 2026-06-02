@@ -90,7 +90,13 @@ export class ProdEditComponent implements OnInit, OnChanges {
 
     this.validarFormulario();
     this.getMarca();
-    this.getCategorias();
+    if (this.user.role === 'SUPERADMIN') {
+      this.loadCategorias();
+    }
+
+    if (this.user.role === 'ADMIN' || this.user.role === 'VENTAS' || this.user.role === 'TIENDA' || this.user.role === 'ALMACEN') {
+      this.loadCategoriasLocal();
+    }
     this.cargar_Locales();
   }
 
@@ -128,35 +134,41 @@ export class ProdEditComponent implements OnInit, OnChanges {
     }
   }
 
-  onClose() {
+ onClose() {
     this.productoSeleccionado = null;
     this.currentStep = 1;
-    this.productoForm.reset();
     this.pageTitle = 'Creando Producto';
-    // Also reset default values if needed
-    this.productoForm.patchValue({
+    
+    // 1. Reseteamos el formulario pasándole los valores iniciales limpios de un solo golpe
+    this.productoForm.reset({
       id: null,
-      titulo: null,
-      slug: null,
-      detalle: null,
-      info_short: null,
-      video_review: null,
-      stock: null,
-      sku: null,
+      titulo: '',
+      slug: '',
+      detalle: '',
+      info_short: '',
+      video_review: '',
+      stock: 0, // Es mejor inicializar numéricos en 0 para evitar errores de validación
+      sku: '',
       precio_ahora: null,
       precio_antes: null,
-      categoria: null,
-      subcategoria: null,
-      isFeatured: null,
-      marca: null,
-      local: null,
-      nombre_selector: null,
+      categoria: '',
+      subcategoria: '',
+      isFeatured: false, // Inicializa los booleanos en false
+      marca: '',
+      local: this.usuario?.local || '', // Mantenemos el local de tu usuario express
+      nombre_selector: 'unico', // Tu valor por defecto estándar
       img: null
     });
-    // Emit event to parent to reset the projectSeleccionado variable
 
+    // 2. 🚀 LA CLAVE: Forzamos a Angular a limpiar los estados de validación visuales (los bordes rojos/verdes)
+    this.productoForm.markAsPristine();
+    this.productoForm.markAsUntouched();
+    this.productoForm.updateValueAndValidity();
+
+    // Emitimos el evento al padre para limpiar cualquier variable externa
     this.closeModal.emit();
-  }
+}
+
 
   nextStep() {
     const titulo = this.productoForm.get('titulo');
@@ -263,7 +275,8 @@ export class ProdEditComponent implements OnInit, OnChanges {
       }
     )
   }
-  getCategorias() {
+
+  loadCategorias() {
     this.categoriaService.getCategoriesActivas().subscribe(
       resp => {
         this.listCategorias = resp;
@@ -271,6 +284,15 @@ export class ProdEditComponent implements OnInit, OnChanges {
 
       }
     )
+  }
+
+  loadCategoriasLocal(){
+    this.categoriaService.getCategoriaByLocal(this.user.local).subscribe(
+      categorias => {
+        this.listCategorias = categorias;
+      }
+    )
+
   }
 
   cargar_Locales() {

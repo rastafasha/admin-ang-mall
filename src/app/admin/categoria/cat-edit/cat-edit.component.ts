@@ -36,6 +36,7 @@ export class CatEditComponent implements OnInit, OnChanges {
   public usuario: Usuario;
   public imagenSubir: File;
   public imgTemp: any = null;
+  user:any;
 
   banner: string;
   pageTitle: string;
@@ -61,6 +62,8 @@ export class CatEditComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
+    let USER = localStorage.getItem("user");
+    this.user = JSON.parse(USER ? USER : '');
     window.scrollTo(0, 0);
     this.cargar_iconos();
     this.validarFormulario();
@@ -152,18 +155,27 @@ export class CatEditComponent implements OnInit, OnChanges {
   updateCategoria() {
 
     if (!this.categoriaForm.valid) {
-      //mostramos las alertas de los campos requeridos
-      this.categoriaForm.markAllAsTouched(); // Esto activa las validaciones visuales
-      return
+      this.categoriaForm.markAllAsTouched(); 
+      return;
     }
 
-    const { nombre, subcategorias } = this.categoriaForm.value;
+    const { nombre } = this.categoriaForm.value;
+
+    // 1. Extraemos el ID de la tienda directamente del usuario logueado
+    // (Ajusta a 'this.usuario.local._id' si 'local' viene como un objeto completo en tu app)
+    const localId = this.user.local?._id || this.user.local;
+
+    if (!localId) {
+      Swal.fire('Error', 'No se pudo determinar la tienda asociada a tu usuario.', 'error');
+      return;
+    }
 
     if (this.categoriaSeleccionado) {
-      //actualizar
+      // ACTUALIZAR
       const data = {
         ...this.categoriaForm.value,
-        _id: this.categoriaSeleccionado._id
+        _id: this.categoriaSeleccionado._id,
+        local: localId // 🟢 Inyectamos el ID de la tienda del usuario
       }
       this.categoriaService.actualizarCategoria(data).subscribe(
         resp => {
@@ -172,25 +184,28 @@ export class CatEditComponent implements OnInit, OnChanges {
           const modal = bootstrap.Modal.getInstance(modalElement);
           if (modal) {
             modal.hide();
-
           }
-          // Emit event to refresh project list
           this.refreshCatList.emit();
-          this.ngOnInit()
+          this.ngOnInit();
         });
 
     } else {
-      //crear
-      this.categoriaService.crearCategoria(this.categoriaForm.value)
+      // CREAR
+      const nuevaCategoriaData = {
+        ...this.categoriaForm.value,
+        local: localId // 🟢 Inyectamos el ID de la tienda del usuario
+      };
+
+      this.categoriaService.crearCategoria(nuevaCategoriaData)
         .subscribe((resp: any) => {
           this.categoriaSeleccionado = resp.categoria;
           Swal.fire('¡Paso 1 completado!', 'Post creado. Ahora sube la imagen.', 'success');
-          // Como estmos creando, al finalizar debe ir al paso 2 para subir la imagen
           this.currentStep = 2;
-        })
+        });
     }
+}
 
-  }
+
 
 
   cambiarImagen(file: File) {

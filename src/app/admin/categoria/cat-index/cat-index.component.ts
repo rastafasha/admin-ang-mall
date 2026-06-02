@@ -54,7 +54,14 @@ export class CatIndexComponent implements OnInit {
     this.user = JSON.parse(USER ? USER : '');
     this.cargar_iconos();
 
-    this.loadCategorias();
+    
+    if (this.user.role === 'SUPERADMIN') {
+      this.loadCategorias();
+    }
+
+    if (this.user.role === 'ADMIN' || this.user.role === 'VENTAS' || this.user.role === 'TIENDA' || this.user.role === 'ALMACEN') {
+      this.loadCategoriasLocal();
+    }
     this.imgSubs = this.modalImagenService.nuevaImagen
     .pipe(
       delay(100)
@@ -69,6 +76,16 @@ export class CatIndexComponent implements OnInit {
   loadCategorias(){
     this.cargando = true;
     this.categoriaService.cargarCategorias().subscribe(
+      categorias => {
+        this.cargando = false;
+        this.categorias = categorias;
+      }
+    )
+
+  }
+  loadCategoriasLocal(){
+    this.cargando = true;
+    this.categoriaService.getCategoriaByLocal(this.user.local).subscribe(
       categorias => {
         this.cargando = false;
         this.categorias = categorias;
@@ -99,7 +116,7 @@ export class CatIndexComponent implements OnInit {
   eliminarCategoria(categoria: Categoria){
     this.categoriaService.borrarCategoria(categoria._id)
     .subscribe( resp => {
-      this.loadCategorias();
+      this.ngOnInit();
       Swal.fire('Borrado', categoria.nombre, 'success')
     })
 
@@ -107,7 +124,7 @@ export class CatIndexComponent implements OnInit {
 
 public PageSize(): void {
     this.query = '';
-    this.loadCategorias();
+    this.ngOnInit();
     // this.router.navigateByUrl('/productos')
   }
 
@@ -122,7 +139,7 @@ public PageSize(): void {
       response=>{
         $('#desactivar-'+id).modal('hide');
         $('.modal-backdrop').removeClass('show');
-        this.loadCategorias();
+        this.ngOnInit();
       },
       error=>{
         this.msm_error = 'No se pudo desactivar el producto, vuelva a intenter.'
@@ -136,7 +153,7 @@ public PageSize(): void {
 
         $('#activar-'+id).modal('hide');
         $('.modal-backdrop').removeClass('show');
-        this.loadCategorias();
+        this.ngOnInit();
       },
       error=>{
         this.msm_error = 'No se pudo activar el producto, vuelva a intenter.'

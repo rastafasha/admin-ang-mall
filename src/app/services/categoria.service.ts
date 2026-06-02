@@ -51,6 +51,15 @@ export class CategoriaService {
 
   }
 
+  getCategoriaByLocal(_id: any){
+    const url = `${base_url}/categorias/local/${_id}`;
+    return this.http.get<any>(url, this.headers)
+      .pipe(
+        map((resp:{ok: boolean, categorias: Categoria[]}) => resp.categorias)
+        );
+
+  }
+
 
   crearCategoria(categoria: {nombre: string, icono: string, img: string, state_banner: string, subcategorias: string}){
     const url = `${base_url}/categorias`;

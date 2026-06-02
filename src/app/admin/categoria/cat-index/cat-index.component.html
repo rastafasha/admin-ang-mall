@@ -149,4 +149,4 @@
     </div>
 </div>
 <app-modalinfo-categorias></app-modalinfo-categorias>
-<app-cat-edit (refreshCatList)="loadCategorias()" [categoriaSeleccionado]="categoriaSeleccionado" (closeModal)="onClose()" #editCategoria></app-cat-edit>
+<app-cat-edit (refreshCatList)="ngOnInit()" [categoriaSeleccionado]="categoriaSeleccionado" (closeModal)="onClose()" #editCategoria></app-cat-edit>

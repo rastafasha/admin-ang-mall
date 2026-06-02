@@ -106,15 +106,7 @@ export class ProdIndexComponent implements OnInit {
         this.cargando = true;
         this.productoService.borrarProducto(producto._id)
           .subscribe(resp => {
-            if (this.user.role === 'SUPERADMIN') {
-              this.cargando = false;
-              this.loadProductos();
-            }
-
-            if (this.user.role === 'ADMIN' || this.user.role === 'VENTAS' || this.user.role === 'TIENDA' || this.user.role === 'ALMACEN') {
-              this.getProductosbByTienda();
-              this.cargando = false;
-            }
+           this.ngOnInit();
           })
         Swal.fire('Borrado!', 'El Archivo fue borrado.', 'success');
       }
@@ -137,12 +129,7 @@ export class ProdIndexComponent implements OnInit {
       response => {
         $('#desactivar-' + id).modal('hide');
         $('.modal-backdrop').removeClass('show');
-        if (this.user.role === 'SUPERADMIN') {
-          this.loadProductos();
-        }
-        if (this.user.role === 'ADMIN' || this.user.role === 'VENTAS' || this.user.role === 'TIENDA' || this.user.role === 'ALMACEN') {
-          this.getProductosbByTienda();
-        }
+       this.ngOnInit();
       },
       error => {
         this.msm_error = 'No se pudo desactivar el producto, vuelva a intenter.'
@@ -156,13 +143,7 @@ export class ProdIndexComponent implements OnInit {
 
         $('#activar-' + id).modal('hide');
         $('.modal-backdrop').removeClass('show');
-        if (this.user.role === 'SUPERADMIN') {
-          this.loadProductos();
-        }
-
-        if (this.user.role === 'ADMIN' || this.user.role === 'VENTAS' || this.user.role === 'TIENDA' || this.user.role === 'ALMACEN') {
-          this.getProductosbByTienda();
-        }
+        this.ngOnInit();
       },
       error => {
         this.msm_error = 'No se pudo activar el producto, vuelva a intenter.'
@@ -175,13 +156,7 @@ export class ProdIndexComponent implements OnInit {
       response => {
         $('#papelera-' + id).modal('hide');
         $('.modal-backdrop').removeClass('show');
-        if (this.user.role === 'SUPERADMIN') {
-          this.loadProductos();
-        }
-
-        if (this.user.role === 'ADMIN' || this.user.role === 'VENTAS' || this.user.role === 'TIENDA' || this.user.role === 'ALMACEN') {
-          this.getProductosbByTienda();
-        }
+       this.ngOnInit();
       },
       error => {
         this.msm_error = 'No se pudo mover a papelera el producto, vuelva a intenter.'
@@ -211,9 +186,12 @@ export class ProdIndexComponent implements OnInit {
 
   onCloseModal(): void {
     this.productoSeleccionado = null;
+    
   }
 
-  onClose() { }
+  onClose() { 
+    this.ngOnInit();
+  }
 
 
 
