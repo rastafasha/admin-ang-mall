@@ -235,7 +235,7 @@ export class ProdEditComponent implements OnInit, OnChanges {
       categoria: ['', Validators.required],
       subcategoria: [''],
       isFeatured: [''],
-      marca: ['', Validators.required],
+      marca: [''],
       local: [''],
       nombre_selector: ['', Validators.required]
     })

@@ -250,8 +250,8 @@
                                         </div>
                                     </div>
                                     <!-- marca -->
-                                    <div class="col-xs-12 col-sm-3">
-                                        <label for="text-input">Marca <span class="required">*</span></label>
+                                    <div class="col-xs-12 col-sm-3" *ngIf="user.role === 'SUPERADMIN'">
+                                        <label for="text-input">Marca </label>
                                         <div class="input-group">
                                             <select class="form-control " name="marca" formControlName="marca" required>
                                                 <option disabled value="">SELECCIONAR</option>
@@ -259,15 +259,7 @@
                                                     {{item.nombre}}</option>
                                             </select>
                                         </div>
-                                        <div *ngIf="productoForm.get('marca')?.touched && productoForm.get('marca')?.invalid"
-                                            class="text-danger">
-                                            <div *ngIf="productoForm.get('marca')?.errors?.['required']">
-                                                Campo Requerido
-                                            </div>
-                                            <div *ngIf="productoForm.get('marca')?.errors?.['minlength']">
-                                                Seleccione una opción, si no existe comunicarse con servicio técnico
-                                            </div>
-                                        </div>
+                                        
                                     </div>
                                 </div>
 
