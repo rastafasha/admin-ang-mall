@@ -173,6 +173,8 @@ public PageSize(): void {
       this.categoriaSeleccionado = null;
     }
   
-    onClose() { }
+    onClose() { 
+      this.ngOnInit();
+    }
 
 }

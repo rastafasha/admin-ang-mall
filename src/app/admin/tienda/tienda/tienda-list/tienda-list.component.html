@@ -34,6 +34,7 @@
                         <thead>
                             <tr>
                                 <th>Img</th>
+                                <th>Img Front</th>
                                 <th>Nombre</th>
                                 <th>Local</th>
                                 <th>status</th>
@@ -47,7 +48,9 @@
                                 <td class="text-center">
                                     <img [src]="tienda.img | imagenPipe: 'tiendas'" class="img-responsive avatar"
                                         alt="{{tienda.nombre}}">
-                                    <!-- <img (click)="abrirModal(marca)" [src]="marca.imagenUrl | imagenPipe: 'marcas'" class="avatar cursor" alt="{{marca.nombre}}"> -->
+                                </td>
+                                <td class="text-center">
+                                    <img [src]="tienda.img_hero | imagenPipe: 'tiendas'" class="img-responsive " style="width: 45px; height: auto;">
                                 </td>
                                 <td>
                                     {{tienda.nombre}}
@@ -69,7 +72,7 @@
                                     </button>
                                 </td>
                                 <td>
-                                    {{tienda.categoria.nombre}}
+                                    {{tienda?.categoria?.nombre}}
                                 </td>
                                 <td class="text-nowrap text-center">
                                     <button class="btn btn-outline-success" data-toggle="tooltip"

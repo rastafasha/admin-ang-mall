@@ -148,7 +148,7 @@
 
                                     <select formControlName="local" name="local" class="form-control">
                                         <option *ngFor="let tienda of listTiendas" value="{{tienda._id}}">
-                                            {{tienda.local}} | {{tienda.nombre}}
+                                             {{tienda.nombre}} | {{tienda.local}}
                                         </option>
                                     </select>
                                     
@@ -157,8 +157,8 @@
                             </div>
                             
                         </div>
-
-                        <button type="button" (click)="guardar()"
+                        <app-loading *ngIf="cargando"></app-loading>
+                        <button type="button" *ngIf="!cargando" (click)="guardar()"
                             class="btn btn-success waves-effect waves-light m-r-10 btn-block">
                             <i class="fa fa-save"></i> Guardar cambios
                         </button>
@@ -166,9 +166,9 @@
                 </div>
             </div>
         </div>
-        <app-loading *ngIf="cargandoImagen"></app-loading>
-        <div class="col-md-4" *ngIf="usertiendaSeleccionado && !cargandoImagen">
-            <div class="card">
+        <div class="col-md-4" *ngIf="usertiendaSeleccionado ">
+            <app-loading *ngIf="cargandoImagen"></app-loading>
+            <div class="card" *ngIf="!cargandoImagen">
                 <div class="card-body">
                     <h4 class="card-title">imagen</h4>
                     <h6 class="card-subtitle">Foto de Perfil</h6>

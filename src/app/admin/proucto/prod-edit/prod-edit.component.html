@@ -78,12 +78,11 @@
                                 <!-- Descripción -->
                                 <div class="row">
                                     <div class="form-group col-xs-12 col-sm-6">
-                                        <label class=" col-form-label font-weight-medium" for="text-input">Descripción
-                                            <span class="required">*</span></label>
+                                        <label class=" col-form-label font-weight-medium" for="text-input">Descripción <span class="required">*</span></label>
                                         <div class="col-md-12">
                                             <!-- <ckeditor formControlName="detalle" [editor]="Editor" data="<p>Hello, world!</p>" required>
                             </ckeditor> -->
-                                            <textarea formControlName="detalle" id="detalle" cols="30" rows="4"
+                                            <textarea formControlName="detalle" id="detalle"
                                                 class="form-control"></textarea>
                                             <div *ngIf="productoForm.get('detalle')?.touched && productoForm.get('detalle')?.invalid"
                                                 class="text-danger">
@@ -99,13 +98,12 @@
                                     </div>
                                     <div class="form-group col-xs-12 col-sm-6">
                                         <label class=" col-form-label font-weight-medium"
-                                            for="textarea-input">Descripción
-                                            corta <span class="required">*</span></label>
+                                            for="textarea-input">Descripción corta <span class="required">*</span></label>
                                         <div class="col-md-12">
                                             <!-- <ckeditor formControlName="info_short" [editor]="Editor1" data="<p>Hello, world!</p>"
                                 required></ckeditor> -->
 
-                                            <textarea formControlName="info_short" id="info_short" cols="30" rows="4"
+                                            <textarea formControlName="info_short" id="info_short"
                                                 class="form-control"></textarea>
 
                                             <div *ngIf="productoForm.get('info_short')?.touched && productoForm.get('info_short')?.invalid"
@@ -216,7 +214,8 @@
                                     </div>
                                     <div class="col-xs-12 col-sm-3">
                                         <div class="form-group">
-                                            <label for="select-input">Subcategoría <span class="required">*</span></label>
+                                            <label for="select-input">Subcategoría <span
+                                                    class="required">*</span></label>
                                             <select class="form-control " formControlName="subcategoria"
                                                 name="subcategoria">
                                                 <option disabled value="">SELECCIONAR</option>
@@ -259,7 +258,7 @@
                                                     {{item.nombre}}</option>
                                             </select>
                                         </div>
-                                        
+
                                     </div>
                                 </div>
 
@@ -347,8 +346,10 @@
                                         <div class="text-center">
                                             <img *ngIf="!imgTemp "
                                                 [src]="productoSeleccionado.img | imagenPipe: 'productos'"
-                                                class="img-responsive img-thumbnail" alt="">
-                                            <img *ngIf="imgTemp" [src]="imgTemp" class="img-responsive">
+                                                class="img-responsive img-thumbnail"
+                                                style="width: 150px; height: 150px;" alt="">
+                                            <img *ngIf="imgTemp" [src]="imgTemp" class="img-responsive"
+                                                style="width: 150px; height: 150px;">
                                             <div class="form-group ">
 
                                             </div>

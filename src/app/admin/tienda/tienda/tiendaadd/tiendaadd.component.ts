@@ -96,12 +96,12 @@ export class TiendaaddComponent implements OnInit, OnChanges {
       nombre: ['', Validators.required],
       local: ['', Validators.required],
       telefono: ['', Validators.required],
-      categoria: ['', Validators.required],
       direccion: ['', Validators.required],
       pais: ['', Validators.required],
       moneda: ['', Validators.required],
       ciudad: ['', Validators.required],
       zip: ['', Validators.required],
+      categoria: [''],
       subcategoria: [''],
       redssociales: [this.redessociales],
       status: ['Desactivado',],
@@ -131,7 +131,7 @@ export class TiendaaddComponent implements OnInit, OnChanges {
         nombre: tienda.nombre,
         local: tienda.local,
         telefono: tienda.telefono,
-        categoria: tienda.categoria,
+        categoria: tienda.categoria._id,
         direccion: tienda.direccion,
         pais: tienda.pais,
         moneda: tienda.moneda,
@@ -199,46 +199,44 @@ export class TiendaaddComponent implements OnInit, OnChanges {
     const nombre = this.tiendaForm.get('nombre');
     const local = this.tiendaForm.get('local');
     const telefono = this.tiendaForm.get('telefono');
-    const categoria = this.tiendaForm.get('categoria');
+    
     const direccion = this.tiendaForm.get('direccion');
     const pais = this.tiendaForm.get('pais');
     const moneda = this.tiendaForm.get('moneda');
     const ciudad = this.tiendaForm.get('ciudad');
     const zip = this.tiendaForm.get('zip');
-    const subcategoria = this.tiendaForm.get('subcategoria');
-    const redssociales = this.tiendaForm.get('redssociales');
+    
     const status = this.tiendaForm.get('status');
     const state_banner = this.tiendaForm.get('state_banner');
 
     if (nombre?.invalid || local?.invalid ||
-      telefono?.invalid || categoria?.invalid ||
+      telefono?.invalid || 
       direccion?.invalid || pais?.invalid ||
       moneda?.invalid || ciudad?.invalid ||
-      zip?.invalid || subcategoria?.invalid ||
-      redssociales?.invalid || status?.invalid ||
+      zip?.invalid ||  status?.invalid ||
       state_banner?.invalid
 
     ) {
       nombre?.markAsTouched();
       local?.markAsTouched();
       telefono?.markAsTouched();
-      categoria?.markAsTouched();
       direccion?.markAsTouched();
       pais?.markAsTouched();
       moneda?.markAsTouched();
       ciudad?.markAsTouched();
       zip?.markAsTouched();
-      subcategoria?.markAsTouched();
-      redssociales?.markAsTouched();
       status?.markAsTouched();
       state_banner?.markAsTouched();
       this.tiendaForm.markAllAsTouched(); // Esto activa las validaciones visuales
       return;
     }
     this.currentStep = 2;
-
-
   }
+
+  nextStep2() {
+    this.currentStep = 3;
+  }
+  
   nextStepApp() {
     const texto_hero_uno = this.tiendaForm.get('texto_hero_uno');
     const texto_hero_dos = this.tiendaForm.get('texto_hero_dos');
@@ -261,17 +259,20 @@ export class TiendaaddComponent implements OnInit, OnChanges {
       this.tiendaForm.markAllAsTouched(); // Esto activa las validaciones visuales
       return;
     }
-    this.currentStep = 3;
+    this.currentStep = 4;
   }
 
 
 
-  prevStep() {
+prevStep1(){
     this.currentStep = 1;
+}
+  prevStep() {
+    this.currentStep = 2;
   }
 
   prevStep2() {
-    this.currentStep = 2;
+    this.currentStep = 3;
   }
 
 
@@ -382,7 +383,13 @@ export class TiendaaddComponent implements OnInit, OnChanges {
 
     } else {
       //crear
-      this.tiendaService.crearTienda(this.tiendaForm.value)
+      const data = {
+        ...this.tiendaForm.value,
+        user: this.user.uid,
+        redssociales: this.redssociales,
+        // user: this.usuario.uid
+      }
+      this.tiendaService.crearTienda(data)
         .subscribe((resp: any) => {
           this.cargando = false;
           this.tiendaSeleccionado = resp.tienda;

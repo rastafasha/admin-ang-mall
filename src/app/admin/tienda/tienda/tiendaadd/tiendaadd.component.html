@@ -12,7 +12,7 @@
                     <div class="row">
 
                         <!-- Step Indicator -->
-                        <div class="step-indicator m-t-20 m-b-20">
+                        <div class="step-indicator">
                             <div class="step" [ngClass]="{'active': currentStep >= 1, 'completed': currentStep > 1}">
                                 <span class="step-number">1</span>
                                 <span class="step-label">Datos</span>
@@ -20,11 +20,16 @@
                             <div class="step-line"></div>
                             <div class="step" [ngClass]="{'active': currentStep >= 2}">
                                 <span class="step-number">2</span>
-                                <span class="step-label">App</span>
+                                <span class="step-label">RRSS</span>
                             </div>
                             <div class="step-line"></div>
                             <div class="step" [ngClass]="{'active': currentStep >= 3}">
                                 <span class="step-number">3</span>
+                                <span class="step-label">App</span>
+                            </div>
+                            <div class="step-line"></div>
+                            <div class="step" [ngClass]="{'active': currentStep >= 4}">
+                                <span class="step-number">4</span>
                                 <span class="step-label">Imagenes</span>
                             </div>
                         </div>
@@ -173,23 +178,14 @@
                                 <!-- categoria -->
                                 <div class="row">
                                     <div class="form-group col-xs-12 col-sm-3">
-                                        <label for="select-input">Categoría <span class="required">*</span></label>
-                                        <select class="form-control " formControlName="categoria" required>
+                                        <label for="select-input">Categoría </label>
+                                        <select class="form-control " formControlName="categoria" >
                                             <option disabled value="">SELECCIONAR</option>
                                             <option *ngFor="let item of listCategorias | unique:'nombre'"
                                                 [value]="item._id">
                                                 {{item.nombre}}</option>
 
                                         </select>
-                                        <div *ngIf="tiendaForm.get('zip')?.touched && tiendaForm.get('zip')?.invalid"
-                                            class="text-danger">
-                                            <div *ngIf="tiendaForm.get('zip')?.errors?.['required']">
-                                                Campo Requerido
-                                            </div>
-                                            <div *ngIf="tiendaForm.get('zip')?.errors?.['minlength']">
-                                                Mínimo 3 Caracteres
-                                            </div>
-                                        </div>
                                     </div>
                                     <div class="form-group col-xs-12 col-sm-3">
                                         <label for="select-input">Subcategoría</label>
@@ -245,8 +241,22 @@
                                 </div>
 
                                 <div class="row">
+                                    <div class="col-6">
+                                        <button class="btn btn-success waves-effect waves-light m-r-10 btn-block"
+                                            type="button" (click)="nextStep()">Siguiente</button>
+                                    </div>
+                                    <div class="col-6">
+                                        <button (click)="saveTienda()" class="btn btn-outline-success">
+                                            {{ tiendaSeleccionado ? 'Actualizar y Continuar' : 'Crear y Continuar' }}
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div *ngIf="currentStep === 2">
+                            <div class="row">
                                     <label>Redes Sociales</label>
-                                    <div class="row">
+                                    <div class="row form-horizontal form-material">
                                         <div class="form-group  col-xs-12 col-sm-3 ">
                                             <label>Nombre de la Red<span class="login-danger">*</span></label>
                                             <input class="form-control" name="name_red" [(ngModel)]="name_red"
@@ -311,7 +321,9 @@
                                 <div class="row">
                                     <div class="col-6">
                                         <button class="btn btn-success waves-effect waves-light m-r-10 btn-block"
-                                            type="button" (click)="nextStep()">Siguiente</button>
+                                            type="button" (click)="prevStep1()">Anterior</button>
+                                        <button class="btn btn-success waves-effect waves-light m-r-10 btn-block"
+                                            type="button" (click)="nextStep2()">Siguiente</button>
                                     </div>
                                     <div class="col-6">
                                         <button (click)="saveTienda()" class="btn btn-outline-success">
@@ -319,9 +331,8 @@
                                         </button>
                                     </div>
                                 </div>
-                            </form>
                         </div>
-                        <div *ngIf="currentStep === 2">
+                        <div *ngIf="currentStep === 3">
                             <form class="form p-t-20 form-horizontal form-material" [formGroup]="tiendaForm">
                                 <!-- Local -->
                                 <div class="row">
@@ -343,23 +354,7 @@
 
                                         </div>
                                     </div>
-                                    <div class="form-group  col-xs-12 col-sm-4">
-                                        <label for="Local">texto_hero_dos <span class="required">*</span></label>
-                                        <div class="input-group">
-
-                                            <input type="text" formControlName="texto_hero_dos" class="form-control"
-                                                id="texto_hero_dos" placeholder="texto_hero_dos">
-                                            <div *ngIf="tiendaForm.get('texto_hero_dos')?.touched && tiendaForm.get('texto_hero_dos')?.invalid"
-                                                class="text-danger">
-                                                <div *ngIf="tiendaForm.get('texto_hero_dos')?.errors?.['required']">
-                                                    Campo Requerido
-                                                </div>
-                                                <div *ngIf="tiendaForm.get('texto_hero_dos')?.errors?.['minlength']">
-                                                    Mínimo 3 Caracteres
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    
                                     <div class="form-group  col-xs-12 col-sm-4">
                                         <label for="telefono">texto_hero_destacado<span
                                                 class="required">*</span></label>
@@ -380,6 +375,23 @@
                                                 </div>
                                             </div>
 
+                                        </div>
+                                    </div>
+                                    <div class="form-group  col-xs-12 col-sm-4">
+                                        <label for="Local">texto_hero_dos <span class="required">*</span></label>
+                                        <div class="input-group">
+
+                                            <input type="text" formControlName="texto_hero_dos" class="form-control"
+                                                id="texto_hero_dos" placeholder="texto_hero_dos">
+                                            <div *ngIf="tiendaForm.get('texto_hero_dos')?.touched && tiendaForm.get('texto_hero_dos')?.invalid"
+                                                class="text-danger">
+                                                <div *ngIf="tiendaForm.get('texto_hero_dos')?.errors?.['required']">
+                                                    Campo Requerido
+                                                </div>
+                                                <div *ngIf="tiendaForm.get('texto_hero_dos')?.errors?.['minlength']">
+                                                    Mínimo 3 Caracteres
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
 
@@ -457,7 +469,7 @@
                             </form>
                         </div>
 
-                        <div *ngIf="currentStep === 3">
+                        <div *ngIf="currentStep === 4">
                             <app-loading *ngIf="isLoadingImage"></app-loading>
                             <div *ngIf="!isLoadingImage">
                                 <label> Anexe su foto</label>
@@ -482,8 +494,8 @@
                                         <div class="text-center" >
                                             <img *ngIf="!imgTemp "
                                                 [src]="tiendaSeleccionado.img | imagenPipe: 'tiendas'"
-                                                class="img-responsive img-thumbnail" alt="">
-                                            <img *ngIf="imgTemp" [src]="imgTemp" class="img-responsive">
+                                                class="img-responsive img-thumbnail" style="width:150px; height: 150px;" alt="">
+                                            <img *ngIf="imgTemp" [src]="imgTemp" class="img-responsive" style="width:150px; height: 150px;">
                                             <div class="form-group ">
 
                                             </div>
@@ -503,8 +515,8 @@
                                         <div class="text-center">
                                             <img *ngIf="!imgHeroTemp "
                                                 [src]="tiendaSeleccionado.img_hero | imagenPipe: 'tiendas'"
-                                                class="img-responsive img-thumbnail" alt="">
-                                            <img *ngIf="imgHeroTemp" [src]="imgHeroTemp" class="img-responsive">
+                                                class="img-responsive img-thumbnail" style="width:150px; height: 150px;" alt="">
+                                            <img *ngIf="imgHeroTemp" [src]="imgHeroTemp" class="img-responsive" style="width:150px; height: 150px;">
                                             <div class="form-group ">
 
                                             </div>

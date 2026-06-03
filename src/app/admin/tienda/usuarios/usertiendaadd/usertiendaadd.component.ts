@@ -65,11 +65,13 @@ export class UsertiendaaddComponent implements OnInit {
     private _iconoService: IconosService,
     private tiendaService: TiendaService,
   ) {
-    this.usuario = usuarioService.usuario;
+    
     const base_url = environment.baseUrl;
   }
 
   ngOnInit(): void {
+    let USER = localStorage.getItem("user");
+    this.user = JSON.parse(USER ? USER : '');
     window.scrollTo(0, 0);
     this.validarFormulario();
     this.activatedRoute.params.subscribe((resp: any) => {
@@ -125,7 +127,7 @@ export class UsertiendaaddComponent implements OnInit {
       password: ['', Validators.required],
       password2: ['', Validators.required],
       local: [''],
-      role: ['', Validators.required],
+      role: ['USER'],
       telefono: ['', Validators.required],
       numdoc: ['', Validators.required],
 
@@ -144,6 +146,7 @@ export class UsertiendaaddComponent implements OnInit {
 
 
   guardar() {
+    this.cargando = true
     if (!this.registerForm.valid) {
       //mostramos las alertas de los campos requeridos
       this.registerForm.markAllAsTouched(); // Esto activa las validaciones visuales
@@ -161,22 +164,26 @@ export class UsertiendaaddComponent implements OnInit {
       numdoc } = this.registerForm.value;
 
     if (this.usertiendaSeleccionado) {
+      const localId = this.user.role === 'SUPERADMIN'
+        ? this.registerForm.value.local
+        : this.user.local;
       const data = {
         ...this.registerForm.value,
         uid: this.user_id,
-        local: this.usuario.local,
+        local: localId,
       }
       this.usuarioService.upadateUser(data, this.user_id).subscribe(
         resp => {
+          this.cargando = false
           Swal.fire('Actualizado', `${first_name} actualizado correctamente`, 'success');
         }
       );
 
     } else {
       // Determinamos qué ID de local enviar según el rol
-      const localId = this.usuario.role === 'SUPERADMIN'
+      const localId = this.user.role === 'SUPERADMIN'
         ? this.registerForm.value.local
-        : this.usuario.local;
+        : this.user.local;
       const data = {
         ...this.registerForm.value,
         local: localId
@@ -184,6 +191,7 @@ export class UsertiendaaddComponent implements OnInit {
       //crear
       this.usuarioService.crearUsuario(data)
         .subscribe((resp: any) => {
+          this.cargando = false
           Swal.fire('Creado', `${first_name} creado correctamente`, 'success');
           this.router.navigateByUrl(`/dashboard/tienda-user`);
         })
