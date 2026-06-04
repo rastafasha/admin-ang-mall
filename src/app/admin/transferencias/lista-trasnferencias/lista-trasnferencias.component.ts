@@ -163,7 +163,7 @@ export class ListaTrasnferenciasComponent implements OnInit {
         Swal.fire({
           position: 'top-end',
           icon: 'success',
-          title: status === 'APROBADO' ? '✅ Pago Aprobado' : '❌ Pago Rechazado',
+          title: status === 'ok' ? '✅ Pago Aprobado' : '❌ Pago Rechazado',
           color: 'gray',
           showConfirmButton: false,
           timer: 1500,
