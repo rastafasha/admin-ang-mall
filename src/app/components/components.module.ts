@@ -21,6 +21,8 @@ import { ModalinfoTiposPagoComponent } from './modalinfo-tipos-pago/modalinfo-ti
 import { ModalinfoTransferenciasComponent } from './modalinfo-transferencias/modalinfo-transferencias.component';
 import { ModalinfoPagoEfectivoComponent } from './modalinfo-pago-efectivo/modalinfo-pago-efectivo.component';
 import { ModalinfoDeliveryComponent } from './modalinfo-delivery/modalinfo-delivery.component';
+import { ModalVerPedidoComponent } from './modal-ver-pedido/modal-ver-pedido.component';
+import { ModalTrackingComponent } from './modal-tracking/modal-tracking.component';
 
 @NgModule({
   declarations: [
@@ -41,16 +43,12 @@ import { ModalinfoDeliveryComponent } from './modalinfo-delivery/modalinfo-deliv
     ModalinfoTiposPagoComponent,
     ModalinfoTransferenciasComponent,
     ModalinfoPagoEfectivoComponent,
-    ModalinfoDeliveryComponent
+    ModalinfoDeliveryComponent,
+    ModalVerPedidoComponent,
+    ModalTrackingComponent
 
   ],
-  imports: [
-    CommonModule,
-    FormsModule,
-    NgChartsModule,
-    PipesModule
-    
-  ],
+  
   exports:[
     ModalImagenComponent,
     BarChartComponent,
@@ -69,7 +67,16 @@ import { ModalinfoDeliveryComponent } from './modalinfo-delivery/modalinfo-deliv
     ModalinfoTiposPagoComponent,
     ModalinfoTransferenciasComponent,
     ModalinfoPagoEfectivoComponent,
-    ModalinfoDeliveryComponent
-  ]
+    ModalinfoDeliveryComponent,
+    ModalVerPedidoComponent,
+    ModalTrackingComponent
+  ],
+  imports: [
+    CommonModule,
+    FormsModule,
+    NgChartsModule,
+    PipesModule
+    
+  ],
 })
 export class ComponentsModule { }

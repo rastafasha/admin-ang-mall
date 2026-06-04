@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UsuarioService } from '../../../services/usuario.service';
 import { VentaService } from 'src/app/services/venta.service';
@@ -9,17 +9,22 @@ import Swal from 'sweetalert2';
 import { ProductoService } from 'src/app/services/producto.service';
 import { Usuario } from 'src/app/models/usuario.model';
 import { Tienda } from 'src/app/models/tienda.model';
+import { ModalTrackingComponent } from 'src/app/components/modal-tracking/modal-tracking.component';
 
 declare var jQuery: any;
 declare var $: any;
+declare var bootstrap: any;
 
 @Component({
   selector: 'app-admin-ventas',
-  standalone:false,
+  standalone: false,
   templateUrl: './admin-ventas.component.html',
   styleUrls: ['./admin-ventas.component.css']
 })
 export class AdminVentasComponent implements OnInit {
+  // 🟢 Capturamos la referencia del componente hijo (#viewTraking)
+  @ViewChildren('viewTraking') modalesHijos!: QueryList<ModalTrackingComponent>;
+
   public mydate = new Date();
   public identity;
   public filtro;
@@ -58,7 +63,7 @@ export class AdminVentasComponent implements OnInit {
   listTiendas: any;
   user: any;
   tiendaSelected: Tienda;
-   public tienda_moneda:string;
+  public tienda_moneda: string;
 
   // accedo al componente hijo FacturaComponent, agregado por José Prados
   @ViewChild(FacturaComponent) factura !: FacturaComponent;
@@ -70,7 +75,8 @@ export class AdminVentasComponent implements OnInit {
   public ventasDataYear: any[] = [];
 
   isLoading = false;
-  
+  trackingSeleccionado: any = null;
+
 
   constructor(
     private _userService: UsuarioService,
@@ -140,6 +146,7 @@ export class AdminVentasComponent implements OnInit {
       $('#btn-uno').addClass('btn-secondary');
     }
   }
+
 
 
 
@@ -267,25 +274,7 @@ export class AdminVentasComponent implements OnInit {
 
   }
 
-  setTrack(trackForm, id) {
-    if (trackForm.valid) {
-      let data = {
-        tracking_number: trackForm.value.track
-      }
-      this._ventaService.set_track(id, data).subscribe(
-        response => {
-          this.search(null, null);
-          this.track = '';
-          $('#trak-' + id).modal('hide');
-          $('.modal-backdrop').removeClass('show');
-        }, error => {
-
-        }
-      );
-    } else {
-      this.msm_error_track = true;
-    }
-  }
+  
 
   close_alert() {
     this.msm_error_track = false;
@@ -445,6 +434,35 @@ export class AdminVentasComponent implements OnInit {
     }
 
   }
+
+  onViewTracking(item: any) {
+    this.trackingSeleccionado = item;
+}
+
+  setTrack(eventoHijo: { id: string, track: string }) {
+    let data = {
+      tracking_number: eventoHijo.track
+    };
+
+    this._ventaService.set_track(eventoHijo.id, data).subscribe(
+      response => {
+        // Recargamos la lista
+        this.search(null, null);
+        
+        // 🟢 Cerramos el modal usando el ID definitivo que funciona fuera del bucle
+        const modalElement = document.getElementById('viewTrackingModal');
+        if (modalElement) {
+          const myModal = bootstrap.Modal.getInstance(modalElement);
+          if (myModal) {
+            myModal.hide();
+          }
+        }
+      },
+      error => {
+        console.error('Error al guardar el tracking:', error);
+      }
+    );
+}
 
   selectedYear() {
     if (this.user.role === 'SUPERADMIN') {

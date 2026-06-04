@@ -72,7 +72,8 @@
                                 <div class="font-size-sm">
                                     <span class="text-muted mr-2">Cantidad:</span>{{item.cantidad}}
                                 </div>
-                                <div class="font-size-sm"><span class="text-muted mr-2">{{item.producto.nombre_selector}}:</span>{{item.selector}}</div>
+                                <div class="font-size-sm"><span class="text-muted mr-2">{{item.producto.nombre_selector}}:&nbsp;</span>{{item.selector}}</div>
+                                <div class="font-size-sm"><span class="text-muted mr-2">{{item.producto.selector_elegido}}:</span></div>
                                 <div class="font-size-sm"><span class="text-muted mr-2">Color:</span>
                                     <span [ngStyle]="{'background': item.color,'color': item.color}" style="font-weight: 900;">||||||||||||||||||||</span>
                                 </div>
@@ -97,7 +98,7 @@
                             <div class="media-body pt-2 mb-4">
                                 <div class="font-size-sm content-txt-pb">
                                     <span class="text-muted mr-2">Destinatario:</span><br>
-                                    <span>{{venta.destinatario}}</span><br>
+                                    <span>{{venta.destinatario}}</span>
                                     <span>{{user.numdoc}}</span><br>
                                     <span>{{user.email}}</span><br>
                                     <span>{{user.telefono}}</span><br>

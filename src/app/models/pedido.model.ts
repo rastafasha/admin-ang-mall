@@ -10,6 +10,7 @@ export class Pedido{
         public delivery: string,
         public deliveryAddres: string,
         public createdAt: Date,
+        public selector_elegido?: string,
     ){
     }
 }

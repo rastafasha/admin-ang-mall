@@ -1,0 +1,65 @@
+<!-- ID estático único porque el componente ahora vive fuera del bucle -->
+<div class="modal fade" id="viewTrackingModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <!-- El *ngIf aquí adentro evita errores si 'item' es null al cargar la página -->
+        <div class="modal-content" *ngIf="item">
+            
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    Tracking <span class="text-muted fs-6 fw-normal">Número de seguimiento</span>
+                </h4>
+                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <!-- Formulario y Cuerpo Único -->
+            <form #trackForm="ngForm" (ngSubmit)="enviarAlPadre(trackForm)">
+                <div class="modal-body">
+                    <div class="row">
+                        
+                        <!-- Alerta Corregida para Bootstrap 5.3 -->
+                        <div class="col-lg-12" *ngIf="msm_error_track">
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                Debe ingresar el número de seguimiento.
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" (click)="close_alert()"></button>
+                            </div>
+                        </div>
+
+                        <!-- Información del pedido -->
+                        <div class="col-lg-12 mb-3">
+                            <p class="mb-1 text-muted small">Pedido ID: {{item._id}}</p>
+                            <h6>
+                                Tipo de envío:
+                                <span class="fw-normal fs-6">{{item.tipo_envio}}</span>
+                            </h6>
+                            <h6>
+                                Precio de envío:
+                                <span class="fw-normal fs-6">{{item.precio_envio | currency:tienda_moneda}}</span>
+                            </h6>
+                        </div>
+
+                        <!-- Input del Tracking -->
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <input class="form-control" type="text" placeholder="Establecer guía" name="track" [(ngModel)]="track">
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12 mt-2 text-center">
+                            <span class="text-muted small">
+                                Establecerlo en blanco, marca <b>sin guía</b>.
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Botones de Acción Únicos -->
+                <div class="modal-footer">
+                    <button class="btn btn-secondary btn-sm" type="button" data-bs-dismiss="modal" (click)="ocultarModal()">Cerrar</button>
+                    <button class="btn btn-primary btn-shadow btn-sm" type="submit">Establecer</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
