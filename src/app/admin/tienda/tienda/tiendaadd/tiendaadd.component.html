@@ -175,7 +175,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!-- categoria -->
+                                
                                 <div class="row">
                                     <div class="form-group col-xs-12 col-sm-3">
                                         <label for="select-input">Categoría </label>
@@ -219,12 +219,24 @@
                                         </div>
                                     </div>
                                 </div>
+                                <!-- reservacion -->
+                                <div class="row">
+                                    
+                                    <div class="form-group col-xs-12 col-sm-3 ">
+                                        <label for="text-input">Usa Reservaciones?</label>
+                                        <div class="input-group">
+                                            <select class="form-control" formControlName="has_reservacion">
+                                                <option disabled value="">SELECCIONAR</option>
+                                                <option [value]="true">Si</option>
+                                                <option [value]="false">No</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="form-group ">
                                     <label class=" col-form-label font-weight-medium" for="text-input">Direccion
                                         <span class="required">*</span></label>
                                     <div class="col-md-12">
-                                        <!-- <ckeditor formControlName="direccion" [editor]="Editor1" data="<p>Hello, world!</p>"
-                                    required></ckeditor> -->
                                         <textarea formControlName="direccion" id="direccion"
                                             class="form-control"></textarea>
                                         <div *ngIf="tiendaForm.get('direccion')?.touched && tiendaForm.get('direccion')?.invalid"

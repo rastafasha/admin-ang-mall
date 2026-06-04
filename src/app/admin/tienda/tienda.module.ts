@@ -20,6 +20,8 @@ import { DriverpModule } from "src/app/admin/driverp/driverp.module";
 import { PedidosMenuComponent } from './pedidos-menu/pedidos-menu.component';
 import { ComponentsModule } from 'src/app/components/components.module';
 import { ComentariosappComponent } from './comentariosapp/comentariosapp.component';
+import { ReservacionListComponent } from './reservacion/reservacion-list/reservacion-list.component';
+import { ReservacionViewComponent } from './reservacion/reservacion-view/reservacion-view.component';
 
 
 @NgModule({
@@ -33,7 +35,9 @@ import { ComentariosappComponent } from './comentariosapp/comentariosapp.compone
     CarritoComponent,
     ProductoComponent,
     PedidosMenuComponent,
-    ComentariosappComponent
+    ComentariosappComponent,
+    ReservacionListComponent,
+    ReservacionViewComponent,
 
   ],
   exports: [
@@ -43,7 +47,9 @@ import { ComentariosappComponent } from './comentariosapp/comentariosapp.compone
     TiendaListComponent,
     UserDetailComponent,
     PedidosMenuComponent,
-    ComentariosappComponent
+    ComentariosappComponent,
+    ReservacionListComponent,
+    ReservacionViewComponent,
 
   ],
   imports: [

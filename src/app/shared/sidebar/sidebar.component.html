@@ -60,6 +60,8 @@
                                 [routerLinkActiveOptions]="{exact:true}">{{'Tiendas'| translate}} </a></li>
                         <li><a routerLink="tienda/pedidos" routerLinkActive="active"
                                 [routerLinkActiveOptions]="{exact:true}">{{'Pedidos'| translate}} </a></li>
+                        <li *ngIf="has_reservacion"><a routerLink="reservaciones" routerLinkActive="active"
+                                [routerLinkActiveOptions]="{exact:true}">{{'Reservaciones'| translate}} </a></li>
                         <li><a routerLink="atencion-local" routerLinkActive="active"
                                 [routerLinkActiveOptions]="{exact:true}">{{'Atención Local'| translate}} </a></li>
                         <li><a routerLink="tienda-user" routerLinkActive="active"

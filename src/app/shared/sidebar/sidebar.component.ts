@@ -5,6 +5,8 @@ import { UsuarioService } from 'src/app/services/usuario.service';
 import { SidebarService } from '../../services/sidebar.service';
 import { filter } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
+import { Tienda } from 'src/app/models/tienda.model';
+import { TiendaService } from 'src/app/services/tienda.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -20,11 +22,14 @@ export class SidebarComponent implements OnInit, OnDestroy {
   role:any;
   private routeSubscription: Subscription;
   public menuActivo: string = '';
+  tienda:Tienda;
+  has_reservacion:boolean = false;
 
   constructor(
     public sidebarService: SidebarService,
     private usuarioService: UsuarioService,
-    private router: Router
+    private router: Router,
+    private tiendaService: TiendaService
   ) {
 
     // this.usuario = usuarioService.usuario;
@@ -49,6 +54,16 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
     // Aplicar estado inicial del sidebar
     this.updateSidebarClasses();
+    this.getTienda();
+  }
+
+  getTienda(){
+    this.tiendaService.getTiendaById(this.usuario.local).subscribe(
+      (resp:any) => {
+        this.tienda = resp;
+        this.has_reservacion = resp.has_reservacion;
+      }
+    )
   }
 
   ngOnDestroy(): void {

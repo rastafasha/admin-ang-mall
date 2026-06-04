@@ -1,42 +1,31 @@
-import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { Slider } from 'src/app/models/slider.model';
-import { Transferencia } from 'src/app/models/transferencia';
+import { Reservacion } from 'src/app/models/reservacion.model';
 import { BusquedasService } from 'src/app/services/busquedas.service';
+import { ReservacionService } from 'src/app/services/reservacion.service';
 import { TiendaService } from 'src/app/services/tienda.service';
-import { TransferenciaService } from 'src/app/services/transferencia.service';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-lista-trasnferencias',
+  selector: 'app-reservacion-list',
   standalone: false,
-  templateUrl: './lista-trasnferencias.component.html',
-  styleUrls: ['./lista-trasnferencias.component.css']
+  templateUrl: './reservacion-list.component.html',
+  styleUrl: './reservacion-list.component.css'
 })
-export class ListaTrasnferenciasComponent implements OnInit {
+export class ReservacionListComponent {
 
-  public transferencias: Transferencia[] = [];
-  public cargando: boolean = true;
-
-  public desde: number = 0;
-  trasnferencia: Transferencia;
-  transf: Transferencia;
-  tienda_moneda: string;
-
+  reservaciones: Reservacion[] = [];
   p: number = 1;
   count: number = 8;
   user: any;
-
+  cargando: boolean = true;
   query: string = '';
   searchForm!: FormGroup;
-  currentPage = 1;
-  collecion = 'categorias';
-  pagoSeleccionado: Transferencia;
-
+  reservaSeleccionado:Reservacion | null = null;
 
   constructor(
-    private trasnferenciaService: TransferenciaService,
-    private busquedaService: BusquedasService,
+    private reservacionService: ReservacionService,
     private tiendaService: TiendaService,
   ) { }
 
@@ -44,63 +33,49 @@ export class ListaTrasnferenciasComponent implements OnInit {
     let USER = localStorage.getItem("user");
     this.user = JSON.parse(USER ? USER : '');
     if (this.user.role === 'SUPERADMIN') {
-      this.loadTrasnferencias();
+      this.loadReservaciones();
     }
     if (this.user.role === 'ADMIN' || this.user.role === 'VENTAS') {
-      this.transPorLocalId()
+      this.getReservacionesByLocal();
       this.getTienda();
     }
   }
 
 
-  loadTrasnferencias() {
+  loadReservaciones() {
     this.cargando = true;
-    this.trasnferenciaService.getTransferencias().subscribe(
-      transferencias => {
+    this.reservacionService.getReservaciones().subscribe(
+      reservaciones => {
         this.cargando = false;
-        this.transferencias = transferencias;
+        this.reservaciones = reservaciones;
       }
     )
 
+  }
+
+
+  getReservacionesByLocal() {
+    this.cargando = true;
+    this.reservacionService.getReservacionByLocal(this.user.local).subscribe(
+      (resp: any) => {
+        this.reservaciones = resp;
+        this.cargando = false;
+      }
+    )
   }
 
   getTienda() {
     this.tiendaService.getTiendaById(this.user.local).subscribe((resp: any) => {
-      this.tienda_moneda = resp.moneda;
+      // this.tienda_moneda = resp.moneda;
     })
   }
-
-  transPorLocalId() {
-    this.cargando = true;
-    this.trasnferenciaService.getTransferenciaByTiendaId(this.user.local).subscribe(
-      (resp: any) => {
-        this.transferencias = resp;
-        this.cargando = false;
-      }
-    )
-  }
-
-  // cambiarStatus(trasnferencia: Transferencia) {
-  //   const data = {
-  //     ...trasnferencia,
-  //     local: this.user.local,
-  //     updatedAt: Date.now
-  //   }
-
-  //   this.trasnferenciaService.updateStatus(data)
-  //     .subscribe(resp => {
-  //       Swal.fire('Actualizado pago referencia y Venta Generada! ', trasnferencia.referencia, 'success')
-  //     })
-
-  // }
-
 
   cambiarStatus(data: any) {
     const status = data.status;
     const id = data._id;
 
     // 1. Caso: RECHAZADO (Pide motivo)
-    if (status === 'no') {
+    if (status === 'Cancelada') {
       Swal.fire({
         title: 'Motivo del Rechazo',
         input: 'text',
@@ -122,10 +97,10 @@ export class ListaTrasnferenciasComponent implements OnInit {
       });
 
       // 2. Caso: APROBADO (Confirmación de seguridad)
-    } else if (status === 'ok') {
+    } else if (status === 'Confirmada') {
       Swal.fire({
-        title: '¿Confirmar Pago?',
-        text: `¿Estás seguro de marcar como APROBADO el pago de ${data.amount}?`,
+        title: '¿Confirmar Reservación?',
+        text: `¿Estás seguro de marcar como APROBADO la Reservación de ${data.first_name}?`,
         icon: 'question',
         showCancelButton: true,
         confirmButtonText: 'Sí, Aprobar',
@@ -158,12 +133,12 @@ export class ListaTrasnferenciasComponent implements OnInit {
 
 
 
-    this.trasnferenciaService.updateStatus(payload).subscribe({
+    this.reservacionService.actualizarReservacion(payload).subscribe({
       next: (resp) => {
         Swal.fire({
           position: 'top-end',
           icon: 'success',
-          title: status === 'APROBADO' ? '✅ Pago Aprobado' : '❌ Pago Rechazado',
+          title: status === 'Confirmada' ? '✅ Reservación Aprobado' : '❌ Reservación Rechazado',
           color: 'gray',
           showConfirmButton: false,
           timer: 1500,
@@ -177,7 +152,7 @@ export class ListaTrasnferenciasComponent implements OnInit {
     });
   }
 
-  eliminarTramsf(transf: Transferencia) {
+  eliminarTramsf(transf: Reservacion) {
     Swal.fire({
       title: 'Estas Seguro?',
       text: 'No podras recuperarlo!',
@@ -188,7 +163,7 @@ export class ListaTrasnferenciasComponent implements OnInit {
       confirmButtonText: 'Si, Borrar!',
     }).then((result) => {
       if (result.isConfirmed) {
-        this.trasnferenciaService.borrarTransferencia(transf._id)
+        this.reservacionService.borrarReservacion(transf._id)
           .subscribe(resp => {
             this.ngOnInit();
           })
@@ -203,31 +178,22 @@ export class ListaTrasnferenciasComponent implements OnInit {
     this.ngOnInit();
     // this.router.navigateByUrl('/productos')
   }
-
   handleSearchEvent(event: any) {
-    if (event.trasnferencias) {
-      this.transferencias = event.trasnferencias;
+    if (event.reservaciones) {
+      this.reservaciones = event.reservaciones;
     }
   }
 
-  getCurrencySymbol(tipo: string): string {
-    switch (tipo) {
-      case 'Transferencia Euro': return '€';
-      case 'Transferencia Dólares': return '$';
-      case 'Transferencia Bolivares': return 'Bs.';
-      default: return '$';
+  onViewPago(reserv: Reservacion) {
+      this.reservaSeleccionado = reserv;
     }
-  }
+  
+  
+    onCloseModal(): void {
+      this.reservaSeleccionado = null;
+    }
+  
+    onClose() { }
 
-  onViewPago(transf: Transferencia) {
-    this.pagoSeleccionado = transf;
-  }
-
-
-  onCloseModal(): void {
-    this.pagoSeleccionado = null;
-  }
-
-  onClose() { }
 
 }

@@ -106,6 +106,7 @@ export class TiendaaddComponent implements OnInit, OnChanges {
       redssociales: [this.redessociales],
       status: ['Desactivado',],
       state_banner: [false,],
+      has_reservacion: [false,],
       texto_hero_uno: [''],
       texto_hero_dos: [''],
       texto_hero_destacado: [''],
@@ -141,6 +142,7 @@ export class TiendaaddComponent implements OnInit, OnChanges {
         redssociales: tienda.redssociales,
         status: tienda.status,
         state_banner: tienda.state_banner,
+        has_reservacion: tienda.has_reservacion,
         texto_hero_uno: tienda.texto_hero_uno,
         texto_hero_dos: tienda.texto_hero_dos,
         texto_hero_destacado: tienda.texto_hero_destacado,
@@ -180,6 +182,7 @@ export class TiendaaddComponent implements OnInit, OnChanges {
       redssociales: null,
       status: null,
       state_banner: null,
+      has_reservacion: null,
       texto_hero_uno: null,
       texto_hero_dos: null,
       texto_hero_destacado: null,
@@ -199,22 +202,24 @@ export class TiendaaddComponent implements OnInit, OnChanges {
     const nombre = this.tiendaForm.get('nombre');
     const local = this.tiendaForm.get('local');
     const telefono = this.tiendaForm.get('telefono');
-    
+
     const direccion = this.tiendaForm.get('direccion');
     const pais = this.tiendaForm.get('pais');
     const moneda = this.tiendaForm.get('moneda');
     const ciudad = this.tiendaForm.get('ciudad');
     const zip = this.tiendaForm.get('zip');
-    
+
     const status = this.tiendaForm.get('status');
     const state_banner = this.tiendaForm.get('state_banner');
+    const has_reservacion = this.tiendaForm.get('has_reservacion');
 
     if (nombre?.invalid || local?.invalid ||
-      telefono?.invalid || 
+      telefono?.invalid ||
       direccion?.invalid || pais?.invalid ||
       moneda?.invalid || ciudad?.invalid ||
-      zip?.invalid ||  status?.invalid ||
-      state_banner?.invalid
+      zip?.invalid || status?.invalid ||
+      state_banner?.invalid ||
+      has_reservacion?.invalid
 
     ) {
       nombre?.markAsTouched();
@@ -227,6 +232,7 @@ export class TiendaaddComponent implements OnInit, OnChanges {
       zip?.markAsTouched();
       status?.markAsTouched();
       state_banner?.markAsTouched();
+      has_reservacion?.markAsTouched();
       this.tiendaForm.markAllAsTouched(); // Esto activa las validaciones visuales
       return;
     }
@@ -236,7 +242,7 @@ export class TiendaaddComponent implements OnInit, OnChanges {
   nextStep2() {
     this.currentStep = 3;
   }
-  
+
   nextStepApp() {
     const texto_hero_uno = this.tiendaForm.get('texto_hero_uno');
     const texto_hero_dos = this.tiendaForm.get('texto_hero_dos');
@@ -264,9 +270,9 @@ export class TiendaaddComponent implements OnInit, OnChanges {
 
 
 
-prevStep1(){
+  prevStep1() {
     this.currentStep = 1;
-}
+  }
   prevStep() {
     this.currentStep = 2;
   }
@@ -403,58 +409,58 @@ prevStep1(){
 
 
   cambiarImagen(file: File, campo: 'img' | 'img_hero') {
-  this.imagenSubir = file;
+    this.imagenSubir = file;
 
-  if (!file) {
-    if (campo === 'img_hero') {
-      return this.imgHeroTemp = null;
-    } else {
-      return this.imgTemp = null;
+    if (!file) {
+      if (campo === 'img_hero') {
+        return this.imgHeroTemp = null;
+      } else {
+        return this.imgTemp = null;
+      }
+    }
+
+    const reader = new FileReader();
+
+    // Solo ejecutamos el método (sin asignarlo a una constante)
+    reader.readAsDataURL(file);
+
+    reader.onloadend = () => {
+      // Asignamos la vista previa al campo correspondiente de forma independiente
+      if (campo === 'img_hero') {
+        this.imgHeroTemp = reader.result;
+      } else {
+        this.imgTemp = reader.result;
+      }
     }
   }
-
-  const reader = new FileReader();
-  
-  // Solo ejecutamos el método (sin asignarlo a una constante)
-  reader.readAsDataURL(file);
-
-  reader.onloadend = () => {
-    // Asignamos la vista previa al campo correspondiente de forma independiente
-    if (campo === 'img_hero') {
-      this.imgHeroTemp = reader.result;
-    } else {
-      this.imgTemp = reader.result;
-    }
-  }
-}
 
 
   // 🛠️ Ahora la función recibe si es 'img' o 'img_hero'
   subirImagen(campo: 'img' | 'img_hero') {
-  if (!this.imagenSubir) {
-    Swal.fire('Atención', 'Por favor, selecciona una imagen primero', 'warning');
-    return;
+    if (!this.imagenSubir) {
+      Swal.fire('Atención', 'Por favor, selecciona una imagen primero', 'warning');
+      return;
+    }
+
+    this.cargandoImagen = true;
+
+    // PASAMOS EL CAMPO AL SERVICIO
+    this.fileUploadService.actualizarFoto(this.imagenSubir, 'locaciones', this.tiendaSeleccionado._id, campo)
+      .then(img => {
+        if (campo === 'img_hero') {
+          this.tiendaSeleccionado.img_hero = img;
+        } else {
+          this.tiendaSeleccionado.img = img;
+        }
+
+        this.cargandoImagen = false;
+        this.imgTemp = null;
+        Swal.fire('Guardado', 'La imagen fue actualizada y optimizada', 'success');
+
+      }).catch(err => {
+        this.cargandoImagen = false;
+        Swal.fire('Error', 'No se pudo subir la imagen', 'error');
+      });
   }
-
-  this.cargandoImagen = true;
-
-  // PASAMOS EL CAMPO AL SERVICIO
-  this.fileUploadService.actualizarFoto(this.imagenSubir, 'locaciones', this.tiendaSeleccionado._id, campo)
-    .then(img => {
-      if (campo === 'img_hero') {
-        this.tiendaSeleccionado.img_hero = img;
-      } else {
-        this.tiendaSeleccionado.img = img;
-      }
-
-      this.cargandoImagen = false;
-      this.imgTemp = null; 
-      Swal.fire('Guardado', 'La imagen fue actualizada y optimizada', 'success');
-
-    }).catch(err => {
-      this.cargandoImagen = false;
-      Swal.fire('Error', 'No se pudo subir la imagen', 'error');
-    });
-}
 
 }

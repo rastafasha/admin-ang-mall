@@ -51,6 +51,7 @@ import { MapaComponent } from '../admin/postal/postalcomp/mapa/mapa.component';
 import { ComentariosappComponent } from '../admin/tienda/comentariosapp/comentariosapp.component';
 import { TasabcvComponent } from '../admin/tasas/tasabcv/tasabcv.component';
 import { TasaeurobcvComponent } from '../admin/tasas/tasaeurobcv/tasaeurobcv.component';
+import { ReservacionListComponent } from '../admin/tienda/reservacion/reservacion-list/reservacion-list.component';
 
 
 const childRoutes: Routes = [
@@ -111,27 +112,28 @@ const childRoutes: Routes = [
             {path: 'ingresos', component: IndexIngresoComponent , data:{tituloPage:'Ingresos'}},
             {path: 'ingresos/registro', component: CreateIngresoComponent , data:{tituloPage:'Ingresos'}},
             {path: 'ingresos/detalle/:id', component: DetalleIngresoComponent , data:{tituloPage:'Ingresos'}},
-            
+            //tienda
             {path: 'tienda', component: TiendaListComponent , data:{tituloPage:'Tienda'}},
             {path: 'tienda/comentariosapp', component: ComentariosappComponent , data:{tituloPage:'Comentarios App'}},
             {path: 'tienda/pedidos', component: PedidosMenuComponent , data:{tituloPage:'Pedidos'}},
-            
+            {path: 'atencion-local', component: AtencionLocalComponent , data:{tituloPage:'Atención Local'}},
             {path: 'tienda-user', component: UsuariosTiendaComponent , data:{tituloPage:'Tienda-empleado'}},
             {path: 'tienda-user/registro', component: UsertiendaaddComponent , data:{tituloPage:'Tienda-empleado'}},
             {path: 'tienda-user/edit/:id', component: UsertiendaaddComponent , data:{tituloPage:'Tienda-empleado-edit'}},
             {path: 'tienda-user/detalle/:id', component: UserDetailComponent , data:{tituloPage:'Tienda-empleado-detail'}},
-            
-            {path: 'transferencias', component: ListaTrasnferenciasComponent , data:{tituloPage:'transferencias'}},
-            // ruta 'pagosefectivo' agregada por José Prados
-            {path: 'pagosefectivo', component: PagosEfectivoComponent, data:{tituloPage:'Pagos en Efectivo'}},
-            {path: 'pagoscheque', component: PagosChequeComponent, data:{tituloPage:'Pagos en cheque'}},
-            {path: 'tipos-de-pago', component: TiposdepagoComponent , data:{tituloPage:'tipos-de-pago'}},
-            {path: 'atencion-local', component: AtencionLocalComponent , data:{tituloPage:'Atención Local'}},
-
-            {path: 'carrito', component: CarritoComponent , data:{tituloPage:'Tienda Carrito'}},
             {path: 'tienda-user/edit/:id', component: UsertiendaaddComponent , data:{tituloPage:'Tienda-empleado-edit'}},
             {path: 'tienda-user/detalle/:id', component: UserDetailComponent , data:{tituloPage:'Tienda-empleado-detail'}},
+            {path: 'reservaciones', component: ReservacionListComponent , data:{tituloPage:'Reservaciones'}},
+            {path: 'carrito', component: CarritoComponent , data:{tituloPage:'Tienda Carrito'}},
+            //pagos
+            {path: 'tipos-de-pago', component: TiposdepagoComponent , data:{tituloPage:'tipos-de-pago'}},
+            {path: 'transferencias', component: ListaTrasnferenciasComponent , data:{tituloPage:'transferencias'}},
+            {path: 'pagoscheque', component: PagosChequeComponent, data:{tituloPage:'Pagos en cheque'}},
+            // ruta 'pagosefectivo' agregada por José Prados
+            {path: 'pagosefectivo', component: PagosEfectivoComponent, data:{tituloPage:'Pagos en Efectivo'}},
+        
             
+            //tasas
             {path: 'tasadollarbcv', component: TasabcvComponent , data:{tituloPage:'Tasa Dollar Bcv'}},
             {path: 'tasaeurobcv', component: TasaeurobcvComponent , data:{tituloPage:'Tasa Euro Bcv'}},
             //mantenimientos

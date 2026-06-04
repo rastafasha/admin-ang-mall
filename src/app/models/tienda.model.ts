@@ -17,6 +17,7 @@ export class Tienda{
     public texto_hero_destacado: string,
     public texto_hero_dos: string,
     public color_fondo: string,
+    public has_reservacion: boolean,
     public redssociales?: string,
     public telefono?: string,
     public productos?: string,

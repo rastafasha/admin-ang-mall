@@ -5,8 +5,5 @@ export class Color{
     public producto: string,
     public color: string,
 
-  ){
-  }
-
-
+  ){}
 }
