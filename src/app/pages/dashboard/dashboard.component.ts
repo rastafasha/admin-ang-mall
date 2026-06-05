@@ -11,6 +11,9 @@ import { TiendaService } from 'src/app/services/tienda.service';
 import { Tienda } from 'src/app/models/tienda.model';
 import { TasadollarbcvService } from 'src/app/services/tasadollarbcv.service';
 import { TasaeurobcvService } from 'src/app/services/tasaeurobcv.service';
+import { SwPush } from '@angular/service-worker';
+import { ToastrService } from 'ngx-toastr';
+import { PushNotificationService } from 'src/app/services/push-notification.service';
 declare let Chart;
 
 @Component({
@@ -20,6 +23,11 @@ declare let Chart;
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
+
+  readonly VAPID_PUBLIC_KEY = environment.VAPI_KEY_PUBLIC;
+  
+  public isLoadingSwitch: boolean = false; // Controla la carga general de las métricas del dashboard
+
 
   public bestsellers: Producto[] = [];
   public populares: Producto[] = [];
@@ -108,6 +116,9 @@ export class DashboardComponent implements OnInit {
     private tasaEuroService: TasaeurobcvService,
     private _router: Router,
     private _route: ActivatedRoute,
+    public pushService: PushNotificationService, // Debe ser PUBLIC para que el HTML acceda a él
+    private swPush: SwPush,
+    private toastr: ToastrService
   ) {
     this.url = environment.baseUrl;
     this.identity = this._userService.usuario;
@@ -117,6 +128,12 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
     const user = localStorage.getItem('user');
     this.usuario = JSON.parse(user);
+    // Al abrir el Dashboard, sincronizamos el Switch con el estado real del navegador
+    if (Notification.permission === 'granted') {
+      this.pushService.isSubscribed$.next(true);
+    } else {
+      this.pushService.isSubscribed$.next(false);
+    }
 
     if (this.usuario.role === 'SUPERADMIN') {
       this.data_Dashboard();
@@ -141,6 +158,57 @@ export class DashboardComponent implements OnInit {
     this.getTasaDollarUltima();
     this.getTasaEuroUltima();
 
+  }
+
+  togglePush() {
+    // Evaluamos el estado guardado en el BehaviorSubject de tu servicio
+    const estaSuscrito = this.pushService.isSubscribed$.value;
+
+    if (!estaSuscrito) {
+      // 🟢 EL ADMINISTRADOR PRENDIÓ EL SWITCH
+      this.pushService.isProcessing$.next(true);
+
+      this.swPush.requestSubscription({
+        serverPublicKey: this.VAPID_PUBLIC_KEY
+      })
+      .then(sub => {
+        // Guardamos la suscripción en tu base de datos mediante tu servicio
+        this.pushService.guardarPushSubscription(sub).subscribe({
+          next: () => {
+            this.pushService.isSubscribed$.next(true);
+            this.pushService.isProcessing$.next(false);
+            this.toastr.success('¡Notificaciones del Dashboard activadas! 🔔');
+          },
+          error: (err) => {
+            console.error('Error guardando sub en backend:', err);
+            this.pushService.isProcessing$.next(false);
+            this.toastr.error('Error', 'No se pudo registrar este dispositivo en el servidor');
+          }
+        });
+      })
+      .catch(err => {
+        // Si el admin cancela el permiso flotante, apagamos el switch automáticamente
+        console.warn('Permiso denegado por el usuario:', err);
+        this.pushService.isProcessing$.next(false);
+        this.pushService.isSubscribed$.next(false);
+        this.toastr.warning('Permiso requerido', 'Debes permitir las notificaciones en la ventana del navegador');
+      });
+
+    } else {
+      // 🔴 EL ADMINISTRADOR APAGÓ EL SWITCH
+      this.pushService.isProcessing$.next(true);
+
+      this.swPush.unsubscribe()
+        .then(() => {
+          this.pushService.isSubscribed$.next(false);
+          this.pushService.isProcessing$.next(false);
+          this.toastr.info('Notificaciones del Dashboard desactivadas');
+        })
+        .catch(err => {
+          console.error('Error al desuscribir del service worker:', err);
+          this.pushService.isProcessing$.next(false);
+        });
+    }
   }
 
   getTasaDollarUltima(){

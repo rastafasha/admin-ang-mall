@@ -29,6 +29,35 @@
                     </div>
                     <!-- comportamiento -->
                     <div class="col-xs-12 col-sm-4">
+                        <!-- subcribirse a notificaciones-->
+                        <div class="col">
+                            <div class="card">
+                                <div class="card-body" >
+                                    <div class="setting-row" *ngIf="!isLoadingSwitch" [class.loading]="pushService.isProcessing$ | async">
+                                        <div class="setting-info">
+                                            <i class="fa fa-bell"></i>
+                                            <div class="text-container">
+                                                <strong>Notificaciones Push</strong>
+                                                <span>Avisos importantes</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="switch-wrapper">
+                                            <!-- Spinner pequeño que solo aparece al cargar -->
+                                            <div *ngIf="pushService.isProcessing$ | async" class="mini-spinner"></div>
+
+                                            <label class="switch">
+                                                <input type="checkbox" [disabled]="pushService.isProcessing$ | async"
+                                                    [checked]="pushService.isSubscribed$ | async" (change)="togglePush()">
+                                                <span class="slider round"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                    <!-- configurar notificaciones push -->
+                                </div>
+
+                            </div>
+                        </div>
                         <!-- total mes -->
                         <div class="col">
                             <div class="card">
@@ -123,7 +152,7 @@
                 <!-- accesos tienda -->
                 <div class="row">
                     <!-- productos -->
-                    <div class="col" >
+                    <div class="col">
                         <div class="card">
                             <div class="card-body" style="padding-bottom: 12px;">
                                 <div class="d-flex align-items-center mx-auto py-3 px-3"
@@ -145,7 +174,7 @@
                         </div>
                     </div>
                     <!-- transferencias -->
-                    <div class="col" >
+                    <div class="col">
                         <div class="card">
                             <div class="card-body" style="padding-bottom: 12px;">
                                 <div class="d-flex align-items-center mx-auto py-3 px-3"
@@ -167,7 +196,7 @@
                         </div>
                     </div>
                     <!-- tikets/modulo -->
-                    <div class="col" >
+                    <div class="col">
                         <div class="card">
                             <div class="card-body" style="padding-bottom: 12px;">
                                 <div class="d-flex align-items-center mx-auto py-3 px-3"
@@ -190,9 +219,9 @@
                     </div>
                 </div>
                 <!-- tasas -->
-                 <div class="row">
+                <div class="row">
                     <!-- dollar -->
-                    <div class="col" >
+                    <div class="col">
                         <div class="card">
                             <div class="card-body" style="padding-bottom: 12px;">
                                 <div class="d-flex align-items-center mx-auto py-3 px-3"
@@ -215,7 +244,7 @@
                         </div>
                     </div>
                     <!-- euro -->
-                    <div class="col" >
+                    <div class="col">
                         <div class="card">
                             <div class="card-body" style="padding-bottom: 12px;">
                                 <div class="d-flex align-items-center mx-auto py-3 px-3"
@@ -267,7 +296,8 @@
                                 <div class="widget">
 
                                     <!-- Item -->
-                                    <div class="media align-items-center pb-2 border-bottom " style="display: flex; gap:10px" *ngFor="let item of last_sellers">
+                                    <div class="media align-items-center pb-2 border-bottom "
+                                        style="display: flex; gap:10px" *ngFor="let item of last_sellers">
                                         <a class="d-block mr-2" *ngIf="item.producto">
                                             <img width="64" [src]="item.producto.img | imagenPipe: 'productos' "
                                                 alt="Product" />
