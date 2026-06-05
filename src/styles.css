@@ -1,3 +1,4 @@
+@import 'ngx-toastr/toastr';
 .fast {
     -webkit-animation-duration: 0.3s;
     animation-duration: 0.3s;

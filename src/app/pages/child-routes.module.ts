@@ -52,6 +52,7 @@ import { ComentariosappComponent } from '../admin/tienda/comentariosapp/comentar
 import { TasabcvComponent } from '../admin/tasas/tasabcv/tasabcv.component';
 import { TasaeurobcvComponent } from '../admin/tasas/tasaeurobcv/tasaeurobcv.component';
 import { ReservacionListComponent } from '../admin/tienda/reservacion/reservacion-list/reservacion-list.component';
+import { NotificacionesComponent } from '../admin/tienda/notificaciones/notificaciones.component';
 
 
 const childRoutes: Routes = [
@@ -136,6 +137,7 @@ const childRoutes: Routes = [
             //tasas
             {path: 'tasadollarbcv', component: TasabcvComponent , data:{tituloPage:'Tasa Dollar Bcv'}},
             {path: 'tasaeurobcv', component: TasaeurobcvComponent , data:{tituloPage:'Tasa Euro Bcv'}},
+            {path: 'notificaciones', component: NotificacionesComponent , data:{tituloPage:'Notificaciones'}},
             //mantenimientos
 
 

@@ -18,12 +18,12 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 
-import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
-
 //pwa
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -39,7 +39,7 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
     ComponentsModule,
     PipesModule,
     AdminModule,
-    // CKEditorModule,
+    BrowserAnimationsModule,
     TranslateModule.forRoot({
       defaultLanguage: 'es',
       loader: {
@@ -54,7 +54,12 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
       enabled: environment.production,
       // Cambiamos a registro inmediato para evitar bloqueos por peticiones en segundo plano
       registrationStrategy: 'registerImmediately'
-    })
+    }),
+    ToastrModule.forRoot({
+      timeOut: 10000,
+      positionClass: 'toast-top-right',
+      preventDuplicates: true,
+    }),
   ],
   providers: [
     Document,

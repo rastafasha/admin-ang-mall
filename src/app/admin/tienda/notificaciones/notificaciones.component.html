@@ -1,0 +1,86 @@
+<div class="row animated fadeIn fast">
+    <!-- <div class="col-12">
+        <app-search [query]="query" [modelo]="reservaciones" [colleccionName]="reservaciones"
+ [colleccion]="'reservaciones'" (searchEvent)="handleSearchEvent($event)" (resetEvent)="PageSize()"></app-search>
+       
+    </div> -->
+</div>
+<app-skeleton-loader *ngIf="cargando" [rows]="1" [columns]="3"></app-skeleton-loader>
+<app-skeleton-loader *ngIf="cargando" [rows]="4" [columns]="9"></app-skeleton-loader>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card shadow-sm">
+            <!-- Encabezado con acciones globales -->
+            <div class="card-header bg-white d-flex justify-content-between align-items-center py-3">
+                <h5 class="mb-0 fw-bold text-dark">Historial de Notificaciones</h5>
+                <button *ngIf="historialNotificaciones && historialNotificaciones.length > 0"
+                    class="btn btn-outline-danger btn-sm" (click)="vaciarTodo()">
+                    <i class="fa fa-trash-o me-1"></i> Vaciar Buzón
+                </button>
+            </div>
+
+            <div class="card-body p-0">
+                <!-- Estado Vacío Blindado contra loops o undefined -->
+                <div *ngIf="!historialNotificaciones || historialNotificaciones.length === 0"
+                    class="text-center py-5 text-muted">
+                    <i class="mdi mdi-bell-off d-block fs-1 mb-2 text-muted-light"></i>
+                    <p class="mb-0">No tienes alertas registradas en el historial.</p>
+                </div>
+
+                <!-- Listado de Alertas -->
+                <div class="list-group list-group-flush"
+                    *ngIf="historialNotificaciones && historialNotificaciones.length > 0">
+                    <div *ngFor="let notif of historialNotificaciones | paginate: { itemsPerPage: count, currentPage: p }"
+                        class="list-group-item list-group-item-action d-flex justify-content-between align-items-center py-3 border-bottom position-relative"
+                        [style.background-color]="notif.leido ? '#fff' : '#f4f7fc'"
+                        style="transition: background 0.2s;">
+
+                        <!-- Todo tu bloque de información (Círculo de color, icono, textos) se queda EXACTAMENTE IGUAL -->
+                        <div class="d-flex align-items-center flex-grow-1" (click)="atenderNotificacion(notif)"
+                            style="cursor: pointer;">
+                            <div class="p-2 rounded-circle text-white me-3 d-flex align-items-center justify-content-center"
+                                [ngClass]="{
+                 'bg-info': notif.tipo === 'NUEVO_PAGO' || notif.tipo.startsWith('PAGO_'),
+                 'bg-warning': notif.tipo === 'NUEVO_PEDIDO' || notif.tipo.startsWith('PEDIDO_'),
+                 'bg-success': notif.tipo === 'NUEVA_RESERVACION' || notif.tipo.startsWith('RESERVACION_')
+             }" style="width: 40px; height: 40px;">
+                                <i [ngClass]="{
+                'fa fa-money': notif.tipo === 'NUEVO_PAGO' || notif.tipo.startsWith('PAGO_'),
+                'fa fa-cutlery': notif.tipo === 'NUEVO_PEDIDO' || notif.tipo.startsWith('PEDIDO_'),
+                'fa fa-calendar': notif.tipo === 'NUEVA_RESERVACION' || notif.tipo.startsWith('RESERVACION_')
+            }"></i>
+                            </div>
+                            <div>
+                                <h6 class="mb-1 fw-bold text-dark fs-6">{{ notif.titulo }}</h6>
+                                <p class="mb-0 text-muted small">{{ notif.mensaje }}</p>
+                                <small class="text-muted-light d-block mt-1" style="font-size: 0.75rem;">
+                                    {{ notif.createdAt | date:'mediumDate' }} - {{ notif.createdAt | date:'shortTime' }}
+                                </small>
+                            </div>
+                        </div>
+
+                        <div class="ms-3">
+                            <button type="button" class="btn btn-sm btn-light border"
+                                (click)="eliminarIndividual(notif._id)" title="Eliminar Alerta">
+                                <i class="fa fa-times text-danger"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 2. Reemplazamos los botones anteriores por tus controles limpios en el card-footer -->
+                    <div class="card-footer bg-white d-flex justify-content-center py-3"
+                        *ngIf="historialNotificaciones && historialNotificaciones.length > 0">
+                        <!-- Tu etiqueta nativa enganchada a la función que pide la página al backend -->
+                        <pagination-controls (pageChange)="cambiarPagina($event)"></pagination-controls>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+
+<!-- <app-modalinfo-reserverencias></app-modalinfo-reserverencias> -->

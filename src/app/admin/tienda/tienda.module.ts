@@ -22,6 +22,8 @@ import { ComponentsModule } from 'src/app/components/components.module';
 import { ComentariosappComponent } from './comentariosapp/comentariosapp.component';
 import { ReservacionListComponent } from './reservacion/reservacion-list/reservacion-list.component';
 import { ReservacionViewComponent } from './reservacion/reservacion-view/reservacion-view.component';
+import { NotificacionesComponent } from './notificaciones/notificaciones.component';
+import { ReservacionEstadisticasComponent } from './reservacion/reservacion-estadisticas/reservacion-estadisticas.component';
 
 
 @NgModule({
@@ -38,6 +40,8 @@ import { ReservacionViewComponent } from './reservacion/reservacion-view/reserva
     ComentariosappComponent,
     ReservacionListComponent,
     ReservacionViewComponent,
+    NotificacionesComponent,
+    ReservacionEstadisticasComponent
 
   ],
   exports: [
@@ -50,6 +54,8 @@ import { ReservacionViewComponent } from './reservacion/reservacion-view/reserva
     ComentariosappComponent,
     ReservacionListComponent,
     ReservacionViewComponent,
+    NotificacionesComponent,
+    ReservacionEstadisticasComponent
 
   ],
   imports: [

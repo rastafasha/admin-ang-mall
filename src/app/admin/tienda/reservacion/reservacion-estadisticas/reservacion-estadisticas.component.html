@@ -1,0 +1,8 @@
+<div *ngIf="tieneDatos && datosAdaptados.length > 0">
+    <!-- 🟢 CORREGIDO: Usamos el input exacto que tu componente bar-chart está esperando -->
+    <app-bar-chart [estadisticas]="datosAdaptados"></app-bar-chart>
+</div>
+
+<div *ngIf="!tieneDatos || datosAdaptados.length === 0" class="text-center py-5 text-muted small">
+    No hay suficiente flujo de reservas esta semana para proyectar métricas.
+</div>

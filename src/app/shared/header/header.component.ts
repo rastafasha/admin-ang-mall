@@ -10,13 +10,12 @@ import { CartItemModel } from 'src/app/models/cart-item-model';
 import { StorageService } from 'src/app/services/storage.service';
 import { CarritoService } from 'src/app/services/carrito.service';
 import { environment } from 'src/environments/environment';
-
 import { io } from "socket.io-client";
 import { Subscription } from 'rxjs';
 import { MessageService } from 'src/app/services/message.service';
 import { TiendaService } from 'src/app/services/tienda.service';
 import { SidebarService } from 'src/app/services/sidebar.service';
-import { filter } from 'rxjs/operators';
+import { NotificacionService } from 'src/app/services/notificacion.service';
 
 @Component({
   selector: 'app-header',
@@ -54,13 +53,17 @@ export class HeaderComponent implements OnInit, OnDestroy {
    langs: string[] = [];
 
   // Dropdown visibility flags
-  showMessagesDropdown = false;
   showCartDropdown = false;
+  public showMessagesDropdown: boolean = false;     // ✉️ Para los correos (SUPERADMIN)
+public showNotificationDropdown: boolean = false; // 🔔 Para la campana (ADMIN/SUPERADMIN)
   showLanguageDropdown = false;
   showProfileDropdown = false;
+  public listaNotificaciones: any[] = [];
+  totalNoLeidas:number = 0
 
   public socket = io(environment.soketServer);
 public tienda_moneda : any;
+
   constructor(
     private usuarioService: UsuarioService,
     private congeralService: CongeneralService,
@@ -72,7 +75,8 @@ public tienda_moneda : any;
     private _carritoService:CarritoService,
     private _messageService: MessageService,
     private cdr: ChangeDetectorRef,
-    private sidebarService: SidebarService
+    private sidebarService: SidebarService,
+    private notificacionService: NotificacionService
   ) {
     // this.usuario = usuarioService.usuario;
     
@@ -143,6 +147,7 @@ ngOnDestroy(): void {
     this.showMessagesDropdown = !this.showMessagesDropdown;
   }
 
+ 
   toggleCartDropdown(event: Event): void {
     event.preventDefault();
     event.stopPropagation();
@@ -332,6 +337,72 @@ ngOnDestroy(): void {
       }
       // console.log('Pulsado');
   }
+
+
+  // notificaciones
+
+  toggleNotificationDropdown(event: Event): void {
+  event.preventDefault();
+  
+  // Guardamos cómo estaba antes de limpiar la pantalla
+  const estadoActual = this.showNotificationDropdown;
+  
+  // Cerramos cualquier otro menú abierto
+  this.closeAllDropdowns();
+  
+  // Asignamos el estado invertido
+  this.showNotificationDropdown = !estadoActual;
+  
+  // Si se abrió, escuchamos un clic en cualquier parte de la pantalla para cerrarlo si pinchan fuera
+  if (this.showNotificationDropdown) {
+    const clickAfuera = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      // Si el clic NO fue dentro de un elemento con la clase .dropdown, cerramos
+      if (!target.closest('.dropdown')) {
+        this.showNotificationDropdown = false;
+        document.removeEventListener('click', clickAfuera); // Limpiamos el escuchador
+      }
+    };
+    // Pequeño retraso para que no se ejecute con el mismo clic de apertura
+    setTimeout(() => document.addEventListener('click', clickAfuera), 0);
+  }
+}
+
+   
+
+  eliminarUna(id: string, event: Event) {
+    event.stopPropagation(); // Evita redirigir
+    event.preventDefault();  // Evita recargas
+    this.notificacionService.borrarNotificacion(id).subscribe(() => {
+      this.cargarHistorialDropdown();
+    });
+  }
+
+
+  // 🟢 FUNCIÓN PARA TRAER LAS NOTIFICACIONES AL DROPDOWN
+cargarHistorialDropdown() {
+  // Solo consultamos al backend si el dropdown se está abriendo 
+  // (es decir, si showMessageDropdown pasó a ser true tras el click)
+  if (this.showNotificationDropdown) {
+    
+    // Llamamos al método que adaptamos en tu servicio (página 1 para el dropdown corto)
+    this.notificacionService.obtenerHistorialCompleto(1).subscribe({
+      next: (res) => {
+        if (res.ok && res.notificaciones) {
+          // Asignamos el arreglo real de la base de datos a tu variable blindada
+          this.listaNotificaciones = res.notificaciones;
+          
+          console.log('Notificaciones cargadas con éxito:', this.listaNotificaciones);
+        }
+      },
+      error: (err) => {
+        console.error('Error al traer las notificaciones del backend:', err);
+        this.listaNotificaciones = []; // Aseguramos arreglo vacío en caso de falla
+      }
+    });
+
+  }
+}
 
 
 }

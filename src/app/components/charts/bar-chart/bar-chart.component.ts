@@ -9,64 +9,44 @@ import { Chart } from 'chart.js';
 })
 export class BarChartComponent implements OnChanges {
   public chart: Chart;
-  @Input() ventas: any;
-  @Input() total_ganado: any;
+  
+  // Recibe la data limpia procesada desde tu backend (.aggregate)
+  @Input() estadisticas: any[] = [];
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes['ventas'] && this.ventas) {
-      this.createChart();
-    }
-    if (changes['total_ganado'] && this.total_ganado) {
+    if (changes['estadisticas'] && this.estadisticas) {
       this.createChart();
     }
   }
 
-  private createChart() {
-    const labels = [
-      'Enero',
-      'Febrero',
-      'Marzo',
-      'Abril',
-      'Mayo',
-      'Junio',
-      'Julio',
-      'Agosto',
-      'Septiembre',
-      'Octubre',
-      'Noviembre',
-      'Diciembre',
-    ];
+private createChart() {
+  setTimeout(() => {
+    
+    if (!this.estadisticas || this.estadisticas.length === 0) return;
 
-    // Initialize arrays for monto and monto_pendiente per month
-    const montoData = new Array(12).fill(0);
-    const montoPendienteData = new Array(12).fill(0);
-
-    // Aggregate monto and monto_pendiente by month
-    this.ventas.forEach(payment => {
-      if (payment.created_at) {
-        const date = new Date(payment.created_at);
-        const month = date.getMonth(); // 0-based month index
-        montoData[month] += Number(payment.monto) || 0;
-        montoPendienteData[month] += Number(payment.monto_pendiente) || 0;
-      }
-    });
+    // 🟢 CORRECCIÓN DEFINITIVA: Mapeamos los campos reales de las reservas sin inventar montos
+    const labels = this.estadisticas.map(item => item._id); // Las fechas ('2024-11-20', '2024-11-23')
+    const totalReservas = this.estadisticas.map(item => item.totalReservas); // Cantidad de mesas (2 y 1)
+    const totalPersonas = this.estadisticas.map(item => item.totalPersonas); // Total de personas (6 y 3)
 
     const data = {
       labels: labels,
       datasets: [
         {
-          label: 'Pagados',
-          data: montoData,
-          backgroundColor: 'rgba(75, 192, 192, 0.6)',
-          borderColor: 'rgba(75, 192, 192, 1)',
-          borderWidth: 1
+          label: 'Reservas Creadas',
+          data: totalReservas,
+          backgroundColor: 'rgba(54, 162, 235, 0.6)', // Barra Azul
+          borderColor: 'rgba(54, 162, 235, 1)',
+          borderWidth: 1,
+          borderRadius: 4
         },
         {
-          label: 'Pendientes',
-          data: montoPendienteData,
-          backgroundColor: 'rgba(255, 99, 132, 0.2)',
-          borderColor: 'rgba(255, 99, 132, 1)',
-          borderWidth: 1
+          label: 'Total Comensales',
+          data: totalPersonas,
+          backgroundColor: 'rgba(75, 192, 192, 0.6)', // Barra Verde
+          borderColor: 'rgba(75, 192, 192, 1)',
+          borderWidth: 1,
+          borderRadius: 4
         }
       ]
     };
@@ -79,22 +59,28 @@ export class BarChartComponent implements OnChanges {
       type: 'bar',
       data: data,
       options: {
+        responsive: true,
+        maintainAspectRatio: false,
         scales: {
-          y: {
+          x: { grid: { display: false } },
+          y: { 
             beginAtZero: true,
+            ticks: { stepSize: 1 } 
           },
         },
-        responsive: true,
         plugins: {
-          legend: {
-            position: 'top',
-          },
+          legend: { position: 'top' },
           title: {
             display: true,
-            text: 'Comportamiento del Año'
+            text: 'Flujo de Reservaciones (Últimos Días)'
           }
         },
       },
     });
-  }
+
+  }, 60);
+}
+
+
+
 }

@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Reservacion } from 'src/app/models/reservacion.model';
-import { BusquedasService } from 'src/app/services/busquedas.service';
 import { ReservacionService } from 'src/app/services/reservacion.service';
 import { TiendaService } from 'src/app/services/tienda.service';
 import Swal from 'sweetalert2';
@@ -22,7 +21,9 @@ export class ReservacionListComponent {
   cargando: boolean = true;
   query: string = '';
   searchForm!: FormGroup;
-  reservaSeleccionado:Reservacion | null = null;
+  reservaSeleccionado: Reservacion | null = null;
+  option_selectedd: number = 1;
+  solicitud_selectedd: any = 1;
 
   constructor(
     private reservacionService: ReservacionService,
@@ -185,15 +186,27 @@ export class ReservacionListComponent {
   }
 
   onViewPago(reserv: Reservacion) {
-      this.reservaSeleccionado = reserv;
+    this.reservaSeleccionado = reserv;
+  }
+
+
+  onCloseModal(): void {
+    this.reservaSeleccionado = null;
+  }
+
+  onClose() { }
+
+  optionSelected(value: number) {
+    this.option_selectedd = value;
+    if (this.option_selectedd === 1) {
+
+      // this.ngOnInit();
     }
-  
-  
-    onCloseModal(): void {
-      this.reservaSeleccionado = null;
+    if (this.option_selectedd === 2) {
+      this.solicitud_selectedd = null;
     }
-  
-    onClose() { }
+  }
+
 
 
 }

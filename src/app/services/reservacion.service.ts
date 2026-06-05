@@ -55,6 +55,24 @@ export class ReservacionService {
       );
   }
 
+     getReservacionEstadisticasByLocal() {
+    const sessionUser = JSON.parse(localStorage.getItem('user') || '{}');
+    
+    const url = (sessionUser.role === 'ADMIN' || sessionUser.role === 'VENTAS')
+      ? `${base_url}/reservacion/estadisticas?local=${sessionUser.local}`
+      : `${base_url}/reservacion/estadisticas`;
+
+    return this.http.get<any>(url, this.headers)
+      .pipe(
+        // 🟢 CORREGIDO: Mapeamos directamente sobre la propiedad 'data' que te envía el backend
+        map((resp: { ok: boolean, data: any[] }) => {
+  return resp.ok && resp.data ? resp.data : [];
+})
+      );
+  }
+
+
+
   getReservacionByUser(_id: any) {
     const url = `${base_url}/reservacion/by_user/${_id}`;
     return this.http.get<any>(url, this.headers)

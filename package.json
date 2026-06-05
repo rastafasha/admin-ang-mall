@@ -40,6 +40,7 @@
     "ngx-loading": "^2.0.1",
     "ngx-pagination": "^6.0.0",
     "ngx-paypal": "^11.0.0",
+    "ngx-toastr": "^19.1.0",
     "rxjs": "~7.5.0",
     "socket.io-client": "^4.8.1",
     "spectrum-colorpicker2": "^2.0.0",

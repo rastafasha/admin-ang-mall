@@ -146,13 +146,11 @@ export class DashboardComponent implements OnInit {
   getTasaDollarUltima(){
     this.tasaDollarService.getUltimaTasa().subscribe((resp:any)=>{
       this.tasadollar = resp;
-      console.log(resp)
     })
   }
   getTasaEuroUltima(){
     this.tasaEuroService.getUltimaTasa().subscribe((resp:any)=>{
       this.tasaeuro = resp;
-      console.log(resp)
     })
   }
 

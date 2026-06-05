@@ -12,18 +12,19 @@
                     <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
                     <!-- Dark Logo icon -->
                     <img src="./assets/svg/logo.svg" style="width: 100%; height: 45px;" alt="homepage" class="dark-logo" />
-                    <!-- <img [src]="congenerals[0].img" style="width: 100%; height: 45px;" alt="homepage" class="dark-logo" /> -->
-                    <!-- <img src="./assets/images/logo-icon.png" alt="homepage" class="dark-logo" /> -->
                     <!-- Light Logo icon -->
                     <img src="./assets/svg/logo.svg" style="width: 100%; height: 45px;" alt="homepage" class="light-logo" />
                     <!-- <img [src]="congenerals[0].img" style="width: 100%; height: 45px;" alt="homepage" class="light-logo" /> -->
                 </b>
                 <!--End Logo icon -->
-                <!-- Logo text --><span>
+                <!-- Logo text -->
+                 <span>
                     <!-- dark Logo text -->
                     <img src="./assets/svg/tipo_admin.svg"  style="width: 170px;" class="dark-logo" />
                     <!-- Light Logo text -->
-                    <img src="./assets/svg/tipo_admin.svg" class="light-logo" style="width: 170px;" /></span> </a>
+                    <img src="./assets/svg/tipo_admin.svg" class="light-logo" style="width: 170px;" />
+                </span> 
+            </a>
         </div>
         <!-- ============================================================== -->
         <!-- End Logo -->
@@ -34,8 +35,12 @@
             <!-- ============================================================== -->
             <ul class="navbar-nav mr-auto">
                 <!-- This is  -->
-                <li class="nav-item"> <a class="nav-link nav-toggler hidden-md-up waves-effect waves-dark" href="javascript:void(0)" (click)="toggleSidebar()"><i class="ti-menu"></i></a> </li>
-                <li class="nav-item"> <a class="nav-link sidebartoggler hidden-sm-down waves-effect waves-dark" href="javascript:void(0)" (click)="toggleSidebar()"><i class="ti-menu"></i></a> </li>
+                <li class="nav-item"> <a class="nav-link nav-toggler hidden-md-up waves-effect waves-dark" href="javascript:void(0)" (click)="toggleSidebar()">
+                    <i class="ti-menu"></i></a> 
+                </li>
+                <li class="nav-item"> <a class="nav-link sidebartoggler hidden-sm-down waves-effect waves-dark" href="javascript:void(0)" (click)="toggleSidebar()">
+                    <i class="ti-menu"></i></a> 
+                </li>
                 <li class="nav-item hidden-sm-down"></li>
             </ul>
             <!-- ============================================================== -->
@@ -43,69 +48,84 @@
             <!-- ============================================================== -->
             <ul class="navbar-nav my-lg-0">
                <div class="pushright">
-                <!-- ============================================================== -->
-                <!-- Search -->
-                <!-- ============================================================== -->
-                <li class="nav-item hidden-xs-down search-box"  *ngIf="usuario.role ==='SUPERADMIN' "> <a class="nav-link hidden-sm-down waves-effect waves-dark" href="javascript:void(0)"><i class="ti-search"></i></a>
-                    <form class="app-search" (submit)="buscar(txtTermino.value)">
-                        <input type="text" class="form-control" placeholder="Buscar" #txtTermino>
-                        <a class="srh-btn"><i class="ti-close"></i></a>
-                    </form>
-                </li>
+                
                  
                 <!-- ============================================================== -->
-                <!-- Ventas Recientes -->
+                <!-- Notificaciones Recientes -->
                 <!-- ============================================================== -->
-                <!-- <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="mdi mdi-message"></i>
-                        <div class="notify"> <span class="heartbit"></span> <span class="point"></span> </div>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right mailbox animated fadeIn fast">
-                        <ul>
-                            <li>
-                                <div class="drop-title">Ventas Recientes</div>
-                            </li>
-                            <li>
-                                <div class="message-center">
-                                    
-                                    <a href="#">
-                                        <div class="btn btn-danger btn-circle"><i class="fa fa-link"></i></div>
-                                        <div class="mail-contnet">
-                                            <h5>Luanch Admin</h5> <span class="mail-desc">Just see the my new admin!</span> <span class="time">9:30 AM</span> </div>
-                                    </a>
-                                    
-                                    <a href="#">
-                                        <div class="btn btn-success btn-circle"><i class="ti-calendar"></i></div>
-                                        <div class="mail-contnet">
-                                            <h5>Event today</h5> <span class="mail-desc">Just a reminder that you have event</span> <span class="time">9:10 AM</span> </div>
-                                    </a>
-                                    
-                                    <a href="#">
-                                        <div class="btn btn-info btn-circle"><i class="ti-settings"></i></div>
-                                        <div class="mail-contnet">
-                                            <h5>Settings</h5> <span class="mail-desc">You can customize this template as you want</span> <span class="time">9:08 AM</span> </div>
-                                    </a>
-                                    <a href="#">
-                                        <div class="btn btn-primary btn-circle"><i class="ti-user"></i></div>
-                                        <div class="mail-contnet">
-                                            <h5>Pavan kumar</h5> <span class="mail-desc">Just see the my admin!</span> <span class="time">9:02 AM</span> </div>
-                                    </a>
-                                </div>
-                            </li>
-                            <li>
-                                <a class="nav-link text-center" routerLink="/dashboard/ventas/modulo"> <strong>Ver Todas</strong> <i class="fa fa-angle-right"></i> </a>
-                            </li>
-                        </ul>
+                <li class="nav-item dropdown">
+                <!-- Usamos tu misma función de toggle pero le pasamos la recarga al hacer clic -->
+                <a class="nav-link dropdown-toggle waves-effect waves-dark" href="javascript:void(0)" 
+                (click)="toggleNotificationDropdown($event); cargarHistorialDropdown()" 
+                [attr.aria-expanded]="showNotificationDropdown"> 
+                    <!-- Cambiamos el icono a una campana -->
+                    <i class="mdi mdi-bell"></i>
+                    <!-- El punto de notificación parpadea solo si hay pendientes -->
+                    <div class="notify" *ngIf="totalNoLeidas > 0"> 
+                        <span class="heartbit"></span> 
+                        <span class="point"></span> 
                     </div>
-                </li> -->
+                </a>
+    
+                <!-- Mantiene tu control exacto de apertura con [style.display] -->
+                <div class="dropdown-menu dropdown-menu-right mailbox animated bounceInDown" 
+                    [style.display]="showNotificationDropdown ? 'block' : 'none'"
+                    style="width: 320px; max-height: 400px; overflow-y: auto;">
+                    <ul>
+                        <li>
+                            <div class="drop-title d-flex justify-content-between align-items-center">
+                                <span>Notificaciones ({{ totalNoLeidas }})</span>
+                                <button *ngIf="totalNoLeidas > 0" class="btn btn-link btn-sm p-0 text-decoration-none" style="font-size: 0.75rem;" (click)="marcarTodo()">
+                                    Marcar leídas
+                                </button>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="message-center">
+                                <!-- Estado Vacío real -->
+                                <div *ngIf="!listaNotificaciones || listaNotificaciones.length === 0" class="p-3 text-center text-muted small">
+                                    No tienes alertas nuevas
+                                </div>
+
+                                <!-- Mapeo dinámico con los iconos e items reales de tu sistema -->
+                                <a href="javascript:void(0)" *ngFor="let notif of listaNotificaciones" (click)="abrirNotificacion(notif)" [style.background-color]="notif.leido ? '#fff' : '#f4f7fc'" class="position-relative">
+                                    <div class="btn btn-circle" [ngClass]="{
+                                        'btn-info': notif.tipo === 'NUEVO_PAGO' || notif.tipo.startsWith('PAGO_'),
+                                        'btn-warning': notif.tipo === 'NUEVO_PEDIDO' || notif.tipo.startsWith('PEDIDO_'),
+                                        'btn-success': notif.tipo === 'NUEVA_RESERVACION' || notif.tipo.startsWith('RESERVACION_')
+                                    }">
+                                        <i [ngClass]="{
+                                            'fa fa-money': notif.tipo === 'NUEVO_PAGO' || notif.tipo.startsWith('PAGO_'),
+                                            'fa fa-cutlery': notif.tipo === 'NUEVO_PEDIDO' || notif.tipo.startsWith('PEDIDO_'),
+                                            'fa fa-calendar': notif.tipo === 'NUEVA_RESERVACION' || notif.tipo.startsWith('RESERVACION_')
+                                        }"></i>
+                                    </div>
+                                    <div class="mail-contnet" style="width: 75%;">
+                                        <h5>{{ notif.titulo }}</h5> 
+                                        <span class="mail-desc text-truncate d-block">{{ notif.mensaje }}</span> 
+                                        <span class="time">{{ notif.createdAt | date:'shortTime' }}</span> 
+                                    </div>
+                                    <!-- Botón para remover la alerta individualmente -->
+                                    <button type="button" class="btn-close position-absolute end-0 top-50 translate-middle-y me-2" style="font-size: 0.6rem; z-index: 10;" (click)="eliminarUna(notif._id, $event)"></button>
+                                </a>
+                            </div>
+                        </li>
+                        <li>
+                            <a class="nav-link text-center" routerLink="/dashboard/notificaciones"> <strong>Ver Historial Completo</strong> <i class="fa fa-angle-right"></i> </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
                 <!-- ============================================================== -->
-                <!-- End Ventas Recientes -->
+                <!-- End Notificaciones Recientes -->
                 <!-- ============================================================== -->
                 <!-- ============================================================== -->
                 <!-- Messages -->
                 <!-- ============================================================== -->
-                <li class="nav-item dropdown" *ngIf="usuario.role ==='SUPERADMIN' ">
-<a class="nav-link dropdown-toggle waves-effect waves-dark" href="javascript:void(0)" id="2" (click)="toggleMessagesDropdown($event)" [attr.aria-expanded]="showMessagesDropdown"> <i class="mdi mdi-email"></i>
+                <li class="nav-item dropdown" *ngIf="usuario.role ==='SUPERADMIN'" >
+                    <a class="nav-link dropdown-toggle waves-effect waves-dark" href="javascript:void(0)" id="2" (click)="toggleMessagesDropdown($event)" [attr.aria-expanded]="showMessagesDropdown"> 
+                        <i class="mdi mdi-email"></i>
                         <div class="notify">
                             <div *ngIf="mensajes.length < 0"></div>
                             <div *ngIf="mensajes.length > 0">
@@ -113,7 +133,7 @@
                             </div>
                         </div>
                     </a>
-<div class="dropdown-menu mailbox dropdown-menu-right animated fadeIn fast" [style.display]="showMessagesDropdown ? 'block' : 'none'" aria-labelledby="2">
+                    <div class="dropdown-menu mailbox dropdown-menu-right animated fadeIn fast" [style.display]="showMessagesDropdown ? 'block' : 'none'" aria-labelledby="2">
                         <ul>
                             <li>
                                 <div class="drop-title">{{'You have'| translate}} {{mensajes.length}} {{'new messages'| translate}}</div>
@@ -145,67 +165,11 @@
 
                 <!-- Cart menu-->
                 <li class="nav-item dropdown" *ngIf="usuario.role ==='SUPERADMIN' || usuario.role ==='ADMIN' ">
-<a class="nav-link dropdown-toggle waves-effect waves-dark" href="javascript:void(0)" (click)="toggleCartDropdown($event)" [attr.aria-expanded]="showCartDropdown">
-                        <!-- <span class="navbar-tool-label">{{carrito.cantidad}}</span>  -->
-                    
+                    <a class="nav-link dropdown-toggle waves-effect waves-dark" href="javascript:void(0)" (click)="toggleCartDropdown($event)" [attr.aria-expanded]="showCartDropdown">
                         <i class="fa fa-shopping-bag "></i> &nbsp; {{subtotal |currency : tienda_moneda}}
                     </a>
                     <div class="dropdown-menu dropdown-menu-right animated bounceInDown cartlist" [style.display]="showCartDropdown ? 'block' : 'none'">
-                        <!-- *ngIf="carrito.cantidad != 0" -->
-                        <!-- <div class="dropdown-item cartlist">
-                            <div style="height: 15rem;" data-simplebar data-simplebar-auto-hide="false">
-                                <div class="widget-cart-item pb-2 border-bottom" *ngFor="let item of carrito">
-                                    <button class="close text-danger" type="button" aria-label="Remove" (click)="remove_producto(item._id)">
-                                      <span aria-hidden="true">&times;</span>
-                                    </button>
-                                    <div class="media align-items-center">
-                                        <div *ngIf="item.producto" style="display:flex">
-                                            <a class="d-block mr-2" [routerLink]="['../producto/',item.producto._id]">
-                                                <img width="64" [src]="item.producto.img | imagenPipe: 'productos'" alt="Product" />
-                                            </a>
-                                            <div class="media-body">
-                                                <h6 class="widget-product-title"><a [routerLink]="['../producto/',item.producto._id]">{{item.producto.titulo.substr(0,25)}}</a></h6>
-                                                <div class="widget-product-meta"><span class="text-accent mr-2">${{item.precio}}</span><span class="text-muted">x {{item.cantidad}}</span></div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="subtotal">
-                                <div class="font-size-sm mr-2 py-2">
-                                    <span class="text-muted">Subtotal:</span>
-                                    <span class="text-accent font-size-base ml-1">${{subtotal}}</span>
-                                </div>
-
-                            </div>
-                            <a class="btn btn-primary btn-sm btn-block" [routerLink]="['/dashboard/carrito']">
-                                <i class="czi-card mr-2 font-size-base align-middle"></i>Carrito completo
-                            </a>
-                        </div> -->
-                        
-                        <!-- formato del carrito en header por Jose Prados -->
-                        <!-- <div class="dropdown-item p-4 border border-top-0 border-left-0 border-right-0 border-secondary" *ngFor="let item of carrito">
-                            <button class="close text-danger" type="button" aria-label="Remove" (click)="remove_producto(item._id)">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                            <li class="d-block" style="font-size: 0.7rem;">
-                                <div *ngIf="item.producto" style="display:flex">
-                                    <div *ngIf="item.producto.img">
-                                        <a class="d-block mr-2" [routerLink]="['../producto/',item.producto._id]">
-                                            <img width="64" [src]="item.producto.img | imagenPipe: 'productos'" alt="Product" />
-                                        </a>
-                                    </div>
-                                    <div class="media-body">
-                                        <h6 class="widget-product-title"><a [routerLink]="['../producto/',item.producto._id]">{{item.producto.titulo.substr(0,25)}}</a></h6>
-                                        <div class="widget-product-meta"><span class="text-accent mr-2">{{item.precio|currency : tienda_moneda}}</span><span class="text-muted">x {{item.cantidad}}</span></div>
-                                    </div>
-                                </div>
-                            </li>
-                            
-                        </div> -->
-                        
+                    
                         <li class="dropdown-item">
                             <div class="subtotal">
                                 <div class="font-size-sm mr-2 py-2">
@@ -228,7 +192,7 @@
                 <!-- ============================================================== -->
                 <!-- Language -->
                 <!-- ============================================================== -->
-<li class="nav-item dropdown">
+                <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle waves-effect waves-dark" href="javascript:void(0)" (click)="toggleLanguageDropdown($event)" [attr.aria-expanded]="showLanguageDropdown">
                         <i *ngIf="flag" class="flag-icon flag-icon-es"></i>
                         <i *ngIf="!flag" class="flag-icon flag-icon-us"></i>
@@ -246,7 +210,7 @@
                 <!-- ============================================================== -->
                 <!-- Profile -->
                 <!-- ============================================================== -->
-<li class="nav-item dropdown">
+                <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle waves-effect waves-dark" href="javascript:void(0)" (click)="toggleProfileDropdown($event)" [attr.aria-expanded]="showProfileDropdown">
                         <img [src]="usuario.img | imagenPipe: 'usuarios' " alt="{{usuario.first_name|slice:0:1}} {{usuario.last_name |slice:0:1}}" class="profile-pic" />
                     </a>
@@ -260,9 +224,7 @@
                                         <small>({{usuario.role}})</small>
                                         <p class="text-muted">
                                             {{usuario.email}}
-                                            <!-- {{usuario.email | slice:0:20}}{{(usuario.email.length > 20 ) ? '...': ''}} -->
                                         </p>
-                                        <!-- <a router-link="./perfil" class="btn btn-rounded btn-danger btn-sm">{{'My Profile'| translate}}</a> -->
                                     </div>
                                 </div>
                             </li>
