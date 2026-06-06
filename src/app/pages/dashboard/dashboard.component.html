@@ -12,10 +12,12 @@
                 </div>
                 <!-- comportamiento -->
                 <div class="row">
+
+                    <!-- grafico -->
                     <div class="col-xs-12 col-sm-8 form-group">
                         <div class="card">
                             <div class="card-body">
-                                <div class="form-group mb-0">
+                                <div class="form-group mb-2">
                                     <select [(ngModel)]="selectedValue" class="form-control select"
                                         (change)="selectedYear(data)" placeholder="2023">
                                         <option *ngFor="let data of selecedList" [value]="data.value">
@@ -27,7 +29,7 @@
                             </div>
                         </div>
                     </div>
-                    <!-- comportamiento -->
+                    <!-- notificaciones -->
                     <div class="col-xs-12 col-sm-4">
                         <!-- subcribirse a notificaciones-->
                         <div class="col">
@@ -162,7 +164,7 @@
                                             <span class="mdi mdi-store"></span>
                                         </a>
                                     </div>
-                                    <div class="pl-2">
+                                    <div class="pl-3">
                                         <h6 style="margin-bottom: 0px;">
                                             {{'Productos'| translate}}
                                         </h6>
@@ -184,7 +186,7 @@
                                             <span class="mdi mdi-store"></span>
                                         </a>
                                     </div>
-                                    <div class="pl-2">
+                                    <div class="pl-3">
                                         <h6 style="margin-bottom: 0px;">
                                             {{'Transferencias'| translate}}
                                         </h6>
@@ -206,7 +208,7 @@
                                             <span class="mdi mdi-store"></span>
                                         </a>
                                     </div>
-                                    <div class="pl-2">
+                                    <div class="pl-3">
                                         <h6 style="margin-bottom: 0px;">
                                             {{'Pedidos'| translate}}
                                         </h6>
