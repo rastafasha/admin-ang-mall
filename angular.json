@@ -159,7 +159,7 @@
               "vendorChunk": false,
               "extractLicenses": true,
               "serviceWorker": true,
-              "ngswConfigPath": "src/env/zlipmenu/ngsw-config.json"
+    "ngswConfigPath": "ngsw-config.json"
             },
             "development": {
               "buildOptimizer": false,
