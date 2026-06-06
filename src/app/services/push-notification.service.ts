@@ -78,7 +78,7 @@ export class PushNotificationService {
 
     // 3. HACER EL POST AL BACKEND (Usa tu variable de URL correcta)
     // Cambié urlBackend por el nombre de tu variable real si es necesario
-    this.http.post(urlBackend, sub, { headers }).subscribe({
+    this.http.post(this.urlBackedNotification, sub, { headers }).subscribe({
       next: () => {
         console.log('✅ ¡Suscripción guardada con éxito!');
         this.isSubscribed$.next(true);
@@ -102,7 +102,7 @@ export class PushNotificationService {
 }
 
 guardarPushSubscription(subcripcion: any){
-      const url = `${base_url}/notipush/save-subscription`;
+      const url = `${this.urlBackedNotification}`;
       return this.http.post(url, subcripcion, this.headers);
     }
 

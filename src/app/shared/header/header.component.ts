@@ -72,7 +72,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   public socket = io(environment.soketServer);
   public tienda_moneda: any;
- 
+
 
   constructor(
     private usuarioService: UsuarioService,
@@ -429,34 +429,34 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.swPush.requestSubscription({
       serverPublicKey: this.VAPID_PUBLIC_KEY
     })
-    .then(sub => {
-      
+      .then(sub => {
 
-      if (this.usuario.uid) {
-        // Estructuramos el objeto idéntico a lo que espera tu backend
-        const payloadSuscripcion = {
-          user: this.usuario.uid,
-          endpoint: sub.endpoint,
-          keys: sub.toJSON().keys // Contiene auth y p256dh de forma nativa
-        };
 
-        // 4. Enviamos la suscripción a tu API de Node.js para que se guarde en la BD
-        this.pushNotificacionService.guardarPushSubscription(sub).subscribe({
-  next: () => {
-    console.log('✅ ¡Suscripción guardada en el backend!');
-    this.isSubscribed$.next(true);
-    this.isProcessing$.next(false);
-    this.toastr.success('¡Notificaciones activadas!'); 
-  },
-  error: err => {
-    console.error('❌ Error al guardar en el servidor:', err);
-    this.isProcessing$.next(false);
-    this.toastr.error('Error', 'No se pudo registrar el dispositivo');
-  }
-});
-      }
-    })
-    .catch(err => console.error('El usuario rechazó las notificaciones o hubo un fallo:', err));
+        if (this.usuario.uid) {
+          // Estructuramos el objeto idéntico a lo que espera tu backend
+          const payloadSuscripcion = {
+            user: this.usuario.uid,
+            endpoint: sub.endpoint,
+            keys: sub.toJSON().keys // Contiene auth y p256dh de forma nativa
+          };
+
+          // 4. Enviamos la suscripción a tu API de Node.js para que se guarde en la BD
+          this.pushNotificacionService.guardarPushSubscription(sub).subscribe({
+            next: () => {
+              console.log('✅ ¡Suscripción guardada en el backend!');
+              this.isSubscribed$.next(true);
+              this.isProcessing$.next(false);
+              this.toastr.success('¡Notificaciones activadas!');
+            },
+            error: err => {
+              console.error('❌ Error al guardar en el servidor:', err);
+              this.isProcessing$.next(false);
+              this.toastr.error('Error', 'No se pudo registrar el dispositivo');
+            }
+          });
+        }
+      })
+      .catch(err => console.error('El usuario rechazó las notificaciones o hubo un fallo:', err));
   }
 
 
