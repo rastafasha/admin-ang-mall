@@ -120,8 +120,6 @@
               "assets": [
                 "src/assets",
                 "src/manifest.webmanifest",
-                "src/ngsw-worker.js",
-    "src/env/zlipmenu/ngsw-config.json",
                 {
                   "glob": "_redirects",
                   "input": "src",
@@ -156,6 +154,10 @@
                 }
               ],
               "outputHashing": "all",
+              "optimization": true,
+              "buildOptimizer": true,
+              "vendorChunk": false,
+              "extractLicenses": true,
               "serviceWorker": true,
               "ngswConfigPath": "src/env/zlipmenu/ngsw-config.json"
             },
