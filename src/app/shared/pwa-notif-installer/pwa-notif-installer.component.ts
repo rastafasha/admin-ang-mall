@@ -1,7 +1,6 @@
 import { Platform } from '@angular/cdk/platform';
 import { Component, OnInit } from '@angular/core';
-import { SwUpdate, VersionReadyEvent } from '@angular/service-worker';
-import { filter, map } from 'rxjs';
+import { SwUpdate } from '@angular/service-worker';
 
 @Component({
   selector: 'app-pwa-notif-installer',
@@ -52,14 +51,12 @@ initPwa() {
   this.updateOnlineStatus();
 
   if (this.swUpdate.isEnabled) {
-    // IMPORTANTE: Se añade el .subscribe() para que Angular "escuche" cambios
-    this.swUpdate.versionUpdates.pipe(
-      filter((evt): evt is VersionReadyEvent => evt.type === 'VERSION_READY')
-    ).subscribe(() => {
-      this.modalVersion = true; // Activa tu modal HTML
+    // Si hay una versión nueva, activa el banner
+    this.swUpdate.versionUpdates.subscribe(() => {
+      this.modalVersion = true;
     });
 
-    // Fuerza a la PWA a buscar cambios en Vercel de inmediato
+    // Fuerza a la PWA a buscar cambios en el servidor de inmediato
     this.swUpdate.checkForUpdate();
   }
 
