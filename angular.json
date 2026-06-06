@@ -51,7 +51,9 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ],
-              "outputHashing": "all"
+              "outputHashing": "all",
+              "serviceWorker": true,
+              "ngswConfigPath": "ngsw-config.json"
             },
             "adminecommerce": {
               "outputPath": "dist/adminecommerce",
@@ -79,13 +81,13 @@
                   "output": "/assets"
                 },
                 {
-                  "glob": "manifest.webmanifest", 
-                  "input": "src/env/adminecommerce/", 
+                  "glob": "manifest.webmanifest",
+                  "input": "src/env/adminecommerce/",
                   "output": "/"
                 },
                 {
-                  "glob": "favicon.ico", 
-                  "input": "src/env/adminecommerce/", 
+                  "glob": "favicon.ico",
+                  "input": "src/env/adminecommerce/",
                   "output": "/"
                 }
               ],
@@ -115,10 +117,9 @@
                   "with": "src/environments/environment.zlipmenu.ts"
                 }
               ],
-             "assets": [
+              "assets": [
                 "src/assets",
                 "src/manifest.webmanifest",
-                
                 {
                   "glob": "_redirects",
                   "input": "src",
@@ -130,13 +131,13 @@
                   "output": "/assets"
                 },
                 {
-                  "glob": "manifest.webmanifest", 
-                  "input": "src/env/zlipmenu/", 
+                  "glob": "manifest.webmanifest",
+                  "input": "src/env/zlipmenu/",
                   "output": "/"
                 },
                 {
-                  "glob": "favicon.ico", 
-                  "input": "src/env/zlipmenu/", 
+                  "glob": "favicon.ico",
+                  "input": "src/env/zlipmenu/",
                   "output": "/"
                 }
               ],
@@ -154,7 +155,6 @@
               ],
               "outputHashing": "all"
             },
-            
             "development": {
               "buildOptimizer": false,
               "optimization": false,
