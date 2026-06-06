@@ -120,6 +120,8 @@
               "assets": [
                 "src/assets",
                 "src/manifest.webmanifest",
+                "src/ngsw-worker.js",
+    "src/env/zlipmenu/ngsw-config.json",
                 {
                   "glob": "_redirects",
                   "input": "src",
