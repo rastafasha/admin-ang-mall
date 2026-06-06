@@ -47,18 +47,50 @@ export class AppComponent {
     this.meta.addTag({ name: 'keywords', content: keywords.join(',') });
   }
 
-  ngOnInit(): void{
+  ngOnInit(): void {
     window.scroll(0,0);
+
+    // Lógica moderna de actualización PWA para Angular 19
     if (this.swUpdate.isEnabled) {
-      // Fuerza a la app a buscar actualizaciones en el servidor de Vercel apenas abre
+      
+      // 1. Escuchar los eventos de actualización del Service Worker
+      this.swUpdate.versionUpdates.subscribe((evt) => {
+        switch (evt.type) {
+          case 'VERSION_DETECTED':
+            console.log('SW: Se está descargando una nueva versión en segundo plano...', evt.version.hash);
+            break;
+            
+          case 'VERSION_READY':
+            console.log('SW: Nueva versión lista para ser usada:', evt.latestVersion.hash);
+            
+            // Lanza el aviso al administrador para refrescar la PWA
+            if (confirm('¡Hay una nueva actualización disponible de Zlipmenu! ¿Deseas recargar la página para ver los cambios?')) {
+              // Aplica la actualización y recarga la pestaña automáticamente
+              this.swUpdate.activateUpdate().then(() => {
+                document.location.reload();
+              });
+            }
+            break;
+
+          case 'VERSION_INSTALLATION_FAILED':
+            console.error('SW: Falló la instalación de la nueva versión:', evt.error);
+            break;
+        }
+      });
+
+      // 2. Forzar al navegador a revisar si el archivo ngsw.json cambió en Vercel
       this.swUpdate.checkForUpdate().then(hasUpdate => {
         if (hasUpdate) {
-          console.log('Nueva versión detectada y descargándose...');
+          console.log('SW: Se detectaron cambios en el servidor.');
+        } else {
+          console.log('SW: La aplicación está completamente al día.');
         }
+      }).catch(err => {
+        console.error('SW: Error al verificar actualizaciones:', err);
       });
     }
     
-    // Load dynamic PayPal SDK if user logged in
+    // Tu lógica existente del SDK Dinámico de PayPal (Mantenla igual)
     if (this.usuarioService.usuario?.local) {
       const tiendaId = typeof this.usuarioService.usuario.local === 'string' 
         ? this.usuarioService.usuario.local 

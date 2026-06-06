@@ -49,15 +49,21 @@ export class PwaNotifInstallerComponent implements OnInit {
     this.updateOnlineStatus();
 
     if (this.swUpdate.isEnabled) {
-      // Si hay una versión nueva, activa el banner
-      this.swUpdate.versionUpdates.subscribe(() => {
-        this.modalVersion = true;
+      // Filtrar explícitamente el evento para Angular 19
+      this.swUpdate.versionUpdates.subscribe((evt) => {
+        // VERSION_READY significa que los archivos nuevos ya están en el caché del cliente
+        if (evt.type === 'VERSION_READY') {
+          console.log('SW: Nueva versión descargada y lista para activar.');
+          this.modalVersion = true; // Aquí es el momento seguro de prender tus banners
+        }
       });
+
       // Fuerza a la PWA a buscar cambios en el servidor de inmediato
-      this.swUpdate.checkForUpdate();
+      this.swUpdate.checkForUpdate().catch(err => console.error('Error buscando update:', err));
     }
     this.loadModalPwa();
   }
+
 
 
   private updateOnlineStatus(): void {
