@@ -14,7 +14,7 @@ export class PwaNotifInstallerComponent implements OnInit {
   isOnline: boolean;
   modalVersion: boolean;
   modalPwaEvent: any;
-  modalPwaPlatform: string|undefined;
+  modalPwaPlatform: string | undefined;
 
   isIOS: boolean;
   isAndroid: boolean;
@@ -22,21 +22,21 @@ export class PwaNotifInstallerComponent implements OnInit {
   constructor(
     private swUpdate: SwUpdate,
     private platform: Platform,
-  ) { 
+  ) {
     this.isOnline = false;
     this.modalVersion = false;
-    
+
     this.isIOS = this.platform.IOS;
     // The CDK has specific checks for Chrome on Android
-    this.isAndroid = this.platform.ANDROID; 
+    this.isAndroid = this.platform.ANDROID;
 
     // console.log('Is iOS:', this.isIOS);
     // console.log('Is Android:', this.isAndroid);
-    if(this.isAndroid){
+    if (this.isAndroid) {
       this.loadModalPwa()
     }
 
-    if(this.isIOS){
+    if (this.isIOS) {
       this.loadModalPwa()
     }
   }
@@ -45,68 +45,63 @@ export class PwaNotifInstallerComponent implements OnInit {
     this.initPwa();
   }
 
+  initPwa() {
+    this.updateOnlineStatus();
 
-
-initPwa() {
-  this.updateOnlineStatus();
-
-  if (this.swUpdate.isEnabled) {
-    // Si hay una versión nueva, activa el banner
-    this.swUpdate.versionUpdates.subscribe(() => {
-      this.modalVersion = true;
-    });
-
-    // Fuerza a la PWA a buscar cambios en el servidor de inmediato
-    this.swUpdate.checkForUpdate();
+    if (this.swUpdate.isEnabled) {
+      // Si hay una versión nueva, activa el banner
+      this.swUpdate.versionUpdates.subscribe(() => {
+        this.modalVersion = true;
+      });
+      // Fuerza a la PWA a buscar cambios en el servidor de inmediato
+      this.swUpdate.checkForUpdate();
+    }
+    this.loadModalPwa();
   }
 
-  this.loadModalPwa();
-}
 
+  private updateOnlineStatus(): void {
+    this.isOnline = window.navigator.onLine;
+    // console.info(`isOnline=[${this.isOnline}]`);
+  }
 
-
-private updateOnlineStatus(): void {
-  this.isOnline = window.navigator.onLine;
-  // console.info(`isOnline=[${this.isOnline}]`);
-}
-
-public updateVersion(): void {
-  this.swUpdate.activateUpdate().then(() => {
-    // Esto intercambia los archivos viejos por los nuevos internamente
-    window.location.reload(); 
-  });
-}
-
-
-public closeVersion(): void {
-  this.modalVersion = false;
-}
-
-private loadModalPwa(): void {
-  if (this.platform.ANDROID) {
-    window.addEventListener('beforeinstallprompt', (event: any) => {
-      event.preventDefault();
-      this.modalPwaEvent = event;
-      this.modalPwaPlatform = 'ANDROID';
+  public updateVersion(): void {
+    this.swUpdate.activateUpdate().then(() => {
+      // Esto intercambia los archivos viejos por los nuevos internamente
+      window.location.reload();
     });
   }
 
-  if (this.platform.IOS && this.platform.SAFARI) {
-    const isInStandaloneMode = ('standalone' in window.navigator) && ((<any>window.navigator)['standalone']);
-    if (!isInStandaloneMode) {
-      this.modalPwaPlatform = 'IOS';
+
+  public closeVersion(): void {
+    this.modalVersion = false;
+  }
+
+  private loadModalPwa(): void {
+    if (this.platform.ANDROID) {
+      window.addEventListener('beforeinstallprompt', (event: any) => {
+        event.preventDefault();
+        this.modalPwaEvent = event;
+        this.modalPwaPlatform = 'ANDROID';
+      });
+    }
+
+    if (this.platform.IOS && this.platform.SAFARI) {
+      const isInStandaloneMode = ('standalone' in window.navigator) && ((<any>window.navigator)['standalone']);
+      if (!isInStandaloneMode) {
+        this.modalPwaPlatform = 'IOS';
+      }
     }
   }
-}
 
-public addToHomeScreen(): void {
-  this.modalPwaEvent.prompt();
-  this.modalPwaPlatform = undefined;
-}
+  public addToHomeScreen(): void {
+    this.modalPwaEvent.prompt();
+    this.modalPwaPlatform = undefined;
+  }
 
-public closePwa(): void {
-  this.modalPwaPlatform = undefined;
-}
-// pwa
+  public closePwa(): void {
+    this.modalPwaPlatform = undefined;
+  }
+  // pwa
 
 }
