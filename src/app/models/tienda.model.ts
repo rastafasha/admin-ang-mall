@@ -33,6 +33,10 @@ export class Tienda{
     public isFeatured?: boolean,
     public iva?: number,
     public status?: 'Desactivado' |'Activo' ,
+    //registro para notificaciones
+    public whatsappStatus?: 'CONECTADO' |'DESCONECTADO'|'ESPERANDO_QR' ,
+    public whatsappQR?: string ,
+    public whatsappConnectedAt?: Date ,
     public _id?: string
 
   ){

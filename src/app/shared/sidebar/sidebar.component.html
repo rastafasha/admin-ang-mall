@@ -58,6 +58,8 @@
                     <ul class="collapse" [ngClass]="{'show': menuActivo === 'tienda'}">
                         <li><a routerLink="tienda" routerLinkActive="active"
                                 [routerLinkActiveOptions]="{exact:true}">{{'Tiendas'| translate}} </a></li>
+                        <li><a routerLink="conectarawhatsapp" routerLinkActive="active"
+                                [routerLinkActiveOptions]="{exact:true}">{{'Conectar Whatsap'| translate}} </a></li>
                         <li><a routerLink="tienda/pedidos" routerLinkActive="active"
                                 [routerLinkActiveOptions]="{exact:true}">{{'Pedidos'| translate}} </a></li>
                         <li *ngIf="has_reservacion"><a routerLink="reservaciones" routerLinkActive="active"

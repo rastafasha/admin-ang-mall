@@ -94,6 +94,7 @@ export class TiendaService {
     const url = `${base_url}/tiendas/admin/activar/`+id;
     return this.http.get(url,  this.headers);
   }
+ 
 
   setSelectedTienda(tienda: Tienda | null) {
     this.selectedTiendaSubject.next(tienda);
@@ -102,5 +103,19 @@ export class TiendaService {
   getSelectedTiendaSync(): Tienda | null {
     return this.selectedTiendaSubject.value;
   }
+
+   statusWhatsapp(id:string):Observable<any>{
+    const url = `${base_url}/tiendas/whatsapp-status/`+id;
+    return this.http.get(url,  this.headers);
+  }
+
+  conectarWhatsapp(id: string) {
+  // 1. Agregamos la barra '/' antes del ID en la URL
+  const url = `${base_url}/tiendas/whatsapp/conectar/${id}`;
+  
+  // 2. Pasamos un objeto vacío {} en el cuerpo (segundo parámetro) 
+  // y movemos las cabeceras al tercer parámetro
+  return this.http.post(url, {}, this.headers);
+}
 
 }

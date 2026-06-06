@@ -24,6 +24,7 @@ import { ReservacionListComponent } from './reservacion/reservacion-list/reserva
 import { ReservacionViewComponent } from './reservacion/reservacion-view/reservacion-view.component';
 import { NotificacionesComponent } from './notificaciones/notificaciones.component';
 import { ReservacionEstadisticasComponent } from './reservacion/reservacion-estadisticas/reservacion-estadisticas.component';
+import { ConectarWhatsappComponent } from './conectar-whatsapp/conectar-whatsapp.component';
 
 
 @NgModule({
@@ -41,7 +42,8 @@ import { ReservacionEstadisticasComponent } from './reservacion/reservacion-esta
     ReservacionListComponent,
     ReservacionViewComponent,
     NotificacionesComponent,
-    ReservacionEstadisticasComponent
+    ReservacionEstadisticasComponent,
+    ConectarWhatsappComponent
 
   ],
   exports: [
@@ -55,7 +57,8 @@ import { ReservacionEstadisticasComponent } from './reservacion/reservacion-esta
     ReservacionListComponent,
     ReservacionViewComponent,
     NotificacionesComponent,
-    ReservacionEstadisticasComponent
+    ReservacionEstadisticasComponent,
+    ConectarWhatsappComponent
 
   ],
   imports: [

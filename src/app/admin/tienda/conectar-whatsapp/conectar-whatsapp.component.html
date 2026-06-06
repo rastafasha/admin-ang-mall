@@ -1,0 +1,38 @@
+
+
+
+<!-- ESTADO 1: Si está desconectado, muestra el botón para activar -->
+<div *ngIf="whatsappStatus === 'DESCONECTADO'">
+  <button class="btn btn-primary" (click)="conexionWhatsapp()">Generar Código QR</button>
+</div>
+
+<!-- 1. MIENTRAS CARGA EL NAVEGADOR INVISIBLE -->
+<div *ngIf="whatsappStatus === 'CARGANDO'" class="text-center p-4">
+  <div class="spinner-border text-primary" role="status"></div>
+  <p class="mt-2 text-muted">Iniciando el servidor de WhatsApp en segundo plano...</p>
+</div>
+
+
+
+<!-- CUANDO DETECTA EL QR EN LA BASE DE DATOS -->
+<div *ngIf="whatsappStatus === 'ESPERANDO_QR'" class="text-center p-4 border rounded bg-light">
+  <h5 class="fw-bold mb-3">Conectar WhatsApp del Negocio 📱</h5>
+  <p class="text-muted small mb-4">Abra WhatsApp en el teléfono corporativo, vaya a "Dispositivos vinculados" y escanee este código:</p>
+  
+  <!-- Contenedor donde la librería qrcode va a pintar el código de forma 100% nativa -->
+  <div class="d-inline-block p-3 bg-white shadow-sm rounded mb-3">
+    <canvas id="canvas-qr"></canvas>
+  </div>
+  
+  <div class="text-secondary small">
+    <span class="spinner-grow spinner-grow-sm text-warning me-1" role="status"></span>
+    Esperando el escaneo desde el dispositivo móvil...
+  </div>
+</div>
+
+<!-- 3. ¡ÉXITO! CUANDO EL BUCLE DETECTA QUE EL ESTADO CAMBIÓ EN MONGO -->
+<div *ngIf="whatsappStatus === 'CONECTADO'" class="alert alert-success text-center p-4 m-3 shadow-sm">
+  <h4 class="alert-heading fw-bold">¡Línea vinculada con éxito! 🎉</h4>
+  <p class="mb-0">El bot de WhatsApp para este restaurante está activo. Los recordatorios automáticos de reservas se enviarán de forma autónoma.</p>
+</div>
+
