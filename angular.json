@@ -155,7 +155,7 @@
               ],
               "outputHashing": "all",
               "serviceWorker": true,
-    "ngswConfigPath": "ngsw-config.json"
+              "ngswConfigPath": "src/env/zlipmenu/ngsw-config.json"
             },
             "development": {
               "buildOptimizer": false,

@@ -6,7 +6,7 @@
     "start": "ng serve",
     "start:dev": "ng serve --port 4203",
     "start:prod": "ng build  && lite-server --baseDir dist/adminpwa",
-    "build": "ng build --configuration production",
+    "build": "ng build --configuration zlipmenu",
     "build:adminecom": "ng build --configuration adminecommerce",
     "build:zlipmenu": "ng build --configuration zlipmenu",
     "watch": "ng build --watch --configuration development",
