@@ -6,17 +6,11 @@
     <meta charset="utf-8">
     <title id="title_general">Zlipmenu Admin |</title>
     <base href="/">
-    <!-- <base href="https://admin.zlipmenu.com/"> -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" id="favicon_icon" sizes="16x16">
-  <meta http-equiv="Content-Security-Policy" content="
-  default-src 'self' https://*.vercel.app https://*.onrender.com;
-  script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.vercel.app https://cdnjs.cloudflare.com;
-  style-src 'self' 'unsafe-inline' https://*.vercel.app https://fonts.googleapis.com https://cdnjs.cloudflare.com;
-  font-src 'self' data: https://*.vercel.app https://gstatic.com https://cdnjs.cloudflare.com;
-  connect-src 'self' https://*.vercel.app https://*.onrender.com;
-">
+ <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline' 'unsafe-eval' data: blob:; script-src * 'unsafe-inline' 'unsafe-eval' blob:; style-src * 'unsafe-inline'; font-src * data:; connect-src * 'unsafe-inline' 'unsafe-eval';">
+
     
     <!-- Bootstrap Core CSS -->
     <link href="./assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
