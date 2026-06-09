@@ -27,17 +27,14 @@ export class PwaNotifInstallerComponent implements OnInit {
     this.modalVersion = false;
 
     this.isIOS = this.platform.IOS;
-    // The CDK has specific checks for Chrome on Android
     this.isAndroid = this.platform.ANDROID;
 
-    // console.log('Is iOS:', this.isIOS);
-    // console.log('Is Android:', this.isAndroid);
     if (this.isAndroid) {
-      this.loadModalPwa()
+      this.loadModalPwa();
     }
 
     if (this.isIOS) {
-      this.loadModalPwa()
+      this.loadModalPwa();
     }
   }
 
@@ -48,36 +45,47 @@ export class PwaNotifInstallerComponent implements OnInit {
   initPwa() {
     this.updateOnlineStatus();
 
-    if (this.swUpdate.isEnabled) {
-      // Filtrar explícitamente el evento para Angular 19
-      this.swUpdate.versionUpdates.subscribe((evt) => {
-        // VERSION_READY significa que los archivos nuevos ya están en el caché del cliente
-        if (evt.type === 'VERSION_READY') {
-          console.log('SW: Nueva versión descargada y lista para activar.');
-          this.modalVersion = true; // Aquí es el momento seguro de prender tus banners
-        }
+    // 🚀 ESCUDO DE PROTECCIÓN: Validamos que el Service Worker de actualización esté activo y soportado
+    if (this.swUpdate && this.swUpdate.isEnabled) {
+      
+      this.swUpdate.versionUpdates.subscribe({
+        next: (evt) => {
+          if (evt.type === 'VERSION_READY') {
+            console.log('SW: Nueva versión descargada y lista para activar.');
+            this.modalVersion = true; 
+          }
+        },
+        error: (err) => console.error('SW: Error escuchando eventos de actualización:', err)
       });
 
-      // Fuerza a la PWA a buscar cambios en el servidor de inmediato
-      this.swUpdate.checkForUpdate().catch(err => console.error('Error buscando update:', err));
+      this.swUpdate.checkForUpdate().catch(err => {
+        console.warn('SW: No se pudo verificar la actualización automática en este entorno:', err.message);
+      });
+
+    } else {
+      console.log('PwaNotifInstaller: SwUpdate no está habilitado o soportado en este dispositivo.');
     }
+    
     this.loadModalPwa();
   }
 
-
-
   private updateOnlineStatus(): void {
-    this.isOnline = window.navigator.onLine;
-    // console.info(`isOnline=[${this.isOnline}]`);
+    this.isOnline = window.navigator?.onLine || false;
   }
 
   public updateVersion(): void {
-    this.swUpdate.activateUpdate().then(() => {
-      // Esto intercambia los archivos viejos por los nuevos internamente
+    // Protección extra por seguridad si presionan el botón de actualizar
+    if (this.swUpdate && this.swUpdate.isEnabled) {
+      this.swUpdate.activateUpdate().then(() => {
+        window.location.reload();
+      }).catch(err => {
+        console.error('Error al activar actualización:', err);
+        window.location.reload(); // Caída controlada: recarga igualmente
+      });
+    } else {
       window.location.reload();
-    });
+    }
   }
-
 
   public closeVersion(): void {
     this.modalVersion = false;
@@ -101,13 +109,13 @@ export class PwaNotifInstallerComponent implements OnInit {
   }
 
   public addToHomeScreen(): void {
-    this.modalPwaEvent.prompt();
+    if (this.modalPwaEvent) {
+      this.modalPwaEvent.prompt();
+    }
     this.modalPwaPlatform = undefined;
   }
 
   public closePwa(): void {
     this.modalPwaPlatform = undefined;
   }
-  // pwa
-
 }
