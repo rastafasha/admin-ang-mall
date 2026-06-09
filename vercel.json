@@ -1,11 +1,6 @@
 {
   "version": 2,
-  "cleanUrls": true,
   "rewrites": [
-    {
-      "source": "/_next/static/(.*)",
-      "destination": "/_next/static/$1"
-    },
     {
       "source": "/assets/(.*)",
       "destination": "/assets/$1"
