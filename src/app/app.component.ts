@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CongeneralService } from './services/congeneral.service';
 import { PaypalService } from './services/paypal.service';
 import { UsuarioService } from './services/usuario.service';
@@ -7,65 +7,64 @@ import { environment } from 'src/environments/environment';
 import { Meta } from '@angular/platform-browser';
 import { SwUpdate } from '@angular/service-worker';
 
-declare var jQuery:any;
-declare var $:any;
+declare var $: any;
+
 @Component({
   selector: 'app-root',
-  standalone:false,
+  standalone: false,
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'admin';
-  public congenerals : any = {};
+  public congenerals: any = {};
   public url: any;
   public headers = false;
 
   constructor(
-    private _congeneralService : CongeneralService,
+    private _congeneralService: CongeneralService,
     private paypalService: PaypalService,
     private usuarioService: UsuarioService,
     private swUpdate: SwUpdate,
-    private _router : Router,
+    private _router: Router,
     private meta: Meta
-    ){
-      this._congeneralService.cargarCongenerals().subscribe( response =>{
-        this.congenerals = response; this.url = environment.baseUrl;
-        $('#favicon_icon').attr('href',this.url+'/congenerals/'+this.congenerals[0].favicon);
-        $('#title_general').text(this.congenerals[0].titulo);
-        // console.log(this.congenerals);
-        // console.log(this.congenerals[0].titulo);
-      },
-         error=>{ } );
-        this._congeneralService.cargarCongenerals().subscribe( response =>{
-          this.congenerals = response; this.url = environment.baseUrl;
-          $('#favicon_icon').attr('href',this.url+'/congenerals/'+this.congenerals[0].favicon);
-          $('#title_general').text(this.congenerals[0].titulo);
-        }, error=>{ } );
-
-        const keywords: string[] = ['foo', 'bar', 'poo']
+  ) {
+    // Las configuraciones fijas se quedan en el constructor
+    const keywords: string[] = ['foo', 'bar', 'poo'];
     this.meta.addTag({ name: 'keywords', content: keywords.join(',') });
   }
 
   ngOnInit(): void {
-    window.scroll(0,0);
+    window.scroll(0, 0);
 
-    // Lógica moderna de actualización PWA para Angular 19
+    // MOVIDO AQUÍ: Cargar los datos generales de forma segura cuando el HTML ya existe en el móvil
+    this._congeneralService.cargarCongenerals().subscribe({
+      next: (response) => {
+        this.congenerals = response; 
+        this.url = environment.baseUrl;
+        
+        // Verificación de seguridad para evitar que explote si la base de datos viene vacía
+        if (this.congenerals && this.congenerals[0]) {
+          $('#favicon_icon').attr('href', this.url + '/congenerals/' + this.congenerals[0].favicon);
+          $('#title_general').text(this.congenerals[0].titulo);
+        }
+      },
+      error: (err) => {
+        console.error('Error al cargar configuraciones generales del backend:', err);
+      }
+    });
+
+    // Lógica moderna de actualización PWA para Angular 19 (Protegida contra bloqueos)
     if (this.swUpdate.isEnabled) {
-      
-      // 1. Escuchar los eventos de actualización del Service Worker
       this.swUpdate.versionUpdates.subscribe((evt) => {
         switch (evt.type) {
           case 'VERSION_DETECTED':
-            console.log('SW: Se está descargando una nueva versión en segundo plano...', evt.version.hash);
+            console.log('SW: Se está descargando una nueva versión...', evt.version.hash);
             break;
             
           case 'VERSION_READY':
-            console.log('SW: Nueva versión lista para ser usada:', evt.latestVersion.hash);
-            
-            // Lanza el aviso al administrador para refrescar la PWA
-            if (confirm('¡Hay una nueva actualización disponible de Zlipmenu! ¿Deseas recargar la página para ver los cambios?')) {
-              // Aplica la actualización y recarga la pestaña automáticamente
+            console.log('SW: Nueva versión lista:', evt.latestVersion.hash);
+            if (confirm('¡Hay una nueva actualización disponible de Zlipmenu! ¿Deseas recargar la página?')) {
               this.swUpdate.activateUpdate().then(() => {
                 document.location.reload();
               });
@@ -73,24 +72,19 @@ export class AppComponent {
             break;
 
           case 'VERSION_INSTALLATION_FAILED':
-            console.error('SW: Falló la instalación de la nueva versión:', evt.error);
+            console.error('SW: Falló la instalación:', evt.error);
             break;
         }
       });
 
-      // 2. Forzar al navegador a revisar si el archivo ngsw.json cambió en Vercel
       this.swUpdate.checkForUpdate().then(hasUpdate => {
-        if (hasUpdate) {
-          console.log('SW: Se detectaron cambios en el servidor.');
-        } else {
-          console.log('SW: La aplicación está completamente al día.');
-        }
+        if (hasUpdate) console.log('SW: Cambios detectados en el servidor.');
       }).catch(err => {
         console.error('SW: Error al verificar actualizaciones:', err);
       });
     }
     
-    // Tu lógica existente del SDK Dinámico de PayPal (Mantenla igual)
+    // Tu lógica existente del SDK Dinámico de PayPal
     if (this.usuarioService.usuario?.local) {
       const tiendaId = typeof this.usuarioService.usuario.local === 'string' 
         ? this.usuarioService.usuario.local 
@@ -101,8 +95,4 @@ export class AppComponent {
       });
     }
   }
-
-
-
-
 }
