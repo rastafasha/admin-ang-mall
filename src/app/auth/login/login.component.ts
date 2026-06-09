@@ -50,7 +50,6 @@ ngOnInit(){
         }else{
           localStorage.removeItem('email');
         }
-        // this.getLocalStorage();
         if(localStorage.getItem('user')){
           this.isLoading = false;
           setTimeout(()=>{
@@ -71,10 +70,6 @@ ngOnInit(){
       let USER = localStorage.getItem('user');
       let lang= localStorage.getItem('lang');
       this.user = JSON.parse(USER ? USER: '');
-      // console.log(this.user);
-      // this.getuserRol();
-      // this.getuserPermisos();
-
       if(localStorage.getItem('user')){
         this.router.navigateByUrl('/dashboard');
         

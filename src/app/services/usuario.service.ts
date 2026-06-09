@@ -27,7 +27,6 @@ export class UsuarioService {
     private router: Router,
     private ngZone: NgZone
   ) {
-    // this.googleInit();
   }
 
   get token(): string {
@@ -66,17 +65,6 @@ export class UsuarioService {
     localStorage.setItem('menu', JSON.stringify(menu));
   }
 
-  // googleInit() {
-  //   return new Promise<void>((resolve) => {
-  //     gapi.load('auth2', () => {
-  //       this.auth2 = gapi.auth2.init({
-  //         client_id: clientIdGoogle,
-  //         cookiepolicy: 'single_host_origin',
-  //       });
-  //       resolve();
-  //     });
-  //   });
-  // }
 
   logout() {
     localStorage.removeItem('token');
@@ -84,12 +72,6 @@ export class UsuarioService {
     localStorage.removeItem('user');
     localStorage.removeItem('auth_token');
     localStorage.removeItem('__paypal_storage__');
-
-    // this.auth2.signOut().then(() => {
-    //   this.ngZone.run(() => {
-    //     this.router.navigateByUrl('/login');
-    //   });
-    // });
     window.location.reload();
   }
 
@@ -193,13 +175,6 @@ export class UsuarioService {
     );
   }
 
-  // loginGoogle(token: string) {
-  //   return this.http.post(`${base_url}/login/google`, { token }).pipe(
-  //     tap((resp: any) => {
-  //       this.guardarLocalStorage(resp.token, resp.usuario, resp.menu);
-  //     })
-  //   );
-  // }
 
   cargarAllUsuarios(desde: number = 0) {
     const url = `${base_url}/usuarios/all/?desde=${desde}`;
@@ -431,8 +406,6 @@ export class UsuarioService {
   }
 
   upadateStatusRole(data: any, uid: any) {
-    // return this.http.put(`${base_url}/usuarios/update/update/${usuario.uid}`, usuario, this.headers);
-
     let URL = base_url + '/usuarios/update/statusrole/' + uid;
     return this.http.put(URL, data, this.headers);
   }
