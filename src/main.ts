@@ -10,12 +10,9 @@ if (environment.production) {
 
 platformBrowserDynamic().bootstrapModule(AppModule)
   .then(() => {
-    // Si el navegador soporta Service Workers y estamos en producción, lo registramos a la fuerza
-    if ('serviceWorker' in navigator && environment.production) {
-      // CORRECCIÓN: Quitamos el '/' inicial para que la ruta sea relativa 'ngsw-worker.js'
-      navigator.serviceWorker.register('ngsw-worker.js')
-        .then(() => console.log('🚀 Service Worker registrado manualmente con éxito'))
-        .catch(err => console.error('Error registrando SW:', err));
-    }
+    // Angular Service Worker (ngsw) se registra automáticamente con:
+    // - serviceWorker: true en angular.json
+    // - @angular/service-worker en el AppModule
+    // No se registra manualmente para evitar conflicts (especialmente en iOS/PWA).
   })
   .catch(err => console.error(err));
