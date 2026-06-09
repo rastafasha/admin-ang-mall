@@ -10,6 +10,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" id="favicon_icon" sizes="16x16">
+    <meta http-equiv="Content-Security-Policy" content="
+  default-src 'self' https://*.vercel.app https://*.onrender.com;
+  script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.vercel.app;
+  style-src 'self' 'unsafe-inline' https://*.vercel.app https://googleapis.com;
+  font-src 'self' data: https://*.vercel.app https://*.vercel-storage.com https://gstatic.com;
+  connect-src 'self' https://*.vercel.app https://*.onrender.com;
+">
     
     <!-- Bootstrap Core CSS -->
     <link href="./assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -19,6 +26,8 @@
     <link href="./assets/css/colors/default-dark.css" id="theme" rel="stylesheet">
     <link href="./assets/css/iconos.css" id="theme" rel="stylesheet">
     <link rel="stylesheet" href="./assets/css/spectrum.min.css">
+    
+
     <!-- pwa -->
     <link rel="manifest" href="manifest.webmanifest">
     <meta name="theme-color" content="#1976d2">
