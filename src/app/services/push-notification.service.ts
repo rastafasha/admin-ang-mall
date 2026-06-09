@@ -9,6 +9,7 @@ import { environment } from '../../environments/environment';
 const claveVapidApi = environment.VAPI_KEY_PUBLIC;
 const urlBackend = environment.urlBackedNotification;
 const base_url = environment.baseUrl;
+
 @Injectable({
   providedIn: 'root'
 })
@@ -20,99 +21,110 @@ export class PushNotificationService {
   private http = inject(HttpClient);
   public toastr = inject(ToastrService);
   public router = inject(Router);
-  // Este observable le dirá a cualquier componente si el usuario está suscrito
+  
   public isSubscribed$ = new BehaviorSubject<boolean>(false);
   public isProcessing$ = new BehaviorSubject<boolean>(false);
 
-   get token():string{
+  get token(): string {
     return localStorage.getItem('token') || '';
   }
 
-  get headers(){
-    return{
+  get headers() {
+    return {
       headers: {
         'x-token': this.token
       }
     }
   }
 
-
   constructor() {
-    this.checkSubscriptionStatus();
-    this.checkInitialStatus();
+    // Parche de seguridad para entornos globales
+    if ('serviceWorker' in navigator && 'PushManager' in window) {
+      this.checkSubscriptionStatus();
+      this.checkInitialStatus();
+    } else {
+      console.warn('PushNotificationService: Las notificaciones no son soportadas en este dispositivo/navegador.');
+      this.isSubscribed$.next(false);
+    }
   }
+
   async checkInitialStatus() {
-    // Verificamos si el navegador ya tiene una suscripción activa
-    const reg = await navigator.serviceWorker.ready;
-    const sub = await reg.pushManager.getSubscription();
-    this.isSubscribed$.next(!!sub);
+    try {
+      const reg = await navigator.serviceWorker.ready;
+      // Validamos estrictamente que pushManager exista en el móvil antes de llamar al método
+      if (reg && reg.pushManager) {
+        const sub = await reg.pushManager.getSubscription();
+        this.isSubscribed$.next(!!sub);
+      } else {
+        this.isSubscribed$.next(false);
+      }
+    } catch (err) {
+      console.error('Error en checkInitialStatus:', err);
+      this.isSubscribed$.next(false);
+    }
   }
+
   setSubscriptionStatus(status: boolean) {
     this.isSubscribed$.next(status);
   }
+
   async checkSubscriptionStatus() {
-    // 1. Esperamos a que el Service Worker esté listo
-    const reg = await navigator.serviceWorker.ready;
-    // 2. Buscamos si ya hay una suscripción
-    const sub = await reg.pushManager.getSubscription();
-    // 3. Si hay suscripción, avisamos a la App
-    this.isSubscribed$.next(!!sub);
+    try {
+      const reg = await navigator.serviceWorker.ready;
+      // Validamos estrictamente que pushManager exista en el móvil antes de llamar al método
+      if (reg && reg.pushManager) {
+        const sub = await reg.pushManager.getSubscription();
+        this.isSubscribed$.next(!!sub);
+      } else {
+        this.isSubscribed$.next(false);
+      }
+    } catch (err) {
+      console.error('Error en checkSubscriptionStatus:', err);
+      this.isSubscribed$.next(false);
+    }
   }
 
   subscribeToNotifications() {
-  this.isProcessing$.next(true);
-  
-  this.swPush.requestSubscription({
-    serverPublicKey: this.VAPID_PUBLIC_KEY
-  })
-  .then(sub => {
-    // 1. EXTRAER EL TOKEN
-    const miToken = localStorage.getItem('token') || '';
-
-    // 2. CONFIGURAR EL HEADER
-    const headers = {
-      'x-token': miToken
-    };
-    
-    console.log('Enviando con token:', miToken);
-
-    // 3. HACER EL POST AL BACKEND (Usa tu variable de URL correcta)
-    // Cambié urlBackend por el nombre de tu variable real si es necesario
-    this.http.post(this.urlBackedNotification, sub, { headers }).subscribe({
-      next: () => {
-        console.log('✅ ¡Suscripción guardada con éxito!');
-        this.isSubscribed$.next(true);
-        this.isProcessing$.next(false);
-        this.toastr.success('¡Notificaciones activadas!'); 
-      },
-      error: err => {
-        console.error('❌ Error al guardar la suscripción:', err);
-        this.isProcessing$.next(false);
-        this.toastr.error('Error', 'No se pudo registrar el dispositivo en el servidor');
-      }
-    });
-
-  })
-  .catch(err => {
-    // 🚀 SALVAVIDAS: Si el usuario rechaza el permiso o cierra la ventana, liberamos el botón
-    console.warn('El usuario rechazó las notificaciones o el navegador lo bloqueó:', err);
-    this.isProcessing$.next(false);
-    this.toastr.warning('Permiso denegado', 'Debes permitir las notificaciones en el navegador para activarlas.');
-  });
-}
-
-guardarPushSubscription(subcripcion: any){
-      const url = `${this.urlBackedNotification}`;
-      return this.http.post(url, subcripcion, this.headers);
+    // Validamos que el navegador móvil realmente tenga la capacidad de suscribirse
+    if (!('serviceWorker' in navigator) || !this.swPush.isEnabled) {
+      this.toastr.warning('No soportado', 'Tu navegador actual no admite notificaciones push.');
+      return;
     }
 
+    this.isProcessing$.next(true);
+    
+    this.swPush.requestSubscription({
+      serverPublicKey: this.VAPID_PUBLIC_KEY
+    })
+    .then(sub => {
+      const miToken = localStorage.getItem('token') || '';
+      const headers = { 'x-token': miToken };
+      
+      console.log('Enviando con token:', miToken);
 
- 
+      this.http.post(this.urlBackedNotification, sub, { headers }).subscribe({
+        next: () => {
+          console.log('✅ ¡Suscripción guardada con éxito!');
+          this.isSubscribed$.next(true);
+          this.isProcessing$.next(false);
+          this.toastr.success('¡Notificaciones activadas!'); 
+        },
+        error: err => {
+          console.error('❌ Error al guardar la suscripción:', err);
+          this.isProcessing$.next(false);
+          this.toastr.error('Error', 'No se pudo registrar el dispositivo en el servidor');
+        }
+      });
+    })
+    .catch(err => {
+      console.warn('El usuario rechazó las notificaciones o el navegador lo bloqueó:', err);
+      this.isProcessing$.next(false);
+      this.toastr.warning('Permiso denegado', 'Debes permitir las notificaciones en el navegador para activarlas.');
+    });
+  }
 
-
- 
-
-
-
-
+  guardarPushSubscription(subcripcion: any) {
+    const url = `${this.urlBackedNotification}`;
+    return this.http.post(url, subcripcion, this.headers);
+  }
 }
