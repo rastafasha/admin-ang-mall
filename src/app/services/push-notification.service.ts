@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, Injector } from '@angular/core';
 import { SwPush } from '@angular/service-worker';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
@@ -17,13 +17,15 @@ export class PushNotificationService {
   readonly VAPID_PUBLIC_KEY = claveVapidApi;
   readonly urlBackedNotification = environment.urlBackedNotification;
 
-  private swPush = inject(SwPush);
+  private swPush: SwPush | null = null;
   private http = inject(HttpClient);
   public toastr = inject(ToastrService);
   public router = inject(Router);
   
   public isSubscribed$ = new BehaviorSubject<boolean>(false);
   public isProcessing$ = new BehaviorSubject<boolean>(false);
+
+
 
   get token(): string {
     return localStorage.getItem('token') || '';
@@ -37,15 +39,22 @@ export class PushNotificationService {
     }
   }
 
-  constructor() {
-    // Parche de seguridad para entornos globales
-    if ('serviceWorker' in navigator && 'PushManager' in window) {
+  constructor(private injector: Injector) {
+   // 🚀 EL ESCUDO DEFINITIVO: Solo instanciamos el servicio nativo si el navegador lo soporta de verdad
+  if ('serviceWorker' in navigator && 'PushManager' in window) {
+    try {
+      // Inyección perezosa (lazy load): solo se crea si el entorno es compatible
+      this.swPush = this.injector.get(SwPush);
+
       this.checkSubscriptionStatus();
       this.checkInitialStatus();
-    } else {
-      console.warn('PushNotificationService: Las notificaciones no son soportadas en este dispositivo/navegador.');
-      this.isSubscribed$.next(false);
+    } catch (e) {
+      console.warn('No se pudo inicializar SwPush nativo de Angular:', e);
     }
+  } else {
+    console.log('PushNotificationService: Notificaciones omitidas de forma segura en este entorno.');
+    this.isSubscribed$.next(false);
+  }
   }
 
   async checkInitialStatus() {
@@ -85,42 +94,50 @@ export class PushNotificationService {
   }
 
   subscribeToNotifications() {
-    // Validamos que el navegador móvil realmente tenga la capacidad de suscribirse
-    if (!('serviceWorker' in navigator) || !this.swPush.isEnabled) {
-      this.toastr.warning('No soportado', 'Tu navegador actual no admite notificaciones push.');
-      return;
-    }
+    // 🚀 VALIDACIÓN ULTRA SEGURA: Evita leer propiedades de un objeto null o undefined
+  if (!this.swPush || !this.swPush.isEnabled) {
+    this.toastr.warning('No soportado', 'Tu navegador actual no admite notificaciones push.');
+    return;
+  }
 
     this.isProcessing$.next(true);
-    
+
     this.swPush.requestSubscription({
       serverPublicKey: this.VAPID_PUBLIC_KEY
     })
-    .then(sub => {
-      const miToken = localStorage.getItem('token') || '';
-      const headers = { 'x-token': miToken };
-      
-      console.log('Enviando con token:', miToken);
+      .then(sub => {
+        const miToken = localStorage.getItem('token') || '';
+        const headers = { 'x-token': miToken };
 
-      this.http.post(this.urlBackedNotification, sub, { headers }).subscribe({
-        next: () => {
-          console.log('✅ ¡Suscripción guardada con éxito!');
-          this.isSubscribed$.next(true);
-          this.isProcessing$.next(false);
-          this.toastr.success('¡Notificaciones activadas!'); 
-        },
-        error: err => {
-          console.error('❌ Error al guardar la suscripción:', err);
-          this.isProcessing$.next(false);
-          this.toastr.error('Error', 'No se pudo registrar el dispositivo en el servidor');
-        }
+        console.log('Enviando con token:', miToken);
+
+        this.http.post(this.urlBackedNotification, sub, { headers }).subscribe({
+          next: () => {
+            console.log('✅ ¡Suscripción guardada con éxito!');
+            this.isSubscribed$.next(true);
+            this.isProcessing$.next(false);
+            this.toastr.success('¡Notificaciones activadas!');
+          },
+          error: err => {
+            console.error('❌ Error al guardar la suscripción:', err);
+            this.isProcessing$.next(false);
+            this.toastr.error('Error', 'No se pudo registrar el dispositivo en el servidor');
+          }
+        });
+      })
+      .catch(err => {
+        // 🚀 PARCHE DEFINITIVO: Manejo seguro y aislado del error para producción
+        console.warn('El usuario rechazó las notificaciones o el navegador lo bloqueó:', err);
+
+        // Evitamos llamadas directas encadenadas si los BehaviorSubjects están en proceso de destrucción
+        setTimeout(() => {
+          if (this.isProcessing$) this.isProcessing$.next(false);
+          if (this.isSubscribed$) this.isSubscribed$.next(false);
+          if (this.toastr) {
+            this.toastr.warning('Permiso denegado', 'Debes permitir las notificaciones en el navegador para activarlas.');
+          }
+        }, 0);
       });
-    })
-    .catch(err => {
-      console.warn('El usuario rechazó las notificaciones o el navegador lo bloqueó:', err);
-      this.isProcessing$.next(false);
-      this.toastr.warning('Permiso denegado', 'Debes permitir las notificaciones en el navegador para activarlas.');
-    });
   }
 
   guardarPushSubscription(subcripcion: any) {
