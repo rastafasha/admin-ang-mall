@@ -16,10 +16,10 @@
     "experimentalDecorators": true,
 "moduleResolution":"bundler",
     "importHelpers": true,
-    "target": "es2022",
-    "module": "es2022",
+   "target": "ES2021",
+    "module": "ES2022",
     "lib": [
-      "es2022",
+      "ES2021",
       "dom"
     ],
     "skipLibCheck": true
