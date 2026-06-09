@@ -1,0 +1,36 @@
+5 rules skipped due to selector errors:
+  0% -> Unmatched selector: %
+  25% -> Unmatched selector: %
+  50% -> Unmatched selector: %
+  75% -> Unmatched selector: %
+  100% -> Unmatched selector: %
+
+Initial chunk files           | Names               | Raw size | Estimated transfer size
+main.dc2d49b21b05bb89.js      | main                |  1.82 MB |               449.01 kB
+polyfills.817e377bf6623b71.js | polyfills           | 33.85 kB |                10.90 kB
+styles.3bcd05c8b1cacbd1.css   | styles              | 16.52 kB |                 4.11 kB
+runtime.e72d9ce04da45e93.js   | runtime             |  2.84 kB |                 1.32 kB
+
+                              | Initial total       |  1.88 MB |               465.34 kB
+
+Lazy chunk files              | Names               | Raw size | Estimated transfer size
+614.cdf22eb2f07fbb02.js       | child-routes-module |  1.99 MB |               361.36 kB
+
+Build at: 2026-06-09T20:08:05.270Z - Hash: 407e7cc0859a17d0 - Time: 471355ms
+
+Warning: /Applications/MAMP/htdocs/proyectos/aplicacionesWeb/Angular/Zlipmenu/adminpwa/src/app/admin/config-site/config-site.component.ts depends on '@ckeditor/ckeditor5-build-classic'. CommonJS or AMD dependencies can cause optimization bailouts.
+For more info see: https://angular.dev/tools/cli/build#configuring-commonjs-dependencies
+
+Warning: /Applications/MAMP/htdocs/proyectos/aplicacionesWeb/Angular/Zlipmenu/adminpwa/src/app/admin/postal/postalcomp/mapa/mapa.component.ts depends on 'leaflet'. CommonJS or AMD dependencies can cause optimization bailouts.
+For more info see: https://angular.dev/tools/cli/build#configuring-commonjs-dependencies
+
+Warning: /Applications/MAMP/htdocs/proyectos/aplicacionesWeb/Angular/Zlipmenu/adminpwa/src/app/admin/tienda/conectar-whatsapp/conectar-whatsapp.component.ts depends on 'qrcode'. CommonJS or AMD dependencies can cause optimization bailouts.
+For more info see: https://angular.dev/tools/cli/build#configuring-commonjs-dependencies
+
+Warning: /Applications/MAMP/htdocs/proyectos/aplicacionesWeb/Angular/Zlipmenu/adminpwa/src/app/admin/ventas/invoice/invoice.component.ts depends on 'html2canvas'. CommonJS or AMD dependencies can cause optimization bailouts.
+For more info see: https://angular.dev/tools/cli/build#configuring-commonjs-dependencies
+
+Warning: /Applications/MAMP/htdocs/proyectos/aplicacionesWeb/Angular/Zlipmenu/adminpwa/src/app/auth/passwordreset/passwordreset.component.ts depends on 'sweetalert2'. CommonJS or AMD dependencies can cause optimization bailouts.
+For more info see: https://angular.dev/tools/cli/build#configuring-commonjs-dependencies
+
+
