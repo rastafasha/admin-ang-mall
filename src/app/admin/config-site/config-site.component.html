@@ -33,35 +33,35 @@
       <div class="card-body">
         <div class="row">
           <div class="col-xs-12 col-sm-4">
-            <p><b>Título:</b> {{ congeneral.titulo }}</p>
-            <p><b>CR:</b> {{ congeneral.cr }}</p>
-            <p><b>Teléfono uno:</b> {{ congeneral.telefono_uno }}</p>
-            <p><b>Teléfono dos:</b> {{ congeneral.telefono_dos }}</p>
-            <p><b>Email uno:</b> {{ congeneral.email_uno }}</p>
-            <p><b>Email dos:</b> {{ congeneral.email_dos }}</p>
-            <p><b>Dirección:</b> {{ congeneral.direccion }}</p>
-            <p><b>Horarios:</b>{{ congeneral.horarios }}</p>
+            <p><b>Título:</b> {{ congeneral?.titulo }}</p>
+            <p><b>CR:</b> {{ congeneral?.cr }}</p>
+            <p><b>Teléfono uno:</b> {{ congeneral?.telefono_uno }}</p>
+            <p><b>Teléfono dos:</b> {{ congeneral?.telefono_dos }}</p>
+            <p><b>Email uno:</b> {{ congeneral?.email_uno }}</p>
+            <p><b>Email dos:</b> {{ congeneral?.email_dos }}</p>
+            <p><b>Dirección:</b> {{ congeneral?.direccion }}</p>
+            <p><b>Horarios:</b>{{ congeneral?.horarios }}</p>
           </div>
           <div class="col-xs-12 col-sm-4">
             <p><b>Modo Paypal Sandbox (modo de pruebas):</b></p>
-            <span class="badge badge-success badge-shadow" *ngIf="congeneral.modoPaypal == true">{{
-              congeneral.modoPaypal }}</span>
-            <span class="badge badge-primary badge-shadow" *ngIf="congeneral.modoPaypal == false">{{
-              congeneral.modoPaypal }}</span>
-            <p><b>Sandbox:</b> {{ congeneral.sandbox }}</p>
-            <p><b>Cliente Paypal ID:</b> {{ congeneral.clientePaypal }}</p>
-            <p><b>Rapid Api Key:</b> {{ congeneral.rapidapiKey }}</p>
+            <span class="badge badge-success badge-shadow" *ngIf="congeneral?.modoPaypal == true">{{
+              congeneral?.modoPaypal }}</span>
+            <span class="badge badge-primary badge-shadow" *ngIf="congeneral?.modoPaypal == false">{{
+              congeneral?.modoPaypal }}</span>
+            <p><b>Sandbox:</b> {{ congeneral?.sandbox }}</p>
+            <p><b>Cliente Paypal ID:</b> {{ congeneral?.clientePaypal }}</p>
+            <p><b>Rapid Api Key:</b> {{ congeneral?.rapidapiKey }}</p>
           </div>
           <div class="col-xs-12 col-sm-4">
             <div class="row">
               <div class="col-xs-12 col-sm-6">
                 <p><b>Logo:</b></p>
-                <img [src]="congeneral.img | imagenPipe : 'congenerals'" style="width: 150px; margin-left: 10px"
+                <img [src]="congeneral?.img | imagenPipe : 'congenerals'" style="width: 150px; margin-left: 10px"
                   class="img-responsive img-thumbnail" alt="" />
               </div>
               <div class="col-xs-12 col-sm-6">
                 <p><b>Favicon:</b></p>
-                <img [src]="congeneral.favicon | imagenPipe : 'congenerals'" style="width: 150px; margin-left: 10px"
+                <img [src]="congeneral?.favicon | imagenPipe : 'congenerals'" style="width: 150px; margin-left: 10px"
                   class="img-responsive img-thumbnail" alt="" />
               </div>
             </div>
@@ -97,7 +97,7 @@
         <div class="col-12">
           <hr>
           <p><b>iframe_mapa (ubicación):</b></p>
-          <!-- <iframe class="mapa" [src]="getMapIframe(congeneral.iframe_mapa)" frameborder="0"
+          <!-- <iframe class="mapa" [src]="getMapIframe(congeneral?.iframe_mapa)" frameborder="0"
             allow="accelerometer; autoplay; encrypted-media; gyroscope; " allowfullscreen></iframe> -->
 
 

@@ -95,7 +95,7 @@ export class ConfigSiteComponent implements OnInit {
 getCongenerals(){
   this.isLoading = true;
   this.congeneralService.cargarCongenerals().subscribe((resp:any)=>{
-
+    console.log(resp)
     this.congeneral_id = resp[0]._id;
     console.log('congeneral_id',this.congeneral_id);
     if(this.congeneral_id ){

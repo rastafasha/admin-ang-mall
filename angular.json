@@ -159,14 +159,14 @@
               "vendorChunk": false,
               "extractLicenses": true,
               "serviceWorker": true,
-    "ngswConfigPath": "ngsw-config.json"
+              "ngswConfigPath": "ngsw-config.json"
             },
             "development": {
               "buildOptimizer": false,
               "optimization": false,
               "vendorChunk": true,
               "extractLicenses": false,
-              "sourceMap": true,
+              "sourceMap": false,
               "namedChunks": true
             }
           },
