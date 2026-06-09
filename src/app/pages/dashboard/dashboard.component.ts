@@ -160,56 +160,65 @@ export class DashboardComponent implements OnInit {
 
   }
 
-  togglePush() {
-    // Evaluamos el estado guardado en el BehaviorSubject de tu servicio
-    const estaSuscrito = this.pushService.isSubscribed$.value;
+ togglePush() {
+  // 🚀 ESCUDO DE PROTECCIÓN MÓVIL: Si SwPush no está habilitado en este dispositivo, frenamos el error
+  if (!this.swPush || !this.swPush.isEnabled) {
+    this.toastr.warning('No soportado', 'Este navegador o dispositivo móvil no admite notificaciones Push.');
+    console.warn('SwPush (Rt) no está habilitado o es undefined en este entorno.');
+    this.pushService.isSubscribed$.next(false);
+    return; // Detiene la función de inmediato para que no explote
+  }
 
-    if (!estaSuscrito) {
-      // 🟢 EL ADMINISTRADOR PRENDIÓ EL SWITCH
-      this.pushService.isProcessing$.next(true);
+  // Evaluamos el estado guardado en el BehaviorSubject de tu servicio
+  const estaSuscrito = this.pushService.isSubscribed$.value;
 
-      this.swPush.requestSubscription({
-        serverPublicKey: this.VAPID_PUBLIC_KEY
-      })
-      .then(sub => {
-        // Guardamos la suscripción en tu base de datos mediante tu servicio
-        this.pushService.guardarPushSubscription(sub).subscribe({
-          next: () => {
-            this.pushService.isSubscribed$.next(true);
-            this.pushService.isProcessing$.next(false);
-            this.toastr.success('¡Notificaciones del Dashboard activadas! 🔔');
-          },
-          error: (err) => {
-            console.error('Error guardando sub en backend:', err);
-            this.pushService.isProcessing$.next(false);
-            this.toastr.error('Error', 'No se pudo registrar este dispositivo en el servidor');
-          }
-        });
+  if (!estaSuscrito) {
+    // 🟢 EL ADMINISTRADOR PRENDIÓ EL SWITCH
+    this.pushService.isProcessing$.next(true);
+
+    this.swPush.requestSubscription({
+      serverPublicKey: this.VAPID_PUBLIC_KEY
+    })
+    .then(sub => {
+      // Guardamos la suscripción en tu base de datos mediante tu servicio
+      this.pushService.guardarPushSubscription(sub).subscribe({
+        next: () => {
+          this.pushService.isSubscribed$.next(true);
+          this.pushService.isProcessing$.next(false);
+          this.toastr.success('¡Notificaciones del Dashboard activadas! 🔔');
+        },
+        error: (err) => {
+          console.error('Error guardando sub en backend:', err);
+          this.pushService.isProcessing$.next(false);
+          this.toastr.error('Error', 'No se pudo registrar este dispositivo en el servidor');
+        }
+      });
+    })
+    .catch(err => {
+      // Si el admin cancela el permiso flotante, apagamos el switch automáticamente
+      console.warn('Permiso denegado por el usuario:', err);
+      this.pushService.isProcessing$.next(false);
+      this.pushService.isSubscribed$.next(false);
+      this.toastr.warning('Permiso requerido', 'Debes permitir las notificaciones en la ventana del navegador');
+    });
+
+  } else {
+    // 🔴 EL ADMINISTRADOR APAGÓ EL SWITCH
+    this.pushService.isProcessing$.next(true);
+
+    this.swPush.unsubscribe()
+      .then(() => {
+        this.pushService.isSubscribed$.next(false);
+        this.pushService.isProcessing$.next(false);
+        this.toastr.info('Notificaciones del Dashboard desactivadas');
       })
       .catch(err => {
-        // Si el admin cancela el permiso flotante, apagamos el switch automáticamente
-        console.warn('Permiso denegado por el usuario:', err);
+        console.error('Error al desuscribir del service worker:', err);
         this.pushService.isProcessing$.next(false);
-        this.pushService.isSubscribed$.next(false);
-        this.toastr.warning('Permiso requerido', 'Debes permitir las notificaciones en la ventana del navegador');
       });
-
-    } else {
-      // 🔴 EL ADMINISTRADOR APAGÓ EL SWITCH
-      this.pushService.isProcessing$.next(true);
-
-      this.swPush.unsubscribe()
-        .then(() => {
-          this.pushService.isSubscribed$.next(false);
-          this.pushService.isProcessing$.next(false);
-          this.toastr.info('Notificaciones del Dashboard desactivadas');
-        })
-        .catch(err => {
-          console.error('Error al desuscribir del service worker:', err);
-          this.pushService.isProcessing$.next(false);
-        });
-    }
   }
+}
+
 
   getTasaDollarUltima(){
     this.tasaDollarService.getUltimaTasa().subscribe((resp:any)=>{

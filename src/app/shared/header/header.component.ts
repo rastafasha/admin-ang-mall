@@ -419,45 +419,52 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   inicializarNotificaciones() {
-    // 1. Verificamos si las notificaciones están disponibles en este navegador/dispositivo
-    if (!this.swPush.isEnabled) {
-      console.log('Las notificaciones Push no están soportadas o activadas en este dispositivo.');
-      return;
-    }
-
-    // 2. Solicitamos la suscripción al navegador (esto dispara la ventana de "Permitir Notificaciones")
-    this.swPush.requestSubscription({
-      serverPublicKey: this.VAPID_PUBLIC_KEY
-    })
-      .then(sub => {
-
-
-        if (this.usuario.uid) {
-          // Estructuramos el objeto idéntico a lo que espera tu backend
-          const payloadSuscripcion = {
-            user: this.usuario.uid,
-            endpoint: sub.endpoint,
-            keys: sub.toJSON().keys // Contiene auth y p256dh de forma nativa
-          };
-
-          // 4. Enviamos la suscripción a tu API de Node.js para que se guarde en la BD
-          this.pushNotificacionService.guardarPushSubscription(sub).subscribe({
-            next: () => {
-              console.log('✅ ¡Suscripción guardada en el backend!');
-              this.isSubscribed$.next(true);
-              this.isProcessing$.next(false);
-              this.toastr.success('¡Notificaciones activadas!');
-            },
-            error: err => {
-              console.error('❌ Error al guardar en el servidor:', err);
-              this.isProcessing$.next(false);
-              this.toastr.error('Error', 'No se pudo registrar el dispositivo');
-            }
-          });
-        }
-      })
-      .catch(err => console.error('El usuario rechazó las notificaciones o hubo un fallo:', err));
+  // 1. Verificación estricta de seguridad para navegadores móviles (Safari/iOS)
+  if (!this.swPush || !this.swPush.isEnabled) {
+    console.log('Las notificaciones Push no están soportadas o activadas en este dispositivo.');
+    if (this.isSubscribed$) this.isSubscribed$.next(false);
+    if (this.isProcessing$) this.isProcessing$.next(false);
+    return; // Detiene la función de inmediato de forma pacífica
   }
+
+  // 2. Solicitamos la suscripción al navegador
+  this.swPush.requestSubscription({
+    serverPublicKey: this.VAPID_PUBLIC_KEY
+  })
+  .then(sub => {
+    // Si la suscripción por alguna razón viene vacía, frenamos para evitar errores
+    if (!sub) return;
+
+    if (this.usuario && this.usuario.uid) {
+      const payloadSuscripcion = {
+        user: this.usuario.uid,
+        endpoint: sub.endpoint,
+        keys: sub.toJSON().keys 
+      };
+
+      this.pushNotificacionService.guardarPushSubscription(sub).subscribe({
+        next: () => {
+          console.log('✅ ¡Suscripción guardada en el backend!');
+          if (this.isSubscribed$) this.isSubscribed$.next(true);
+          if (this.isProcessing$) this.isProcessing$.next(false);
+          this.toastr.success('¡Notificaciones activadas!');
+        },
+        error: err => {
+          console.error('❌ Error al guardar en el servidor:', err);
+          if (this.isProcessing$) this.isProcessing$.next(false);
+          this.toastr.error('Error', 'No se pudo registrar el dispositivo');
+        }
+      });
+    }
+  })
+  .catch(err => {
+    // 🚀 SALVAVIDAS PARA EL MÓVIL: Apagamos los estados de procesamiento si hay un fallo
+    console.warn('El usuario rechazó las notificaciones o hubo un fallo:', err);
+    if (this.isSubscribed$) this.isSubscribed$.next(false);
+    if (this.isProcessing$) this.isProcessing$.next(false);
+  });
+}
+
 
 
 }
