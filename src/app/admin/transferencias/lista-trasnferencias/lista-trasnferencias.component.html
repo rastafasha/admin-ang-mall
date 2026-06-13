@@ -18,7 +18,7 @@
                 <div class="row">
                     <div class="col-10">
                         <!-- <h4 class="card-title">Transferencias: ({{ trasnferencias.length}})</h4> -->
-                        <h6 class="card-subtitle">Transferencias registrados en la app</h6>
+                        <h6 class="card-subtitle">{{'Transferencias registrados en la app'|translate}}</h6>
                     </div>
                     <div class="col-2 d-flex justify-content-end">
                         <app-backbutton></app-backbutton>
@@ -32,24 +32,24 @@
                         <thead>
                             <tr>
                                 <th>Img</th>
-                                <th>Metodo</th>
-                                <th>Referencia</th>
-                                <th>Banco</th>
-                                <th>Monto</th>
-                                <th>Tasa Bcv</th>
-                                <th *ngIf="user.role==='SUPERADMIN'">Local</th>
-                                <th>Fecha</th>
-                                <th>Status</th>
-                                <th>Actualizada</th>
-                                <th>Aprobar</th>
-                                <th class="text-nowrap">Acciones</th>
+                                <th>{{'Método'|translate}}</th>
+                                <th>{{'Referencia'|translate}}</th>
+                                <th>{{'Banco'|translate}}</th>
+                                <th>{{'Monto'|translate}}</th>
+                                <th>{{'Tasa Bcv'|translate}}</th>
+                                <th *ngIf="user.role==='SUPERADMIN'">{{'Tienda'}}</th>
+                                <th>{{'Fecha'|translate}}</th>
+                                <th>{{'Status'|translate}}</th>
+                                <th>{{'Actualizada'|translate}}</th>
+                                <th>{{'Aprobar'|translate}}</th>
+                                <th class="text-nowrap">{{'Acciones'|translate}}</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr *ngFor="let transf of transferencias |  paginate: { itemsPerPage: count, currentPage: p } | orderBy:'createdAt, desc'">
                                 
                                 <td>
-                                    <img [src]="transf.img | imagenPipe: 'transferencias' " class="avatar cursor"
+                                    <img [src]="transf.img | imagenPipe: 'transferencias' " class="imgtranf cursor"
                                         alt="{{transf.referencia}}">
                                 </td>
                                 <td>
@@ -97,9 +97,9 @@
                                                 'border-warning text-warning': transf.status === 'pending',
                                                 'border-danger text-danger': transf.status === 'no'
                                             }">
-                                                <option value="ok">Aprobado</option>
-                                                <option value="pending">Pendiente</option>
-                                                <option value="no">Rechazado</option>
+                                                <option value="ok">{{'Aprobado'|translate}}</option>
+                                                <option value="pending">{{'Pendiente'|translate}}</option>
+                                                <option value="no">{{'Rechazado'|translate}}</option>
                                             </select>
 
                                 </td>

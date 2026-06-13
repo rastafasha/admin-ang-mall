@@ -2,7 +2,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="coloModalLabel">{{pageTitle}}</h5>
+                <h5 class="modal-title" id="coloModalLabel">{{pageTitle|translate}}</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
                     (click)="onClose()"></button>
             </div>
@@ -18,7 +18,7 @@
                                     style="padding-left: 10px;">
                                 <select class="form-control" name="search_categoria" [(ngModel)]="search_categoria"
                                     (change)="search_cat()">
-                                    <option value="" selected disabled>Categoría</option>
+                                    <option value="" selected disabled>{{'Categoría'|translate}}</option>
                                     <option [value]="item._id" *ngFor="let item of listCategorias">{{item.nombre}}
                                     </option>
                                 </select>
@@ -29,8 +29,8 @@
                     <div class="row">
                         <div class="col-lg-12 mb-4" *ngIf="count_cat == 0">
                             <div class="alert alert-dark alert-with-icon mb-0" role="alert">
-                                <div class="alert-icon-box"><i class="alert-icon czi-security-announcement"></i></div>No
-                                hay ningún elemento en la papelera de reciclaje.
+                                <div class="alert-icon-box"><i class="alert-icon czi-security-announcement"></i></div>
+                                {{'No hay ningún elemento en la papelera de reciclaje'|translate}}.
                             </div>
                         </div>
                         <div class="col-lg-12 mb-4"
@@ -43,14 +43,14 @@
                                     </div>
                                     <div class="col-sm-8">
                                         <div class="card-body">
-                                            <h5 class="card-title">{{item.titulo}}</h5>
+                                            <h5 class="card-title">{{item.titulo?.es}}</h5>
                                             <div class="h3 font-weight-normal text-accent mb-3 mr-1">
                                                 ${{item.precio_ahora}}<small></small>
                                                 <del class="font-size-sm text-muted" style="padding-left: 10px;"><small
                                                         style="font-size: 18px;">{{item.precio_antes}}</small></del>
 
                                                 <div class="font-size-sm mb-4">
-                                                    <span class="text-heading font-weight-medium mr-1">Estado:</span>
+                                                    <span class="text-heading font-weight-medium mr-1">{{'Estado'|translate}}:</span>
                                                     <span class="badge badge-dark badge-shadow"
                                                         *ngIf="item.status == 'Papelera'">{{item.status}}</span>
 
@@ -58,12 +58,12 @@
                                             </div>
                                             <button type="button" class="btn btn-outline-primary"
                                                 *ngIf="item.status == 'Papelera'" (click)="desactivar(item._id)"> 
-                                                Mover a entradas
+                                                {{'Mover a entradas'|translate}}
                                             </button>
                                             <br>
                                             <span class="text-muted" *ngIf="item.status == 'Papelera'"
-                                                style="font-size: 13px;">Este producto aún no está disponible en la
-                                                tienda.</span>
+                                                style="font-size: 13px;">
+                                                {{'Este producto aún no está disponible en la tienda'|translate}}.</span>
                                         </div>
                                     </div>
                                 </div>

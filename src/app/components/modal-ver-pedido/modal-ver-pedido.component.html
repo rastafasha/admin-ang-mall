@@ -3,7 +3,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Pedido: {{item._id}}</h4>
+                <h4 class="modal-title">{{'Pedido'|translate}}: {{item._id}}</h4>
 
 
                 <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"><span
@@ -42,12 +42,12 @@
                     <div class="bg-light rounded-4 p-3 mb-4" style="border-radius: 15px;">
 
                         <div class="d-flex justify-content-between mb-3 border-bottom pb-2">
-                            <span class="text-muted small">Categoria</span>
+                            <span class="text-muted small">{{'Categoría'|translate}}</span>
                             <span class="fw-bold small">{{ pedidoitem.subcategoria
                                 }}</span>
                         </div>
                         <div class="d-flex justify-content-between mb-3 border-bottom pb-2">
-                            <span class="text-muted small">Nombre</span> &nbsp;
+                            <span class="text-muted small">{{'Nombre'|translate}}</span> &nbsp;
                             <div class="d-flex flex-column">
                                 <span class="fw-bold small">{{ pedidoitem.titulo }}</span>
                             <span class="fw-bold small">{{ pedidoitem.selector_elegido }}</span>
@@ -55,12 +55,12 @@
                         </div>
 
                         <div class="d-flex justify-content-between">
-                            <span class="text-muted small">Cantidad</span>
+                            <span class="text-muted small">{{'Cantidad'|translate}}</span>
                             <span class="fw-bold small">{{ pedidoitem.cantidad }}</span>
                         </div>
 
                         <div class="d-flex justify-content-between">
-                            <span class="text-muted small">Precio</span>
+                            <span class="text-muted small">{{'Precio'|translate}}</span>
                             <span class="fw-bold small">{{ +pedidoitem.precio_ahora |
                                 currency:tienda_moneda }}</span>
                         </div>

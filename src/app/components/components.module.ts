@@ -23,6 +23,8 @@ import { ModalinfoPagoEfectivoComponent } from './modalinfo-pago-efectivo/modali
 import { ModalinfoDeliveryComponent } from './modalinfo-delivery/modalinfo-delivery.component';
 import { ModalVerPedidoComponent } from './modal-ver-pedido/modal-ver-pedido.component';
 import { ModalTrackingComponent } from './modal-tracking/modal-tracking.component';
+import { TranslateModule } from '@ngx-translate/core';
+import { FichaPedidoComponent } from './fichaPedido/fichaPedido.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +47,8 @@ import { ModalTrackingComponent } from './modal-tracking/modal-tracking.componen
     ModalinfoPagoEfectivoComponent,
     ModalinfoDeliveryComponent,
     ModalVerPedidoComponent,
-    ModalTrackingComponent
+    ModalTrackingComponent,
+    FichaPedidoComponent
 
   ],
   
@@ -69,13 +72,15 @@ import { ModalTrackingComponent } from './modal-tracking/modal-tracking.componen
     ModalinfoPagoEfectivoComponent,
     ModalinfoDeliveryComponent,
     ModalVerPedidoComponent,
-    ModalTrackingComponent
+    ModalTrackingComponent,
+    FichaPedidoComponent
   ],
   imports: [
     CommonModule,
     FormsModule,
     NgChartsModule,
-    PipesModule
+    PipesModule,
+    TranslateModule
     
   ],
 })

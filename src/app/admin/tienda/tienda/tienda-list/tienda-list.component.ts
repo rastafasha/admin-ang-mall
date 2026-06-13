@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
 import { Subscription, delay } from 'rxjs';
 import { Marca } from 'src/app/models/marca.model';
 import { Tienda } from 'src/app/models/tienda.model';
@@ -41,6 +42,7 @@ export class TiendaListComponent implements OnInit {
     private tiendaService: TiendaService,
     private modalImagenService: ModalImagenService,
     private busquedaService: BusquedasService,
+    public translate: TranslateService
   ) { }
 
   ngOnInit(): void {

@@ -2,7 +2,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="coloModalLabel">{{pageTitle}}</h5>
+                <h5 class="modal-title" id="coloModalLabel">{{pageTitle|translate}}</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
                     (click)="onClose()"></button>
             </div>
@@ -13,8 +13,8 @@
 
                         <form #galeriaForm="ngForm" *ngIf="!isLoadingImage">
                             <div *ngIf="msm_error" class="alert alert-danger alert-dismissible fade show" role="alert">
-                                <span class="font-weight-medium">Error!:</span> Por favor ingrese al menos
-                                dos imagenes.
+                                <span class="font-weight-medium">Error!:</span> 
+                                {{'Por favor ingrese al menos dos imagenes'|translate}}.
                                 <button type="button" (click)="close_alert()" class="close" data-dismiss="alert"
                                     aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
@@ -23,7 +23,7 @@
                             <div class="custom-dropzone" ngx-dropzone [accept]="'image/*'" (change)="onSelect($event)">
                                 <ngx-dropzone-label>
                                     <div>
-                                        <h2>Arrastra las imagenes aquí</h2>
+                                        <h2>{{'Arrastra las imagenes aquí'|translate}}</h2>
                                     </div>
                                 </ngx-dropzone-label>
                                 <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files"
@@ -33,7 +33,7 @@
                             </div>
 
                             <button class="btn btn-success btn-shadow " type="button"
-                                (click)="onSubmit()">Subir</button>
+                                (click)="onSubmit()">{{'Subir'|translate}}</button>
 
                         </form>
                         <div class="row">
@@ -43,9 +43,9 @@
                                 *ngFor="let item of galeria  | paginate: { itemsPerPage: count, currentPage: p }">
                                 <div class="card">
                                     <img [src]="item.imagen | imagenPipe: 'galerias'" style="width: 100%;">
-                                    <button class="btn btn-accent btn-sm" (click)="eliminar(item._id)"><span
-                                            class="czi-trash"></span> &nbsp;
-                                        Eliminar</button>
+                                    <button class="btn btn-accent btn-sm" (click)="eliminar(item._id)">
+                                        <span class="czi-trash"></span> &nbsp;{{'Eliminar'|translate}}
+                                    </button>
                                 </div>
                             </div>
 
@@ -60,7 +60,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
-                    (click)="onClose()">Cerrar</button>
+                    (click)="onClose()">{{'Cerrar'|translate}}</button>
             </div>
         </div>
     </div>

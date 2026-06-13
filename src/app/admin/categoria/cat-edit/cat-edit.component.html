@@ -2,7 +2,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="catModalLabel">{{pageTitle}}</h5>
+                <h5 class="modal-title" id="catModalLabel">{{pageTitle|translate}}</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
                     (click)="onClose()"></button>
             </div>
@@ -15,12 +15,12 @@
                         <div class="step-indicator m-t-20 m-b-20">
                             <div class="step" [ngClass]="{'active': currentStep >= 1, 'completed': currentStep > 1}">
                                 <span class="step-number">1</span>
-                                <span class="step-label">Datos</span>
+                                <span class="step-label">{{'Datos'|translate}}</span>
                             </div>
                             <div class="step-line"></div>
                             <div class="step" [ngClass]="{'active': currentStep >= 2}">
                                 <span class="step-number">2</span>
-                                <span class="step-label">Imagen</span>
+                                <span class="step-label">{{'Imagen'|translate}}</span>
                             </div>
                         </div>
                         <!-- editar/crear post -->
@@ -28,7 +28,7 @@
                             <form class="form p-t-20 form-horizontal form-material" [formGroup]="categoriaForm">
                                 <div class="row">
                                     <div class="form-group col-xs-12 col-sm-6">
-                                        <label for="exampleInputuname">Titulo Categoria <span
+                                        <label for="exampleInputuname">{{'Categoría'|translate}} <span
                                                 class="required">*</span></label>
                                         <div class="input-group">
 
@@ -37,16 +37,16 @@
                                             <div *ngIf="categoriaForm.get('nombre')?.touched && categoriaForm.get('nombre')?.invalid"
                                                 class="text-danger">
                                                 <div *ngIf="categoriaForm.get('nombre')?.errors?.['required']">
-                                                    Campo Requerido
+                                                    {{'Campo Requerido'|translate}}
                                                 </div>
                                                 <div *ngIf="categoriaForm.get('nombre')?.errors?.['minlength']">
-                                                    Mínimo 3 Caracteres
+                                                    {{'Mínimo 3 Caracteres'|translate}}
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="form-group col-xs-12 col-sm-6">
-                                        <label for="exampleInputsubcategorias">Subcategoría <span
+                                        <label for="exampleInputsubcategorias">{{'Subcategoría'|translate}} <span
                                                 class="required">*</span></label>
 
                                         <div class="col-12">
@@ -55,10 +55,10 @@
                                             <div *ngIf="categoriaForm.get('subcategorias')?.touched && categoriaForm.get('subcategorias')?.invalid"
                                                 class="text-danger">
                                                 <div *ngIf="categoriaForm.get('subcategorias')?.errors?.['required']">
-                                                    Campo Requerido
+                                                    {{'Campo Requerido'|translate}}
                                                 </div>
                                                 <div *ngIf="categoriaForm.get('subcategorias')?.errors?.['minlength']">
-                                                    Mínimo 3 Caracteres
+                                                    {{'Mínimo 3 Caracteres'|translate}}
                                                 </div>
                                             </div>
                                         </div>
@@ -66,18 +66,18 @@
                                 </div>
                                 <div class="row">
                                     <div class="form-group col-xs-12 col-sm-6 ">
-                                        <label  for="text-input">Mostrar en
-                                            slide</label>
+                                        <label  for="text-input">
+                                            {{'Mostrar en slide'|translate}}</label>
                                         <div class="input-group">
                                             <select class="form-control" formControlName="state_banner">
-                                                <option disabled value="">SELECCIONAR</option>
-                                                <option [value]="true">Activo</option>
-                                                <option [value]="false">Inactivo</option>
+                                                <option disabled value="">{{'Seleccionar'|translate}}</option>
+                                                <option [value]="true">{{'Activo'|translate}}</option>
+                                                <option [value]="false">{{'Inactivo'|translate}}</option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="form-group col-xs-12 col-sm-6">
-                                        <label for="icono">Icono <span class="required">*</span></label>
+                                        <label for="icono">{{'Icono'|translate}} <span class="required">*</span></label>
                                         <div class="input-group">
 
                                             <select formControlName="icono" class="form-control">
@@ -90,10 +90,10 @@
                                         <div *ngIf="categoriaForm.get('icono')?.touched && categoriaForm.get('icono')?.invalid"
                                             class="text-danger">
                                             <div *ngIf="categoriaForm.get('icono')?.errors?.['required']">
-                                                Campo Requerido
+                                                {{'Campo Requerido'|translate}}
                                             </div>
                                             <div *ngIf="categoriaForm.get('icono')?.errors?.['minlength']">
-                                                Seleccione una opción
+                                                {{'Seleccione una opción'|translate}}
                                             </div>
                                         </div>
                                     </div>
@@ -102,11 +102,11 @@
                                 <div class="row">
                                     <div class="col-6">
                                         <button class="btn btn-success waves-effect waves-light m-r-10 btn-block"
-                                            type="button" (click)="nextStep()">Siguiente</button>
+                                            type="button" (click)="nextStep()">{{'Siguiente'|translate}}</button>
                                     </div>
                                     <div class="col-6">
                                         <button (click)="updateCategoria()" class="btn btn-outline-success">
-                                            {{ categoriaSeleccionado ? 'Actualizar y Continuar' : 'Crear y Continuar' }}
+                                             {{ (categoriaSeleccionado ? 'Actualizar y Continuar' : 'Crear y Continuar') | translate }}
                                         </button>
                                     </div>
                                 </div>
@@ -115,18 +115,18 @@
                         <div *ngIf="currentStep === 2">
                             <app-loading *ngIf="isLoadingImage"></app-loading>
                             <div *ngIf="!isLoadingImage">
-                                <label> Anexe su foto</label>
+                                <label> {{'Anexe foto'| translate }}</label>
                                 <br>
                                 <div class="row">
                                     <div class="especificaciones col-xs-12" *ngIf="!categoriaSeleccionado">
-                                        <h4>Debe Crear un post para agregar la imagen</h4>
+                                        <h4>{{'Debe Crear un post para agregar la imagen'| translate}}</h4>
                                     </div>
                                     <div class="especificaciones col-xs-12 col-sm-6" *ngIf="categoriaSeleccionado">
-                                        <h4>Especificaciones:</h4>
+                                        <h4>{{'Especificaciones'| translate}}:</h4>
                                         <ul>
-                                            <li>Tamaño máximo: 300px X 300px</li>
-                                            <li>Peso máximo: 2 mb</li>
-                                            <li>Formato permitido: jpg, .gif, .png</li>
+                                            <li>{{'Tamaño máximo'| translate}}: 300px X 300px</li>
+                                            <li>{{'Peso máximo'| translate}}: 2 mb</li>
+                                            <li>{{'Formato permitido'| translate}}: jpg, .gif, .png</li>
                                         </ul>
                                     </div>
                                     <div class="col-xs-12 col-sm-6" *ngIf="categoriaSeleccionado ">
@@ -148,12 +148,12 @@
                                             <div class="col-6">
                                                 <button
                                                     class="btn btn-success waves-effect waves-light m-r-10 btn-block"
-                                                    type="button" (click)="prevStep()">Anterior</button>
+                                                    type="button" (click)="prevStep()">{{'Anterior'| translate}}</button>
                                             </div>
                                             <div class="col-6">
                                                 <button type="button" [disabled]="!imagenSubir" (click)="subirImagen()"
                                                     class="btn btn-success waves-effect waves-light m-r-10 btn-block">
-                                                    <i class="fa fa-save"></i> Subir imagen
+                                                    <i class="fa fa-save"></i> {{'Subir imagen'| translate}}
                                                 </button>
                                             </div>
                                         </div>

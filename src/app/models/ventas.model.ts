@@ -1,3 +1,4 @@
+import { PaymentMethod } from "./paymenthmethod.model";
 import { Tienda } from "./tienda.model";
 import { Usuario } from "./usuario.model";
 
@@ -9,7 +10,7 @@ export class Venta {
   total_pagado: number;
   info_cupon: string;
   idtransaccion: string;
-  metodo_pago: string;
+  metodo_pago: PaymentMethod;
   precio_envio: string;
   tipo_envio: string;
   tiempo_estimado: string;

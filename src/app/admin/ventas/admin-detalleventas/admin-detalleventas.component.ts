@@ -11,6 +11,7 @@ import { Venta } from 'src/app/models/ventas.model';
 import { Usuario } from 'src/app/models/usuario.model';
 import { Tienda } from 'src/app/models/tienda.model';
 import { TiendaService } from 'src/app/services/tienda.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-admin-detalleventas',
@@ -30,7 +31,7 @@ export class AdminDetalleventasComponent implements OnInit {
   public tienda_moneda: string;
   public local: string;
   isLoading = false;
-
+ 
   constructor(
     private _userService: UsuarioService,
     private _router: Router,
@@ -39,6 +40,7 @@ export class AdminDetalleventasComponent implements OnInit {
     private _ventaService: VentaService,
     private tiendaService: TiendaService,
     private location: Location,
+    public translate: TranslateService 
   ) {
     this.identity = this._userService.usuario;
     this.url = environment.baseUrl;

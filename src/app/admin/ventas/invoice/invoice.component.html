@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>HostingNice - Factura nº{{producto_id?.toUpperCase()}}</title>
+    <title>{{'Factura'|translate}} nº{{producto_id?.toUpperCase()}}</title>
 
     <link href="/templates/six/css/all.min.css" rel="stylesheet">
     <link href="/assets/css/fontawesome-all.min.css" rel="stylesheet">
@@ -17,9 +17,9 @@
 <body>
     <div class="container-fluid invoice-container" style="padding: 20px;">
         <div class="row">
-            
+
             <div class="col-10">
-                <a (click)="imprimir()" class="btn btn-default">Descargar</a>
+                <a (click)="imprimir()" class="btn btn-default">{{'Descargar'|translate}}</a>
             </div>
             <div class="col-2 d-flex justify-content-end">
                 <app-backbutton></app-backbutton>
@@ -32,14 +32,14 @@
         <div class="row invoice-header">
             <div class="invoice-col">
 
-                <h3 class="invoice-status" style="padding-bottom: 8px;">Factura N°:</h3>
+                <h3 class="invoice-status" style="padding-bottom: 8px;">{{'Factura'|translate}} N°:</h3>
                 <span>{{producto_id?.toUpperCase()}}</span>
 
             </div>
             <div class="invoice-col text-right">
 
                 <div class="invoice-status">
-                    <span class="unpaid">Fecha</span>
+                    <span class="unpaid">{{'Fecha'|translate}}</span>
                 </div>
 
                 <div class="small-text">
@@ -55,21 +55,25 @@
 
         <div class="row">
             <div class="col-lg-6">
-                <strong>Facturado a</strong>
+                <strong>{{'Facturado a'|translate}}</strong>
                 <address class="small-text">
-                        <strong>Cliente: </strong>{{venta.user.first_name}} {{venta.user.last_name}}<br>
-                        <strong>Monto: </strong> ${{venta.total_pagado}}<br>
-                        <strong>Correo: </strong> {{venta.user.email}}<br>
-                        <strong>Transaccion: </strong> {{venta.idtransaccion?.toUpperCase()}}<br>
+                    <strong>{{'Cliente'|translate}}: </strong>{{venta.user.first_name}} {{venta.user.last_name}}<br>
+                    <strong>{{'Monto'|translate}}: </strong> ${{venta.total_pagado}}<br>
+                    <strong>{{'Correo'|translate}}: </strong> {{venta.user.email}}<br>
+                    <strong>{{'Transacción'|translate}}: </strong> {{venta.idtransaccion?.toUpperCase()}}<br>
+                    <strong>{{'Dirección'|translate}}: </strong> {{venta.pais}} / {{venta.ciudad}} / {{venta.zip}}<br>
+                    <strong>{{'Tipo de Envio'|translate}}: </strong> {{venta.tipo_envio}}<br>
+                    <strong>{{'Tiempo estimado de entrega'|translate}}: </strong> {{venta.tiempo_estimado}}<br>
+                    <strong>{{'Precio de envio'|translate}}:</strong> {{venta.precio_envio| currency:tienda_moneda}}<br>
+
                 </address>
             </div>
             <div class="col-lg-6 text-right">
-                <strong>Tienda:</strong>
+                <strong>{{'Tienda'|translate}}: {{tienda.nombre}}</strong>
                 <address class="small-text">
-                    Dirección:<br> {{venta.direccion}}<br>
-                    {{venta.pais}} / {{venta.ciudad}} / {{venta.zip}}<br>
-                    Tipo de Envio:<br>{{venta.tipo_envio}}<br>
-                    Tiempo estimado de entrega:<br> {{venta.tiempo_estimado}}<br>
+                    {{'Dirección'|translate}}:<br> {{tienda.direccion}}<br>
+                    <br>
+                    {{'Teléfono'|translate}}:<br>{{tienda.telefono}}<br>
                 </address>
             </div>
 
@@ -78,48 +82,52 @@
         <div class="row">
 
             <div class="col-lg-6">
-                <strong>Método de Pago</strong><br>
+                <strong>{{'Método de Pago'|translate}}</strong><br>
                 <span class="small-text">
-                    {{venta.metodo_pago}}<br><br>
+                    {{venta.metodo_pago.tipo}}<br><br>
                 </span>
 
             </div>
             <div class="col-lg-6 text-right">
-                <strong>Precio de envio:</strong><br>
-                <span class="small-text">
-                    {{venta.precio_envio| currency:tienda_moneda}}<br><br>
-                    </span>
+
             </div>
-
-
         </div>
 
         <br>
 
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title"><strong>Productos</strong></h3>
+                <h3 class="panel-title"><strong>{{'Productos'|translate}}</strong></h3>
             </div>
             <div class="panel-body">
                 <div class="table-responsive">
                     <table class="table table-condensed">
                         <thead>
                             <tr>
-                                <td><strong>Descripción</strong></td>
-                                <td width="20%" class="text-center"><strong>Importe</strong></td>
+                                <td><strong>{{'Descripción'|translate}}</strong></td>
+                                <td width="20%" class="text-center"><strong>{{'Importe'|translate}}</strong></td>
                             </tr>
                         </thead>
                         <tbody>
                             <tr *ngFor="let item of detalle">
-                                <td>{{item.producto.titulo}} x {{item.cantidad}}</td>
-                                <td class="text-center">{{item.precio * item.cantidad | currency:tienda_moneda}} </td>
+                                <td>
+                                   <div class="d-flex flex-column">
+                                     {{ translate.currentLang === 'en' ? item?.producto?.titulo?.en :
+                                    item?.producto?.titulo?.es }}:
+                                    {{ item?.selector_elegido}}
+                                   </div>
+                                    x {{ item?.cantidad }}
+                                </td>
+                                <td class="text-center">
+                                    {{ (item?.precio * item?.cantidad) | currency: tienda_moneda }}
+                                </td>
                             </tr>
                             <tr>
-                                <td class="total-row text-right"><strong>Envio</strong></td>
+                                <td class="total-row text-right"><strong>{{'Envío'|translate}}</strong></td>
                                 <td class="total-row text-center">{{venta.precio_envio | currency:tienda_moneda}} </td>
                             </tr>
                             <tr>
-                                <td class="total-row text-right"><strong>Total</strong></td>
+                                <td class="total-row text-right"><strong>{{'Total'|translate}}</strong></td>
                                 <td class="total-row text-center">{{venta.total_pagado | currency:tienda_moneda}} </td>
                             </tr>
                         </tbody>

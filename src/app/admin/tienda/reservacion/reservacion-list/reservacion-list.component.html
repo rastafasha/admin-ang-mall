@@ -3,13 +3,13 @@
         <li>
             <a href="#" onclick="return false;" [ngClass]="{'active': option_selectedd == 1}"
                 (click)="optionSelected(1)">
-                <h3 class="btn btn-outline-info"> {{'Reservaciones'}}</h3>
+                <h3 class="btn btn-outline-info"> {{'Reservaciones'|translate}}</h3>
             </a>
         </li>
         <li>
             <a href="#" onclick="return false;" [ngClass]="{'active': option_selectedd == 2}"
                 (click)="optionSelected(2)">
-                <h3 class="btn btn-outline-info">{{'Graficos'}}</h3>
+                <h3 class="btn btn-outline-info">{{'Gráficos'|translate}}</h3>
             </a>
         </li>
 
@@ -37,8 +37,6 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-10">
-                            <!-- <h4 class="card-title">Transferencias: ({{ trasnferencias.length}})</h4> -->
-                            <h6 class="card-subtitle">Transferencias registrados en la app</h6>
                         </div>
                         <div class="col-2 d-flex justify-content-end">
                             <app-backbutton></app-backbutton>
@@ -51,18 +49,18 @@
                         <table class="table table-borderless">
                             <thead>
                                 <tr>
-                                    <th>fecha</th>
-                                    <th>Cliente</th>
-                                    <th>personas</th>
-                                    <th>hora</th>
-                                    <th>listaespera</th>
-                                    <th>email</th>
-                                    <th *ngIf="user.role==='SUPERADMIN'">Local</th>
-                                    <th>Creada</th>
-                                    <th>Status</th>
-                                    <th>Aprobar</th>
-                                    <th>Actualizada</th>
-                                    <th class="text-nowrap">Acciones</th>
+                                    <th>{{'Fecha'|translate}}</th>
+                                    <th>{{'Cliente'|translate}}</th>
+                                    <th>{{'Personas'|translate}}</th>
+                                    <th>{{'Hora'|translate}}</th>
+                                    <th>{{'en espera?'|translate}}</th>
+                                    <th>{{'Email'}}</th>
+                                    <th *ngIf="user.role==='SUPERADMIN'">{{'Tienda'|translate}}</th>
+                                    <th>{{'Creada'|translate}}</th>
+                                    <th>{{'Status'|translate}}</th>
+                                    <th>{{'Aprobar'|translate}}</th>
+                                    <th>{{'Actualizada'|translate}}</th>
+                                    <th class="text-nowrap">{{'Acciones'|translate}}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -119,10 +117,10 @@
                                                 'border-danger text-danger': reserv.status === 'Cancelada',
                                                 'border-warning text-warning': reserv.status === 'Completada'
                                             }">
-                                            <option value="Pendiente">Pendiente</option>
-                                            <option value="Confirmada">Confirmada</option>
-                                            <option value="Cancelada">Cancelada</option>
-                                            <option value="Completada">Completada</option>
+                                            <option value="Pendiente">{{'Pendiente'|translate}}</option>
+                                            <option value="Confirmada">{{'Confirmada'|translate}}</option>
+                                            <option value="Cancelada">{{'Cancelada'|translate}}</option>
+                                            <option value="Completada">{{'Completada'|translate}}</option>
                                         </select>
 
                                     </td>

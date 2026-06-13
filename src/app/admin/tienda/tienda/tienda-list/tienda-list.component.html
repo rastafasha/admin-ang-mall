@@ -14,8 +14,8 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-11">
-                        <h4 class="card-title">Tiendas: ({{ tiendas.length}})</h4>
-                        <h6 class="card-subtitle">Tiendas registrados en la app</h6>
+                        <h4 class="card-title">{{'Tiendas'|translate}}: ({{ tiendas.length}})</h4>
+                        <h6 class="card-subtitle">{{'Tiendas registrados en la app'|translate}}</h6>
                     </div>
                     <div class="col-1">
                         <div class="text-right">
@@ -35,11 +35,11 @@
                             <tr>
                                 <th>Img</th>
                                 <th>Img Front</th>
-                                <th>Nombre</th>
-                                <th>Local</th>
-                                <th>status</th>
-                                <th>Categoria</th>
-                                <th class="text-nowrap">Acciones</th>
+                                <th>{{'Nombre'|translate}}</th>
+                                <th>{{'Tienda'|translate}}</th>
+                                <th>{{'Status'|translate}}</th>
+                                <th>{{'Categoria'|translate}}</th>
+                                <th class="text-nowrap">{{'Acciones'|translate}}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -62,17 +62,17 @@
                                     <!-- Botón que se muestra SOLO cuando la tienda está Desactivada (para poder Activarla) -->
                                     <button type="button" class="btn btn-outline-success" *ngIf="tienda.status === 'Desactivado'"
                                         (click)="activar(tienda._id, 'Activo')">
-                                        <span class="czi-check"></span> Activo
+                                        <span class="czi-check"></span> {{'Activo'|translate}}
                                     </button>
 
                                     <!-- Botón que se muestra SOLO cuando la tienda está Activa (para poder Desactivarla) -->
                                     <button type="button" class="btn btn-primary" *ngIf="tienda.status === 'Activo'"
                                         (click)="desactivar(tienda._id, 'Desactivado')">
-                                        <span class="czi-close"></span> Desactivar
+                                        <span class="czi-close"></span> {{'Desactivar'|translate}}
                                     </button>
                                 </td>
                                 <td>
-                                    {{tienda?.categoria?.nombre}}
+                                    {{ translate.currentLang === 'en' ? tienda?.categoria?.nombre?.en : tienda?.categoria?.nombre?.es }}
                                 </td>
                                 <td class="text-nowrap text-center">
                                     <button class="btn btn-outline-success" data-toggle="tooltip"

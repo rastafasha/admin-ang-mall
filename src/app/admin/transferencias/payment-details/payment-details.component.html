@@ -10,27 +10,27 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-xs-12 col-sm-4">
-                            <p><b>bankName:</b> {{pagoSeleccionado?.bankName}}</p>
-                            <p><b>Referencia:</b> {{pagoSeleccionado?.referencia}}</p>
-                            <p><b>Monto:</b> {{pagoSeleccionado?.amount | currency:tienda_moneda}}</p>
-                            <p><b>Tasa BCV:</b> {{pagoSeleccionado?.tasa | currency:'Bs.'}}</p>
-                            <p><b>metodo_pago:</b> {{pagoSeleccionado?.metodo_pago.tipo}}</p>
-                            <p><b>Nombre de la cuenta:</b>&nbsp;
+                            <p><b>{{'Nombre del Banco'|translate}}:</b> {{pagoSeleccionado?.bankName}}</p>
+                            <p><b>{{'Referencia'|translate}}:</b> {{pagoSeleccionado?.referencia}}</p>
+                            <p><b>{{'Monto'|translate}}:</b> {{pagoSeleccionado?.amount | currency:tienda_moneda}}</p>
+                            <p><b>{{'Tasa Bcv'|translate}}:</b> {{pagoSeleccionado?.tasa | currency:'Bs.'}}</p>
+                            <p><b>{{'Método'|translate}}:</b> {{pagoSeleccionado?.metodo_pago.tipo}}</p>
+                            <p><b>{{'Nombre de Usuario'|translate}}:</b>&nbsp;
                                 {{pagoSeleccionado?.name_person}}
                                 <!-- <a [routerLink]="['/dashboard/user/', pagoSeleccionado?.user]">
                                     {{pagoSeleccionado?.name_person}}</a> -->
                             </p>
-                            <p><b>phone:</b> {{pagoSeleccionado?.phone}}</p>
+                            <p><b>{{'Teléfono'|translate}}:</b> {{pagoSeleccionado?.phone}}</p>
                             
                             
-                            <p><b>Fecha | Hora:</b> {{pagoSeleccionado?.createdAt | date:'MMM d, y, h:mm:ss a'}}</p>
-                            <p><b>Status:</b>&nbsp;
+                            <p><b>{{'Fecha'|translate}} | {{'Hora'|translate}}:</b> {{pagoSeleccionado?.createdAt | date:'MMM d, y, h:mm:ss a'}}</p>
+                            <p><b>{{'Status'|translate}}:</b>&nbsp;
                                 <span class="badge bg-success"
-                                    *ngIf="pagoSeleccionado?.status === 'ok'">Completado</span>
+                                    *ngIf="pagoSeleccionado?.status === 'ok'">{{'Aprobado'|translate}}</span>
                                 <span class="badge bg-primary"
-                                    *ngIf="pagoSeleccionado?.status === 'pending'">Pendiente</span>
+                                    *ngIf="pagoSeleccionado?.status === 'pending'">{{'Pendiente'|translate}}</span>
                                 <span class="badge bg-danger"
-                                    *ngIf="pagoSeleccionado?.status === 'no'">Rechazado</span>
+                                    *ngIf="pagoSeleccionado?.status === 'no'">{{'Rechazado'|translate}}</span>
                             </p>
                             
 
@@ -42,12 +42,12 @@
                                 <div class="bg-light rounded-4 p-3 mb-4" style="border-radius: 15px;">
 
                                     <div class="d-flex justify-content-between mb-3 border-bottom pb-2">
-                                        <span class="text-muted small">Categoria</span>
+                                        <span class="text-muted small">{{'Categoria'|translate}}</span>
                                         <span class="fw-bold small">{{ pedidoitem.subcategoria
                                             }}</span>
                                     </div>
                                     <div class="d-flex justify-content-between mb-3 border-bottom pb-2">
-                                        <span class="text-muted small">Nombre</span>
+                                        <span class="text-muted small">{{'Nombre'|translate}}</span>
                                         <div class="d-flex flex-column">
                                             <span class="fw-bold small">{{ pedidoitem.titulo }}</span>
                                         <span class="fw-bold small">{{ pedidoitem.selector_elegido }}</span>
@@ -56,18 +56,18 @@
                                     
 
                                     <div class="d-flex justify-content-between">
-                                        <span class="text-muted small">Cantidad</span>
+                                        <span class="text-muted small">{{'Cantidad'|translate}}</span>
                                         <span class="fw-bold small">{{ pedidoitem.cantidad }}</span>
                                     </div>
 
                                     <div class="d-flex justify-content-between">
-                                        <span class="text-muted small">Precio</span>
+                                        <span class="text-muted small">{{'Precio'|translate}}</span>
                                         <span class="fw-bold small">{{ +pedidoitem.precio_ahora |
                                             currency:tienda_moneda }}</span>
                                     </div>
 
                                     <div class="d-flex justify-content-between">
-                                        <span class="text-muted small">Total</span>
+                                        <span class="text-muted small">{{'Total'|translate}}</span>
                                         <!-- El símbolo + convierte el texto "20" y "10" en números reales antes de multiplicar -->
                                         <span class="fw-bold small">{{ (+pedidoitem.precio_ahora) *
                                             (+pedidoitem.cantidad) | currency:tienda_moneda
@@ -88,7 +88,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
-                    (click)="onClose()">Cerrar</button>
+                    (click)="onClose()">{{'Cerrar'|translate}}</button>
             </div>
         </div>
     </div>

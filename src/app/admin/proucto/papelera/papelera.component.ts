@@ -61,13 +61,13 @@ export class PapeleraComponent implements OnInit, OnChanges {
       changes['productoSeleccionado'] &&
       changes['productoSeleccionado'].currentValue
     ) {
-      this.pageTitle = 'Editando Producto';
+      this.pageTitle = 'Papelera';
       const producto = changes['productoSeleccionado'].currentValue;
       
       this.productoSeleccionado = producto;
-      this.pageTitle = 'Editando Producto';
+      this.pageTitle = 'Papelera';
     } else {
-      this.pageTitle = 'Creando Producto';
+      this.pageTitle = 'Papelera';
     }
   }
 

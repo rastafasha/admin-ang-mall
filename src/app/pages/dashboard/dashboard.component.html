@@ -34,8 +34,9 @@
                         <!-- subcribirse a notificaciones-->
                         <div class="col">
                             <div class="card">
-                                <div class="card-body" >
-                                    <div class="setting-row" *ngIf="!isLoadingSwitch" [class.loading]="pushService.isProcessing$ | async">
+                                <div class="card-body">
+                                    <div class="setting-row" *ngIf="!isLoadingSwitch"
+                                        [class.loading]="pushService.isProcessing$ | async">
                                         <div class="setting-info">
                                             <i class="fa fa-bell"></i>
                                             <div class="text-container">
@@ -50,12 +51,13 @@
 
                                             <label class="switch">
                                                 <input type="checkbox" [disabled]="pushService.isProcessing$ | async"
-                                                    [checked]="pushService.isSubscribed$ | async" (change)="togglePush()">
+                                                    [checked]="pushService.isSubscribed$ | async"
+                                                    (change)="togglePush()">
                                                 <span class="slider round"></span>
                                             </label>
                                         </div>
                                     </div>
-                    <!-- configurar notificaciones push -->
+                                    <!-- configurar notificaciones push -->
                                 </div>
 
                             </div>
@@ -161,7 +163,7 @@
                                     style="padding: 0px !important;">
                                     <div class="display-2 font-weight-normal border-color mr-4">
                                         <a routerLink="producto">
-                                            <span class="mdi mdi-store"></span>
+                                            <span class="czi-store"></span>
                                         </a>
                                     </div>
                                     <div class="pl-3">
@@ -183,7 +185,7 @@
                                     style="padding: 0px !important;">
                                     <div class="display-2 font-weight-normal border-color mr-4">
                                         <a routerLink="transferencias">
-                                            <span class="mdi mdi-store"></span>
+                                            <span class="czi-store"></span>
                                         </a>
                                     </div>
                                     <div class="pl-3">
@@ -205,7 +207,7 @@
                                     style="padding: 0px !important;">
                                     <div class="display-2 font-weight-normal border-color mr-4">
                                         <a routerLink="tienda/pedidos">
-                                            <span class="mdi mdi-store"></span>
+                                            <span class="czi-store"></span>
                                         </a>
                                     </div>
                                     <div class="pl-3">
@@ -238,7 +240,6 @@
                                             {{'Tasa Dollar BCV'| translate}}
                                         </h6>
                                         <p>Bs.{{tasadollar?.precio_dia}}</p>
-                                        <p>Fecha:&nbsp;{{tasadollar?.createdAt|date}}</p>
                                     </div>
                                 </div>
                             </div>
@@ -261,7 +262,6 @@
                                             {{'Tasa Euro BCV'| translate}}
                                         </h6>
                                         <p>Bs.{{tasaeuro?.precio_dia}}</p>
-                                        <p>Fecha:&nbsp;{{tasaeuro?.createdAt|date}}</p>
                                     </div>
                                 </div>
                             </div>
@@ -307,7 +307,10 @@
                                         <div class="media-body">
                                             <h6 class="card-title pt-4" *ngIf="item.producto"
                                                 style="font-size: 15.2px;margin-bottom: 0px;">
-                                                {{item.producto.titulo.substr(0,30)}}..</h6>
+                                                {{ translate.currentLang === 'en' ? item.producto?.titulo?.en?.substring(0,30) :
+                                                item.producto?.titulo?.es?.substring(0,30) }}...
+                                            </h6>
+
                                             <div class="font-size-sm">
                                                 <span class="text-muted mr-2">{{'Cantidad'|
                                                     translate}}:</span>{{item.cantidad}}

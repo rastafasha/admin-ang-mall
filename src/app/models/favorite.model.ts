@@ -8,7 +8,7 @@ export class Favorite {
 
     constructor(producto: Producto){
       this.productId= producto._id;
-      this.productName = producto.titulo;
+      this.productName = producto.titulo ? producto.titulo.es : '';
       this.quantity = 1;
     }
   }

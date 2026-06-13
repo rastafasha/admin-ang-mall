@@ -15,8 +15,8 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-11">
-                        <h4 class="card-title">Total de Usuarios de Tienda</h4>
-                        <h6 class="card-subtitle">Empleados registrados en la app</h6>
+                        <h4 class="card-title">{{'Total de Usuarios de Tienda'|translate}}</h4>
+                        <h6 class="card-subtitle">{{'Empleados registrados en la app'|translate}}</h6>
                     </div>
                     <div class="col-1">
                         <div class="text-right">
@@ -32,12 +32,12 @@
                     <table class="table table-borderless">
                         <thead>
                             <tr>
-                                <th>Avatar</th>
-                                <th>Correo</th>
-                                <th>Nombre</th>
-                                <th>Cambiar Role</th>
+                                <th>{{'Avatar'|translate}}</th>
+                                <th>{{'Correo'|translate}}</th>
+                                <th>{{'Nombre'|translate}}</th>
+                                <th>{{'Cambiar Role'|translate}}</th>
                                 <th>Auth</th>
-                                <th class="text-nowrap">Acciones</th>
+                                <th class="text-nowrap">{{'Acciones'|translate}}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -50,12 +50,12 @@
                                 <td>
                                     <select class="form-control" [(ngModel)]="usuario.role" (change)="cambiarStatus(usuario)">
                                     
-                                    <option value="USER">User</option>
-                                    <option value="ADMIN">Admin</option>
-                                    <option value="VENTAS">Ventas</option> 
-                                    <option value="TIENDA">Tienda</option>
-                                    <option value="ALMACEN">Almacen</option>
-                                    <option value="CHOFER">Chofer</option>
+                                    <option value="USER">{{'Usuario'|translate}}</option>
+                                    <option value="ADMIN">{{'Admin'|translate}}</option>
+                                    <option value="VENTAS">{{'Ventas'|translate}}</option> 
+                                    <option value="TIENDA">{{'Tienda'|translate}}</option>
+                                    <option value="ALMACEN">{{'Almacen'|translate}}</option>
+                                    <option value="CHOFER">{{'Chofer'|translate}}</option>
                                   </select>
                                 </td>
                                 <td>

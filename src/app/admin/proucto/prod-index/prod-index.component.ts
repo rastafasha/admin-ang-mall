@@ -8,6 +8,7 @@ import { ProductoService } from '../../../services/producto.service';
 import { FormGroup } from '@angular/forms';
 import { Usuario } from 'src/app/models/usuario.model';
 import { UsuarioService } from 'src/app/services/usuario.service';
+import { TranslateService } from '@ngx-translate/core';
 
 declare var jQuery: any;
 declare var $: any;
@@ -47,6 +48,7 @@ export class ProdIndexComponent implements OnInit {
     private productoService: ProductoService,
     private categoriaService: CategoriaService,
     private usuarioService: UsuarioService,
+    public translate: TranslateService 
   ) {
   }
 

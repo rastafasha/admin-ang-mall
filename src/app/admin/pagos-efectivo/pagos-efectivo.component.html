@@ -19,11 +19,11 @@
                             <thead>
                                 <tr>
                                     <th>N°</th>
-                                    <th>Nombre y Apellido</th>
-                                    <th>Monto</th>
-                                    <th>Teléfono</th>
-                                    <th *ngIf="user.role==='SUPERADMIN'">Local</th>
-                                    <th>Fecha</th>
+                                    <th>{{'Nombre y Apellido'|translate}}</th>
+                                    <th>{{'Monto'|translate}}</th>
+                                    <th>{{'Teléfono'|translate}}</th>
+                                    <th *ngIf="user.role==='SUPERADMIN'">{{'Tienda'|translate}}</th>
+                                    <th>{{'Fecha'|translate}}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -40,7 +40,7 @@
                                 <tr *ngIf="pagoefectivos.length<=0">
                                     <td colspan="5">
                                         <div class="alert alert-danger">
-                                            No hay pagos en efectivo registrados
+                                            {{'No hay pagos en efectivo registrados'|translate}}
                                         </div>
                                     </td>
                                 </tr>

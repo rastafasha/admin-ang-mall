@@ -13,10 +13,10 @@
         <div class="card shadow-sm">
             <!-- Encabezado con acciones globales -->
             <div class="card-header bg-white d-flex justify-content-between align-items-center py-3">
-                <h5 class="mb-0 fw-bold text-dark">Historial de Notificaciones</h5>
+                <h5 class="mb-0 fw-bold text-dark">{{'Historial de Notificaciones'|translate}}</h5>
                 <button *ngIf="historialNotificaciones && historialNotificaciones.length > 0"
                     class="btn btn-outline-danger btn-sm" (click)="vaciarTodo()">
-                    <i class="fa fa-trash-o me-1"></i> Vaciar Buzón
+                    <i class="fa fa-trash-o me-1"></i> {{'Vaciar Buzón'|translate}}
                 </button>
             </div>
 
@@ -25,7 +25,7 @@
                 <div *ngIf="!historialNotificaciones || historialNotificaciones.length === 0"
                     class="text-center py-5 text-muted">
                     <i class="mdi mdi-bell-off d-block fs-1 mb-2 text-muted-light"></i>
-                    <p class="mb-0">No tienes alertas registradas en el historial.</p>
+                    <p class="mb-0">{{'No tienes alertas registradas en el historial'|translate}}.</p>
                 </div>
 
                 <!-- Listado de Alertas -->

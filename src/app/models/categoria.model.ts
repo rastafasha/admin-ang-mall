@@ -6,9 +6,10 @@ const base_url = environment.baseUrl;
 export class Categoria {
   constructor(
     public icono : string,
-    public nombre: string,
+    public nombre: { es: string; en: string },
     public state_banner : boolean,
-    public subcategorias?: string,
+    // public subcategorias?: string,
+    public subcategorias: { es: string; en: string },
     public img?: string,
     public _id?: string
   ){}

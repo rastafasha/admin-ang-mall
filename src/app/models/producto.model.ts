@@ -6,16 +6,17 @@ const base_url = environment.mediaUrlRemoto;
 export class Producto{
   constructor(
 
-        public titulo: string,
+      public titulo: { es: string; en: string },
+      public info_short: { es: string; en: string },
+      public detalle: { es: string; en: string },
+      public subcategoria: { es: string; en: string },
+
         public slug: string,
         public precio_ahora: string,
         public precio_antes: string,
         public video_review: string,
-        public info_short: string,
-        public detalle: string,
         public stock: string,
         public categoria: string,
-        public subcategoria: string,
         public nombre_selector: string,
         public marca: string,
         public sku?: string,

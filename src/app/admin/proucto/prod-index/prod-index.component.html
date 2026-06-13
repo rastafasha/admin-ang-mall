@@ -15,8 +15,8 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-9">
-                        <h4 class="card-title">Productos: ({{ productos.length}})</h4>
-                        <h6 class="card-subtitle">Productos registrados en la app</h6>
+                        <h4 class="card-title">{{'Productos'|translate}}: ({{ productos.length}})</h4>
+                        <h6 class="card-subtitle">{{'Productos registrados en la app'|translate}}</h6>
                     </div>
                     <div class="col-1">
                         <div class="text-right">
@@ -30,7 +30,7 @@
                         <div class="text-right">
                             <button (click)="openEditProductPapelera()" class="btn btn-outline-warning" data-toggle="tooltip"
                                 data-original-title="Edit" data-bs-toggle="modal" data-bs-target="#editProdPapelera">
-                                <i class="fa fa-trash"></i> ver papelera
+                                <i class="fa fa-trash"></i> {{'ver papelera'|translate}}
                             </button>
                         </div>
                     </div>
@@ -44,15 +44,15 @@
                         <thead>
                             <tr>
                                 <th>img</th>
-                                <th>Titulo</th>
-                                <th>Status</th>
-                                <th>Destacado</th>
+                                <th>{{'Titulo'|translate}}</th>
+                                <th>{{'Status'|translate}}</th>
+                                <th>{{'Destacado'|translate}}</th>
                                 <!-- <th>Precio Ahora</th>
                                 <th>Precio Antes</th> -->
-                                <th>Activar</th>
-                                <th>Created</th>
-                                <th>Stock</th>
-                                <th class="text-nowrap">Acciones</th>
+                                <th>{{'Activar'|translate}}</th>
+                                <th>{{'Created'|translate}}</th>
+                                <th>{{'Stock'|translate}}</th>
+                                <th class="text-nowrap">{{'Acciones'|translate}}</th>
                             </tr>
                         </thead>
                         
@@ -63,9 +63,11 @@
                                     <!-- <img [src]="producto.img | imagenPipe: 'productos'" class="img-responsive avatar" alt="{{producto.titulo}}"> -->
                                     <img [routerLink]="['/dashboard/producto/edit',producto._id]"
                                         [src]="producto.img | imagenPipe: 'productos' " class="avatar cursor"
-                                        alt="{{producto.titulo}}">
+                                        alt="{{translate.currentLang === 'en' ? producto?.titulo?.en : producto?.titulo?.es}}">
                                 </td>
-                                <td>{{producto.titulo |slice:0:30}}...</td>
+                                <td>{{ translate.currentLang === 'en' ? producto?.titulo?.en?.substring(0,30) : producto?.titulo?.es?.substring(0,30) }}...</td>
+
+                                
                                 <td>
                                     <div class="font-size-sm mb-4">
                                         <span class="badge badge-accent badge-shadow"
@@ -86,8 +88,6 @@
                                             *ngIf="producto.isFeatured == true">{{producto.isFeatured}}</span>
                                     </div>
                                 </td>
-                                <!-- <td>{{producto.precio_ahora}}...</td>
-                                <td>{{producto.precio_antes}}...</td> -->
                                 <td>
 
                                     
@@ -97,7 +97,7 @@
                                         *ngIf="producto.status == 'Edición' || producto.status == 'Desactivado'"
                                         data-bs-toggle="modal" [attr.data-bs-target]="'#activar-'+producto._id">
                                         <span class="czi-check"></span> 
-                                        Activar
+                                        {{'Activar'|translate}}
                                     </button>
                                     <!-- modal activar -->
                                     
@@ -106,18 +106,19 @@
                                         <div class="modal-dialog modal-dialog-centered" >
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h4 class="modal-title">Confirmación</h4>
+                                                    <h4 class="modal-title">{{'Confirmación'|translate}}</h4>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <p class="font-size-sm">Al aceptar, estás confirmando que el
-                                                        producto fué editado correctamente.</p>
+                                                    <p class="font-size-sm">
+                                                        {{'Al aceptar, estás confirmando que el producto fué editado correctamente.'|translate}}
+                                                    </p>
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button class="btn btn-secondary btn-sm" type="button"
-                                                        data-bs-dismiss="modal">Cerrar</button>
+                                                        data-bs-dismiss="modal">{{'Cerrar'|translate}}</button>
                                                     <button class="btn btn-primary btn-shadow btn-sm" type="button"
-                                                        (click)="activar(producto._id)">Aceptar</button>
+                                                        (click)="activar(producto._id)">{{'Aceptar'|translate}}</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -125,7 +126,7 @@
                                    
                                     <button type="button" class="btn btn-primary" *ngIf="producto.status == 'Activo'"
                                         data-bs-toggle="modal" [attr.data-bs-target]="'#desactivar-'+producto._id"><span
-                                            class="czi-close"></span> Desactivar
+                                            class="czi-close"></span> {{'Desactivar'|translate}}
                                         </button>
                                         <!-- modal desactivar -->
                                     <div class="modal fade" [attr.id]="'desactivar-'+producto._id" tabindex="-1"
@@ -133,18 +134,19 @@
                                         <div class="modal-dialog modal-dialog-centered" >
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h4 class="modal-title">Confirmación</h4>
+                                                    <h4 class="modal-title">{{'Confirmación'|translate}}</h4>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <p class="font-size-sm">Al aceptar el producto, no será visible en
-                                                        la tienda.</p>
+                                                    <p class="font-size-sm">
+                                                        {{'Al aceptar el producto, no será visible en la tienda.'|translate}}
+                                                    </p>
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button class="btn btn-secondary btn-sm" type="button"
                                                         data-bs-dismiss="modal">{{'Cerrar'| translate}}</button>
                                                     <button class="btn btn-primary btn-shadow btn-sm" type="button"
-                                                        (click)="desactivar(producto._id)">Aceptar</button>
+                                                        (click)="desactivar(producto._id)">{{'Aceptar'|translate}}</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -152,7 +154,7 @@
 
                                     <button type="button" class="btn btn-secondary" data-bs-toggle="modal"
                                         [attr.data-bs-target]="'#papelera-'+producto._id">
-                                        <span class="czi-remove-folder"></span> Papelera
+                                        <span class="czi-remove-folder"></span> {{'Papelera'|translate}}
                                     </button>
 
                                     <div class="modal fade" [attr.id]="'papelera-'+producto._id" tabindex="-1"
@@ -160,28 +162,30 @@
                                         <div class="modal-dialog modal-dialog-centered" >
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h4 class="modal-title">Confirmación</h4>
+                                                    <h4 class="modal-title">{{'Confirmación'|translate}}</h4>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <p class="font-size-sm">El producto se moverá a la papelera de
-                                                        reciclaje.</p>
+                                                    <p class="font-size-sm">
+                                                       {{'El producto se moverá a la papelera de reciclaje.'|translate}}
+                                                    </p>
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button class="btn btn-secondary btn-sm" type="button"
                                                         data-bs-dismiss="modal">{{'Cerrar'| translate}}</button>
                                                     <button class="btn btn-primary btn-shadow btn-sm" type="button"
-                                                        (click)="papelera(producto._id)">Aceptar</button>
+                                                        (click)="papelera(producto._id)">{{'Aceptar'|translate}}</button>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
 
                                     <span class="text-muted" *ngIf="producto.status == 'Edición'"
-                                        style="font-size: 13px;">Este producto aún se encuentra en edición.</span>
+                                        style="font-size: 13px;">{{'Este producto aún se encuentra en edición.'|translate}}</span>
                                     <span class="text-muted" *ngIf="producto.status == 'Desactivado'"
-                                        style="font-size: 13px;">Este producto aún no está disponible en la
-                                        tienda.</span>
+                                        style="font-size: 13px;">
+                                        {{'Este producto aún no está disponible en la tienda.'|translate}}
+                                    </span>
 
                                 </td>
                                 <td>{{ producto.createdAt | date:'MMM d, y' }}</td>
@@ -194,7 +198,7 @@
                                         data-bs-target="#editProducto">
                                             <span class="czi-edit-alt"></span>
                                         </button>
-                                        <button type="button" class="btn btn-warning" data-bs-toggle="tooltip"
+                                        <button *ngIf="user.role ==='SUPERADMIN'" type="button" class="btn btn-warning" data-bs-toggle="tooltip"
                                             title="Galeria"
                                             (click)="onEditGaleria(producto)" data-bs-toggle="modal"
                                         data-bs-target="#editGaleria">

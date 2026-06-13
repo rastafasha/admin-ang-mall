@@ -11,26 +11,26 @@
                             <div class="row">
                                 <div class=" row col-12 ">
                                     <div class="form-group local-forms col-12 col-md-6 col-xl-4">
-                                        <label>Id/Cédula <span class="login-danger">*</span></label>
+                                        <label>{{'Id/Cédula'|translate}} <span class="login-danger">*</span></label>
                                         <input class="form-control" name="numdoc" [(ngModel)]="numdoc" type="text">
                                         <button type="button" class="btn btn-sm " (click)="filterClient()">
-                                            Filtrar
+                                            {{'Filtrar'|translate}}
                                         </button>
                                         <button type="button" class="btn btn-sm " (click)="resetClient()">
-                                            Reset
+                                            {{'Resetear'|translate}}
                                         </button>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-xl-4">
                                     <div class="form-group local-forms">
-                                        <label>Nombre <span class="login-danger">*</span></label>
+                                        <label>{{'Nombre'|translate}} <span class="login-danger">*</span></label>
                                         <input class="form-control" [(ngModel)]="first_name" name="first_name"
                                             type="text">
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-xl-4">
                                     <div class="form-group local-forms">
-                                        <label>Apellido <span class="login-danger">*</span></label>
+                                        <label>{{'Apellido'|translate}} <span class="login-danger">*</span></label>
                                         <input class="form-control" [(ngModel)]="last_name" name="last_name"
                                             type="text">
                                     </div>
@@ -43,7 +43,7 @@
                                 </div>
                                 <div class="col-12 col-md-6 col-xl-4">
                                     <div class="form-group local-forms">
-                                        <label>telefono <span class="login-danger">*</span></label>
+                                        <label>{{'Teléfono'|translate}} <span class="login-danger">*</span></label>
                                         <input class="form-control" [(ngModel)]="telefono" name="telefono" type="text">
                                     </div>
                                 </div>
@@ -51,22 +51,23 @@
 
                             <!-- estilo de grupo de botones modificado por José Prados -->
                             <div class="col-12 mb-3 btn-group">
-                                <button class="btn btn-outline-success btn-sm" (click)="addClient()">Registrar
-                                    Cliente</button>
-                                <button class="btn btn-outline-primary btn-sm" (click)="adjuntarClienteaCompra()">+
-                                    Agregar a Compra</button>
+                                <button class="btn btn-outline-success btn-sm" (click)="addClient()">
+                                    {{'Registrar Cliente'|translate}}
+                                </button>
+                                <button class="btn btn-outline-primary btn-sm" (click)="adjuntarClienteaCompra()">
+                                    + {{'Agregar a Compra'|translate}}</button>
                                 <!-- <button class="btn btn-danger btn-sm">x</button> -->
                             </div>
                         </div>
 
                         <div class="col-xs-12 col-sm-4">
                             <div class="form-group local-forms">
-                                <label>Vendedor <span class="login-danger">*</span></label>
+                                <label>{{'Vendedor'|translate}} <span class="login-danger">*</span></label>
                                 <p>{{user?.first_name}} {{user?.last_name}}</p>
                                 <p>{{user?.role}}</p>
                             </div>
                             <div class="form-group local-forms">
-                                <label>Locación <span class="login-danger">*</span></label>
+                                <label>{{'Tienda'|translate}} <span class="login-danger">*</span></label>
                                 <p>{{tienda?.nombre}}</p>
 
                             </div>
@@ -89,7 +90,7 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <h4>Favor Ingresar datos de cliente</h4>
+                <h4>{{'Favor Ingresar datos de cliente'|translate}}</h4>
             </div>
         </div>
     </div>
@@ -142,8 +143,12 @@
                                         {{prod.titulo}}
                                     </h5>
                                     <p>SKU:{{prod.sku}}</p>
-                                    <span class="price">{{prod.precio_ahora |number:'1.2-2'| currency:tienda_moneda}}</span>
-                                    <span class="price precioantes" *ngIf="prod.precio_antes > prod.precio_ahora">{{prod.precio_antes |number:'1.2-2'| currency:tienda_moneda}}</span>
+                                    <span class="price">
+                                        {{prod.precio_ahora |number:'1.2-2'| currency:tienda_moneda}}
+                                    </span>
+                                    <span class="price precioantes" *ngIf="prod.precio_antes > prod.precio_ahora">
+                                        {{prod.precio_antes |number:'1.2-2'| currency:tienda_moneda}}
+                                    </span>
 
                                 </figcaption>
                             </div>
@@ -178,7 +183,7 @@
         </div>
         <div class="col-xs-12 col-sm-6">
             <button class="btn btn-outline-danger btn-sm mt-4" (click)="volverProductos()">
-                Volver a Productos
+                {{'Volver a Productos'|translate}}
             </button>
             <article>
                 <!-- implementar aqui la galeria de imagenes del producto -->
@@ -187,7 +192,7 @@
                 </h3>
                 <!-- mensaje indicando que se agregó producto al carrito-->
                 <div class="alert alert-success alert-dismissible fade show" role="alert" *ngIf="msm_success">
-                    Artículo agregado al <a [routerLink]="['/dashboard/carrito']"><b>Carrito!</b></a>.
+                    {{'Artículo agregado al'|translate}} <a [routerLink]="['/dashboard/carrito']"><b>{{'Carrito'|translate}}!</b></a>.
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -202,13 +207,13 @@
                     <del class="text-muted font-size-lg mr-3">
                         {{productoSeleccionado.precio_antes |currency : tienda_moneda}}
                     </del>
-                    <span class="badge badge-danger badge-shadow align-middle mt-2">Oferta</span>
+                    <span class="badge badge-danger badge-shadow align-middle mt-2">{{'Oferta'|translate}}</span>
                 </div>
 
                 <!-- colores -->
                 <div class="font-size-sm">
                     <div class="text-heading font-weight-medium mr-1 d-block">
-                        Colores:
+                        {{'Colores'|translate}}:
                     </div>
                     <div class="text-muted listacolor" id="colorOption">
                         <ng-container *ngFor="let color of colores">
@@ -239,33 +244,32 @@
                             <a class="nav-link-style font-size-sm"
                                 *ngIf="productoSeleccionado.subcategoria == 'Calzado'" data-toggle="modal"
                                 data-target="#sizes-modal" style="cursor: pointer;">
-                                <i class="czi-ruler lead align-middle mr-1 mt-n1"></i>Formato de tallas
+                                <i class="czi-ruler lead align-middle mr-1 mt-n1"></i>{{'Formato de tallas'|translate}}
                             </a>
                         </div>
                         <select class="custom-select form-control" required="" id="product-size" name="selector_to_cart"
                             [(ngModel)]="selector_to_cart">
-                            <option value=" " selected disabled>Selecciona</option>
-                            <option value="{{selector.titulo}}" *ngFor="let selector of selectores">{{selector.titulo}}
+                            <option value=" " selected disabled>{{'Seleccione'|translate}}</option>
+                            <option value="{{selector.titulo}}" *ngFor="let selector of selectores">
+                                {{selector.titulo}}
                             </option>
                         </select>
                         <div class="invalid-feedback" style="display: block;" *ngIf="selector_error">
-                            Selecciona alguna opción por favor.
+                            {{'Selecciona alguna opción por favor'|translate}}.
                         </div>
                     </div>
                     <div class="form-group d-flex align-items-center">
                         <input type="number" class="form-control mr-3" min="1" [attr.max]="productoSeleccionado.stock"
                             name="cantidad_to_cart" [(ngModel)]="cantidad_to_cart" style="width: 5rem;">
-                        <button class="btn btn-primary btn-shadow btn-block" disabled *ngIf="!identity" type="submit"><i
-                                class="czi-cart font-size-lg mr-2"></i>Agregar al carrito</button>
-                        <button class="btn btn-primary btn-shadow btn-block" *ngIf="identity" type="submit"><i
-                                class="czi-cart font-size-lg mr-2"></i>Agregar al carrito</button>
+                        <button class="btn btn-primary btn-shadow btn-block" disabled type="submit">
+                            <i class="czi-cart font-size-lg mr-2"></i>{{'Agregar al carrito'|translate}}
+                        </button>
                     </div>
                     <div class="invalid-feedback" *ngIf="err_stock" style="display: block;">{{err_stock}}</div>
                 </form>
 
                 <!-- Product panels-->
                 <div class="card shadow">
-                    <!-- <p class="text-justify" style="font-size: 14px;">{{producto.info_short}}</p> -->
                     {{productoSeleccionado.info_short}}
                 </div>
             </article>

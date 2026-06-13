@@ -15,12 +15,12 @@
                         <div class="step-indicator m-t-20 m-b-20">
                             <div class="step" [ngClass]="{'active': currentStep >= 1, 'completed': currentStep > 1}">
                                 <span class="step-number">1</span>
-                                <span class="step-label">Datos</span>
+                                <span class="step-label">{{'Datos'|translate}}</span>
                             </div>
                             <div class="step-line"></div>
                             <div class="step" [ngClass]="{'active': currentStep >= 2}">
                                 <span class="step-number">2</span>
-                                <span class="step-label">Imagen</span>
+                                <span class="step-label">{{'Imagen'|translate}}</span>
                             </div>
                         </div>
                         <!-- editar/crear post -->
@@ -30,7 +30,7 @@
                                 <div class="row">
                                     <div class="col-xs-12 col-sm-6">
                                         <div class="form-group">
-                                            <label for="exampleInputuname">Título <span class="required">*</span>
+                                            <label for="exampleInputuname">{{'Título'|translate}} <span class="required">*</span>
                                             </label>
                                             <div class="input-group">
 
@@ -40,10 +40,10 @@
                                                 <div *ngIf="productoForm.get('titulo')?.touched && productoForm.get('titulo')?.invalid"
                                                     class="text-danger">
                                                     <div *ngIf="productoForm.get('titulo')?.errors?.['required']">
-                                                        Campo Requerido
+                                                        {{'Campo Requerido'|translate}}
                                                     </div>
                                                     <div *ngIf="productoForm.get('titulo')?.errors?.['minlength']">
-                                                        Mínimo 3 Caracteres
+                                                        {{'Mínimo 3 Caracteres'|translate}}
                                                     </div>
                                                 </div>
 
@@ -65,10 +65,10 @@
                                                 <div *ngIf="productoForm.get('sku')?.touched && productoForm.get('sku')?.invalid"
                                                     class="text-danger">
                                                     <div *ngIf="productoForm.get('sku')?.errors?.['required']">
-                                                        Campo Requerido
+                                                        {{'Campo Requerido'|translate}}
                                                     </div>
                                                     <div *ngIf="productoForm.get('sku')?.errors?.['minlength']">
-                                                        Mínimo 3 Caracteres
+                                                        {{'Mínimo 3 Caracteres'|translate}}
                                                     </div>
                                                 </div>
                                             </div>
@@ -78,7 +78,7 @@
                                 <!-- Descripción -->
                                 <div class="row">
                                     <div class="form-group col-xs-12 col-sm-6">
-                                        <label class=" col-form-label font-weight-medium" for="text-input">Descripción <span class="required">*</span></label>
+                                        <label class=" col-form-label font-weight-medium" for="text-input">{{'Descripción'|translate}} <span class="required">*</span></label>
                                         <div class="col-md-12">
                                             <!-- <ckeditor formControlName="detalle" [editor]="Editor" data="<p>Hello, world!</p>" required>
                             </ckeditor> -->
@@ -87,10 +87,10 @@
                                             <div *ngIf="productoForm.get('detalle')?.touched && productoForm.get('detalle')?.invalid"
                                                 class="text-danger">
                                                 <div *ngIf="productoForm.get('detalle')?.errors?.['required']">
-                                                    Campo Requerido
+                                                    {{'Campo Requerido'|translate}}
                                                 </div>
                                                 <div *ngIf="productoForm.get('detalle')?.errors?.['minlength']">
-                                                    Mínimo 3 Caracteres
+                                                    {{'Mínimo 3 Caracteres'|translate}}
                                                 </div>
                                             </div>
 
@@ -98,7 +98,7 @@
                                     </div>
                                     <div class="form-group col-xs-12 col-sm-6">
                                         <label class=" col-form-label font-weight-medium"
-                                            for="textarea-input">Descripción corta <span class="required">*</span></label>
+                                            for="textarea-input">{{'Descripción corta'|translate}} <span class="required">*</span></label>
                                         <div class="col-md-12">
                                             <!-- <ckeditor formControlName="info_short" [editor]="Editor1" data="<p>Hello, world!</p>"
                                 required></ckeditor> -->
@@ -109,10 +109,10 @@
                                             <div *ngIf="productoForm.get('info_short')?.touched && productoForm.get('info_short')?.invalid"
                                                 class="text-danger">
                                                 <div *ngIf="productoForm.get('info_short')?.errors?.['required']">
-                                                    Campo Requerido
+                                                    {{'Campo Requerido'|translate}}
                                                 </div>
                                                 <div *ngIf="productoForm.get('info_short')?.errors?.['minlength']">
-                                                    Mínimo 3 Caracteres
+                                                    {{'Mínimo 3 Caracteres'|translate}}
                                                 </div>
                                             </div>
                                         </div>
@@ -121,7 +121,7 @@
                                 <!-- Descripción -->
                                 <!-- video -->
                                 <div class="form-group ">
-                                    <label class=" col-form-label font-weight-medium" for="text-input">video de youtube
+                                    <label class=" col-form-label font-weight-medium" for="text-input">{{'video de youtube'|translate}}
                                     </label>
                                     <div class="col-md-12">
                                         <input type="text" formControlName="video_review" class="form-control"
@@ -132,12 +132,12 @@
 
                                 <!-- precio y stock -->
                                 <div class="form-group ">
-                                    <label class=" col-form-label font-weight-medium" for="text-input">Detalles Valor
+                                    <label class=" col-form-label font-weight-medium" for="text-input">{{'Detalles Valor'|translate}}
                                         <span class="required">*</span></label>
                                     <div class="col-md-12">
                                         <div class="row">
                                             <div class="col-lg-4">
-                                                <label class=" col-form-label font-weight-medium">Stock <span
+                                                <label class=" col-form-label font-weight-medium">{{'Stock'|translate}} <span
                                                         class="required">*</span></label>
                                                 <input class="form-control" type="number"
                                                     placeholder="Stock del producto" formControlName="stock" min="0"
@@ -145,31 +145,31 @@
                                                 <div *ngIf="productoForm.get('stock')?.touched && productoForm.get('stock')?.invalid"
                                                     class="text-danger">
                                                     <div *ngIf="productoForm.get('stock')?.errors?.['required']">
-                                                        Campo Requerido
+                                                        {{'Campo Requerido'|translate}}
                                                     </div>
                                                     <div *ngIf="productoForm.get('stock')?.errors?.['minlength']">
-                                                        Mínimo 100
+                                                        {{'Mínimo 100'|translate}}
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-lg-4">
-                                                <label class=" col-form-label font-weight-medium">Precio Actual <span
+                                                <label class=" col-form-label font-weight-medium">{{'Precio Actual'|translate}} <span
                                                         class="required">*</span></label>
                                                 <input class="form-control" type="number" placeholder="Precio actual"
                                                     formControlName="precio_ahora" min="0" required>
                                                 <div *ngIf="productoForm.get('precio_ahora')?.touched && productoForm.get('precio_ahora')?.invalid"
                                                     class="text-danger">
                                                     <div *ngIf="productoForm.get('precio_ahora')?.errors?.['required']">
-                                                        Campo Requerido
+                                                        {{'Campo Requerido'|translate}}
                                                     </div>
                                                     <div
                                                         *ngIf="productoForm.get('precio_ahora')?.errors?.['minlength']">
-                                                        Mínimo 1
+                                                        {{'Mínimo 1'|translate}}
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-lg-4">
-                                                <label class=" col-form-label font-weight-medium">Precio Antes <span
+                                                <label class=" col-form-label font-weight-medium">{{'Precio Antes'|translate}} <span
                                                         class="required">*</span></label>
                                                 <input class="form-control" type="number" placeholder="Precio antes"
                                                     formControlName="precio_antes" min="0" required>
@@ -177,11 +177,11 @@
                                                 <div *ngIf="productoForm.get('precio_antes')?.touched && productoForm.get('precio_antes')?.invalid"
                                                     class="text-danger">
                                                     <div *ngIf="productoForm.get('precio_antes')?.errors?.['required']">
-                                                        Campo Requerido
+                                                        {{'Campo Requerido'|translate}}
                                                     </div>
                                                     <div
                                                         *ngIf="productoForm.get('precio_antes')?.errors?.['minlength']">
-                                                        Si no tiene variacion el monto debe ser igual a Precio Actual
+                                                        {{'Si no tiene variacion el monto debe ser igual a Precio Actual'|translate}}
                                                     </div>
                                                 </div>
                                             </div>
@@ -192,10 +192,10 @@
                                     <!-- Categorías -->
                                     <div class="col-xs-12 col-sm-3">
                                         <div class="form-group">
-                                            <label for="select-input">Categoría <span class="required">*</span></label>
+                                            <label for="select-input">{{'Categoría'|translate}} <span class="required">*</span></label>
                                             <select class="form-control " formControlName="categoria" name="categoria"
                                                 required>
-                                                <option disabled value="">SELECCIONAR</option>
+                                                <option disabled value="">{{'Seleccionar'|translate}}</option>
                                                 <option *ngFor="let item of listCategorias | unique:'nombre'"
                                                     [value]="item._id">
                                                     {{item.nombre}}</option>
@@ -204,21 +204,21 @@
                                             <div *ngIf="productoForm.get('categoria')?.touched && productoForm.get('categoria')?.invalid"
                                                 class="text-danger">
                                                 <div *ngIf="productoForm.get('categoria')?.errors?.['required']">
-                                                    Campo Requerido
+                                                    {{'Campo Requerido'|translate}}
                                                 </div>
                                                 <div *ngIf="productoForm.get('categoria')?.errors?.['minlength']">
-                                                    Seleccione una opción
+                                                    {{'Seleccione una opción'|translate}}
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-xs-12 col-sm-3">
                                         <div class="form-group">
-                                            <label for="select-input">Subcategoría <span
+                                            <label for="select-input">{{'Subcategoría'|translate}} <span
                                                     class="required">*</span></label>
                                             <select class="form-control " formControlName="subcategoria"
                                                 name="subcategoria">
-                                                <option disabled value="">SELECCIONAR</option>
+                                                <option disabled value="">{{'Seleccionar'|translate}}</option>
                                                 <option *ngFor="let item of listCategorias | unique:'subcategorias'"
                                                     [value]="item.subcategorias">
                                                     {{item.subcategorias}}</option>
@@ -227,10 +227,10 @@
                                             <div *ngIf="productoForm.get('subcategoria')?.touched && productoForm.get('subcategoria')?.invalid"
                                                 class="text-danger">
                                                 <div *ngIf="productoForm.get('subcategoria')?.errors?.['required']">
-                                                    Campo Requerido
+                                                    {{'Campo Requerido'|translate}}
                                                 </div>
                                                 <div *ngIf="productoForm.get('subcategoria')?.errors?.['minlength']">
-                                                    Seleccione una opción
+                                                    {{'Seleccione una opción'|translate}}
                                                 </div>
                                             </div>
 
@@ -239,21 +239,21 @@
                                     <!-- Destacado -->
                                     <div class="col-xs-12 col-sm-3">
                                         <div class="form-group">
-                                            <label for="select-input">Destacado?</label>
+                                            <label for="select-input">{{'Destacado?'|translate}}</label>
                                             <select class="form-control " formControlName="isFeatured"
                                                 name="isFeatured">
-                                                <option disabled value="">SELECCIONAR</option>
-                                                <option [value]="true">Activo</option>
-                                                <option [value]="false">Inactivo</option>
+                                                <option disabled value="">{{'Seleccionar'|translate}}</option>
+                                                <option [value]="true">{{'Activo'|translate}}</option>
+                                                <option [value]="false">{{'Inactivo'|translate}}</option>
                                             </select>
                                         </div>
                                     </div>
                                     <!-- marca -->
                                     <div class="col-xs-12 col-sm-3" *ngIf="user.role === 'SUPERADMIN'">
-                                        <label for="text-input">Marca </label>
+                                        <label for="text-input">{{'Marca'|translate}} </label>
                                         <div class="input-group">
                                             <select class="form-control " name="marca" formControlName="marca" required>
-                                                <option disabled value="">SELECCIONAR</option>
+                                                <option disabled value="">{{'Seleccionar'|translate}}</option>
                                                 <option *ngFor="let item of listMarcas" [value]="item._id">
                                                     {{item.nombre}}</option>
                                             </select>
@@ -265,11 +265,11 @@
                                 <!-- local -->
                                 <div class="form-group row">
                                     <div class="col-xs-12 col-sm-6" *ngIf="user.role === 'SUPERADMIN'">
-                                        <label class=" col-form-label font-weight-medium" for="local">local <span
+                                        <label class=" col-form-label font-weight-medium" for="local">{{'Tienda'|translate}} <span
                                                 class="required">*</span></label>
                                         <div class="input-group">
                                             <select class="form-control " name="local" formControlName="local" required>
-                                                <option disabled value="">SELECCIONAR</option>
+                                                <option disabled value="">{{'Seleccionar'|translate}}</option>
                                                 <option *ngFor="let tienda of listTiendas" [value]="tienda._id">
                                                     {{tienda.local}} | {{tienda.nombre}}
                                                 </option>
@@ -278,7 +278,7 @@
                                         </div>
                                     </div>
                                     <div class="col-xs-12 col-sm-6">
-                                        <label class="col-form-label font-weight-medium" for="text-input">Tipo <span
+                                        <label class="col-form-label font-weight-medium" for="text-input">{{'Tipo'|translate}} <span
                                                 class="required">*</span></label>
                                         <div class="col-md-12">
                                             <div class="row">
@@ -291,20 +291,20 @@
                                                         class="text-danger">
                                                         <div
                                                             *ngIf="productoForm.get('nombre_selector')?.errors?.['required']">
-                                                            Campo Requerido
+                                                            {{'Campo Requerido'|translate}}
                                                         </div>
                                                         <div
                                                             *ngIf="productoForm.get('nombre_selector')?.errors?.['minlength']">
-                                                            Si no existe variación, colocar unico
+                                                            {{'Si no existe variación, colocar único'|translate}}
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-12">
                                                     <span class="text-muted">
-                                                        Por ejemplo: Si el producto, no tiene sabores, colocar
-                                                        <b>Sabores</b>.
-                                                        Para calzados el selector es
-                                                        <b>TALLAS</b></span>
+                                                        {{'Por ejemplo: Si el producto, no tiene sabores, colocar'|translate}}
+                                                        <b>{{'Sabores'|translate}}</b>.
+                                                        {{'Para calzados el selector es'|translate}}
+                                                        <b>{{'Tallas'|translate}}</b></span>
                                                 </div>
 
                                             </div>
@@ -315,11 +315,11 @@
                                 <div class="row">
                                     <div class="col-6">
                                         <button class="btn btn-success waves-effect waves-light m-r-10 btn-block"
-                                            type="button" (click)="nextStep()">Siguiente</button>
+                                            type="button" (click)="nextStep()">{{'Siguiente'|translate}}</button>
                                     </div>
                                     <div class="col-6">
                                         <button (click)="updateProducto()" class="btn btn-outline-success">
-                                            {{ productoSeleccionado ? 'Actualizar y Continuar' : 'Crear y Continuar' }}
+                                            {{ (productoSeleccionado ? 'Actualizar y Continuar' : 'Crear y Continuar') | translate }}
                                         </button>
                                     </div>
                                 </div>
@@ -328,18 +328,18 @@
                         <div *ngIf="currentStep === 2">
                             <app-loading *ngIf="cargandoImagen"></app-loading>
                             <div *ngIf="!cargandoImagen">
-                                <label> Anexe su foto</label>
+                                <label> {{'Anexe foto'|translate}}</label>
                                 <br>
                                 <div class="row">
                                     <div class="especificaciones col-xs-12" *ngIf="!productoSeleccionado">
-                                        <h4>Debe Crear un post para agregar la imagen</h4>
+                                        <h4>{{'Debe Crear un post para agregar la imagen'|translate}}</h4>
                                     </div>
                                     <div class="especificaciones col-xs-12 col-sm-6" *ngIf="productoSeleccionado">
-                                        <h4>Especificaciones:</h4>
+                                        <h4>{{'Especificaciones'|translate}}:</h4>
                                         <ul>
-                                            <li>Tamaño máximo: 300px X 300px</li>
-                                            <li>Peso máximo: 2 mb</li>
-                                            <li>Formato permitido: jpg, .gif, .png</li>
+                                            <li>{{'Tamaño máximo'|translate}}: 300px X 300px</li>
+                                            <li>{{'Peso máximo'|translate}}: 2 mb</li>
+                                            <li>{{'Formato permitido'|translate}}: jpg, .gif, .png</li>
                                         </ul>
                                     </div>
                                     <div class="col-xs-12 col-sm-6" *ngIf="productoSeleccionado ">
@@ -361,12 +361,12 @@
                                             <div class="col-6">
                                                 <button
                                                     class="btn btn-success waves-effect waves-light m-r-10 btn-block"
-                                                    type="button" (click)="prevStep()">Anterior</button>
+                                                    type="button" (click)="prevStep()">{{'Anterior'|translate}}</button>
                                             </div>
                                             <div class="col-6">
                                                 <button type="button" [disabled]="!imagenSubir" (click)="subirImagen()"
                                                     class="btn btn-success waves-effect waves-light m-r-10 btn-block">
-                                                    <i class="fa fa-save"></i> Subir imagen
+                                                    <i class="fa fa-save"></i> {{'Subir imagen'|translate}}
                                                 </button>
                                             </div>
                                         </div>
@@ -380,7 +380,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
-                    (click)="onClose()">Cerrar</button>
+                    (click)="onClose()">{{'Cerrar'|translate}}</button>
             </div>
         </div>
     </div>

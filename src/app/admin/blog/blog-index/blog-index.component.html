@@ -101,7 +101,7 @@
                                     </div>
 
                                     <button type="button" class="btn btn-primary" *ngIf="blog.status == 'Activo'" data-bs-toggle="modal" [attr.data-bs-target]="'#desactivar-'+blog._id">
-                                        <span class="czi-close"></span> Desactivar
+                                        <span class="czi-close"></span> {{'Desactivar'|translate}}
                                     </button>
                                     <div class="modal fade" [attr.id]="'desactivar-'+blog._id" tabindex="-1"
                                           aria-hidden="true">

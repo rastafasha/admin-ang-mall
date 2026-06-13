@@ -193,20 +193,26 @@
                 <!-- Language -->
                 <!-- ============================================================== -->
                 <li class="nav-item dropdown">
+                    <!-- Botón principal: Muestra la bandera según el idioma activo en la librería -->
                     <a class="nav-link dropdown-toggle waves-effect waves-dark" href="javascript:void(0)" (click)="toggleLanguageDropdown($event)" [attr.aria-expanded]="showLanguageDropdown">
-                        <i *ngIf="flag" class="flag-icon flag-icon-es"></i>
-                        <i *ngIf="!flag" class="flag-icon flag-icon-us"></i>
+                        <i *ngIf="translate.currentLang === 'es'" class="flag-icon flag-icon-es"></i>
+                        <i *ngIf="translate.currentLang === 'en'" class="flag-icon flag-icon-us"></i>
                     </a>
+                    
+                    <!-- Menú desplegable -->
                     <div class="dropdown-menu dropdown-menu-right animated bounceInDown" [style.display]="showLanguageDropdown ? 'block' : 'none'">
-                        <a class="dropdown-item" *ngIf="flag" [ngClass]="{'active': activeLang == 'congeneral.idioma'}" (click)="cambiarLenguaje('en')">
+                        <!-- Opción para cambiar a Inglés (Se muestra si el idioma actual es Español) -->
+                        <a class="dropdown-item" *ngIf="translate.currentLang === 'es'" [ngClass]="{'active': activeLang === 'en'}" (click)="cambiarLenguaje('en')">
                             <i class="flag-icon flag-icon-us"></i> English
                         </a>
-                        <a class="dropdown-item" *ngIf="!flag" [ngClass]="{'active': activeLang == 'congeneral.idioma'}" (click)="cambiarLenguaje('es')">
+                        
+                        <!-- Opción para cambiar a Español (Se muestra si el idioma actual es Inglés) -->
+                        <a class="dropdown-item" *ngIf="translate.currentLang === 'en'" [ngClass]="{'active': activeLang === 'es'}" (click)="cambiarLenguaje('es')">
                             <i class="flag-icon flag-icon-es"></i> Español
                         </a>
-
                     </div>
                 </li>
+
                 <!-- ============================================================== -->
                 <!-- Profile -->
                 <!-- ============================================================== -->

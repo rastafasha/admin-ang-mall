@@ -2,7 +2,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="selectorModalLabel">{{pageTitle}}</h5>
+                <h5 class="modal-title" id="selectorModalLabel">{{pageTitle|translate}}</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
                     (click)="onClose()"></button>
             </div>
@@ -22,8 +22,8 @@
                         </form>
                         <div class="col-lg-8" *ngIf="!selector">
                             <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                                <span class="font-weight-medium">Mensaje:</span> No hay ningun selector en este
-                                producto.
+                                <span class="font-weight-medium">{{'Mensaje'|translate}}:</span> 
+                                {{'No hay ningun selector en este producto'|translate}}.
                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -31,7 +31,7 @@
                         </div>
                         <div class="col-lg-10" *ngIf="msm_error">
                             <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                                <span class="font-weight-medium">Mensaje:</span> {{msm_error}}.
+                                <span class="font-weight-medium">{{'Mensaje'|translate}}:</span> {{msm_error}}.
                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -44,7 +44,7 @@
                                         <tr>
                                             <th class="text-center">Item</th>
 
-                                            <th class="text-center">Eliminar</th>
+                                            <th class="text-center">{{'Eliminar'|translate}}</th>
                                         </tr>
                                     </thead>
                                     <tbody *ngFor="let item of selector">
@@ -53,7 +53,7 @@
 
                                             <td class="text-center">
                                                 <button class="btn btn-danger btn-sm"
-                                                    (click)="eliminar(item._id)">Eliminar</button>
+                                                    (click)="eliminar(item._id)">{{'Eliminar'|translate}}</button>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -66,7 +66,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
-                    (click)="onClose()">Cerrar</button>
+                    (click)="onClose()">{{'Cerrar'|translate}}</button>
             </div>
         </div>
     </div>

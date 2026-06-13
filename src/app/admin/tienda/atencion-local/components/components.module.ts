@@ -9,6 +9,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { PipesModule } from 'src/app/pipes/pipes.module';
 import { ListaProductosComponent } from './lista-productos/lista-productos.component';
 import { ProductoSelectedComponent } from './productoSelected/productoSelected.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 
 
@@ -30,6 +31,7 @@ import { ProductoSelectedComponent } from './productoSelected/productoSelected.c
         NgxDropzoneModule,
         PdfViewerModule,
         NgxPaginationModule,
+        TranslateModule
         // CKEditorModule,
   ]
 })

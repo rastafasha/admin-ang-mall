@@ -10,6 +10,7 @@ import { ComentarioService } from "src/app/services/comentario.service";
 import { ProductoService } from 'src/app/services/producto.service';
 import { TiendaService } from 'src/app/services/tienda.service';
 import { Tienda } from 'src/app/models/tienda.model';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-invoice',
@@ -30,13 +31,10 @@ export class InvoiceComponent implements OnInit {
 
   constructor(
     private _userService: UsuarioService,
-    private _router : Router,
     private activatedRoute :ActivatedRoute,
-    private http: HttpClient,
     private _ventaService: VentaService,
-    private _comentarioService : ComentarioService,
-    private _productoService : ProductoService,
     private tiendaService : TiendaService,
+    public translate: TranslateService 
   ) {
     this.identity = this._userService.usuario;
     this.url = environment.baseUrl;

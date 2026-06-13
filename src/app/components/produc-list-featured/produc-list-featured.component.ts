@@ -1,4 +1,5 @@
 import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { Producto } from 'src/app/models/producto.model';
 
 @Component({
@@ -13,6 +14,11 @@ export class ProducListFeaturedComponent implements OnChanges {
   @Input() populares: Producto[] = [];
   public collection: Producto[] = [];
   public title: string = '';
+
+   constructor(
+  // Debe ser public para que el HTML pueda leer "translate.currentLang"
+  public translate: TranslateService 
+) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['bestsellers'] && this.bestsellers.length > 0) {

@@ -17,10 +17,10 @@
                         <div class="card ">
                             <div class="card-body">
                                 <div class="d-flex flex-column">
-                                    <p class="box-title m-b-0"><b>Usuario:</b> {{item.user.first_name}} {{item.user.last_name}}</p>
-                                    <p class="box-title m-b-0"><b>Comentario:</b> {{item.comentario}}</p>
-                                    <p class="box-title m-b-0"><b>Pros:</b> {{item.pros}}</p>
-                                    <p class="box-title m-b-0"><b>Cons:</b> {{item.cons}}</p>
+                                    <p class="box-title m-b-0"><b>{{'Usuario'|translate}}:</b> {{item.user.first_name}} {{item.user.last_name}}</p>
+                                    <p class="box-title m-b-0"><b>{{'Comentario'|translate}}:</b> {{item.comentario}}</p>
+                                    <p class="box-title m-b-0"><b>{{'Pros'|translate}}:</b> {{item.pros}}</p>
+                                    <p class="box-title m-b-0"><b>{{'Cons'|translate}}:</b> {{item.cons}}</p>
                                     <h4 class="card-title"><span class="lstick"></span>
                                         <span class="font-size-ms text-muted">
                                             {{item.createdAt|date :'MMM d, y, h:mm:ss a'}}

@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Input, OnInit, OnDestroy, HostListener } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit, OnDestroy, HostListener, signal } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { Usuario } from 'src/app/models/usuario.model';
 import { ContactoService } from 'src/app/services/contact.service';
@@ -55,9 +55,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   public pageSize = 15;
   public count_cat: number;
 
-  public activeLang = 'es';
   private cartSubscription?: Subscription;
-  flag = false;
   is_visible: boolean;
   langs: string[] = [];
 
@@ -65,13 +63,21 @@ export class HeaderComponent implements OnInit, OnDestroy {
   showCartDropdown = false;
   public showMessagesDropdown: boolean = false;     // ✉️ Para los correos (SUPERADMIN)
   public showNotificationDropdown: boolean = false; // 🔔 Para la campana (ADMIN/SUPERADMIN)
-  showLanguageDropdown = false;
+  
   showProfileDropdown = false;
   public listaNotificaciones: any[] = [];
   totalNoLeidas: number = 0
 
   public socket = io(environment.soketServer);
   public tienda_moneda: any;
+
+  // 1. Inicializamos el idioma leyendo el LocalStorage (por defecto 'es')
+  public activeLang: string = localStorage.getItem('lang') || 'es';
+  // 2. 🔥 CLAVE: Sincronizamos la bandera con el idioma guardado
+  // Si el idioma es 'es', flag es true (muestra España). Si es 'en', flag es false (muestra USA).
+  public flag!: boolean;
+  // Control del menú desplegable
+  public showLanguageDropdown: boolean = false;
 
 
   constructor(
@@ -80,7 +86,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private router: Router,
     private _contactoService: ContactoService,
     private _tiendaService: TiendaService,
-    private translate: TranslateService,
+    public translate: TranslateService,
     private storageService: StorageService,
     private _carritoService: CarritoService,
     private _messageService: MessageService,
@@ -91,17 +97,19 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private swPush: SwPush,
     private toastr: ToastrService,
   ) {
-    // this.usuario = usuarioService.usuario;
 
-    this.translate.setDefaultLang(this.activeLang);
-    this.translate.use('es');
-    // this.translate.addLangs(["es", "en"]);
-    // this.langs = this.translate.getLangs();
-    // this.identity = usuarioService.usuario;
-    localStorage.getItem('lang');
+   // Primero: Leemos qué idioma prefiere el usuario (por defecto 'es')
+    this.activeLang = localStorage.getItem('lang') || 'es';
+    
+    // Segundo: Si el idioma es 'es', flag es true. Si es 'en', flag es false.
+    this.flag = (this.activeLang === 'es');
+    
+    // Sincronizamos la librería al arrancar
+    this.translate.use(this.activeLang);
   }
 
   ngOnInit(): void {
+
     const user = localStorage.getItem('user');
     this.usuario = JSON.parse(user);
     this.showCliente();
@@ -147,11 +155,18 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   }
 
-  ngOnDestroy(): void {
-    if (this.cartSubscription) {
-      this.cartSubscription.unsubscribe();
-    }
+  public cambiarLenguaje(lang: string) {
+    this.activeLang = lang;
+    this.translate.use(this.activeLang);
+    
+    // Al hacer clic, invertimos la bandera correctamente
+    this.flag = (lang === 'es');
+    
+    localStorage.setItem('lang', this.activeLang);
+    this.showLanguageDropdown = false;
   }
+
+  
 
   // Toggle methods for dropdowns
   toggleMessagesDropdown(event: Event): void {
@@ -210,15 +225,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }
   }
 
-  public cambiarLenguaje(lang: any) {
+  
+ 
 
-    // this.activeLang = this.congenerals[0].lang;
-    this.activeLang = lang;
-    this.translate.use(this.activeLang);
-    this.flag = !this.flag;
-    this.is_visible = !this.is_visible;
-    localStorage.setItem('lang', this.activeLang);
-  }
 
 
 
@@ -419,52 +428,57 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   inicializarNotificaciones() {
-  // 1. Verificación estricta de seguridad para navegadores móviles (Safari/iOS)
-  if (!this.swPush || !this.swPush.isEnabled) {
-    console.log('Las notificaciones Push no están soportadas o activadas en este dispositivo.');
-    if (this.isSubscribed$) this.isSubscribed$.next(false);
-    if (this.isProcessing$) this.isProcessing$.next(false);
-    return; // Detiene la función de inmediato de forma pacífica
+    // 1. Verificación estricta de seguridad para navegadores móviles (Safari/iOS)
+    if (!this.swPush || !this.swPush.isEnabled) {
+      console.log('Las notificaciones Push no están soportadas o activadas en este dispositivo.');
+      if (this.isSubscribed$) this.isSubscribed$.next(false);
+      if (this.isProcessing$) this.isProcessing$.next(false);
+      return; // Detiene la función de inmediato de forma pacífica
+    }
+
+    // 2. Solicitamos la suscripción al navegador
+    this.swPush.requestSubscription({
+      serverPublicKey: this.VAPID_PUBLIC_KEY
+    })
+      .then(sub => {
+        // Si la suscripción por alguna razón viene vacía, frenamos para evitar errores
+        if (!sub) return;
+
+        if (this.usuario && this.usuario.uid) {
+          const payloadSuscripcion = {
+            user: this.usuario.uid,
+            endpoint: sub.endpoint,
+            keys: sub.toJSON().keys
+          };
+
+          this.pushNotificacionService.guardarPushSubscription(sub).subscribe({
+            next: () => {
+              console.log('✅ ¡Suscripción guardada en el backend!');
+              if (this.isSubscribed$) this.isSubscribed$.next(true);
+              if (this.isProcessing$) this.isProcessing$.next(false);
+              this.toastr.success('¡Notificaciones activadas!');
+            },
+            error: err => {
+              console.error('❌ Error al guardar en el servidor:', err);
+              if (this.isProcessing$) this.isProcessing$.next(false);
+              this.toastr.error('Error', 'No se pudo registrar el dispositivo');
+            }
+          });
+        }
+      })
+      .catch(err => {
+        // 🚀 SALVAVIDAS PARA EL MÓVIL: Apagamos los estados de procesamiento si hay un fallo
+        console.warn('El usuario rechazó las notificaciones o hubo un fallo:', err);
+        if (this.isSubscribed$) this.isSubscribed$.next(false);
+        if (this.isProcessing$) this.isProcessing$.next(false);
+      });
   }
 
-  // 2. Solicitamos la suscripción al navegador
-  this.swPush.requestSubscription({
-    serverPublicKey: this.VAPID_PUBLIC_KEY
-  })
-  .then(sub => {
-    // Si la suscripción por alguna razón viene vacía, frenamos para evitar errores
-    if (!sub) return;
-
-    if (this.usuario && this.usuario.uid) {
-      const payloadSuscripcion = {
-        user: this.usuario.uid,
-        endpoint: sub.endpoint,
-        keys: sub.toJSON().keys 
-      };
-
-      this.pushNotificacionService.guardarPushSubscription(sub).subscribe({
-        next: () => {
-          console.log('✅ ¡Suscripción guardada en el backend!');
-          if (this.isSubscribed$) this.isSubscribed$.next(true);
-          if (this.isProcessing$) this.isProcessing$.next(false);
-          this.toastr.success('¡Notificaciones activadas!');
-        },
-        error: err => {
-          console.error('❌ Error al guardar en el servidor:', err);
-          if (this.isProcessing$) this.isProcessing$.next(false);
-          this.toastr.error('Error', 'No se pudo registrar el dispositivo');
-        }
-      });
+  ngOnDestroy(): void {
+    if (this.cartSubscription) {
+      this.cartSubscription.unsubscribe();
     }
-  })
-  .catch(err => {
-    // 🚀 SALVAVIDAS PARA EL MÓVIL: Apagamos los estados de procesamiento si hay un fallo
-    console.warn('El usuario rechazó las notificaciones o hubo un fallo:', err);
-    if (this.isSubscribed$) this.isSubscribed$.next(false);
-    if (this.isProcessing$) this.isProcessing$.next(false);
-  });
-}
-
+  }
 
 
 }

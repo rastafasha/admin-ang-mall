@@ -208,16 +208,20 @@ export class VentaService {
     return this._http.get('https://apidojo-17track-v1.p.rapidapi.com/track?timeZoneOffset=0&codes='+number,{headers:headers});
   }
 
-  enviarFacturaCliente(pdf:any, venta:any){
-    // Convertir el PDF a Blob
-    const pdfBlob = pdf.output('blob');
+ enviarFacturaCliente(pdf: any, venta: any) {
+  const pdfBlob = pdf.output('blob');
+  const formData = new FormData();
 
-    const formData = new FormData();
-    formData.append('facturacliente', pdfBlob, `${venta._id}.pdf`);
-    formData.append('nombrecliente',venta.user.first_name + ' ' + venta.user.last_name);
-    formData.append('emailcliente',venta.user.email);
-    formData.append('monto',venta.total_pagado);
+  formData.append('facturacliente', pdfBlob, `${venta._id}.pdf`);
+  formData.append('nombrecliente', venta.user.first_name + ' ' + venta.user.last_name);
+  formData.append('emailcliente', venta.user.email || ''); 
+  formData.append('monto', venta.total_pagado);
+  formData.append('telefono', venta.user.telefono || ''); 
+  formData.append('nombrerestaurante', venta.local?.nombre || 'Zlipmenu Restaurante'); 
+  
+  // 🔥 LA LÍNEA CLAVE: Para que el helper de Node sepa a qué cuenta de WhatsApp asociarlo
+  formData.append('idtienda', venta.local || ''); 
 
-    return this._http.post<any>(`${this.url}/ventas/enviar_factura`,formData);
-  }
+  return this._http.post<any>(`${this.url}/ventas/enviar_factura`, formData);
+}
 }

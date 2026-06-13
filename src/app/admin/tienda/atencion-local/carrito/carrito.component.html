@@ -2,7 +2,7 @@
     <section class="sub-header shop-detail-1">
         <img class="rellax bg-overlay" src="images/sub-header/013.jpg" alt="">
         <div class="overlay-call-to-action"></div>
-        <h3 class="heading-style-3">Shop Cart </h3>
+        <h3 class="heading-style-3">{{'Carrito'|translate}} </h3>
     </section>
 
 
@@ -11,16 +11,16 @@
             <!-- List of items-->
             <section class="col-lg-8">
                 <div class="d-flex justify-content-between align-items-center pt-3 pb-2 pb-sm-5 mt-1">
-                    <h2 class="h6 text-light mb-0">Productos</h2><a class="btn btn-outline-primary btn-sm pl-2"
+                    <h2 class="h6 text-light mb-0">{{'Productos'|translate}}</h2><a class="btn btn-outline-primary btn-sm pl-2"
                         [routerLink]="['../atencion-local']" routerLinkActive="router-link-active"><i
-                            class="czi-arrow-left mr-2"></i>Continuar comprando</a>
+                            class="czi-arrow-left mr-2"></i>{{'Continuar comprando'|translate}}</a>
                 </div>
                 <!-- Item-->
                 <div class="alert alert-danger alert-with-icon" role="alert" *ngIf="error_stock">
                     <div class="alert-icon-box">
                         <i class="alert-icon czi-close-circle"></i>
                     </div>
-                    Algun producto de su carrito de compras no tiene stock.
+                    {{'Algun producto de su carrito de compras no tiene stock'|translate}}.
                 </div>
 
                 <ng-container *ngIf="carrito">
@@ -57,7 +57,7 @@
                                 </ng-container>
 
                                 <ng-container *ngIf="item.producto.stock == 0">
-                                    <span class="badge badge-danger">No hay stock del producto</span>
+                                    <span class="badge badge-danger">{{'No hay stock del producto'|translate}}</span>
                                 </ng-container>
 
 
@@ -66,13 +66,14 @@
                         <div class="pt-2 pt-sm-0 pl-sm-3 mx-auto mx-sm-0 text-center text-sm-left"
                             style="max-width: 9rem;">
                             <div class="form-group mb-0">
-                                <label class="font-weight-medium" for="quantity1">Cantidad</label>
+                                <label class="font-weight-medium" for="quantity1">{{'Cantidad'|translate}}</label>
                                 <input class="form-control" type="number" id="quantity1" readonly
                                     [value]="item.cantidad">
                             </div>
                             <button class="btn btn-link px-0 text-danger" type="button"
                                 (click)="remove_producto(item._id)">
-                                <i class="fa fa-trash-o mr-2"></i><span class="font-size-sm">Eliminar</span>
+                                <i class="fa fa-trash-o mr-2"></i>
+                                <span class="font-size-sm">{{'Eliminar'|translate}}</span>
                             </button>
                         </div>
 
@@ -86,9 +87,9 @@
                                 style="background-image: url(./assets/images/background/silver-ultrabook-supermarket-trolley-yellow-background-concept-shopping-modern-online-internet-commerce-sites-copy-220746051.jpeg)"
                                 role="alert">
                                 <i class="czi-time d-block text-white my-4" style="font-size: 3rem;"></i>
-                                <h2 class="text-white text-shadow">Tu carrito actualmente esta vacío!</h2>
+                                <h2 class="text-white text-shadow">{{'Tu carrito actualmente esta vacío'|translate}}!</h2>
                                 <h4 class="text-white font-weight-normal text-shadow mb-4 pb-2">:'(</h4>
-                                <a [routerLink]="['/atencion-local']" class="btn btn-primary mb-3">Ir a comprar</a>
+                                <a [routerLink]="['/atencion-local']" class="btn btn-primary mb-3">{{'Ir a comprar'|translate}}</a>
                                 <button type="button" class="close text-white" data-dismiss="alert" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>

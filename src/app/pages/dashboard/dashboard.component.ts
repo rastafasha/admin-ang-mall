@@ -14,6 +14,7 @@ import { TasaeurobcvService } from 'src/app/services/tasaeurobcv.service';
 import { SwPush } from '@angular/service-worker';
 import { ToastrService } from 'ngx-toastr';
 import { PushNotificationService } from 'src/app/services/push-notification.service';
+import { TranslateService } from '@ngx-translate/core';
 declare let Chart;
 
 @Component({
@@ -105,6 +106,7 @@ export class DashboardComponent implements OnInit {
   public tasadollar;
   public tasaeuro;
 
+  
 
   constructor(
     private _ventaService: VentaService,
@@ -118,7 +120,8 @@ export class DashboardComponent implements OnInit {
     private _route: ActivatedRoute,
     public pushService: PushNotificationService, // Debe ser PUBLIC para que el HTML acceda a él
     private swPush: SwPush,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+     public translate: TranslateService 
   ) {
     this.url = environment.baseUrl;
     this.identity = this._userService.usuario;

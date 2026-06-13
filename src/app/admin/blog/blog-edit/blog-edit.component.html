@@ -2,7 +2,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="postModalLabel">{{pageTitle}}</h5>
+                <h5 class="modal-title" id="postModalLabel">{{pageTitle|translate}}</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
                     (click)="onClose()"></button>
             </div>
@@ -15,12 +15,12 @@
                         <div class="step-indicator m-t-20 m-b-20">
                             <div class="step" [ngClass]="{'active': currentStep >= 1, 'completed': currentStep > 1}">
                                 <span class="step-number">1</span>
-                                <span class="step-label">Datos</span>
+                                <span class="step-label">{{'Datos'|translate}}</span>
                             </div>
                             <div class="step-line"></div>
                             <div class="step" [ngClass]="{'active': currentStep >= 2}">
                                 <span class="step-number">2</span>
-                                <span class="step-label">Imagen</span>
+                                <span class="step-label">{{'Imagen'|translate}}</span>
                             </div>
                         </div>
                         <!-- editar/crear post -->
@@ -40,10 +40,10 @@
                                                 <div *ngIf="blogForm.get('titulo')?.touched && blogForm.get('titulo')?.invalid"
                                                     class="text-danger">
                                                     <div *ngIf="blogForm.get('titulo')?.errors?.['required']">
-                                                        Campo Requerido
+                                                        {{'Campo Requerido'|translate}}
                                                     </div>
                                                     <div *ngIf="blogForm.get('titulo')?.errors?.['minlength']">
-                                                        Coloque un Titulo
+                                                        {{'Mínimo 3 caracteres'|translate}}
                                                     </div>
                                                 </div>
                                             </div>
@@ -75,10 +75,10 @@
                                         <div *ngIf="blogForm.get('isFeatured')?.touched && blogForm.get('isFeatured')?.invalid"
                                             class="text-danger">
                                             <div *ngIf="blogForm.get('isFeatured')?.errors?.['required']">
-                                                Campo Requerido
+                                                {{'Campo Requerido'|translate}}
                                             </div>
                                             <div *ngIf="blogForm.get('isFeatured')?.errors?.['minlength']">
-                                                Seleccione una opción
+                                                {{'Seleccione una opción'|translate}}
                                             </div>
                                         </div>
                                     </div>
@@ -94,10 +94,10 @@
                                         <div *ngIf="blogForm.get('categoria')?.touched && blogForm.get('categoria')?.invalid"
                                             class="text-danger">
                                             <div *ngIf="blogForm.get('categoria')?.errors?.['required']">
-                                                Campo Requerido
+                                                {{'Campo Requerido'|translate}}
                                             </div>
                                             <div *ngIf="blogForm.get('categoria')?.errors?.['minlength']">
-                                                Seleccione una opción
+                                                {{'Seleccione una opción'|translate}}
                                             </div>
                                         </div>
                                     </div>
@@ -116,10 +116,10 @@
                                             <div *ngIf="blogForm.get('descripcion')?.touched && blogForm.get('descripcion')?.invalid"
                                                 class="text-danger">
                                                 <div *ngIf="blogForm.get('descripcion')?.errors?.['required']">
-                                                    Campo Requerido
+                                                    {{'Campo Requerido'|translate}}
                                                 </div>
                                                 <div *ngIf="blogForm.get('descripcion')?.errors?.['minlength']">
-                                                    Coloque una Descripción
+                                                    {{'Mínimo 3 caracteres'|translate}}
                                                 </div>
                                             </div>
                                         </div>
@@ -144,18 +144,18 @@
                         <div *ngIf="currentStep === 2">
                             <app-loading *ngIf="isLoadingImage"></app-loading>
                             <div *ngIf="!isLoadingImage">
-                                <label> Anexe su foto</label>
+                                <label> {{'Anexe foto'|translate}}</label>
                                 <br>
                                 <div class="row">
                                     <div class="especificaciones col-xs-12" *ngIf="!postSeleccionado">
-                                        <h4>Debe Crear un post para agregar la imagen</h4>
+                                        <h4>{{'Debe Crear un post para agregar la imagen'|translate}}</h4>
                                     </div>
                                     <div class="especificaciones col-xs-12 col-sm-6" *ngIf="postSeleccionado">
-                                        <h4>Especificaciones:</h4>
+                                        <h4>{{'Especificaciones'|translate}}:</h4>
                                         <ul>
-                                            <li>Tamaño máximo: 300px X 300px</li>
-                                            <li>Peso máximo: 2 mb</li>
-                                            <li>Formato permitido: jpg, .gif, .png</li>
+                                            <li>{{'Tamaño máximo'|translate}}: 300px X 300px</li>
+                                            <li>{{'Peso máximo'|translate}}: 2 mb</li>
+                                            <li>{{'Formato permitido'|translate}}: jpg, .gif, .png</li>
                                         </ul>
                                     </div>
                                     <div class="col-xs-12 col-sm-6" *ngIf="postSeleccionado ">
@@ -177,12 +177,12 @@
                                             <div class="col-6">
                                                 <button
                                                     class="btn btn-success waves-effect waves-light m-r-10 btn-block"
-                                                    type="button" (click)="prevStep()">Anterior</button>
+                                                    type="button" (click)="prevStep()">{{'Anterior'|translate}}</button>
                                             </div>
                                             <div class="col-6">
                                                 <button type="button" [disabled]="!imagenSubir" (click)="subirImagen()"
                                                     class="btn btn-success waves-effect waves-light m-r-10 btn-block">
-                                                    <i class="fa fa-save"></i> Subir imagen
+                                                    <i class="fa fa-save"></i> {{'Subir imagen'|translate}}
                                                 </button>
                                             </div>
                                         </div>

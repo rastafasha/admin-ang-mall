@@ -8,6 +8,7 @@ import { CategoriaService } from '../../../services/categoria.service';
 import { ModalImagenService } from '../../../services/modal-imagen.service';
 import { IconosService } from 'src/app/services/iconos.service';
 import { FormGroup } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
 
 declare var jQuery:any;
 declare var $:any;
@@ -46,6 +47,7 @@ export class CatIndexComponent implements OnInit {
     private modalImagenService: ModalImagenService,
     private busquedaService: BusquedasService,
     private _iconoService: IconosService,
+    public translate: TranslateService 
   ) { }
 
   ngOnInit(): void {
@@ -107,7 +109,7 @@ export class CatIndexComponent implements OnInit {
   guardarCambios(categoria: Categoria){
     this.categoriaService.actualizarCategoria(categoria)
     .subscribe( resp => {
-      Swal.fire('Actualizado', categoria.nombre,  'success')
+      Swal.fire('Actualizado', categoria.nombre.es,  'success')
     })
 
   }
@@ -117,7 +119,7 @@ export class CatIndexComponent implements OnInit {
     this.categoriaService.borrarCategoria(categoria._id)
     .subscribe( resp => {
       this.ngOnInit();
-      Swal.fire('Borrado', categoria.nombre, 'success')
+      Swal.fire('Borrado', categoria.nombre.es, 'success')
     })
 
   }

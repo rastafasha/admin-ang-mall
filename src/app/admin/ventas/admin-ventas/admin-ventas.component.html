@@ -12,7 +12,7 @@
                 <div class="border-bottom mt-lg-2 pb-2">
                     <div class="row">
                         <div class="col-10">
-                            <h2 class="card-title">Ordenes</h2>
+                            <h2 class="card-title">{{'Ordenes'|translate}}</h2>
                         </div>
                         <div class="col-2 d-flex justify-content-end">
                             <app-backbutton></app-backbutton>
@@ -22,11 +22,11 @@
                         <div class="col-xs-12 col-sm-6">
                             <div *ngIf="user.role ==='SUPERADMIN'  ">
                                 <label class=" col-form-label font-weight-medium" for="local">
-                                    Filtro de Ventas por Local</label>
+                                    {{'Filtro de Ventas por Local'|translate}}</label>
                                 <div class="input-group">
                                     <select name="local" id="local" class="form-control"
                                         (change)="onChangeTienda($event)">
-                                        <option value="todas" selected>Todos los locales</option>
+                                        <option value="todas" selected>{{'Todas las Tiendas'|translate}}</option>
                                         <option value="{{tienda._id}}" *ngFor="let tienda of listTiendas">
                                             {{tienda.local}} | {{tienda.nombre}}
                                         </option>
@@ -36,13 +36,13 @@
 
                             <div *ngIf="user.role ==='ADMIN' || user.role==='VENTAS'">
                                 <label class=" col-form-label font-weight-medium" for="local">
-                                    Ventas Local: {{tiendaSelected?.nombre}}
+                                    {{'Ventas Tienda'|translate}}: {{tiendaSelected?.nombre}}
                                 </label>
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-6">
                             <label class=" col-form-label font-weight-medium" for="local">
-                                Año
+                                {{'Año'|translate}}
                                 <span class="required">*</span></label>
                             <select [(ngModel)]="selectedValue" class="form-control select" (change)="selectedYear()"
                                 placeholder="2023">
@@ -78,21 +78,21 @@
                             <li class="nav-item">
                                 <a href="javascript:void(0)" class="nav-link active" id="pills-home1" data-toggle="pill"
                                     role="tab" aria-controls="home1" aria-selected="true" (click)="pills('home1')">
-                                    <i class="czi-bookmark mr-2"></i> Fechas
+                                    <i class="czi-bookmark mr-2"></i> {{'Fechas'|translate}}
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a href="javascript:void(0)" class="nav-link" id="pills-profile1" data-toggle="pill"
                                     role="tab" aria-controls="profile1" aria-selected="false"
                                     (click)="pills('profile1')">
-                                    <i class="czi-flag mr-2"></i> Estado
+                                    <i class="czi-flag mr-2"></i> {{'Estado'|translate}}
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a href="javascript:void(0)" class="nav-link" id="pills-messages1" data-toggle="pill"
                                     role="tab" aria-controls="messages1" aria-selected="false"
                                     (click)="pills('messages1')">
-                                    <i class="czi-key mr-2"></i> Código
+                                    <i class="czi-key mr-2"></i> {{'Código'|translate}}
                                 </a>
                             </li>
                         </ul>
@@ -107,13 +107,13 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text"
                                                     style="border-top-right-radius: 0px;border-bottom-right-radius: 0px">
-                                                    Año
+                                                    {{'Año'|translate}}
                                                 </span>
                                             </div>
                                             <select name="" class="form-control custom-select"
                                                 style="border-top-left-radius: 0px;border-bottom-left-radius: 0px"
                                                 name="year" [(ngModel)]="year">
-                                                <option value="" selected disabled>Seleccionar</option>
+                                                <option value="" selected disabled>{{'Seleccionar'|translate}}</option>
                                                 <option value="2019">2019</option>
                                                 <option value="2020">2020</option>
                                                 <option value="2021">2021</option>
@@ -134,25 +134,25 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text"
                                                     style="border-top-right-radius: 0px;border-bottom-right-radius: 0px">
-                                                    Mes
+                                                    {{'Mes'|translate}}
                                                 </span>
                                             </div>
                                             <select name="" class="form-control custom-select"
                                                 style="border-top-left-radius: 0px;border-bottom-left-radius: 0px"
                                                 name="mes" [(ngModel)]="mes">
-                                                <option value="0" selected>Todos</option>
-                                                <option value="1">Enero</option>
-                                                <option value="2">Febrero</option>
-                                                <option value="3">Marco</option>
-                                                <option value="4">Abril</option>
-                                                <option value="5">Mayo</option>
-                                                <option value="6">Junio</option>
-                                                <option value="7">Julio</option>
-                                                <option value="8">Agosto</option>
-                                                <option value="9">Septiembre</option>
-                                                <option value="10">Octubre</option>
-                                                <option value="11">Noviembre</option>
-                                                <option value="12">Diciembre</option>
+                                                <option value="0" selected>{{'Todos'|translate}}</option>
+                                                <option value="1">{{'Enero'|translate}}</option>
+                                                <option value="2">{{'Febrero'|translate}}</option>
+                                                <option value="3">{{'Marco'|translate}}</option>
+                                                <option value="4">{{'Abril'|translate}}</option>
+                                                <option value="5">{{'Mayo'|translate}}</option>
+                                                <option value="6">{{'Junio'|translate}}</option>
+                                                <option value="7">{{'Julio'|translate}}</option>
+                                                <option value="8">{{'Agosto'|translate}}</option>
+                                                <option value="9">{{'Septiembre'|translate}}</option>
+                                                <option value="10">{{'Octubre'|translate}}</option>
+                                                <option value="11">{{'Noviembre'|translate}}</option>
+                                                <option value="12">{{'Diciembre'|translate}}</option>
                                             </select>
 
                                         </div>
@@ -160,7 +160,7 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text"
                                                     style="border-top-right-radius: 0px;border-bottom-right-radius: 0px">
-                                                    Día
+                                                    {{'Día'|translate}}
                                                 </span>
                                             </div>
                                             <input type="number" class="form-control" max="31" min="0"
@@ -186,17 +186,17 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text"
                                                     style="border-top-right-radius: 0px;border-bottom-right-radius: 0px">
-                                                    Estado
+                                                    {{'Estado'}}
                                                 </span>
                                             </div>
                                             <select name="" class="form-control custom-select"
                                                 style="border-top-left-radius: 0px;border-bottom-left-radius: 0px"
                                                 name="estado" [(ngModel)]="estado">
-                                                <option value="Venta en proceso" selected>Venta en proceso</option>
-                                                <option value="Enviado">Enviado</option>
-                                                <option value="Cancelado">Cancelado</option>
-                                                <option value="Reembolsado">Reembolsado</option>
-                                                <option value="Finalizado">Finalizado</option>
+                                                <option value="Venta en proceso" selected>{{'Venta en proceso'|translate}}</option>
+                                                <option value="Enviado">{{'Enviado'|translate}}</option>
+                                                <option value="Cancelado">{{'Cancelado'|translate}}</option>
+                                                <option value="Reembolsado">{{'Reembolsado'|translate}}</option>
+                                                <option value="Finalizado">{{'Finalizado'|translate}}</option>
                                             </select>
 
                                         </div>
@@ -218,7 +218,7 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text"
                                                     style="border-top-right-radius: 0px;border-bottom-right-radius: 0px">
-                                                    Código
+                                                    {{'Código'|translate}}
                                                 </span>
                                             </div>
                                             <input type="text" class="form-control" placeholder="Código de venta"
@@ -248,15 +248,15 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text"
                                     style="border-top-right-radius: 0px;border-bottom-right-radius: 0px">
-                                    <span class="czi-arrows-vertical"></span> &nbsp; Orden
+                                    <span class="czi-arrows-vertical"></span> &nbsp; {{'Orden'|translate}}
                                 </span>
                             </div>
                             <select class="form-control custom-select" name="orden" [(ngModel)]="orden"
                                 (change)="search(tipo,orden)">
-                                <option value="fecha+" selected>Fecha (+ to -)</option>
-                                <option value="pagado+">Total pagado (+ to -)</option>
-                                <option value="fecha-">Fecha (- to +)</option>
-                                <option value="pagado-">Total pagado (- to +)</option>
+                                <option value="fecha+" selected>{{'Fecha'|translate}} (+ to -)</option>
+                                <option value="pagado+">{{'Total pagado'|translate}} (+ to -)</option>
+                                <option value="fecha-">{{'Fecha'|translate}} (- to +)</option>
+                                <option value="pagado-">{{'Total pagado'|translate}} (- to +)</option>
                             </select>
                             <button type="button" class="btn btn-accent" (click)="init_data()">
                                 <span class="czi-filter"></span> </button>
@@ -295,7 +295,7 @@
                                             <ng-container *ngIf="item.estado == 'Finalizado'">
                                                 <span class="badge badge-primary">{{item.estado}}</span>&nbsp;
                                             </ng-container>
-                                            <a>Compra: N°-{{item._id.toUpperCase()}}</a>
+                                            <a>{{'Compra'|translate}}: N°-{{item._id.toUpperCase()}}</a>
                                         </h3>
 
                                     </div>
@@ -304,27 +304,27 @@
                                             <div class="col-lg-5">
                                                 <div class="media-body pt-2">
                                                     <div class="font-size-sm"><span
-                                                            class="text-muted mr-2">Cliente:</span>
+                                                            class="text-muted mr-2">{{'Cliente'|translate}}:</span>
                                                         {{item.user.first_name}} {{item.user.last_name}}
                                                     </div>
                                                     <div class="font-size-sm"><span
                                                             class="text-muted mr-2">Tracking:</span>
                                                         <span
                                                             *ngIf="item.tracking_number">{{item.tracking_number}}</span>
-                                                        <span *ngIf="!item.tracking_number" class="badge badge-dark">No
-                                                            disponible</span>
+                                                        <span *ngIf="!item.tracking_number" class="badge badge-dark">
+                                                            {{'No disponible'|translate}}</span>
                                                     </div>
                                                     <div class="font-size-sm"><span
-                                                            class="text-muted mr-2">Destino:</span> {{item.pais}} -
+                                                            class="text-muted mr-2">{{'Destino'|translate}}:</span> {{item.pais}} -
                                                         {{item.ciudad}}
                                                     </div>
                                                     <div class="font-size-sm"><span
-                                                            class="text-muted mr-2">Fecha:</span> {{ item.createdAt |
+                                                            class="text-muted mr-2">{{'Fecha'|translate}}:</span> {{ item.createdAt |
                                                         date:'MMM d, y, h:mm:ss a' }}
                                                     </div>
                                                     <div class="font-size-lg text-accent pt-2"><span
-                                                            class="text-muted mr-2">Total
-                                                            pagado:</span>{{item.total_pagado | currency:tienda_moneda}}
+                                                            class="text-muted mr-2">
+                                                            {{'Total pagado'|translate}}:</span>{{item.total_pagado | currency:tienda_moneda}}
                                                     </div>
                                                 </div>
                                             </div>
@@ -373,8 +373,8 @@
                                                 <ng-container *ngIf="item.estado == 'Cancelado'">
                                                     <a [routerLink]="['/dashboard/cancelacion/modulo']"
                                                         routerLinkActive="router-link-active"
-                                                        class="btn btn-danger"><span class="czi-turn-off"></span>&nbsp;
-                                                        Ir a cancelaciones</a>
+                                                        class="btn btn-danger"><span class="czi-turn-off"></span>
+                                                        &nbsp; {{'Ir a cancelaciones'|translate}}</a>
 
                                                 </ng-container>
                                             </div>
@@ -392,9 +392,9 @@
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Código</th>
-                                        <th>Fecha</th>
-                                        <th>Estado</th>
+                                        <th>{{'Código'|translate}}</th>
+                                        <th>{{'Fecha'|translate}}</th>
+                                        <th>{{'Estado'|translate}}</th>
                                         <th>OP</th>
                                     </tr>
                                 </thead>
@@ -574,12 +574,12 @@
                     <div class="card-footer" *ngIf="option_selected == 2">
                         <ng-container *ngIf="count_selects">
                             <button class="btn btn-success btn-sm" (click)="update_envio()">
-                                <span class="czi-plane"></span> Marcar como enviados
+                                <span class="czi-plane"></span> {{'Marcar como enviados'|translate}}
                             </button>
                         </ng-container>
                         <ng-container *ngIf="!count_selects">
                             <button class="btn btn-success btn-sm" disabled>
-                                <span class="czi-plane"></span> Marcar como enviados
+                                <span class="czi-plane"></span> {{'Marcar como enviados'|translate}}
                             </button>
                         </ng-container>
                     </div>

@@ -10,9 +10,9 @@ export const environment = {
   // soketServer : 'http://localhost:3000',
 
    //remoto vercel
-  baseUrl: 'https://back-zlipmenu.onrender.com/api',
-  mediaUrl: 'https://back-zlipmenu.onrender.com/api/uploads',
-  soketServer: 'https://back-zlipmenu.onrender.com',
+  // baseUrl: 'https://back-zlipmenu.onrender.com/api',
+  // mediaUrl: 'https://back-zlipmenu.onrender.com/api/uploads',
+  // soketServer: 'https://back-zlipmenu.onrender.com',
 
   mediaUrlRemoto: 'https://res.cloudinary.com/dmv6aukai/image/upload/v1741218430/zlipmenu',
   //plugins
