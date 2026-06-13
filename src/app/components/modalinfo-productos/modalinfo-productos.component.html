@@ -4,20 +4,21 @@
     <div class="modal-content">
       <div class="modal-body">
 
-          <p>En esta sección podrás:</p>
+          <p>{{'En esta sección podrás'|translate}}:</p>
           <ul>
-            <li>Crear Productos</li>
-            <li>Luego de Crear el Producto, podrás agregar la imagen Principal</li>
-            <li>Si el producto es unico, (no tiene variantes) coloca la palabra unico</li>
-            <li>Puedes usar los ya existentes como guía o ejemplo</li>
-            <li>Es necesario agregar un color y un selector, ya que este sistema es multi producto</li>
+            <li>{{'Crear Productos'|translate}}</li>
+            <li>{{'Luego de Crear el Producto, podrás agregar la imagen Principal'|translate}}</li>
+            <li>{{'Si el producto es unico, (no tiene variantes) coloca la palabra único'|translate}}</li>
+            <li>{{'Puedes usar los ya existentes como guía o ejemplo'|translate}}</li>
+            <li>{{'Es necesario agregar un color y un selector, ya que este sistema es multi producto'|translate}}</li>
           </ul>
 
       </div>
       <div class="modal-footer botonesmodal">
-        <button type="button" class="btn btn-outline-success" data-dismiss="modal">Continuar</button>
-        <button type="button" class="btn btn-outline-danger" (click)="onNoShowMore()">No quiero ver más este
-          mensaje</button>
+        <button type="button" class="btn btn-outline-success" data-dismiss="modal">{{'Continuar'|translate}}</button>
+        <button type="button" class="btn btn-outline-danger" (click)="onNoShowMore()">
+          {{'No quiero ver más este mensaje'|translate}}
+        </button>
       </div>
     </div>
   </div>

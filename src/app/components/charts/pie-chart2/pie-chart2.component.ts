@@ -1,9 +1,10 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import Chart from 'chart.js/auto';
 
 @Component({
   selector: 'app-pie-chart2',
-  standalone:false,
+  standalone: false,
   templateUrl: './pie-chart2.component.html',
   styleUrls: ['./pie-chart2.component.css']
 })
@@ -11,6 +12,11 @@ export class PieChart2Component implements OnChanges {
   public chart: Chart<'doughnut', number[], string>;
   @Input() ventas: any[];
   @Input() total_ganado: any[];
+
+  constructor(
+    // Debe ser public para que el HTML pueda leer "translate.currentLang"
+    public translate: TranslateService
+  ) { }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['ventas'] && this.ventas) {
@@ -38,10 +44,13 @@ export class PieChart2Component implements OnChanges {
     });
 
     const data = {
-      labels: ['Venta en proceso', 'Enviado', 'Reembolsado', 'Finalizado', 'Cancelado' ],
+      labels: this.translate.currentLang === 'en'
+        ? ['Sale in Progress', 'Shipped', 'Refunded', 'Completed', 'Cancelled']
+        : ['Venta en proceso', 'Enviado', 'Reembolsado', 'Finalizado', 'Cancelado'],
+
       datasets: [
         {
-          label: 'Estados de Ventas',
+          label: this.translate.currentLang === 'en' ? 'Sales Status' : 'Estados de Ventas',
           data: [
             estadoCounts['Venta en proceso'],
             estadoCounts['Enviado'],
@@ -83,7 +92,7 @@ export class PieChart2Component implements OnChanges {
             },
             title: {
               display: true,
-              text: 'Estados de Ventas Mensuales'
+              text: this.translate.currentLang === 'en' ? 'Monthly Sales Status' : 'Estados de Ventas Mensuales'
             }
           },
           scales: {

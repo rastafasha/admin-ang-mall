@@ -1,9 +1,10 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { Chart } from 'chart.js';
 
 @Component({
   selector: 'app-line-chart2',
-  standalone:false,
+  standalone: false,
   templateUrl: './line-chart2.component.html',
   styleUrls: ['./line-chart2.component.css']
 })
@@ -12,6 +13,11 @@ export class LineChart2Component implements OnChanges {
   @Input() ventas: any[] = [];
   public chart: Chart;
 
+  constructor(
+    // Debe ser public para que el HTML pueda leer "translate.currentLang"
+    public translate: TranslateService
+  ) { }
+
   ngOnChanges(changes: SimpleChanges) {
     if (changes['ventas'] && this.ventas && this.ventas.length > 0) {
       this.createChart();
@@ -19,20 +25,14 @@ export class LineChart2Component implements OnChanges {
   }
 
   createChart() {
-    const labels = [
-      'Enero',
-      'Febrero',
-      'Marzo',
-      'Abril',
-      'Mayo',
-      'Junio',
-      'Julio',
-      'Agosto',
-      'Septiembre',
-      'Octubre',
-      'Noviembre',
-      'Diciembre',
-    ];
+    const labelsOriginales = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+
+    // Si usas ngx-translate, puedes resolverlo de forma limpia en tu configuración del gráfico:
+    const labels = labelsOriginales.map(mes => {
+      return this.translate.currentLang === 'en'
+        ? { 'Enero': 'January', 'Febrero': 'February', 'Marzo': 'March', 'Abril': 'April', 'Mayo': 'May', 'Junio': 'June', 'Julio': 'July', 'Agosto': 'August', 'Septiembre': 'September', 'Octubre': 'October', 'Noviembre': 'November', 'Diciembre': 'December' }[mes]
+        : mes;
+    });
 
     // Helper function to generate random color
     function getRandomColor() {
@@ -63,7 +63,7 @@ export class LineChart2Component implements OnChanges {
     }
 
     const datasets = [{
-      label: 'Ventas Mensuales',
+      label: this.translate.currentLang === 'en' ? 'Monthly Sales' : 'Ventas Mensuales',
       data: salesByMonth,
       fill: false,
       borderColor: getRandomColor(),

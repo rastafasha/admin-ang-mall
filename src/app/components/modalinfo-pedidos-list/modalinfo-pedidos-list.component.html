@@ -4,20 +4,21 @@
     <div class="modal-content">
       <div class="modal-body">
 
-          <p>En esta sección podrás:</p>
+          <p>{{'En esta sección podrás'|translate}}:</p>
 
           <ul>
-            <li>Ver los pedidos recientes.</li>
-            <li>La información de cada pedido: Quien lo pide, cuando lo pide,</li>
-            <li>El contenido del pedido</li>
-            <li>Cambiar el estado del pedido: Activar, ver, eliminar </li>
+            <li>{{'Ver los pedidos recientes'|translate}}.</li>
+            <li>{{'La información de cada pedido: Quien lo pide, cuando lo pide'|translate}},</li>
+            <li>{{'El contenido del pedido'|translate}}</li>
+            <li>{{'Cambiar el estado del pedido: Activar, ver, eliminar'|translate}} </li>
           </ul>
 
       </div>
       <div class="modal-footer botonesmodal">
-        <button type="button" class="btn btn-outline-success" data-dismiss="modal">Continuar</button>
-        <button type="button" class="btn btn-outline-danger" (click)="onNoShowMore()">No quiero ver más este
-          mensaje</button>
+        <button type="button" class="btn btn-outline-success" data-dismiss="modal">{{'Continuar'|translate}}</button>
+        <button type="button" class="btn btn-outline-danger" (click)="onNoShowMore()">
+          {{'No quiero ver más este mensaje'|translate}}
+        </button>
       </div>
     </div>
   </div>

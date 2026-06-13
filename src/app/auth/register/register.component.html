@@ -13,7 +13,7 @@
                 </div>
                 <p class="text-center">Admin</p>
 
-                <h3 class="box-title m-t-40 m-b-0">Registro</h3>
+                <h3 class="box-title m-t-40 m-b-0">{{'Registro'|translate}}</h3>
 
                 <!-- Step Indicators -->
                 <div class="step-indicators text-center mb-4">
@@ -27,10 +27,10 @@
                         <div *ngIf="registerForm.get('first_name')?.touched && registerForm.get('first_name')?.invalid"
                             class="text-danger">
                             <div *ngIf="registerForm.get('first_name')?.errors?.['required']">
-                                Campo Requerido
+                                {{'Campo Requerido'|translate}}
                             </div>
                             <div *ngIf="registerForm.get('first_name')?.errors?.['minlength']">
-                                Mínimo 3 Caracteres
+                                {{'Mínimo 3 Caracteres'|translate}}
                             </div>
                         </div>
                     </div>
@@ -41,10 +41,10 @@
                         <div *ngIf="registerForm.get('last_name')?.touched && registerForm.get('last_name')?.invalid"
                             class="text-danger">
                             <div *ngIf="registerForm.get('last_name')?.errors?.['required']">
-                                Campo Requerido
+                                {{'Campo Requerido'|translate}}
                             </div>
                             <div *ngIf="registerForm.get('last_name')?.errors?.['minlength']">
-                                Mínimo 3 Caracteres
+                                {{'Mínimo 3 Caracteres'|translate}}
                             </div>
                         </div>
                     </div>
@@ -55,13 +55,13 @@
                         <div *ngIf="registerForm.get('email')?.touched && registerForm.get('email')?.invalid"
                             class="text-danger">
                             <div *ngIf="registerForm.get('email')?.errors?.['required']">
-                                Campo Requerido
+                                {{'Campo Requerido'|translate}}
                             </div>
                             <div *ngIf="registerForm.get('email')?.errors?.['email']">
                                 Email no válido
                             </div>
                             <div *ngIf="registerForm.get('email')?.errors?.['minlength']">
-                                Mínimo 3 Caracteres
+                                {{'Mínimo 3 Caracteres'|translate}}
                             </div>
                         </div>
                     </div>
@@ -72,10 +72,10 @@
                         <div *ngIf="registerForm.get('password')?.touched && registerForm.get('password')?.invalid"
                             class="text-danger">
                             <div *ngIf="registerForm.get('password')?.errors?.['required']">
-                                Campo Requerido
+                                {{'Campo Requerido'|translate}}
                             </div>
                             <div *ngIf="registerForm.get('password')?.errors?.['minlength']">
-                                Mínimo 3 Caracteres
+                                {{'Mínimo 3 Caracteres'|translate}}
                             </div>
                         </div>
                     </div>
@@ -88,13 +88,13 @@
                         <div *ngIf="registerForm.get('password2')?.touched && registerForm.get('password2')?.invalid"
                             class="text-danger">
                             <div *ngIf="registerForm.get('password2')?.errors?.['required']">
-                                Campo Requerido
+                                {{'Campo Requerido'|translate}}
                             </div>
                             <div *ngIf="registerForm.get('password2')?.errors?.['minlength']">
-                                Mínimo 3 Caracteres
+                                {{'Mínimo 3 Caracteres'|translate}}
                             </div>
                             <div *ngIf="registerForm.get('password2')?.errors?.['noEsIgual']">
-                                Las contraseñas no coinciden
+                                {{'Las contraseñas no coinciden'|translate}}
                             </div>
                         </div>
                     </div>
@@ -113,21 +113,21 @@
                         <div *ngIf="currentStep === 1" class="text-center">
                             <button class="btn btn-info btn-md btn-block text-uppercase waves-effect waves-light m-r-10"
                                 type="button" (click)="nextStep()">
-                                Siguiente
+                                {{'Siguiente'|translate}}
                             </button>
                         </div>
                         <div *ngIf="currentStep === 2" class="text-center">
                             <button class="btn btn-secondary btn-md m-r-10" type="button" (click)="prevStep()">
-                                Volver
+                                {{'Volver'|translate}}
                             </button>
                             <button class="btn btn-info btn-md btn-block text-uppercase waves-effect waves-light"
-                                type="submit">Sign Up</button>
+                                type="submit">{{'Registro'}}</button>
                         </div>
                     </div>
                 </div>
                 <div class="form-group m-b-0">
                     <div class="col-sm-12 text-center">
-                        <p>¿Ya posee una cuenta? <a routerLink="/login" class="text-info m-l-5"><b>Ingresar</b></a>
+                        <p>{{'¿Ya posee una cuenta?'|translate}} <a routerLink="/login" class="text-info m-l-5"><b>{{'Ingresar'|translate}}</b></a>
                         </p>
                     </div>
                 </div>

@@ -10,6 +10,7 @@ export class ModalPagoComponent implements OnInit {
 
   @Input() amount: any;
   @Input() items: any;
+  @Input() activeModal: any;
 
 
   constructor(
@@ -18,5 +19,7 @@ export class ModalPagoComponent implements OnInit {
 
   ngOnInit(): void {
   }
+
+  
 
 }

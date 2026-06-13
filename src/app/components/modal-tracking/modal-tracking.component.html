@@ -6,7 +6,7 @@
             
             <div class="modal-header">
                 <h4 class="modal-title">
-                    Tracking <span class="text-muted fs-6 fw-normal">Número de seguimiento</span>
+                    Tracking <span class="text-muted fs-6 fw-normal">{{'Número de seguimiento'|translate}}</span>
                 </h4>
                 <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
@@ -19,20 +19,20 @@
                         <!-- Alerta Corregida para Bootstrap 5.3 -->
                         <div class="col-lg-12" *ngIf="msm_error_track">
                             <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                Debe ingresar el número de seguimiento.
+                                {{'Debe ingresar el número de seguimiento'|translate}}.
                                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" (click)="close_alert()"></button>
                             </div>
                         </div>
 
                         <!-- Información del pedido -->
                         <div class="col-lg-12 mb-3">
-                            <p class="mb-1 text-muted small">Pedido ID: {{item._id}}</p>
+                            <p class="mb-1 text-muted small">{{'Pedido'|translate}} ID: {{item._id}}</p>
                             <h6>
-                                Tipo de envío:
+                                {{'Tipo de envío'|translate}}:
                                 <span class="fw-normal fs-6">{{item.tipo_envio}}</span>
                             </h6>
                             <h6>
-                                Precio de envío:
+                                {{'Precio de envío'|translate}}:
                                 <span class="fw-normal fs-6">{{item.precio_envio | currency:tienda_moneda}}</span>
                             </h6>
                         </div>
@@ -46,7 +46,7 @@
 
                         <div class="col-lg-12 mt-2 text-center">
                             <span class="text-muted small">
-                                Establecerlo en blanco, marca <b>sin guía</b>.
+                                {{'Establecerlo en blanco, marca'|translate}} <b>{{'sin guía'|translate}}</b>.
                             </span>
                         </div>
                     </div>
@@ -54,8 +54,8 @@
 
                 <!-- Botones de Acción Únicos -->
                 <div class="modal-footer">
-                    <button class="btn btn-secondary btn-sm" type="button" data-bs-dismiss="modal" (click)="ocultarModal()">Cerrar</button>
-                    <button class="btn btn-primary btn-shadow btn-sm" type="submit">Establecer</button>
+                    <button class="btn btn-secondary btn-sm" type="button" data-bs-dismiss="modal" (click)="ocultarModal()">{{'Cerrar'|translate}}</button>
+                    <button class="btn btn-primary btn-shadow btn-sm" type="submit">{{'Establecer'|translate}}</button>
                 </div>
             </form>
 

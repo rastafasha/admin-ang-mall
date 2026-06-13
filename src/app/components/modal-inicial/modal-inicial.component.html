@@ -11,36 +11,36 @@
           <span class="step-circle {{currentStep >= 2 ? 'active' : ''}}">2</span>
         </div>
         <div *ngIf="currentStep === 1">
-          <h2>¡Bienvenido al Admin Zlipmenu! </h2>
+          <h2>¡{{'Bienvenido al Admin Zlipmenu'|translate}}! </h2>
 
-          <p>Gracias por acceder a la versión Demo!</p>
-          <p>En esta sección podrás ver:</p>
+          <!-- <p>Gracias por acceder a la versión Demo!</p> -->
+          <p>{{'En esta sección podrás ver'|translate}}:</p>
 
           <ul>
-            <li>El comportamiento diario, mensual y anual de las ventas de tu Negocio.</li>
-            <li>Los Productos más vendidos</li>
-            <li> las Ultimas Ventas</li>
+            <li>{{'El comportamiento diario, mensual y anual de las ventas de tu Negocio'|translate}}.</li>
+            <li>{{'Los Productos más vendidos'|translate}}</li>
+            <li> {{'las Ultimas Ventas'|translate}}</li>
           </ul>
 
-          <p>Además tienes mas opciones en el menu lateral Izquierdo</p>
-          <small>Eventualmente estaremos mejorando y agregando más opciones, con actualiaciones periodicas</small>
+          <p>{{'Además tienes mas opciones en el menu lateral Izquierdo'|translate}}</p>
+          <small>{{'Eventualmente estaremos mejorando y agregando más opciones, con actualiaciones periodicas'|translate}}</small>
         </div>
         <div *ngIf="currentStep === 2">
-          <h2>Instalalo en tu Dispositivo! </h2>
+          <h2>{{'Instalalo en tu Dispositivo'|translate}}! </h2>
 
-          <p>Si puedes ver este icon en la barra de dirección:</p>
+          <p>{{'Si puedes ver este icon en la barra de dirección'|translate}}:</p>
           <img src="./assets/images/barra.jpg" class="image-responsive" style="width: 100%; display: block; margin:auto"
             alt="">
           <br>
           <div class="row">
             <div class="col-xs-12 col-sm-6">
-              <p>1 Pulsa sobre el icono y podras instalarlo en tu dispositivo (Computador, Tabla, Movil):</p>
+              <p>1 {{'Pulsa sobre el icono y podras instalarlo en tu dispositivo (Computador, Tabla, Movil)'|translate}}:</p>
               <img src="./assets/images/install.jpg" style="width: 100%; display: block; margin:auto" alt="">
               <br>
-              <p>2 Pulsa el Boton Install</p>
+              <p>2 {{'Pulsa el Botón Install'|translate}}</p>
             </div>
             <div class="col-xs-12 col-sm-6">
-              <p>3 Agregalo a tu barra de Inicio:</p>
+              <p>3 {{'Agregalo a tu barra de Inicio'|translate}}:</p>
               <img src="./assets/images/instalado.png" style="width: 100%; display: block; margin:auto" alt="">
 
             </div>
@@ -52,12 +52,12 @@
             <div *ngIf="currentStep === 1" class="text-center">
               <button class="btn btn-info btn-md text-uppercase waves-effect waves-light m-r-10" type="button"
                 (click)="nextStep()">
-                Siguiente
+                {{'Siguiente'|translate}}
               </button>
             </div>
             <div *ngIf="currentStep === 2" class="text-center">
               <button class="btn btn-secondary btn-md m-r-10" type="button" (click)="prevStep()">
-                Volver
+                {{'Volver'|translate}}
               </button>
             </div>
           </div>
@@ -66,9 +66,9 @@
 
       </div>
       <div class="modal-footer botonesmodal">
-        <button type="button" class="btn btn-outline-success" data-dismiss="modal">Continuar</button>
-        <button type="button" class="btn btn-outline-danger" (click)="onNoShowMore()">No quiero ver más este
-          mensaje</button>
+        <button type="button" class="btn btn-outline-success" data-dismiss="modal">{{'Continuar'|translate}}</button>
+        <button type="button" class="btn btn-outline-danger" (click)="onNoShowMore()">
+          {{'No quiero ver más este mensaje'|translate}}</button>
       </div>
     </div>
   </div>
