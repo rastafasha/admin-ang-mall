@@ -40,8 +40,8 @@
                                         <div class="setting-info">
                                             <i class="fa fa-bell"></i>
                                             <div class="text-container">
-                                                <strong>Notificaciones Push</strong>
-                                                <span>Avisos importantes</span>
+                                                <strong>{{'Notificaciones Push'| translate}}</strong>
+                                                <span>{{'Avisos importantes'| translate}}</span>
                                             </div>
                                         </div>
 
@@ -86,7 +86,7 @@
 
                                                 </ng-container>
                                             </h6>
-                                            <p class="mb-3 pt-1" style="font-size: 14px;">{{current_month}}</p>
+                                            <p class="mb-3 pt-1" style="font-size: 14px;">{{current_month| translate}}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -121,7 +121,7 @@
                                                 </ng-container>
                                             </h6>
                                             <p class="mb-3 pt-1" style="font-size: 14px;">{{'Ventas'| translate}}
-                                                {{current_month}}</p>
+                                                {{current_month| translate}}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -379,7 +379,7 @@
                                         <td class="text-center">{{num_ventas}}</td>
                                     </tr>
                                     <tr>
-                                        <td>{{'Ventas '| translate}} {{current_month}}</td>
+                                        <td>{{'Ventas '| translate}} {{current_month| translate}}</td>
                                         <td class="text-center" *ngIf="total_ventas > total_ventas_ant">{{total_ventas
                                             }}
                                             <i class="fa fa-caret-up text-success"></i>
@@ -390,15 +390,15 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>{{'Ventas'| translate}} {{last_month}}</td>
+                                        <td>{{'Ventas'| translate}} {{last_month | translate}}</td>
                                         <td class="text-center">{{total_ventas_ant}}</td>
                                     </tr>
                                     <tr>
-                                        <td>{{'Usuarios'| translate}} {{current_month}}</td>
+                                        <td>{{'Usuarios'| translate}} {{current_month | translate}}</td>
                                         <td class="text-center">{{num_user}}</td>
                                     </tr>
                                     <tr>
-                                        <td>{{'Regeneraciones'| translate}} {{current_month}}</td>
+                                        <td>{{'Regeneraciones'| translate}} {{current_month | translate}}</td>
                                         <td class="text-center">{{num_comentarios}}</td>
                                     </tr>
                                 </tbody>
