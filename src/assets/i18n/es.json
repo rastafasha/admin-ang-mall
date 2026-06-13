@@ -426,6 +426,7 @@
     
     "Perfil": "Perfil",
     "Ajustes": "Ajustes",
+    "Ajustes de Cuenta": "Ajustes de Cuenta",
     "Número Válido": "Número Válido",
     "Email no válido": "Email no válido",
     "Contraseña": "Contraseña",
@@ -435,6 +436,9 @@
     "Identificación": "Identificación",
     "Mi perfil": "Mi perfil",
     "Idioma": "Idioma",
+    "Seleccione el tema": "Seleccione el tema",
+    "Con el sidebar claro": "Con el sidebar claro",
+    "Con el sidebar oscuro": "Con el sidebar oscuro",
     
     "Usuarios":"Usuarios"
 

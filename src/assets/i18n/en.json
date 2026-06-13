@@ -425,6 +425,7 @@
 
     "Perfil": "Profile",
     "Ajustes": "Settings",
+    "Ajustes de Cuenta": "Account Settings",
     "Número Válido": "Valid Number",
     "Email no válido": "Invalid email",
     "Contraseña": "Password",
@@ -434,6 +435,9 @@
     "Identificación": "Id",
      "Mi perfil": "My profile",
     "Idioma": "Language",
+    "Seleccione el tema": "Select theme",
+    "Con el sidebar claro": "With Light Sidebar",
+    "Con el sidebar oscuro": "With dark Sidebar",
     "Usuarios":"Users"
 
 
