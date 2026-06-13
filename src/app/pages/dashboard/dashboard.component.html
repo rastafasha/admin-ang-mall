@@ -71,7 +71,7 @@
                                         <div class="display-2 font-weight-normal border-color mr-4">
                                             <span class="czi-dollar-circle"></span>
                                         </div>
-                                        <div class="pl-3">
+                                        <div style="margin-left: 15px;">
                                             <h6 style="margin-bottom: 0px;">{{total_mes | currency:tienda_moneda}}
                                                 <br>
                                                 <ng-container *ngIf="total_mes > total_ganado_ant">
@@ -104,20 +104,15 @@
                                                 <span class="czi-basket-alt"></span>
                                             </a>
                                         </div>
-                                        <div class="pl-3">
+                                        <div style="margin-left: 15px;">
                                             <h6 style="margin-bottom: 0px;">{{total_ventas}}
                                                 <br>
                                                 <ng-container *ngIf="total_ventas > total_ventas_ant">
-                                                    <span class="text-success" style="font-size: 10px;">+{{total_ventas
-                                                        -
-                                                        total_ventas_ant}}</span>&nbsp;
-
+                                                    <span class="text-success" style="font-size: 10px;">+{{total_ventas - total_ventas_ant}}</span>&nbsp;
                                                 </ng-container>
                                                 <ng-container *ngIf="total_ventas <= total_ventas_ant">
                                                     <span class="text-danger"
-                                                        style="font-size: 10px;">-{{total_ventas_ant -
-                                                        total_ventas}}</span>&nbsp;
-
+                                                        style="font-size: 10px;">-{{total_ventas_ant - total_ventas}}</span>
                                                 </ng-container>
                                             </h6>
                                             <p class="mb-3 pt-1" style="font-size: 14px;">{{'Ventas'| translate}}
