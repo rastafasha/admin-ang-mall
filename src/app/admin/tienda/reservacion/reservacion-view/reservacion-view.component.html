@@ -2,7 +2,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="pagoModalLabel">{{title}} | {{reservaSeleccionado?.fecha}}</h5>
+                <h5 class="modal-title" id="pagoModalLabel">{{title|translate}} | {{reservaSeleccionado?.fecha}}</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
                     (click)="onClose()"></button>
             </div>
@@ -10,33 +10,33 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-xs-12 col-sm-6">
-                            <p><b>Cliente:</b> {{reservaSeleccionado?.first_name}} {{reservaSeleccionado?.last_name}}</p>
-                            <p><b>email:</b> {{reservaSeleccionado?.email}}</p>
-                            <p><b>telefono:</b> {{reservaSeleccionado?.telefono}}</p>
-                            <p><b>Fecha:</b> {{reservaSeleccionado?.fecha | date:'MMM d, y, h:mm:ss a'}}</p>
-                            <p><b>Hora:</b> {{reservaSeleccionado?.hora }}</p>
-                            <p><b>personas:</b> {{reservaSeleccionado?.personas}}</p>
-                            <p><b>Creada:</b> {{reservaSeleccionado?.createdAt | date:'MMM d, y, h:mm:ss a'}}</p>
-                            <p><b>Actualizada:</b> {{reservaSeleccionado?.updatedAt | date:'MMM d, y, h:mm:ss a'}}</p>
+                            <p><b>{{'Cliente'|translate}}:</b> {{reservaSeleccionado?.first_name}} {{reservaSeleccionado?.last_name}}</p>
+                            <p><b>Email:</b> {{reservaSeleccionado?.email}}</p>
+                            <p><b>{{'Teléfono'|translate}}:</b> {{reservaSeleccionado?.telefono}}</p>
+                            <p><b>{{'Fecha'|translate}}:</b> {{reservaSeleccionado?.fecha | date:'MMM d, y, h:mm:ss a'}}</p>
+                            <p><b>{{'Hora'|translate}}:</b> {{reservaSeleccionado?.hora }}</p>
+                            <p><b>{{'Personas'|translate}}:</b> {{reservaSeleccionado?.personas}}</p>
+                            <p><b>{{'Creada'|translate}}:</b> {{reservaSeleccionado?.createdAt | date:'MMM d, y, h:mm:ss a'}}</p>
+                            <p><b>{{'Actualizada'|translate}}:</b> {{reservaSeleccionado?.updatedAt | date:'MMM d, y, h:mm:ss a'}}</p>
                             <p><b>Status:</b>&nbsp;
                                 <span class="badge bg-primary"
-                                    *ngIf="reservaSeleccionado?.status === 'Pendiente'">Pendiente</span>
+                                    *ngIf="reservaSeleccionado?.status === 'Pendiente'">{{'Pendiente'|translate}}</span>
                                 <span class="badge bg-success"
-                                    *ngIf="reservaSeleccionado?.status === 'Confirmada'">Confirmada</span>
+                                    *ngIf="reservaSeleccionado?.status === 'Confirmada'">{{'Confirmada'|translate}}</span>
                                 <span class="badge bg-danger"
-                                    *ngIf="reservaSeleccionado?.status === 'Cancelada'">Cancelada</span>
+                                    *ngIf="reservaSeleccionado?.status === 'Cancelada'">{{'Cancelada'|translate}}</span>
                                 <span class="badge bg-warning"
-                                    *ngIf="reservaSeleccionado?.status === 'Completada'">Completada</span>
+                                    *ngIf="reservaSeleccionado?.status === 'Completada'">{{'Completada'|translate}}</span>
                             </p>
                             
                         </div>
                         <div class="col-xs-12 col-sm-6">
-                            <p><b>Comensal con alergia?:</b>
+                            <p><b>{{'Comensal con alergia?'|translate}}:</b>
                                 {{reservaSeleccionado?.comensal_alergia}}
                             </p>
-                            <p *ngIf="reservaSeleccionado?.comensal_alergia === 'Si'"><b>Comentarios sobre la alergia:</b></p>
+                            <p *ngIf="reservaSeleccionado?.comensal_alergia === 'Si'"><b>{{'Comentarios sobre la alergia'|translate}}:</b></p>
                             <p *ngIf="reservaSeleccionado?.comensal_alergia === 'Si'" [innerHTML]="reservaSeleccionado?.comentarios_alergia"></p>
-                            <p><b>Comentarios:</b></p>
+                            <p><b>{{'Comentarios'|translate}}:</b></p>
                             <p [innerHTML]="reservaSeleccionado?.comentarios"></p>
                         </div>
                     </div>
@@ -45,7 +45,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
-                    (click)="onClose()">Cerrar</button>
+                    (click)="onClose()">{{'Cerrar'|translate}}</button>
             </div>
         </div>
     </div>
