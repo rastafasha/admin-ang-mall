@@ -77,7 +77,7 @@ export class BarChartComponent implements OnChanges {
             legend: { position: 'top' },
             title: {
               display: true,
-              text: 'Flujo de Reservaciones (Últimos Días)'
+              text: this.translate.currentLang === 'en' ? 'Reservations (Last days)' : 'Flujo de Reservaciones (Últimos Días)',
             }
           },
         },

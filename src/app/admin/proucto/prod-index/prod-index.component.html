@@ -1,3 +1,19 @@
+<div class="row">
+    <div class="col-9"></div>
+    <div class="col-2 d-flex justify-content-end">
+        <app-backbutton></app-backbutton>
+    </div>
+    <div class="col-1">
+        <div class="text-right">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <button class="btn btn-outline-primary btn-sm rounded-circle shadow-sm"
+                    (click)="instruccionesModal.open()" title="Ayuda de la sección">
+                    <i class="fa fa-question"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="row animated fadeIn fast">
     <div class="col-12">
         <app-search [query]="query" [modelo]="producto" [colleccionName]="productos" [colleccion]="'productos'"
@@ -14,7 +30,7 @@
         <div class="card">
             <div class="card-body">
                 <div class="row">
-                    <div class="col-8">
+                    <div class="col-9">
                         <h4 class="card-title">{{'Productos'|translate}}: ({{ productos.length}})</h4>
                         <h6 class="card-subtitle">{{'Productos registrados en la app'|translate}}</h6>
                     </div>
@@ -32,16 +48,6 @@
                                 data-original-title="Edit" data-bs-toggle="modal" data-bs-target="#editProdPapelera">
                                 <i class="fa fa-trash"></i> {{'ver papelera'|translate}}
                             </button>
-                        </div>
-                    </div>
-                    <div class="col-1">
-                        <div class="text-right">
-                            <div class="d-flex justify-content-between align-items-center mb-3">
-                            <button class="btn btn-outline-primary btn-sm rounded-circle shadow-sm" (click)="instruccionesModal.open()"
-                                title="Ayuda de la sección">
-                                <i class="fa fa-question"></i>
-                            </button>
-                            </div>
                         </div>
                     </div>
                 </div>
