@@ -8,3 +8,13 @@
     transform: translateY(-8px);
     box-shadow: 0 15px 30px rgba(0,0,0,0.15) !important;
 }
+
+.btn-outline-primary.rounded-circle {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-width: 2px;
+  font-weight: bold;
+}

@@ -44,11 +44,13 @@ export class ProdIndexComponent implements OnInit {
   user: Usuario;
   productoSeleccionado: Producto;
 
+  public info: string = '';
+  private langSubscription!: Subscription;
   constructor(
     private productoService: ProductoService,
     private categoriaService: CategoriaService,
     private usuarioService: UsuarioService,
-    public translate: TranslateService 
+    public translate: TranslateService
   ) {
   }
 
@@ -64,9 +66,37 @@ export class ProdIndexComponent implements OnInit {
       this.getProductosbByTienda();
     }
     this.loadCategorias();
+
+    this.langSubscription = this.translate.onLangChange.subscribe(() => {
+      this.actualizarInstruccionesPagos();
+    });
   }
 
- 
+  private actualizarInstruccionesPagos() {
+    // Jalamos los textos traducidos desde el JSON en milisegundos
+    const title = this.translate.instant('PRODUCTS.TITLE');
+    const subtitle = this.translate.instant('PRODUCTS.SUBTITLE');
+    const item1 = this.translate.instant('PRODUCTS.ITEM_1');
+    const item2 = this.translate.instant('PRODUCTS.ITEM_2');
+    const item3 = this.translate.instant('PRODUCTS.ITEM_3');
+    const item4 = this.translate.instant('PRODUCTS.ITEM_4');
+    const item5 = this.translate.instant('PRODUCTS.ITEM_5');
+
+    // Inyectamos el bloque HTML bilingüe estable en la propiedad
+    this.info = `
+    <h2>${title}</h2>
+    <p>${subtitle}</p>
+    <ul>
+      <li>${item1}</li>
+      <li>${item2}</li>
+      <li>${item3}</li>
+      <li>${item4}</li>
+      <li>${item5}</li>
+    </ul>
+  `;
+  }
+
+
 
   loadProductos() {
     this.cargando = true;
@@ -108,7 +138,7 @@ export class ProdIndexComponent implements OnInit {
         this.cargando = true;
         this.productoService.borrarProducto(producto._id)
           .subscribe(resp => {
-           this.ngOnInit();
+            this.ngOnInit();
           })
         Swal.fire('Borrado!', 'El Archivo fue borrado.', 'success');
       }
@@ -131,7 +161,7 @@ export class ProdIndexComponent implements OnInit {
       response => {
         $('#desactivar-' + id).modal('hide');
         $('.modal-backdrop').removeClass('show');
-       this.ngOnInit();
+        this.ngOnInit();
       },
       error => {
         this.msm_error = 'No se pudo desactivar el producto, vuelva a intenter.'
@@ -158,7 +188,7 @@ export class ProdIndexComponent implements OnInit {
       response => {
         $('#papelera-' + id).modal('hide');
         $('.modal-backdrop').removeClass('show');
-       this.ngOnInit();
+        this.ngOnInit();
       },
       error => {
         this.msm_error = 'No se pudo mover a papelera el producto, vuelva a intenter.'
@@ -188,10 +218,10 @@ export class ProdIndexComponent implements OnInit {
 
   onCloseModal(): void {
     this.productoSeleccionado = null;
-    
+
   }
 
-  onClose() { 
+  onClose() {
     this.ngOnInit();
   }
 

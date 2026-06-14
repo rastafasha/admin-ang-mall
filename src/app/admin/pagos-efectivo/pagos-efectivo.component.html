@@ -1,14 +1,35 @@
+<div class="row">
+        <div class="col-10">
+        </div>
+        <div class="col-1">
+            <app-backbutton></app-backbutton>
+        </div>
+        <div class="col-1">
+            <div class="text-right">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <button class="btn btn-outline-primary btn-sm rounded-circle shadow-sm"
+                        (click)="instruccionesModal.open()" title="Ayuda de la sección">
+                        <i class="fa fa-question"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 <div class="row animated fadeIn fast">
     <div class="col-12">
         <app-search [query]="query" [modelo]="pagoefectivo" [colleccionName]="pagoefectivos"
- [colleccion]="'pagoefectivos'" (searchEvent)="handleSearchEvent($event)" (resetEvent)="PageSize()"></app-search>
-       
+            [colleccion]="'pagoefectivos'" (searchEvent)="handleSearchEvent($event)"
+            (resetEvent)="PageSize()"></app-search>
+
     </div>
 </div>
 <div class="container">
     <app-skeleton-loader *ngIf="cargando" [rows]="1" [columns]="3"></app-skeleton-loader>
-<app-skeleton-loader *ngIf="cargando" [rows]="2" [columns]="2"></app-skeleton-loader>
+    <app-skeleton-loader *ngIf="cargando" [rows]="2" [columns]="2"></app-skeleton-loader>
+    
     <div class="row" *ngIf="!cargando">
+
         <div class="col">
 
             <div class="card">
@@ -33,8 +54,8 @@
                                     <td>{{pago.amount|currency}}</td>
                                     <td>{{pago.phone}}</td>
                                     <td *ngIf="user.role==='SUPERADMIN'">
-                                    {{pago.local?.nombre | date}}
-                                </td>
+                                        {{pago.local?.nombre | date}}
+                                    </td>
                                     <td>{{pago.paymentday | date : "shortDate"}}</td>
                                 </tr>
                                 <tr *ngIf="pagoefectivos.length<=0">
@@ -54,4 +75,5 @@
         </div>
     </div>
 </div>
-<app-modalinfo-pago-efectivo></app-modalinfo-pago-efectivo>
+<app-modal-instrucciones [info]="info" [sectionId]="'PagoEfectivo' |translate"
+    #instruccionesModal></app-modal-instrucciones>

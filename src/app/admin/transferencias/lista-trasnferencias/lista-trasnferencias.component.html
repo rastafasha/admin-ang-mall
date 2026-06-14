@@ -1,9 +1,26 @@
+<div class="row">
+    <div class="col-9"></div>
+    <div class="col-2 d-flex justify-content-end">
+        <app-backbutton></app-backbutton>
+    </div>
+    <div class="col-1">
+        <div class="text-right">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <button class="btn btn-outline-primary btn-sm rounded-circle shadow-sm"
+                    (click)="instruccionesModal.open()" title="Ayuda de la sección">
+                    <i class="fa fa-question"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class="row animated fadeIn fast">
     <div class="col-12">
         <app-search [query]="query" [modelo]="trasnferencia" [colleccionName]="transferencias"
- [colleccion]="'trasnferencias'" (searchEvent)="handleSearchEvent($event)" (resetEvent)="PageSize()"></app-search>
-       
+            [colleccion]="'trasnferencias'" (searchEvent)="handleSearchEvent($event)"
+            (resetEvent)="PageSize()"></app-search>
+
     </div>
 </div>
 <app-skeleton-loader *ngIf="cargando" [rows]="1" [columns]="3"></app-skeleton-loader>
@@ -15,17 +32,6 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <div class="row">
-                    <div class="col-10">
-                        <!-- <h4 class="card-title">Transferencias: ({{ trasnferencias.length}})</h4> -->
-                        <h6 class="card-subtitle">{{'Transferencias registrados en la app'|translate}}</h6>
-                    </div>
-                    <div class="col-2 d-flex justify-content-end">
-                        <app-backbutton></app-backbutton>
-                    </div>
-                </div>
-                <br>
-                <hr>
 
                 <div class="table-responsive">
                     <table class="table table-borderless">
@@ -46,8 +52,9 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let transf of transferencias |  paginate: { itemsPerPage: count, currentPage: p } | orderBy:'createdAt, desc'">
-                                
+                            <tr
+                                *ngFor="let transf of transferencias |  paginate: { itemsPerPage: count, currentPage: p } | orderBy:'createdAt, desc'">
+
                                 <td>
                                     <img [src]="transf.img | imagenPipe: 'transferencias' " class="imgtranf cursor"
                                         alt="{{transf.referencia}}">
@@ -57,7 +64,7 @@
                                 </td>
                                 <td>
                                     <a (click)="onViewPago(transf)" data-bs-toggle="modal" class="cursor"
-                                            data-bs-target="#viewPago">{{transf.referencia}}</a>
+                                        data-bs-target="#viewPago">{{transf.referencia}}</a>
                                 </td>
                                 <td>
                                     {{transf.bankName}}
@@ -76,38 +83,41 @@
                                 <td>
                                     {{transf.paymentday | date}}
                                 </td>
-                                
+
                                 <td>
                                     <div class="font-size-sm mb-4">
-                                        <span class="badge badge-primary badge-shadow" *ngIf="transf.status == 'pending'">{{transf.status}}</span>
-                                        <span class="badge badge-success badge-shadow" *ngIf="transf.status == 'ok'">{{transf.status}}</span>
-                                        <span class="badge badge-danger badge-shadow" *ngIf="transf.status == 'no'">{{transf.status}}</span>
-                                        
+                                        <span class="badge badge-primary badge-shadow"
+                                            *ngIf="transf.status == 'pending'">{{transf.status}}</span>
+                                        <span class="badge badge-success badge-shadow"
+                                            *ngIf="transf.status == 'ok'">{{transf.status}}</span>
+                                        <span class="badge badge-danger badge-shadow"
+                                            *ngIf="transf.status == 'no'">{{transf.status}}</span>
+
                                     </div>
                                 </td>
                                 <td>
                                     {{transf.updatedAt | date:'mediumDate'}}
                                 </td>
                                 <td class="text-nowrap text-center">
-                                   
+
 
                                     <select class="form-select fw-bolder" [(ngModel)]="transf.status"
-                                                (change)="cambiarStatus(transf)" [ngClass]="{
+                                        (change)="cambiarStatus(transf)" [ngClass]="{
                                                 'border-success text-success': transf.status === 'ok',
                                                 'border-warning text-warning': transf.status === 'pending',
                                                 'border-danger text-danger': transf.status === 'no'
                                             }">
-                                                <option value="ok">{{'Aprobado'|translate}}</option>
-                                                <option value="pending">{{'Pendiente'|translate}}</option>
-                                                <option value="no">{{'Rechazado'|translate}}</option>
-                                            </select>
+                                        <option value="ok">{{'Aprobado'|translate}}</option>
+                                        <option value="pending">{{'Pendiente'|translate}}</option>
+                                        <option value="no">{{'Rechazado'|translate}}</option>
+                                    </select>
 
                                 </td>
                                 <td class="text-nowrap text-center">
-                                      <a (click)="eliminarTramsf(transf)" class="btn btn-outline-danger " > 
-                                        <i class="fa fa-trash text-danger"></i> 
+                                    <a (click)="eliminarTramsf(transf)" class="btn btn-outline-danger ">
+                                        <i class="fa fa-trash text-danger"></i>
                                     </a>
-                                   
+
                                 </td>
                             </tr>
 
@@ -119,5 +129,7 @@
         </div>
     </div>
 </div>
-<app-modalinfo-transferencias></app-modalinfo-transferencias>
- <app-payment-details  [pagoSeleccionado]="pagoSeleccionado" (closeModal)="onClose()" #viewPago></app-payment-details>
+<app-modal-instrucciones [info]="info" [sectionId]="'Transferencias' |translate"
+    #instruccionesModal></app-modal-instrucciones>
+
+<app-payment-details [pagoSeleccionado]="pagoSeleccionado" (closeModal)="onClose()" #viewPago></app-payment-details>

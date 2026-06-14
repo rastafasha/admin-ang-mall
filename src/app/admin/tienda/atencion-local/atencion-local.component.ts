@@ -23,6 +23,7 @@ import { SelectorService } from 'src/app/services/selector.service';
 import { VentaService } from 'src/app/services/venta.service';
 import { Router } from '@angular/router';
 import { FormGroup } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
 
 declare var jQuery: any;
 declare var $: any;
@@ -105,14 +106,15 @@ export class AtencionLocalComponent implements OnInit {
   searchForm!: FormGroup;
   currentPage = 1;
   collecion = 'productos';
+  public info: string = '';
+    private langSubscription!: Subscription;
 
   constructor(
     private productoService: ProductoService,
     private categoriaService: CategoriaService,
     private modalImagenService: ModalImagenService,
-    private busquedaService: BusquedasService,
-    private messageService: MessageService,
     private userService: UsuarioService,
+    private translate: TranslateService,
     private tiendaService: TiendaService,
     private _carritoService: CarritoService,
     private _colorService: ColorService,
@@ -120,7 +122,6 @@ export class AtencionLocalComponent implements OnInit {
     private router: Router,
     private _ventaService: VentaService,
   ) {
-    this.url = environment.baseUrl;
 
     this.identity = userService.usuario;
   }
@@ -148,6 +149,31 @@ export class AtencionLocalComponent implements OnInit {
 
     this.uploads();
 
+    this.langSubscription = this.translate.onLangChange.subscribe(() => {
+      this.actualizarInstruccionesPagos();
+    });
+  }
+
+  private actualizarInstruccionesPagos() {
+    // Jalamos los textos traducidos desde el JSON en milisegundos
+    const title = this.translate.instant('LOCAL_ATENTION.TITLE');
+    const subtitle = this.translate.instant('LOCAL_ATENTION.SUBTITLE');
+    const item1 = this.translate.instant('LOCAL_ATENTION.ITEM_1');
+    const item2 = this.translate.instant('LOCAL_ATENTION.ITEM_2');
+    const item3 = this.translate.instant('LOCAL_ATENTION.ITEM_3');
+    const item4 = this.translate.instant('LOCAL_ATENTION.ITEM_4');
+
+    // Inyectamos el bloque HTML bilingüe estable en la propiedad
+    this.info = `
+    <h2>${title}</h2>
+    <p>${subtitle}</p>
+    <ul>
+      <li>${item1}</li>
+      <li>${item2}</li>
+      <li>${item3}</li>
+      <li>${item4}</li>
+    </ul>
+  `;
   }
 
   ngOnDestroy() {

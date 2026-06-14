@@ -1,7 +1,7 @@
 <section>
     <div class="pt-2 px-4 pl-lg-0 pr-xl-5">
         <div class="row">
-            <div class="col-lg-12">
+            <div class="col-lg-11">
                 <div class="border-bottom boton-title">
                     <h1 class="mt-lg-4">{{'Pedidos'|translate}}</h1>
                 </div>
@@ -33,13 +33,15 @@
                     </ul>
                 </div>
                 <!-- tab -->
-                 <!-- Pendientes -->
+                <!-- Pendientes -->
                 <div *ngIf="option_selectedd == 1">
                     <app-loading *ngIf="cargando"></app-loading>
                     <div class="row " *ngIf="!cargando">
-                        <div class="col-md-6 col-lg-4 "  *ngFor="let item of pedidos |  paginate: { itemsPerPage: count, currentPage: p } | orderBy:'createdAt, desc' | pedidoStatus:'PENDING'">
-                             <div class="card ">
-                                <app-fichaPedido [item]="item" [activar]="activar" [finalizar]="finalizar" [eliminarPedido]="eliminarPedido"></app-fichaPedido>
+                        <div class="col-md-6 col-lg-4 "
+                            *ngFor="let item of pedidos |  paginate: { itemsPerPage: count, currentPage: p } | orderBy:'createdAt, desc' | pedidoStatus:'PENDING'">
+                            <div class="card ">
+                                <app-fichaPedido [item]="item" [activar]="activar" [finalizar]="finalizar"
+                                    [eliminarPedido]="eliminarPedido"></app-fichaPedido>
                                 <!-- modal ver-->
                                 <app-modal-ver-pedido [item]="item"></app-modal-ver-pedido>
                             </div>
@@ -50,9 +52,11 @@
                 <div *ngIf="option_selectedd == 2">
                     <app-loading *ngIf="cargando"></app-loading>
                     <div class="row " *ngIf="!cargando">
-                        <div class="col-md-6 col-lg-4 "  *ngFor="let item of pedidos |  paginate: { itemsPerPage: count, currentPage: p } | orderBy:'createdAt, desc' | pedidoStatus:'INPROCESS'">
+                        <div class="col-md-6 col-lg-4 "
+                            *ngFor="let item of pedidos |  paginate: { itemsPerPage: count, currentPage: p } | orderBy:'createdAt, desc' | pedidoStatus:'INPROCESS'">
                             <div class="card ">
-                                <app-fichaPedido [item]="item" [activar]="activar" [finalizar]="finalizar" [eliminarPedido]="eliminarPedido"></app-fichaPedido>
+                                <app-fichaPedido [item]="item" [activar]="activar" [finalizar]="finalizar"
+                                    [eliminarPedido]="eliminarPedido"></app-fichaPedido>
                                 <!-- modal ver-->
                                 <app-modal-ver-pedido [item]="item"></app-modal-ver-pedido>
                             </div>
@@ -63,13 +67,25 @@
                 <div *ngIf="option_selectedd == 3">
                     <app-loading *ngIf="cargando"></app-loading>
                     <div class="row " *ngIf="!cargando">
-                        <div class="col-md-6 col-lg-4 "*ngFor="let item of pedidos |  paginate: { itemsPerPage: count, currentPage: p } | orderBy:'createdAt, desc' | pedidoStatus:'FINISHED'">
+                        <div class="col-md-6 col-lg-4 "
+                            *ngFor="let item of pedidos |  paginate: { itemsPerPage: count, currentPage: p } | orderBy:'createdAt, desc' | pedidoStatus:'FINISHED'">
                             <div class="card ">
-                                <app-fichaPedido [item]="item" [activar]="activar" [finalizar]="finalizar" [eliminarPedido]="eliminarPedido"></app-fichaPedido>
+                                <app-fichaPedido [item]="item" [activar]="activar" [finalizar]="finalizar"
+                                    [eliminarPedido]="eliminarPedido"></app-fichaPedido>
                                 <!-- modal ver-->
                                 <app-modal-ver-pedido [item]="item"></app-modal-ver-pedido>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-1">
+                <div class="text-right">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <button class="btn btn-outline-primary btn-sm rounded-circle shadow-sm"
+                            (click)="instruccionesModal.open()" title="Ayuda de la sección">
+                            <i class="fa fa-question"></i>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -79,4 +95,4 @@
         </div>
     </div>
 </section>
-<app-modalinfo-pedidos-list></app-modalinfo-pedidos-list>
+<app-modal-instrucciones [info]="info" [sectionId]="'Pedidos' |translate" #instruccionesModal></app-modal-instrucciones>

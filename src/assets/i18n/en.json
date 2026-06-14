@@ -444,7 +444,142 @@
     "Populares": "Populars",
     "Usuarios":"Users",
     "Reservas Creadas": "Created Reservations",
-"Total Comensales": "Total Guests"
+    "Total Comensales": "Total Guests",
+
+    "No mostrar más en esta sección": "Do not show again in this section",
+    "Entendido": "Got it",
+    "Guía de Sección": "Section guide",
+
+    
+    "Bienvenido al Admin Zlipmenu": "Welcome to Zlipmenu Admin",
+    "El comportamiento diario, mensual y anual de las ventas de tu Negocio": "The daily, monthly, and annual sales performance of your business",
+    "Los Productos más vendidos": "Top selling products",
+    "las Ultimas Ventas": "Recent sales",
+    "Además tienes mas opciones en el menu lateral Izquierdo": "You also have more options in the left side menu",
+    "Eventualmente estaremos mejorando y agregando más opciones, con actualiaciones constantes": "We will continuously improve and add more features through constant updates",
+    "Instalalo en tu Dispositivo": "Install it on your device",
+    "Si puedes ver este icon en la barra de dirección": "If you can see this icon in the address bar",
+    "Pulsa sobre el icono y podras instalarlo en tu dispositivo (Computador, Tabla, Movil)": "Click on the icon to install it on your device (Computer, Tablet, Mobile)",
+    "Pulsa el Botón Install": "Click the Install button",
+    "Agregalo a tu barra de Inicio": "Add it to your Home Screen",
+    "En esta sección podrás ver": "In this section you can see",
+    
+    "PRODUCTS": {
+        "TITLE": "Section: Products",
+        "SUBTITLE": "In this section you can:",
+        "ITEM_1": "Create Products",
+        "ITEM_2": "After creating the product, you can add the main image",
+        "ITEM_3": "If the product is unique (has no variants), enter the word 'unique'",
+        "ITEM_4": "You can use the existing ones as a guide or example",
+        "ITEM_5": "It is necessary to add a color and a selector, as this is a multi-product system"
+    },
+
+    "CATEGORY": {
+        "TITLE": "Section: Categories",
+        "SUBTITLE": "In this section you can:",
+        "ITEM_1": "View available categories",
+        "ITEM_2": "Create categories tailored to your business",
+        "ITEM_3": "Search by name",
+        "ITEM_4": "We recommend not deactivating active categories",
+        "ITEM_5": "You can use the existing ones as a guide or example"
+    },
+
+    "LOCAL_ATENTION": {
+        "TITLE": "Section: Local Service",
+        "SUBTITLE": "In this section you can:",
+        "ITEM_1": "Use this application as a cash register",
+        "ITEM_2": "Search for or register a customer",
+        "ITEM_3": "Add items to the cart",
+        "ITEM_4": "Process payments"
+    },
+
+    
+    "ORDERS": {
+        "TITLE": "Section: Orders",
+        "SUBTITLE": "In this section you can:",
+        "ITEM_1": "View recent orders",
+        "ITEM_2": "View info for each order: Who ordered it and when",
+        "ITEM_3": "View order details and content",
+        "ITEM_4": "Change order status: Activate, view, or delete"
+    },
+    "PAYMENT_METHODS": {
+        "TITLE": "Section: Payment Methods",
+        "SUBTITLE": "In this section you can:",
+        "ITEM_1": "Create payment methods used by your business",
+        "ITEM_2": "Use bank details for transfers to your USD or EUR account",
+        "ITEM_3": "If the mobile payment system is available, add the details",
+        "ITEM_4": "Technical assistance is required to add PayPal details",
+        "ITEM_5": "The current PayPal account is in test mode and belongs to our company"
+    },
+    "SALES": {
+        "TITLE": "Section: Sales",
+        "SUBTITLE": "In this section you can:",
+        "ITEM_1": "Track the daily, monthly, and annual sales performance of your business",
+        "ITEM_2": "Check sales status",
+        "ITEM_3": "View details of each sale",
+        "ITEM_4": "Create a tracking number or code",
+        "ITEM_5": "View and send the invoice to the customer's email"
+    },
+
+    
+    "STORE": {
+        "TITLE": "Section: Stores",
+        "SUBTITLE": "In this section you can:",
+        "ITEM_1": "Edit your business information",
+        "ITEM_2": "Create branches or additional locations"
+    },
+    "TRANSF": {
+        "TITLE": "Section: Transfers",
+        "SUBTITLE": "In this section you can:",
+        "ITEM_1": "View transfer payments",
+        "ITEM_2": "To confirm payments, you must verify them with your bank",
+        "ITEM_3": "Approve or reject payments"
+    },
+    "USERS_STORE": {
+        "TITLE": "Section: Store Users",
+        "SUBTITLE": "In this section you can:",
+        "ITEM_1": "Create and edit your business staff information",
+        "ITEM_2": "View your customers' information",
+        "ITEM_3": "Find users"
+    },
+    "DELIVERY": {
+        "TITLE": "Section: Delivery",
+        "SUBTITLE": "In this section you can:",
+        "ITEM_1": "Create delivery types with pricing",
+        "ITEM_2": "Assign shipments to delivery sales",
+        "ITEM_3": "Track orders, routes, and drivers in real time"
+    },
+    
+    "RESERVATION": {
+        "TITLE": "Section: Reservations",
+        "SUBTITLE": "In this section you can:",
+        "ITEM_1": "View recent reservations",
+        "ITEM_2": "Click on the link to view the details of each one",
+        "ITEM_3": "Approve requests, and if there is a rejection, you can specify the reason",
+        "ITEM_4": "Track performance in the charts"
+    },
+    "CONNECT_TO_WHATSAPP": {
+    "TITLE": "Section: Connect to WhatsApp",
+    "SUBTITLE": "In this section you can:",
+    "ITEM_1": "Link your business WhatsApp number",
+    "ITEM_2": "Scan the QR code to keep the session active",
+    "ITEM_3": "Send automatic order and reservation notifications to your customers",
+    "ITEM_4": "Monitor the connection status in real time"
+},
+
+
+    "CASH_PAYMENT": {
+        "TITLE": "Section: Cash Payments",
+        "SUBTITLE": "In this section you can:",
+        "ITEM_1": "View cash payments",
+        "ITEM_2": "These payments are currently only recorded using the Local Service mode"
+    }
+
+
+
+
+
+
 
 
     

@@ -41,6 +41,8 @@ export class CatIndexComponent implements OnInit {
 
   public msm_error;
   categoriaSeleccionado: Categoria;
+  public info: string = '';
+  private langSubscription!: Subscription;
 
   constructor(
     private categoriaService: CategoriaService,
@@ -69,6 +71,34 @@ export class CatIndexComponent implements OnInit {
       delay(100)
     )
     .subscribe(banner => { this.loadCategorias();});
+
+    this.langSubscription = this.translate.onLangChange.subscribe(() => {
+      this.actualizarInstruccionesPagos();
+    });
+  }
+
+  private actualizarInstruccionesPagos() {
+    // Jalamos los textos traducidos desde el JSON en milisegundos
+    const title = this.translate.instant('CATEGORY.TITLE');
+    const subtitle = this.translate.instant('CATEGORY.SUBTITLE');
+    const item1 = this.translate.instant('CATEGORY.ITEM_1');
+    const item2 = this.translate.instant('CATEGORY.ITEM_2');
+    const item3 = this.translate.instant('CATEGORY.ITEM_3');
+    const item4 = this.translate.instant('CATEGORY.ITEM_4');
+    const item5 = this.translate.instant('CATEGORY.ITEM_5');
+
+    // Inyectamos el bloque HTML bilingüe estable en la propiedad
+    this.info = `
+    <h2>${title}</h2>
+    <p>${subtitle}</p>
+    <ul>
+      <li>${item1}</li>
+      <li>${item2}</li>
+      <li>${item3}</li>
+      <li>${item4}</li>
+      <li>${item5}</li>
+    </ul>
+  `;
   }
 
   ngOnDestroy(){

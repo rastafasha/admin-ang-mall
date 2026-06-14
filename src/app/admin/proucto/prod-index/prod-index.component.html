@@ -14,7 +14,7 @@
         <div class="card">
             <div class="card-body">
                 <div class="row">
-                    <div class="col-9">
+                    <div class="col-8">
                         <h4 class="card-title">{{'Productos'|translate}}: ({{ productos.length}})</h4>
                         <h6 class="card-subtitle">{{'Productos registrados en la app'|translate}}</h6>
                     </div>
@@ -32,6 +32,16 @@
                                 data-original-title="Edit" data-bs-toggle="modal" data-bs-target="#editProdPapelera">
                                 <i class="fa fa-trash"></i> {{'ver papelera'|translate}}
                             </button>
+                        </div>
+                    </div>
+                    <div class="col-1">
+                        <div class="text-right">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                            <button class="btn btn-outline-primary btn-sm rounded-circle shadow-sm" (click)="instruccionesModal.open()"
+                                title="Ayuda de la sección">
+                                <i class="fa fa-question"></i>
+                            </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -231,7 +241,9 @@
         </div>
     </div>
 </div>
-<app-modalinfo-productos></app-modalinfo-productos>
+
+<app-modal-instrucciones [info]="info" [sectionId]="'Productos' |translate" #instruccionesModal></app-modal-instrucciones>
+
 <app-color (refreshProductList)="ngOnInit()" [productoSeleccionado]="productoSeleccionado" (closeModal)="onClose()"
     #editColor></app-color>
 <app-selector (refreshProductList)="ngOnInit()" [productoSeleccionado]="productoSeleccionado" (closeModal)="onClose()"

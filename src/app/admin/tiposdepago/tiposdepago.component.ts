@@ -13,6 +13,8 @@ import { TiposdepagoService } from 'src/app/services/tiposdepago.service';
 import { PaymentMethod } from 'src/app/models/paymenthmethod.model';
 import { Paypal } from 'src/app/models/paypal.model';
 import { PaypalService } from 'src/app/services/paypal.service';
+import { Subscription } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
 
 interface HtmlInputEvent extends Event {
   target: HTMLInputElement & EventTarget;
@@ -35,7 +37,7 @@ export class TiposdepagoComponent implements OnInit {
   public identity;
   public msm_error = false;
   public msm_success = false;
-  pageTitle: string = 'Gestión Tipos de Pago';
+  pageTitle: string = 'Tipos de Pago';
 
   public slider: any = {};
   paypal: Paypal;
@@ -64,13 +66,16 @@ export class TiposdepagoComponent implements OnInit {
   editingPayment: PaymentMethod | null = null;
   isLoading = false;
 
+  public info: string = '';
+    private langSubscription!: Subscription;
+
   constructor(
     private fb: FormBuilder,
     private paymentMethodService: TiposdepagoService,
     private userService: UsuarioService,
     private location: Location,
-    private ativatedRoute: ActivatedRoute,
     private paypalService: PaypalService,
+    public translate: TranslateService
   ) {
     this.url = environment.baseUrl;
     this.identity = this.userService.usuario;
@@ -91,6 +96,34 @@ export class TiposdepagoComponent implements OnInit {
     } else if (this.user.role === 'ADMIN' || this.user.role === 'VENTAS') {
       this.getTiposdePagoByLocal();
     }
+
+    this.langSubscription = this.translate.onLangChange.subscribe(() => {
+      this.actualizarInstruccionesPagos();
+    });
+  }
+
+  private actualizarInstruccionesPagos() {
+    // Jalamos los textos traducidos desde el JSON en milisegundos
+    const title = this.translate.instant('PAYMENT_METHODS.TITLE');
+    const subtitle = this.translate.instant('PAYMENT_METHODS.SUBTITLE');
+    const item1 = this.translate.instant('PAYMENT_METHODS.ITEM_1');
+    const item2 = this.translate.instant('PAYMENT_METHODS.ITEM_2');
+    const item3 = this.translate.instant('PAYMENT_METHODS.ITEM_3');
+    const item4 = this.translate.instant('PAYMENT_METHODS.ITEM_4');
+    const item5 = this.translate.instant('PAYMENT_METHODS.ITEM_5');
+
+    // Inyectamos el bloque HTML bilingüe estable en la propiedad
+    this.info = `
+    <h2>${title}</h2>
+    <p>${subtitle}</p>
+    <ul>
+      <li>${item1}</li>
+      <li>${item2}</li>
+      <li>${item3}</li>
+      <li>${item4}</li>
+      <li>${item5}</li>
+    </ul>
+  `;
   }
 
   loadPaypalConfig() {

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
+import { Subscription } from 'rxjs';
 import { Pedido } from 'src/app/models/pedido.model';
 import { SafePipe } from 'src/app/pipes/safe.pipe';
 import { PedidomenuService } from 'src/app/services/pedidomenu.service';
@@ -23,9 +25,12 @@ export class PedidosMenuComponent implements OnInit {
   user: any;
   option_selectedd: number = 1;
   solicitud_selectedd: any = 1;
+  public info: string = '';
+      private langSubscription!: Subscription;
 
   constructor(
-    private pedidosMenuService: PedidomenuService
+    private pedidosMenuService: PedidomenuService,
+    private translate: TranslateService,
   ) { }
 
   ngOnInit(): void {
@@ -39,6 +44,31 @@ export class PedidosMenuComponent implements OnInit {
     if (this.user.role === 'ADMIN') {
       this.pedidosPorLocalId()
     }
+   this.langSubscription = this.translate.onLangChange.subscribe(() => {
+      this.actualizarInstruccionesPagos();
+    });
+  }
+
+  private actualizarInstruccionesPagos() {
+    // Jalamos los textos traducidos desde el JSON en milisegundos
+    const title = this.translate.instant('ORDERS.TITLE');
+    const subtitle = this.translate.instant('ORDERS.SUBTITLE');
+    const item1 = this.translate.instant('ORDERS.ITEM_1');
+    const item2 = this.translate.instant('ORDERS.ITEM_2');
+    const item3 = this.translate.instant('ORDERS.ITEM_3');
+    const item4 = this.translate.instant('ORDERS.ITEM_4');
+
+    // Inyectamos el bloque HTML bilingüe estable en la propiedad
+    this.info = `
+    <h2>${title}</h2>
+    <p>${subtitle}</p>
+    <ul>
+      <li>${item1}</li>
+      <li>${item2}</li>
+      <li>${item3}</li>
+      <li>${item4}</li>
+    </ul>
+  `;
   }
 
   optionSelected(value: number) {

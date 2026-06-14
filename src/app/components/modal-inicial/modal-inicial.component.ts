@@ -1,4 +1,4 @@
-import { Component, AfterViewInit } from '@angular/core';
+import { Component, AfterViewInit, EventEmitter, Output } from '@angular/core';
 
 declare var $: any;
 declare var bootstrap: any;
@@ -10,6 +10,8 @@ declare var bootstrap: any;
   styleUrls: ['./modal-inicial.component.css']
 })
 export class ModalInicialComponent implements AfterViewInit {
+
+  @Output() closeModal: EventEmitter<void> = new EventEmitter<void>();
   
   isLogued: boolean = false;
 
@@ -27,6 +29,22 @@ export class ModalInicialComponent implements AfterViewInit {
         modalElement.modal('show');
       }
     }, 500);
+  }
+
+  // Método público para abrir el modal manualmente (ignorando el bloqueo)
+  public open() {
+    setTimeout(() => {
+      const modalElement = document.getElementById('exampleModal') as HTMLElement;
+      if (modalElement) {
+        const bootstrapModal = (window as any).bootstrap?.Modal?.getInstance(modalElement) || 
+                               new (window as any).bootstrap.Modal(modalElement);
+        bootstrapModal.show();
+      }
+    }, 100);
+  }
+
+  onClose() {
+    this.closeModal.emit();
   }
 
   onNoShowMore() {

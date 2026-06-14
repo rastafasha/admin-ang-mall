@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
+import { Subscription } from 'rxjs';
 import { Slider } from 'src/app/models/slider.model';
 import { Transferencia } from 'src/app/models/transferencia';
 import { BusquedasService } from 'src/app/services/busquedas.service';
@@ -33,11 +35,14 @@ export class ListaTrasnferenciasComponent implements OnInit {
   collecion = 'categorias';
   pagoSeleccionado: Transferencia;
 
-
+  public info: string = '';
+  private langSubscription!: Subscription;
+  
   constructor(
     private trasnferenciaService: TransferenciaService,
     private busquedaService: BusquedasService,
     private tiendaService: TiendaService,
+    public translate: TranslateService
   ) { }
 
   ngOnInit(): void {
@@ -50,6 +55,30 @@ export class ListaTrasnferenciasComponent implements OnInit {
       this.transPorLocalId()
       this.getTienda();
     }
+
+    this.langSubscription = this.translate.onLangChange.subscribe(() => {
+      this.actualizarInstruccionesPagos();
+    });
+  }
+
+  private actualizarInstruccionesPagos() {
+    // Jalamos los textos traducidos desde el JSON en milisegundos
+    const title = this.translate.instant('TRANSF.TITLE');
+    const subtitle = this.translate.instant('TRANSF.SUBTITLE');
+    const item1 = this.translate.instant('TRANSF.ITEM_1');
+    const item2 = this.translate.instant('TRANSF.ITEM_2');
+    const item3 = this.translate.instant('TRANSF.ITEM_3');
+
+    // Inyectamos el bloque HTML bilingüe estable en la propiedad
+    this.info = `
+    <h2>${title}</h2>
+    <p>${subtitle}</p>
+    <ul>
+      <li>${item1}</li>
+      <li>${item2}</li>
+      <li>${item3}</li>
+    </ul>
+  `;
   }
 
 

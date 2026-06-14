@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
+import { Subscription } from 'rxjs';
 import { Reservacion } from 'src/app/models/reservacion.model';
 import { ReservacionService } from 'src/app/services/reservacion.service';
 import { TiendaService } from 'src/app/services/tienda.service';
@@ -24,10 +26,13 @@ export class ReservacionListComponent {
   reservaSeleccionado: Reservacion | null = null;
   option_selectedd: number = 1;
   solicitud_selectedd: any = 1;
+  public info: string = '';
+    private langSubscription!: Subscription;
 
   constructor(
     private reservacionService: ReservacionService,
     private tiendaService: TiendaService,
+    public translate: TranslateService
   ) { }
 
   ngOnInit(): void {
@@ -40,6 +45,31 @@ export class ReservacionListComponent {
       this.getReservacionesByLocal();
       this.getTienda();
     }
+    this.langSubscription = this.translate.onLangChange.subscribe(() => {
+      this.actualizarInstruccionesPagos();
+    });
+  }
+
+  private actualizarInstruccionesPagos() {
+    // Jalamos los textos traducidos desde el JSON en milisegundos
+    const title = this.translate.instant('RESERVATION.TITLE');
+    const subtitle = this.translate.instant('RESERVATION.SUBTITLE');
+    const item1 = this.translate.instant('RESERVATION.ITEM_1');
+    const item2 = this.translate.instant('RESERVATION.ITEM_2');
+    const item3 = this.translate.instant('RESERVATION.ITEM_3');
+    const item4 = this.translate.instant('RESERVATION.ITEM_4');
+
+    // Inyectamos el bloque HTML bilingüe estable en la propiedad
+    this.info = `
+    <h2>${title}</h2>
+    <p>${subtitle}</p>
+    <ul>
+      <li>${item1}</li>
+      <li>${item2}</li>
+      <li>${item3}</li>
+      <li>${item4}</li>
+    </ul>
+  `;
   }
 
 

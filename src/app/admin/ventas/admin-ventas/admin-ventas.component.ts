@@ -10,6 +10,8 @@ import { ProductoService } from 'src/app/services/producto.service';
 import { Usuario } from 'src/app/models/usuario.model';
 import { Tienda } from 'src/app/models/tienda.model';
 import { ModalTrackingComponent } from 'src/app/components/modal-tracking/modal-tracking.component';
+import { Subscription } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
 
 declare var jQuery: any;
 declare var $: any;
@@ -77,12 +79,16 @@ export class AdminVentasComponent implements OnInit {
   isLoading = false;
   trackingSeleccionado: any = null;
 
+  public info: string = '';
+    private langSubscription!: Subscription;
+
 
   constructor(
     private _userService: UsuarioService,
     private _router: Router,
     private _route: ActivatedRoute,
     private _ventaService: VentaService,
+    public translate: TranslateService,
     private _productoService: ProductoService, // agregado por José Prados
     private tiendaService: TiendaService, // agregado por José Prados
   ) {
@@ -126,6 +132,33 @@ export class AdminVentasComponent implements OnInit {
       }
     );
 
+    this.langSubscription = this.translate.onLangChange.subscribe(() => {
+      this.actualizarInstruccionesPagos();
+    });
+  }
+
+  private actualizarInstruccionesPagos() {
+    // Jalamos los textos traducidos desde el JSON en milisegundos
+    const title = this.translate.instant('SALES.TITLE');
+    const subtitle = this.translate.instant('SALES.SUBTITLE');
+    const item1 = this.translate.instant('SALES.ITEM_1');
+    const item2 = this.translate.instant('SALES.ITEM_2');
+    const item3 = this.translate.instant('SALES.ITEM_3');
+    const item4 = this.translate.instant('SALES.ITEM_4');
+    const item5 = this.translate.instant('SALES.ITEM_5');
+
+    // Inyectamos el bloque HTML bilingüe estable en la propiedad
+    this.info = `
+    <h2>${title}</h2>
+    <p>${subtitle}</p>
+    <ul>
+      <li>${item1}</li>
+      <li>${item2}</li>
+      <li>${item3}</li>
+      <li>${item4}</li>
+      <li>${item5}</li>
+    </ul>
+  `;
   }
 
   method_data_view(val) {

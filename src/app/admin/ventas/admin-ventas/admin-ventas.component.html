@@ -1,4 +1,21 @@
 <!-- Content-->
+<div class="row">
+    <div class="col-9">
+    </div>
+    <div class="col-2 d-flex justify-content-end">
+        <app-backbutton></app-backbutton>
+    </div>
+    <div class="col-1">
+        <div class="text-right">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <button class="btn btn-outline-primary btn-sm rounded-circle shadow-sm"
+                    (click)="instruccionesModal.open()" title="Ayuda de la sección">
+                    <i class="fa fa-question"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 <app-skeleton-loader *ngIf="isLoading" [rows]="1" [columns]="3"></app-skeleton-loader>
 <app-skeleton-loader *ngIf="isLoading" [rows]="1" [columns]="1"></app-skeleton-loader>
 <app-skeleton-loader *ngIf="isLoading" [rows]="4" [columns]="2"></app-skeleton-loader>
@@ -10,14 +27,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="border-bottom mt-lg-2 pb-2">
-                    <div class="row">
-                        <div class="col-10">
-                            <h2 class="card-title">{{'Ordenes'|translate}}</h2>
-                        </div>
-                        <div class="col-2 d-flex justify-content-end">
-                            <app-backbutton></app-backbutton>
-                        </div>
-                    </div>
+
                     <div class="row">
                         <div class="col-xs-12 col-sm-6">
                             <div *ngIf="user.role ==='SUPERADMIN'  ">
@@ -192,7 +202,8 @@
                                             <select name="" class="form-control custom-select"
                                                 style="border-top-left-radius: 0px;border-bottom-left-radius: 0px"
                                                 name="estado" [(ngModel)]="estado">
-                                                <option value="Venta en proceso" selected>{{'Venta en proceso'|translate}}</option>
+                                                <option value="Venta en proceso" selected>{{'Venta en
+                                                    proceso'|translate}}</option>
                                                 <option value="Enviado">{{'Enviado'|translate}}</option>
                                                 <option value="Cancelado">{{'Cancelado'|translate}}</option>
                                                 <option value="Reembolsado">{{'Reembolsado'|translate}}</option>
@@ -315,16 +326,19 @@
                                                             {{'No disponible'|translate}}</span>
                                                     </div>
                                                     <div class="font-size-sm"><span
-                                                            class="text-muted mr-2">{{'Destino'|translate}}:</span> {{item.pais}} -
+                                                            class="text-muted mr-2">{{'Destino'|translate}}:</span>
+                                                        {{item.pais}} -
                                                         {{item.ciudad}}
                                                     </div>
                                                     <div class="font-size-sm"><span
-                                                            class="text-muted mr-2">{{'Fecha'|translate}}:</span> {{ item.createdAt |
+                                                            class="text-muted mr-2">{{'Fecha'|translate}}:</span> {{
+                                                        item.createdAt |
                                                         date:'MMM d, y, h:mm:ss a' }}
                                                     </div>
                                                     <div class="font-size-lg text-accent pt-2"><span
                                                             class="text-muted mr-2">
-                                                            {{'Total pagado'|translate}}:</span>{{item.total_pagado | currency:tienda_moneda}}
+                                                            {{'Total pagado'|translate}}:</span>{{item.total_pagado |
+                                                        currency:tienda_moneda}}
                                                     </div>
                                                 </div>
                                             </div>
@@ -379,7 +393,7 @@
                                                 </ng-container>
                                             </div>
                                         </div>
-                                       
+
                                     </div>
                                 </div>
                             </div>
@@ -599,5 +613,6 @@
     <app-factura (eventCerrarModal)="cerrarModal($event)"></app-factura>
 </section>
 
-<app-modalinfo-ventas></app-modalinfo-ventas>
-<app-modal-tracking [item]="trackingSeleccionado" [tienda_moneda]="tienda_moneda" #viewTracking (onGuardarTrack)="setTrack($event)"></app-modal-tracking>
+<app-modal-instrucciones [info]="info" [sectionId]="'Ventas' |translate" #instruccionesModal></app-modal-instrucciones>
+<app-modal-tracking [item]="trackingSeleccionado" [tienda_moneda]="tienda_moneda" #viewTracking
+    (onGuardarTrack)="setTrack($event)"></app-modal-tracking>

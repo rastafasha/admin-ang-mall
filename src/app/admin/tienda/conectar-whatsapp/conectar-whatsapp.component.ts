@@ -1,6 +1,8 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { TiendaService } from 'src/app/services/tienda.service';
 import * as QRCode from 'qrcode';
+import { TranslateService } from '@ngx-translate/core';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-conectar-whatsapp',
@@ -13,8 +15,11 @@ export class ConectarWhatsappComponent implements OnInit{
   public whatsappStatus: string = 'DESCONECTADO'; 
   public whatsappQRString: string = '';
   private chequeoInterval: any; 
+  public info: string = '';
+    private langSubscription!: Subscription;
 
   public tiendaService = inject(TiendaService);
+  public translate = inject(TranslateService);
 
   ngOnInit(): void {
     let USER = localStorage.getItem("user");
@@ -22,6 +27,32 @@ export class ConectarWhatsappComponent implements OnInit{
     if (this.user?.local) {
       this.revisarEstadoActual();
     }
+
+    this.langSubscription = this.translate.onLangChange.subscribe(() => {
+      this.actualizarInstruccionesPagos();
+    });
+  }
+
+  private actualizarInstruccionesPagos() {
+    // Jalamos los textos traducidos desde el JSON en milisegundos
+    const title = this.translate.instant('CONNECT_TO_WHATSAPP.TITLE');
+    const subtitle = this.translate.instant('CONNECT_TO_WHATSAPP.SUBTITLE');
+    const item1 = this.translate.instant('CONNECT_TO_WHATSAPP.ITEM_1');
+    const item2 = this.translate.instant('CONNECT_TO_WHATSAPP.ITEM_2');
+    const item3 = this.translate.instant('CONNECT_TO_WHATSAPP.ITEM_3');
+    const item4 = this.translate.instant('CONNECT_TO_WHATSAPP.ITEM_4');
+
+    // Inyectamos el bloque HTML bilingüe estable en la propiedad
+    this.info = `
+    <h2>${title}</h2>
+    <p>${subtitle}</p>
+    <ul>
+      <li>${item1}</li>
+      <li>${item2}</li>
+      <li>${item3}</li>
+      <li>${item4}</li>
+    </ul>
+  `;
   }
 
   revisarEstadoActual() {

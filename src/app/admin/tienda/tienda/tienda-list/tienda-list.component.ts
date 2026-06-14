@@ -37,11 +37,12 @@ export class TiendaListComponent implements OnInit {
   collecion = 'tiendas';
   user: Usuario;
   tiendaSeleccionado: Tienda;
+  public info: string = '';
+  private langSubscription!: Subscription;
 
   constructor(
     private tiendaService: TiendaService,
     private modalImagenService: ModalImagenService,
-    private busquedaService: BusquedasService,
     public translate: TranslateService
   ) { }
 
@@ -54,7 +55,7 @@ export class TiendaListComponent implements OnInit {
       this.loadTiendas();
     }
 
-    if (this.user.role !== 'SUPERADMIN' ) {
+    if (this.user.role !== 'SUPERADMIN') {
       this.loadTiendasById();
     }
 
@@ -63,6 +64,28 @@ export class TiendaListComponent implements OnInit {
         delay(100)
       )
       .subscribe(banner => { this.loadTiendas(); });
+      
+    this.langSubscription = this.translate.onLangChange.subscribe(() => {
+      this.actualizarInstruccionesPagos();
+    });
+  }
+
+  private actualizarInstruccionesPagos() {
+    // Jalamos los textos traducidos desde el JSON en milisegundos
+    const title = this.translate.instant('STORE.TITLE');
+    const subtitle = this.translate.instant('STORE.SUBTITLE');
+    const item1 = this.translate.instant('STORE.ITEM_1');
+    const item2 = this.translate.instant('STORE.ITEM_2');
+
+    // Inyectamos el bloque HTML bilingüe estable en la propiedad
+    this.info = `
+    <h2>${title}</h2>
+    <p>${subtitle}</p>
+    <ul>
+      <li>${item1}</li>
+      <li>${item2}</li>
+    </ul>
+  `;
   }
 
   ngOnDestroy() {
@@ -118,46 +141,46 @@ export class TiendaListComponent implements OnInit {
       })
 
   }
-desactivar(id) {
-    this.tiendaService.desactivar(id).subscribe((resp:any)=>{
+  desactivar(id) {
+    this.tiendaService.desactivar(id).subscribe((resp: any) => {
       this.ngOnInit();
     })
   }
 
   activar(id) {
-    this.tiendaService.activar(id).subscribe((resp:any)=>{
+    this.tiendaService.activar(id).subscribe((resp: any) => {
       this.ngOnInit();
     })
   }
 
 
-  
-  eliminarTienda(tienda: Marca) {
-      Swal.fire({
-        title: 'Estas Seguro?',
-        text: 'No podras recuperarlo!',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Si, Borrar!',
-      }).then((result) => {
-        if (result.isConfirmed) {
-          this.cargando = true;
-          this.tiendaService.borrarTienda(tienda._id)
-            .subscribe(resp => {
-              if (this.user.role === 'SUPERADMIN') {
-                this.loadTiendas();
-              }
 
-              if (this.user.role === 'ADMIN') {
-                this.loadTiendasById();
-              }
-            })
-          Swal.fire('Borrado!', 'El Archivo fue borrado.', 'success');
-        }
-      });
-    }
+  eliminarTienda(tienda: Marca) {
+    Swal.fire({
+      title: 'Estas Seguro?',
+      text: 'No podras recuperarlo!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, Borrar!',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.cargando = true;
+        this.tiendaService.borrarTienda(tienda._id)
+          .subscribe(resp => {
+            if (this.user.role === 'SUPERADMIN') {
+              this.loadTiendas();
+            }
+
+            if (this.user.role === 'ADMIN') {
+              this.loadTiendasById();
+            }
+          })
+        Swal.fire('Borrado!', 'El Archivo fue borrado.', 'success');
+      }
+    });
+  }
 
 
   public PageSize(): void {

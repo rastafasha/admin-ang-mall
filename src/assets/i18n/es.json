@@ -445,7 +445,131 @@
 
     "Usuarios":"Usuarios",
     "Reservas Creadas": "Reservas Creadas",
-"Total Comensales": "Total Comensales"
+    "Total Comensales": "Total Comensales",
+    "No mostrar más en esta sección": "No mostrar más en esta sección",
+    "Entendido": "Entendido",
+    "Guía de Sección": "Guía de Sección",
+    
+    "Bienvenido al Admin Zlipmenu": "Bienvenido al Admin Zlipmenu",
+    "El comportamiento diario, mensual y anual de las ventas de tu Negocio": "El comportamiento diario, mensual y anual de las ventas de tu Negocio",
+    "Los Productos más vendidos": "Los Productos más vendidos",
+    "las Ultimas Ventas": "las Ultimas Ventas",
+    "Además tienes mas opciones en el menu lateral Izquierdo": "Además tienes mas opciones en el menu lateral Izquierdo",
+    "Eventualmente estaremos mejorando y agregando más opciones, con actualiaciones constantes": "Eventualmente estaremos mejorando y agregando más opciones, con actualiaciones constantes",
+    "Instalalo en tu Dispositivo": "Instalalo en tu Dispositivo",
+    "Si puedes ver este icon en la barra de dirección": "Si puedes ver este icon en la barra de dirección",
+    "Pulsa sobre el icono y podras instalarlo en tu dispositivo (Computador, Tabla, Movil)": "Pulsa sobre el icono y podras instalarlo en tu dispositivo (Computador, Tabla, Movil)",
+    "Pulsa el Botón Install": "Pulsa el Botón Install",
+    "Agregalo a tu barra de Inicio": "Agregalo a tu barra de Inicio",
+
+    "En esta sección podrás ver": "En esta sección podrás ver",
+    
+    "PRODUCTS": {
+        "TITLE": "Sección: Productos",
+        "SUBTITLE": "En este apartado podrás:",
+        "ITEM_1": "Crear Productos",
+        "ITEM_2": "Luego de Crear el Producto, podrás agregar la imagen Principal",
+        "ITEM_3": "Si el producto es unico, (no tiene variantes) coloca la palabra único",
+        "ITEM_4": "Puedes usar los ya existentes como guía o ejemplo",
+        "ITEM_5": "Es necesario agregar un color y un selector, ya que este sistema es multi producto "
+    },
+
+    "CATEGORY": {
+        "TITLE": "Sección: Productos",
+        "SUBTITLE": "En este apartado podrás:",
+        "ITEM_1": "Ver las Categorías disponibles",
+        "ITEM_2": "Crear Categorías adaptadas a tu negocio",
+        "ITEM_3": "Encontrar por nombre",
+        "ITEM_4": "Recomendamos no desactivar las categorías activas",
+        "ITEM_5": "Puedes usar los ya existentes como guía o ejemplo"
+    },
+
+    "LOCAL_ATENTION": {
+        "TITLE": "Sección: Atención Local",
+        "SUBTITLE": "En este apartado podrás:",
+        "ITEM_1": "Puedes Usar esta Aplicación como Caja Registradora",
+        "ITEM_2": "Busca o registra el cliente",
+        "ITEM_3": "Agrega los artículos al carrito",
+        "ITEM_4": "Procesa los pagos"
+    },
+
+    "ORDERS": {
+        "TITLE": "Sección: Pedidos",
+        "SUBTITLE": "En este apartado podrás:",
+        "ITEM_1": "Ver los pedidos recientes",
+        "ITEM_2": "La información de cada pedido: Quien lo pide, cuando lo pide",
+        "ITEM_3": "El contenido del pedido",
+        "ITEM_4": "Cambiar el estado del pedido: Activar, ver, eliminar"
+    },
+    "PAYMENT_METHODS": {
+        "TITLE": "Sección: Tipos de Pago",
+        "SUBTITLE": "En este apartado podrás:",
+        "ITEM_1": "Crear Tipos de Pago que use tu negocio",
+        "ITEM_2": "Usa los datos bancarios para que transfieran a tu cuenta en dólares o euros",
+        "ITEM_3": "Si esta disponible el sistema de pago móvil, agrega los datos",
+        "ITEM_4": "Para agregar los datos de paypal, es necesario nuestra asistencia técnica",
+        "ITEM_5": "La cuenta de paypal actual esta en modo prueba, y es de nuestra empresa"
+    },
+    "SALES": {
+        "TITLE": "Sección: Ventas",
+        "SUBTITLE": "En este apartado podrás:",
+        "ITEM_1": "Ver el comportamiento diario, mensual y anual de las ventas de tu Negocio",
+        "ITEM_2": "El estado de las ventas",
+        "ITEM_3": "Detalle de cada venta",
+        "ITEM_4": "Crear número o código de traking",
+        "ITEM_5": "Puedes ver y enviar la factura al correo del cliente"
+    },
+
+    "STORE": {
+        "TITLE": "Sección: Tiendas",
+        "SUBTITLE": "En este apartado podrás:",
+        "ITEM_1": "Editar la información de tu Negocio",
+        "ITEM_2": "Crear Sucurzales o ubicaciones adicionales"
+    },
+    "TRANSF": {
+        "TITLE": "Sección: Transferencias",
+        "SUBTITLE": "En este apartado podrás:",
+        "ITEM_1": "Ver los pagos por trasnferencias",
+        "ITEM_2": "Para confirmar los pagos, es necesario que confirmes con tu banco",
+        "ITEM_3": "Podrás Aprobar o Rechazar pagos"
+    },
+    "USERS_STORE": {
+        "TITLE": "Sección:Usuarios Tienda",
+        "SUBTITLE": "En este apartado podrás:",
+        "ITEM_1": "Crear, Editar la información del personal de tu Negocio",
+        "ITEM_2": "Ver la información de tus clientes",
+        "ITEM_3": "Encontrar usuarios"
+    },
+    "DELIVERY": {
+        "TITLE": "Sección: Delivery",
+        "SUBTITLE": "En este apartado podrás:",
+        "ITEM_1": "Crear los tipos de Delivery con precios",
+        "ITEM_2": "Asignar Envios a ventas de delivery",
+        "ITEM_3": "Visualizar en tiempo real los pedidos, rutas y choferes"
+    },
+    "RESERVATION": {
+        "TITLE": "Sección: Reservaciones",
+        "SUBTITLE": "En este apartado podrás:",
+        "ITEM_1": "Ver las reservaciones recientes",
+        "ITEM_2": "Al Pulsar sobre el enlace podras ver el detalle de cada una",
+        "ITEM_3": "Aprobar las solicitudes, y si hay algun rechazo podras indicar el motivo",
+        "ITEM_4": "Ver el comportamiento en los gráficos"
+    },
+    "CONNECT_TO_WHATSAPP": {
+    "TITLE": "Sección: Conectar a WhatsApp",
+    "SUBTITLE": "En este apartado podrás:",
+    "ITEM_1": "Vincular el número de WhatsApp de tu negocio",
+    "ITEM_2": "Escanear el código QR para mantener la sesión activa",
+    "ITEM_3": "Enviar notificaciones automáticas de pedidos y reservas a tus clientes",
+    "ITEM_4": "Monitorear el estado de la conexión en tiempo real"
+},
+
+    "CASH_PAYMENT": {
+        "TITLE": "Sección: Pago Efectivo",
+        "SUBTITLE": "En este apartado podrás:",
+        "ITEM_1": "Ver los pagos en efectivo",
+        "ITEM_2": "Estos pagos actualmente solo se registran usando el modo Atención Local"
+    }
 
     
 

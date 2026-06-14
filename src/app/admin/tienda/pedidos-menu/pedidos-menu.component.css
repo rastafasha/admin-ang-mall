@@ -72,3 +72,13 @@
 .nav li a:hover h3.btn {
     background-color: rgba(23, 162, 184, 0.1);
 }
+
+.btn-outline-primary.rounded-circle {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-width: 2px;
+  font-weight: bold;
+}

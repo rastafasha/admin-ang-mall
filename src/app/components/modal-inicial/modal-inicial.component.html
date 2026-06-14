@@ -23,7 +23,7 @@
           </ul>
 
           <p>{{'Además tienes mas opciones en el menu lateral Izquierdo'|translate}}</p>
-          <small>{{'Eventualmente estaremos mejorando y agregando más opciones, con actualiaciones periodicas'|translate}}</small>
+          <small>{{'Eventualmente estaremos mejorando y agregando más opciones, con actualiaciones constantes'|translate}}</small>
         </div>
         <div *ngIf="currentStep === 2">
           <h2>{{'Instalalo en tu Dispositivo'|translate}}! </h2>
@@ -66,9 +66,9 @@
 
       </div>
       <div class="modal-footer botonesmodal">
-        <button type="button" class="btn btn-outline-success" data-dismiss="modal">{{'Continuar'|translate}}</button>
+        <button type="button" class="btn btn-outline-success" data-bs-dismiss="modal" (click)="onClose()">{{'Entendido'|translate}}</button>
         <button type="button" class="btn btn-outline-danger" (click)="onNoShowMore()">
-          {{'No quiero ver más este mensaje'|translate}}</button>
+          {{'No mostrar más en esta sección'|translate}}</button>
       </div>
     </div>
   </div>

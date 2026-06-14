@@ -7,11 +7,12 @@ import { BusquedasService } from 'src/app/services/busquedas.service';
 import { ModalImagenService } from 'src/app/services/modal-imagen.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { FormGroup } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
 
 
 @Component({
   selector: 'app-usuarios-tienda',
-  standalone:false,
+  standalone: false,
   templateUrl: './usuarios-tienda.component.html',
   styleUrls: ['./usuarios-tienda.component.css']
 })
@@ -33,47 +34,74 @@ export class UsuariosTiendaComponent implements OnInit {
 
   roles: string[];
 
-  query:string ='';
-    searchForm!:FormGroup;
-    currentPage = 1;
-    collecion='usuarios';
-    public usuario : any = {};
+  query: string = '';
+  searchForm!: FormGroup;
+  currentPage = 1;
+  collecion = 'usuarios';
+  public usuario: any = {};
+
+  public info: string = '';
+  private langSubscription!: Subscription;
 
   constructor(
     private usuarioService: UsuarioService,
     private busquedaService: BusquedasService,
-    private modalImagenService: ModalImagenService
-    ) { }
+    private modalImagenService: ModalImagenService,
+    public translate: TranslateService
+  ) { }
 
   ngOnInit(): void {
     let USER = localStorage.getItem("user");
-    this.user = JSON.parse(USER ? USER: '');
+    this.user = JSON.parse(USER ? USER : '');
     this.localId = this.user.local;
     this.role = this.user.role;
     this.loadUsuarios();
 
+    this.langSubscription = this.translate.onLangChange.subscribe(() => {
+      this.actualizarInstruccionesPagos();
+    });
   }
 
- 
+  private actualizarInstruccionesPagos() {
+    // Jalamos los textos traducidos desde el JSON en milisegundos
+    const title = this.translate.instant('USERS_STORE.TITLE');
+    const subtitle = this.translate.instant('USERS_STORE.SUBTITLE');
+    const item1 = this.translate.instant('USERS_STORE.ITEM_1');
+    const item2 = this.translate.instant('USERS_STORE.ITEM_2');
+    const item3 = this.translate.instant('USERS_STORE.ITEM_3');
 
-  loadUsuarios(){
+    // Inyectamos el bloque HTML bilingüe estable en la propiedad
+    this.info = `
+    <h2>${title}</h2>
+    <p>${subtitle}</p>
+    <ul>
+      <li>${item1}</li>
+      <li>${item2}</li>
+      <li>${item3}</li>
+    </ul>
+  `;
+  }
+
+
+
+  loadUsuarios() {
     this.cargando = true;
-    this.usuarioService.cargarEmployeesTienda(this.localId )
-    .subscribe(
-      local=>{
-        this.usuarios = local;
-        this.cargando = false;
-      }
-    )
+    this.usuarioService.cargarEmployeesTienda(this.localId)
+      .subscribe(
+        local => {
+          this.usuarios = local;
+          this.cargando = false;
+        }
+      )
   }
 
 
-  cambiarPagina(valor: number){
+  cambiarPagina(valor: number) {
     this.desde += valor;
 
-    if(this.desde < 0){
+    if (this.desde < 0) {
       this.desde = 0
-    }else if( this.desde > this.totalUsuarios){
+    } else if (this.desde > this.totalUsuarios) {
       this.desde -= valor;
     }
 
@@ -82,7 +110,7 @@ export class UsuariosTiendaComponent implements OnInit {
 
   }
 
- public PageSize(): void {
+  public PageSize(): void {
     this.query = '';
     this.loadUsuarios();
     // this.router.navigateByUrl('/productos')
@@ -93,9 +121,9 @@ export class UsuariosTiendaComponent implements OnInit {
       this.usuarios = event.usuarios;
     }
   }
-  eliminarUsuario(usuario: any){
+  eliminarUsuario(usuario: any) {
 
-    if(usuario.uid === this.usuarioService.uid){
+    if (usuario.uid === this.usuarioService.uid) {
       return Swal.fire('Error', 'No se puede borrarse a si mismo', 'error');
 
     }
@@ -115,19 +143,19 @@ export class UsuariosTiendaComponent implements OnInit {
               'Usuario Borrado',
               `El usuario ${usuario.first_name} ha sido borrado correctamente`,
               'success'
-               );
+            );
           });
       }
     })
   }
 
 
-  cambiarStatus(data:any){
+  cambiarStatus(data: any) {
     let VALUE = data.role;
     // console.log(VALUE);
-    
+
     this.usuarioService.upadateStatusRole(data, data.uid).subscribe(
-      resp =>{
+      resp => {
         // console.log(resp);
         Swal.fire('Updated', `Client Status Updated successfully!`, 'success');
         this.loadUsuarios();

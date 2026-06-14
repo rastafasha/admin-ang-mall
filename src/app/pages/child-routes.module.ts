@@ -130,7 +130,7 @@ const childRoutes: Routes = [
             {path: 'notificaciones', component: NotificacionesComponent , data:{tituloPage:'Notificaciones'}},
             {path: 'conectarawhatsapp', component: ConectarWhatsappComponent , data:{tituloPage:'Conectar a Whatsapp'}},
             //pagos
-            {path: 'tipos-de-pago', component: TiposdepagoComponent , data:{tituloPage:'Tipos de pago'}},
+            {path: 'tipos-de-pago', component: TiposdepagoComponent , data:{tituloPage:'Tipos de Pago'}},
             {path: 'transferencias', component: ListaTrasnferenciasComponent , data:{tituloPage:'Transferencias'}},
             {path: 'pagoscheque', component: PagosChequeComponent, data:{tituloPage:'Pagos en cheque'}},
             // ruta 'pagosefectivo' agregada por José Prados

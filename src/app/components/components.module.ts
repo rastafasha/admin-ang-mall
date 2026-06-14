@@ -10,21 +10,14 @@ import { LineChart2Component } from './charts/line-chart2/line-chart2.component'
 import { ProducListFeaturedComponent } from './produc-list-featured/produc-list-featured.component';
 import { PipesModule } from '../pipes/pipes.module';
 import { ModalInicialComponent } from './modal-inicial/modal-inicial.component';
-import { ModalinfoTiendasComponent } from './modalinfo-tiendas/modalinfo-tiendas.component';
-import { ModalinfoPedidosListComponent } from './modalinfo-pedidos-list/modalinfo-pedidos-list.component';
-import { ModalinfoAtencioLocalComponent } from './modalinfo-atencio-local/modalinfo-atencio-local.component';
-import { ModalinfoUsuariosTiendaComponent } from './modalinfo-usuarios-tienda/modalinfo-usuarios-tienda.component';
-import { ModalinfoProductosComponent } from './modalinfo-productos/modalinfo-productos.component';
-import { ModalinfoCategoriasComponent } from './modalinfo-categorias/modalinfo-categorias.component';
-import { ModalinfoVentasComponent } from './modalinfo-ventas/modalinfo-ventas.component';
-import { ModalinfoTiposPagoComponent } from './modalinfo-tipos-pago/modalinfo-tipos-pago.component';
-import { ModalinfoTransferenciasComponent } from './modalinfo-transferencias/modalinfo-transferencias.component';
-import { ModalinfoPagoEfectivoComponent } from './modalinfo-pago-efectivo/modalinfo-pago-efectivo.component';
-import { ModalinfoDeliveryComponent } from './modalinfo-delivery/modalinfo-delivery.component';
+
+
+
 import { ModalVerPedidoComponent } from './modal-ver-pedido/modal-ver-pedido.component';
 import { ModalTrackingComponent } from './modal-tracking/modal-tracking.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { FichaPedidoComponent } from './fichaPedido/fichaPedido.component';
+import { ModalInstruccionesComponent } from './modal-instrucciones/modal-instrucciones.component';
 
 @NgModule({
   declarations: [
@@ -35,20 +28,10 @@ import { FichaPedidoComponent } from './fichaPedido/fichaPedido.component';
     LineChart2Component,
     ProducListFeaturedComponent,
     ModalInicialComponent,
-    ModalinfoTiendasComponent,
-    ModalinfoPedidosListComponent,
-    ModalinfoAtencioLocalComponent,
-    ModalinfoUsuariosTiendaComponent,
-    ModalinfoProductosComponent,
-    ModalinfoCategoriasComponent,
-    ModalinfoVentasComponent,
-    ModalinfoTiposPagoComponent,
-    ModalinfoTransferenciasComponent,
-    ModalinfoPagoEfectivoComponent,
-    ModalinfoDeliveryComponent,
     ModalVerPedidoComponent,
     ModalTrackingComponent,
-    FichaPedidoComponent
+    FichaPedidoComponent,
+    ModalInstruccionesComponent
 
   ],
   
@@ -60,20 +43,10 @@ import { FichaPedidoComponent } from './fichaPedido/fichaPedido.component';
     LineChart2Component,
     ProducListFeaturedComponent,
     ModalInicialComponent,
-    ModalinfoTiendasComponent,
-    ModalinfoPedidosListComponent,
-    ModalinfoAtencioLocalComponent,
-    ModalinfoUsuariosTiendaComponent,
-     ModalinfoProductosComponent,
-    ModalinfoCategoriasComponent,
-    ModalinfoVentasComponent,
-    ModalinfoTiposPagoComponent,
-    ModalinfoTransferenciasComponent,
-    ModalinfoPagoEfectivoComponent,
-    ModalinfoDeliveryComponent,
     ModalVerPedidoComponent,
     ModalTrackingComponent,
-    FichaPedidoComponent
+    FichaPedidoComponent,
+    ModalInstruccionesComponent
   ],
   imports: [
     CommonModule,
