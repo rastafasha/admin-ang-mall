@@ -1,26 +1,41 @@
-import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { TranslatePipe } from '@ngx-translate/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, Output, AfterViewInit } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser'; 
 
 @Component({
   selector: 'app-modal-instrucciones',
-  standalone:false,
+  standalone: false,
   templateUrl: './modal-instrucciones.component.html',
   styleUrl: './modal-instrucciones.component.scss'
 })
-export class ModalInstruccionesComponent {
+export class ModalInstruccionesComponent implements AfterViewInit   {
 
   @Output() closeModal: EventEmitter<void> = new EventEmitter<void>();
   @Input() displaycomponent: string = 'block';
-  @Input() info!: string;
-  @Input() sectionId!: string; 
+  @Input() sectionId!: string;
   isLogued: boolean = false;
+  private _info!: string;
+
+  @Input()
+set info(value: string) {
+  this._info = value;
+  // Cada vez que el padre le asigne datos a 'info', obligamos al modal a enterarse
+  this.cdRef.detectChanges(); 
+}
+
+get info(): string {
+  return this._info;
+}
+
+  constructor(
+    private cdRef: ChangeDetectorRef,
+    private sanitizer: DomSanitizer 
+  ) { }
 
   ngAfterViewInit() {
     const USER = localStorage.getItem("user");
     this.isLogued = !!USER;
 
-    // USAMOS EL ID DE LA SECCIÓN PARA COMPROBAR
+    // Si pasas el ID técnico (ej: 'tienda'), la clave se guardará de forma idéntica en cualquier idioma
     if (localStorage.getItem(`modalDismissed_${this.sectionId}`)) {
       return;
     }
@@ -30,13 +45,14 @@ export class ModalInstruccionesComponent {
       if (modalElement) {
         const bootstrapModal = (window as any).bootstrap?.Modal?.getInstance(modalElement) || 
                                new (window as any).bootstrap.Modal(modalElement);
+        
         bootstrapModal.show();
+        this.cdRef.detectChanges(); // Fuerza el renderizado inicial de tu innerHTML
       }
     }, 500);
   }
 
   onNoShowMore() {
-    // GUARDAMOS CON EL ID ESPECÍFICO
     localStorage.setItem(`modalDismissed_${this.sectionId}`, 'true');
     this.closeAndCleanup();
   }
@@ -46,7 +62,6 @@ export class ModalInstruccionesComponent {
     this.closeModal.emit();
   }
 
-  // Función auxiliar para no repetir el código de limpieza de Bootstrap
   private closeAndCleanup() {
     const modalElement = document.getElementById('infoModal') as HTMLElement;
     if (modalElement) {
@@ -62,16 +77,16 @@ export class ModalInstruccionesComponent {
     document.documentElement.style.overflowX = 'auto';
   }
 
-  // Método público para abrir el modal manualmente (ignorando el bloqueo)
+  // Método público para abrir el modal manualmente (por si ponen un botón de "Ayuda")
   public open() {
     setTimeout(() => {
       const modalElement = document.getElementById('infoModal') as HTMLElement;
       if (modalElement) {
-        const bootstrapModal = (window as any).bootstrap?.Modal?.getInstance(modalElement) || 
+        const bootstrapModal = (window as any).bootstrap?.Modal?.getInstance(modalElement) ||
                                new (window as any).bootstrap.Modal(modalElement);
         bootstrapModal.show();
+        this.cdRef.detectChanges(); // 2. Agregado aquí también para evitar que abra vacío al llamarlo de forma externa
       }
     }, 100);
   }
-
 }

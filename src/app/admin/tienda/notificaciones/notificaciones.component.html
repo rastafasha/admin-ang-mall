@@ -16,7 +16,7 @@
                 <h5 class="mb-0 fw-bold text-dark">{{'Historial de Notificaciones'|translate}}</h5>
                 <button *ngIf="historialNotificaciones && historialNotificaciones.length > 0"
                     class="btn btn-outline-danger btn-sm" (click)="vaciarTodo()">
-                    <i class="fa fa-trash-o me-1"></i> {{'Vaciar Buzón'|translate}}
+                    <i class="fas fa-trash-alt me-1"></i> {{'Vaciar Buzón'|translate}}
                 </button>
             </div>
 
@@ -24,7 +24,7 @@
                 <!-- Estado Vacío Blindado contra loops o undefined -->
                 <div *ngIf="!historialNotificaciones || historialNotificaciones.length === 0"
                     class="text-center py-5 text-muted">
-                    <i class="mdi mdi-bell-off d-block fs-1 mb-2 text-muted-light"></i>
+                    <i class="fas fa-bell-slash d-block fs-1 mb-2 text-muted-light"></i>
                     <p class="mb-0">{{'No tienes alertas registradas en el historial'|translate}}.</p>
                 </div>
 
@@ -37,23 +37,35 @@
                         style="transition: background 0.2s;">
 
                         <!-- Todo tu bloque de información (Círculo de color, icono, textos) se queda EXACTAMENTE IGUAL -->
-                        <div class="d-flex align-items-center grow" (click)="atenderNotificacion(notif)"
-                            style="cursor: pointer;">
+                        
+
+                        <div class="d-flex align-items-center grow" (click)="atenderNotificacion(notif)" style="cursor: pointer;">
+                            <!-- Contenedor del Icono con clases dinámicas corregidas -->
                             <div class="p-2 rounded-circle text-white me-3 d-flex align-items-center justify-content-center"
                                 [ngClass]="{
-                 'bg-info': notif.tipo === 'NUEVO_PAGO' || notif.tipo.startsWith('PAGO_'),
-                 'bg-warning': notif.tipo === 'NUEVO_PEDIDO' || notif.tipo.startsWith('PEDIDO_'),
-                 'bg-success': notif.tipo === 'NUEVA_RESERVACION' || notif.tipo.startsWith('RESERVACION_')
-             }" style="width: 40px; height: 40px;">
+                                    'bg-info': notif.tipo === 'NUEVO_PAGO' || notif.tipo === 'NUEVA_RESERVACION' || notif.tipo === 'RESERVACION_COMPLETADA',
+                                    'bg-success': notif.tipo === 'PAGO_APROBADO' || notif.tipo === 'PEDIDO_APROBADO' || notif.tipo === 'PEDIDO_FINALIZADO' || notif.tipo === 'RESERVACION_CONFIRMADA',
+                                    'bg-warning': notif.tipo === 'NUEVO_PEDIDO',
+                                    'bg-danger': notif.tipo === 'PAGO_RECHAZADO' || notif.tipo === 'PEDIDO_RECHAZADO' || notif.tipo === 'RESERVACION_CANCELADA'
+                                }" style="width: 40px; height: 40px;">
+                                
                                 <i [ngClass]="{
-                'fa fa-money': notif.tipo === 'NUEVO_PAGO' || notif.tipo.startsWith('PAGO_'),
-                'fa fa-cutlery': notif.tipo === 'NUEVO_PEDIDO' || notif.tipo.startsWith('PEDIDO_'),
-                'fa fa-calendar': notif.tipo === 'NUEVA_RESERVACION' || notif.tipo.startsWith('RESERVACION_')
-            }"></i>
+                                    'fas fa-money-bill': notif.tipo.includes('PAGO'),
+                                    'fas fa-utensils': notif.tipo.includes('PEDIDO'), 
+                                    'far fa-calendar': notif.tipo.includes('RESERVACION')
+                                }"></i>
                             </div>
+                            
+                            <!-- Bloque de Textos Traducidos -->
                             <div>
-                                <h6 class="mb-1 fw-bold text-dark fs-6">{{ notif.titulo }}</h6>
-                                <p class="mb-0 text-muted small">{{ notif.mensaje }}</p>
+                                <!-- 1. Traduce el título usando el ENUM como clave -->
+                                <h6 class="mb-1 fw-bold text-dark fs-6">
+                                    {{ 'NOTIFICATIONS.' + (notif.tipo ? notif.tipo : 'DEFAULT') | translate }}
+                                </h6>
+                                <!-- 2. Traduce el mensaje por si contiene una clave i18n -->
+                                <p class="mb-0 text-muted small">
+                                    {{ notif.mensaje | translate }}
+                                </p>
                                 <small class="text-muted-light d-block mt-1" style="font-size: 0.75rem;">
                                     {{ notif.createdAt | date:'mediumDate' }} - {{ notif.createdAt | date:'shortTime' }}
                                 </small>

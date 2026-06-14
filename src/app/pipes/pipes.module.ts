@@ -8,6 +8,8 @@ import { OrderByPipe } from './orderby.pipe';
 import { UniquePipe } from './unique.pipe';
 import { SafePipe } from './safe.pipe';
 import { PedidoStatusPipe } from './pedido-status.pipe';
+import { UserRolePipe } from './user-role.pipe';
+import { UserRoleclientPipe } from './user-roleclient.pipe';
 
 
 @NgModule({
@@ -20,7 +22,9 @@ import { PedidoStatusPipe } from './pedido-status.pipe';
     OrderByPipe,
     UniquePipe,
     SafePipe,
-    PedidoStatusPipe
+    PedidoStatusPipe,
+    UserRolePipe,
+    UserRoleclientPipe
   ],
   exports:[
     ImagenPipePipe,
@@ -31,7 +35,9 @@ import { PedidoStatusPipe } from './pedido-status.pipe';
     OrderByPipe,
     UniquePipe,
     SafePipe,
-    PedidoStatusPipe
+    PedidoStatusPipe,
+    UserRolePipe,
+    UserRoleclientPipe
 
   ]
 })

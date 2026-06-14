@@ -14,94 +14,219 @@
         </div>
     </div>
 </div>
-<div class="row animated fadeIn fast">
-    <div class="col-12">
-        <app-search [query]="query" [modelo]="usuario" [colleccionName]="usuarios"
-[colleccion]="'usuarios'" (searchEvent)="handleSearchEvent($event)" (resetEvent)="PageSize()"></app-search>
-       
-    </div>
+
+<div class="tab-content-set">
+    <ul class="nav">
+        <li>
+            <a href="#" onclick="return false;" [ngClass]="{'active': option_selectedd == 1}"
+                (click)="optionSelected(1)">
+                <h3 class="btn btn-outline-info"> {{'Usuarios'}}</h3>
+            </a>
+        </li>
+        <li>
+            <a href="#" onclick="return false;" [ngClass]="{'active': option_selectedd == 2}"
+                (click)="optionSelected(2)">
+                <h3 class="btn btn-outline-info">{{'Clientes'}}</h3>
+            </a>
+        </li>
+
+
+    </ul>
 </div>
+<div *ngIf="option_selectedd == 1">
+    <div class="row animated fadeIn fast">
+        <div class="col-12">
+            <app-search [query]="query" [modelo]="usuario" [colleccionName]="usuarios" [colleccion]="'usuarios'"
+                (searchEvent)="handleSearchEvent($event)" (resetEvent)="PageSize()"></app-search>
 
-<app-skeleton-loader *ngIf="cargando" [rows]="1" [columns]="2"></app-skeleton-loader>
-<app-skeleton-loader *ngIf="cargando" [rows]="4" [columns]="7"></app-skeleton-loader>
+        </div>
+    </div>
 
-<div class="row animated fadeIn fast" *ngIf="!cargando ">
-    <div class="col-12">
-        <div class="card">
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-11">
-                        <h4 class="card-title">{{'Total de Usuarios de Tienda'|translate}}</h4>
-                        <h6 class="card-subtitle">{{'Empleados registrados en la app'|translate}}</h6>
-                    </div>
-                    <div class="col-1">
-                        <div class="text-right">
-                            
-                            <button [routerLink]="['/dashboard/tienda-user/registro']"class="btn btn-outline-success" data-toggle="tooltip"
-                                data-original-title="Edit" >
-                                <i class="fa fa-plus"></i>
-                            </button>
+    <app-skeleton-loader *ngIf="cargando" [rows]="1" [columns]="2"></app-skeleton-loader>
+    <app-skeleton-loader *ngIf="cargando" [rows]="4" [columns]="7"></app-skeleton-loader>
+
+    <div class="row animated fadeIn fast" *ngIf="!cargando ">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-11">
+                            <h4 class="card-title">{{'Total de Usuarios de Tienda'|translate}}</h4>
+                            <h6 class="card-subtitle">{{'Empleados registrados en la app'|translate}}</h6>
+                        </div>
+                        <div class="col-1">
+                            <div class="text-right">
+
+                                <button [routerLink]="['/dashboard/tienda-user/registro']"
+                                    class="btn btn-outline-success" data-toggle="tooltip" data-original-title="Edit">
+                                    <i class="fa fa-plus"></i>
+                                </button>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="table-responsive">
-                    <table class="table table-borderless">
-                        <thead>
-                            <tr>
-                                <th>{{'Avatar'|translate}}</th>
-                                <th>{{'Correo'|translate}}</th>
-                                <th>{{'Nombre'|translate}}</th>
-                                <th>{{'Cambiar Role'|translate}}</th>
-                                <th>Auth</th>
-                                <th class="text-nowrap">{{'Acciones'|translate}}</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let usuario of usuarios |  paginate: { itemsPerPage: count, currentPage: p }">
-                                <td class="text-center">
-                                    <img [src]="usuario.img | imagenPipe: 'usuarios'" [routerLink]="['/dashboard/tienda-user/edit/',usuario.uid]" class="img-thumbnail avatar cursor" alt="">
-                                </td>
-                                <td>{{usuario.email}}</td>
-                                <td>{{usuario.first_name}}</td>
-                                <td>
-                                    <select class="form-control" [(ngModel)]="usuario.role" (change)="cambiarStatus(usuario)">
-                                    
-                                    <option value="USER">{{'Usuario'|translate}}</option>
-                                    <option value="ADMIN">{{'Admin'|translate}}</option>
-                                    <option value="VENTAS">{{'Ventas'|translate}}</option> 
-                                    <option value="TIENDA">{{'Tienda'|translate}}</option>
-                                    <option value="ALMACEN">{{'Almacen'|translate}}</option>
-                                    <option value="CHOFER">{{'Chofer'|translate}}</option>
-                                  </select>
-                                </td>
-                                <td>
-                                    <span *ngIf="usuario.google" class="label label-danger">Google</span>
-                                    <span *ngIf="!usuario.google" class="label label-info">Email</span>
-                                </td>
-                                <td class="text-nowrap text-center">
-                                    
+                    <div class="table-responsive">
+                        <table class="table table-borderless">
+                            <thead>
+                                <tr>
+                                    <th>{{'Avatar'|translate}}</th>
+                                    <th>{{'Correo'|translate}}</th>
+                                    <th>{{'Nombre'|translate}}</th>
+                                    <th>{{'Cambiar Role'|translate}}</th>
+                                    <th>Auth</th>
+                                    <th class="text-nowrap">{{'Acciones'|translate}}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr
+                                    *ngFor="let usuario of usuarios | userRolePipe |  paginate: { itemsPerPage: count, currentPage: p }">
+                                    <td class="text-center">
+                                        <img [src]="usuario.img | imagenPipe: 'usuarios'"
+                                            [routerLink]="['/dashboard/tienda-user/edit/',usuario.uid]"
+                                            class="img-thumbnail avatar cursor" alt="">
+                                    </td>
+                                    <td>{{usuario.email}}</td>
+                                    <td>{{usuario.first_name}}</td>
+                                    <td>
+                                        <select class="form-control" [(ngModel)]="usuario.role"
+                                            (change)="cambiarStatus(usuario)">
 
-                                    <button class="btn btn-outline-success" data-toggle="tooltip"
-                                        data-original-title="Edit"[routerLink]="['/dashboard/tienda-user/edit/', usuario.uid]" >
-                                        <i class="fa fa-edit"></i>
-                                    </button>
-                                    &nbsp;
-                                    <button (click)="eliminarUsuario(usuario)" class="btn btn-outline-danger"
-                                        data-toggle="tooltip" data-original-title="Borrar">
-                                        <i class="fa fa-trash"></i>
-                                    </button>
-                                </td>
-                            </tr>
+                                            <option value="USER">{{'Usuario'|translate}}</option>
+                                            <option value="ADMIN">{{'Admin'|translate}}</option>
+                                            <option value="VENTAS">{{'Ventas'|translate}}</option>
+                                            <option value="TIENDA">{{'Tienda'|translate}}</option>
+                                            <option value="ALMACEN">{{'Almacen'|translate}}</option>
+                                            <option value="CHOFER">{{'Chofer'|translate}}</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <span *ngIf="usuario.google" class="label label-danger">Google</span>
+                                        <span *ngIf="!usuario.google" class="label label-info">Email</span>
+                                    </td>
+                                    <td class="text-nowrap text-center">
 
-                        </tbody>
-                    </table>
-                </div>
-                <div *ngIf="query.length === 0">
-                    <pagination-controls (pageChange)="p = $event"></pagination-controls>
-                </div>
 
+                                        <button class="btn btn-outline-success" data-toggle="tooltip"
+                                            data-original-title="Edit"
+                                            [routerLink]="['/dashboard/tienda-user/edit/', usuario.uid]">
+                                            <i class="fa fa-edit"></i>
+                                        </button>
+                                        &nbsp;
+                                        <button (click)="eliminarUsuario(usuario)" class="btn btn-outline-danger"
+                                            data-toggle="tooltip" data-original-title="Borrar">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <div *ngIf="query.length === 0">
+                        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                    </div>
+
+                </div>
             </div>
         </div>
     </div>
 </div>
-<app-modal-instrucciones [info]="info" [sectionId]="'Usuarios' |translate" #instruccionesModal></app-modal-instrucciones>
+<div *ngIf="option_selectedd == 2">
+    <div class="row animated fadeIn fast">
+        <div class="col-12">
+            <app-search [query]="query" [modelo]="usuario" [colleccionName]="usuarios" [colleccion]="'usuarios'"
+                (searchEvent)="handleSearchEvent($event)" (resetEvent)="PageSize()"></app-search>
+
+        </div>
+    </div>
+
+    <app-skeleton-loader *ngIf="cargando" [rows]="1" [columns]="2"></app-skeleton-loader>
+    <app-skeleton-loader *ngIf="cargando" [rows]="4" [columns]="7"></app-skeleton-loader>
+
+    <div class="row animated fadeIn fast" *ngIf="!cargando ">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-11">
+                            <h4 class="card-title">{{'Total de Usuarios de Tienda'|translate}}</h4>
+                            <h6 class="card-subtitle">{{'Empleados registrados en la app'|translate}}</h6>
+                        </div>
+                        <div class="col-1">
+                            <div class="text-right">
+
+                                <button [routerLink]="['/dashboard/tienda-user/registro']"
+                                    class="btn btn-outline-success" data-toggle="tooltip" data-original-title="Edit">
+                                    <i class="fa fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-borderless">
+                            <thead>
+                                <tr>
+                                    <th>{{'Avatar'|translate}}</th>
+                                    <th>{{'Correo'|translate}}</th>
+                                    <th>{{'Nombre'|translate}}</th>
+                                    <th>{{'Cambiar Role'|translate}}</th>
+                                    <th>Auth</th>
+                                    <th class="text-nowrap">{{'Acciones'|translate}}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr
+                                    *ngFor="let usuario of usuarios | userRoleclientPipe |  paginate: { itemsPerPage: count, currentPage: p }">
+                                    <td class="text-center">
+                                        <img [src]="usuario.img | imagenPipe: 'usuarios'"
+                                            [routerLink]="['/dashboard/tienda-user/edit/',usuario.uid]"
+                                            class="img-thumbnail avatar cursor" alt="">
+                                    </td>
+                                    <td>{{usuario.email}}</td>
+                                    <td>{{usuario.first_name}}</td>
+                                    <td>
+                                        <select class="form-control" [(ngModel)]="usuario.role"
+                                            (change)="cambiarStatus(usuario)">
+
+                                            <option value="USER">{{'Usuario'|translate}}</option>
+                                            <option value="ADMIN">{{'Admin'|translate}}</option>
+                                            <option value="VENTAS">{{'Ventas'|translate}}</option>
+                                            <option value="TIENDA">{{'Tienda'|translate}}</option>
+                                            <option value="ALMACEN">{{'Almacen'|translate}}</option>
+                                            <option value="CHOFER">{{'Chofer'|translate}}</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <span *ngIf="usuario.google" class="label label-danger">Google</span>
+                                        <span *ngIf="!usuario.google" class="label label-info">Email</span>
+                                    </td>
+                                    <td class="text-nowrap text-center">
+
+
+                                        <button class="btn btn-outline-success" data-toggle="tooltip"
+                                            data-original-title="Edit"
+                                            [routerLink]="['/dashboard/tienda-user/edit/', usuario.uid]">
+                                            <i class="fa fa-edit"></i>
+                                        </button>
+                                        &nbsp;
+                                        <button (click)="eliminarUsuario(usuario)" class="btn btn-outline-danger"
+                                            data-toggle="tooltip" data-original-title="Borrar">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <div *ngIf="query.length === 0">
+                        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<app-modal-instrucciones [info]="info" [sectionId]="'usuariostienda' " #instruccionesModal></app-modal-instrucciones>

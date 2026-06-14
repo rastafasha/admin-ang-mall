@@ -1,4 +1,5 @@
 import { Component, inject } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { NotificacionService } from 'src/app/services/notificacion.service';
 
 @Component({
@@ -10,6 +11,7 @@ import { NotificacionService } from 'src/app/services/notificacion.service';
 export class NotificacionesComponent {
   cargando = false;
   public notiService = inject(NotificacionService);
+  public translate = inject(TranslateService);
   
   // Lista flexible 'any' para evitar trancas de tipado con el populate del usuario
   public historialNotificaciones: any[] = [];

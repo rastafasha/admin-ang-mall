@@ -463,6 +463,10 @@
     "Agregalo a tu barra de Inicio": "Agregalo a tu barra de Inicio",
 
     "En esta sección podrás ver": "En esta sección podrás ver",
+    "Historial de Notificaciones":"Historial de Notificaciones",
+    "Notificaciones":"Notificaciones",
+    "Vaciar Buzón":"Vaciar Buzón",
+    "Ver Historial Completo":"Ver Historial Completo",
     
     "PRODUCTS": {
         "TITLE": "Sección: Productos",
@@ -569,8 +573,36 @@
         "SUBTITLE": "En este apartado podrás:",
         "ITEM_1": "Ver los pagos en efectivo",
         "ITEM_2": "Estos pagos actualmente solo se registran usando el modo Atención Local"
-    }
+    },
+     "NOTIFICATIONS": {
+        "NUEVO_PAGO": "Nuevo Pago Reportado",
+        "NUEVO_PEDIDO": "Comanda Entrante",
+        "NUEVA_RESERVACION": "Solicitud de Reserva",
+        "PAGO_APROBADO": "Pago Verificado",
+        "PAGO_RECHAZADO": "Pago Mechazado",
+        "PEDIDO_APROBADO": "Pedido en Cocina",
+        "PEDIDO_RECHAZADO": "Pedido Cancelado",
+        "PEDIDO_FINALIZADO": "Pedido Despachado",
+        "RESERVACION_CONFIRMADA": "Reserva Confirmada",
+        "RESERVACION_CANCELADA": "Reserva Cancelada",
+        "RESERVACION_COMPLETADA": "Reserva Finalizada",
+        "DEFAULT": "Alerta de Sistema"
+    },
 
+    "SECTIONS": {
+    "tienda": "Tienda",
+    "pedidos": "Pedidos",
+    "reservaciones": "Reservaciones",
+    "ventas": "Ventas",
+    "atencionTienda": "Atención Tienda",
+    "usuariostienda": "Usuarios Tienda",
+    "transferencias": "Transferencias",
+    "productos": "Productos",
+    "pagoEfectivo": "Pagos en Efectivo",
+    "categorias": "Categorías",
+    "conectarWhatsapp": "Conectar a Whatsapp",
+    "tiposdePago": "Tipos de Pago"
+  }
     
 
 

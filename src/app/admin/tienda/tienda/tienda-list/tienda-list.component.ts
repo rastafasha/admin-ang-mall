@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { Subscription, delay } from 'rxjs';
@@ -17,7 +17,7 @@ import Swal from 'sweetalert2';
   templateUrl: './tienda-list.component.html',
   styleUrls: ['./tienda-list.component.css']
 })
-export class TiendaListComponent implements OnInit {
+export class TiendaListComponent implements OnInit, OnDestroy  {
 
   public tiendas: Tienda;
   public tienda: Tienda;
@@ -47,8 +47,20 @@ export class TiendaListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    window.scrollTo(0, 0);
     let USER = localStorage.getItem("user");
     this.user = USER ? JSON.parse(USER) : null;
+    this.user = JSON.parse(USER ? USER : '');
+    
+     // 🟢 1. CARGA INICIAL DE LAS INSTRUCCIONES (Garantiza que la info no empiece vacía)
+    this.translate.get('STORE.TITLE').subscribe(() => {
+      this.actualizarInstruccionesPagos();
+    });
+
+    // 🟢 2. ESCUCHA SI CAMBIAN EL IDIOMA DESPUÉS (Mantiene tu lógica actual)
+    this.langSubscription = this.translate.onLangChange.subscribe(() => {
+      this.actualizarInstruccionesPagos();
+    });
 
 
     if (this.user.role === 'SUPERADMIN') {
@@ -65,9 +77,7 @@ export class TiendaListComponent implements OnInit {
       )
       .subscribe(banner => { this.loadTiendas(); });
       
-    this.langSubscription = this.translate.onLangChange.subscribe(() => {
-      this.actualizarInstruccionesPagos();
-    });
+   
   }
 
   private actualizarInstruccionesPagos() {
@@ -88,10 +98,15 @@ export class TiendaListComponent implements OnInit {
   `;
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
+    if (this.langSubscription) {
+      this.langSubscription.unsubscribe();
+    }
     this.imgSubs.unsubscribe();
   }
 
+
+ 
   loadTiendas() {
     this.cargando = true;
     this.tiendaService.cargarTiendas().subscribe(

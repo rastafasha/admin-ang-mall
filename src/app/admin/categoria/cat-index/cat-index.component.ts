@@ -9,18 +9,19 @@ import { ModalImagenService } from '../../../services/modal-imagen.service';
 import { IconosService } from 'src/app/services/iconos.service';
 import { FormGroup } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
+import { SidebarService } from 'src/app/services/sidebar.service';
 
-declare var jQuery:any;
-declare var $:any;
+declare var jQuery: any;
+declare var $: any;
 @Component({
   selector: 'app-cat-index',
-  standalone:false,
+  standalone: false,
   templateUrl: './cat-index.component.html',
   styleUrls: ['./cat-index.component.css']
 })
-export class CatIndexComponent implements OnInit {
+export class CatIndexComponent implements OnInit, OnDestroy {
 
-  public categorias: Categoria[] =[];
+  public categorias: Categoria[] = [];
   public categoria: Categoria;
   public cargando: boolean = true;
 
@@ -32,33 +33,40 @@ export class CatIndexComponent implements OnInit {
 
   public imgSubs: Subscription;
   listIcons;
-  user:any;
+  user: any;
 
-  query:string ='';
-        searchForm!:FormGroup;
-        currentPage = 1;
-        collecion='categorias';
+  query: string = '';
+  searchForm!: FormGroup;
+  currentPage = 1;
+  collecion = 'categorias';
 
   public msm_error;
   categoriaSeleccionado: Categoria;
   public info: string = '';
   private langSubscription!: Subscription;
+  
 
   constructor(
     private categoriaService: CategoriaService,
     private modalImagenService: ModalImagenService,
-    private busquedaService: BusquedasService,
     private _iconoService: IconosService,
-    public translate: TranslateService 
+    public translate: TranslateService
   ) { }
 
   ngOnInit(): void {
-
     let USER = localStorage.getItem("user");
     this.user = JSON.parse(USER ? USER : '');
     this.cargar_iconos();
+    // 🟢 1. CARGA INICIAL DE LAS INSTRUCCIONES (Garantiza que la info no empiece vacía)
+    this.translate.get('CATEGORY.TITLE').subscribe(() => {
+      this.actualizarInstruccionesPagos();
+    });
 
-    
+    // 🟢 2. ESCUCHA SI CAMBIAN EL IDIOMA DESPUÉS (Mantiene tu lógica actual)
+    this.langSubscription = this.translate.onLangChange.subscribe(() => {
+      this.actualizarInstruccionesPagos();
+    });
+
     if (this.user.role === 'SUPERADMIN') {
       this.loadCategorias();
     }
@@ -67,14 +75,12 @@ export class CatIndexComponent implements OnInit {
       this.loadCategoriasLocal();
     }
     this.imgSubs = this.modalImagenService.nuevaImagen
-    .pipe(
-      delay(100)
-    )
-    .subscribe(banner => { this.loadCategorias();});
+      .pipe(
+        delay(100)
+      )
+      .subscribe(banner => { this.loadCategorias(); });
 
-    this.langSubscription = this.translate.onLangChange.subscribe(() => {
-      this.actualizarInstruccionesPagos();
-    });
+
   }
 
   private actualizarInstruccionesPagos() {
@@ -101,11 +107,15 @@ export class CatIndexComponent implements OnInit {
   `;
   }
 
-  ngOnDestroy(){
+  ngOnDestroy(): void {
+    if (this.langSubscription) {
+      this.langSubscription.unsubscribe();
+    }
     this.imgSubs.unsubscribe();
   }
 
-  loadCategorias(){
+
+  loadCategorias() {
     this.cargando = true;
     this.categoriaService.cargarCategorias().subscribe(
       categorias => {
@@ -115,7 +125,7 @@ export class CatIndexComponent implements OnInit {
     )
 
   }
-  loadCategoriasLocal(){
+  loadCategoriasLocal() {
     this.cargando = true;
     this.categoriaService.getCategoriaByLocal(this.user.local).subscribe(
       categorias => {
@@ -126,9 +136,9 @@ export class CatIndexComponent implements OnInit {
 
   }
 
-  cargar_iconos(){
+  cargar_iconos() {
     this._iconoService.getIcons().subscribe(
-      resp =>{
+      resp => {
         this.listIcons = resp;
         console.log(this.listIcons.iconos)
 
@@ -136,25 +146,25 @@ export class CatIndexComponent implements OnInit {
     )
   }
 
-  guardarCambios(categoria: Categoria){
+  guardarCambios(categoria: Categoria) {
     this.categoriaService.actualizarCategoria(categoria)
-    .subscribe( resp => {
-      Swal.fire('Actualizado', categoria.nombre.es,  'success')
-    })
+      .subscribe(resp => {
+        Swal.fire('Actualizado', categoria.nombre.es, 'success')
+      })
 
   }
 
 
-  eliminarCategoria(categoria: Categoria){
+  eliminarCategoria(categoria: Categoria) {
     this.categoriaService.borrarCategoria(categoria._id)
-    .subscribe( resp => {
-      this.ngOnInit();
-      Swal.fire('Borrado', categoria.nombre.es, 'success')
-    })
+      .subscribe(resp => {
+        this.ngOnInit();
+        Swal.fire('Borrado', categoria.nombre.es, 'success')
+      })
 
   }
 
-public PageSize(): void {
+  public PageSize(): void {
     this.query = '';
     this.ngOnInit();
     // this.router.navigateByUrl('/productos')
@@ -166,47 +176,47 @@ public PageSize(): void {
     }
   }
 
-  desactivar(id){
+  desactivar(id) {
     this.categoriaService.desactivar(id).subscribe(
-      response=>{
-        $('#desactivar-'+id).modal('hide');
+      response => {
+        $('#desactivar-' + id).modal('hide');
         $('.modal-backdrop').removeClass('show');
         this.ngOnInit();
       },
-      error=>{
+      error => {
         this.msm_error = 'No se pudo desactivar el producto, vuelva a intenter.'
       }
     )
   }
 
-  activar(id){
+  activar(id) {
     this.categoriaService.activar(id).subscribe(
-      response=>{
+      response => {
 
-        $('#activar-'+id).modal('hide');
+        $('#activar-' + id).modal('hide');
         $('.modal-backdrop').removeClass('show');
         this.ngOnInit();
       },
-      error=>{
+      error => {
         this.msm_error = 'No se pudo activar el producto, vuelva a intenter.'
       }
     )
   }
 
   onEditProject(categoria: Categoria) {
-      this.categoriaSeleccionado = categoria;
-    }
-  
-    openEditModal(): void {
-      this.categoriaSeleccionado = null;
-    }
-  
-    onCloseModal(): void {
-      this.categoriaSeleccionado = null;
-    }
-  
-    onClose() { 
-      this.ngOnInit();
-    }
+    this.categoriaSeleccionado = categoria;
+  }
+
+  openEditModal(): void {
+    this.categoriaSeleccionado = null;
+  }
+
+  onCloseModal(): void {
+    this.categoriaSeleccionado = null;
+  }
+
+  onClose() {
+    this.ngOnInit();
+  }
 
 }

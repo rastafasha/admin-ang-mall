@@ -11,19 +11,21 @@
                 <!-- Logo icon --><b>
                     <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
                     <!-- Dark Logo icon -->
-                    <img src="./assets/svg/logo.svg" style="width: 100%; height: 45px;" alt="homepage" class="dark-logo" />
+                    <img src="./assets/svg/logo.svg" style="width: 100%; height: 45px;" alt="homepage"
+                        class="dark-logo" />
                     <!-- Light Logo icon -->
-                    <img src="./assets/svg/logo.svg" style="width: 100%; height: 45px;" alt="homepage" class="light-logo" />
+                    <img src="./assets/svg/logo.svg" style="width: 100%; height: 45px;" alt="homepage"
+                        class="light-logo" />
                     <!-- <img [src]="congenerals[0].img" style="width: 100%; height: 45px;" alt="homepage" class="light-logo" /> -->
                 </b>
                 <!--End Logo icon -->
                 <!-- Logo text -->
-                 <span>
+                <span>
                     <!-- dark Logo text -->
-                    <img src="./assets/svg/tipo_admin.svg"  style="width: 170px;" class="dark-logo" />
+                    <img src="./assets/svg/tipo_admin.svg" style="width: 170px;" class="dark-logo" />
                     <!-- Light Logo text -->
                     <img src="./assets/svg/tipo_admin.svg" class="light-logo" style="width: 170px;" />
-                </span> 
+                </span>
             </a>
         </div>
         <!-- ============================================================== -->
@@ -35,11 +37,13 @@
             <!-- ============================================================== -->
             <ul class="navbar-nav mr-auto">
                 <!-- This is  -->
-                <li class="nav-item"> <a class="nav-link nav-toggler hidden-md-up waves-effect waves-dark" href="javascript:void(0)" (click)="toggleSidebar()">
-                    <i class="ti-menu"></i></a> 
+                <li class="nav-item"> <a class="nav-link nav-toggler hidden-md-up waves-effect waves-dark"
+                        href="javascript:void(0)" (click)="toggleSidebar()">
+                        <i class="ti-menu"></i></a>
                 </li>
-                <li class="nav-item"> <a class="nav-link sidebartoggler hidden-sm-down waves-effect waves-dark" href="javascript:void(0)" (click)="toggleSidebar()">
-                    <i class="ti-menu"></i></a> 
+                <li class="nav-item"> <a class="nav-link sidebartoggler hidden-sm-down waves-effect waves-dark"
+                        href="javascript:void(0)" (click)="toggleSidebar()">
+                        <i class="ti-menu"></i></a>
                 </li>
                 <li class="nav-item hidden-sm-down"></li>
             </ul>
@@ -47,144 +51,175 @@
             <!-- User profile and search -->
             <!-- ============================================================== -->
             <ul class="navbar-nav my-lg-0">
-               <div class="pushright">
-                
-                 
-                <!-- ============================================================== -->
-                <!-- Notificaciones Recientes -->
-                <!-- ============================================================== -->
-                <li class="nav-item dropdown">
-                <!-- Usamos tu misma función de toggle pero le pasamos la recarga al hacer clic -->
-                <a class="nav-link dropdown-toggle waves-effect waves-dark" href="javascript:void(0)" 
-                (click)="toggleNotificationDropdown($event); cargarHistorialDropdown()" 
-                [attr.aria-expanded]="showNotificationDropdown"> 
-                    <!-- Cambiamos el icono a una campana -->
-                    <i class="mdi mdi-bell"></i>
-                    <!-- El punto de notificación parpadea solo si hay pendientes -->
-                    <div class="notify" *ngIf="totalNoLeidas > 0"> 
-                        <span class="heartbit"></span> 
-                        <span class="point"></span> 
-                    </div>
-                </a>
-    
-                <!-- Mantiene tu control exacto de apertura con [style.display] -->
-                <div class="dropdown-menu dropdown-menu-right mailbox animated bounceInDown" 
-                    [style.display]="showNotificationDropdown ? 'block' : 'none'"
-                    style="width: 320px; max-height: 400px; overflow-y: auto;">
-                    <ul>
-                        <li>
-                            <div class="drop-title d-flex justify-content-between align-items-center">
-                                <span>Notificaciones ({{ totalNoLeidas }})</span>
-                                <button *ngIf="totalNoLeidas > 0" class="btn btn-link btn-sm p-0 text-decoration-none" style="font-size: 0.75rem;" (click)="marcarTodo()">
-                                    Marcar leídas
-                                </button>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="message-center">
-                                <!-- Estado Vacío real -->
-                                <div *ngIf="!listaNotificaciones || listaNotificaciones.length === 0" class="p-3 text-center text-muted small">
-                                    No tienes alertas nuevas
-                                </div>
+                <div class="pushright">
 
-                                <!-- Mapeo dinámico con los iconos e items reales de tu sistema -->
-                                <a href="javascript:void(0)" *ngFor="let notif of listaNotificaciones" (click)="abrirNotificacion(notif)" [style.background-color]="notif.leido ? '#fff' : '#f4f7fc'" class="position-relative">
-                                    <div class="btn btn-circle" [ngClass]="{
-                                        'btn-info': notif.tipo === 'NUEVO_PAGO' || notif.tipo.startsWith('PAGO_'),
-                                        'btn-warning': notif.tipo === 'NUEVO_PEDIDO' || notif.tipo.startsWith('PEDIDO_'),
-                                        'btn-success': notif.tipo === 'NUEVA_RESERVACION' || notif.tipo.startsWith('RESERVACION_')
+
+                    <!-- ============================================================== -->
+                    <!-- Notificaciones Recientes -->
+                    <!-- ============================================================== -->
+                    <li class="nav-item dropdown">
+                        <!-- Usamos tu misma función de toggle pero le pasamos la recarga al hacer clic -->
+                        <a class="nav-link dropdown-toggle waves-effect waves-dark" href="javascript:void(0)"
+                            (click)="toggleNotificationDropdown($event); cargarHistorialDropdown()"
+                            [attr.aria-expanded]="showNotificationDropdown">
+                            <!-- Cambiamos el icono a una campana -->
+                            <i class="fa fa-bell"></i>
+                            <!-- El punto de notificación parpadea solo si hay pendientes -->
+                            <div class="notify" *ngIf="totalNoLeidas > 0">
+                                <span class="heartbit"></span>
+                                <span class="point"></span>
+                            </div>
+                        </a>
+
+                        <!-- Mantiene tu control exacto de apertura con [style.display] -->
+                        <div class="dropdown-menu dropdown-menu-right mailbox animated bounceInDown"
+                            [style.display]="showNotificationDropdown ? 'block' : 'none'"
+                            style="width: 320px; max-height: 400px; overflow-y: auto;">
+                            <ul>
+                                <li>
+                                    <div class="drop-title d-flex justify-content-between align-items-center">
+                                        <span>{{'Notificaciones'|translate}} ({{ totalNoLeidas }})</span>
+                                        <button *ngIf="totalNoLeidas > 0"
+                                            class="btn btn-link btn-sm p-0 text-decoration-none"
+                                            style="font-size: 0.75rem;" (click)="marcarTodo()">
+                                            {{'Marcar leídas'|translate}}
+                                        </button>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="message-center">
+                                        <!-- Estado Vacío real -->
+                                        <div *ngIf="!listaNotificaciones || listaNotificaciones.length === 0"
+                                            class="p-3 text-center text-muted small">
+                                            {{'No tienes alertas nuevas'|translate}}
+                                        </div>
+
+                                        <!-- Mapeo dinámico con los iconos e items reales de tu sistema -->
+                                        <a href="javascript:void(0)" *ngFor="let notif of listaNotificaciones"
+                                            (click)="abrirNotificacion(notif)"
+                                            [style.background-color]="notif.leido ? '#fff' : '#f4f7fc'"
+                                            class="position-relative">
+                                            <div class="btn btn-circle" [ngClass]="{
+                                        'btn-info': notif.tipo === 'NUEVO_PAGO' || notif.tipo === 'NUEVA_RESERVACION' || notif.tipo === 'RESERVACION_COMPLETADA',
+                                        'btn-success': notif.tipo === 'PAGO_APROBADO' || notif.tipo === 'PEDIDO_APROBADO' || notif.tipo === 'PEDIDO_FINALIZADO' || notif.tipo === 'RESERVACION_CONFIRMADA',
+                                        'btn-warning': notif.tipo === 'NUEVO_PEDIDO',
+                                        'btn-danger': notif.tipo === 'PAGO_RECHAZADO' || notif.tipo === 'PEDIDO_RECHAZADO' || notif.tipo === 'RESERVACION_CANCELADA'
                                     }">
-                                        <i [ngClass]="{
-                                            'fa fa-money': notif.tipo === 'NUEVO_PAGO' || notif.tipo.startsWith('PAGO_'),
-                                            'fa fa-cutlery': notif.tipo === 'NUEVO_PEDIDO' || notif.tipo.startsWith('PEDIDO_'),
-                                            'fa fa-calendar': notif.tipo === 'NUEVA_RESERVACION' || notif.tipo.startsWith('RESERVACION_')
+                                                <i [ngClass]="{
+                                            'fas fa-money-bill': notif.tipo.includes('PAGO'),
+                                            'fas fa-utensils': notif.tipo.includes('PEDIDO'),
+                                            'far fa-calendar': notif.tipo.includes('RESERVACION')
                                         }"></i>
-                                    </div>
-                                    <div class="mail-contnet" style="width: 75%;">
-                                        <h5>{{ notif.titulo }}</h5> 
-                                        <span class="mail-desc text-truncate d-block">{{ notif.mensaje }}</span> 
-                                        <span class="time">{{ notif.createdAt | date:'shortTime' }}</span> 
-                                    </div>
-                                    <!-- Botón para remover la alerta individualmente -->
-                                    <button type="button" class="btn-close position-absolute end-0 top-50 translate-middle-y me-2" style="font-size: 0.6rem; z-index: 10;" (click)="eliminarUna(notif._id, $event)"></button>
-                                </a>
-                            </div>
-                        </li>
-                        <li>
-                            <a class="nav-link text-center" routerLink="/dashboard/notificaciones"> <strong>Ver Historial Completo</strong> <i class="fa fa-angle-right"></i> </a>
-                        </li>
-                    </ul>
-                </div>
-            </li>
+                                            </div>
 
-                <!-- ============================================================== -->
-                <!-- End Notificaciones Recientes -->
-                <!-- ============================================================== -->
-                <!-- ============================================================== -->
-                <!-- Messages -->
-                <!-- ============================================================== -->
-                <li class="nav-item dropdown" *ngIf="usuario.role ==='SUPERADMIN'" >
-                    <a class="nav-link dropdown-toggle waves-effect waves-dark" href="javascript:void(0)" id="2" (click)="toggleMessagesDropdown($event)" [attr.aria-expanded]="showMessagesDropdown"> 
-                        <i class="mdi mdi-email"></i>
-                        <div class="notify">
-                            <div *ngIf="mensajes.length < 0"></div>
-                            <div *ngIf="mensajes.length > 0">
-                                <span class="heartbit"></span> <span class="point"></span>
+                                            <div class="mail-contnet" style="width: 75%; margin-left: 10px;">
+                                                <!-- 1. Título internacionalizado usando el tipo de notificación -->
+                                                <h5>{{ 'NOTIFICATIONS.' + (notif.tipo ? notif.tipo : 'DEFAULT') |
+                                                    translate }}</h5>
+
+                                                <!-- 2. Cuerpo del mensaje traducido -->
+                                                <span class="mail-desc text-truncate d-block">{{ notif.mensaje |
+                                                    translate }}</span>
+
+                                                <!-- 3. Hora de creación -->
+                                                <span class="time">{{ notif.createdAt | date:'shortTime' }}</span>
+                                            </div>
+                                            <!-- Botón para remover la alerta individualmente -->
+                                            <button type="button"
+                                                class="btn-close position-absolute end-0 top-50 translate-middle-y me-2"
+                                                style="font-size: 0.6rem; z-index: 10;"
+                                                (click)="eliminarUna(notif._id, $event)"></button>
+                                        </a>
+                                    </div>
+                                </li>
+                                <li>
+                                    <a class="nav-link text-center" routerLink="/dashboard/notificaciones">
+                                        <strong>{{'Ver Historial Completo'|translate}}</strong>
+                                        <i class="fa fa-angle-right"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <!-- ============================================================== -->
+                    <!-- End Notificaciones Recientes -->
+                    <!-- ============================================================== -->
+                    <!-- ============================================================== -->
+                    <!-- Messages -->
+                    <!-- ============================================================== -->
+                    <li class="nav-item dropdown" *ngIf="usuario.role ==='SUPERADMIN'">
+                        <a class="nav-link dropdown-toggle waves-effect waves-dark" href="javascript:void(0)" id="2"
+                            (click)="toggleMessagesDropdown($event)" [attr.aria-expanded]="showMessagesDropdown">
+                            <i class="mdi mdi-email"></i>
+                            <div class="notify">
+                                <div *ngIf="mensajes.length < 0"></div>
+                                <div *ngIf="mensajes.length > 0">
+                                    <span class="heartbit"></span> <span class="point"></span>
+                                </div>
+                            </div>
+                        </a>
+                        <div class="dropdown-menu mailbox dropdown-menu-right animated fadeIn fast"
+                            [style.display]="showMessagesDropdown ? 'block' : 'none'" aria-labelledby="2">
+                            <ul>
+                                <li>
+                                    <div class="drop-title">{{'You have'| translate}} {{mensajes.length}} {{'new
+                                        messages'| translate}}</div>
+                                </li>
+                                <li>
+                                    <div class="message-center"
+                                        *ngFor="let item of mensajes| slice: (page-1) * pageSize : (page-1) * pageSize + pageSize">
+                                        <!-- Message -->
+                                        <a routerLink="contacto">
+                                            <div class="user-img">
+                                                <img [src]="item.img | imagenPipe: 'usuarios' " alt="user"
+                                                    class="img-circle">
+                                                <span class="profile-status online pull-right"></span>
+                                            </div>
+                                            <div class="mail-contnet">
+                                                <h5>{{item.nombres}}</h5>
+                                                <span class="mail-desc">{{item.tema}}</span>
+                                                <span class="time">{{item.createdAt|date :'MMM d, y, h:mm:ss a'}}</span>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </li>
+                                <li>
+                                    <a class="nav-link text-center" routerLink="contacto"> <strong>{{'See all'|
+                                            translate}}</strong> <i class="fa fa-angle-right"></i> </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <!-- ============================================================== -->
+                    <!-- End Messages -->
+                    <!-- ============================================================== -->
+
+                    <!-- Cart menu-->
+                    <li class="nav-item dropdown" *ngIf="usuario.role ==='SUPERADMIN' || usuario.role ==='ADMIN' ">
+                        <a class="nav-link dropdown-toggle waves-effect waves-dark" href="javascript:void(0)"
+                            (click)="toggleCartDropdown($event)" [attr.aria-expanded]="showCartDropdown">
+                            <i class="fa fa-shopping-bag "></i> &nbsp; {{subtotal |currency : tienda_moneda}}
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right animated bounceInDown cartlist"
+                            [style.display]="showCartDropdown ? 'block' : 'none'">
+
+                    <li class="dropdown-item">
+                        <div class="subtotal">
+                            <div class="font-size-sm mr-2 py-2">
+                                <span class="text-muted">Subtotal:</span>
+                                <span class="text-accent font-size-base ml-1">{{subtotal |currency :
+                                    tienda_moneda}}</span>
                             </div>
                         </div>
-                    </a>
-                    <div class="dropdown-menu mailbox dropdown-menu-right animated fadeIn fast" [style.display]="showMessagesDropdown ? 'block' : 'none'" aria-labelledby="2">
-                        <ul>
-                            <li>
-                                <div class="drop-title">{{'You have'| translate}} {{mensajes.length}} {{'new messages'| translate}}</div>
-                            </li>
-                            <li>
-                                <div class="message-center" *ngFor="let item of mensajes| slice: (page-1) * pageSize : (page-1) * pageSize + pageSize">
-                                    <!-- Message -->
-                                    <a routerLink="contacto">
-                                        <div class="user-img">
-                                             <img [src]="item.img | imagenPipe: 'usuarios' " alt="user" class="img-circle"> 
-                                             <span class="profile-status online pull-right"></span> </div>
-                                        <div class="mail-contnet">
-                                            <h5>{{item.nombres}}</h5> 
-                                            <span class="mail-desc">{{item.tema}}</span> 
-                                            <span class="time">{{item.createdAt|date :'MMM d, y, h:mm:ss a'}}</span> 
-                                        </div>
-                                    </a>
-                                </div>
-                            </li>
-                            <li>
-                                <a class="nav-link text-center" routerLink="contacto"> <strong>{{'See all'| translate}}</strong> <i class="fa fa-angle-right"></i> </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-                <!-- ============================================================== -->
-                <!-- End Messages -->
-                <!-- ============================================================== -->
+                    </li>
+                    <li class="dropdown-item">
+                        <a class="btn btn-primary btn-sm btn-block" [routerLink]="['/dashboard/carrito']">
+                            <i class="czi-cart mr-2 font-size-base align-middle"></i>{{'Ver Carrito' | translate}}
+                        </a>
+                    </li>
 
-                <!-- Cart menu-->
-                <li class="nav-item dropdown" *ngIf="usuario.role ==='SUPERADMIN' || usuario.role ==='ADMIN' ">
-                    <a class="nav-link dropdown-toggle waves-effect waves-dark" href="javascript:void(0)" (click)="toggleCartDropdown($event)" [attr.aria-expanded]="showCartDropdown">
-                        <i class="fa fa-shopping-bag "></i> &nbsp; {{subtotal |currency : tienda_moneda}}
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right animated bounceInDown cartlist" [style.display]="showCartDropdown ? 'block' : 'none'">
-                    
-                        <li class="dropdown-item">
-                            <div class="subtotal">
-                                <div class="font-size-sm mr-2 py-2">
-                                    <span class="text-muted">Subtotal:</span>
-                                    <span class="text-accent font-size-base ml-1">{{subtotal |currency : tienda_moneda}}</span>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="dropdown-item">
-                            <a class="btn btn-primary btn-sm btn-block" [routerLink]="['/dashboard/carrito']">
-                                <i class="czi-cart mr-2 font-size-base align-middle"></i>{{'Ver Carrito' | translate}}
-                            </a>
-                        </li>
-
-                    </div>
+                </div>
                 </li>
 
                 <!-- Cart menu-->
@@ -194,20 +229,24 @@
                 <!-- ============================================================== -->
                 <li class="nav-item dropdown">
                     <!-- Botón principal: Muestra la bandera según el idioma activo en la librería -->
-                    <a class="nav-link dropdown-toggle waves-effect waves-dark" href="javascript:void(0)" (click)="toggleLanguageDropdown($event)" [attr.aria-expanded]="showLanguageDropdown">
+                    <a class="nav-link dropdown-toggle waves-effect waves-dark" href="javascript:void(0)"
+                        (click)="toggleLanguageDropdown($event)" [attr.aria-expanded]="showLanguageDropdown">
                         <i *ngIf="translate.currentLang === 'es'" class="flag-icon flag-icon-es"></i>
                         <i *ngIf="translate.currentLang === 'en'" class="flag-icon flag-icon-us"></i>
                     </a>
-                    
+
                     <!-- Menú desplegable -->
-                    <div class="dropdown-menu dropdown-menu-right animated bounceInDown" [style.display]="showLanguageDropdown ? 'block' : 'none'">
+                    <div class="dropdown-menu dropdown-menu-right animated bounceInDown"
+                        [style.display]="showLanguageDropdown ? 'block' : 'none'">
                         <!-- Opción para cambiar a Inglés (Se muestra si el idioma actual es Español) -->
-                        <a class="dropdown-item" *ngIf="translate.currentLang === 'es'" [ngClass]="{'active': activeLang === 'en'}" (click)="cambiarLenguaje('en')">
+                        <a class="dropdown-item" *ngIf="translate.currentLang === 'es'"
+                            [ngClass]="{'active': activeLang === 'en'}" (click)="cambiarLenguaje('en')">
                             <i class="flag-icon flag-icon-us"></i> English
                         </a>
-                        
+
                         <!-- Opción para cambiar a Español (Se muestra si el idioma actual es Inglés) -->
-                        <a class="dropdown-item" *ngIf="translate.currentLang === 'en'" [ngClass]="{'active': activeLang === 'es'}" (click)="cambiarLenguaje('es')">
+                        <a class="dropdown-item" *ngIf="translate.currentLang === 'en'"
+                            [ngClass]="{'active': activeLang === 'es'}" (click)="cambiarLenguaje('es')">
                             <i class="flag-icon flag-icon-es"></i> Español
                         </a>
                     </div>
@@ -217,14 +256,20 @@
                 <!-- Profile -->
                 <!-- ============================================================== -->
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle waves-effect waves-dark" href="javascript:void(0)" (click)="toggleProfileDropdown($event)" [attr.aria-expanded]="showProfileDropdown">
-                        <img [src]="usuario.img | imagenPipe: 'usuarios' " alt="{{usuario.first_name|slice:0:1}} {{usuario.last_name |slice:0:1}}" class="profile-pic" />
+                    <a class="nav-link dropdown-toggle waves-effect waves-dark" href="javascript:void(0)"
+                        (click)="toggleProfileDropdown($event)" [attr.aria-expanded]="showProfileDropdown">
+                        <img [src]="usuario.img | imagenPipe: 'usuarios' "
+                            alt="{{usuario.first_name|slice:0:1}} {{usuario.last_name |slice:0:1}}"
+                            class="profile-pic" />
                     </a>
-                    <div class="dropdown-menu dropdown-menu-right animated fadeIn fast" [style.display]="showProfileDropdown ? 'block' : 'none'">
+                    <div class="dropdown-menu dropdown-menu-right animated fadeIn fast"
+                        [style.display]="showProfileDropdown ? 'block' : 'none'">
                         <ul class="dropdown-user">
                             <li>
                                 <div class="dw-user-box">
-                                    <div class="u-img"><img [src]="usuario.img | imagenPipe: 'usuarios' " alt="{{usuario.first_name|slice:0:1}} {{usuario.last_name |slice:0:1}}"></div>
+                                    <div class="u-img"><img [src]="usuario.img | imagenPipe: 'usuarios' "
+                                            alt="{{usuario.first_name|slice:0:1}} {{usuario.last_name |slice:0:1}}">
+                                    </div>
                                     <div class="u-text">
                                         <h4>{{usuario.first_name}} {{usuario.last_name}}</h4>
                                         <small>({{usuario.role}})</small>
@@ -235,13 +280,14 @@
                                 </div>
                             </li>
                             <li role="separator" class="divider"></li>
-                            <li><a (click)="logout()" class="cursor"><i class="fa fa-power-off"></i> {{'Logout'| translate}}</a></li>
+                            <li><a (click)="logout()" class="cursor"><i class="fa fa-power-off"></i> {{'Logout'|
+                                    translate}}</a></li>
                         </ul>
                     </div>
                 </li>
-               </div>
-                
-            </ul>
+        </div>
+
+        </ul>
         </div>
     </nav>
 </header>

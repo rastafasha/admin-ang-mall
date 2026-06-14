@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UsuarioService } from '../../../services/usuario.service';
 import { VentaService } from 'src/app/services/venta.service';
@@ -23,7 +23,7 @@ declare var bootstrap: any;
   templateUrl: './admin-ventas.component.html',
   styleUrls: ['./admin-ventas.component.css']
 })
-export class AdminVentasComponent implements OnInit {
+export class AdminVentasComponent implements OnInit, OnDestroy {
   // 🟢 Capturamos la referencia del componente hijo (#viewTraking)
   @ViewChildren('viewTraking') modalesHijos!: QueryList<ModalTrackingComponent>;
 
@@ -80,7 +80,7 @@ export class AdminVentasComponent implements OnInit {
   trackingSeleccionado: any = null;
 
   public info: string = '';
-    private langSubscription!: Subscription;
+  private langSubscription!: Subscription;
 
 
   constructor(
@@ -101,20 +101,29 @@ export class AdminVentasComponent implements OnInit {
   ngOnInit(): void {
     window.scrollTo(0, 0);
 
-    // obtengo el usuario
+    // Obtengo el usuario
     let USER = localStorage.getItem("user");
     this.user = JSON.parse(USER ? USER : '');
 
     // Obtener locales
     this.cargar_Locales();
 
-
     this.method_data_view(1);
     this.year = this.mydate.getFullYear();
     this.isLoading = true;
+
+    // 🟢 1. CARGA INICIAL DE LAS INSTRUCCIONES (Garantiza que la info no empiece vacía)
+    this.translate.get('SALES.TITLE').subscribe(() => {
+      this.actualizarInstruccionesPagos();
+    });
+
+    // 🟢 2. ESCUCHA SI CAMBIAN EL IDIOMA DESPUÉS (Mantiene tu lógica actual)
+    this.langSubscription = this.translate.onLangChange.subscribe(() => {
+      this.actualizarInstruccionesPagos();
+    });
+
     this._ventaService.init_data_admin().subscribe(
       response => {
-
         if (this.user.role === 'SUPERADMIN') {
           this.ventas = response.data;
           this.ventasFiltradas = response.data;
@@ -131,11 +140,8 @@ export class AdminVentasComponent implements OnInit {
         this.isLoading = false;
       }
     );
-
-    this.langSubscription = this.translate.onLangChange.subscribe(() => {
-      this.actualizarInstruccionesPagos();
-    });
   }
+
 
   private actualizarInstruccionesPagos() {
     // Jalamos los textos traducidos desde el JSON en milisegundos
@@ -159,6 +165,12 @@ export class AdminVentasComponent implements OnInit {
       <li>${item5}</li>
     </ul>
   `;
+  }
+
+   ngOnDestroy(): void {
+    if (this.langSubscription) {
+      this.langSubscription.unsubscribe();
+    }
   }
 
   method_data_view(val) {
@@ -307,7 +319,7 @@ export class AdminVentasComponent implements OnInit {
 
   }
 
-  
+
 
   close_alert() {
     this.msm_error_track = false;
@@ -470,7 +482,7 @@ export class AdminVentasComponent implements OnInit {
 
   onViewTracking(item: any) {
     this.trackingSeleccionado = item;
-}
+  }
 
   setTrack(eventoHijo: { id: string, track: string }) {
     let data = {
@@ -481,7 +493,7 @@ export class AdminVentasComponent implements OnInit {
       response => {
         // Recargamos la lista
         this.search(null, null);
-        
+
         // 🟢 Cerramos el modal usando el ID definitivo que funciona fuera del bucle
         const modalElement = document.getElementById('viewTrackingModal');
         if (modalElement) {
@@ -495,7 +507,7 @@ export class AdminVentasComponent implements OnInit {
         console.error('Error al guardar el tracking:', error);
       }
     );
-}
+  }
 
   selectedYear() {
     if (this.user.role === 'SUPERADMIN') {

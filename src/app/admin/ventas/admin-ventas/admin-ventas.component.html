@@ -613,6 +613,6 @@
     <app-factura (eventCerrarModal)="cerrarModal($event)"></app-factura>
 </section>
 
-<app-modal-instrucciones [info]="info" [sectionId]="'Ventas' |translate" #instruccionesModal></app-modal-instrucciones>
+<app-modal-instrucciones [info]="info" [sectionId]="'ventas'" #instruccionesModal></app-modal-instrucciones>
 <app-modal-tracking [item]="trackingSeleccionado" [tienda_moneda]="tienda_moneda" #viewTracking
     (onGuardarTrack)="setTrack($event)"></app-modal-tracking>

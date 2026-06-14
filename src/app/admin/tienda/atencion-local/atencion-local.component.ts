@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import Swal from 'sweetalert2';
 import { delay } from 'rxjs/operators';
@@ -34,7 +34,7 @@ declare var $: any;
   templateUrl: './atencion-local.component.html',
   styleUrls: ['./atencion-local.component.css']
 })
-export class AtencionLocalComponent implements OnInit {
+export class AtencionLocalComponent implements OnInit, OnDestroy  {
 
   public socket = io(environment.soketServer);
 
@@ -127,9 +127,20 @@ export class AtencionLocalComponent implements OnInit {
   }
 
   ngOnInit(): void {
+     window.scrollTo(0, 0);
     // obtenemos el cliente del localstorage
     const cliente = localStorage.getItem('cliente');
     // Si el cliente existe, lo parseamos de JSON a un objeto
+     // 🟢 1. CARGA INICIAL DE LAS INSTRUCCIONES (Garantiza que la info no empiece vacía)
+    this.translate.get('LOCAL_ATENTION.TITLE').subscribe(() => {
+      this.actualizarInstruccionesPagos();
+    });
+
+    // 🟢 2. ESCUCHA SI CAMBIAN EL IDIOMA DESPUÉS (Mantiene tu lógica actual)
+    this.langSubscription = this.translate.onLangChange.subscribe(() => {
+      this.actualizarInstruccionesPagos();
+    });
+
     if (cliente) {
       this.clienteSeleccionado = JSON.parse(cliente);
       this.loadClienteenProceso();
@@ -149,9 +160,7 @@ export class AtencionLocalComponent implements OnInit {
 
     this.uploads();
 
-    this.langSubscription = this.translate.onLangChange.subscribe(() => {
-      this.actualizarInstruccionesPagos();
-    });
+    
   }
 
   private actualizarInstruccionesPagos() {
@@ -175,10 +184,15 @@ export class AtencionLocalComponent implements OnInit {
     </ul>
   `;
   }
-
-  ngOnDestroy() {
+   ngOnDestroy(): void {
+    if (this.langSubscription) {
+      this.langSubscription.unsubscribe();
+    }
     this.imgSubs.unsubscribe();
   }
+
+
+  
 
   private uploads() {
 

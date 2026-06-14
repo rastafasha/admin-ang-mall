@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { environment } from '../../environments/environment';
+import { TranslateService } from '@ngx-translate/core';
 
 const BackendApi = environment.baseUrl;
 
@@ -25,6 +26,7 @@ export class NotificacionService {
   private http = inject(HttpClient);
   public toastr = inject(ToastrService);
   public router = inject(Router);
+  public translate = inject(TranslateService);
   // Este observable le dirá a cualquier componente si el usuario está suscrito
   public isSubscribed$ = new BehaviorSubject<boolean>(false);
   public isProcessing$ = new BehaviorSubject<boolean>(false);
@@ -32,6 +34,22 @@ export class NotificacionService {
   // Estado reactivo para el contador de no leídas
   private unreadCountSub = new BehaviorSubject<number>(0);
   public unreadCount$ = this.unreadCountSub.asObservable();
+
+  // Configuración de emojis y métodos de toastr por tipo
+  private readonly NOTIF_MAP: Record<string, { icon: string; method: 'info' | 'warning' | 'success' | 'error' }> = {
+    'NUEVO_PAGO': { icon: '💰', method: 'info' },
+    'NUEVO_PEDIDO': { icon: '🍕', method: 'warning' },
+    'NUEVA_RESERVACION': { icon: '🗓️', method: 'info' },
+    'PAGO_APROBADO': { icon: '✅', method: 'success' },
+    'PAGO_RECHAZADO': { icon: '❌', method: 'error' },
+    'PEDIDO_APROBADO': { icon: '✅', method: 'success' },
+    'PEDIDO_RECHAZADO': { icon: '❌', method: 'error' },
+    'PEDIDO_FINALIZADO': { icon: '🏁', method: 'success' },
+    'RESERVACION_CONFIRMADA': { icon: '✅', method: 'success' },
+    'RESERVACION_CANCELADA': { icon: '❌', method: 'error' },
+    'RESERVACION_COMPLETADA': { icon: '✨', method: 'info' },
+    'DEFAULT': { icon: '🔔', method: 'info' }
+  };
 
   // Helper privado para no repetir los headers del token en cada método
   private getOptions() {
@@ -67,48 +85,23 @@ export class NotificacionService {
         this.unreadCountSub.next(noLeidas.length);
 
         noLeidas.forEach(notif => {
-          let toast;
           const config = { timeOut: 10000, closeButton: true, tapToDismiss: true };
 
-          // 🟢 ADAPTADO PARA LOS ENUMS DEL ADMINISTRADOR
-          switch (notif.tipo) {
-            case 'NUEVO_PAGO':
-              toast = this.toastr.info(notif.mensaje, '💰 Nuevo Pago Reportado', config);
-              break;
-            case 'NUEVO_PEDIDO':
-              toast = this.toastr.warning(notif.mensaje, '🍕 Comanda Entrante', config);
-              break;
-            case 'NUEVA_RESERVACION':
-              toast = this.toastr.info(notif.mensaje, '🗓️ Solicitud de Reserva', config);
-              break;
-            case 'PAGO_APROBADO':
-              toast = this.toastr.success(notif.mensaje, '✅ Pago Verificado', config);
-              break;
-            case 'PAGO_RECHAZADO':
-              toast = this.toastr.error(notif.mensaje, '❌ Pago Rechazado', config);
-              break;
-            case 'PEDIDO_APROBADO':
-              toast = this.toastr.success(notif.mensaje, '✅ Pedido en Cocina', config);
-              break;
-            case 'PEDIDO_RECHAZADO':
-              toast = this.toastr.error(notif.mensaje, '❌ Pedido Cancelado', config);
-              break;
-            case 'PEDIDO_FINALIZADO':
-              toast = this.toastr.success(notif.mensaje, '🏁 Pedido Despachado', config);
-              break;
-            case 'RESERVACION_CONFIRMADA':
-              toast = this.toastr.success(notif.mensaje, '✅ Reserva Confirmada', config);
-              break;
-            case 'RESERVACION_CANCELADA':
-              toast = this.toastr.error(notif.mensaje, '❌ Reserva Cancelada', config);
-              break;
-            case 'RESERVACION_COMPLETADA':
-              toast = this.toastr.info(notif.mensaje, '✨ Reserva Finalizada', config);
-              break;
-            default:
-              toast = this.toastr.info(notif.mensaje, '🔔 Alerta de Sistema', config);
-          }
+          // 1. Obtener la configuración visual según el tipo de notificación
+          const mapa = this.NOTIF_MAP[notif.tipo] || this.NOTIF_MAP['DEFAULT'];
+          const claveTraduccion = this.NOTIF_MAP[notif.tipo] ? notif.tipo : 'DEFAULT';
 
+          // 2. Traducir el título y construirlo con su emoji correspondiente
+          const tituloTraducido = this.translate.instant(`NOTIFICATIONS.${claveTraduccion}`);
+          const tituloFinal = `${mapa.icon} ${tituloTraducido}`;
+
+          // 3. Traducir el cuerpo del mensaje por si el backend envía claves i18n
+          const mensajeFinal = this.translate.instant(notif.mensaje);
+
+          // 4. Lanzar el Toastr dinámicamente usando corchetes para el método
+          const toast = this.toastr[mapa.method](mensajeFinal, tituloFinal, config);
+
+          // 5. Mantener la lógica de interacción original intacta
           toast.onTap.subscribe(() => {
             this.marcarUnaComoLeida(notif._id).subscribe(() => {
               this.router.navigate([this.determinarRutaAdmin(notif.tipo, notif.referenciaId)]);
@@ -173,7 +166,7 @@ export class NotificacionService {
    */
   private determinarRutaAdmin(tipo: string, refId?: string): string {
     if (!refId) return '/dashboard';
-    
+
     if (tipo === 'NUEVO_PAGO' || tipo.startsWith('PAGO_')) {
       return `/dashboard/transferencias`; // Ajusta si tu ruta de pagos es diferente (ej: dashboard/ventas)
     }
@@ -183,7 +176,7 @@ export class NotificacionService {
     if (tipo === 'NUEVA_RESERVACION' || tipo.startsWith('RESERVACION_')) {
       return `/dashboard/reservaciones`; // 🟢 Coincide exactamente con tu ruta
     }
-    
+
     return '/dashboard';
   }
 }

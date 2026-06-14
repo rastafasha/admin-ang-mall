@@ -16,7 +16,7 @@ import { TranslateService } from '@ngx-translate/core';
   templateUrl: './usuarios-tienda.component.html',
   styleUrls: ['./usuarios-tienda.component.css']
 })
-export class UsuariosTiendaComponent implements OnInit {
+export class UsuariosTiendaComponent implements OnInit, OnDestroy {
 
   public totalUsuarios: number = 0;
   public usuarios: Usuario[] = [];
@@ -43,6 +43,9 @@ export class UsuariosTiendaComponent implements OnInit {
   public info: string = '';
   private langSubscription!: Subscription;
 
+  option_selectedd: number = 1;
+      solicitud_selectedd: any = 1;
+
   constructor(
     private usuarioService: UsuarioService,
     private busquedaService: BusquedasService,
@@ -51,15 +54,24 @@ export class UsuariosTiendaComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    window.scrollTo(0, 0);
     let USER = localStorage.getItem("user");
     this.user = JSON.parse(USER ? USER : '');
+     // 🟢 1. CARGA INICIAL DE LAS INSTRUCCIONES (Garantiza que la info no empiece vacía)
+    this.translate.get('USERS_STORE.TITLE').subscribe(() => {
+      this.actualizarInstruccionesPagos();
+    });
+
+    // 🟢 2. ESCUCHA SI CAMBIAN EL IDIOMA DESPUÉS (Mantiene tu lógica actual)
+    this.langSubscription = this.translate.onLangChange.subscribe(() => {
+      this.actualizarInstruccionesPagos();
+    });
+
     this.localId = this.user.local;
     this.role = this.user.role;
     this.loadUsuarios();
 
-    this.langSubscription = this.translate.onLangChange.subscribe(() => {
-      this.actualizarInstruccionesPagos();
-    });
+    
   }
 
   private actualizarInstruccionesPagos() {
@@ -80,6 +92,12 @@ export class UsuariosTiendaComponent implements OnInit {
       <li>${item3}</li>
     </ul>
   `;
+  }
+
+   ngOnDestroy(): void {
+    if (this.langSubscription) {
+      this.langSubscription.unsubscribe();
+    }
   }
 
 
@@ -162,6 +180,18 @@ export class UsuariosTiendaComponent implements OnInit {
       }
     )
   }
+
+   optionSelected(value: number) {
+        this.option_selectedd = value;
+        if (this.option_selectedd === 1) {
+    
+          // this.ngOnInit();
+        }
+        if (this.option_selectedd === 2) {
+          this.solicitud_selectedd = null;
+        }
+      }
+  
 
 
 }

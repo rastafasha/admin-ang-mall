@@ -6,14 +6,20 @@
       <div class="modal-header bg-success text-white border-0">
         <h5 class="modal-title d-flex align-items-center" id="infoModalLabel">
           <i class="fa fa-info-circle me-2"></i> 
-          <span>{{'Guía de Sección'|translate}}: {{ sectionId | titlecase }}</span>
+          <span>
+            {{ 'Guía de Sección' | translate }}: {{ 'SECTIONS.' + sectionId | translate }}
+          </span>
         </h5>
         <button type="button" class="btn-close btn-close-white" (click)="onClose()" aria-label="Close"></button>
       </div>
 
       <div class="modal-body py-4">
         <!-- El contenido inyectado desde el TS -->
-        <div class="instrucciones-content" [innerHTML]="info"></div>
+        <div *ngIf="info" class="instrucciones-content" [innerHTML]="info"></div>
+        <!-- Opcional: Un spinner de carga por si la información viene de una API lenta -->
+  <div *ngIf="!info" class="text-center text-muted py-3">
+    <i class="fa fa-spinner fa-spin me-2"></i> Cargando guía...
+  </div>
       </div>
 
       <div class="modal-footer border-0 bg-light d-flex justify-content-between">

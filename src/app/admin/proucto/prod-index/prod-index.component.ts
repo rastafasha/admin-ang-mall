@@ -18,7 +18,7 @@ declare var $: any;
   templateUrl: './prod-index.component.html',
   styleUrls: ['./prod-index.component.css']
 })
-export class ProdIndexComponent implements OnInit {
+export class ProdIndexComponent implements OnInit, OnDestroy{
 
   public productos: Producto[] = [];
   public producto: Producto;
@@ -58,6 +58,16 @@ export class ProdIndexComponent implements OnInit {
 
     let USER = localStorage.getItem("user");
     this.user = USER ? JSON.parse(USER) : null;
+    // 🟢 1. CARGA INICIAL DE LAS INSTRUCCIONES (Garantiza que la info no empiece vacía)
+    this.translate.get('PRODUCTS.TITLE').subscribe(() => {
+      this.actualizarInstruccionesPagos();
+    });
+
+    // 🟢 2. ESCUCHA SI CAMBIAN EL IDIOMA DESPUÉS (Mantiene tu lógica actual)
+    this.langSubscription = this.translate.onLangChange.subscribe(() => {
+      this.actualizarInstruccionesPagos();
+    });
+    
     if (this.user.role === 'SUPERADMIN') {
       this.loadProductos();
     }
@@ -67,9 +77,7 @@ export class ProdIndexComponent implements OnInit {
     }
     this.loadCategorias();
 
-    this.langSubscription = this.translate.onLangChange.subscribe(() => {
-      this.actualizarInstruccionesPagos();
-    });
+    
   }
 
   private actualizarInstruccionesPagos() {
@@ -95,6 +103,13 @@ export class ProdIndexComponent implements OnInit {
     </ul>
   `;
   }
+
+   ngOnDestroy(): void {
+    if (this.langSubscription) {
+      this.langSubscription.unsubscribe();
+    }
+  }
+
 
 
 

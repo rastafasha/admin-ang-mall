@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
@@ -29,7 +29,7 @@ declare var $: any;
   templateUrl: './tiposdepago.component.html',
   styleUrls: ['./tiposdepago.component.css']
 })
-export class TiposdepagoComponent implements OnInit {
+export class TiposdepagoComponent implements OnInit, OnDestroy {
 
   public file: File;
   public imgSelect: String | ArrayBuffer;
@@ -86,6 +86,16 @@ export class TiposdepagoComponent implements OnInit {
     let USER = localStorage.getItem("user");
     this.user = JSON.parse(USER || '{}');
 
+    // 🟢 1. CARGA INICIAL DE LAS INSTRUCCIONES (Garantiza que la info no empiece vacía)
+    this.translate.get('PAYMENT_METHODS.TITLE').subscribe(() => {
+      this.actualizarInstruccionesPagos();
+    });
+
+    // 🟢 2. ESCUCHA SI CAMBIAN EL IDIOMA DESPUÉS (Mantiene tu lógica actual)
+    this.langSubscription = this.translate.onLangChange.subscribe(() => {
+      this.actualizarInstruccionesPagos();
+    });
+
     // Load Paypal config first
     if (this.user.local) {
       this.loadPaypalConfig();
@@ -97,9 +107,7 @@ export class TiposdepagoComponent implements OnInit {
       this.getTiposdePagoByLocal();
     }
 
-    this.langSubscription = this.translate.onLangChange.subscribe(() => {
-      this.actualizarInstruccionesPagos();
-    });
+    
   }
 
   private actualizarInstruccionesPagos() {
@@ -124,6 +132,11 @@ export class TiposdepagoComponent implements OnInit {
       <li>${item5}</li>
     </ul>
   `;
+  }
+  ngOnDestroy(): void {
+    if (this.langSubscription) {
+      this.langSubscription.unsubscribe();
+    }
   }
 
   loadPaypalConfig() {

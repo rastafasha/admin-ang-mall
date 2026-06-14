@@ -463,6 +463,11 @@
     "Pulsa el Botón Install": "Click the Install button",
     "Agregalo a tu barra de Inicio": "Add it to your Home Screen",
     "En esta sección podrás ver": "In this section you can see",
+
+    "Historial de Notificaciones":"Notifications History",
+    "Notificaciones":"Notifications",
+    "Vaciar Buzón":"Clear Inbox",
+    "Ver Historial Completo":"View Complete History",
     
     "PRODUCTS": {
         "TITLE": "Section: Products",
@@ -573,6 +578,37 @@
         "SUBTITLE": "In this section you can:",
         "ITEM_1": "View cash payments",
         "ITEM_2": "These payments are currently only recorded using the Local Service mode"
-    }
+    },
+    
+  "NOTIFICATIONS": {
+    "NUEVO_PAGO": "New Payment Reported",
+    "NUEVO_PEDIDO": "Incoming Order",
+    "NUEVA_RESERVACION": "Reservation Request",
+    "PAGO_APROBADO": "Payment Verified",
+    "PAGO_RECHAZADO": "Payment Declined",
+    "PEDIDO_APROBADO": "Order in Kitchen",
+    "PEDIDO_RECHAZADO": "Order Canceled",
+    "PEDIDO_FINALIZADO": "Order Dispatched",
+    "RESERVACION_CONFIRMADA": "Reservation Confirmed",
+    "RESERVACION_CANCELADA": "Reservation Canceled",
+    "RESERVACION_COMPLETADA": "Reservation Completed",
+    "DEFAULT": "System Alert"
+  
+},
+ "SECTIONS": {
+    "tienda": "Store",
+    "pedidos": "Orders",
+    "reservaciones": "Reservations",
+    "ventas": "Sales",
+    "atencionTienda": "Store Atenttion",
+    "usuariostienda": "Users Stores",
+    "transferencias": "Trasfers",
+    "pagoEfectivo": "Cash Payments",
+    "productos": "Products",
+    "categorias": "Categories",
+    "conectarWhatsapp": "Connect to Whatsapp",
+    "tiposdePago": "Payment Methods"
+  }
+
 
 }

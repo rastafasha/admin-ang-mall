@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 import { Pedido } from 'src/app/models/pedido.model';
@@ -13,7 +13,7 @@ declare var $: any;
   templateUrl: './pedidos-menu.component.html',
   styleUrls: ['./pedidos-menu.component.css']
 })
-export class PedidosMenuComponent implements OnInit {
+export class PedidosMenuComponent implements OnInit, OnDestroy {
   public pedidos: Pedido[];
   public status: string = 'PENDING';
   public cargando: boolean = false;
@@ -38,15 +38,23 @@ export class PedidosMenuComponent implements OnInit {
     let USER = localStorage.getItem("user");
     this.user = JSON.parse(USER ? USER : '');
 
+    // 🟢 1. CARGA INICIAL DE LAS INSTRUCCIONES (Garantiza que la info no empiece vacía)
+    this.translate.get('ORDERS.TITLE').subscribe(() => {
+      this.actualizarInstruccionesPagos();
+    });
+
+    // 🟢 2. ESCUCHA SI CAMBIAN EL IDIOMA DESPUÉS (Mantiene tu lógica actual)
+    this.langSubscription = this.translate.onLangChange.subscribe(() => {
+      this.actualizarInstruccionesPagos();
+    });
+
     if (this.user.role === 'SUPERADMIN') {
       this.getPedidos();
     }
     if (this.user.role === 'ADMIN') {
       this.pedidosPorLocalId()
     }
-   this.langSubscription = this.translate.onLangChange.subscribe(() => {
-      this.actualizarInstruccionesPagos();
-    });
+   
   }
 
   private actualizarInstruccionesPagos() {
@@ -69,6 +77,12 @@ export class PedidosMenuComponent implements OnInit {
       <li>${item4}</li>
     </ul>
   `;
+  }
+
+   ngOnDestroy(): void {
+    if (this.langSubscription) {
+      this.langSubscription.unsubscribe();
+    }
   }
 
   optionSelected(value: number) {

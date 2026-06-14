@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
@@ -11,7 +11,7 @@ import { PagoEfectivoService } from 'src/app/services/pago-efectivo.service';
   templateUrl: './pagos-efectivo.component.html',
   styleUrls: ['./pagos-efectivo.component.css']
 })
-export class PagosEfectivoComponent implements OnInit {
+export class PagosEfectivoComponent implements OnInit, OnDestroy {
 
   pagoefectivos: PagoEfectivo[] = [];
   pagoefectivo: PagoEfectivo;
@@ -35,15 +35,23 @@ export class PagosEfectivoComponent implements OnInit {
     let USER = localStorage.getItem("user");
     this.user = JSON.parse(USER ? USER : '');
 
+    // 🟢 1. CARGA INICIAL DE LAS INSTRUCCIONES (Garantiza que la info no empiece vacía)
+    this.translate.get('CASH_PAYMENT.TITLE').subscribe(() => {
+      this.actualizarInstruccionesPagos();
+    });
+
+    // 🟢 2. ESCUCHA SI CAMBIAN EL IDIOMA DESPUÉS (Mantiene tu lógica actual)
+    this.langSubscription = this.translate.onLangChange.subscribe(() => {
+      this.actualizarInstruccionesPagos();
+    });
+
     if (this.user.role === 'SUPERADMIN') {
       this.obtenerPagosEfectivo();
     }
     if (this.user.role === 'ADMIN' || this.user.role === 'VENTAS') {
       this.getTiposdePagoByLocal()
     }
-    this.langSubscription = this.translate.onLangChange.subscribe(() => {
-      this.actualizarInstruccionesPagos();
-    });
+
   }
 
   private actualizarInstruccionesPagos() {
@@ -63,6 +71,12 @@ export class PagosEfectivoComponent implements OnInit {
     </ul>
   `;
   }
+  ngOnDestroy(): void {
+    if (this.langSubscription) {
+      this.langSubscription.unsubscribe();
+    }
+  }
+
 
   private obtenerPagosEfectivo() {
     this.cargando = true;

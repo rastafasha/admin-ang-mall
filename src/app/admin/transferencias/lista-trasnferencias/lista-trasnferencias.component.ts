@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
@@ -15,7 +15,7 @@ import Swal from 'sweetalert2';
   templateUrl: './lista-trasnferencias.component.html',
   styleUrls: ['./lista-trasnferencias.component.css']
 })
-export class ListaTrasnferenciasComponent implements OnInit {
+export class ListaTrasnferenciasComponent implements OnInit, OnDestroy {
 
   public transferencias: Transferencia[] = [];
   public cargando: boolean = true;
@@ -46,8 +46,20 @@ export class ListaTrasnferenciasComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    window.scrollTo(0, 0);
     let USER = localStorage.getItem("user");
     this.user = JSON.parse(USER ? USER : '');
+
+    // 🟢 1. CARGA INICIAL DE LAS INSTRUCCIONES (Garantiza que la info no empiece vacía)
+    this.translate.get('TRANSF.TITLE').subscribe(() => {
+      this.actualizarInstruccionesPagos();
+    });
+
+    // 🟢 2. ESCUCHA SI CAMBIAN EL IDIOMA DESPUÉS (Mantiene tu lógica actual)
+    this.langSubscription = this.translate.onLangChange.subscribe(() => {
+      this.actualizarInstruccionesPagos();
+    });
+    
     if (this.user.role === 'SUPERADMIN') {
       this.loadTrasnferencias();
     }
@@ -56,9 +68,7 @@ export class ListaTrasnferenciasComponent implements OnInit {
       this.getTienda();
     }
 
-    this.langSubscription = this.translate.onLangChange.subscribe(() => {
-      this.actualizarInstruccionesPagos();
-    });
+    
   }
 
   private actualizarInstruccionesPagos() {
@@ -79,6 +89,12 @@ export class ListaTrasnferenciasComponent implements OnInit {
       <li>${item3}</li>
     </ul>
   `;
+  }
+
+   ngOnDestroy(): void {
+    if (this.langSubscription) {
+      this.langSubscription.unsubscribe();
+    }
   }
 
 

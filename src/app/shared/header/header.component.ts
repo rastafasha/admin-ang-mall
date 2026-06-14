@@ -11,7 +11,7 @@ import { StorageService } from 'src/app/services/storage.service';
 import { CarritoService } from 'src/app/services/carrito.service';
 import { environment } from 'src/environments/environment';
 import { io } from "socket.io-client";
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { BehaviorSubject, filter, Subscription } from 'rxjs';
 import { MessageService } from 'src/app/services/message.service';
 import { TiendaService } from 'src/app/services/tienda.service';
 import { SidebarService } from 'src/app/services/sidebar.service';
@@ -79,7 +79,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   // Control del menú desplegable
   public showLanguageDropdown: boolean = false;
 
-
+  private routerSubscription!: Subscription;
   constructor(
     private usuarioService: UsuarioService,
     private congeralService: CongeneralService,
@@ -109,6 +109,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+
+    //  Escucha globalmente el cambio de página para cerrar el sidebar
+    this.routerSubscription = this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe(() => {
+      this.sidebarService.closeSidebar();
+    });
 
     const user = localStorage.getItem('user');
     this.usuario = JSON.parse(user);
@@ -225,24 +232,16 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }
   }
 
-  
- 
-
-
-
-
   logout() {
     this.usuarioService.logout();
   }
 
 
   buscar(termino: string) {
-
     if (termino.length === 0) {
       return;
     }
     this.router.navigateByUrl(`/dashboard/buscar/${termino}`);
-
   }
 
   getTienda() {
@@ -255,11 +254,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   openMenu() {
-
     var menuLateral = document.getElementsByClassName("sidemenu");
     for (var i = 0; i < menuLateral.length; i++) {
       menuLateral[i].classList.toggle('active');
-
     }
   }
 
@@ -478,7 +475,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
     if (this.cartSubscription) {
       this.cartSubscription.unsubscribe();
     }
+    if (this.routerSubscription) {
+      this.routerSubscription.unsubscribe();
+    }
   }
+
+ 
 
 
 }

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
@@ -14,7 +14,7 @@ import Swal from 'sweetalert2';
   templateUrl: './reservacion-list.component.html',
   styleUrl: './reservacion-list.component.css'
 })
-export class ReservacionListComponent {
+export class ReservacionListComponent implements OnInit, OnDestroy{
 
   reservaciones: Reservacion[] = [];
   p: number = 1;
@@ -38,6 +38,16 @@ export class ReservacionListComponent {
   ngOnInit(): void {
     let USER = localStorage.getItem("user");
     this.user = JSON.parse(USER ? USER : '');
+    // 🟢 1. CARGA INICIAL DE LAS INSTRUCCIONES (Garantiza que la info no empiece vacía)
+    this.translate.get('RESERVATION.TITLE').subscribe(() => {
+      this.actualizarInstruccionesPagos();
+    });
+
+    // 🟢 2. ESCUCHA SI CAMBIAN EL IDIOMA DESPUÉS (Mantiene tu lógica actual)
+    this.langSubscription = this.translate.onLangChange.subscribe(() => {
+      this.actualizarInstruccionesPagos();
+    });
+
     if (this.user.role === 'SUPERADMIN') {
       this.loadReservaciones();
     }
@@ -45,9 +55,7 @@ export class ReservacionListComponent {
       this.getReservacionesByLocal();
       this.getTienda();
     }
-    this.langSubscription = this.translate.onLangChange.subscribe(() => {
-      this.actualizarInstruccionesPagos();
-    });
+   
   }
 
   private actualizarInstruccionesPagos() {
@@ -70,6 +78,12 @@ export class ReservacionListComponent {
       <li>${item4}</li>
     </ul>
   `;
+  }
+
+  ngOnDestroy(): void {
+    if (this.langSubscription) {
+      this.langSubscription.unsubscribe();
+    }
   }
 
 

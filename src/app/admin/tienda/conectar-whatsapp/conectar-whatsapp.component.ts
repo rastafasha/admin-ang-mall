@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { TiendaService } from 'src/app/services/tienda.service';
 import * as QRCode from 'qrcode';
 import { TranslateService } from '@ngx-translate/core';
@@ -10,7 +10,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './conectar-whatsapp.component.html',
   styleUrl: './conectar-whatsapp.component.css'
 })
-export class ConectarWhatsappComponent implements OnInit{
+export class ConectarWhatsappComponent implements OnInit, OnDestroy{
   user:any;
   public whatsappStatus: string = 'DESCONECTADO'; 
   public whatsappQRString: string = '';
@@ -22,15 +22,24 @@ export class ConectarWhatsappComponent implements OnInit{
   public translate = inject(TranslateService);
 
   ngOnInit(): void {
+    window.scrollTo(0, 0);
     let USER = localStorage.getItem("user");
     this.user = USER ? JSON.parse(USER) : null;
+     // 🟢 1. CARGA INICIAL DE LAS INSTRUCCIONES (Garantiza que la info no empiece vacía)
+    this.translate.get('CONNECT_TO_WHATSAPP.TITLE').subscribe(() => {
+      this.actualizarInstruccionesPagos();
+    });
+
+    // 🟢 2. ESCUCHA SI CAMBIAN EL IDIOMA DESPUÉS (Mantiene tu lógica actual)
+    this.langSubscription = this.translate.onLangChange.subscribe(() => {
+      this.actualizarInstruccionesPagos();
+    });
+
     if (this.user?.local) {
       this.revisarEstadoActual();
     }
 
-    this.langSubscription = this.translate.onLangChange.subscribe(() => {
-      this.actualizarInstruccionesPagos();
-    });
+    
   }
 
   private actualizarInstruccionesPagos() {
@@ -54,6 +63,8 @@ export class ConectarWhatsappComponent implements OnInit{
     </ul>
   `;
   }
+
+  
 
   revisarEstadoActual() {
     this.tiendaService.statusWhatsapp(this.user.local).subscribe((resp: any) => {
@@ -123,8 +134,13 @@ export class ConectarWhatsappComponent implements OnInit{
     }, 100);
   }
 
-  ngOnDestroy(): void {
-    if (this.chequeoInterval) clearInterval(this.chequeoInterval);
+  
+   ngOnDestroy(): void {
+
+     if (this.chequeoInterval) clearInterval(this.chequeoInterval);
+    if (this.langSubscription) {
+      this.langSubscription.unsubscribe();
+    }
   }
 
   public encodeURIComponent(str: string): string {

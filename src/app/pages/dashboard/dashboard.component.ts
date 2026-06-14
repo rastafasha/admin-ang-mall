@@ -15,6 +15,7 @@ import { SwPush } from '@angular/service-worker';
 import { ToastrService } from 'ngx-toastr';
 import { PushNotificationService } from 'src/app/services/push-notification.service';
 import { TranslateService } from '@ngx-translate/core';
+import { SidebarService } from 'src/app/services/sidebar.service';
 declare let Chart;
 
 @Component({
@@ -121,7 +122,9 @@ export class DashboardComponent implements OnInit {
     public pushService: PushNotificationService, // Debe ser PUBLIC para que el HTML acceda a él
     private swPush: SwPush,
     private toastr: ToastrService,
-     public translate: TranslateService 
+     public translate: TranslateService,
+     public sidebarService: SidebarService,
+
   ) {
     this.url = environment.baseUrl;
     this.identity = this._userService.usuario;
@@ -129,6 +132,7 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.sidebarService.closeSidebar();
     const user = localStorage.getItem('user');
     this.usuario = JSON.parse(user);
     // Al abrir el Dashboard, sincronizamos el Switch con el estado real del navegador
