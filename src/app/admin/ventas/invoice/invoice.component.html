@@ -101,37 +101,66 @@
             </div>
             <div class="panel-body">
                 <div class="table-responsive">
-                    <table class="table table-condensed">
+                    <table class="table table-condensed align-middle">
                         <thead>
                             <tr>
-                                <td><strong>{{'Descripción'|translate}}</strong></td>
-                                <td width="20%" class="text-center"><strong>{{'Importe'|translate}}</strong></td>
+                                <th><strong>{{'Descripción'|translate}}</strong></th>
+                                <th class="text-center"><strong>{{'Cantidad'|translate}}</strong></th>
+                                <th class="text-center"><strong>{{'Precio unitario'|translate}}</strong></th>
+                                <th class="text-center"><strong>{{'Total'|translate}}</strong></th>
+                                <th width="20%" class="text-center"><strong>{{'Importe'|translate}}</strong></th>
                             </tr>
                         </thead>
                         <tbody>
+                            <!-- Fila dinámica de productos -->
                             <tr *ngFor="let item of detalle">
                                 <td>
-                                   <div class="d-flex flex-column">
-                                     {{ translate.currentLang === 'en' ? item?.producto?.titulo?.en :
-                                    item?.producto?.titulo?.es }}:
-                                    {{ item?.selector_elegido}}
-                                   </div>
-                                    x {{ item?.cantidad }}
+                                    <div class="d-flex flex-column">
+                                        <span class="fw-semibold">
+                                            {{ translate.currentLang === 'en' ? (item?.producto?.titulo?.en ||
+                                            item?.producto?.titulo?.es) : (item?.producto?.titulo?.es ||
+                                            item?.producto?.titulo?.en) }}
+                                        </span>
+                                        <small class="text-muted" *ngIf="item?.selector_elegido">
+                                            {{ item?.selector_elegido }}
+                                        </small>
+                                    </div>
+                                </td>
+                                <td class="text-center">
+                                    {{ item?.cantidad }}
+                                </td>
+                                <td class="text-center">
+                                    {{ item?.precio | currency: tienda_moneda }}
                                 </td>
                                 <td class="text-center">
                                     {{ (item?.precio * item?.cantidad) | currency: tienda_moneda }}
                                 </td>
+                                <!-- Celda vacía para mantener el balance con la columna Importe si no se usa aquí -->
+                                <td class="text-center">-</td>
                             </tr>
+
+                            <!-- Fila de Envío Corregida -->
                             <tr>
-                                <td class="total-row text-right"><strong>{{'Envío'|translate}}</strong></td>
-                                <td class="total-row text-center">{{venta.precio_envio | currency:tienda_moneda}} </td>
+                                <td colspan="4" class="text-end border-0 pt-3">
+                                    <strong>{{'Envío'|translate}}:</strong>
+                                </td>
+                                <td class="text-center border-0 pt-3">
+                                    {{ venta.precio_envio | currency:tienda_moneda }}
+                                </td>
                             </tr>
+
+                            <!-- Fila de Total Corregida -->
                             <tr>
-                                <td class="total-row text-right"><strong>{{'Total'|translate}}</strong></td>
-                                <td class="total-row text-center">{{venta.total_pagado | currency:tienda_moneda}} </td>
+                                <td colspan="4" class="text-end border-0fw-bold fs-5">
+                                    <strong>{{'Total'|translate}}:</strong>
+                                </td>
+                                <td class="text-center border-0 fw-bold fs-5 text-success">
+                                    {{ venta.total_pagado | currency:tienda_moneda }}
+                                </td>
                             </tr>
                         </tbody>
                     </table>
+
                 </div>
             </div>
         </div>

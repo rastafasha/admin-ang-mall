@@ -1,10 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { Location } from '@angular/common';
 import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
-
 import { FileUploadService } from 'src/app/services/file-upload.service';
 import { Categoria } from 'src/app/models/categoria.model';
 import { Usuario } from 'src/app/models/usuario.model';
@@ -12,6 +9,7 @@ import { CategoriaService } from 'src/app/services/categoria.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { IconosService } from 'src/app/services/iconos.service';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { TranslateService } from '@ngx-translate/core';
 interface HtmlInputEvent extends Event {
   target: HTMLInputElement & EventTarget;
 }
@@ -52,9 +50,7 @@ export class CatEditComponent implements OnInit, OnChanges {
     private categoriaService: CategoriaService,
     private usuarioService: UsuarioService,
     private fileUploadService: FileUploadService,
-    private router: Router,
-    private activatedRoute: ActivatedRoute,
-    private location: Location,
+    private translate: TranslateService,
     private _iconoService: IconosService,
   ) {
     this.usuario = usuarioService.usuario;
@@ -77,13 +73,24 @@ export class CatEditComponent implements OnInit, OnChanges {
     ) {
       this.pageTitle = 'Editando Categoria';
       const categoria = changes['categoriaSeleccionado'].currentValue;
-      this.categoriaForm.patchValue({
-        id: categoria._id,
-        nombre: categoria.nombre,
-        subcategorias: categoria.subcategorias,
-        icono: categoria.icono,
-        state_banner: categoria.state_banner,
-      });
+      // Detectamos el idioma actual del sistema
+const lang = this.translate.currentLang || 'es';
+
+this.categoriaForm.patchValue({
+  id: categoria._id,
+  
+  // 1. Extrae el texto del idioma actual (con respaldo en español por si viene vacío)
+  nombre: categoria.nombre?.[lang] || categoria.nombre?.es || '',
+  
+  // 2. Hace lo mismo para la subcategoría protegiendo el código contra textos planos viejos
+  subcategorias: typeof categoria.subcategorias === 'object' 
+    ? (categoria.subcategorias?.[lang] || categoria.subcategorias?.es || '')
+    : (categoria.subcategorias || ''), // Por si queda algún registro viejo sin migrar
+    
+  icono: categoria.icono,
+  state_banner: categoria.state_banner,
+});
+
       this.categoriaSeleccionado = categoria;
       this.pageTitle = 'Editando Categoria';
     } else {
@@ -245,7 +252,5 @@ export class CatEditComponent implements OnInit, OnChanges {
   }
 
 
-  goBack() {
-    this.location.back(); // <-- go back to previous location on cancel
-  }
+  
 }

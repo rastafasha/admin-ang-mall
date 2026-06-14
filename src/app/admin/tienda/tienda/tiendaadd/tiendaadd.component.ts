@@ -13,6 +13,7 @@ import { Tienda } from 'src/app/models/tienda.model';
 import { TiendaService } from 'src/app/services/tienda.service';
 import { PaisService } from 'src/app/services/pais.service';
 import { Pais } from 'src/app/models/pais.model';
+import { TranslateService } from '@ngx-translate/core';
 
 interface HtmlInputEvent extends Event {
   target: HTMLInputElement & EventTarget;
@@ -68,6 +69,8 @@ export class TiendaaddComponent implements OnInit, OnChanges {
   telefono: any; user: any;
   redssociales: any; status: any;
 
+  public typeof = (val: any) => typeof val;
+
   constructor(
     private fb: FormBuilder,
     private categoriaService: CategoriaService,
@@ -76,6 +79,7 @@ export class TiendaaddComponent implements OnInit, OnChanges {
     private usuarioService: UsuarioService,
     private fileUploadService: FileUploadService,
     private _iconoService: IconosService,
+    public translate: TranslateService,
   ) {
     this.usuario = usuarioService.usuario;
     const base_url = environment.baseUrl;
@@ -128,32 +132,46 @@ export class TiendaaddComponent implements OnInit, OnChanges {
     ) {
       this.pageTitle = 'Editando Tienda';
       const tienda = changes['tiendaSeleccionado'].currentValue;
+      // Detectamos el idioma actual del sistema ('es' o 'en')
+      const lang = this.translate.currentLang || 'es';
+
       this.tiendaForm.patchValue({
         id: tienda._id,
+
+        // 1. Textos de Marketing/Hero bilingües (extrae el idioma activo con respaldo en español)
+        texto_hero_uno: tienda.texto_hero_uno?.[lang] || tienda.texto_hero_uno?.es || '',
+        texto_hero_dos: tienda.texto_hero_dos?.[lang] || tienda.texto_hero_dos?.es || '',
+        texto_hero_destacado: tienda.texto_hero_destacado?.[lang] || tienda.texto_hero_destacado?.es || '',
+        descripcion_hero: tienda.descripcion_hero?.[lang] || tienda.descripcion_hero?.es || '',
+
+        // 2. Manejo seguro de subcategoría (por si viene como objeto bilingüe o texto plano)
+        subcategoria: typeof tienda.subcategoria === 'object'
+          ? (tienda.subcategoria?.[lang] || tienda.subcategoria?.es || '')
+          : (tienda.subcategoria || ''),
+
+        // 3. Selectores de relación (ID limpio para que el <select> se active)
+        categoria: tienda.categoria?._id || tienda.categoria || '',
+
+        // 4. Campos administrativos, de configuración y de contacto (se quedan exactamente igual)
         nombre: tienda.nombre,
         local: tienda.local,
         telefono: tienda.telefono,
-        categoria: tienda.categoria._id,
         direccion: tienda.direccion,
         pais: tienda.pais,
         moneda: tienda.moneda,
         ciudad: tienda.ciudad,
         zip: tienda.zip,
-        subcategoria: tienda.subcategoria,
         status: tienda.status,
         state_banner: tienda.state_banner,
         has_reservacion: tienda.has_reservacion,
         capacidad_por_hora: tienda.capacidad_por_hora,
-        texto_hero_uno: tienda.texto_hero_uno,
-        texto_hero_dos: tienda.texto_hero_dos,
-        texto_hero_destacado: tienda.texto_hero_destacado,
-        descripcion_hero: tienda.descripcion_hero,
         color_primario: tienda.color_primario,
         color_fondo: tienda.color_fondo,
         img: tienda.img,
         img_hero: tienda.img_hero,
-        user: tienda.user
+        user: tienda.user?._id || tienda.user || '' // Por si el objeto de usuario viene poblado
       });
+
       this.tiendaSeleccionado = tienda;
       this.redssociales = this.tiendaSeleccionado.redssociales;
       this.pageTitle = 'Editando Tienda';

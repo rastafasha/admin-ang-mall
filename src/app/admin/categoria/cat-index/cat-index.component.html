@@ -68,7 +68,7 @@
                                             data-bs-target="#editCategoria" [src]="categoria.img | imagenPipe: 'categorias'" class="avatar cursor" alt="{{categoria.titulo}}">
                                 </td>
                                 <td>{{ translate.currentLang === 'en' ? categoria.nombre?.en: categoria.nombre?.es }}</td>
-                                <td>{{ translate.currentLang === 'en' ? categoria.subcategorias?.en: categoria.subcategorias?.es }}...</td>
+                                <td>{{ translate.currentLang === 'en' ? (categoria.subcategorias?.en || categoria.subcategorias?.es) : (categoria.subcategorias?.es || categoria.subcategorias?.en) }}</td>
                                 <td>
                                     <button type="button" class="btn btn-accent" *ngIf="categoria.status == 'Edición' || categoria.status == 'Desactivado'" data-bs-toggle="modal" [attr.data-bs-target]="'#activar-'+categoria._id">
                                         <span class="czi-check"></span> {{'Activar'|translate}}

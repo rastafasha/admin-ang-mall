@@ -15,6 +15,7 @@ import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { ColorService } from 'src/app/services/color.service';
 import { SelectorService } from 'src/app/services/selector.service';
 import { TiendaService } from 'src/app/services/tienda.service';
+import { TranslateService } from '@ngx-translate/core';
 interface HtmlInputEvent extends Event {
   target: HTMLInputElement & EventTarget;
 }
@@ -66,7 +67,7 @@ export class ProdEditComponent implements OnInit, OnChanges {
   public Editor1 = ClassicEditor;
 
   user: any;
-
+ public typeof = (val: any) => typeof val;
   constructor(
     private fb: FormBuilder,
     private productoService: ProductoService,
@@ -75,7 +76,7 @@ export class ProdEditComponent implements OnInit, OnChanges {
     private categoriaService: CategoriaService,
     private tiendaService: TiendaService,
     private fileUploadService: FileUploadService,
-
+    public translate: TranslateService,
     private _colorService: ColorService,
     private _selectorService: SelectorService,
     private sanitizer: DomSanitizer,
@@ -108,25 +109,40 @@ export class ProdEditComponent implements OnInit, OnChanges {
     ) {
       this.pageTitle = 'Editando Producto';
       const producto = changes['productoSeleccionado'].currentValue;
+      // Detectamos el idioma actual del sistema ('es' o 'en')
+      const lang = this.translate.currentLang || 'es';
+
       this.productoForm.patchValue({
         id: producto._id,
-        titulo: producto.titulo,
+
+        // 1. Campos de texto bilingües (extrae el idioma activo con respaldo en español)
+        titulo: producto.titulo?.[lang] || producto.titulo?.es || '',
+        detalle: producto.detalle?.[lang] || producto.detalle?.es || '',
+        info_short: producto.info_short?.[lang] || producto.info_short?.es || '',
+
+        // 2. Selectores de relación (asumiendo que llega el objeto poblado o solo el ID)
+        // Pasamos solo el _id para que el elemento <select> de Bootstrap/Angular se active correctamente
+        categoria: producto.categoria?._id || producto.categoria || '',
+
+        // Manejo seguro de subcategoría por si viene como objeto bilingüe o string plano
+        subcategoria: typeof producto.subcategoria === 'object'
+          ? (producto.subcategoria?.[lang] || producto.subcategoria?.es || '')
+          : (producto.subcategoria || ''),
+
+        // 3. Campos planos, numéricos y de control (se quedan exactamente igual)
         slug: producto.slug,
-        detalle: producto.detalle,
-        info_short: producto.info_short,
         video_review: producto.video_review,
         stock: producto.stock,
         sku: producto.sku,
         precio_ahora: producto.precio_ahora,
         precio_antes: producto.precio_antes,
-        categoria: producto.categoria,
-        subcategoria: producto.subcategoria,
         isFeatured: producto.isFeatured,
         marca: producto.marca,
-        local: producto.local || '',
+        local: producto.local?._id || producto.local || '', // Por si local viene poblado
         nombre_selector: producto.nombre_selector,
         img: producto.img
       });
+
       this.productoSeleccionado = producto;
       this.pageTitle = 'Editando Producto';
     } else {
@@ -134,11 +150,11 @@ export class ProdEditComponent implements OnInit, OnChanges {
     }
   }
 
- onClose() {
+  onClose() {
     this.productoSeleccionado = null;
     this.currentStep = 1;
     this.pageTitle = 'Creando Producto';
-    
+
     // 1. Reseteamos el formulario pasándole los valores iniciales limpios de un solo golpe
     this.productoForm.reset({
       id: null,
@@ -167,7 +183,7 @@ export class ProdEditComponent implements OnInit, OnChanges {
 
     // Emitimos el evento al padre para limpiar cualquier variable externa
     this.closeModal.emit();
-}
+  }
 
 
   nextStep() {
@@ -286,7 +302,7 @@ export class ProdEditComponent implements OnInit, OnChanges {
     )
   }
 
-  loadCategoriasLocal(){
+  loadCategoriasLocal() {
     this.categoriaService.getCategoriaByLocal(this.user.local).subscribe(
       categorias => {
         this.listCategorias = categorias;

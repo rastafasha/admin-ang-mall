@@ -33,6 +33,7 @@ export class Tienda{
     public categoria?: Categoria,
     public subcategoria?: string,
     public isFeatured?: boolean,
+    public state_banner?: boolean,
     public iva?: number,
     public status?: 'Desactivado' |'Activo' ,
     //registro para notificaciones
