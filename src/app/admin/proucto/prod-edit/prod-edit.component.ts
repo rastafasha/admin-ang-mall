@@ -183,6 +183,7 @@ export class ProdEditComponent implements OnInit, OnChanges {
 
     // Emitimos el evento al padre para limpiar cualquier variable externa
     this.closeModal.emit();
+    this.refreshProductList.emit();
   }
 
 
@@ -376,6 +377,7 @@ export class ProdEditComponent implements OnInit, OnChanges {
           this.productoSeleccionado = resp.producto;
           Swal.fire('¡Paso 1 completado!', 'Post creado. Ahora sube la imagen.', 'success');
           // Como estmos creando, al finalizar debe ir al paso 2 para subir la imagen
+          this.refreshProductList.emit();
           this.currentStep = 2;
         })
     }

@@ -3,6 +3,7 @@ import { SelectorService } from "../../../services/selector.service";
 import Swal from 'sweetalert2';
 import { UsuarioService } from '../../../services/usuario.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
 
 declare var bootstrap: any;
 @Component({
@@ -37,6 +38,7 @@ export class SelectorComponent implements OnInit, OnChanges {
     private fb: FormBuilder,
     private _selectorService: SelectorService,
     private _userService: UsuarioService,
+    public translate: TranslateService
   ) {
     this.identity = this._userService.usuario;
   }

@@ -49,7 +49,9 @@
                                     </thead>
                                     <tbody *ngFor="let item of selector">
                                         <tr>
-                                            <td class="text-center">{{item.titulo}}</td>
+                                            <td class="text-center">
+                                                {{ translate.currentLang === 'en' ? item.titulo?.en : item.titulo?.es }}
+                                            </td>
 
                                             <td class="text-center">
                                                 <button class="btn btn-danger btn-sm"
