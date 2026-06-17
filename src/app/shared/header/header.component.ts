@@ -408,7 +408,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     if (this.showNotificationDropdown) {
 
       // Llamamos al método que adaptamos en tu servicio (página 1 para el dropdown corto)
-      this.notificacionService.obtenerHistorialCompleto(1, this.localId).subscribe({
+      this.notificacionService.obtenerHistorialCompleto(1, this.localId, true).subscribe({
         next: (res) => {
           if (res.ok && res.notificaciones) {
             // Asignamos el arreglo real de la base de datos a tu variable blindada

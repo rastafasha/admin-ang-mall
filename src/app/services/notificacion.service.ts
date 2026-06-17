@@ -154,10 +154,16 @@ export class NotificacionService {
   /**
    * 5. Obtener historial completo paginado
    */
-  obtenerHistorialCompleto(page: number = 1, localId: string): Observable<{ ok: boolean, notificaciones: Notificacion[], proximo: number | null }> {
-    // 🔑 Concatenamos &localId=... y &esAdmin=true para que el backend inteligente sepa qué hacer
+  obtenerHistorialCompleto(page: number = 1, localId?: string, esAdmin: boolean = false): Observable<{ ok: boolean, notificaciones: Notificacion[], proximo: number | null }> {
+    // 🔑 Si viene el localId, construimos los Query Params dinámicamente
+    let url = `${BackendApi}/notificaciones/historial?page=${page}`;
+    
+    if (localId) {
+      url += `&localId=${localId}&esAdmin=${esAdmin}`;
+    }
+
     return this.http.get<{ ok: boolean, notificaciones: Notificacion[], proximo: number | null }>(
-      `${BackendApi}/notificaciones/historial?page=${page}&localId=${localId}&esAdmin=true`,
+      url,
       this.getOptions()
     );
 }

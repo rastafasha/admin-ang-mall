@@ -1,6 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+import { Usuario } from 'src/app/models/usuario.model';
 import { NotificacionService } from 'src/app/services/notificacion.service';
+import { TiendaService } from 'src/app/services/tienda.service';
 
 @Component({
   selector: 'app-notificaciones',
@@ -10,8 +12,11 @@ import { NotificacionService } from 'src/app/services/notificacion.service';
 })
 export class NotificacionesComponent {
   cargando = false;
+  localId:string;
+  public usuario: Usuario;
   public notiService = inject(NotificacionService);
   public translate = inject(TranslateService);
+  public _tiendaService = inject(TiendaService);
   
   // Lista flexible 'any' para evitar trancas de tipado con el populate del usuario
   public historialNotificaciones: any[] = [];
@@ -20,11 +25,16 @@ export class NotificacionesComponent {
   count: number = 8;
 
   ngOnInit(): void {
+    const user = localStorage.getItem('user');
+    this.usuario = JSON.parse(user);
+    this.localId = this.usuario.local;
     this.cargarHistorial(this.p);
   }
 
+  
+
   cargarHistorial(page: number) {
-    this.notiService.obtenerHistorialCompleto(page).subscribe({
+    this.notiService.obtenerHistorialCompleto(page, this.localId, true).subscribe({
       next: (res) => {
         if (res.ok && res.notificaciones) {
           this.historialNotificaciones = res.notificaciones;
