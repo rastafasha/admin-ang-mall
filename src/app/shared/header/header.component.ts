@@ -70,6 +70,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   public socket = io(environment.soketServer);
   public tienda_moneda: any;
+  localId:string;
 
   // 1. Inicializamos el idioma leyendo el LocalStorage (por defecto 'es')
   public activeLang: string = localStorage.getItem('lang') || 'es';
@@ -119,6 +120,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
     const user = localStorage.getItem('user');
     this.usuario = JSON.parse(user);
+    this.localId = this.usuario.local;
     this.showCliente();
     this.getTienda();
     this.flag = true;
@@ -406,7 +408,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     if (this.showNotificationDropdown) {
 
       // Llamamos al método que adaptamos en tu servicio (página 1 para el dropdown corto)
-      this.notificacionService.obtenerHistorialCompleto(1, this.usuario.local).subscribe({
+      this.notificacionService.obtenerHistorialCompleto(1, this.localId).subscribe({
         next: (res) => {
           if (res.ok && res.notificaciones) {
             // Asignamos el arreglo real de la base de datos a tu variable blindada
