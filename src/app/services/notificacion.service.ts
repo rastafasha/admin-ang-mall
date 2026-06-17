@@ -154,12 +154,13 @@ export class NotificacionService {
   /**
    * 5. Obtener historial completo paginado
    */
-  obtenerHistorialCompleto(page: number = 1): Observable<{ ok: boolean, notificaciones: Notificacion[], proximo: number | null }> {
+  obtenerHistorialCompleto(page: number = 1, localId: string): Observable<{ ok: boolean, notificaciones: Notificacion[], proximo: number | null }> {
+    // 🔑 Concatenamos &localId=... y &esAdmin=true para que el backend inteligente sepa qué hacer
     return this.http.get<{ ok: boolean, notificaciones: Notificacion[], proximo: number | null }>(
-      `${BackendApi}/notificaciones/historial?page=${page}`,
+      `${BackendApi}/notificaciones/historial?page=${page}&localId=${localId}&esAdmin=true`,
       this.getOptions()
     );
-  }
+}
 
   /**
    * 🟢 REFACTORIZADO: Enrutador exclusivo para las vistas del panel de administración
