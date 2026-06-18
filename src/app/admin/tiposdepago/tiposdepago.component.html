@@ -38,23 +38,23 @@
                             </div>
                             <form class="rbt-profile-row rbt-default-form row row--15">
                                 <div class="form-group col-xs-12" *ngIf="!isEditMode">
-                                    <label for="exampleInputEmail0">{{'Tipo de Pago'|translate}}<span
-                                            class="required">*</span></label>
-                                    <select name="tipo" id="input" class="form-control" [(ngModel)]="tipo"
-                                        (change)="selectedTypeEdit($event.target.value)">
+                                    <label for="exampleInputEmail0">{{'Tipo de Pago / Canal'|translate}}<span class="required">*</span></label>
+                                    <select name="tipo" id="input" class="form-control" [(ngModel)]="tipo" (change)="selectedTypeEdit($event.target.value)">
                                         <option value="seleccione">{{'Seleccione'|translate}}</option>
-                                        <option value="Transferencia Dólares">{{'Transferencia Dólares'|translate}}
-                                        </option>
-                                        <option value="Transferencia Bolivares">{{'Transferencia Bolívares'|translate}}
-                                        </option>
-                                        <option value="Transferencia Euro">{{'Transferencia Euro'|translate}}</option>
-                                        <option value="pagomovil">Pago Móvil</option>
-                                        <option value="zelle">Zelle</option>
-                                        <option value="cheque">{{'Cheque'|translate}}</option>
+                                        
+                                        <!-- 🌍 OPCIONES UNIVERSALES CAMALEÓNICAS (Envían el string que espera Node, pero se adaptan visualmente) -->
+                                        <option value="Transferencia Bolivares">{{'Transferencia Nacional / Moneda Local (Bizum, Alias, Cuenta RUT)'|translate}}</option>
+                                        <option value="Transferencia Dólares">{{'Transferencia Internacional USD (Zelle, Swift, Wire)'|translate}}</option>
+                                        <option value="Transferencia Euro">{{'Transferencia Internacional EUR (SEPA Europa)'|translate}}</option>
+                                        
+                                        <!-- Mantienes tus opciones fijas tradicionales que ya funcionan -->
+                                        <option value="pagomovil">{{'Pago Móvil (Venezuela)'|translate}}</option>
+                                        <option value="zelle">Zelle (USD)</option>
                                         <option value="paypal">Paypal</option>
+                                        <option value="cheque">{{'Cheque'|translate}}</option>
                                     </select>
-
                                 </div>
+
                                 <div class="clear"></div>
 
                                 <!-- Transferencia  -->

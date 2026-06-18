@@ -102,7 +102,15 @@ export class TiendaaddComponent implements OnInit, OnChanges {
       telefono: ['', Validators.required],
       direccion: ['', Validators.required],
       pais: ['', Validators.required],
-      moneda: ['', Validators.required],
+
+      // 🔑 MODIFICADO: Dejamos 'USD' por defecto para tus clientes tradicionales
+      moneda: ['USD', Validators.required],
+
+      // 🔑 NUEVOS CAMPOS INTERNACIONALES OPERATIVOS
+      tipoFlujo: ['WHATSAPP', Validators.required], // Nace híbrido por defecto
+      acepta_usd_internacional: [false],
+      acepta_eur: [false],
+
       ciudad: ['', Validators.required],
       zip: ['', Validators.required],
       categoria: [''],
@@ -110,6 +118,7 @@ export class TiendaaddComponent implements OnInit, OnChanges {
       redessociales: [this.redessociales],
       status: ['Desactivado',],
       state_banner: [false,],
+      mostrarTasas: [false,],
       has_reservacion: [false,],
       capacidad_por_hora: [''],
       texto_hero_uno: [''],
@@ -122,6 +131,7 @@ export class TiendaaddComponent implements OnInit, OnChanges {
       user: [this.user.uid],
     })
   }
+
 
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -158,10 +168,11 @@ export class TiendaaddComponent implements OnInit, OnChanges {
         telefono: tienda.telefono,
         direccion: tienda.direccion,
         pais: tienda.pais,
-        moneda: tienda.moneda,
+        moneda: tienda.moneda || 'USD', // Aseguramos un respaldo por si acaso
         ciudad: tienda.ciudad,
         zip: tienda.zip,
         status: tienda.status,
+        mostrarTasas: tienda.mostrarTasas,
         state_banner: tienda.state_banner,
         has_reservacion: tienda.has_reservacion,
         capacidad_por_hora: tienda.capacidad_por_hora,
@@ -169,8 +180,15 @@ export class TiendaaddComponent implements OnInit, OnChanges {
         color_fondo: tienda.color_fondo,
         img: tienda.img,
         img_hero: tienda.img_hero,
-        user: tienda.user?._id || tienda.user || '' // Por si el objeto de usuario viene poblado
+        user: tienda.user?._id || tienda.user || '', // Por si el objeto de usuario viene poblado
+
+        // 🔑 5. INYECCIÓN DE CONTROL INTERNACIONAL AL EDITAR
+        // Sincroniza los selectores y switches de tu HTML con la base de datos migrada
+        tipoFlujo: tienda.tipoFlujo || 'WHATSAPP',
+        acepta_usd_internacional: tienda.acepta_usd_internacional || false,
+        acepta_eur: tienda.acepta_eur || false
       });
+
 
       this.tiendaSeleccionado = tienda;
       this.redssociales = this.tiendaSeleccionado.redssociales;
@@ -185,6 +203,7 @@ export class TiendaaddComponent implements OnInit, OnChanges {
     this.currentStep = 1;
     this.tiendaForm.reset();
     this.pageTitle = 'Creando Tienda';
+    
     // Also reset default values if needed
     this.tiendaForm.patchValue({
       id: null,
@@ -194,12 +213,13 @@ export class TiendaaddComponent implements OnInit, OnChanges {
       categoria: null,
       direccion: null,
       pais: null,
-      moneda: null,
+      moneda: 'USD', // 🔑 Resetea al valor internacional por defecto
       ciudad: null,
       zip: null,
       subcategoria: null,
       redssociales: null,
       status: null,
+      mostrarTasas: null,
       state_banner: null,
       has_reservacion: null,
       texto_hero_uno: null,
@@ -210,12 +230,19 @@ export class TiendaaddComponent implements OnInit, OnChanges {
       color_fondo: null,
       img: null,
       img_hero: null,
-      user: null
+      user: null,
+
+      // 🔑 NUEVA LIMPIEZA INTERNACIONAL:
+      // Setea los valores base de fábrica para que el formulario nazca limpio para Venezuela
+      tipoFlujo: 'WHATSAPP',
+      acepta_usd_internacional: false,
+      acepta_eur: false
     });
     // Emit event to parent to reset the projectSeleccionado variable
 
     this.closeModal.emit();
-  }
+}
+
 
   nextStep() {
     const nombre = this.tiendaForm.get('nombre');
@@ -224,9 +251,11 @@ export class TiendaaddComponent implements OnInit, OnChanges {
 
     const direccion = this.tiendaForm.get('direccion');
     const pais = this.tiendaForm.get('pais');
+    const tipoFlujo = this.tiendaForm.get('tipoFlujo');
     const moneda = this.tiendaForm.get('moneda');
     const ciudad = this.tiendaForm.get('ciudad');
     const zip = this.tiendaForm.get('zip');
+    const mostrarTasas = this.tiendaForm.get('mostrarTasas');
 
     const status = this.tiendaForm.get('status');
     const state_banner = this.tiendaForm.get('state_banner');
@@ -235,8 +264,10 @@ export class TiendaaddComponent implements OnInit, OnChanges {
     if (nombre?.invalid || local?.invalid ||
       telefono?.invalid ||
       direccion?.invalid || pais?.invalid ||
-      moneda?.invalid || ciudad?.invalid ||
+      tipoFlujo?.invalid || ciudad?.invalid ||
       zip?.invalid || status?.invalid ||
+      moneda?.invalid ||
+      mostrarTasas?.invalid ||
       state_banner?.invalid ||
       has_reservacion?.invalid
 
@@ -246,7 +277,9 @@ export class TiendaaddComponent implements OnInit, OnChanges {
       telefono?.markAsTouched();
       direccion?.markAsTouched();
       pais?.markAsTouched();
+      tipoFlujo?.markAsTouched();
       moneda?.markAsTouched();
+      mostrarTasas?.markAsTouched();
       ciudad?.markAsTouched();
       zip?.markAsTouched();
       status?.markAsTouched();
@@ -373,6 +406,7 @@ export class TiendaaddComponent implements OnInit, OnChanges {
       pais,
       ciudad,
       moneda,
+      tipoFlujo,
       zip,
       subcategoria,
       redssociales,
