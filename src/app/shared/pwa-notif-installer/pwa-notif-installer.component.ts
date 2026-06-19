@@ -1,5 +1,5 @@
 import { Platform } from '@angular/cdk/platform';
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { SwUpdate, VersionReadyEvent } from '@angular/service-worker';
 import { filter } from 'rxjs';
 
@@ -9,16 +9,17 @@ import { filter } from 'rxjs';
   templateUrl: './pwa-notif-installer.component.html',
   styleUrls: ['./pwa-notif-installer.component.css']
 })
-export class PwaNotifInstallerComponent implements OnInit {
+export class PwaNotifInstallerComponent implements OnInit, OnDestroy {
 
-  // pwa
   isOnline: boolean = false;
   modalVersion: boolean = false;
-  modalPwaEvent: any = null;
   modalPwaPlatform: string | undefined = undefined;
 
   isIOS: boolean;
   isAndroid: boolean;
+  
+  // Guardamos la función para poder remover el listener limpiamente
+  private pwaListenerBind: any;
 
   constructor(
     private swUpdate: SwUpdate,
@@ -26,39 +27,46 @@ export class PwaNotifInstallerComponent implements OnInit {
   ) { 
     this.isIOS = this.platform.IOS;
     this.isAndroid = this.platform.ANDROID; 
-    
-    // TRUCO CLAVE 1: Capturar el evento de instalación global inmediatamente
-    // antes de que cualquier otra lógica de Angular inicialice.
-    this.escucharInstalacionGlobal();
   }
 
   ngOnInit(): void {
     this.initPwa();
+    this.verificarInstalacionAndroid();
   }
 
-  private escucharInstalacionGlobal(): void {
-    if (this.platform.ANDROID) {
-      window.addEventListener('beforeinstallprompt', (event: any) => {
-        event.preventDefault();
-        this.modalPwaEvent = event;
-        this.modalPwaPlatform = 'ANDROID';
-      });
+  ngOnDestroy(): void {
+    // Limpieza de memoria
+    window.removeEventListener('pwa-prompt-ready', this.pwaListenerBind);
+  }
+
+  private verificarInstalacionAndroid(): void {
+    if (!this.isAndroid) return;
+
+    // 1. Si el index.html ya atrapó el evento antes de que Angular cargara
+    if ((window as any).deferredPrompt) {
+      this.modalPwaPlatform = 'ANDROID';
+    } else {
+      // 2. Si Angular cargó volando y el evento aún no ha ocurrido, lo escuchamos aquí
+      this.pwaListenerBind = () => {
+        if ((window as any).deferredPrompt) {
+          this.modalPwaPlatform = 'ANDROID';
+        }
+      };
+      window.addEventListener('pwa-prompt-ready', this.pwaListenerBind);
     }
   }
 
   initPwa() {
-    this.updateOnlineStatus();
+    this.isOnline = window.navigator.onLine;
 
     if (this.swUpdate.isEnabled) {
-      // Escucha limpia cuando Render avise que hay archivos nuevos
       this.swUpdate.versionUpdates.pipe(
         filter((evt): evt is VersionReadyEvent => evt.type === 'VERSION_READY')
       ).subscribe(() => {
         this.modalVersion = true; // Abre tu modal HTML de actualización
       });
 
-      // TRUCO CLAVE 2: Le damos 2 segundos a la app para que cargue en Render 
-      // antes de forzar la búsqueda de actualizaciones. Evita que se tranque.
+      // Le damos 2 segundos a Render para estabilizar la app antes de chequear caché
       setTimeout(() => {
         this.swUpdate.checkForUpdate().catch(err => console.error("Error SW:", err));
       }, 2000);
@@ -67,45 +75,36 @@ export class PwaNotifInstallerComponent implements OnInit {
     this.checkIOSStandalone();
   }
 
-  private updateOnlineStatus(): void {
-    this.isOnline = window.navigator.onLine;
-  }
-
-  // Se ejecuta al darle "Aceptar" en tu cartel de actualización
   public updateVersion(): void {
     this.swUpdate.activateUpdate().then(() => {
-      window.location.reload(); // Intercambia caché vieja por nueva de golpe
+      window.location.reload(); 
     });
   }
 
-  public closeVersion(): void {
-    this.modalVersion = false;
-  }
-
-  // TRUCO CLAVE 3: Simplificación de detección para iOS en Angular 19
   private checkIOSStandalone(): void {
     if (this.isIOS) {
       const isInStandaloneMode = ('standalone' in window.navigator) && ((window.navigator as any).standalone);
       if (!isInStandaloneMode) {
-        this.modalPwaPlatform = 'IOS'; // Muestra la guía de "Añadir a inicio" en iPhone
+        this.modalPwaPlatform = 'IOS';
       }
     }
   }
 
   public addToHomeScreen(): void {
-    if (this.modalPwaEvent) {
-      this.modalPwaEvent.prompt();
-      this.modalPwaEvent.userChoice.then((choiceResult: any) => {
+    const promptEvent = (window as any).deferredPrompt;
+    if (promptEvent) {
+      promptEvent.prompt();
+      promptEvent.userChoice.then((choiceResult: any) => {
         if (choiceResult.outcome === 'accepted') {
+          (window as any).deferredPrompt = null;
           this.modalPwaPlatform = undefined;
         }
       });
     }
   }
 
-  public closePwa(): void {
-    this.modalPwaPlatform = undefined;
-  }
+  public closeVersion(): void { this.modalVersion = false; }
+  public closePwa(): void { this.modalPwaPlatform = undefined; }
 
 
 }
