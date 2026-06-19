@@ -60,6 +60,21 @@
 
     <!-- SEO -->
     <!-- <meta name="keywords" content="{{ keywords.join() }}"> -->
+     <script>
+  // Guardamos el evento en una variable global de la ventana
+  window.deferredPrompt = null;
+  
+  window.addEventListener('beforeinstallprompt', (e) => {
+    // Evita que Android muestre su barra por defecto
+    e.preventDefault();
+    // Guarda el evento para que Angular lo use después
+    window.deferredPrompt = e;
+    
+    // Dispara un evento personalizado para avisarle a Angular si ya cargó
+    const event = new CustomEvent('pwa-prompt-ready');
+    window.dispatchEvent(event);
+  });
+</script>
 
 </head>
 

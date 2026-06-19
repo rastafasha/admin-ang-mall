@@ -1,7 +1,7 @@
 import { Platform } from '@angular/cdk/platform';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { SwUpdate, VersionReadyEvent } from '@angular/service-worker';
-import { filter, map } from 'rxjs';
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-pwa-notif-installer',
@@ -12,10 +12,10 @@ import { filter, map } from 'rxjs';
 export class PwaNotifInstallerComponent implements OnInit {
 
   // pwa
-  isOnline: boolean;
-  modalVersion: boolean;
-  modalPwaEvent: any;
-  modalPwaPlatform: string|undefined;
+  isOnline: boolean = false;
+  modalVersion: boolean = false;
+  modalPwaEvent: any = null;
+  modalPwaPlatform: string | undefined = undefined;
 
   isIOS: boolean;
   isAndroid: boolean;
@@ -24,92 +24,88 @@ export class PwaNotifInstallerComponent implements OnInit {
     private swUpdate: SwUpdate,
     private platform: Platform,
   ) { 
-    this.isOnline = false;
-    this.modalVersion = false;
-    
     this.isIOS = this.platform.IOS;
-    // The CDK has specific checks for Chrome on Android
     this.isAndroid = this.platform.ANDROID; 
-
-    // console.log('Is iOS:', this.isIOS);
-    // console.log('Is Android:', this.isAndroid);
-    if(this.isAndroid){
-      this.loadModalPwa()
-    }
-
-    if(this.isIOS){
-      this.loadModalPwa()
-    }
+    
+    // TRUCO CLAVE 1: Capturar el evento de instalación global inmediatamente
+    // antes de que cualquier otra lógica de Angular inicialice.
+    this.escucharInstalacionGlobal();
   }
 
   ngOnInit(): void {
     this.initPwa();
   }
 
-
-
-initPwa() {
-  this.updateOnlineStatus();
-
-  if (this.swUpdate.isEnabled) {
-    // IMPORTANTE: Se añade el .subscribe() para que Angular "escuche" cambios
-    this.swUpdate.versionUpdates.pipe(
-      filter((evt): evt is VersionReadyEvent => evt.type === 'VERSION_READY')
-    ).subscribe(() => {
-      this.modalVersion = true; // Activa tu modal HTML
-    });
-
-    // Fuerza a la PWA a buscar cambios en Vercel de inmediato
-    this.swUpdate.checkForUpdate();
-  }
-
-  this.loadModalPwa();
-}
-
-
-
-private updateOnlineStatus(): void {
-  this.isOnline = window.navigator.onLine;
-  // console.info(`isOnline=[${this.isOnline}]`);
-}
-
-public updateVersion(): void {
-  this.swUpdate.activateUpdate().then(() => {
-    // Esto intercambia los archivos viejos por los nuevos internamente
-    window.location.reload(); 
-  });
-}
-
-
-public closeVersion(): void {
-  this.modalVersion = false;
-}
-
-private loadModalPwa(): void {
-  if (this.platform.ANDROID) {
-    window.addEventListener('beforeinstallprompt', (event: any) => {
-      event.preventDefault();
-      this.modalPwaEvent = event;
-      this.modalPwaPlatform = 'ANDROID';
-    });
-  }
-
-  if (this.platform.IOS && this.platform.SAFARI) {
-    const isInStandaloneMode = ('standalone' in window.navigator) && ((<any>window.navigator)['standalone']);
-    if (!isInStandaloneMode) {
-      this.modalPwaPlatform = 'IOS';
+  private escucharInstalacionGlobal(): void {
+    if (this.platform.ANDROID) {
+      window.addEventListener('beforeinstallprompt', (event: any) => {
+        event.preventDefault();
+        this.modalPwaEvent = event;
+        this.modalPwaPlatform = 'ANDROID';
+      });
     }
   }
-}
 
-public addToHomeScreen(): void {
-  this.modalPwaEvent.prompt();
-  this.modalPwaPlatform = undefined;
-}
+  initPwa() {
+    this.updateOnlineStatus();
 
-public closePwa(): void {
-  this.modalPwaPlatform = undefined;
-}
-// pwa
+    if (this.swUpdate.isEnabled) {
+      // Escucha limpia cuando Render avise que hay archivos nuevos
+      this.swUpdate.versionUpdates.pipe(
+        filter((evt): evt is VersionReadyEvent => evt.type === 'VERSION_READY')
+      ).subscribe(() => {
+        this.modalVersion = true; // Abre tu modal HTML de actualización
+      });
+
+      // TRUCO CLAVE 2: Le damos 2 segundos a la app para que cargue en Render 
+      // antes de forzar la búsqueda de actualizaciones. Evita que se tranque.
+      setTimeout(() => {
+        this.swUpdate.checkForUpdate().catch(err => console.error("Error SW:", err));
+      }, 2000);
+    }
+
+    this.checkIOSStandalone();
+  }
+
+  private updateOnlineStatus(): void {
+    this.isOnline = window.navigator.onLine;
+  }
+
+  // Se ejecuta al darle "Aceptar" en tu cartel de actualización
+  public updateVersion(): void {
+    this.swUpdate.activateUpdate().then(() => {
+      window.location.reload(); // Intercambia caché vieja por nueva de golpe
+    });
+  }
+
+  public closeVersion(): void {
+    this.modalVersion = false;
+  }
+
+  // TRUCO CLAVE 3: Simplificación de detección para iOS en Angular 19
+  private checkIOSStandalone(): void {
+    if (this.isIOS) {
+      const isInStandaloneMode = ('standalone' in window.navigator) && ((window.navigator as any).standalone);
+      if (!isInStandaloneMode) {
+        this.modalPwaPlatform = 'IOS'; // Muestra la guía de "Añadir a inicio" en iPhone
+      }
+    }
+  }
+
+  public addToHomeScreen(): void {
+    if (this.modalPwaEvent) {
+      this.modalPwaEvent.prompt();
+      this.modalPwaEvent.userChoice.then((choiceResult: any) => {
+        if (choiceResult.outcome === 'accepted') {
+          this.modalPwaPlatform = undefined;
+        }
+      });
+    }
+  }
+
+  public closePwa(): void {
+    this.modalPwaPlatform = undefined;
+  }
+
 
 }
