@@ -395,7 +395,6 @@ Notify
         }
         .breadcrumb-item+.breadcrumb-item::before {
             content: "\e649";
-            font-family: themify;
             color: $light-text;
             font-size: 11px;
         }
