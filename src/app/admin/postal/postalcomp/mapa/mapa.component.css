@@ -319,15 +319,22 @@
 }
 
 .cardss{
-    position: absolute;
-    top: 70vh;
-    bottom: 0px;
+    /* position: absolute; */
+    /* top: 70vh; */
+    /* bottom: 0px; */
     left: 20px;
     /* z-index: 99; */
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap:15px;
-    width: 80vw;
+      display: grid;
+    /* Esto crea 3 columnas iguales de 1 fracción de espacio cada una */
+    grid-template-columns: repeat(3, 1fr); 
+    
+    /* Agrega una separación limpia entre las tarjetas sin usar margins */
+    gap: 20px; 
+    
+    /* Para que respete el espacio del sidebar sin desbordarse */
+    width: 100%; 
+    box-sizing: border-box;
+    padding: 15px;
 }
 
 
