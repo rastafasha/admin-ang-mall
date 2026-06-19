@@ -61,13 +61,11 @@ export class AdminVentasComponent implements OnInit, OnDestroy {
   p: number = 1;
   count: number = 8;
 
-  // agregado por José Prados
   listTiendas: any;
   user: any;
   tiendaSelected: Tienda;
   public tienda_moneda: string;
 
-  // accedo al componente hijo FacturaComponent, agregado por José Prados
   @ViewChild(FacturaComponent) factura !: FacturaComponent;
 
   itemSelected: any;
@@ -89,8 +87,8 @@ export class AdminVentasComponent implements OnInit, OnDestroy {
     private _route: ActivatedRoute,
     private _ventaService: VentaService,
     public translate: TranslateService,
-    private _productoService: ProductoService, // agregado por José Prados
-    private tiendaService: TiendaService, // agregado por José Prados
+    private _productoService: ProductoService, 
+    private tiendaService: TiendaService, 
   ) {
     this.identity = this._userService.usuario;
     this.url = environment.baseUrl;
@@ -449,7 +447,6 @@ export class AdminVentasComponent implements OnInit, OnDestroy {
   }
 
 
-  // agregado por José Prados
   private cargar_Locales() {
     this.tiendaService.cargarTiendas().subscribe(
       (resp: any) => {
@@ -465,7 +462,6 @@ export class AdminVentasComponent implements OnInit, OnDestroy {
     })
   }
 
-  // agregado por José Prados
   onChangeTienda(event: any) {
     console.log(event.target.value)
     if (event.target.value === 'todas') {

@@ -287,7 +287,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
 
-  // modificado por Jose Prados
   show_Carrito() {
     this.subtotal = 0;
     if (this.clienteSeleccionado) {
@@ -310,7 +309,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }
   }
 
-  // modificado por José Prados
   remove_producto(id) {
     this._carritoService.remove_carrito(id).subscribe(
       response => {

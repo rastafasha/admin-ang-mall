@@ -176,6 +176,12 @@ export class UsertiendaaddComponent implements OnInit {
         resp => {
           this.cargando = false
           Swal.fire('Actualizado', `${first_name} actualizado correctamente`, 'success');
+           if(this.user.role === 'SUPERADMIN'){
+            this.router.navigateByUrl(`/dashboard/usuarios`);
+
+          }else{
+            this.router.navigateByUrl(`/dashboard/tienda-user`);
+          }
         }
       );
 
@@ -193,7 +199,12 @@ export class UsertiendaaddComponent implements OnInit {
         .subscribe((resp: any) => {
           this.cargando = false
           Swal.fire('Creado', `${first_name} creado correctamente`, 'success');
-          this.router.navigateByUrl(`/dashboard/tienda-user`);
+          if(this.user.role === 'SUPERADMIN'){
+            this.router.navigateByUrl(`/dashboard/usuarios`);
+
+          }else{
+            this.router.navigateByUrl(`/dashboard/tienda-user`);
+          }
         })
     }
 

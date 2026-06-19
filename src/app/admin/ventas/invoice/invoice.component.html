@@ -7,15 +7,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{'Factura'|translate}} nº{{producto_id?.toUpperCase()}}</title>
 
-    <link href="/templates/six/css/all.min.css" rel="stylesheet">
-    <link href="/assets/css/fontawesome-all.min.css" rel="stylesheet">
-    <link href="/templates/six/css/invoice.css" rel="stylesheet">
-    <script src="/templates/six/js/scripts.min.js?v=a0a674"></script>
+    
 
 </head>
 
 <body>
-    <div class="container-fluid invoice-container" style="padding: 20px;">
+       <app-skeleton-loader *ngIf="isLoading" [rows]="1" [columns]="1"></app-skeleton-loader>
+ <app-skeleton-loader *ngIf="isLoading" [rows]="1" [columns]="3"></app-skeleton-loader>
+
+    <div class="container-fluid invoice-container" *ngIf="!isLoading" style="padding: 20px;">
         <div class="row">
 
             <div class="col-10">
@@ -26,7 +26,7 @@
             </div>
         </div>
     </div>
-    <div class="container-fluid invoice-container" id="contdiv">
+    <div class="container-fluid invoice-container" *ngIf="!isLoading" id="contdiv">
 
 
         <div class="row invoice-header">
@@ -57,9 +57,9 @@
             <div class="col-lg-6">
                 <strong>{{'Facturado a'|translate}}</strong>
                 <address class="small-text">
-                    <strong>{{'Cliente'|translate}}: </strong>{{venta.user.first_name}} {{venta.user.last_name}}<br>
+                    <strong>{{'Cliente'|translate}}: </strong>{{venta.user?.first_name}} {{venta.user?.last_name}}<br>
                     <strong>{{'Monto'|translate}}: </strong> ${{venta.total_pagado}}<br>
-                    <strong>{{'Correo'|translate}}: </strong> {{venta.user.email}}<br>
+                    <strong>{{'Correo'|translate}}: </strong> {{venta.user?.email}}<br>
                     <strong>{{'Transacción'|translate}}: </strong> {{venta.idtransaccion?.toUpperCase()}}<br>
                     <strong>{{'Dirección'|translate}}: </strong> {{venta.pais}} / {{venta.ciudad}} / {{venta.zip}}<br>
                     <strong>{{'Tipo de Envio'|translate}}: </strong> {{venta.tipo_envio}}<br>
@@ -69,11 +69,11 @@
                 </address>
             </div>
             <div class="col-lg-6 text-right">
-                <strong>{{'Tienda'|translate}}: {{tienda.nombre}}</strong>
+                <strong>{{'Tienda'|translate}}: {{tienda?.nombre}}</strong>
                 <address class="small-text">
-                    {{'Dirección'|translate}}:<br> {{tienda.direccion}}<br>
+                    {{'Dirección'|translate}}:<br> {{tienda?.direccion}}<br>
                     <br>
-                    {{'Teléfono'|translate}}:<br>{{tienda.telefono}}<br>
+                    {{'Teléfono'|translate}}:<br>{{tienda?.telefono}}<br>
                 </address>
             </div>
 
@@ -84,7 +84,7 @@
             <div class="col-lg-6">
                 <strong>{{'Método de Pago'|translate}}</strong><br>
                 <span class="small-text">
-                    {{venta.metodo_pago.tipo}}<br><br>
+                    {{venta.metodo_pago?.tipo}}<br><br>
                 </span>
 
             </div>

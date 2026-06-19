@@ -133,7 +133,6 @@ const childRoutes: Routes = [
             {path: 'tipos-de-pago', component: TiposdepagoComponent , data:{tituloPage:'Tipos de Pago'}},
             {path: 'transferencias', component: ListaTrasnferenciasComponent , data:{tituloPage:'Transferencias'}},
             {path: 'pagoscheque', component: PagosChequeComponent, data:{tituloPage:'Pagos en cheque'}},
-            // ruta 'pagosefectivo' agregada por José Prados
             {path: 'pagosefectivo', component: PagosEfectivoComponent, data:{tituloPage:'Pagos en Efectivo'}},
         
             

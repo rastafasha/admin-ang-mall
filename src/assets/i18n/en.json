@@ -472,6 +472,10 @@
     "Comensal con alergia?": "Guest with allergies?",
     "Comentarios sobre la alergia": "Allergy comments",
     "Comentarios": "Comments",
+
+    "Aceptar USD Internacional (Zelle)":"Accept USD (Zelle)",
+    "Aceptar EUR Internacional (Bizum)":"Accept EUR (Bizum)",
+    "Mostrar Tasas?":"Show Rates?",
     
     "PRODUCTS": {
         "TITLE": "Section: Products",

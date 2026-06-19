@@ -90,7 +90,6 @@
                             <div class="form-group col-xs-12 col-sm-6">
                                 <label for="exampleInputuname">Email <span class="required">*</span></label>
                                 <div class="input-group">
-
                                     <input class="form-control" type="text" formControlName="email" placeholder="Email">
 
                                     <div *ngIf="registerForm.get('email')?.touched && registerForm.get('email')?.invalid"
@@ -110,10 +109,8 @@
                             <div class="form-group col-xs-12 col-sm-6">
                                 <label for="exampleInputuname">{{'Contraseña'|translate}} <span class="required">*</span></label>
                                 <div class="input-group">
-
                                     <input class="form-control" type="password" formControlName="password"
                                         placeholder="Password">
-
                                     <div *ngIf="registerForm.get('password')?.touched && registerForm.get('password')?.invalid"
                                         class="text-danger">
                                         <div *ngIf="registerForm.get('password')?.errors?.['required']">
@@ -128,7 +125,6 @@
                             <div class="form-group col-xs-12 col-sm-6">
                                 <label for="exampleInputuname">{{'Confirmar Contraseña'|translate}} <span class="required">*</span></label>
                                 <div class="input-group">
-
                                     <input class="form-control" type="password" formControlName="password2"
                                         placeholder="Confirm Password">
                                     <div *ngIf="registerForm.get('password2')?.touched && registerForm.get('password2')?.invalid"
@@ -145,22 +141,19 @@
                             <div class="form-group col-xs-12 col-sm-6" *ngIf="user.role === 'SUPERADMIN'">
                                 <label for="icono">{{'Tienda'|translate}} </label>
                                 <div class="input-group">
-
                                     <select formControlName="local" name="local" class="form-control">
                                         <option *ngFor="let tienda of listTiendas" value="{{tienda._id}}">
                                              {{tienda.nombre}} | {{tienda.local}}
                                         </option>
                                     </select>
-                                    
-
                                 </div>
                             </div>
                             
                         </div>
                         <app-loading *ngIf="cargando"></app-loading>
-                        <button type="button" *ngIf="!cargando" (click)="guardar()"
-                            class="btn btn-success waves-effect waves-light m-r-10 btn-block">
-                            <i class="fa fa-save"></i> {{'Guardar'|translate}} 
+                        <button type="button" [disabled]="registerForm.invalid" *ngIf="!cargando" (click)="guardar()"
+                                class="btn btn-outline-success btn-md btn-block text-uppercase btn-rounded">
+                                <i class="fa fa-save"></i> {{'Guardar'|translate}} 
                         </button>
                     </form>
                 </div>

@@ -1,17 +1,10 @@
 import { Component, OnInit, DoCheck } from '@angular/core';
-import {environment} from 'src/environments/environment';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Location } from '@angular/common';
-import { FormBuilder, Validators, FormGroup } from '@angular/forms';
-import Swal from 'sweetalert2';
-
-import { FileUploadService } from 'src/app/services/file-upload.service';
 import { SettingsService } from '../../services/settings.service';
 import { CongeneralService } from 'src/app/services/congeneral.service';
 import { Congeneral } from 'src/app/models/congeneral.model';
 import { UsuarioService } from '../../services/usuario.service';
 import { Usuario } from 'src/app/models/usuario.model';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { DomSanitizer } from '@angular/platform-browser';
 
 interface HtmlInputEvent extends Event{
   target : HTMLInputElement & EventTarget;

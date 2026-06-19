@@ -3,7 +3,7 @@
 <!-- ============================================================== -->
 <section id="wrapper" class="login-register login-sidebar"
     style="background-image:url(../assets/images/background/login-register.jpg);">
-    <div class="login-box card">
+    <div class="login-box card animated fadeInRight fast">
         <div class="card-body">
             <app-loading *ngIf="isLoading"></app-loading>
             <form *ngIf="!isLoading" [formGroup]="registerForm" (ngSubmit)="crearUsuario()" autocapitalize="off"
@@ -120,7 +120,7 @@
                             <button class="btn btn-secondary btn-md m-r-10" type="button" (click)="prevStep()">
                                 {{'Volver'|translate}}
                             </button>
-                            <button class="btn btn-info btn-md btn-block text-uppercase waves-effect waves-light"
+                            <button class="btn btn-outline-success btn-lg btn-block text-uppercase btn-rounded"
                                 type="submit">{{'Registro'}}</button>
                         </div>
                     </div>

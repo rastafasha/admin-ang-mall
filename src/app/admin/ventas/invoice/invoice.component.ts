@@ -1,17 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-declare let jsPDF;
 import html2canvas from 'html2canvas';
 import { UsuarioService } from '../../../services/usuario.service';
 import {environment} from 'src/environments/environment';
 import { Router, ActivatedRoute } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
 import { VentaService } from "src/app/services/venta.service";
-import { ComentarioService } from "src/app/services/comentario.service";
-import { ProductoService } from 'src/app/services/producto.service';
 import { TiendaService } from 'src/app/services/tienda.service';
 import { Tienda } from 'src/app/models/tienda.model';
 import { TranslateService } from '@ngx-translate/core';
 
+declare let jsPDF;
 @Component({
   selector: 'app-invoice',
   standalone:false,
@@ -28,6 +25,7 @@ export class InvoiceComponent implements OnInit {
   public tienda:Tienda;
   public tienda_moneda:string;
   public local:string;
+  isLoading =false;
 
   constructor(
     private _userService: UsuarioService,
@@ -51,11 +49,13 @@ export class InvoiceComponent implements OnInit {
   }
 
   getDetalle(){
+    this.isLoading =true;
     this._ventaService.detalle(this.producto_id).subscribe(
       (response:any) =>{
         this.detalle = response.detalle;
         this.venta = response.venta;
         this.local= response.venta.local;
+        this.isLoading =false;
         this.getTiendaId()
 
       },

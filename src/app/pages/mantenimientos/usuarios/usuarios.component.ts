@@ -15,8 +15,7 @@ import { FormGroup } from '@angular/forms';
   selector: 'app-usuarios',
   standalone:false,
   templateUrl: './usuarios.component.html',
-  styles: [
-  ]
+  styleUrls: ['./usuarios.component.css']
 })
 export class UsuariosComponent implements OnInit, OnDestroy {
 
@@ -30,6 +29,8 @@ export class UsuariosComponent implements OnInit, OnDestroy {
   public imgSubs: Subscription;
   p: number = 1;
   count: number = 8;
+  option_selectedd: number = 1;
+  solicitud_selectedd: any = null;
 
   roles: string[] = ['USER', 'MEDICO', 'ADMIN'];
 
@@ -154,6 +155,17 @@ export class UsuariosComponent implements OnInit, OnDestroy {
   handleSearchEvent(event: any) {
     if (event.usuarios) {
       this.usuarios = event.usuarios;
+    }
+  }
+
+  optionSelected(value: number) {
+    this.option_selectedd = value;
+    if (this.option_selectedd === 1) {
+
+      // this.ngOnInit();
+    }
+    if (this.option_selectedd === 2) {
+      this.solicitud_selectedd = null;
     }
   }
 
