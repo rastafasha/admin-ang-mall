@@ -8,6 +8,7 @@ import { Usuario } from 'src/app/models/usuario.model';
 import { Transferencia } from 'src/app/models/transferencia';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { TransferenciaService } from 'src/app/services/transferencia.service';
+import { TranslateService } from '@ngx-translate/core';
 
 declare var bootstrap: any;
 
@@ -39,6 +40,7 @@ export class PaymentDetailsComponent implements OnInit, OnChanges {
   public imagenSubir: File;
   public imgTemp: any = null;
 
+   
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -46,7 +48,7 @@ export class PaymentDetailsComponent implements OnInit, OnChanges {
     private http: HttpClient,
     private fb: FormBuilder,
     private usuarioService: UsuarioService,
-    private fileUploadService: FileUploadService,
+    public translate: TranslateService 
 
   ) {
     this.usuario = this.usuarioService.usuario
