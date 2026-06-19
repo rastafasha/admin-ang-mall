@@ -106,6 +106,7 @@ export class DashboardComponent implements OnInit {
   public usuario;
   public tasadollar;
   public tasaeuro;
+  mostrarTasas:boolean
 
   
 
@@ -507,6 +508,7 @@ export class DashboardComponent implements OnInit {
   getTiendaId(){
     this.tiendaService.getTiendaById(this.usuario.local).subscribe((resp:any)=>{
       this.tienda = resp;
+      this.mostrarTasas = this.tienda.mostrarTasas;
       this.tienda_moneda = this.tienda.moneda
     })
   }

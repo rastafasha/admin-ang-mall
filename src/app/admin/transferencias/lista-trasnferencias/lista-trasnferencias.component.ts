@@ -102,8 +102,8 @@ export class ListaTrasnferenciasComponent implements OnInit, OnDestroy {
     this.cargando = true;
     this.trasnferenciaService.getTransferencias().subscribe(
       transferencias => {
-        this.cargando = false;
         this.transferencias = transferencias;
+        this.cargando = false;
       }
     )
 
