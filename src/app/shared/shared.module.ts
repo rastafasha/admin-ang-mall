@@ -12,6 +12,7 @@ import { SearchComponent } from './search/search.component';
 import { PipesModule } from '../pipes/pipes.module';
 import { PwaNotifInstallerComponent } from './pwa-notif-installer/pwa-notif-installer.component';
 import { SkeletonLoaderComponent } from './skeleton-loader/skeleton-loader.component';
+import { BackInstruccComponent } from './back-instrucc/back-instrucc.component';
 
 
 
@@ -24,7 +25,8 @@ import { SkeletonLoaderComponent } from './skeleton-loader/skeleton-loader.compo
     LoadingComponent,
     SearchComponent,
     PwaNotifInstallerComponent,
-    SkeletonLoaderComponent
+    SkeletonLoaderComponent,
+    BackInstruccComponent
   ],
   exports: [
     BreadcrumbsComponent,
@@ -34,7 +36,8 @@ import { SkeletonLoaderComponent } from './skeleton-loader/skeleton-loader.compo
     LoadingComponent,
     SearchComponent,
     PwaNotifInstallerComponent,
-    SkeletonLoaderComponent
+    SkeletonLoaderComponent,
+    BackInstruccComponent
   ],
   imports: [
     CommonModule,

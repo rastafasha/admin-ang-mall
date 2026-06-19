@@ -1,19 +1,4 @@
-<div class="row">
-    <div class="col-9"></div>
-    <div class="col-2 d-flex justify-content-end">
-        <app-backbutton></app-backbutton>
-    </div>
-    <div class="col-1">
-        <div class="text-right">
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <button class="btn btn-outline-primary btn-sm rounded-circle shadow-sm"
-                    (click)="instruccionesModal.open()" title="Ayuda de la sección">
-                    <i class="fa fa-question"></i>
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
+<app-back-instrucc (onOpenHelp)="instruccionesModal.open()"></app-back-instrucc>
 <section>
     <div class="pt-2 px-4 pl-lg-0 pr-xl-5">
         <div class="row">
