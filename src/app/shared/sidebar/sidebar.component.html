@@ -24,12 +24,11 @@
                 <li class="nav-devider"></li>
 
                 <!-- contenido, blog, page -->
-                <li class="nav-small-cap" *ngIf="usuario.role ==='SUPERADMIN'">{{'Contenido'| translate}}</li>
                 <li *ngIf="usuario.role ==='SUPERADMIN'">
                     <!-- 🟢 Controla la sección 'contenido' -->
                     <a href="javascript:void(0);" (click)="toggleMenu('contenido')"
                         [attr.aria-expanded]="menuActivo === 'contenido'">
-                        <i class="mdi mdi-store"></i>
+                        <i class="fas fa-file-alt"></i>&nbsp;
                         <span class="hide-menu">{{'Contenido'| translate}}</span>
                     </a>
                     <ul class="collapse" [ngClass]="{'show': menuActivo === 'contenido'}"
@@ -46,7 +45,7 @@
                     <!-- 🟢 Controla la sección 'tienda' -->
                     <a href="javascript:void(0);" (click)="toggleMenu('tienda')"
                         [attr.aria-expanded]="menuActivo === 'tienda'">
-                        <i class="mdi mdi-store"></i>
+                        <i class="fas fa-store"></i> &nbsp;
                         <span class="hide-menu">{{'Tienda'| translate}}</span>
                     </a>
                     <ul class="collapse" [ngClass]="{'show': menuActivo === 'tienda'}">
@@ -71,7 +70,7 @@
                     <!-- 🟢 Controla la sección 'productos' -->
                     <a href="javascript:void(0);" (click)="toggleMenu('productos')"
                         [attr.aria-expanded]="menuActivo === 'productos'">
-                        <i class="mdi mdi-store"></i>
+                        <i class="fas fa-cubes"></i>&nbsp;
                         <span class="hide-menu">{{'Productos'| translate}}</span>
                     </a>
                     <ul class="collapse" [ngClass]="{'show': menuActivo === 'productos'}">
@@ -93,7 +92,7 @@
                     <!-- 🟢 Controla la sección 'delivery' -->
                     <a href="javascript:void(0);" (click)="toggleMenu('delivery')"
                         [attr.aria-expanded]="menuActivo === 'delivery'">
-                        <i class="mdi mdi-store"></i>
+                        <i class="fas fa-truck"></i>&nbsp;
                         <span class="hide-menu">{{'Delivery'| translate}}</span>
                     </a>
                     <ul class="collapse" [ngClass]="{'show': menuActivo === 'delivery'}">
@@ -112,7 +111,7 @@
                     <!-- 🟢 Controla la sección 'admin' -->
                     <a href="javascript:void(0);" (click)="toggleMenu('admin')"
                         [attr.aria-expanded]="menuActivo === 'admin'">
-                        <i class="mdi mdi-store"></i>
+                        <i class="fas fa-clipboard-list"></i>&nbsp;
                         <span class="hide-menu">{{'Adminstración'| translate}}</span>
                     </a>
                     <ul class="collapse" [ngClass]="{'show': menuActivo === 'admin'}">

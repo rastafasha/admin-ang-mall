@@ -274,17 +274,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
    * Actualiza las clases CSS del sidebar según su estado
    */
   private updateSidebarClasses(): void {
-    const wrapper = document.getElementById('main-wrapper');
-    if (wrapper) {
-      const isOpen = this.sidebarService.isSidebarOpen();
-
-      if (isOpen) {
-        wrapper.classList.add('show-sidebar');
-      } else {
-        wrapper.classList.remove('show-sidebar');
-      }
-    }
+  const wrapper = document.getElementById('main-wrapper');
+  if (wrapper) {
+    wrapper.classList.toggle('show-sidebar', this.sidebarService.isSidebarOpen());
   }
+}
 
 
   show_Carrito() {

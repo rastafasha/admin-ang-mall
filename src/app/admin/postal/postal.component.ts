@@ -47,6 +47,12 @@ export class PostalComponent implements OnInit {
   ngOnInit(): void {
     this.crearNuevo = false;
     this.listar();
+    // 🟢 1. CARGA INICIAL DE LAS INSTRUCCIONES (Garantiza que la info no empiece vacía)
+    this.translate.get('DELIVERY.TITLE').subscribe(() => {
+      this.actualizarInstruccionesPagos();
+    });
+
+    // 🟢 2. ESCUCHA SI CAMBIAN EL IDIOMA DESPUÉS (Mantiene tu lógica actual)
     this.langSubscription = this.translate.onLangChange.subscribe(() => {
       this.actualizarInstruccionesPagos();
     });

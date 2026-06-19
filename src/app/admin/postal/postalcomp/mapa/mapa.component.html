@@ -2,7 +2,7 @@
     <div class="pt-2 px-4 pl-lg-0 pr-xl-5">
         <div class="container">
             <div class="row">
-                <div class="saludo card" >
+                <div class="saludo card">
                     <h2 *ngIf="user.role !== 'ADMIN' && user.role !== 'SUPERADMIN'">Ruta de Entrega</h2>
                     <h2 *ngIf="user.role === 'ADMIN' || user.role === 'SUPERADMIN'">📍 Panel de Drivers
                         ({{allDrivers.length}}
@@ -65,8 +65,9 @@
                         <p>Usando ubicación de demostración</p>
                     </div>
                     <!-- Admin Drivers List Sidebar -->
-                    
-                    <div class="drivers-sidebar" *ngIf="showDriversList && (user.role === 'ADMIN' || user.role === 'SUPERADMIN')">
+
+                    <div class="drivers-sidebar"
+                        *ngIf="showDriversList && (user.role === 'ADMIN' || user.role === 'SUPERADMIN')">
                         <div class="sidebar-header">
                             <h3>Drivers ({{allDrivers.length}})</h3>
                             <button (click)="toggleDriversList()" class="close-btn">❌</button>
@@ -94,9 +95,21 @@
                     </div>
 
                 </div>
-
-
             </div>
+        </div>
+
+        <div class="clear"></div>
+        <div class="row cardss">
+            <div class="cardo">
+                <h2>Contenido</h2>
+            </div>
+            <div class="cardo">
+                <h2>Contenido</h2>
+            </div>
+            <div class="cardo">
+                <h2>Contenido</h2>
+            </div>
+
         </div>
     </div>
 </section>

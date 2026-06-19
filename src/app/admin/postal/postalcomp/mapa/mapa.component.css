@@ -1,13 +1,15 @@
 .mostrarmapa {
-    position: fixed; /* O absolute, dependiendo de tu scroll */
+    position: absolute; /* O absolute, dependiendo de tu scroll */
     /* Ajusta estos valores según el ancho de tu sidebar y alto de tu header */
     top: 60px;      /* Altura aproximada de tu Header */
-    left: 240px;    /* Ancho aproximado de tu Sidebar */
-    width: calc(100% - 240px); /* Resta el ancho del menú */
-    height: calc(100vh - 60px); /* Resta el alto del header */
+    left: 0px;   
+    width: calc(84vw);/* Resta el ancho del menú */
+    height: 60vh; /* Resta el alto del header */
     background-color: #f0f0f0;
     z-index: 1; /* Asegúrate de que el sidebar tenga un z-index mayor (ej. 10) */
+    box-shadow: 0 15px 30px rgba(0,0,0,0.15) !important;
 }
+
 
 .map-container {
     height: 100%; /* Ahora sí ocupará el área restante correctamente */
@@ -136,7 +138,8 @@
     z-index: 5;
     top: 70px;
     padding: 20px;
-    left: 50px;
+    left: 70px;
+    width: 220px;
 }
 
 .saludo h2 {
@@ -169,7 +172,7 @@
 
 .drivers-sidebar {
     position: absolute;
-    top: 80px;
+    top: 20px;
     right: 20px;
     width: 350px;
     max-height: calc(100vh - 120px);
@@ -313,4 +316,40 @@
     display: block;
     content: "";
     margin: 2px 0;
+}
+
+.cardss{
+    position: absolute;
+    top: 70vh;
+    bottom: 0px;
+    left: 20px;
+    /* z-index: 99; */
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap:15px;
+    width: 80vw;
+}
+
+
+.mini-sidebar .cardss,
+.mini-sidebar .mostrarmapa {
+    position: absolute;
+    left: 0;
+    width: 100vw;
+    background-color: red;
+    z-index: 1; /* Un número bajo para que quede atrás */
+}
+
+.cardo {
+    background-color: #fff;
+    height: 40px;
+    border: 1px solid #ccc;
+    border-radius: 15px !important;
+    overflow: hidden; /* Para que el header redondeado se aplique bien */
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.cardo:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.15) !important;
 }
