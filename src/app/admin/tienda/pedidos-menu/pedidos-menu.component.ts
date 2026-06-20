@@ -134,6 +134,14 @@ export class PedidosMenuComponent implements OnInit, OnDestroy {
       }
     )
   }
+  desactivar(id) {
+    this.cargando = true;
+    this.pedidosMenuService.activar(id).subscribe(
+      response => {
+        this.ngOnInit()
+      }
+    )
+  }
   finalizar(id) {
     this.cargando = true;
     this.pedidosMenuService.finalizado(id).subscribe(

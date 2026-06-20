@@ -37,6 +37,9 @@
         <button type="button" class="btn btn-outline-warning" *ngIf="(item.status || '').toUpperCase() === 'PENDING'"
             (click)="onActivar(item._id)">
             <span class="czi-check"></span> {{'Activar'|translate}}</button>
+        <button type="button" class="btn btn-outline-warning" *ngIf="(item.status || '').toUpperCase() === 'INPROCESS'"
+            (click)="onDesactivar(item._id)">
+            <span class="czi-check"></span> {{'Desactivar'|translate}}</button>
         <button type="button" class="btn btn-outline-success" *ngIf="(item.status || '').toUpperCase() === 'INPROCESS'"
             (click)="onFinalizar(item._id)">
             <span class="czi-check"></span> {{'Finalizar'|translate}}</button>
