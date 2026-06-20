@@ -33,19 +33,19 @@
     <div class="d-flex justify-content-between align-items-center button-group mt-3">
         <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal"
             [attr.data-bs-target]="'#ver-'+item._id">
-            <span class="czi-eye"></span> {{'Ver'|translate}}</button>
+            <span class="fas fa-eye"></span> {{'Ver'|translate}}</button>
         <button type="button" class="btn btn-outline-warning" *ngIf="(item.status || '').toUpperCase() === 'PENDING'"
             (click)="onActivar(item._id)">
-            <span class="czi-check"></span> {{'Activar'|translate}}</button>
-        <button type="button" class="btn btn-outline-warning" *ngIf="(item.status || '').toUpperCase() === 'INPROCESS'"
+            <span class="fas fa-check"></span> {{'Activar'|translate}}</button>
+        <button type="button" class="btn btn-outline-primary" *ngIf="(item.status || '').toUpperCase() === 'INPROCESS'"
             (click)="onDesactivar(item._id)">
-            <span class="czi-check"></span> {{'Desactivar'|translate}}</button>
+            <span class="fas fa-times"></span> {{'Desactivar'|translate}}</button>
         <button type="button" class="btn btn-outline-success" *ngIf="(item.status || '').toUpperCase() === 'INPROCESS'"
             (click)="onFinalizar(item._id)">
-            <span class="czi-check"></span> {{'Finalizar'|translate}}</button>
+            <span class="fas fa-flag-checkered"></span> {{'Finalizar'|translate}}</button>
 
         <button type="button" class="btn btn-outline-danger" (click)="onEliminar(item)">
-            <span class="czi-delete-document"></span> {{'Eliminar'|translate}}</button>
+            <span class="fas fa-trash"></span> {{'Eliminar'|translate}}</button>
     </div>
     <!-- botones opciones -->
 </div>
