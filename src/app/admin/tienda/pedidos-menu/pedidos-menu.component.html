@@ -41,8 +41,12 @@
                         <div class="col-md-6 col-lg-4 "
                             *ngFor="let item of pedidos |  paginate: { itemsPerPage: count, currentPage: p } | orderBy:'createdAt, desc' | pedidoStatus:'PENDING'">
                             <div class="card ">
-                                <app-fichaPedido [item]="item" [activar]="activar" [finalizar]="finalizar"
-                                    [eliminarPedido]="eliminarPedido"></app-fichaPedido>
+                                <app-fichaPedido 
+                                [item]="item" 
+                                (activar)="activar($event)" 
+                                (finalizar)="finalizar($event)"
+                                (eliminarPedido)="eliminarPedido($event)"
+                                    ></app-fichaPedido>
                                 <!-- modal ver-->
                                 <app-modal-ver-pedido [item]="item"></app-modal-ver-pedido>
                             </div>
@@ -56,8 +60,12 @@
                         <div class="col-md-6 col-lg-4 "
                             *ngFor="let item of pedidos |  paginate: { itemsPerPage: count, currentPage: p } | orderBy:'createdAt, desc' | pedidoStatus:'INPROCESS'">
                             <div class="card ">
-                                <app-fichaPedido [item]="item" [activar]="activar" [finalizar]="finalizar"
-                                    [eliminarPedido]="eliminarPedido"></app-fichaPedido>
+                                 <app-fichaPedido 
+                                [item]="item" 
+                                (activar)="activar($event)" 
+                                (finalizar)="finalizar($event)"
+                                (eliminarPedido)="eliminarPedido($event)"
+                                    ></app-fichaPedido>
                                 <!-- modal ver-->
                                 <app-modal-ver-pedido [item]="item"></app-modal-ver-pedido>
                             </div>
@@ -71,8 +79,12 @@
                         <div class="col-md-6 col-lg-4 "
                             *ngFor="let item of pedidos |  paginate: { itemsPerPage: count, currentPage: p } | orderBy:'createdAt, desc' | pedidoStatus:'FINISHED'">
                             <div class="card ">
-                                <app-fichaPedido [item]="item" [activar]="activar" [finalizar]="finalizar"
-                                    [eliminarPedido]="eliminarPedido"></app-fichaPedido>
+                                 <app-fichaPedido 
+                                [item]="item" 
+                                (activar)="activar($event)" 
+                                (finalizar)="finalizar($event)"
+                                (eliminarPedido)="eliminarPedido($event)"
+                                    ></app-fichaPedido>
                                 <!-- modal ver-->
                                 <app-modal-ver-pedido [item]="item"></app-modal-ver-pedido>
                             </div>

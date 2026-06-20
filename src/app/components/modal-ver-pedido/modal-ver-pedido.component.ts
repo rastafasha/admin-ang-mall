@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-modal-ver-pedido',
@@ -8,5 +9,11 @@ import { Component, Input } from '@angular/core';
 })
 export class ModalVerPedidoComponent {
   @Input() item:any;
+
+
+     constructor(
+    // Debe ser public para que el HTML pueda leer "translate.currentLang"
+    public translate: TranslateService 
+  ) {}
 
 }

@@ -43,13 +43,16 @@
 
                         <div class="d-flex justify-content-between mb-3 border-bottom pb-2">
                             <span class="text-muted small">{{'Categoría'|translate}}</span>
-                            <span class="fw-bold small">{{ pedidoitem.subcategoria
-                                }}</span>
+                            <span class="fw-bold small">
+                                {{ translate.currentLang === 'en' ? (pedidoitem.categoria.subcategorias?.en || pedidoitem.categoria.subcategorias?.es) : (pedidoitem.categoria.subcategorias?.es || pedidoitem.categoria.subcategorias?.en) }}
+                            </span>
                         </div>
                         <div class="d-flex justify-content-between mb-3 border-bottom pb-2">
                             <span class="text-muted small">{{'Nombre'|translate}}</span> &nbsp;
                             <div class="d-flex flex-column">
-                                <span class="fw-bold small">{{ pedidoitem.titulo }}</span>
+                                <span class="fw-bold small">
+                                    {{ translate.currentLang === 'en' ? pedidoitem?.titulo?.en: pedidoitem?.titulo?.es}}
+                                </span>
                             <span class="fw-bold small">{{ pedidoitem.selector_elegido }}</span>
                             </div>
                         </div>
@@ -61,8 +64,7 @@
 
                         <div class="d-flex justify-content-between">
                             <span class="text-muted small">{{'Precio'|translate}}</span>
-                            <span class="fw-bold small">{{ +pedidoitem.precio_ahora |
-                                currency:tienda_moneda }}</span>
+                            <span class="fw-bold small">{{ +pedidoitem.precio_ahora | currency:tienda_moneda }}</span>
                         </div>
 
                         <div class="d-flex justify-content-between">

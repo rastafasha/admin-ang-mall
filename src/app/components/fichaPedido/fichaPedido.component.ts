@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
     selector: 'app-fichaPedido',
@@ -8,8 +8,22 @@ import { Component, Input } from '@angular/core';
 })
 export class FichaPedidoComponent {
     @Input() item
-    @Input() activar
-    @Input() finalizar
-    @Input() eliminarPedido
+    // Las funciones ahora se transforman en emisores de eventos
+  @Output() activar = new EventEmitter<any>();
+  @Output() finalizar = new EventEmitter<any>();
+  @Output() eliminarPedido = new EventEmitter<any>();
     constructor () {}
+
+    // Métodos internos del hijo que se ejecutan al hacer clic en sus botones
+   onActivar(id: string): void {
+    this.activar.emit(id);
+  }
+
+  onFinalizar(id: string): void {
+    this.finalizar.emit(id);
+  }
+
+  onEliminar(item: string): void {
+    this.eliminarPedido.emit(item);
+  }
 }
