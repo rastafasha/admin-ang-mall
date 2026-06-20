@@ -57,23 +57,23 @@ export class PwaNotifInstallerComponent implements OnInit, OnDestroy {
   }
 
   initPwa() {
-    this.isOnline = window.navigator.onLine;
+  this.isOnline = window.navigator.onLine;
 
-    if (this.swUpdate.isEnabled) {
-      this.swUpdate.versionUpdates.pipe(
-        filter((evt): evt is VersionReadyEvent => evt.type === 'VERSION_READY')
-      ).subscribe(() => {
-        this.modalVersion = true; // Abre tu modal HTML de actualización
-      });
+  if (this.swUpdate.isEnabled) {
+    this.swUpdate.versionUpdates.pipe(
+      filter((evt): evt is VersionReadyEvent => evt.type === 'VERSION_READY')
+    ).subscribe(() => {
+      this.modalVersion = true; 
+    });
 
-      // Le damos 2 segundos a Render para estabilizar la app antes de chequear caché
-      setTimeout(() => {
-        this.swUpdate.checkForUpdate().catch(err => console.error("Error SW:", err));
-      }, 2000);
-    }
-
-    this.checkIOSStandalone();
+    // 💡 Aumentamos a 4 segundos para acoplarse con la estrategia del módulo
+    setTimeout(() => {
+      this.swUpdate.checkForUpdate().catch(err => console.error("Error SW:", err));
+    }, 4000);
   }
+
+  this.checkIOSStandalone();
+}
 
   public updateVersion(): void {
     this.swUpdate.activateUpdate().then(() => {

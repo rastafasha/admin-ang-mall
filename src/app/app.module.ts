@@ -53,7 +53,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: !isDevMode(),
       // Cambiamos a registro inmediato para evitar bloqueos por peticiones en segundo plano
-      registrationStrategy: 'registerImmediately'
+      registrationStrategy: 'registerWhenStable:3000'
     }),
     ToastrModule.forRoot({
       timeOut: 10000,
