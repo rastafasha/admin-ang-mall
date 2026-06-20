@@ -101,7 +101,7 @@ export class CrearPostalComponent {
     })
   }
 
-    onSubmit() {
+  onSubmit() {
 
     if (!this.postalForm.valid) {
       this.postalForm.markAllAsTouched();
@@ -122,7 +122,7 @@ export class CrearPostalComponent {
       const data = {
         ...this.postalForm.value,
         _id: this.postalSeleccionado._id,
-        local: localId 
+        local: localId
       }
       this.postalService.actualizarPostal(data).subscribe(
         resp => {
@@ -130,9 +130,10 @@ export class CrearPostalComponent {
           if (modalElement) {
             const modalInstance = (window as any).bootstrap.Modal.getInstance(modalElement);
             if (modalInstance) {
-              modalInstance.hide(); 
+              modalInstance.hide();
             }
           }
+          this.onClose();
           // 💡 SOLUCIÓN: Damos 300ms a Bootstrap para que limpie el fondo gris antes de destruir el componente con emit()
           setTimeout(() => {
             // Parche de fuerza bruta si Bootstrap no logra borrar su propia cortina:
@@ -143,13 +144,14 @@ export class CrearPostalComponent {
 
             this.refreshPostalList.emit();
           }, 300);
+          
         });
 
     } else {
       // CREAR
       const nuevaCategoriaData = {
         ...this.postalForm.value,
-        local: localId 
+        local: localId
       };
 
       this.postalService.registro(nuevaCategoriaData)
@@ -159,19 +161,20 @@ export class CrearPostalComponent {
           if (modalElement) {
             const modalInstance = (window as any).bootstrap.Modal.getInstance(modalElement);
             if (modalInstance) {
-              modalInstance.hide(); 
+              modalInstance.hide();
             }
           }
+          this.onClose();
           // 💡 SOLUCIÓN: Lo mismo aquí para la creación
           setTimeout(() => {
-  // Parche de fuerza bruta si Bootstrap no logra borrar su propia cortina:
-  const backdrop = document.querySelector('.modal-backdrop');
-  if (backdrop) backdrop.remove();
-  document.body.style.overflow = '';
-  document.body.style.paddingRight = '';
+            // Parche de fuerza bruta si Bootstrap no logra borrar su propia cortina:
+            const backdrop = document.querySelector('.modal-backdrop');
+            if (backdrop) backdrop.remove();
+            document.body.style.overflow = '';
+            document.body.style.paddingRight = '';
 
-  this.refreshPostalList.emit();
-}, 300);
+            this.refreshPostalList.emit();
+          }, 300);
         });
     }
   }
