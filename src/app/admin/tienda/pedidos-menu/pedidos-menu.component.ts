@@ -136,7 +136,7 @@ export class PedidosMenuComponent implements OnInit, OnDestroy {
   }
   desactivar(id) {
     this.cargando = true;
-    this.pedidosMenuService.activar(id).subscribe(
+    this.pedidosMenuService.desactivar(id).subscribe(
       response => {
         this.ngOnInit()
       }
