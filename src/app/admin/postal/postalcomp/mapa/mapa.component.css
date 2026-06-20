@@ -319,9 +319,9 @@
 }
 
 .cardss{
-    /* position: absolute; */
-    /* top: 70vh; */
-    /* bottom: 0px; */
+    position: absolute;
+    top: 70vh;
+    bottom: 0px;
     left: 20px;
     /* z-index: 99; */
       display: grid;
