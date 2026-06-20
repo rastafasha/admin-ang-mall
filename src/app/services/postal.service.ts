@@ -48,9 +48,20 @@ export class PostalService {
     const url = `${base_url}/postals/${id}`;
     return this.http.get<any>(url, this.headers)
     .pipe(
-      map((resp:{ok: boolean, cupon: Postal}) => resp.cupon)
+      map((resp:{ok: boolean, postal: Postal}) => resp.postal)
       );
   }
+  getPostalesLocal(id:string):Observable<any>{
+    const url = `${base_url}/postals/local/${id}`;
+    return this.http.get<any>(url, this.headers)
+    .pipe(
+      map((resp:{ok: boolean, postales: Postal}) => resp.postales)
+      );
+  }
+  actualizarPostal(postal: Postal){
+      const url = `${base_url}/postals/actualizar/${postal._id}`;
+      return this.http.put(url, postal, this.headers);
+    }
 
   eliminar(_id:string):Observable<any>{
     const url = `${base_url}/postals/${_id}`;

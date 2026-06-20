@@ -4,7 +4,8 @@ export class Postal{
         public titulo: string,
         public precio: string,
         public tiempo: string,
-        public dias: number,
+        public distancia: string,
+        public local: string,
     ){
     }
 }

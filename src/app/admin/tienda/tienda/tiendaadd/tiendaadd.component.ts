@@ -119,6 +119,7 @@ export class TiendaaddComponent implements OnInit, OnChanges {
       status: ['Desactivado',],
       state_banner: [false,],
       mostrarTasas: [false,],
+      usaDelivery: [false,],
       has_reservacion: [false,],
       capacidad_por_hora: [''],
       texto_hero_uno: [''],
@@ -173,6 +174,7 @@ export class TiendaaddComponent implements OnInit, OnChanges {
         zip: tienda.zip,
         status: tienda.status,
         mostrarTasas: tienda.mostrarTasas,
+        usaDelivery: tienda.usaDelivery,
         state_banner: tienda.state_banner,
         has_reservacion: tienda.has_reservacion,
         capacidad_por_hora: tienda.capacidad_por_hora,
@@ -220,6 +222,7 @@ export class TiendaaddComponent implements OnInit, OnChanges {
       redssociales: null,
       status: null,
       mostrarTasas: null,
+      usaDelivery: null,
       state_banner: null,
       has_reservacion: null,
       texto_hero_uno: null,
@@ -256,6 +259,7 @@ export class TiendaaddComponent implements OnInit, OnChanges {
     const ciudad = this.tiendaForm.get('ciudad');
     const zip = this.tiendaForm.get('zip');
     const mostrarTasas = this.tiendaForm.get('mostrarTasas');
+    const usaDelivery = this.tiendaForm.get('usaDelivery');
 
     const status = this.tiendaForm.get('status');
     const state_banner = this.tiendaForm.get('state_banner');
@@ -268,6 +272,7 @@ export class TiendaaddComponent implements OnInit, OnChanges {
       zip?.invalid || status?.invalid ||
       moneda?.invalid ||
       mostrarTasas?.invalid ||
+      usaDelivery?.invalid ||
       state_banner?.invalid ||
       has_reservacion?.invalid
 
@@ -280,6 +285,7 @@ export class TiendaaddComponent implements OnInit, OnChanges {
       tipoFlujo?.markAsTouched();
       moneda?.markAsTouched();
       mostrarTasas?.markAsTouched();
+      usaDelivery?.markAsTouched();
       ciudad?.markAsTouched();
       zip?.markAsTouched();
       status?.markAsTouched();

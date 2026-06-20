@@ -1,5 +1,8 @@
 <!-- Modal Dinámico de Instrucciones -->
-<div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="infoModalLabel" aria-hidden="true" data-bs-backdrop="static">
+<div class="modal fade" 
+     id="infoModal" 
+     tabindex="-1" 
+     aria-labelledby="infoModalLabel">
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
     <div class="modal-content border-0 shadow">
       <!-- Header con color dinámico si lo deseas, aquí mantenemos el success -->
@@ -10,7 +13,7 @@
             {{ 'Guía de Sección' | translate }}: {{ 'SECTIONS.' + sectionId | translate }}
           </span>
         </h5>
-        <button type="button" class="btn-close btn-close-white" (click)="onClose()" aria-label="Close"></button>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" (click)="onClose()" aria-label="Close"></button>
       </div>
 
       <div class="modal-body py-4">
@@ -28,7 +31,7 @@
           {{'No mostrar más en esta sección'|translate}}
         </button>
         
-        <button type="button" class="btn btn-success px-4" (click)="onClose()">
+        <button type="button" class="btn btn-success px-4" data-bs-dismiss="modal" (click)="onClose()">
           {{'Entendido' |translate}}
         </button>
       </div>

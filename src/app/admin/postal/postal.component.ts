@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Postal } from "src/app/models/postal.model";
 import { PostalService } from "src/app/services/postal.service";
-import { ActivatedRoute, Router } from '@angular/router';
-import { UsuarioService } from 'src/app/services/usuario.service';
 import Swal from 'sweetalert2';
 import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
@@ -20,7 +18,7 @@ declare var $: any;
 })
 export class PostalComponent implements OnInit {
 
-  public postal = new Postal('', '', '', '', null);
+  public postal:Postal;
   public msm_error = '';
   public postales;
   public identity;
@@ -29,22 +27,20 @@ export class PostalComponent implements OnInit {
   cargando = false;
   crearNuevo = false;
 
-  activeCategory: any;
+  postalSeleccionado: any;
 
   public info: string = '';
   private langSubscription!: Subscription;
 
   constructor(
     private postalService: PostalService,
-    private usuarioService: UsuarioService,
-    private router: Router,
-    private route: ActivatedRoute,
     public translate: TranslateService
   ) {
-    this.identity = this.usuarioService.usuario;
   }
 
   ngOnInit(): void {
+    let USER = localStorage.getItem("user");
+    this.identity = USER ? JSON.parse(USER) : null;
     this.crearNuevo = false;
     this.listar();
     // 🟢 1. CARGA INICIAL DE LAS INSTRUCCIONES (Garantiza que la info no empiece vacía)
@@ -80,35 +76,11 @@ export class PostalComponent implements OnInit {
 
 
 
-  onSubmit(postalForm) {
-    if (postalForm.valid) {
-      let data = {
-        titulo: postalForm.value.titulo,
-        tiempo: postalForm.value.tiempo,
-        precio: postalForm.value.precio,
-        dias: postalForm.value.dias,
-      }
-
-      this.postalService.registro(data).subscribe(
-        response => {
-          console.log(response);
-          this.postal = new Postal('', '', '', '', null);
-          this.listar();
-        },
-        error => {
-          console.log(error);
-
-        }
-      );
-    } else {
-      this.msm_error = 'Complete correctamente el formulario';
-    }
-  }
-
+  
   listar() {
-    this.postalService.listar().subscribe(
-      response => {
-        this.postales = response.postales;
+    this.postalService.getPostalesLocal(this.identity.local).subscribe(
+      (resp:any) => {
+        this.postales = resp;
       },
       error => {
       }
@@ -140,34 +112,23 @@ export class PostalComponent implements OnInit {
     });
   }
 
-  optionSelected(value: number) {
-    this.option_selectedd = value;
-    if (this.option_selectedd === 1) {
+  
 
-      // this.ngOnInit();
+
+
+  onEditProject(postal: Postal) {
+      this.postalSeleccionado = postal;
     }
-    if (this.option_selectedd === 2) {
-      this.solicitud_selectedd = null;
+  
+    openEditModal(): void {
+      this.postalSeleccionado = null;
     }
-    if (this.option_selectedd === 3) {
-      this.solicitud_selectedd = null;
+  
+    onCloseModal(): void {
+      this.postalSeleccionado = null;
     }
-    if (this.option_selectedd === 4) {
-      this.solicitud_selectedd = null;
+  
+    onClose() {
+      this.ngOnInit();
     }
-  }
-
-
-
-  selectCategory(category: string) {
-    this.activeCategory = category;
-  }
-
-  optionCrear() {
-    this.crearNuevo = true;
-  }
-  cerrarOptionCrear() {
-    this.crearNuevo = false;
-  }
-
 }

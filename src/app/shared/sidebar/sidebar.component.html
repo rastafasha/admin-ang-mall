@@ -88,7 +88,7 @@
 
                 <!-- delivery -->
                 
-                <li *ngIf="usuario.role ==='SUPERADMIN' ">
+                <li *ngIf="usuario.role ==='SUPERADMIN' || usuario.role ==='ADMIN' && tienda.usaDelivery === true">
                     <!-- 🟢 Controla la sección 'delivery' -->
                     <a href="javascript:void(0);" (click)="toggleMenu('delivery')"
                         [attr.aria-expanded]="menuActivo === 'delivery'">
@@ -104,7 +104,7 @@
                                 [routerLinkActiveOptions]="{exact:true}">{{'Mapa '|translate}}</a></li>
                     </ul>
                 </li>
-                <li class="nav-devider" *ngIf="usuario.role ==='SUPERADMIN'"></li>
+                <li class="nav-devider" *ngIf="usuario.role ==='SUPERADMIN' || usuario.role ==='ADMIN' && tienda.usaDelivery === true"></li>
 
                 <!-- administracion -->
                 <li *ngIf="usuario.role ==='SUPERADMIN' || usuario.role ==='ADMIN' || usuario.role ==='VENTAS'">

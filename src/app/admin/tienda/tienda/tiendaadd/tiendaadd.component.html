@@ -254,7 +254,7 @@
                                 <!-- reservacion -->
                                 <div class="row">
 
-                                    <div class="form-group col-xs-12 col-sm-4  ">
+                                    <div class="form-group col-xs-12 col-sm-3  ">
                                         <label for="text-input">{{'Mostrar Tasas?'|translate}} <span
                                                 class="required">*</span></label>
                                         <div class="input-group">
@@ -264,17 +264,37 @@
                                                 <option [value]="false">{{'No'|translate}}</option>
                                             </select>
                                         </div>
-                                        <div *ngIf="tiendaForm.get('has_reservacion')?.touched && tiendaForm.get('has_reservacion')?.invalid"
+                                        <div *ngIf="tiendaForm.get('mostrarTasas')?.touched && tiendaForm.get('mostrarTasas')?.invalid"
                                             class="text-danger">
-                                            <div *ngIf="tiendaForm.get('has_reservacion')?.errors?.['required']">
+                                            <div *ngIf="tiendaForm.get('mostrarTasas')?.errors?.['required']">
                                                 {{'Campo Requerido'|translate}}
                                             </div>
-                                            <div *ngIf="tiendaForm.get('has_reservacion')?.errors?.['minlength']">
+                                            <div *ngIf="tiendaForm.get('mostrarTasas')?.errors?.['minlength']">
                                                 {{'Por Favor Seleccione'|translate}}
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="form-group col-xs-12 col-sm-4  ">
+                                    <div class="form-group col-xs-12 col-sm-3  ">
+                                        <label for="text-input">{{'Delivery?'|translate}} <span
+                                                class="required">*</span></label>
+                                        <div class="input-group">
+                                            <select class="form-control" formControlName="usaDelivery">
+                                                <option disabled value="">{{'Seleccione'|translate}}</option>
+                                                <option [value]="true">{{'Si'|translate}}</option>
+                                                <option [value]="false">{{'No'|translate}}</option>
+                                            </select>
+                                        </div>
+                                        <div *ngIf="tiendaForm.get('usaDelivery')?.touched && tiendaForm.get('usaDelivery')?.invalid"
+                                            class="text-danger">
+                                            <div *ngIf="tiendaForm.get('usaDelivery')?.errors?.['required']">
+                                                {{'Campo Requerido'|translate}}
+                                            </div>
+                                            <div *ngIf="tiendaForm.get('usaDelivery')?.errors?.['minlength']">
+                                                {{'Por Favor Seleccione'|translate}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-xs-12 col-sm-3  ">
                                         <label for="text-input">{{'Usa Reservaciones?'|translate}} <span
                                                 class="required">*</span></label>
                                         <div class="input-group">
@@ -294,7 +314,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="form-group col-xs-12 col-sm-4 " >
+                                    <div class="form-group col-xs-12 col-sm-3 " >
                                         <label for="Tienda">{{'Capacidad por Hora'|translate}} </label>
                                         <div class="input-group">
                                             <input type="number" formControlName="capacidad_por_hora"

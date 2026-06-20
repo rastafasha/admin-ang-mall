@@ -1,0 +1,103 @@
+<div id="editPostal" class="modal fade" tabindex="-1" aria-labelledby="catModalLabel" aria-live="anonymous">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="catModalLabel">{{pageTitle|translate}}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                    (click)="onClose()"></button>
+            </div>
+            <div class="modal-body">
+                <!-- <app-loading *ngIf="isLoading"></app-loading> -->
+                <div class="container">
+                    <div class="row">
+                        <form class="form p-t-20 form-horizontal form-material" [formGroup]="postalForm">
+                            <div class="row">
+                                <div class="form-group col-xs-12 col-sm-6">
+                                    <label for="exampleInputuname">{{'Título'|translate}} <span
+                                            class="required">*</span></label>
+                                    <div class="input-group">
+                                        <input type="text" formControlName="titulo" class="form-control"
+                                            id="exampleInputuname" placeholder="titulo">
+                                        <div *ngIf="postalForm.get('titulo')?.touched && postalForm.get('titulo')?.invalid"
+                                            class="text-danger">
+                                            <div *ngIf="postalForm.get('titulo')?.errors?.['required']">
+                                                {{'Campo Requerido'|translate}}
+                                            </div>
+                                            <div *ngIf="postalForm.get('titulo')?.errors?.['minlength']">
+                                                {{'Mínimo 3 Caracteres'|translate}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-xs-12 col-sm-6">
+                                    <label for="exampleInputuname">{{'Tiempo'|translate}} <span
+                                            class="required">*</span></label>
+                                    <div class="input-group">
+                                        <input type="text" formControlName="tiempo" class="form-control"
+                                            id="exampleInputuname" placeholder="tiempo">
+                                        <div *ngIf="postalForm.get('tiempo')?.touched && postalForm.get('tiempo')?.invalid"
+                                            class="text-danger">
+                                            <div *ngIf="postalForm.get('tiempo')?.errors?.['required']">
+                                                {{'Campo Requerido'|translate}}
+                                            </div>
+                                            <div *ngIf="postalForm.get('tiempo')?.errors?.['minlength']">
+                                                {{'Mínimo 3 Caracteres'|translate}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-xs-12 col-sm-6">
+                                    <label for="exampleInputuname">{{'Precio'|translate}} <span
+                                            class="required">*</span></label>
+                                    <div class="input-group">
+                                        <input type="text" formControlName="precio" class="form-control"
+                                            id="exampleInputuname" placeholder="precio">
+                                        <div *ngIf="postalForm.get('precio')?.touched && postalForm.get('precio')?.invalid"
+                                            class="text-danger">
+                                            <div *ngIf="postalForm.get('precio')?.errors?.['required']">
+                                                {{'Campo Requerido'|translate}}
+                                            </div>
+                                            <div *ngIf="postalForm.get('precio')?.errors?.['minlength']">
+                                                {{'Mínimo 3 Caracteres'|translate}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-xs-12 col-sm-6">
+                                    <label for="exampleInputuname">{{'Distancia'|translate}} <span
+                                            class="required">*</span></label>
+                                    <div class="input-group">
+                                        <input type="text" formControlName="distancia" class="form-control"
+                                            id="exampleInputuname" placeholder="distancia">
+                                        <div *ngIf="postalForm.get('distancia')?.touched && postalForm.get('distancia')?.invalid"
+                                            class="text-danger">
+                                            <div *ngIf="postalForm.get('distancia')?.errors?.['required']">
+                                                {{'Campo Requerido'|translate}}
+                                            </div>
+                                            <div *ngIf="postalForm.get('distancia')?.errors?.['minlength']">
+                                                {{'Mínimo 3 Caracteres'|translate}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+
+                                <button (click)="onSubmit()" class="btn btn-outline-success">
+                                    {{ (postalSeleccionado ? 'Actualizar ' : 'Crear ') | translate
+                                    }}
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                    (click)="onClose()">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>

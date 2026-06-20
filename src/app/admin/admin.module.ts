@@ -70,6 +70,7 @@ import { DriverpModule } from './driverp/driverp.module';
 import { PaymentDetailsComponent } from './transferencias/payment-details/payment-details.component';
 import { TasabcvComponent } from './tasas/tasabcv/tasabcv.component';
 import { TasaeurobcvComponent } from './tasas/tasaeurobcv/tasaeurobcv.component';
+import { CrearPostalComponent } from './postal/crear-postal/crear-postal.component';
 
 @NgModule({
   declarations: [
@@ -85,6 +86,7 @@ import { TasaeurobcvComponent } from './tasas/tasaeurobcv/tasaeurobcv.component'
     ConfigSiteComponent,
     PromocionComponent,
     PostalComponent,
+    CrearPostalComponent,
     CuponComponent,
     ContactoComponent,
     PromoeditComponent,
@@ -133,6 +135,7 @@ import { TasaeurobcvComponent } from './tasas/tasaeurobcv/tasaeurobcv.component'
     ConfigSiteComponent,
     PromocionComponent,
     PostalComponent,
+    CrearPostalComponent,
     CuponComponent,
     ContactoComponent,
     PromoeditComponent,
