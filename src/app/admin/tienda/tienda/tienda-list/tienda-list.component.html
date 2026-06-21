@@ -1,6 +1,6 @@
 <app-back-instrucc (onOpenHelp)="instruccionesModal.open()"></app-back-instrucc>
 
-<div class="row animated fadeIn fast">
+<div class="row animated fadeIn fast" >
     <div class="col-12">
         <app-search [query]="query" [modelo]="tienda" [colleccionName]="tiendas" [colleccion]="'tiendas'"
             (searchEvent)="handleSearchEvent($event)" (resetEvent)="PageSize()"></app-search>
@@ -19,7 +19,7 @@
                         <h4 class="card-title">{{'Tiendas'|translate}}: ({{ tiendas.length}})</h4>
                         <h6 class="card-subtitle">{{'Tiendas registrados en la app'|translate}}</h6>
                     </div>
-                    <div class="col-1">
+                    <div class="col-1" *ngIf="user.role === 'SUPERADMIN'">
                         <div class="text-right">
                             <button (click)="openEditModal()" class="btn btn-outline-success" data-toggle="tooltip"
                                 data-original-title="Edit" data-bs-toggle="modal" data-bs-target="#editTienda">
@@ -39,8 +39,8 @@
                                 <th>Img Front</th>
                                 <th>{{'Nombre'|translate}}</th>
                                 <th>{{'Tienda'|translate}}</th>
-                                <th>{{'Status'|translate}}</th>
-                                <th>{{'Categoria'|translate}}</th>
+                                <th *ngIf="user.role === 'SUPERADMIN'">{{'Status'|translate}}</th>
+                                <th>{{'Categoría'|translate}}</th>
                                 <th class="text-nowrap">{{'Acciones'|translate}}</th>
                             </tr>
                         </thead>
@@ -61,7 +61,7 @@
                                 <td>
                                     {{tienda.local}}
                                 </td>
-                                <td>
+                                <td *ngIf="user.role === 'SUPERADMIN'">
                                     <!-- Botón que se muestra SOLO cuando la tienda está Desactivada (para poder Activarla) -->
                                     <button type="button" class="btn btn-outline-success"
                                         *ngIf="tienda.status === 'Desactivado'" (click)="activar(tienda._id, 'Activo')">
@@ -101,5 +101,5 @@
     </div>
 </div>
 <app-modal-instrucciones [info]="info" [sectionId]="'tienda'" #instruccionesModal></app-modal-instrucciones>
-<app-tiendaadd (refreshTiendaList)="loadTiendas()" [tiendaSeleccionado]="tiendaSeleccionado" (closeModal)="onClose()"
+<app-tiendaadd (refreshTiendaList)="ngOnInit()" [tiendaSeleccionado]="tiendaSeleccionado" (closeModal)="onClose()"
     #editTienda></app-tiendaadd>

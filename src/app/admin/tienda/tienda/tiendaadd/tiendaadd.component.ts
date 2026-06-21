@@ -14,6 +14,9 @@ import { TiendaService } from 'src/app/services/tienda.service';
 import { PaisService } from 'src/app/services/pais.service';
 import { Pais } from 'src/app/models/pais.model';
 import { TranslateService } from '@ngx-translate/core';
+import { Subscription } from 'rxjs';
+import * as L from 'leaflet';
+import { WaGeolocationService } from '@ng-web-apis/geolocation';
 
 interface HtmlInputEvent extends Event {
   target: HTMLInputElement & EventTarget;
@@ -69,6 +72,14 @@ export class TiendaaddComponent implements OnInit, OnChanges {
   telefono: any; user: any;
   redssociales: any; status: any;
 
+  // Variables del mapa
+  private map: L.Map | null = null;
+  private marker: L.Marker | null = null;
+  selectedCoords: { lat: number; lng: number } | null = null;
+  mapLoading = true;
+  mapError = '';
+  private locationSubscription: Subscription | null = null;
+
   public typeof = (val: any) => typeof val;
 
   constructor(
@@ -80,6 +91,7 @@ export class TiendaaddComponent implements OnInit, OnChanges {
     private fileUploadService: FileUploadService,
     private _iconoService: IconosService,
     public translate: TranslateService,
+    private geolocation$: WaGeolocationService,
   ) {
     this.usuario = usuarioService.usuario;
     const base_url = environment.baseUrl;
@@ -101,6 +113,8 @@ export class TiendaaddComponent implements OnInit, OnChanges {
       local: ['', Validators.required],
       telefono: ['', Validators.required],
       direccion: ['', Validators.required],
+      latitud: ['', Validators.required],
+      longitud: ['', Validators.required],
       pais: ['', Validators.required],
 
       // 🔑 MODIFICADO: Dejamos 'USD' por defecto para tus clientes tradicionales
@@ -168,6 +182,8 @@ export class TiendaaddComponent implements OnInit, OnChanges {
         local: tienda.local,
         telefono: tienda.telefono,
         direccion: tienda.direccion,
+        latitud: tienda.latitud,
+        longitud: tienda.longitud,
         pais: tienda.pais,
         moneda: tienda.moneda || 'USD', // Aseguramos un respaldo por si acaso
         ciudad: tienda.ciudad,
@@ -205,7 +221,7 @@ export class TiendaaddComponent implements OnInit, OnChanges {
     this.currentStep = 1;
     this.tiendaForm.reset();
     this.pageTitle = 'Creando Tienda';
-    
+
     // Also reset default values if needed
     this.tiendaForm.patchValue({
       id: null,
@@ -214,6 +230,8 @@ export class TiendaaddComponent implements OnInit, OnChanges {
       telefono: null,
       categoria: null,
       direccion: null,
+      latitud: null,
+      longitud: null,
       pais: null,
       moneda: 'USD', // 🔑 Resetea al valor internacional por defecto
       ciudad: null,
@@ -244,7 +262,7 @@ export class TiendaaddComponent implements OnInit, OnChanges {
     // Emit event to parent to reset the projectSeleccionado variable
 
     this.closeModal.emit();
-}
+  }
 
 
   nextStep() {
@@ -358,6 +376,77 @@ export class TiendaaddComponent implements OnInit, OnChanges {
     )
   }
 
+  /**
+ * Usa la ubicación actual del GPS
+ */
+  useCurrentLocation(): void {
+    this.mapLoading = true;
+    this.geolocation$.subscribe({
+      next: (position) => {
+        const lat = position.coords.latitude;
+        const lng = position.coords.longitude;
+
+        this.placeMarker(lat, lng);
+        this.mapLoading = false;
+
+      },
+      error: (error) => {
+        this.mapLoading = false;
+        // this.toastr.warning('GPS Error', 'Habilita ubicación. Usa HTTPS.')
+      }
+    });
+  }
+
+  /**
+   * Coloca o mueve el marcador en las coordenadas especificadas
+   */
+  placeMarker(lat: number, lng: number): void {
+    // console.log('placeMarker called with lat:', lat, 'lng:', lng);
+
+    // Always set coords FIRST
+    this.selectedCoords = { lat, lng };
+    // console.log('selectedCoords set:', this.selectedCoords);
+
+    // Patch form fields
+    this.tiendaForm.patchValue({ latitud: lat, longitud: lng });
+    // console.log('Form lat/lng:', this.direccionForm.value.latitud, this.direccionForm.value.longitud);
+
+    if (!this.map) {
+      console.error('Map not ready - coords saved anyway');
+      this.fetchAddress(lat, lng);
+      return;
+    }
+
+    // Marker
+    if (this.marker) {
+      this.marker.setLatLng([lat, lng]);
+    } else {
+      this.marker = L.marker([lat, lng])
+        .addTo(this.map)
+        .bindPopup('<b>Ubicación GPS</b>')
+        .openPopup();
+    }
+
+    this.map.setView([lat, lng], 15);
+
+    // Address
+    this.fetchAddress(lat, lng);
+  }
+
+  fetchAddress(lat: number, lng: number): void {
+    // console.log('Geocoding', lat, lng);
+    fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=18&addressdetails=1`)
+      .then(res => res.json())
+      .then(data => {
+        const address = data.display_name || `Lat ${lat.toFixed(4)}, Lng ${lng.toFixed(4)}`;
+        this.tiendaForm.patchValue({ direccion: `📍 ${address}` });
+        console.log('Address:', address);
+      })
+      .catch(() => {
+        this.tiendaForm.patchValue({ direccion: `📍 GPS: ${lat.toFixed(6)}, ${lng.toFixed(6)}` });
+      });
+  }
+
   // addRedSocial
   addRedSocial() {
     if (this.redssociales) {
@@ -409,6 +498,8 @@ export class TiendaaddComponent implements OnInit, OnChanges {
       telefono,
       categoria,
       direccion,
+      latitud,
+      longitud,
       pais,
       ciudad,
       moneda,
@@ -423,34 +514,68 @@ export class TiendaaddComponent implements OnInit, OnChanges {
     } = this.tiendaForm.value;
 
     if (this.tiendaSeleccionado) {
-      //actualizar
+      // 🚀 BLINDAJE DE PROPIEDAD:
+      // Si edita el Superadmin, mantenemos el dueño real que ya tenía la tienda.
+      // Si edita el ADMIN (dueño), mantenemos su ID. Evitamos usar a ciegas el uid de la sesión.
+      const dueñoRealId = this.tiendaSeleccionado.user?._id || this.tiendaSeleccionado.user || this.user.uid;
+
       const data = {
         ...this.tiendaForm.value,
-        user: this.user.uid,
+        user: dueñoRealId, // 🔑 SOLUCIONADO: Se amarra al dueño original de la tienda
         _id: this.tiendaSeleccionado._id,
-        // user: this.usuario.uid
-      }
+      };
+
       this.tiendaService.actualizarTienda(data).subscribe(
         resp => {
           this.cargando = false;
-          Swal.fire('Actualizado', `${nombre} actualizado correctamente, Ahora Agrega la info para el menu y sube la imagen.`, 'success');
-          // Close modal programmatically
-          // const modalElement = document.getElementById('editTienda');
-          // const modal = bootstrap.Modal.getInstance(modalElement);
-          // if (modal) {
-          //   modal.hide();
+          // 1. Mensajes personalizados según el rol
+          if (this.user.role === 'ADMIN') {
+            Swal.fire('Actualizado', `${nombre} actualizado correctamente.`, 'success');
+          }
 
-          // }
-          // // Emit event to refresh project list
-          // this.refreshTiendaList.emit();
-          // this.ngOnInit()
+          if (this.user.role === 'SUPERADMIN') {
+            Swal.fire('Actualizado', `${nombre} actualizado correctamente. Ahora agrega la info para el menú y sube la imagen.`, 'success');
+          }
+
+          // Intentamos el cierre nativo por botón
+          const botonCerrar = document.getElementById('btnCerrarModalTienda'); // El ID que le pusiste a tu botón 'Cerrar'
+          if (botonCerrar) {
+            botonCerrar.click();
+          } else {
+            const modalElement = document.getElementById('editTienda');
+            if (modalElement && typeof bootstrap !== 'undefined') {
+              const modal = bootstrap.Modal.getOrCreateInstance(modalElement);
+              modal.hide();
+            }
+          }
+
+          // 🔥 EL SALVAVAVIDAS DE LIMPIEZA DEL BODY (Destruye el fondo oscuro pegado)
+          setTimeout(() => {
+            // 1. Removemos la clase de Bootstrap que congela el scroll de la pantalla
+            document.body.classList.remove('modal-open');
+            document.body.style.overflow = '';
+            document.body.style.paddingRight = '';
+
+            // 2. Buscamos el div gris oscuro del backdrop flotante y lo exterminamos del HTML
+            const backdrops = document.getElementsByClassName('modal-backdrop');
+            while (backdrops.length > 0) {
+              backdrops[0].parentNode?.removeChild(backdrops[0]);
+            }
+
+            console.log('🧼 Fondo oscuro limpiado manualmente con éxito.');
+          }, 100); // Un pestañeo de 100ms es suficiente para que termine la animación
+
+          // Emitimos el evento para refrescar la lista de tiendas en la pantalla principal
+          this.refreshTiendaList.emit();
+
         });
 
     } else {
       //crear
+      const nuevoDueñoId = this.tiendaForm.value.user || this.user.uid;
       const data = {
         ...this.tiendaForm.value,
-        user: this.user.uid,
+        user: nuevoDueñoId,
         redssociales: this.redssociales,
         // user: this.usuario.uid
       }

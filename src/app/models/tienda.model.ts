@@ -34,6 +34,8 @@ export class Tienda{
     public direccion?: string,
     public pais?: string,
     public ciudad?: string,
+    public latitud?: number,
+    public longitud?: number,
     public zip?: string,
     public user?: string,
     public categoria?: Categoria,

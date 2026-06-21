@@ -85,7 +85,6 @@ export class TiendaListComponent implements OnInit, OnDestroy  {
     const title = this.translate.instant('STORE.TITLE');
     const subtitle = this.translate.instant('STORE.SUBTITLE');
     const item1 = this.translate.instant('STORE.ITEM_1');
-    const item2 = this.translate.instant('STORE.ITEM_2');
 
     // Inyectamos el bloque HTML bilingüe estable en la propiedad
     this.info = `
@@ -93,7 +92,6 @@ export class TiendaListComponent implements OnInit, OnDestroy  {
     <p>${subtitle}</p>
     <ul>
       <li>${item1}</li>
-      <li>${item2}</li>
     </ul>
   `;
   }

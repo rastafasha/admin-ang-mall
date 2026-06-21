@@ -12,7 +12,7 @@
                     <div class="row">
 
                         <!-- Step Indicator -->
-                        <div class="step-indicator">
+                        <div class="step-indicator" *ngIf="user.role === 'SUPERADMIN'">
                             <div class="step" [ngClass]="{'active': currentStep >= 1, 'completed': currentStep > 1}">
                                 <span class="step-number">1</span>
                                 <span class="step-label">{{'Datos'|translate}}</span>
@@ -186,6 +186,19 @@
                                     </div>
                                 </div>
                                 <div class="row">
+                                    <!-- Botón ubicación actual -->
+                                     <div class="form-group col-xs-12 col-md-3 ">
+                                         <button class="btn btn-primary btn-block location-btn" (click)="useCurrentLocation()">
+                                        <i class="fa fa-crosshairs"></i> Usar mi ubicación actual
+                                    </button>
+
+                                    <!-- Coordenadas seleccionadas -->
+                                    <div class="coords-display bg-dark mt-2 rounded-1" *ngIf="selectedCoords" >
+                                        <span class="label">📍 Ubicación seleccionada:</span>
+                                        <span class="value">{{ selectedCoords.lat.toFixed(6) }}, {{ selectedCoords.lng.toFixed(6) }}</span>
+                                    </div>
+                                     </div>
+                                   <div class="form-group col-xs-12 col-md-9">
                                     <label class=" col-form-label font-weight-medium" for="text-input">{{'Dirección'|translate}}
                                         <span class="required">*</span></label>
                                     <div class="col-md-12">
@@ -201,10 +214,12 @@
                                                 </div>
                                             </div>
                                 </div>
+                                   </div>
+                                    
                                 </div>
 
                                 <div class="row">
-                                    <div class="form-group col-xs-12 col-sm-6 col-md-3">
+                                    <div class="form-group col-xs-12 col-sm-6 col-md-3" *ngIf="user.role === 'SUPERADMIN'">
                                         <label for="select-input">{{'Categoría'|translate}} </label>
                                         <select class="form-control" formControlName="categoria">
                                             <option disabled value="">{{ 'Seleccione' | translate }}</option>
@@ -215,7 +230,7 @@
                                             </option>
                                         </select>
                                     </div>
-                                    <div class="form-group col-xs-12 col-sm-6 col-md-3">
+                                    <div class="form-group col-xs-12 col-sm-6 col-md-3" *ngIf="user.role === 'SUPERADMIN'">
                                         <label for="select-input">{{'Subcategoría'|translate}}</label>
                                         <select class="form-control" formControlName="subcategoria">
                                             <option disabled value="">{{ 'Seleccione' | translate }}</option>
@@ -230,7 +245,7 @@
                                             </option>
                                         </select>
                                     </div>
-                                    <div class="form-group col-xs-12 col-sm-6 col-md-3 ">
+                                    <div class="form-group col-xs-12 col-sm-6 col-md-3 " *ngIf="user.role === 'SUPERADMIN'">
                                         <label for="text-input">{{'Mostrar en slide'|translate}}</label>
                                         <div class="input-group">
                                             <select class="form-control" formControlName="state_banner">
@@ -240,7 +255,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="form-group col-xs-12 col-sm-6 col-md-3 ">
+                                    <div class="form-group col-xs-12 col-sm-6 col-md-3 " *ngIf="user.role === 'SUPERADMIN'">
                                         <label for="text-input">{{'Destacado?'|translate}}</label>
                                         <div class="input-group">
                                             <select class="form-control" formControlName="isFeatured">
@@ -254,7 +269,7 @@
                                 <!-- reservacion -->
                                 <div class="row">
 
-                                    <div class="form-group col-xs-12 col-sm-3  ">
+                                    <div class="form-group col-xs-12 col-sm-3" *ngIf="user.role === 'SUPERADMIN'">
                                         <label for="text-input">{{'Mostrar Tasas?'|translate}} <span
                                                 class="required">*</span></label>
                                         <div class="input-group">
@@ -274,7 +289,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="form-group col-xs-12 col-sm-3  ">
+                                    <div class="form-group col-xs-12 col-sm-3  " *ngIf="user.role === 'SUPERADMIN'">
                                         <label for="text-input">{{'Delivery?'|translate}} <span
                                                 class="required">*</span></label>
                                         <div class="input-group">
@@ -294,7 +309,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="form-group col-xs-12 col-sm-3  ">
+                                    <div class="form-group col-xs-12 col-sm-3  " *ngIf="user.role === 'SUPERADMIN'">
                                         <label for="text-input">{{'Reservaciones?'|translate}} <span
                                                 class="required">*</span></label>
                                         <div class="input-group">
@@ -314,7 +329,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="form-group col-xs-12 col-sm-3 " >
+                                    <div class="form-group col-xs-12 col-sm-3 " *ngIf="user.role === 'SUPERADMIN'">
                                         <label for="Tienda">{{'Capacidad por Hora'|translate}} </label>
                                         <div class="input-group">
                                             <input type="number" formControlName="capacidad_por_hora"
@@ -322,7 +337,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row col-xs-12">
+                                <div class="row col-xs-12" *ngIf="user.role === 'SUPERADMIN'">
                                         <!-- Selector de Flujo Operativo (Agrégalo aquí) -->
                                         <div class="form-group col-xs-12 col-sm-6 col-md-3">
                                             <label>{{'Tipo de Flujo'|translate}} <span class="required">*</span></label>
@@ -332,8 +347,8 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="row col-xs-12 mt-3"
-                                        *ngIf="tiendaForm.get('tipoFlujo')?.value === 'POS_DIRECTO'">
+
+                                    <div class="row col-xs-12 mt-3" *ngIf="tiendaForm.get('tipoFlujo')?.value === 'POS_DIRECTO' && user.role === 'SUPERADMIN'">
                                         <div class="form-group col-xs-12 col-sm-6">
                                             <div class="form-check form-switch bg-light p-2 rounded border">
                                                 <input class="form-check-input" type="checkbox" id="checkUsd"
@@ -351,7 +366,7 @@
                                     </div>
 
                                    <div class="row">
-                                    <div class="col-6">
+                                    <div class="col-6" *ngIf="user.role === 'SUPERADMIN'" >
                                         <button class="btn btn-success waves-effect waves-light m-r-10 btn-block"
                                             type="button" (click)="nextStep()">{{'Siguiente'|translate}}</button>
                                     </div>

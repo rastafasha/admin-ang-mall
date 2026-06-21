@@ -20,14 +20,18 @@ export class SearchComponent {
   @Input() modelo!: any;
 
   resultados: any[] = [];
-
+  user:any;
   @Output() searchEvent: EventEmitter<any> = new EventEmitter<any>();
   @Output() resetEvent: EventEmitter<void> = new EventEmitter<void>();
 
   cargando: boolean = false;
   constructor(
     public busquedaService: BusquedasService,
-  ) { }
+  ) { 
+    let USER = localStorage.getItem("user");
+    this.user = USER ? JSON.parse(USER) : null;
+    this.user = JSON.parse(USER ? USER : '');
+  }
 
   
   search(query: string) {

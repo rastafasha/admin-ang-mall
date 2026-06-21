@@ -1,38 +1,29 @@
 .mostrarmapa {
-    position: absolute; 
-    top: 60px;      
-    left: 0px;   
-    
+    position: absolute;
+    top: 60px;
+    left: 0px;
+
     /* 💡 SOLUCIÓN 1: Usa porcentajes dinámicos en lugar de vw para que respete el contenedor padre */
-    width: 100%; 
+    width: 100%;
     max-width: 100%;
-    
+
     /* 💡 SOLUCIÓN 2: Dale una altura en píxeles fijos en lugar de vh para que Leaflet dibuje los cuadros al tiro */
-    height: 400px; 
-    
+    height: 400px;
+
     background-color: #f0f0f0;
-    z-index: 1; 
-    box-shadow: 0 15px 30px rgba(0,0,0,0.15) !important;
+    z-index: 1;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15) !important;
 }
 
 .map-container {
     /* Mantenemos que use el 100% de los 450px fijos del padre */
-    height: 100%; 
+    height: 100%;
     width: 100%;
     display: block;
 }
 
-
-@media (max-width: 768px) {
-    .mostrarmapa {
-        left: 0;
-        width: 100%;
-        top: 60px; /* Mantén solo el espacio del header si este sigue visible */
-    }
-}
-
-
-.coords-info, .error-message {
+.coords-info,
+.error-message {
     position: absolute; /* Cambiado de relative a absolute */
     bottom: 20px; /* Ajustado para que no quede tan arriba */
     left: 50%;
@@ -53,7 +44,7 @@
 }
 
 .coord-item .value {
-    font-family: 'SF Mono', Monaco, 'Courier New', monospace;
+    font-family: "SF Mono", Monaco, "Courier New", monospace;
     font-size: 12px;
     color: #666;
     background: #f5f5f5;
@@ -96,7 +87,7 @@
 
 .sidebar-header {
     padding: 16px 20px;
-    background: linear-gradient(135deg, #2196F3, #21CBF3);
+    background: linear-gradient(135deg, #2196f3, #21cbf3);
     color: white;
     display: flex;
     justify-content: space-between;
@@ -118,8 +109,6 @@
     cursor: pointer;
     font-size: 18px;
 }
-
-
 
 .driver-row {
     padding: 16px 20px;
@@ -151,7 +140,7 @@
 
 .driver-pos {
     font-size: 13px;
-    color: #2196F3;
+    color: #2196f3;
     font-family: monospace;
     padding: 4px 8px;
     background: #f0f8ff;
@@ -165,26 +154,25 @@
     font-style: italic;
 }
 
-
-
-.marker-green, .marker-red, .marker-blue {
+.marker-green,
+.marker-red,
+.marker-blue {
     width: 12px;
     height: 12px;
     border-radius: 50%;
 }
 
 .marker-green {
-    background: #4CAF50;
+    background: #4caf50;
 }
 
 .marker-red {
-    background: #F44336;
+    background: #f44336;
 }
 
 .marker-blue {
-    background: #2196F3;
+    background: #2196f3;
 }
-
 
 .leaflet-popup-content-wrapper {
     border-radius: 8px;
@@ -192,7 +180,7 @@
 
 .leaflet-popup-content {
     margin: 10px 12px;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
 .leaflet-popup-content b {
@@ -206,25 +194,24 @@
     margin: 2px 0;
 }
 
-.cardss{
+.cardss {
     position: absolute;
     top: 67vh;
     bottom: 0px;
     left: 0px;
     /* z-index: 99; */
-      display: grid;
+    display: grid;
     /* Esto crea 3 columnas iguales de 1 fracción de espacio cada una */
-    grid-template-columns: repeat(3, 1fr); 
-    
+    grid-template-columns: repeat(3, 1fr);
+
     /* Agrega una separación limpia entre las tarjetas sin usar margins */
-    gap: 20px; 
-    
+    gap: 20px;
+
     /* Para que respete el espacio del sidebar sin desbordarse */
-    width: 100%; 
+    width: 100%;
     box-sizing: border-box;
     padding: 15px;
 }
-
 
 .mini-sidebar .cardss,
 .mini-sidebar .mostrarmapa {
@@ -237,8 +224,7 @@
 
 .cardo {
     background-color: #fff;
-    height: auto;
-    max-height: 150px;
+    height: 150px;
     border: 1px solid #ccc;
     border-radius: 15px !important;
     overflow: hidden; /* Para que el header redondeado se aplique bien */
@@ -247,5 +233,26 @@
 
 .cardo:hover {
     transform: translateY(-8px);
-    box-shadow: 0 15px 30px rgba(0,0,0,0.15) !important;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15) !important;
+}
+
+@media (max-width: 768px) {
+    .sectmapa{
+        height: 140vh;
+    }
+    .mostrarmapa {
+        left: 0;
+        width: 100%;
+        height: 300px;
+        top: 60px; /* Mantén solo el espacio del header si este sigue visible */
+    }
+    .cardss {
+        top: 55vh;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .cardo {
+        height: 220px;
+    }
 }
