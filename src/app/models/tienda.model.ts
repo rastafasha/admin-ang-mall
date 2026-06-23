@@ -41,6 +41,7 @@ export class Tienda{
     public categoria?: Categoria,
     public subcategoria?: string,
     public isFeatured?: boolean,
+    public has_cotizacion?: boolean,
     public mostrarTasas?: boolean,
     public state_banner?: boolean,
     public usaDelivery?: boolean,

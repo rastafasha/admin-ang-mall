@@ -135,15 +135,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
       }
     );
 
-    this.congeralService.cargarCongenerals().subscribe(
-      response => {
-        this.congenerals = response;
-        // console.log('header', this.congenerals);
-      },
-      error => {
+    // this.congeralService.cargarCongenerals().subscribe(
+    //   response => {
+    //     this.congenerals = response;
+    //     // console.log('header', this.congenerals);
+    //   },
+    //   error => {
 
-      }
-    );
+    //   }
+    // );
 
     if (this.storageService.existCart()) {
       this.cartItems = this.storageService.getCart();

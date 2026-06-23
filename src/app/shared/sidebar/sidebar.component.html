@@ -57,6 +57,8 @@
                                 [routerLinkActiveOptions]="{exact:true}">{{'Pedidos'| translate}} </a></li>
                         <li *ngIf="has_reservacion"><a routerLink="reservaciones" routerLinkActive="active"
                                 [routerLinkActiveOptions]="{exact:true}">{{'Reservaciones'| translate}} </a></li>
+                        <li *ngIf="has_cotizacion"><a routerLink="cotizaciones" routerLinkActive="active"
+                                [routerLinkActiveOptions]="{exact:true}">{{'Cotizaciones'| translate}} </a></li>
                         <li><a routerLink="atencion-local" routerLinkActive="active"
                                 [routerLinkActiveOptions]="{exact:true}">{{'Atención Local'| translate}} </a></li>
                         <li><a routerLink="tienda-user" routerLinkActive="active"
@@ -88,7 +90,7 @@
 
                 <!-- delivery -->
                 
-                <li *ngIf="usuario.role ==='SUPERADMIN' || usuario.role ==='ADMIN' && tienda.usaDelivery === true">
+                <li *ngIf="usuario.role ==='SUPERADMIN' || usuario.role ==='ADMIN' && usaDelivery === true">
                     <!-- 🟢 Controla la sección 'delivery' -->
                     <a href="javascript:void(0);" (click)="toggleMenu('delivery')"
                         [attr.aria-expanded]="menuActivo === 'delivery'">
@@ -104,7 +106,7 @@
                                 [routerLinkActiveOptions]="{exact:true}">{{'Mapa '|translate}}</a></li>
                     </ul>
                 </li>
-                <li class="nav-devider" *ngIf="usuario.role ==='SUPERADMIN' || usuario.role ==='ADMIN' && tienda.usaDelivery === true"></li>
+                <li class="nav-devider" *ngIf="usuario.role ==='SUPERADMIN' || usuario.role ==='ADMIN' && usaDelivery === true"></li>
 
                 <!-- administracion -->
                 <li *ngIf="usuario.role ==='SUPERADMIN' || usuario.role ==='ADMIN' || usuario.role ==='VENTAS'">

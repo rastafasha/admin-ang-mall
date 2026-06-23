@@ -34,7 +34,7 @@ export class CatEditComponent implements OnInit, OnChanges {
   public usuario: Usuario;
   public imagenSubir: File;
   public imgTemp: any = null;
-  user:any;
+  user: any;
 
   banner: string;
   pageTitle: string;
@@ -74,22 +74,22 @@ export class CatEditComponent implements OnInit, OnChanges {
       this.pageTitle = 'Editando Categoria';
       const categoria = changes['categoriaSeleccionado'].currentValue;
       // Detectamos el idioma actual del sistema
-const lang = this.translate.currentLang || 'es';
+      const lang = this.translate.currentLang || 'es';
 
-this.categoriaForm.patchValue({
-  id: categoria._id,
-  
-  // 1. Extrae el texto del idioma actual (con respaldo en español por si viene vacío)
-  nombre: categoria.nombre?.[lang] || categoria.nombre?.es || '',
-  
-  // 2. Hace lo mismo para la subcategoría protegiendo el código contra textos planos viejos
-  subcategorias: typeof categoria.subcategorias === 'object' 
-    ? (categoria.subcategorias?.[lang] || categoria.subcategorias?.es || '')
-    : (categoria.subcategorias || ''), // Por si queda algún registro viejo sin migrar
-    
-  icono: categoria.icono,
-  state_banner: categoria.state_banner,
-});
+      this.categoriaForm.patchValue({
+        id: categoria._id,
+
+        // 1. Extrae el texto del idioma actual (con respaldo en español por si viene vacío)
+        nombre: categoria.nombre?.[lang] || categoria.nombre?.es || '',
+
+        // 2. Hace lo mismo para la subcategoría protegiendo el código contra textos planos viejos
+        subcategorias: typeof categoria.subcategorias === 'object'
+          ? (categoria.subcategorias?.[lang] || categoria.subcategorias?.es || '')
+          : (categoria.subcategorias || ''), // Por si queda algún registro viejo sin migrar
+
+        icono: categoria.icono,
+        state_banner: categoria.state_banner,
+      });
 
       this.categoriaSeleccionado = categoria;
       this.pageTitle = 'Editando Categoria';
@@ -98,11 +98,11 @@ this.categoriaForm.patchValue({
     }
   }
 
- onClose() {
+  onClose() {
     this.categoriaSeleccionado = null;
     this.currentStep = 1;
     this.pageTitle = 'Creando Producto';
-    
+
     // 1. Reseteamos el formulario pasándole los valores iniciales limpios de un solo golpe
     this.categoriaForm.reset({
       id: null,
@@ -110,7 +110,7 @@ this.categoriaForm.patchValue({
       subcategorias: '',
       icono: '',
       state_banner: false, // Inicializa los booleanos en false
-      
+
     });
 
     // 2. 🚀 LA CLAVE: Forzamos a Angular a limpiar los estados de validación visuales (los bordes rojos/verdes)
@@ -120,9 +120,9 @@ this.categoriaForm.patchValue({
 
     // Emitimos el evento al padre para limpiar cualquier variable externa
     this.closeModal.emit();
-}
+  }
 
-  
+
 
   nextStep() {
     const nombre = this.categoriaForm.get('nombre');
@@ -170,7 +170,7 @@ this.categoriaForm.patchValue({
   updateCategoria() {
 
     if (!this.categoriaForm.valid) {
-      this.categoriaForm.markAllAsTouched(); 
+      this.categoriaForm.markAllAsTouched();
       return;
     }
 
@@ -218,7 +218,7 @@ this.categoriaForm.patchValue({
           this.currentStep = 2;
         });
     }
-}
+  }
 
 
 
@@ -252,5 +252,5 @@ this.categoriaForm.patchValue({
   }
 
 
-  
+
 }

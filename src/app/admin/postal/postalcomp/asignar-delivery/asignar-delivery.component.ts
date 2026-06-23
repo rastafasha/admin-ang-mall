@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Asignacion } from 'src/app/models/asignaciondelivery.model';
+import { Direccion } from 'src/app/models/direccion.model';
 import { Driver } from 'src/app/models/driverp.model';
+import { Pedido } from 'src/app/models/pedido.model';
 import { Tienda } from 'src/app/models/tienda.model';
 import { Venta } from 'src/app/models/ventas.model';
 import { AsignardeliveryService } from 'src/app/services/asignardelivery.service';
+import { DireccionService } from 'src/app/services/direccion.service';
 import { DriverpService } from 'src/app/services/driverp.service';
-import { TiendaService } from 'src/app/services/tienda.service';
-import { UsuarioService } from 'src/app/services/usuario.service';
+import { PedidomenuService } from 'src/app/services/pedidomenu.service';
 import { VentaService } from 'src/app/services/venta.service';
 // import { Modal } from 'bootstrap';
 
@@ -27,11 +29,15 @@ export class AsignarDeliveryComponent implements OnInit {
   tienda: Tienda;
   tiendaId: string;
   venta: Venta;
+  pedidos: Pedido[];
   msm_error = false;
+  isLoading = false;
   listaparaenviar: Array<any> = [];
   asignaciones: Asignacion;
 
   showModal: boolean = false;
+  ventaSelected:any;
+  direccion:Direccion;
 
   public page;
   public pageSize = 15;
@@ -42,9 +48,9 @@ export class AsignarDeliveryComponent implements OnInit {
   constructor(
     private ventaService: VentaService,
     private asignacionDService: AsignardeliveryService,
-    private userService: UsuarioService,
     private driverService: DriverpService,
-    private tiendaService: TiendaService,
+    private pedidoService: PedidomenuService,
+    public direccionService: DireccionService,
   ) { }
 
   ngOnInit(): void {
@@ -52,8 +58,9 @@ export class AsignarDeliveryComponent implements OnInit {
     let USER = localStorage.getItem("user");
     this.user = JSON.parse(USER ? USER : '');
     this.getAsignaciones();
-
+    this.getpedidos();
     this.filtrarVentas();
+
     if (this.user.role === 'SUPERADMIN') {
       this.getDrivers();
 
@@ -64,14 +71,7 @@ export class AsignarDeliveryComponent implements OnInit {
   }
 
   PageSize() {
-    this.filtrarVentas();
-    this.getAsignaciones();
-    if (this.user.role === 'SUPERADMIN') {
-      this.getDrivers();
-    }
-    if (this.user.role === 'ADMIN') {
-      this.getDriversLocal();
-    }
+    this.ngOnInit();
   }
 
   filtrarVentas() {
@@ -121,19 +121,48 @@ export class AsignarDeliveryComponent implements OnInit {
     })
   }
 
+ getpedidos() {
+  this.pedidoService.getByTiendaId(this.user.local).subscribe((resp: any) => {
+    this.pedidos = resp;
+    // console.log(this.pedidos);
+    
+    // Recorremos el arreglo de pedidos recibido
+    this.pedidos.forEach((pedido: any) => {
+      // Verificamos que el pedido tenga una dirección y que no sea null
+      if (pedido.direccion) {
+        this.getDireccion(pedido.direccion);
+      }
+    });
+  });
+}
+
+// Modificamos la función para que reciba el ID por parámetro
+getDireccion(idDireccion: string) {
+  this.direccionService.get_direccion(idDireccion).subscribe((resp: any) => {
+    // Aquí recibes la dirección individual de ese pedido
+    // console.log('Dirección recibida:', resp);
+    this.direccion = resp;
+    
+    // NOTA: Si necesitas guardar las direcciones, puedes asociarlas 
+    // directamente al objeto del pedido correspondiente.
+  });
+}
+
   getAsignaciones() {
+    this.isLoading = true;
     this.asignacionDService.getByTiendaId(this.user.local).subscribe((resp: any) => {
       this.asignaciones = resp;
-      console.log(this.asignaciones)
+      this.isLoading = false;
 
     })
   }
 
 
-  asignarDelivery(driver: string, venta: any) {
+  asignarDeliveryconDriver(datos:{driver: string, venta: any}) {
+
     const data = {
-      venta: venta._id,
-      driver: driver,
+      pedido: datos.venta._id,
+      driver: datos.driver,
       tienda: this.user.local,
       status: 'Asignado'
     };
@@ -144,7 +173,6 @@ export class AsignarDeliveryComponent implements OnInit {
         // Aquí puedes agregar lógica adicional, como mostrar un mensaje de éxito o actualizar la lista de asignaciones
 
         //cerramos el modal
-        this.closeModal(venta);
         this.ngOnInit();
       },
       error => {
@@ -153,32 +181,19 @@ export class AsignarDeliveryComponent implements OnInit {
       }
     );
   }
-  openModal(venta: any) {
-    this.showModal = true;
-    const modal = document.querySelector('#asignar-' + venta._id) as HTMLElement;
-    if (modal) {
-      modal.classList.add('show');
-      modal.style.display = 'block';
-      document.body.classList.add('modal-open');
-      const backdrop = document.createElement('div');
-      backdrop.className = 'modal-backdrop fade show';
-      document.body.appendChild(backdrop);
+
+  onViewVenta(venta: Venta) {
+      this.ventaSelected = venta;
+      // console.log(this.ventaSelected)
     }
+  
+
+
+  onCloseModal(): void {
+    this.ventaSelected = null;
   }
 
-  closeModal(venta: any) {
-    this.showModal = false;
-    const modal = document.querySelector('#asignar-' + venta._id) as HTMLElement;
-    if (modal) {
-      modal.classList.remove('show');
-      modal.style.display = 'none';
-      document.body.classList.remove('modal-open');
-      const backdrop = document.querySelector('.modal-backdrop') as HTMLElement;
-      if (backdrop) {
-        document.body.removeChild(backdrop);
-      }
-    }
-  }
+  onClose() { }
 
 
 }

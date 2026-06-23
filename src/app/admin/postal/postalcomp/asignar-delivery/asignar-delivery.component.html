@@ -1,4 +1,8 @@
-<div class="container">
+<app-skeleton-loader *ngIf="isLoading" [rows]="1" [columns]="5"></app-skeleton-loader>
+<app-skeleton-loader *ngIf="isLoading" [rows]="1" [columns]="6"></app-skeleton-loader>
+
+
+<div class="container" *ngIf="!isLoading">
     <div class="row">
         <div class="col-lg-12" *ngIf="msm_error">
             <div class="alert alert-primary alert-danger fade show" role="alert">
@@ -10,9 +14,9 @@
         </div>
         <!-- ventasFiltradas -->
         <div class=" mb-3">
-           <app-backbutton></app-backbutton> &nbsp;
-        <a href="javascript:;" (click)="PageSize()" class="btn btn-primary ">
-            <i class="fas fa-sync"></i></a>
+            <app-backbutton></app-backbutton> &nbsp;
+            <a href="javascript:;" (click)="PageSize()" class="btn btn-primary ">
+                <i class="fas fa-sync"></i></a>
         </div>
         <div class="col-12  card">
             <div class="table-responsive table-sm">
@@ -20,77 +24,53 @@
                     <thead class="thead-dark">
                         <tr>
 
-                            <th>referencia</th>
+                            <th>delivery</th>
+                            <th>Asignado</th>
                             <th>usuario</th>
                             <th>telefono</th>
-                            <th>Estado</th>
+                            <th>Direccion</th>
                             <th>OP</th>
                         </tr>
                     </thead>
-                    <tbody *ngFor="let venta of listaparaenviar">
+                    <tbody *ngFor="let pedido of pedidos">
                         <tr>
-                            <td style="font-size: 13px;">{{venta.referencia}}</td>
-                            <td style="font-size: 13px;">{{venta.user.first_name}} {{venta.user.last_name}}</td>
-                            <td style="font-size: 13px;">{{venta.user.telefono}}</td>
-                            <td style="font-size: 13px;">{{venta.estado}}</td>
+                            <td style="font-size: 13px;">
+
+                                <div class="font-size-sm mb-4">
+                                    <span class="badge badge-success badge-shadow"
+                                        *ngIf="pedido.delivery == 'true'">{{pedido.delivery}}</span>
+                                    <span class="badge badge-danger badge-shadow"
+                                        *ngIf="pedido.delivery == 'false'">{{pedido.delivery}}</span>
+
+                                </div>
+                            </td>
+                            <td style="font-size: 13px;">
+
+                                <div class="font-size-sm mb-4">
+                                    <span class="badge badge-success badge-shadow"
+                                        *ngIf="pedido.asignado == true">{{pedido.asignado}}</span>
+                                    <span class="badge badge-danger badge-shadow"
+                                        *ngIf="pedido.asignado == false">{{pedido.asignado}}</span>
+
+                                </div>
+                            </td>
+                            <td style="font-size: 13px;">{{pedido.user.first_name}} {{pedido.user.last_name}}</td>
+                            <td style="font-size: 13px;">{{pedido.user.telefono}}</td>
+                            <td  style="font-size: 13px;">
+                                <span *ngIf="pedido.delivery === 'false' || pedido.delivery === 'true' && pedido.direccion === null ">
+                                    {{ 'Sin dirección / Retiro en tienda' }}
+                                </span>
+                                <span *ngIf="pedido.delivery === 'true' && pedido.direccion !== null ">
+                                    {{ (direccion?.direccion | slice:0:30)  }}...
+                                </span>
+                            </td>
                             <td class="text-center">
-                                <a class="nav-link-style text-success" data-toggle="modal"
-                                    [attr.data-target]="'#asignar-'+venta._id" (click)="openModal(venta)"
+                                <a class="nav-link-style text-success" (click)="onViewVenta(pedido)"
+                                    data-bs-toggle="modal" class="cursor" data-bs-target="#asignarDelivery"
                                     style="cursor:pointer">
                                     <div class="czi-share"></div>
                                 </a>
-                                <!-- modal -->
-                                <div class="modal fade" *ngIf="showModal" [attr.id]="'asignar-'+venta._id" tabindex="-1"
-                                    role="dialog" style="display: none;" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h4 class="modal-title">Confirmación</h4>
-                                                <button class="close" type="button" (click)="closeModal(venta)"
-                                                    aria-label="Close"><span aria-hidden="true">×</span></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <p class="font-size-sm">¿Desea asignar el pedido a la referencia
-                                                    <b>{{venta.referencia}}</b> ?
-                                                </p>
-                                                <table class="table table-sm">
-                                                    <thead class="thead-dark">
-                                                        <tr>
 
-                                                            <th>numdoc</th>
-                                                            <th>usuario</th>
-                                                            <th>telefono</th>
-                                                            <th>OP</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody *ngFor="let driver of drivers">
-                                                        <tr>
-                                                            <td style="font-size: 13px;">{{driver.user.numdoc}}</td>
-                                                            <td style="font-size: 13px;">{{driver.user.first_name}}
-                                                                {{driver.user.last_name}}</td>
-                                                            <td style="font-size: 13px;">{{driver.user.telefono}}</td>
-                                                            <td style="font-size: 13px;">
-                                                                <a class="nav-link-style text-success"
-                                                                    (click)="asignarDelivery(driver._id, venta)"
-                                                                    style="cursor:pointer">
-                                                                    <div class="czi-add"></div>
-                                                                </a>
-                                                            </td>
-
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button class="btn btn-secondary btn-sm" type="button"
-                                                    (click)="closeModal(venta)">Cancelar</button>
-                                                <!-- <button class="btn btn-primary btn-shadow btn-sm" type="button"
-                                                    (click)="asignarDelivery(item._id)">Asignar</button> -->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- modal -->
                             </td>
                         </tr>
                     </tbody>
@@ -108,8 +88,9 @@
                     <thead class="thead-dark">
                         <tr>
 
-                            <th>Driver</th>
-                            <th>Venta</th>
+                            <th>T. Vehiculo</th>
+                            <th>Licencia</th>
+                            <th>Pedido</th>
                             <th>Tienda</th>
                             <th>Estado</th>
                             <th>Fecha</th>
@@ -118,8 +99,9 @@
                     </thead>
                     <tbody *ngFor="let asignacion of asignaciones">
                         <tr>
+                            <td style="font-size: 13px;">{{asignacion.driver.tipo_vehiculo}}</td>
                             <td style="font-size: 13px;">{{asignacion.driver.licencianum}}</td>
-                            <td style="font-size: 13px;">{{asignacion.venta}}</td>
+                            <td style="font-size: 13px;">{{asignacion.pedido}}</td>
                             <td style="font-size: 13px;">{{asignacion.tienda.nombre}}</td>
                             <td style="font-size: 13px;">
                                 <span class="badge badge-accent badge-shadow"
@@ -173,3 +155,8 @@
         </div>
     </div>
 </div>
+
+<!-- modal -->
+<app-modal-asignar (reloadList)="ngOnInit()" [drivers]="drivers" [ventaSelected]="ventaSelected"
+    (closeModal)="onClose()" (asignar)="asignarDeliveryconDriver($event)"  #asignarDelivery></app-modal-asignar>
+<!-- modal -->

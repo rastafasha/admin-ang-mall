@@ -95,9 +95,7 @@ export class UsertiendaaddComponent implements OnInit {
   cargar_usuario() {
     this.usuarioService.getUserById(this.user_id).subscribe(
       (resp: any) => {
-        // this.listIcons = resp.iconos;
         this.usertiendaSeleccionado = resp;
-        console.log('editar user: ', this.usertiendaSeleccionado)
 
         this.registerForm.setValue({
           first_name: this.usertiendaSeleccionado.first_name,
@@ -116,7 +114,6 @@ export class UsertiendaaddComponent implements OnInit {
         }
       }
     )
-    // this.validarFormulario();
   }
 
   validarFormulario() {
@@ -137,9 +134,7 @@ export class UsertiendaaddComponent implements OnInit {
   cargar_Locales() {
     this.tiendaService.cargarTiendas().subscribe(
       (resp: any) => {
-        // console.log(resp)
         this.listTiendas = resp;
-
       }
     )
   }

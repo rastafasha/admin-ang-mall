@@ -54,6 +54,7 @@ import { TasaeurobcvComponent } from '../admin/tasas/tasaeurobcv/tasaeurobcv.com
 import { ReservacionListComponent } from '../admin/tienda/reservacion/reservacion-list/reservacion-list.component';
 import { NotificacionesComponent } from '../admin/tienda/notificaciones/notificaciones.component';
 import { ConectarWhatsappComponent } from '../admin/tienda/conectar-whatsapp/conectar-whatsapp.component';
+import { CotizacionListComponent } from '../admin/cotizacion/cotizacion-list/cotizacion-list.component';
 
 
 const childRoutes: Routes = [
@@ -129,6 +130,8 @@ const childRoutes: Routes = [
             {path: 'carrito', component: CarritoComponent , data:{tituloPage:'Tienda Carrito'}},
             {path: 'notificaciones', component: NotificacionesComponent , data:{tituloPage:'Notificaciones'}},
             {path: 'conectarawhatsapp', component: ConectarWhatsappComponent , data:{tituloPage:'Conectar a Whatsapp'}},
+            {path: 'reservaciones', component: ReservacionListComponent , data:{tituloPage:'Reservaciones'}},
+            {path: 'cotizaciones', component: CotizacionListComponent , data:{tituloPage:'Cotizaciones'}},
             //pagos
             {path: 'tipos-de-pago', component: TiposdepagoComponent , data:{tituloPage:'Tipos de Pago'}},
             {path: 'transferencias', component: ListaTrasnferenciasComponent , data:{tituloPage:'Transferencias'}},

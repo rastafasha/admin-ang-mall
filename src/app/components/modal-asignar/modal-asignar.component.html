@@ -1,0 +1,57 @@
+<div class="modal fade" id="asignarDelivery" tabindex="-1" aria-labelledby="editPresupuestoLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editPresupuestoLabel">{{ventaSelected?.referencia}}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                    (click)="onClose()"></button>
+            </div>
+            <div class="modal-body">
+             <div class="card">
+                <div class="card-title">
+                    <h4>Dirección de Envío</h4>
+                </div>
+                <div class="card-body">
+                    <p>{{direccionSelected?.referencia}}</p>
+                    <p>{{direccionSelected?.direccion}}</p>
+                    <p>{{direccionSelected?.zip}}</p>
+                </div>
+             </div>
+              <p class="font-size-sm">¿Desea asignar el pedido a la referencia
+                    <b>{{ventaSelected?.referencia}}</b> ?
+                </p>
+                <table class="table table-sm">
+                    <thead class="thead-dark">
+                        <tr>
+
+                            <th>numdoc</th>
+                            <th>usuario</th>
+                            <th>telefono</th>
+                            <th>OP</th>
+                        </tr>
+                    </thead>
+                    <tbody *ngFor="let driver of drivers">
+                        <tr>
+                            <td style="font-size: 13px;">{{driver.user.numdoc}}</td>
+                            <td style="font-size: 13px;">{{driver.user.first_name}}
+                                {{driver.user.last_name}}</td>
+                            <td style="font-size: 13px;">{{driver.user.telefono}}</td>
+                            <td style="font-size: 13px;">
+                                <a class="nav-link-style text-success" (click)="onAsignarDelivery(driver._id, ventaSelected)"
+                                    style="cursor:pointer">
+                                    <div class="czi-add"></div>
+                                </a>
+                            </td>
+
+                        </tr>
+                    </tbody>
+                </table>
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                    (click)="onClose()">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>

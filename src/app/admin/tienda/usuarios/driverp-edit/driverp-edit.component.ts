@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Driver } from 'src/app/models/driverp.model';
@@ -31,7 +31,7 @@ const defaultDriver: Driver = {
 })
 export class DriverpEditComponent implements OnInit {
 
-  @Input() usertiendaSeleccionado: Usuario;
+  @Input() usertiendaSeleccionado: any;
 
   public driverProfileForm: FormGroup;
   public usuario: Usuario;
@@ -41,47 +41,66 @@ export class DriverpEditComponent implements OnInit {
   public imgTemp: any = null;
   uid: string;
   pageTitle: string;
+  cargando = false;
+  cargandoImagen = false;
 
   user: any = [];
   user_id: any;
 
   constructor(
     private fb: FormBuilder,
-    private usuarioService: UsuarioService,
-    private activatedRoute: ActivatedRoute,
     private driverService: DriverpService,
     private fileUploadService: FileUploadService
   ) {
-    this.usuario = usuarioService.usuario;
   }
 
   ngOnInit(): void {
     console.log('user: ', this.usertiendaSeleccionado);
-    this.cargardriver();
+    
+    this.validarFormulario();
+    this.getDriverProfile();
   }
 
-  cargardriver() {
-    this.driverService.getByUserId(this.usertiendaSeleccionado.uid).subscribe(
-      (resp: any) => {
-        // this.listIcons = resp.iconos;
-        this.driverSeleccionado = resp;
-        console.log('driver: ', this.driverSeleccionado)
+  getDriverProfile() {
+  if (!this.usertiendaSeleccionado || !this.usertiendaSeleccionado.uid) return;
 
-        this.driverProfileForm.setValue({
-          marca: this.driverSeleccionado.marca,
-          modelo: this.driverSeleccionado.modelo,
-          color: this.driverSeleccionado.color,
-          year: this.driverSeleccionado.year,
-          tipo_vehiculo: this.driverSeleccionado.tipo_vehiculo,
-          placa: this.driverSeleccionado.placa,
-          licencianum: this.driverSeleccionado.licencianum,
-          status: this.driverSeleccionado.status,
-          user: this.driverSeleccionado.user,
+  this.driverService.getByUserId(this.usertiendaSeleccionado.uid).subscribe({
+    next: (resp: any) => {
+      // 🚀 CAPTURAMOS LA RESPUESTA REAL DEL BACKEND
+      // Nota: Revisa si tu API devuelve el objeto directo o dentro de un campo (ej: resp.driver)
+      const driver = resp.driver || resp; 
+      this.driverSeleccionado = driver;
+      
+      console.log('driver recuperado con éxito: ', this.driverSeleccionado);
+
+      if (this.driverSeleccionado && this.driverSeleccionado._id) {
+        this.pageTitle = 'Editando Driver';
+
+        // 📝 RELLENAMOS EL FORMULARIO EN TIEMPO REAL
+        // Usamos patchValue en lugar de setValue por seguridad, por si falta algún campo en la DB
+        this.driverProfileForm.patchValue({
+          marca: driver.marca || '',
+          modelo: driver.modelo || '',
+          color: driver.color || '',
+          year: driver.year || '',
+          tipo_vehiculo: driver.tipo_vehiculo || 'MOTO', // Tu segmentación hermosa de vehículos
+          placa: driver.placa || '',
+          licencianum: driver.licencianum || '',
+          status: driver.status || 'ACTIVE',
+          user: driver.user?._id || driver.user || this.usertiendaSeleccionado.uid,
         });
+
+      } else {
+        this.pageTitle = 'Creando Driver';
       }
-    )
-    // this.validarFormulario();
-  }
+    },
+    error: (err) => {
+      console.error('Error al obtener el perfil del conductor:', err);
+      this.pageTitle = 'Creando Driver';
+    }
+  });
+}
+
 
   validarFormulario() {
     this.driverProfileForm = this.fb.group({
@@ -100,7 +119,13 @@ export class DriverpEditComponent implements OnInit {
 
 
   
-  actualizar() {
+  onSubmit() {
+    if (!this.driverProfileForm.valid) {
+      //mostramos las alertas de los campos requeridos
+      this.driverProfileForm.markAllAsTouched(); // Esto activa las validaciones visuales
+      return
+    }
+
     if (this.driverSeleccionado) {
       //actualizar
       const data = {
@@ -119,8 +144,10 @@ export class DriverpEditComponent implements OnInit {
       };
       this.driverService.create(data)
         .subscribe((resp: any) => {
+          this.driverSeleccionado = resp.driver;
+          console.log(resp)
           Swal.fire('Creado', `Creado correctamente`, 'success');
-          // this.router.navigateByUrl(`/dashboard/producto`);
+          this.ngOnInit();
         });
     }
   }
@@ -143,12 +170,15 @@ export class DriverpEditComponent implements OnInit {
   }
 
   subirImagen() {
+    this.cargandoImagen = true;
     this.fileUploadService
-      .actualizarFoto(this.imagenSubir, 'drivers', this.user.uid)
+      .actualizarFoto(this.imagenSubir, 'drivers', this.driverSeleccionado._id)
       .then(img => {
         this.usuario.img = img;
+        this.cargandoImagen = false;
         Swal.fire('Guardado', 'La imagen fue actualizada', 'success');
       }).catch(err => {
+        this.cargandoImagen = false;
         Swal.fire('Error', 'No se pudo subir la imagen', 'error');
       })
   }

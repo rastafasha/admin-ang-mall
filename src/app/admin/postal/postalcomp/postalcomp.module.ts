@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 import { PipesModule } from 'src/app/pipes/pipes.module';
 import { MapaComponent } from './mapa/mapa.component';
 import { SharedModule } from "src/app/shared/shared.module";
+import { ComponentsModule } from "src/app/components/components.module";
 
 
 
@@ -23,7 +24,8 @@ import { SharedModule } from "src/app/shared/shared.module";
     ReactiveFormsModule,
     FormsModule,
     RouterModule,
-    SharedModule
+    SharedModule,
+    ComponentsModule
 ]
 })
 export class PostalcompModule { }

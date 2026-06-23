@@ -135,6 +135,7 @@ export class TiendaaddComponent implements OnInit, OnChanges {
       mostrarTasas: [false,],
       usaDelivery: [false,],
       has_reservacion: [false,],
+      has_cotizacion: [false,],
       capacidad_por_hora: [''],
       texto_hero_uno: [''],
       texto_hero_dos: [''],
@@ -192,6 +193,7 @@ export class TiendaaddComponent implements OnInit, OnChanges {
         mostrarTasas: tienda.mostrarTasas,
         usaDelivery: tienda.usaDelivery,
         state_banner: tienda.state_banner,
+        has_cotizacion: tienda.has_cotizacion,
         has_reservacion: tienda.has_reservacion,
         capacidad_por_hora: tienda.capacidad_por_hora,
         color_primario: tienda.color_primario,
@@ -243,6 +245,7 @@ export class TiendaaddComponent implements OnInit, OnChanges {
       usaDelivery: null,
       state_banner: null,
       has_reservacion: null,
+      has_cotizacion: null,
       texto_hero_uno: null,
       texto_hero_dos: null,
       texto_hero_destacado: null,
@@ -282,6 +285,7 @@ export class TiendaaddComponent implements OnInit, OnChanges {
     const status = this.tiendaForm.get('status');
     const state_banner = this.tiendaForm.get('state_banner');
     const has_reservacion = this.tiendaForm.get('has_reservacion');
+    const has_cotizacion = this.tiendaForm.get('has_cotizacion');
 
     if (nombre?.invalid || local?.invalid ||
       telefono?.invalid ||
@@ -292,7 +296,8 @@ export class TiendaaddComponent implements OnInit, OnChanges {
       mostrarTasas?.invalid ||
       usaDelivery?.invalid ||
       state_banner?.invalid ||
-      has_reservacion?.invalid
+      has_reservacion?.invalid||
+      has_cotizacion?.invalid
 
     ) {
       nombre?.markAsTouched();
@@ -309,6 +314,7 @@ export class TiendaaddComponent implements OnInit, OnChanges {
       status?.markAsTouched();
       state_banner?.markAsTouched();
       has_reservacion?.markAsTouched();
+      has_cotizacion?.markAsTouched();
       this.tiendaForm.markAllAsTouched(); // Esto activa las validaciones visuales
       return;
     }

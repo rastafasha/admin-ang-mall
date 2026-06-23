@@ -16,7 +16,6 @@ import { CarritoComponent } from './atencion-local/carrito/carrito.component';
 import { ProductoComponent } from './atencion-local/producto/producto.component';
 import { ComponentsAtentionModule } from './atencion-local/components/components.module';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { DriverpModule } from "src/app/admin/driverp/driverp.module";
 import { PedidosMenuComponent } from './pedidos-menu/pedidos-menu.component';
 import { ComponentsModule } from 'src/app/components/components.module';
 import { ComentariosappComponent } from './comentariosapp/comentariosapp.component';
@@ -26,6 +25,7 @@ import { NotificacionesComponent } from './notificaciones/notificaciones.compone
 import { ReservacionEstadisticasComponent } from './reservacion/reservacion-estadisticas/reservacion-estadisticas.component';
 import { ConectarWhatsappComponent } from './conectar-whatsapp/conectar-whatsapp.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { DriverpEditComponent } from './usuarios/driverp-edit/driverp-edit.component';
 
 
 @NgModule({
@@ -44,7 +44,8 @@ import { TranslateModule } from '@ngx-translate/core';
     ReservacionViewComponent,
     NotificacionesComponent,
     ReservacionEstadisticasComponent,
-    ConectarWhatsappComponent
+    ConectarWhatsappComponent,
+    DriverpEditComponent
 
   ],
   exports: [
@@ -59,7 +60,8 @@ import { TranslateModule } from '@ngx-translate/core';
     ReservacionViewComponent,
     NotificacionesComponent,
     ReservacionEstadisticasComponent,
-    ConectarWhatsappComponent
+    ConectarWhatsappComponent,
+    DriverpEditComponent
 
   ],
   imports: [
@@ -74,7 +76,6 @@ import { TranslateModule } from '@ngx-translate/core';
     // CKEditorModule,
     ComponentsAtentionModule,
     SharedModule,
-    DriverpModule,
     ComponentsModule,
     PipesModule,
     TranslateModule

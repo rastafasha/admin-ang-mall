@@ -24,6 +24,8 @@ export class SidebarComponent implements OnInit, OnDestroy {
   public menuActivo: string = '';
   tienda:Tienda;
   has_reservacion:boolean = false;
+  has_cotizacion:boolean = false;
+  usaDelivery:boolean = false;
 
   constructor(
     public sidebarService: SidebarService,
@@ -62,6 +64,8 @@ export class SidebarComponent implements OnInit, OnDestroy {
       (resp:any) => {
         this.tienda = resp;
         this.has_reservacion = resp.has_reservacion;
+        this.has_cotizacion = resp.has_cotizacion;
+        this.usaDelivery = resp.usaDelivery
       }
     )
   }

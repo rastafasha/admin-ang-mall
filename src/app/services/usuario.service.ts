@@ -269,6 +269,12 @@ export class UsuarioService {
     );
   }
 
+  cargarClientes(localId: string, ) {
+    const url = `${base_url}/usuarios/users_store/${localId}`;
+    return this.http.get<any>(url, this.headers);
+  }
+
+
   cargarEmployeesTienda(localId: string) {
     const url = `${base_url}/usuarios/employe_store/${localId}`;
     return this.http

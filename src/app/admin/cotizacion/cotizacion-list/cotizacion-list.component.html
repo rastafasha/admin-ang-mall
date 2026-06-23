@@ -1,0 +1,92 @@
+<!-- <app-back-instrucc (onOpenHelp)="instruccionesModal.open()"></app-back-instrucc> -->
+<div class="row animated fadeIn fast">
+    <div class="col-12">
+        <app-search [query]="query" [modelo]="presupuesto" [colleccionName]="presupuesto"
+[colleccion]="'presupuestos'" (searchEvent)="handleSearchEvent($event)" (resetEvent)="PageSize()"></app-search>
+        
+    </div>
+</div>
+
+<app-skeleton-loader *ngIf="cargando" [rows]="1" [columns]="3"></app-skeleton-loader>
+<app-skeleton-loader *ngIf="cargando" [rows]="4" [columns]="7"></app-skeleton-loader>
+
+<div class="row" *ngIf="!cargando">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    
+                    <div class="col-1">
+                        <div class="text-right">
+                          <button (click)="openEditModal()" class="btn btn-outline-success" data-toggle="tooltip"
+                                data-original-title="Edit" data-bs-toggle="modal" data-bs-target="#editPresupuesto">
+                                <i class="fa fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <hr>
+
+                <div class="table-responsive">
+                    <table class="table table-borderless">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>{{'Cliente'|translate}}</th>
+                                <th>{{'Título'|translate}}</th>
+                                <th>{{'Cantidad Personas'|translate}}</th>
+                                <th>{{'Fecha Evento'|translate}}</th>
+                                <th>{{'Status'|translate}}</th>
+                                <th>{{'Creación'|translate}}</th>
+                                <th class="text-nowrap" >{{'Acciones'|translate}}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let presupuesto of presupuestos |  paginate: { itemsPerPage: count, currentPage: p } | orderBy:'createdAt, desc'">
+                                <th scope="row"><span class="{{categoria.icono}}"></span></th>
+                                
+                                <td>{{ presupuesto.cliente }}</td>
+                                <td>{{ presupuesto.title }}</td>
+                                <td>{{ presupuesto.cantidadPersonas }}</td>
+                                <td>{{ presupuesto.fechaEvento | date }}</td>
+                                 <td>
+                                    <div class="font-size-sm mb-4">
+                                        <span class="badge badge-primary badge-shadow"
+                                            *ngIf="presupuesto.status == 'PENDING'">{{presupuesto.status}}</span>
+                                        <span class="badge badge-success badge-shadow"
+                                            *ngIf="presupuesto.status == 'APROVED'">{{presupuesto.status}}</span>
+                                        <span class="badge badge-danger badge-shadow"
+                                            *ngIf="presupuesto.status == 'REFUSED'">{{presupuesto.status}}</span>
+
+                                    </div>
+                                </td>
+                                <td>{{ categoria.createdAt | date:'MMM d, y' }}</td>
+                                <td class="text-nowrap text-center">
+                                 
+                                    <button  class="btn btn-outline-success"
+                                            data-toggle="tooltip" data-original-title="Edit"
+                                            (click)="onEditProject(categoria)"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#editCategoria">
+                                            <i class="fa fa-edit"></i>
+                                        </button>
+                                         &nbsp;
+                                        <button *ngIf="user.role === 'SUPERADMIN'" (click)="eliminarCategoria(categoria)" class="btn btn-outline-danger" data-toggle="tooltip"
+                                            data-original-title="Borrar">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+                <pagination-controls (pageChange)="p = $event"></pagination-controls>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- <app-modal-instrucciones [info]="info" [sectionId]="'categorias'" #instruccionesModal></app-modal-instrucciones> -->
+
+<app-cotizacion-edit #editPresupuesto (reloadList)="ngOnInit()" [presupuestoSeleccionado]="presupuestoSeleccionado"></app-cotizacion-edit>

@@ -1,9 +1,13 @@
 <app-back-instrucc (onOpenHelp)="instruccionesModal.open()"></app-back-instrucc>
 
 <div class="row animated fadeIn fast" >
-    <div class="col-12">
+    <div class="col-12" *ngIf="user.role === 'SUPERADMIN'">
         <app-search [query]="query" [modelo]="tienda" [colleccionName]="tiendas" [colleccion]="'tiendas'"
             (searchEvent)="handleSearchEvent($event)" (resetEvent)="PageSize()"></app-search>
+    </div>
+    <div class="col-2 mb-3" *ngIf="user.role !== 'SUPERADMIN'">
+        <a href="javascript:;" (click)="PageSize()" class="btn btn-primary doctor-refresh ms-2 searchbtn"><i
+              class="fas fa-sync"></i></a>
     </div>
 </div>
 <app-skeleton-loader *ngIf="cargando" [rows]="1" [columns]="3"></app-skeleton-loader>

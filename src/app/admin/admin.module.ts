@@ -50,7 +50,6 @@ import { VideoIndexComponent } from './curso/video-index/video-index.component';
 import { VideoEditComponent } from './curso/video-edit/video-edit.component';
 
 //pluggins
-import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { NgxPaginationModule } from 'ngx-pagination';
@@ -66,11 +65,12 @@ import { ComponentsModule } from '../components/components.module';
 import { PagosChequeComponent } from './pagos-cheque/pagos-cheque.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { PostalcompModule } from "./postal/postalcomp/postalcomp.module";
-import { DriverpModule } from './driverp/driverp.module';
 import { PaymentDetailsComponent } from './transferencias/payment-details/payment-details.component';
 import { TasabcvComponent } from './tasas/tasabcv/tasabcv.component';
 import { TasaeurobcvComponent } from './tasas/tasaeurobcv/tasaeurobcv.component';
 import { CrearPostalComponent } from './postal/crear-postal/crear-postal.component';
+import { CotizacionListComponent } from './cotizacion/cotizacion-list/cotizacion-list.component';
+import { CotizacionEditComponent } from './cotizacion/cotizacion-edit/cotizacion-edit.component';
 
 @NgModule({
   declarations: [
@@ -119,7 +119,9 @@ import { CrearPostalComponent } from './postal/crear-postal/crear-postal.compone
     PagosChequeComponent,
     PaymentDetailsComponent,
     TasabcvComponent,
-    TasaeurobcvComponent
+    TasaeurobcvComponent,
+    CotizacionListComponent,
+    CotizacionEditComponent
 
   ],
   exports: [
@@ -164,7 +166,9 @@ import { CrearPostalComponent } from './postal/crear-postal/crear-postal.compone
     TiposdepagoComponent,
     PaymentDetailsComponent,
     TasabcvComponent,
-    TasaeurobcvComponent
+    TasaeurobcvComponent,
+    CotizacionListComponent,
+    CotizacionEditComponent
 
   ],
 
@@ -186,7 +190,6 @@ import { CrearPostalComponent } from './postal/crear-postal/crear-postal.compone
     ComponentsModule,
     TranslateModule,
     PostalcompModule,
-    DriverpModule
 ],
   providers:[
     IconosService,

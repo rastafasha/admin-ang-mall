@@ -17,6 +17,7 @@ import { PagoEfectivo } from '../models/pagoEfectivo.model';
 import { Categoria } from '../models/categoria.model';
 import { Promocion } from '../models/promocion.model';
 import { Reservacion } from '../models/reservacion.model';
+import { Presupuesto } from '../models/presupuesto';
 
 const base_url = environment.baseUrl;
 
@@ -87,12 +88,15 @@ export class BusquedasService {
   private trasnformarReservacion(resultados: any[]): Reservacion[]{
     return resultados;
   }
+  private trasnformarPresupuesto(resultados: any[]): Presupuesto[]{
+    return resultados;
+  }
 
 
   buscar(tipo: 'usuarios'|'categorias' |'marcas' |'productos'|'blogs'|
     'pages'|'sliders'|'cursos'
     | 'tiendas'| 'trasnferencias'
-    | 'pagoecheques'| 'pagoefectivos'|'promocions'|'reservaciones'
+    | 'pagoecheques'| 'pagoefectivos'|'promocions'|'reservaciones'|'presupuestos'
     ,
         termino: string
         ){
@@ -142,6 +146,9 @@ export class BusquedasService {
 
                 case 'reservaciones':
                 return this.trasnformarReservacion(resp.resultados)
+
+                case 'presupuestos':
+                return this.trasnformarPresupuesto(resp.resultados)
 
 
               default:

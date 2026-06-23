@@ -38,21 +38,21 @@ export class AppComponent implements OnInit {
     window.scroll(0, 0);
 
     // MOVIDO AQUÍ: Cargar los datos generales de forma segura cuando el HTML ya existe en el móvil
-    this._congeneralService.cargarCongenerals().subscribe({
-      next: (response) => {
-        this.congenerals = response; 
-        this.url = environment.baseUrl;
+    // this._congeneralService.cargarCongenerals().subscribe({
+    //   next: (response) => {
+    //     this.congenerals = response; 
+    //     this.url = environment.baseUrl;
         
-        // Verificación de seguridad para evitar que explote si la base de datos viene vacía
-        if (this.congenerals && this.congenerals[0]) {
-          $('#favicon_icon').attr('href', this.url + '/congenerals/' + this.congenerals[0].favicon);
-          $('#title_general').text(this.congenerals[0].titulo);
-        }
-      },
-      error: (err) => {
-        console.error('Error al cargar configuraciones generales del backend:', err);
-      }
-    });
+    //     // Verificación de seguridad para evitar que explote si la base de datos viene vacía
+    //     if (this.congenerals && this.congenerals[0]) {
+    //       $('#favicon_icon').attr('href', this.url + '/congenerals/' + this.congenerals[0].favicon);
+    //       $('#title_general').text(this.congenerals[0].titulo);
+    //     }
+    //   },
+    //   error: (err) => {
+    //     console.error('Error al cargar configuraciones generales del backend:', err);
+    //   }
+    // });
 
     // Lógica moderna de actualización PWA para Angular 19 (Protegida contra bloqueos)
     if (this.swUpdate.isEnabled) {

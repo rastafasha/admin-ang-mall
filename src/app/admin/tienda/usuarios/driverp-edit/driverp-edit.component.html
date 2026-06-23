@@ -1,0 +1,163 @@
+<div class="row">
+
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Mi perfil de conductor</h4>
+                <h6 class="card-subtitle">{{pageTitle}} | {{usertiendaSeleccionado.first_name}}
+                    {{usertiendaSeleccionado.last_name}} </h6>
+                <h6 class="card-subtitle" *ngIf="driverSeleccionado">LicNum: {{driverSeleccionado.licencianum}}</h6>
+                <form class="form p-t-20 form-horizontal form-material" [formGroup]="driverProfileForm">
+                    <div class="row">
+                        <div class="form-group col-xs-12 col-sm-6">
+                            <label for="exampleInputPais">Tipo Vehículo <span class="required">*</span></label>
+                            <select formControlName="tipo_vehiculo" class="form-control">
+                                <option value="">Selecione</option>
+                                <option value="carro">Carro</option>
+                                <option value="moto">Moto</option>
+                                <option value="camioneta">Camioneta</option>
+                                <option value="van">Van ó Mini-Van</option>
+                                <option value="Camion">Camión</option>
+                            </select>
+                            <div *ngIf="driverProfileForm.get('tipo_vehiculo')?.touched && driverProfileForm.get('tipo_vehiculo')?.invalid"
+                                class="text-danger">
+                                <div *ngIf="driverProfileForm.get('tipo_vehiculo')?.errors?.['required']">
+                                    {{'Campo Requerido'|translate}}
+                                </div>
+                                <div *ngIf="driverProfileForm.get('tipo_vehiculo')?.errors?.['minlength']">
+                                    {{'Seleccione'|translate}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-xs-12 col-sm-6 ">
+                            <label for="Marca">Marca <span class="required">*</span></label>
+                            <div class="input-group">
+                                <input type="text" formControlName="marca" class="form-control" id="Marca"
+                                    placeholder="ej:Chevrolet">
+                                <div *ngIf="driverProfileForm.get('marca')?.touched && driverProfileForm.get('marca')?.invalid"
+                                    class="text-danger">
+                                    <div *ngIf="driverProfileForm.get('marca')?.errors?.['required']">
+                                        {{'Campo Requerido'|translate}}
+                                    </div>
+                                    <div *ngIf="driverProfileForm.get('marca')?.errors?.['minlength']">
+                                        {{'Mínimo 3 Caracteres'|translate}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-xs-12 col-sm-6">
+                            <label for="Modelo">Modelo <span class="required">*</span></label>
+                            <div class="input-group">
+                                <input type="text" formControlName="modelo" class="form-control" id="Modelo"
+                                    placeholder="ej:Camaro">
+                                <div *ngIf="driverProfileForm.get('modelo')?.touched && driverProfileForm.get('modelo')?.invalid"
+                                    class="text-danger">
+                                    <div *ngIf="driverProfileForm.get('modelo')?.errors?.['required']">
+                                        {{'Campo Requerido'|translate}}
+                                    </div>
+                                    <div *ngIf="driverProfileForm.get('modelo')?.errors?.['minlength']">
+                                        {{'Mínimo 3 Caracteres'|translate}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-xs-12 col-sm-6">
+                            <label for="Color">Color <span class="required">*</span></label>
+                            <div class="input-group">
+                                <input type="text" formControlName="color" class="form-control" id="Color"
+                                    placeholder="ej:rojo">
+                                <div *ngIf="driverProfileForm.get('color')?.touched && driverProfileForm.get('color')?.invalid"
+                                    class="text-danger">
+                                    <div *ngIf="driverProfileForm.get('color')?.errors?.['required']">
+                                        {{'Campo Requerido'|translate}}
+                                    </div>
+                                    <div *ngIf="driverProfileForm.get('color')?.errors?.['minlength']">
+                                        {{'Mínimo 3 Caracteres'|translate}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-xs-12 col-sm-4">
+                            <label for="year">Año <span class="required">*</span></label>
+                            <div class="input-group">
+                                <input type="text" formControlName="year" class="form-control" id="año"
+                                    placeholder="ej:2016">
+                                <div *ngIf="driverProfileForm.get('year')?.touched && driverProfileForm.get('year')?.invalid"
+                                    class="text-danger">
+                                    <div *ngIf="driverProfileForm.get('year')?.errors?.['required']">
+                                        {{'Campo Requerido'|translate}}
+                                    </div>
+                                    <div *ngIf="driverProfileForm.get('year')?.errors?.['minlength']">
+                                        {{'Mínimo 3 Caracteres'|translate}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-xs-12 col-sm-4">
+                            <label for="placa">Placa <span class="required">*</span></label>
+                            <div class="input-group">
+                                <input type="text" formControlName="placa" class="form-control" id="placa"
+                                    placeholder="Placa">
+                                <div *ngIf="driverProfileForm.get('placa')?.touched && driverProfileForm.get('placa')?.invalid"
+                                    class="text-danger">
+                                    <div *ngIf="driverProfileForm.get('placa')?.errors?.['required']">
+                                        {{'Campo Requerido'|translate}}
+                                    </div>
+                                    <div *ngIf="driverProfileForm.get('placa')?.errors?.['minlength']">
+                                        {{'Mínimo 3 Caracteres'|translate}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-xs-12 col-sm-4">
+                            <label for="licencianum">Licencia No.</label>
+                            <div class="input-group">
+                                <input type="text" formControlName="licencianum" class="form-control" id="licencianum"
+                                    placeholder="Num Licencia o permiso conducir">
+                                <div *ngIf="driverProfileForm.get('licencianum')?.touched && driverProfileForm.get('licencianum')?.invalid"
+                                    class="text-danger">
+                                    <div *ngIf="driverProfileForm.get('licencianum')?.errors?.['required']">
+                                        {{'Campo Requerido'|translate}}
+                                    </div>
+                                    <div *ngIf="driverProfileForm.get('licencianum')?.errors?.['minlength']">
+                                        {{'Mínimo 3 Caracteres'|translate}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" [disabled]="driverProfileForm.invalid" *ngIf="!cargando" (click)="onSubmit()"
+                                class="btn btn-outline-success btn-md btn-block text-uppercase btn-rounded">
+                                <i class="fa fa-save"></i> {{'Guardar'|translate}} 
+                        </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4" *ngIf="driverSeleccionado">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Avatar</h4>
+                <h6 class="card-subtitle">Imagen de Vehículo</h6>
+                <app-loading *ngIf="cargandoImagen"></app-loading>
+                <div class="text-center" *ngIf="!cargandoImagen">
+                    <img *ngIf="!imgTemp" [src]="driverSeleccionado?.img | imagenPipe: 'drivers'  "
+                        class="img-responsive img-thumbnail" alt="">
+                    <img *ngIf="imgTemp" [src]="imgTemp" class="img-avatar">
+                </div>
+                <input type="file" (change)="cambiarImagen($event.target.files[0])">
+                <br>
+                <br>
+                <button type="button" [disabled]="!imagenSubir" (click)="subirImagen()"
+                    class="btn btn-success waves-effect waves-light m-r-10 btn-block">
+                    <i class="fa fa-save"></i> Cambiar imagen
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

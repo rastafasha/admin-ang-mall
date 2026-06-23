@@ -18,6 +18,7 @@ import { ModalTrackingComponent } from './modal-tracking/modal-tracking.componen
 import { TranslateModule } from '@ngx-translate/core';
 import { FichaPedidoComponent } from './fichaPedido/fichaPedido.component';
 import { ModalInstruccionesComponent } from './modal-instrucciones/modal-instrucciones.component';
+import { ModalAsignarComponent } from './modal-asignar/modal-asignar.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { ModalInstruccionesComponent } from './modal-instrucciones/modal-instruc
     ModalVerPedidoComponent,
     ModalTrackingComponent,
     FichaPedidoComponent,
-    ModalInstruccionesComponent
+    ModalInstruccionesComponent,
+    ModalAsignarComponent
 
   ],
   
@@ -46,7 +48,8 @@ import { ModalInstruccionesComponent } from './modal-instrucciones/modal-instruc
     ModalVerPedidoComponent,
     ModalTrackingComponent,
     FichaPedidoComponent,
-    ModalInstruccionesComponent
+    ModalInstruccionesComponent,
+    ModalAsignarComponent
   ],
   imports: [
     CommonModule,

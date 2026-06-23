@@ -20,6 +20,7 @@ export class UsuariosTiendaComponent implements OnInit, OnDestroy {
 
   public totalUsuarios: number = 0;
   public usuarios: Usuario[] = [];
+  public clientes: Usuario[] = [];
   public tiendausersTemp: Usuario[] = [];
 
   public desde: number = 0;
@@ -112,6 +113,8 @@ export class UsuariosTiendaComponent implements OnInit, OnDestroy {
         }
       )
   }
+
+  
 
 
   cambiarPagina(valor: number) {
