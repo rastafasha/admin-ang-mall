@@ -7,6 +7,19 @@
             <p class="box-title m-b-0">{{item.user.first_name}}</p>
             <small>{{'Teléfono'|translate}}:</small>
             <p class="box-title m-b-0">{{item.user.telefono}}</p>
+            <small>{{'Verificado'|translate}}:</small>
+            <div>
+                <span class="badge badge-danger badge-shadow" *ngIf="item.verificado === false">{{item.verificado }}</span>
+                <span class="badge badge-success badge-shadow" *ngIf="item.verificado === true">{{item.verificado}}</span>
+
+            </div>
+            <small>{{'Creado'|translate}}:</small>
+            <small>{{'Delivery'|translate}}:</small>
+            <div>
+                <span class="badge badge-danger badge-shadow" *ngIf="item.delivery === false">{{item.delivery }}</span>
+                <span class="badge badge-success badge-shadow" *ngIf="item.delivery === true">{{item.delivery}}</span>
+
+            </div>
             <small>{{'Creado'|translate}}:</small>
             <p class="card-title"><span class="lstick"></span>
                 <span class="font-size-ms text-muted">
@@ -33,30 +46,30 @@
     <div class="d-flex justify-content-between align-items-center button-group mt-3">
         <button type="button" class="btn btn-outline-info" data-bs-toggle="modal"
             [attr.data-bs-target]="'#ver-'+item._id">
-            <span class="fas fa-eye"></span> 
+            <span class="fas fa-eye"></span>
             <!-- {{'Ver'|translate}} -->
         </button>
 
         <button type="button" class="btn btn-outline-warning" *ngIf="(item.status || '').toUpperCase() === 'PENDING'"
             (click)="onActivar(item._id)">
-            <span class="fas fa-check"></span> 
+            <span class="fas fa-check"></span>
             <!-- {{'Activar'|translate}} -->
         </button>
 
         <button type="button" class="btn btn-outline-primary" *ngIf="(item.status || '').toUpperCase() === 'INPROCESS'"
             (click)="onDesactivar(item._id)">
-            <span class="fas fa-times"></span> 
+            <span class="fas fa-times"></span>
             <!-- {{'Desactivar'|translate}} -->
         </button>
 
         <button type="button" class="btn btn-outline-success" *ngIf="(item.status || '').toUpperCase() === 'INPROCESS'"
             (click)="onFinalizar(item._id)">
-            <span class="fas fa-flag-checkered"></span> 
+            <span class="fas fa-flag-checkered"></span>
             <!-- {{'Finalizar'|translate}} -->
         </button>
 
         <button type="button" class="btn btn-outline-danger" (click)="onEliminar(item)">
-            <span class="fas fa-trash"></span> 
+            <span class="fas fa-trash"></span>
             <!-- {{'Eliminar'|translate}} -->
         </button>
     </div>

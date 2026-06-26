@@ -100,8 +100,8 @@
                                             [style.background-color]="notif.leido ? '#fff' : '#f4f7fc'"
                                             class="position-relative">
                                             <div class="btn btn-circle" [ngClass]="{
-                                        'btn-info': notif.tipo === 'NUEVO_PAGO' || notif.tipo === 'NUEVA_RESERVACION' || notif.tipo === 'RESERVACION_COMPLETADA',
-                                        'btn-success': notif.tipo === 'PAGO_APROBADO' || notif.tipo === 'PEDIDO_APROBADO' || notif.tipo === 'PEDIDO_FINALIZADO' || notif.tipo === 'RESERVACION_CONFIRMADA',
+                                        'btn-info': notif.tipo === 'NUEVO_PAGO' || notif.tipo === 'NUEVA_RESERVACION' || notif.tipo === 'RESERVACION_COMPLETADA' ,
+                                        'btn-success': notif.tipo === 'PAGO_APROBADO' || notif.tipo === 'PEDIDO_APROBADO' || notif.tipo === 'PEDIDO_FINALIZADO' || notif.tipo === 'RESERVACION_CONFIRMADA' || notif.tipo === 'VENTA_FINALIZADA',
                                         'btn-warning': notif.tipo === 'NUEVO_PEDIDO',
                                         'btn-danger': notif.tipo === 'PAGO_RECHAZADO' || notif.tipo === 'PEDIDO_RECHAZADO' || notif.tipo === 'RESERVACION_CANCELADA'
                                     }">

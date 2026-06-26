@@ -600,6 +600,7 @@
     "RESERVACION_CONFIRMADA": "Reservation Confirmed",
     "RESERVACION_CANCELADA": "Reservation Canceled",
     "RESERVACION_COMPLETADA": "Reservation Completed",
+    "VENTA_FINALIZADA": "Sale Finished",
     "DEFAULT": "System Alert"
   
 },

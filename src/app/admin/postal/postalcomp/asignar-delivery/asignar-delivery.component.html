@@ -25,6 +25,7 @@
                         <tr>
 
                             <th>delivery</th>
+                            <th>Pedido Id</th>
                             <th>Asignado</th>
                             <th>usuario</th>
                             <th>telefono</th>
@@ -32,7 +33,7 @@
                             <th>OP</th>
                         </tr>
                     </thead>
-                    <tbody *ngFor="let pedido of pedidos">
+                    <tbody *ngFor="let pedido of pedidos |  paginate: { itemsPerPage: countp, currentPage: pp }">
                         <tr>
                             <td style="font-size: 13px;">
 
@@ -44,6 +45,7 @@
 
                                 </div>
                             </td>
+                            <td style="font-size: 13px;">{{pedido._id}}</td>
                             <td style="font-size: 13px;">
 
                                 <div class="font-size-sm mb-4">
@@ -57,7 +59,7 @@
                             <td style="font-size: 13px;">{{pedido.user.first_name}} {{pedido.user.last_name}}</td>
                             <td style="font-size: 13px;">{{pedido.user.telefono}}</td>
                             <td  style="font-size: 13px;">
-                                <span *ngIf="pedido.delivery === 'false' || pedido.delivery === 'true' && pedido.direccion === null ">
+                                <span *ngIf="pedido.delivery === 'false' || pedido.delivery === 'true' && pedido.direccion === null || pedido.direccion === 'Dirección Express ' ">
                                     {{ 'Sin dirección / Retiro en tienda' }}
                                 </span>
                                 <span *ngIf="pedido.delivery === 'true' && pedido.direccion !== null ">
@@ -76,6 +78,7 @@
                     </tbody>
                 </table>
             </div>
+            <pagination-controls (pageChange)="pp = $event"></pagination-controls>
         </div>
 
     </div>
@@ -90,14 +93,14 @@
 
                             <th>T. Vehiculo</th>
                             <th>Licencia</th>
-                            <th>Pedido</th>
+                            <th>Pedido Id</th>
                             <th>Tienda</th>
                             <th>Estado</th>
                             <th>Fecha</th>
                             <th>OP</th>
                         </tr>
                     </thead>
-                    <tbody *ngFor="let asignacion of asignaciones">
+                    <tbody *ngFor="let asignacion of asignaciones |  paginate: { itemsPerPage: count, currentPage: p }">
                         <tr>
                             <td style="font-size: 13px;">{{asignacion.driver.tipo_vehiculo}}</td>
                             <td style="font-size: 13px;">{{asignacion.driver.licencianum}}</td>
@@ -113,6 +116,10 @@
                                     ||
                                     'N/A'}}</span>
                                 <span class="badge badge-primary badge-shadow"
+                                    *ngIf="(asignacion.status || '').toUpperCase() === 'ENTREGADO'">{{asignacion.status
+                                    ||
+                                    'N/A'}}</span>
+                                <span class="badge badge-warning badge-shadow"
                                     *ngIf="(asignacion.status || '').toUpperCase() === 'CONFIRMADO'">{{asignacion.status
                                     ||
                                     'N/A'}}</span>
@@ -152,6 +159,7 @@
                     </tbody>
                 </table>
             </div>
+            <pagination-controls (pageChange)="p = $event"></pagination-controls>
         </div>
     </div>
 </div>

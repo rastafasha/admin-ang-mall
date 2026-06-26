@@ -48,6 +48,7 @@ export class NotificacionService {
     'RESERVACION_CONFIRMADA': { icon: '✅', method: 'success' },
     'RESERVACION_CANCELADA': { icon: '❌', method: 'error' },
     'RESERVACION_COMPLETADA': { icon: '✨', method: 'info' },
+    'VENTA_FINALIZADA': { icon: '✅', method: 'success' },
     'DEFAULT': { icon: '🔔', method: 'info' }
   };
 
@@ -182,6 +183,9 @@ export class NotificacionService {
     }
     if (tipo === 'NUEVA_RESERVACION' || tipo.startsWith('RESERVACION_')) {
       return `/dashboard/reservaciones`; // 🟢 Coincide exactamente con tu ruta
+    }
+    if (tipo === 'VENTA_FINALIZADA' || tipo.startsWith('VENTA_')) {
+      return `/dashboard/ventas/modulo`; // 🟢 Coincide exactamente con tu ruta
     }
 
     return '/dashboard';

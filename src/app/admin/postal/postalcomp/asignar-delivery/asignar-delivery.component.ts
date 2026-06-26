@@ -40,7 +40,11 @@ export class AsignarDeliveryComponent implements OnInit {
   direccion:Direccion;
 
   public page;
-  public pageSize = 15;
+  public pageSize = 7;
+  p: number = 1;
+  pp: number = 1;
+  countp: number = 8;
+  count: number = 8;
   public count_cat;
 
   public last_sellers: Array<any> = [];

@@ -11,6 +11,7 @@ export class Pedido{
         public status: string,
         public delivery: string,
         public asignado: boolean,
+        public verificado: boolean,
         public deliveryAddres: string,
         public createdAt: Date,
         public selector_elegido?: string,

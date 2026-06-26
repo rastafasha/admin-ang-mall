@@ -594,6 +594,7 @@
         "RESERVACION_CONFIRMADA": "Reserva Confirmada",
         "RESERVACION_CANCELADA": "Reserva Cancelada",
         "RESERVACION_COMPLETADA": "Reserva Finalizada",
+        "VENTA_FINALIZADA": "Venta Finalizada",
         "DEFAULT": "Alerta de Sistema"
     },
 

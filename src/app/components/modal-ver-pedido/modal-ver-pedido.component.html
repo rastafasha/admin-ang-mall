@@ -18,6 +18,18 @@
                         <p> <i class="fa fa-whatsapp"></i>
                             {{item.user.telefono}}</p>
                     </div>
+                    <small>{{'Verificado'|translate}}:</small>
+            <div>
+                <span class="badge badge-danger badge-shadow" *ngIf="item.verificado === false">{{item.verificado }}</span>
+                <span class="badge badge-success badge-shadow" *ngIf="item.verificado === true">{{item.verificado}}</span>
+
+            </div>
+                    <small>{{'Delivery'|translate}}:</small>
+                    <div>
+                        <span class="badge badge-danger badge-shadow" *ngIf="item.delivery === false">{{item.delivery }}</span>
+                        <span class="badge badge-success badge-shadow" *ngIf="item.delivery === true">{{item.delivery}}</span>
+
+                    </div>
                     <!-- status -->
                     <div>
                         <span class="badge badge-warning badge-shadow"
