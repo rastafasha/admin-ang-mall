@@ -81,7 +81,6 @@ export class BlogIndexComponent implements OnInit {
   public PageSize(): void {
     this.query = '';
     this.loadBlogs();
-    // this.router.navigateByUrl('/productos')
   }
 
   handleSearchEvent(event: any) {

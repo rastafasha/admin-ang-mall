@@ -167,7 +167,6 @@ export class BlogEditComponent implements OnInit, OnChanges {
   updateBlog() {
 
     if (!this.blogForm.valid) {
-      //mostramos las alertas de los campos requeridos
       this.blogForm.markAllAsTouched(); // Esto activa las validaciones visuales
       return
     }
