@@ -23,11 +23,14 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { PwaNotifInstallerComponent } from './shared/pwa-notif-installer/pwa-notif-installer.component';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     NopagefoundComponent,
+    
   ],
   imports: [
     BrowserModule,
@@ -36,6 +39,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     PagesModule,
     AuthModule,
     ComponentsModule,
+    AuthModule,
+    SharedModule,
     PipesModule,
     AdminModule,
     BrowserAnimationsModule,
