@@ -29,7 +29,6 @@ export class AppComponent implements OnInit {
     private _router: Router,
     private meta: Meta
   ) {
-    // Las configuraciones fijas se quedan en el constructor
     const keywords: string[] = ['foo', 'bar', 'poo'];
     this.meta.addTag({ name: 'keywords', content: keywords.join(',') });
   }
@@ -37,24 +36,9 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     window.scroll(0, 0);
 
-    // MOVIDO AQUÍ: Cargar los datos generales de forma segura cuando el HTML ya existe en el móvil
-    // this._congeneralService.cargarCongenerals().subscribe({
-    //   next: (response) => {
-    //     this.congenerals = response; 
-    //     this.url = environment.baseUrl;
-        
-    //     // Verificación de seguridad para evitar que explote si la base de datos viene vacía
-    //     if (this.congenerals && this.congenerals[0]) {
-    //       $('#favicon_icon').attr('href', this.url + '/congenerals/' + this.congenerals[0].favicon);
-    //       $('#title_general').text(this.congenerals[0].titulo);
-    //     }
-    //   },
-    //   error: (err) => {
-    //     console.error('Error al cargar configuraciones generales del backend:', err);
-    //   }
-    // });
-
-    // Lógica moderna de actualización PWA para Angular 19 (Protegida contra bloqueos)
+    // =========================================================================
+    // 🟢 LOGS DE SEGUIMIENTO PARA EL SERVICE WORKER EN EL RAÍZ
+    // =========================================================================
     if (this.swUpdate.isEnabled) {
       this.swUpdate.versionUpdates.subscribe((evt) => {
         switch (evt.type) {
@@ -63,12 +47,9 @@ export class AppComponent implements OnInit {
             break;
             
           case 'VERSION_READY':
-            console.log('SW: Nueva versión lista:', evt.latestVersion.hash);
-            if (confirm('¡Hay una nueva actualización disponible de Zlipmenu! ¿Deseas recargar la página?')) {
-              this.swUpdate.activateUpdate().then(() => {
-                document.location.reload();
-              });
-            }
+            // 🟢 SOLUCIÓN: Eliminamos el alert confirm() molesto. 
+            // Ahora dejamos que tu componente 'pwa-notif-installer' maneje el modal estético de forma exclusiva.
+            console.log('SW: Nueva versión lista en el servidor:', evt.latestVersion.hash);
             break;
 
           case 'VERSION_INSTALLATION_FAILED':
@@ -84,7 +65,7 @@ export class AppComponent implements OnInit {
       });
     }
     
-    // Tu lógica existente del SDK Dinámico de PayPal
+    // Lógica existente del SDK Dinámico de PayPal
     if (this.usuarioService.usuario?.local) {
       const tiendaId = typeof this.usuarioService.usuario.local === 'string' 
         ? this.usuarioService.usuario.local 
