@@ -76,6 +76,7 @@ export class UsertiendaaddComponent implements OnInit {
     this.validarFormulario();
     this.activatedRoute.params.subscribe((resp: any) => {
       this.user_id = resp.id;
+      console.log(this.user_id )
     })
     this.cargar_Locales();
     if (this.user_id) {
@@ -93,28 +94,29 @@ export class UsertiendaaddComponent implements OnInit {
 
 
   cargar_usuario() {
-    this.usuarioService.getUserById(this.user_id).subscribe(
-      (resp: any) => {
-        this.usertiendaSeleccionado = resp;
+  this.usuarioService.getUserById(this.user_id).subscribe(
+    (resp: any) => {
+      this.usertiendaSeleccionado = resp;
 
-        this.registerForm.setValue({
-          first_name: this.usertiendaSeleccionado.first_name,
-          last_name: this.usertiendaSeleccionado.last_name,
-          email: this.usertiendaSeleccionado.email,
-          password: '',
-          password2: '',
-          local: this.usertiendaSeleccionado.local || '',
-          role: this.usertiendaSeleccionado.role || '',
-          telefono: this.usertiendaSeleccionado.telefono || '',
-          numdoc: this.usertiendaSeleccionado.numdoc || ''
-        });
+      this.registerForm.setValue({
+        first_name: this.usertiendaSeleccionado.first_name || '',
+        last_name: this.usertiendaSeleccionado.last_name || '', // 🟢 SOLUCIÓN: Si es undefined, usa ''
+        email: this.usertiendaSeleccionado.email || '',
+        password: '',
+        password2: '',
+        local: this.usertiendaSeleccionado.local || '',
+        role: this.usertiendaSeleccionado.role || '',
+        telefono: this.usertiendaSeleccionado.telefono || '',
+        numdoc: this.usertiendaSeleccionado.numdoc || ''
+      });
 
-        if (this.usertiendaSeleccionado.role === 'CHOFER') {
-          this.isDriver = true;
-        }
+      if (this.usertiendaSeleccionado.role === 'CHOFER') {
+        this.isDriver = true;
       }
-    )
-  }
+    }
+  );
+}
+
 
   validarFormulario() {
     this.registerForm = this.fb.group({
