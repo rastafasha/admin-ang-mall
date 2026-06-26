@@ -10,6 +10,7 @@ import { SafePipe } from './safe.pipe';
 import { PedidoStatusPipe } from './pedido-status.pipe';
 import { UserRolePipe } from './user-role.pipe';
 import { UserRoleclientPipe } from './user-roleclient.pipe';
+import { VerifiedPipe } from './verified.pipe';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import { UserRoleclientPipe } from './user-roleclient.pipe';
     SafePipe,
     PedidoStatusPipe,
     UserRolePipe,
-    UserRoleclientPipe
+    UserRoleclientPipe,
+    VerifiedPipe
   ],
   exports:[
     ImagenPipePipe,
@@ -37,7 +39,8 @@ import { UserRoleclientPipe } from './user-roleclient.pipe';
     SafePipe,
     PedidoStatusPipe,
     UserRolePipe,
-    UserRoleclientPipe
+    UserRoleclientPipe,
+    VerifiedPipe
 
   ]
 })

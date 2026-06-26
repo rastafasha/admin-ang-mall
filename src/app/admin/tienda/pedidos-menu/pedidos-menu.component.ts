@@ -18,11 +18,13 @@ export class PedidosMenuComponent implements OnInit, OnDestroy {
   public status: string = 'PENDING';
   public cargando: boolean = false;
 
-  public pageSize = 10;
+  // public pageSize = 10;
   public count_cat;
   p: number = 1;
-  count: number = 8;
+  count: number = 5;
   user: any;
+  role: any;
+  local: any;
   option_selectedd: number = 1;
   solicitud_selectedd: any = 1;
   public info: string = '';
@@ -37,6 +39,8 @@ export class PedidosMenuComponent implements OnInit, OnDestroy {
     // obtengo el usuario
     let USER = localStorage.getItem("user");
     this.user = JSON.parse(USER ? USER : '');
+    this.role = this.user.role
+    this.local = this.user.local
 
     // 🟢 1. CARGA INICIAL DE LAS INSTRUCCIONES (Garantiza que la info no empiece vacía)
     this.translate.get('ORDERS.TITLE').subscribe(() => {
@@ -48,12 +52,15 @@ export class PedidosMenuComponent implements OnInit, OnDestroy {
       this.actualizarInstruccionesPagos();
     });
 
-    if (this.user.role === 'SUPERADMIN') {
+     setTimeout(()=>{
+      if (this.role === 'SUPERADMIN') {
       this.getPedidos();
     }
-    if (this.user.role === 'ADMIN') {
+    if (this.role === 'ADMIN') {
       this.pedidosPorLocalId()
     }
+    },1000)
+    
    
   }
 
@@ -89,18 +96,18 @@ export class PedidosMenuComponent implements OnInit, OnDestroy {
     this.option_selectedd = value;
     if (this.option_selectedd === 1) {
 
-      if (this.user.role === 'SUPERADMIN') {
+      if (this.role === 'SUPERADMIN') {
         this.getPedidos();
       }
-      if (this.user.role === 'ADMIN') {
+      if (this.role === 'ADMIN') {
         this.pedidosPorLocalId()
       }
     }
     if (this.option_selectedd === 2) {
-      if (this.user.role === 'SUPERADMIN') {
+      if (this.role === 'SUPERADMIN') {
         this.getPedidos();
       }
-      if (this.user.role === 'ADMIN') {
+      if (this.role === 'ADMIN') {
         this.pedidosPorLocalId()
       }
     }
@@ -113,14 +120,14 @@ export class PedidosMenuComponent implements OnInit, OnDestroy {
     this.cargando = true;
     this.pedidosMenuService.getByStatus(this.status).subscribe((resp) => {
       this.pedidos = resp;
-      console.log('Pedidos loaded (getByStatus):', this.pedidos);
       this.cargando = false;
     })
   }
   pedidosPorLocalId() {
     this.cargando = true;
-    this.pedidosMenuService.getByTiendaId(this.user.local).subscribe((resp: any) => {
+    this.pedidosMenuService.getByTiendaId(this.local).subscribe((resp: any) => {
       this.pedidos = resp;
+      console.log(resp)
       this.user = resp.user
       this.cargando = false;
     })
@@ -135,6 +142,7 @@ export class PedidosMenuComponent implements OnInit, OnDestroy {
     )
   }
   desactivar(id) {
+    console.log(id)
     this.cargando = true;
     this.pedidosMenuService.desactivar(id).subscribe(
       response => {
@@ -166,11 +174,11 @@ export class PedidosMenuComponent implements OnInit, OnDestroy {
         this.cargando = true;
         this.pedidosMenuService.borrarPedido(pedido._id).subscribe(
           response => {
-            if (this.user.role === 'SUPERADMIN') {
+            if (this.role === 'SUPERADMIN') {
               this.cargando = false;
               this.getPedidos();
             }
-            if (this.user.role === 'ADMIN') {
+            if (this.role === 'ADMIN') {
               this.cargando = false;
               this.pedidosPorLocalId()
             }

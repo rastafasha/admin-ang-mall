@@ -5,8 +5,6 @@ import { Subscription, delay } from 'rxjs';
 import { Marca } from 'src/app/models/marca.model';
 import { Tienda } from 'src/app/models/tienda.model';
 import { Usuario } from 'src/app/models/usuario.model';
-import { BusquedasService } from 'src/app/services/busquedas.service';
-import { MarcaService } from 'src/app/services/marca.service';
 import { ModalImagenService } from 'src/app/services/modal-imagen.service';
 import { TiendaService } from 'src/app/services/tienda.service';
 import Swal from 'sweetalert2';

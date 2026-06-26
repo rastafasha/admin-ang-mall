@@ -23,7 +23,6 @@ import { SelectorComponent } from './proucto/selector/selector.component';
 import { PapeleraComponent } from './proucto/papelera/papelera.component';
 import { ConfigSiteComponent } from './config-site/config-site.component';
 import { PromocionComponent } from './promocion/promocion.component';
-import { PostalComponent } from './postal/postal.component';
 import { CuponComponent } from './cupon/cupon.component';
 import { ContactoComponent } from './contacto/contacto.component';
 import { PromoeditComponent } from './promocion/promoedit/promoedit.component';
@@ -64,11 +63,10 @@ import { SharedModule } from '../shared/shared.module';
 import { ComponentsModule } from '../components/components.module';
 import { PagosChequeComponent } from './pagos-cheque/pagos-cheque.component';
 import { TranslateModule } from '@ngx-translate/core';
-import { PostalcompModule } from "./postal/postalcomp/postalcomp.module";
+import { PostalcompModule } from "./postal/postalcomp.module";
 import { PaymentDetailsComponent } from './transferencias/payment-details/payment-details.component';
 import { TasabcvComponent } from './tasas/tasabcv/tasabcv.component';
 import { TasaeurobcvComponent } from './tasas/tasaeurobcv/tasaeurobcv.component';
-import { CrearPostalComponent } from './postal/crear-postal/crear-postal.component';
 import { CotizacionListComponent } from './cotizacion/cotizacion-list/cotizacion-list.component';
 import { CotizacionEditComponent } from './cotizacion/cotizacion-edit/cotizacion-edit.component';
 
@@ -85,8 +83,6 @@ import { CotizacionEditComponent } from './cotizacion/cotizacion-edit/cotizacion
     PapeleraComponent,
     ConfigSiteComponent,
     PromocionComponent,
-    PostalComponent,
-    CrearPostalComponent,
     CuponComponent,
     ContactoComponent,
     PromoeditComponent,
@@ -136,8 +132,6 @@ import { CotizacionEditComponent } from './cotizacion/cotizacion-edit/cotizacion
     PapeleraComponent,
     ConfigSiteComponent,
     PromocionComponent,
-    PostalComponent,
-    CrearPostalComponent,
     CuponComponent,
     ContactoComponent,
     PromoeditComponent,

@@ -7,13 +7,19 @@ import { PipesModule } from 'src/app/pipes/pipes.module';
 import { MapaComponent } from './mapa/mapa.component';
 import { SharedModule } from "src/app/shared/shared.module";
 import { ComponentsModule } from "src/app/components/components.module";
+import { CrearPostalComponent } from './crear-postal/crear-postal.component';
+import { PostalComponent } from './postal.component';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { TranslateModule } from '@ngx-translate/core';
 
 
 
 @NgModule({
   declarations: [
     AsignarDeliveryComponent,
+    CrearPostalComponent,
     MapaComponent,
+    PostalComponent
   ],
   exports: [
     AsignarDeliveryComponent
@@ -25,7 +31,9 @@ import { ComponentsModule } from "src/app/components/components.module";
     FormsModule,
     RouterModule,
     SharedModule,
-    ComponentsModule
+    ComponentsModule,
+    NgxPaginationModule,
+    TranslateModule
 ]
 })
 export class PostalcompModule { }

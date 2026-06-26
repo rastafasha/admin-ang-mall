@@ -24,17 +24,27 @@
                     <thead class="thead-dark">
                         <tr>
 
-                            <th>delivery</th>
                             <th>Pedido Id</th>
-                            <th>Asignado</th>
+                            <th>Verificado </th>
+                            <th>delivery</th>
                             <th>usuario</th>
+                            <th>Asignado</th>
                             <th>telefono</th>
                             <th>Direccion</th>
                             <th>OP</th>
                         </tr>
                     </thead>
-                    <tbody *ngFor="let pedido of pedidos |  paginate: { itemsPerPage: countp, currentPage: pp }">
+                    <tbody *ngFor="let pedido of pedidos |verified |  paginate: { itemsPerPage: countp, currentPage: pp }">
                         <tr>
+                            <td style="font-size: 13px;">{{pedido._id | slice:0:15}}...</td>
+                            <td style="font-size: 13px;">
+
+                                <div class="font-size-sm mb-4">
+                                    <span class="badge badge-danger badge-shadow" *ngIf="pedido.verificado === false">{{pedido.verificado }}</span>
+                                    <span class="badge badge-success badge-shadow" *ngIf="pedido.verificado === true">{{pedido.verificado}}</span>
+
+                                </div>
+                            </td>
                             <td style="font-size: 13px;">
 
                                 <div class="font-size-sm mb-4">
@@ -45,7 +55,9 @@
 
                                 </div>
                             </td>
-                            <td style="font-size: 13px;">{{pedido._id}}</td>
+                            
+                            
+                            <td style="font-size: 13px;">{{pedido.user.first_name}} {{pedido.user.last_name}}</td>
                             <td style="font-size: 13px;">
 
                                 <div class="font-size-sm mb-4">
@@ -59,11 +71,11 @@
                             <td style="font-size: 13px;">{{pedido.user.first_name}} {{pedido.user.last_name}}</td>
                             <td style="font-size: 13px;">{{pedido.user.telefono}}</td>
                             <td  style="font-size: 13px;">
-                                <span *ngIf="pedido.delivery === 'false' || pedido.delivery === 'true' && pedido.direccion === null || pedido.direccion === 'Dirección Express ' ">
-                                    {{ 'Sin dirección / Retiro en tienda' }}
+                                <span *ngIf="pedido.delivery === 'false' || pedido.delivery === 'true' && pedido.direccion === null ">
+                                    {{ 'Sin dirección / Retiro en tienda' |translate }}
                                 </span>
                                 <span *ngIf="pedido.delivery === 'true' && pedido.direccion !== null ">
-                                    {{ (direccion?.direccion | slice:0:30)  }}...
+                                    {{ 'Revisar Dirección' |translate }}
                                 </span>
                             </td>
                             <td class="text-center">

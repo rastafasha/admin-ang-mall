@@ -20,7 +20,7 @@ export class FichaPedidoComponent {
     this.activar.emit(id);
   }
    onDesactivar(id: string): void {
-    this.activar.emit(id);
+    this.desactivar.emit(id);
   }
 
   onFinalizar(id: string): void {

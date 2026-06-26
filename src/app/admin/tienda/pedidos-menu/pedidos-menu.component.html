@@ -3,28 +3,26 @@
     <div class="pt-2 px-4 pl-lg-0 pr-xl-5">
         <div class="row">
             <div class="col-lg-12">
-                <div class="border-bottom boton-title">
-                    <h1 class="mt-lg-4">{{'Pedidos'|translate}}</h1>
-                </div>
+               
                 <!-- tab -->
                 <div class="tab-content-set">
                     <ul class="nav">
                         <li>
                             <a href="#" onclick="return false;" [ngClass]="{'active': option_selectedd == 1}"
                                 (click)="optionSelected(1)">
-                                <h3 class="btn btn-outline-info"> {{'Pendientes'|translate}}</h3>
+                                <h3 class="btn btn-outline-info"> {{'Pendientes'|translate}} </h3>
                             </a>
                         </li>
                         <li>
                             <a href="#" onclick="return false;" [ngClass]="{'active': option_selectedd == 2}"
                                 (click)="optionSelected(2)">
-                                <h3 class="btn btn-outline-info">{{'Activo'|translate}}</h3>
+                                <h3 class="btn btn-outline-info">{{'Activo'|translate}} </h3>
                             </a>
                         </li>
                         <li>
                             <a href="#" onclick="return false;" [ngClass]="{'active': option_selectedd == 3}"
                                 (click)="optionSelected(3)">
-                                <h3 class="btn btn-outline-info">{{'Finalizados'|translate}}</h3>
+                                <h3 class="btn btn-outline-info">{{'Finalizados'|translate}} </h3>
                             </a>
                         </li>
                         <li>
@@ -51,15 +49,20 @@
                                 <!-- modal ver-->
                                 <app-modal-ver-pedido [item]="item"></app-modal-ver-pedido>
                             </div>
+                            
                         </div>
+                        <div class="col-lg-12" *ngIf="pedidos.length > 5 ">
+                                <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                            </div>
                     </div>
                 </div>
                 <!-- Activo -->
                 <div *ngIf="option_selectedd == 2">
                     <app-loading *ngIf="cargando"></app-loading>
                     <div class="row " *ngIf="!cargando">
+                        <!-- -->
                         <div class="col-md-6 col-lg-4 "
-                            *ngFor="let item of pedidos |  paginate: { itemsPerPage: count, currentPage: p } | orderBy:'createdAt, desc' | pedidoStatus:'INPROCESS'">
+                            *ngFor="let item of pedidos   |  paginate: { itemsPerPage: count, currentPage: p } | orderBy:'createdAt, desc' | pedidoStatus:'INPROCESS'">
                             <div class="card ">
                                  <app-fichaPedido 
                                 [item]="item" 
@@ -71,7 +74,11 @@
                                 <!-- modal ver-->
                                 <app-modal-ver-pedido [item]="item"></app-modal-ver-pedido>
                             </div>
+                            
                         </div>
+                        <div class="col-lg-12" *ngIf="pedidos.length > 5 ">
+                                <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                            </div>
                     </div>
                 </div>
                 <!-- Finalizados -->
@@ -91,14 +98,16 @@
                                 <!-- modal ver-->
                                 <app-modal-ver-pedido [item]="item"></app-modal-ver-pedido>
                             </div>
+                            
                         </div>
+                        <div class="col-lg-12" *ngIf="pedidos.length > 5 ">
+                    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                </div>
                     </div>
                 </div>
             </div>
             
-            <div class="col-lg-12" *ngIf="!cargando">
-                <pagination-controls (pageChange)="p = $event"></pagination-controls>
-            </div>
+            
         </div>
     </div>
 </section>

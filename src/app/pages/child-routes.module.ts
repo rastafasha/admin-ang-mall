@@ -46,8 +46,8 @@ import { TiposdepagoComponent } from '../admin/tiposdepago/tiposdepago.component
 import { PagosEfectivoComponent } from '../admin/pagos-efectivo/pagos-efectivo.component';
 import { PagosChequeComponent } from '../admin/pagos-cheque/pagos-cheque.component';
 import { PedidosMenuComponent } from '../admin/tienda/pedidos-menu/pedidos-menu.component';
-import { AsignarDeliveryComponent } from '../admin/postal/postalcomp/asignar-delivery/asignar-delivery.component';
-import { MapaComponent } from '../admin/postal/postalcomp/mapa/mapa.component';
+import { AsignarDeliveryComponent } from '../admin/postal/asignar-delivery/asignar-delivery.component';
+import { MapaComponent } from '../admin/postal/mapa/mapa.component';
 import { ComentariosappComponent } from '../admin/tienda/comentariosapp/comentariosapp.component';
 import { TasabcvComponent } from '../admin/tasas/tasabcv/tasabcv.component';
 import { TasaeurobcvComponent } from '../admin/tasas/tasaeurobcv/tasaeurobcv.component';
