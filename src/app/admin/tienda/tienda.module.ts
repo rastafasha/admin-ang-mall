@@ -26,6 +26,7 @@ import { ReservacionEstadisticasComponent } from './reservacion/reservacion-esta
 import { ConectarWhatsappComponent } from './conectar-whatsapp/conectar-whatsapp.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { DriverpEditComponent } from './usuarios/driverp-edit/driverp-edit.component';
+import { FormcomponentsModule } from './tienda/formcomponents/formcomponents.module';
 
 
 @NgModule({
@@ -78,7 +79,8 @@ import { DriverpEditComponent } from './usuarios/driverp-edit/driverp-edit.compo
     SharedModule,
     ComponentsModule,
     PipesModule,
-    TranslateModule
-  ]
+    TranslateModule,
+    FormcomponentsModule
+]
 })
 export class TiendaModule { }

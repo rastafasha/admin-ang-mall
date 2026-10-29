@@ -9,6 +9,7 @@ import { FormGroup } from '@angular/forms';
 import { Usuario } from 'src/app/models/usuario.model';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { TranslateService } from '@ngx-translate/core';
+import { MercadolibreService } from 'src/app/services/mercadolibre.service';
 
 declare var jQuery: any;
 declare var $: any;
@@ -27,6 +28,9 @@ export class ProdIndexComponent implements OnInit, OnDestroy{
   public url;
   public totalProductos: number = 0;
   public desde: number = 0;
+
+  // 🚀 2. VARIABLE PARA GESTIONAR EL LOADING POR CADA FILA DE PRODUCTO
+  public cargandoSincronizacion: { [key: string]: boolean } = {};
 
   p: number = 1;
   count: number = 8;
@@ -50,7 +54,8 @@ export class ProdIndexComponent implements OnInit, OnDestroy{
     private productoService: ProductoService,
     private categoriaService: CategoriaService,
     private usuarioService: UsuarioService,
-    public translate: TranslateService
+    public translate: TranslateService,
+    private meliService: MercadolibreService 
   ) {
   }
 
@@ -138,6 +143,45 @@ export class ProdIndexComponent implements OnInit, OnDestroy{
       })
   }
 
+  /**
+   * 🚀 4. NUEVA FUNCIÓN PARA EXPORTAR / ACTUALIZAR EL ÍTEM EN MERCADO LIBRE
+   */
+  sincronizarConMercadoLibre(producto: Producto): void {
+    if (!producto._id) return;
+
+    // Activamos la animación de carga exclusivamente para esta celda
+    this.cargandoSincronizacion[producto._id] = true;
+
+    this.meliService.exportarProducto(producto._id).subscribe({
+      next: (resp) => {
+        this.cargandoSincronizacion[producto._id!] = false;
+        
+        // Mutamos el estado reactivo del ítem local de forma inmediata para cambiar la interfaz
+        if (!producto.mercadolibre) {
+          producto.mercadolibre = { id: resp.ml_id, status: 'active', last_sync: new Date() };
+        } else {
+          producto.mercadolibre.id = resp.ml_id;
+          producto.mercadolibre.last_sync = new Date();
+        }
+
+        Swal.fire({
+          title: '¡Sincronizado con éxito!',
+          text: resp.mensaje,
+          icon: 'success',
+          confirmButtonColor: '#2d3277'
+        });
+      },
+      error: (err) => {
+        this.cargandoSincronizacion[producto._id!] = false;
+        Swal.fire({
+          title: 'Fallo de Sincronización',
+          text: err.error?.mensaje || 'Asegúrate de que la categoría de este producto esté vinculada a un ID de categoría de Mercado Libre en tu panel.',
+          icon: 'error'
+        });
+      }
+    });
+  }
+
 
   eliminarProducto(producto: Producto) {
     Swal.fire({
@@ -211,34 +255,14 @@ export class ProdIndexComponent implements OnInit, OnDestroy{
     )
   }
 
-  onEditColor(producto: Producto) {
-    this.productoSeleccionado = producto;
-  }
-  onEditSelector(producto: Producto) {
-    this.productoSeleccionado = producto;
-  }
-  onEditGaleria(producto: Producto) {
-    this.productoSeleccionado = producto;
-  }
-  onEditProject(producto: Producto) {
-    this.productoSeleccionado = producto;
-  }
-  openEditProductPapelera() {
-    this.productoSeleccionado = null;
-  }
-
-  openEditModal(): void {
-    this.productoSeleccionado = null;
-  }
-
-  onCloseModal(): void {
-    this.productoSeleccionado = null;
-
-  }
-
-  onClose() {
-    this.ngOnInit();
-  }
+  onEditColor(producto: Producto) { this.productoSeleccionado = producto; }
+  onEditSelector(producto: Producto) { this.productoSeleccionado = producto; }
+  onEditGaleria(producto: Producto) { this.productoSeleccionado = producto; }
+  onEditProject(producto: Producto) { this.productoSeleccionado = producto; }
+  openEditProductPapelera() { this.productoSeleccionado = null; }
+  openEditModal(): void { this.productoSeleccionado = null; }
+  onCloseModal(): void { this.productoSeleccionado = null; }
+  onClose() { this.ngOnInit(); }
 
 
 

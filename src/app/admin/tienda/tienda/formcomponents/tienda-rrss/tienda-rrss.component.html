@@ -1,0 +1,57 @@
+<div class="row form-horizontal form-material">
+    <div class="form-group  col-xs-12 col-sm-3 ">
+        <label>{{'Nombre de la Red'|translate}}<span class="login-danger">*</span></label>
+        <input class="form-control" name="name_red" [(ngModel)]="name_red" [ngModelOptions]="{standalone: true}"
+            type="text">
+    </div>
+    <div class="form-group  col-xs-12 col-sm-3">
+        <label>{{'Usuario'|translate}}<span class="login-danger">*</span></label>
+        <input class="form-control" name="usuario_red" [(ngModel)]="usuario_red" [ngModelOptions]="{standalone: true}"
+            type="text">
+    </div>
+    <div class="form-group col-xs-12 col-sm-3 ">
+        <label for="icono">{{'Icono'|translate}}</label>
+        <div class="input-group">
+
+            <select [(ngModel)]="icono" name="icono" class="form-control" [ngModelOptions]="{standalone: true}">
+                <option *ngFor="let ic of listIcons" value="{{ic.icono}}">
+                    {{ic.name}} <i class="{{ic.icono}}"></i>
+                </option>
+            </select>
+
+        </div>
+    </div>
+
+    <div class="form-group col-xs-12 col-sm-3 ">
+        <button class="btn btn-primary btn-sm" (click)="addRedSocial()">+
+            {{'Agregar'|translate}}</button>
+        <!-- <button class="btn btn-danger btn-sm">x</button> -->
+    </div>
+</div>
+<div class="row mt-4 mb-4">
+    <div class="table-responsive">
+        <table class="table table-borderless">
+            <thead>
+                <tr>
+                    <th>{{'Descripción'|translate}}</th>
+                    <th>{{'Acción'|translate}}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let reds of redssociales; let i = index">
+                    <td>
+                        {{'Red social'|translate}}: {{reds.name_red}}
+                        <br>
+                        {{"Usuario"|translate}}: {{reds.usuario_red}}
+                        <br>
+                        {{'Icono'|translate}}: <span class="{{reds.icono}}"></span>
+                    </td>
+                    <td>
+                        <button class="btn btn-danger btn-sm" (click)="deleteMedical(i)">x</button>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,48 @@
+<h5 class="card-title text-secondary">
+    <i class="bi bi-shop"></i> Configuración de App Privada (Mercado Libre)
+</h5>
+
+<!-- Alerta informativa de estado de conexión -->
+<div class="alert"
+    [ngClass]="{'alert-success': meliStatus === 'CONECTADO', 'alert-warning': meliStatus === 'CONFIGURADO', 'alert-danger': meliStatus === 'DESCONECTADO'}">
+    <strong>Estado de la cuenta:</strong>
+    <span *ngIf="meliStatus === 'DESCONECTADO'"> No enlazado</span>
+    <span *ngIf="meliStatus === 'CONFIGURADO'"> Credenciales listas (Falta vincular cuenta)</span>
+    <span *ngIf="meliStatus === 'CONECTADO'"> Conectado con éxito <span *ngIf="meliNickname">({{ meliNickname
+            }})</span></span>
+</div>
+
+<div class="row">
+    <div class="col-md-6 form-group">
+        <label class="fw-bold">Client ID *</label>
+        <input type="text" class="form-control" formControlName="meli_client_id" placeholder="Ej: 846352920293">
+    </div>
+
+    <div class="col-md-6 form-group">
+        <label class="fw-bold">Client Secret</label>
+        <input type="password" class="form-control" formControlName="meli_client_secret" placeholder="••••••••••••••••">
+        <small class="text-muted">Por seguridad se mantiene encriptado.</small>
+    </div>
+</div>
+
+<div class="row mt-2">
+    <div class="col-md-12 form-group">
+        <label class="fw-bold">Redirect URI (Configurado en Mercado Libre Developers) *</label>
+        <input type="text" class="form-control" formControlName="meli_redirect_uri" placeholder="https://tusaas.com">
+    </div>
+</div>
+
+<!-- Barra de acciones dedicada -->
+<div class="d-flex justify-content-between align-items-center mt-3">
+    <button type="button" class="btn btn-sm btn-dark" (click)="guardarCredencialesMeli()">
+        <i class="fa fa-save"></i> Guardar Credenciales
+    </button>
+
+    <!-- Este botón solo se habilita una vez que la app está guardada en BD -->
+    <button type="button" class="btn btn-sm" [disabled]="meliStatus === 'DESCONECTADO'" (click)="vincularCuentaMeli()"
+        style="background-color: #fff159; color: #333; font-weight: bold; border: 1px solid #dcd14d;">
+
+        <i class="fas fa-handshake" style="margin-right: 6px;"></i>
+        Conectar Cuenta de Mercado Libre
+    </button>
+</div>

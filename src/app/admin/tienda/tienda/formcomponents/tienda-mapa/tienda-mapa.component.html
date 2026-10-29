@@ -1,0 +1,30 @@
+<div [formGroup]="formParent" class="row">
+  
+  <div class="col-md-12 form-group">
+    <label class="fw-bold">Dirección Seleccionada</label>
+    <input type="text" class="form-control" formControlName="direccion" readonly placeholder="📍 El mapa autocompletará este campo">
+  </div>
+
+  <div class="col-md-6 form-group">
+    <label class="fw-bold">Latitud *</label>
+    <input type="text" class="form-control" formControlName="latitud" readonly>
+  </div>
+
+  <div class="col-md-6 form-group">
+    <label class="fw-bold">Longitud *</label>
+    <input type="text" class="form-control" formControlName="longitud" readonly>
+  </div>
+
+  <div class="col-md-12 my-2">
+    <button type="button" class="btn btn-sm btn-outline-primary" [disabled]="mapLoading" (click)="useCurrentLocation()">
+      <i class="bi bi-geo-alt-fill"></i> 
+      {{ mapLoading ? 'Obteniendo GPS...' : 'Usar mi ubicación actual (GPS)' }}
+    </button>
+  </div>
+
+  <!-- Contenedor físico donde Leaflet pintará el mapa OpenStreetMap -->
+  <div class="col-md-12 mt-2">
+    <div id="mapElementId" style="height: 300px; border-radius: 8px; border: 1px solid #ccc; z-index: 1;"></div>
+  </div>
+
+</div>

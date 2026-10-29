@@ -8,15 +8,12 @@ import { Usuario } from 'src/app/models/usuario.model';
 import { CategoriaService } from 'src/app/services/categoria.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { IconosService } from 'src/app/services/iconos.service';
-import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { Tienda } from 'src/app/models/tienda.model';
 import { TiendaService } from 'src/app/services/tienda.service';
 import { PaisService } from 'src/app/services/pais.service';
 import { Pais } from 'src/app/models/pais.model';
 import { TranslateService } from '@ngx-translate/core';
-import { Subscription } from 'rxjs';
-import * as L from 'leaflet';
-import { WaGeolocationService } from '@ng-web-apis/geolocation';
+import { MercadolibreService } from 'src/app/services/mercadolibre.service';
 
 interface HtmlInputEvent extends Event {
   target: HTMLInputElement & EventTarget;
@@ -55,32 +52,25 @@ export class TiendaaddComponent implements OnInit, OnChanges {
   currentStep = 1;
 
 
-  public Editor = ClassicEditor;
-  public Editor1 = ClassicEditor;
   public pais?: Pais;
   public paises: Pais;
 
   public redessociales: any = [];
   public listCategorias: any = [];
-  public icono: any;
   description: any;
-  name_red: any;
-  usuario_red: any;
 
   nombre: any; local: any;
   categoria: any; subcategorias: any;
   telefono: any; user: any;
   redssociales: any; status: any;
 
-  // Variables del mapa
-  private map: L.Map | null = null;
-  private marker: L.Marker | null = null;
-  selectedCoords: { lat: number; lng: number } | null = null;
-  mapLoading = true;
-  mapError = '';
-  private locationSubscription: Subscription | null = null;
 
   public typeof = (val: any) => typeof val;
+
+  // mercadolibre:
+  public usaMercadoLibre: boolean = false;
+  public meliStatus: string = 'DESCONECTADO';
+  public meliNickname: string = '';
 
   constructor(
     private fb: FormBuilder,
@@ -89,19 +79,15 @@ export class TiendaaddComponent implements OnInit, OnChanges {
     private tiendaService: TiendaService,
     private usuarioService: UsuarioService,
     private fileUploadService: FileUploadService,
-    private _iconoService: IconosService,
     public translate: TranslateService,
-    private geolocation$: WaGeolocationService,
   ) {
     this.usuario = usuarioService.usuario;
-    const base_url = environment.baseUrl;
   }
 
   ngOnInit(): void {
     window.scrollTo(0, 0);
     let USER = localStorage.getItem("user");
     this.user = USER ? JSON.parse(USER) : null;
-    this.cargar_iconos();
     this.getPaises();
     this.getCategorias();
     this.validarFormulario();
@@ -145,6 +131,14 @@ export class TiendaaddComponent implements OnInit, OnChanges {
       color_fondo: ['',],
       isFeatured: [false,],
       user: [this.user.uid],
+
+      usaMercadoLibre: [false], // 🚀 NUEVO SWITCH
+
+      // Campos de la APP de ML (No requieren Validators.required obligatorios de fábrica, 
+      // ya que solo aplican si 'usaMercadoLibre' es true)
+      meli_client_id: [''],
+      meli_client_secret: [''],
+      meli_redirect_uri: ['']
     })
   }
 
@@ -160,6 +154,7 @@ export class TiendaaddComponent implements OnInit, OnChanges {
       const tienda = changes['tiendaSeleccionado'].currentValue;
       // Detectamos el idioma actual del sistema ('es' o 'en')
       const lang = this.translate.currentLang || 'es';
+
 
       this.tiendaForm.patchValue({
         id: tienda._id,
@@ -296,7 +291,7 @@ export class TiendaaddComponent implements OnInit, OnChanges {
       mostrarTasas?.invalid ||
       usaDelivery?.invalid ||
       state_banner?.invalid ||
-      has_reservacion?.invalid||
+      has_reservacion?.invalid ||
       has_cotizacion?.invalid
 
     ) {
@@ -382,113 +377,7 @@ export class TiendaaddComponent implements OnInit, OnChanges {
     )
   }
 
-  /**
- * Usa la ubicación actual del GPS
- */
-  useCurrentLocation(): void {
-    this.mapLoading = true;
-    this.geolocation$.subscribe({
-      next: (position) => {
-        const lat = position.coords.latitude;
-        const lng = position.coords.longitude;
 
-        this.placeMarker(lat, lng);
-        this.mapLoading = false;
-
-      },
-      error: (error) => {
-        this.mapLoading = false;
-        // this.toastr.warning('GPS Error', 'Habilita ubicación. Usa HTTPS.')
-      }
-    });
-  }
-
-  /**
-   * Coloca o mueve el marcador en las coordenadas especificadas
-   */
-  placeMarker(lat: number, lng: number): void {
-    // console.log('placeMarker called with lat:', lat, 'lng:', lng);
-
-    // Always set coords FIRST
-    this.selectedCoords = { lat, lng };
-    // console.log('selectedCoords set:', this.selectedCoords);
-
-    // Patch form fields
-    this.tiendaForm.patchValue({ latitud: lat, longitud: lng });
-    // console.log('Form lat/lng:', this.direccionForm.value.latitud, this.direccionForm.value.longitud);
-
-    if (!this.map) {
-      console.error('Map not ready - coords saved anyway');
-      this.fetchAddress(lat, lng);
-      return;
-    }
-
-    // Marker
-    if (this.marker) {
-      this.marker.setLatLng([lat, lng]);
-    } else {
-      this.marker = L.marker([lat, lng])
-        .addTo(this.map)
-        .bindPopup('<b>Ubicación GPS</b>')
-        .openPopup();
-    }
-
-    this.map.setView([lat, lng], 15);
-
-    // Address
-    this.fetchAddress(lat, lng);
-  }
-
-  fetchAddress(lat: number, lng: number): void {
-    // console.log('Geocoding', lat, lng);
-    fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=18&addressdetails=1`)
-      .then(res => res.json())
-      .then(data => {
-        const address = data.display_name || `Lat ${lat.toFixed(4)}, Lng ${lng.toFixed(4)}`;
-        this.tiendaForm.patchValue({ direccion: `📍 ${address}` });
-        console.log('Address:', address);
-      })
-      .catch(() => {
-        this.tiendaForm.patchValue({ direccion: `📍 GPS: ${lat.toFixed(6)}, ${lng.toFixed(6)}` });
-      });
-  }
-
-  // addRedSocial
-  addRedSocial() {
-    if (this.redssociales) {
-      this.redssociales.push({
-        index: this.redssociales.length + 1,
-        name_red: this.name_red,
-        usuario_red: this.usuario_red,
-        icono: this.icono
-      });
-    } else {
-      this.redssociales = [
-        {
-          index: 1, // initial index
-          name_red: this.name_red,
-          usuario_red: this.usuario_red,
-          icono: this.icono
-        },
-      ];
-    }
-    this.name_red = '';
-    this.usuario_red = '';
-    this.icono = '';
-  }
-
-  deleteMedical(i: any) {
-    this.redssociales.splice(i, 1);
-  }
-
-  cargar_iconos() {
-    this._iconoService.getIconsSocial().subscribe(
-      (resp: any) => {
-        this.listIcons = resp.iconos;
-      }
-    )
-  }
-  // addRedSocial
 
   saveTienda() {
     this.cargando = true;
@@ -652,5 +541,8 @@ export class TiendaaddComponent implements OnInit, OnChanges {
         Swal.fire('Error', 'No se pudo subir la imagen', 'error');
       });
   }
+
+
+
 
 }

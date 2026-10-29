@@ -1,5 +1,6 @@
 import { environment } from "src/environments/environment";
 import { Tienda } from "./tienda.model";
+import { MeliProductoSyncStatus } from "./mercadoliobre.model";
 
 const base_url = environment.mediaUrlRemoto;
 
@@ -19,6 +20,9 @@ export class Producto{
         public categoria: string,
         public nombre_selector: string,
         public marca: string,
+
+        public mercadolibre?: MeliProductoSyncStatus,
+        
         public sku?: string,
         public local?: string,
         public isFeatured?: boolean,

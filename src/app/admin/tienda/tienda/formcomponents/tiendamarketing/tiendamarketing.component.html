@@ -1,0 +1,116 @@
+<form class="form p-t-20 form-horizontal form-material" [formGroup]="formParent">
+    <!-- Local -->
+    <div class="row">
+        <div class="form-group col-xs-12 col-sm-4">
+            <label for="Tienda">{{'Texto Hero uno'|translate}} <span class="required">*</span></label>
+            <div class="input-group">
+
+                <input type="text" formControlName="texto_hero_uno" class="form-control" id="Tienda"
+                    placeholder="texto_hero_uno">
+                <div *ngIf="formParent.get('texto_hero_uno')?.touched && formParent.get('texto_hero_uno')?.invalid"
+                    class="text-danger">
+                    <div *ngIf="formParent.get('texto_hero_uno')?.errors?.['required']">
+                        {{'Campo Requerido'|translate}}
+                    </div>
+                    <div *ngIf="formParent.get('texto_hero_uno')?.errors?.['minlength']">
+                        {{'Mínimo 3 Caracteres'|translate}}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="form-group  col-xs-12 col-sm-4">
+            <label for="telefono">{{'Texto hero destacado'|translate}}<span class="required">*</span></label>
+            <div class="input-group">
+
+                <input type="text" formControlName="texto_hero_destacado" class="form-control" id="texto_hero_destacado"
+                    placeholder="texto_hero_destacado">
+                <div *ngIf="formParent.get('texto_hero_destacado')?.touched && formParent.get('texto_hero_destacado')?.invalid"
+                    class="text-danger">
+                    <div *ngIf="formParent.get('texto_hero_destacado')?.errors?.['required']">
+                        {{'Campo Requerido'|translate}}
+                    </div>
+                    <div *ngIf="formParent.get('texto_hero_destacado')?.errors?.['minlength']">
+                        {{'Mínimo 3 Caracteres'|translate}}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="form-group  col-xs-12 col-sm-4">
+            <label for="Local">{{'Texto hero dos'|translate}}<span class="required">*</span></label>
+            <div class="input-group">
+
+                <input type="text" formControlName="texto_hero_dos" class="form-control" id="texto_hero_dos"
+                    placeholder="texto_hero_dos">
+                <div *ngIf="formParent.get('texto_hero_dos')?.touched && formParent.get('texto_hero_dos')?.invalid"
+                    class="text-danger">
+                    <div *ngIf="formParent.get('texto_hero_dos')?.errors?.['required']">
+                        {{'Campo Requerido'|translate}}
+                    </div>
+                    <div *ngIf="formParent.get('texto_hero_dos')?.errors?.['minlength']">
+                        {{'Mínimo 3 Caracteres'|translate}}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="form-group col-xs-12 col-sm-6">
+            <label for="Tienda">{{'Color primario'|translate}} <span class="required">*</span></label>
+            <div class="input-group">
+
+                <input type="color" formControlName="color_primario" class="form-control" id="Tienda"
+                    placeholder="color_primario">
+                <div *ngIf="formParent.get('color_primario')?.touched && formParent.get('color_primario')?.invalid"
+                    class="text-danger">
+                    <div *ngIf="formParent.get('color_primario')?.errors?.['required']">
+                        {{'Campo Requerido'|translate}}
+                    </div>
+                    <div *ngIf="formParent.get('color_primario')?.errors?.['minlength']">
+                        {{'Mínimo 3 Caracteres'|translate}}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="form-group  col-xs-12 col-sm-6">
+            <label for="Local">{{'Color fondo'|translate}} <span class="required">*</span></label>
+            <div class="input-group">
+
+                <input type="color" formControlName="color_fondo" class="form-control" id="color_fondo"
+                    placeholder="color_fondo">
+                <div *ngIf="formParent.get('color_fondo')?.touched && formParent.get('color_fondo')?.invalid"
+                    class="text-danger">
+                    <div *ngIf="formParent.get('color_fondo')?.errors?.['required']">
+                        {{'Campo Requerido'|translate}}
+                    </div>
+                    <div *ngIf="formParent.get('color_fondo')?.errors?.['minlength']">
+                        {{'Mínimo 3 Caracteres'|translate}}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="form-group ">
+        <label class=" col-form-label font-weight-medium" for="text-input">
+            {{'Descripción'|translate}} hero <span class="required">*</span></label>
+        <div class="col-md-12">
+            <textarea formControlName="descripcion_hero" id="descripcion_hero" class="form-control"></textarea>
+            <div *ngIf="formParent.get('descripcion_hero')?.touched && formParent.get('descripcion_hero')?.invalid"
+                class="text-danger">
+                <div *ngIf="formParent.get('descripcion_hero')?.errors?.['required']">
+                    {{'Campo Requerido'|translate}}
+                </div>
+                <div *ngIf="formParent.get('descripcion_hero')?.errors?.['minlength']">
+                    {{'Mínimo 3 Caracteres'|translate}}
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</form>
