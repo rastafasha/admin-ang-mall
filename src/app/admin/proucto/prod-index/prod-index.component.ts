@@ -47,6 +47,9 @@ export class ProdIndexComponent implements OnInit, OnDestroy{
   identity: Usuario;
   user: Usuario;
   productoSeleccionado: Producto;
+  idLocal: string = '';
+
+  public verModalImportar: boolean = false;
 
   public info: string = '';
   private langSubscription!: Subscription;
@@ -63,6 +66,8 @@ export class ProdIndexComponent implements OnInit, OnDestroy{
 
     let USER = localStorage.getItem("user");
     this.user = USER ? JSON.parse(USER) : null;
+
+    this.idLocal = this.user?.local || '';
     // 🟢 1. CARGA INICIAL DE LAS INSTRUCCIONES (Garantiza que la info no empiece vacía)
     this.translate.get('PRODUCTS.TITLE').subscribe(() => {
       this.actualizarInstruccionesPagos();
@@ -263,6 +268,10 @@ export class ProdIndexComponent implements OnInit, OnDestroy{
   openEditModal(): void { this.productoSeleccionado = null; }
   onCloseModal(): void { this.productoSeleccionado = null; }
   onClose() { this.ngOnInit(); }
+
+  openImportarExcel(){
+
+  }
 
 
 

@@ -15,23 +15,24 @@
         <div class="card">
             <div class="card-body">
                 <div class="row">
-                    <div class="col-9">
+                    <div class="col-10">
                         <h4 class="card-title">{{'Productos'|translate}}: ({{ productos.length}})</h4>
                         <h6 class="card-subtitle">{{'Productos registrados en la app'|translate}}</h6>
                     </div>
-                    <div class="col-1">
+                    <div class="col-2 gap-3 d-flex">
                         <div class="text-right">
-                            <button (click)="openEditModal()" class="btn btn-outline-success" data-toggle="tooltip"
-                                data-original-title="Edit" data-bs-toggle="modal" data-bs-target="#editProducto">
+                            <button (click)="openEditModal()" class="btn btn-outline-success" 
+                                title="Crear" data-bs-toggle="modal" data-bs-target="#editProducto">
                                 <i class="fa fa-plus"></i>
                             </button>
-                        </div>
-                    </div>
-                    <div class="col-2">
-                        <div class="text-right">
-                            <button (click)="openEditProductPapelera()" class="btn btn-outline-warning" data-toggle="tooltip"
-                                data-original-title="Edit" data-bs-toggle="modal" data-bs-target="#editProdPapelera">
-                                <i class="fa fa-trash"></i> {{'ver papelera'|translate}}
+                            <button (click)="openEditProductPapelera()" class="btn btn-outline-warning" 
+                                 title="Ver Papelera" data-bs-toggle="modal" data-bs-target="#editProdPapelera">
+                                <i class="fa fa-trash"></i> 
+                            </button>
+
+                            <button class="btn btn-outline-success" (click)="verModalImportar = true" 
+                                title="Carga Masiva Excel">
+                            <i class="fa fa-file-excel me-1"></i> 
                             </button>
                         </div>
                     </div>
@@ -268,3 +269,9 @@
     #editProducto></app-prod-edit>
 <app-papelera (refreshProductList)="ngOnInit()" [productoSeleccionado]="productoSeleccionado" (closeModal)="onClose()"
     #editProdPapelera></app-papelera>
+<app-importar-productos 
+  [isOpen]="verModalImportar" 
+  [localId]="idLocal" 
+  (onClose)="verModalImportar = false"
+  (onRefreshProducts)="ngOnInit()">
+</app-importar-productos>

@@ -203,6 +203,7 @@ export class ProdEditComponent implements OnInit, OnChanges {
     const marca = this.productoForm.get('marca');
     const local = this.productoForm.get('local');
     const nombre_selector = this.productoForm.get('nombre_selector');
+    const condition = this.productoForm.get('condition');
 
     if (titulo?.invalid || detalle?.invalid ||
       info_short?.invalid || video_review?.invalid ||
@@ -211,7 +212,8 @@ export class ProdEditComponent implements OnInit, OnChanges {
       precio_antes?.invalid || categoria?.invalid ||
       subcategoria?.invalid || isFeatured?.invalid ||
       marca?.invalid || local?.invalid ||
-      nombre_selector?.invalid
+      nombre_selector?.invalid ||
+      condition?.invalid 
 
     ) {
       titulo?.markAsTouched();
@@ -229,6 +231,7 @@ export class ProdEditComponent implements OnInit, OnChanges {
       marca?.markAsTouched();
       local?.markAsTouched();
       nombre_selector?.markAsTouched();
+      condition?.markAsTouched();
       return;
     }
     this.currentStep = 2;
@@ -254,6 +257,7 @@ export class ProdEditComponent implements OnInit, OnChanges {
       isFeatured: [''],
       marca: [''],
       local: [''],
+      condition: ['new', [Validators.required]],
       nombre_selector: ['', Validators.required]
     })
   }

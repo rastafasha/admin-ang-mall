@@ -1,0 +1,36 @@
+.sticky-top {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+/* Badges de alerta suaves */
+.bg-light-danger {
+  background-color: #f8d7da !important;
+  color: #842029 !important;
+}
+
+.bg-light-info {
+  background-color: #e2f0d9 !important;
+  color: #385723 !important;
+}
+
+.dropzone-area {
+  border: 2px dashed #0275d8;
+  background-color: #f8f9fa;
+  padding: 40px 20px;
+  border-radius: 8px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.dropzone-area.dragover {
+  background-color: #e2f0d9;
+  border-color: #5cb85c;
+}
+
+.file-preview-list {
+  max-height: 150px;
+  overflow-y: auto;
+}

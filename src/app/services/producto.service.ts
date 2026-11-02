@@ -91,6 +91,25 @@ export class ProductoService {
   // }
 
 
+  importarExcel(data: any){
+    const url = `${base_url}/productos/importar-excel`;
+    return this.http.post(url, data, this.headers);
+  }
+
+  vincularImagen(data: any){
+    const url = `${base_url}/productos/vincular-imagen`;
+    return this.http.post(url, data, this.headers);
+  }
+
+ descargarPlantilla(): Observable<Blob> {
+    return this.http.post(`${base_url}/productos//descargar-plantilla`, {}, {
+      headers: this.headers.headers,
+      responseType: 'blob' // Obligatorio para manejar archivos binarios desde el backend
+    });
+  }
+
+
+
   getProductosTienda(tienda: any):Observable<any>{
     const url = `${base_url}/productos/producto_by_tiendaId/${tienda}`;
     return this.http.get<any>(url)

@@ -69,6 +69,7 @@ import { TasabcvComponent } from './tasas/tasabcv/tasabcv.component';
 import { TasaeurobcvComponent } from './tasas/tasaeurobcv/tasaeurobcv.component';
 import { CotizacionListComponent } from './cotizacion/cotizacion-list/cotizacion-list.component';
 import { CotizacionEditComponent } from './cotizacion/cotizacion-edit/cotizacion-edit.component';
+import { ImportarProductosComponent } from './proucto/importar-productos/importar-productos.component';
 
 @NgModule({
   declarations: [
@@ -117,7 +118,8 @@ import { CotizacionEditComponent } from './cotizacion/cotizacion-edit/cotizacion
     TasabcvComponent,
     TasaeurobcvComponent,
     CotizacionListComponent,
-    CotizacionEditComponent
+    CotizacionEditComponent,
+    ImportarProductosComponent
 
   ],
   exports: [
@@ -162,7 +164,8 @@ import { CotizacionEditComponent } from './cotizacion/cotizacion-edit/cotizacion
     TasabcvComponent,
     TasaeurobcvComponent,
     CotizacionListComponent,
-    CotizacionEditComponent
+    CotizacionEditComponent,
+    ImportarProductosComponent
 
   ],
 

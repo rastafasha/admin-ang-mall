@@ -252,6 +252,18 @@
                                             </select>
                                         </div>
                                     </div>
+                                    <!-- condition -->
+                                    <div class="col-xs-12 col-sm-6 col-md-3 ">
+                                        <div class="form-group">
+                                            <label for="select-input">{{'Condición?'|translate}}</label>
+                                            <select class="form-control " formControlName="condition"
+                                                name="condition" required>
+                                                <option disabled value="">{{'Seleccionar'|translate}}</option>
+                                                <option value="new">{{'Nuevo'|translate}}</option>
+                                                <option value="used">{{'Usado'|translate}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
                                     <!-- marca -->
                                     <div class="col-xs-12 col-sm-6 col-md-3" *ngIf="user.role === 'SUPERADMIN'">
                                         <label for="text-input">{{'Marca'|translate}} </label>

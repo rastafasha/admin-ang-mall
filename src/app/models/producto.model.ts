@@ -20,6 +20,7 @@ export class Producto{
         public categoria: string,
         public nombre_selector: string,
         public marca: string,
+        public condition: 'new' | 'used',
 
         public mercadolibre?: MeliProductoSyncStatus,
         
