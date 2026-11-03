@@ -34,6 +34,38 @@
 <div *ngIf="whatsappStatus === 'CONECTADO'" class="alert alert-success text-center p-4 m-3 shadow-sm">
   <h4 class="alert-heading fw-bold">¡{{'Línea vinculada con éxito'|translate}}! 🎉</h4>
   <p class="mb-0">{{'El bot de WhatsApp para este restaurante está activo. Los recordatorios automáticos de reservas se enviarán de forma autónoma'|translate}}.</p>
+
+  <!-- 🚀 EL NUEVO SWITCH DE CONTROL MULTI-TENANT -->
+  <div class="card shadow-sm border-0 mb-4">
+    <div class="card-body p-4">
+      <div class="d-flex align-items-center justify-content-between p-3 border rounded bg-light">
+        <div>
+          <h6 class="mb-1 font-weight-bold text-dark">Asistente Virtual Automático (Bot)</h6>
+          <p class="text-muted small mb-0">
+            Responde de manera inteligente buscando platos en Mongoose y enviando links directos a tu subdominio:
+            <span class="text-primary font-weight-bold">https://{{ localSlug }}.zlipmenu.com</span>
+          </p>
+        </div>
+        
+        <!-- Switch Nativo compatible con Bootstrap -->
+        <div class="custom-control custom-switch custom-switch-md">
+          <input 
+            type="checkbox" 
+            class="custom-control-input" 
+            id="pageBotSwitch"
+            [(ngModel)]="botActivo"
+            [disabled]="guardandoBot"
+            (change)="toggleBotEstado()">
+          <label class="custom-control-label current-pointer" for="pageBotSwitch"></label>
+        </div>
+      </div>
+      
+      <!-- Micro-spinner de carga asíncrona -->
+      <div *ngIf="guardandoBot" class="text-muted small mt-2 text-right animate__animated animate__fadeIn">
+        <i class="fas fa-spin fa-spinner text-success"></i> Guardando configuraciones en Mongoose...
+      </div>
+    </div>
+  </div>
 </div>
 
 <app-modal-instrucciones [info]="info" [sectionId]="'conectarWhatsapp'" #instruccionesModal></app-modal-instrucciones>

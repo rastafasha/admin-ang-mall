@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { Pedido } from 'src/app/models/pedido.model';
 import { SafePipe } from 'src/app/pipes/safe.pipe';
 import { PedidomenuService } from 'src/app/services/pedidomenu.service';
+import { WhatsappService } from 'src/app/services/whatsapp.service';
 import Swal from 'sweetalert2';
 
 declare var $: any;
@@ -28,11 +29,12 @@ export class PedidosMenuComponent implements OnInit, OnDestroy {
   option_selectedd: number = 1;
   solicitud_selectedd: any = 1;
   public info: string = '';
-      private langSubscription!: Subscription;
+  private langSubscription!: Subscription;
 
   constructor(
     private pedidosMenuService: PedidomenuService,
     private translate: TranslateService,
+    private whatsappService: WhatsappService,
   ) { }
 
   ngOnInit(): void {
@@ -52,16 +54,16 @@ export class PedidosMenuComponent implements OnInit, OnDestroy {
       this.actualizarInstruccionesPagos();
     });
 
-     setTimeout(()=>{
+    setTimeout(() => {
       if (this.role === 'SUPERADMIN') {
-      this.getPedidos();
-    }
-    if (this.role === 'ADMIN') {
-      this.pedidosPorLocalId()
-    }
-    },1000)
-    
-   
+        this.getPedidos();
+      }
+      if (this.role === 'ADMIN') {
+        this.pedidosPorLocalId()
+      }
+    }, 1000)
+
+
   }
 
   private actualizarInstruccionesPagos() {
@@ -86,7 +88,7 @@ export class PedidosMenuComponent implements OnInit, OnDestroy {
   `;
   }
 
-   ngOnDestroy(): void {
+  ngOnDestroy(): void {
     if (this.langSubscription) {
       this.langSubscription.unsubscribe();
     }
@@ -137,26 +139,62 @@ export class PedidosMenuComponent implements OnInit, OnDestroy {
     this.cargando = true;
     this.pedidosMenuService.activar(id).subscribe(
       response => {
+        // Opcional: Podrías mandar un WhatsApp diciendo "Tu pedido empezó a prepararse"
         this.ngOnInit()
       }
     )
   }
+  /**
+   * PEDIDO LISTO PARA RETIRAR (Equivale a tu lógica de desactivar/pausar de la cola de cocina)
+   */
   desactivar(id) {
-    console.log(id)
+    console.log(id);
     this.cargando = true;
+
+    // 1. Buscamos el pedido en el array para obtener el teléfono y el número identificador
+    const pedidoActivo = this.pedidos.find(p => p._id === id);
+
     this.pedidosMenuService.desactivar(id).subscribe(
       response => {
-        this.ngOnInit()
+        if (pedidoActivo && pedidoActivo.user.telefono) {
+          // 2. Disparamos la plantilla "LISTO" enviando las propiedades requeridas
+          this.whatsappService.notificarCambioEstadoPedido(
+            this.local,
+            pedidoActivo.user.telefono,
+            'LISTO',
+            pedidoActivo.nroPedido || id.substring(0, 5) // Fallback si no maneja número correlativo largo
+          ).subscribe({
+            next: () => console.log(`🔔 Cliente notificado: Listo para retirar.`),
+            error: (err) => console.error(`❌ Error en notificación WA:`, err)
+          });
+        }
+        this.ngOnInit();
       }
-    )
+    );
   }
   finalizar(id) {
     this.cargando = true;
+
+    // 1. Buscamos el pedido en memoria antes de que se limpie la tabla
+    const pedidoActivo = this.pedidos.find(p => p._id === id);
+
     this.pedidosMenuService.finalizado(id).subscribe(
       response => {
-        this.ngOnInit()
+        if (pedidoActivo && pedidoActivo.user.telefono) {
+          // 2. Disparamos la plantilla "DESPACHADO" (Va en camino por delivery)
+          this.whatsappService.notificarCambioEstadoPedido(
+            this.local,
+            pedidoActivo.user.telefono,
+            'DESPACHADO',
+            pedidoActivo.nroPedido || id.substring(0, 5)
+          ).subscribe({
+            next: () => console.log(`🔔 Cliente notificado: Pedido en camino.`),
+            error: (err) => console.error(`❌ Error en notificación WA:`, err)
+          });
+        }
+        this.ngOnInit();
       }
-    )
+    );
   }
 
   eliminarPedido(pedido) {

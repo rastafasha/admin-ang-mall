@@ -3,29 +3,36 @@ import { TiendaService } from 'src/app/services/tienda.service';
 import * as QRCode from 'qrcode';
 import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
+import { WhatsappService } from 'src/app/services/whatsapp.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-conectar-whatsapp',
-  standalone:false,
+  standalone: false,
   templateUrl: './conectar-whatsapp.component.html',
   styleUrl: './conectar-whatsapp.component.css'
 })
-export class ConectarWhatsappComponent implements OnInit, OnDestroy{
-  user:any;
-  public whatsappStatus: string = 'DESCONECTADO'; 
+export class ConectarWhatsappComponent implements OnInit, OnDestroy {
+  user: any;
+  public whatsappStatus: string = 'DESCONECTADO';
   public whatsappQRString: string = '';
-  private chequeoInterval: any; 
+  private chequeoInterval: any;
   public info: string = '';
-    private langSubscription!: Subscription;
+  private langSubscription!: Subscription;
+
+  public botActivo: boolean = true;
+  public guardandoBot: boolean = false;
+  public localSlug: string = '';
 
   public tiendaService = inject(TiendaService);
   public translate = inject(TranslateService);
+  public whatsappService = inject(WhatsappService);
 
   ngOnInit(): void {
     window.scrollTo(0, 0);
     let USER = localStorage.getItem("user");
     this.user = USER ? JSON.parse(USER) : null;
-     // 🟢 1. CARGA INICIAL DE LAS INSTRUCCIONES (Garantiza que la info no empiece vacía)
+    // 🟢 1. CARGA INICIAL DE LAS INSTRUCCIONES (Garantiza que la info no empiece vacía)
     this.translate.get('CONNECT_TO_WHATSAPP.TITLE').subscribe(() => {
       this.actualizarInstruccionesPagos();
     });
@@ -39,7 +46,7 @@ export class ConectarWhatsappComponent implements OnInit, OnDestroy{
       this.revisarEstadoActual();
     }
 
-    
+
   }
 
   private actualizarInstruccionesPagos() {
@@ -64,7 +71,7 @@ export class ConectarWhatsappComponent implements OnInit, OnDestroy{
   `;
   }
 
-  
+
 
   revisarEstadoActual() {
     this.tiendaService.statusWhatsapp(this.user.local).subscribe((resp: any) => {
@@ -79,16 +86,16 @@ export class ConectarWhatsappComponent implements OnInit, OnDestroy{
   }
 
   conexionWhatsapp() {
-    this.whatsappStatus = 'CARGANDO'; 
+    this.whatsappStatus = 'CARGANDO';
 
     // Ajustado: Empaquetamos el id dentro de un objeto para cumplir con el tipo (Tienda) que espera tu servicio
     const objetoTienda = { _id: this.user.local };
 
     this.tiendaService.conectarWhatsapp(this.user.local).subscribe({
       next: (resp: any) => {
-        this.whatsappStatus = resp.whatsappStatus; 
-        this.whatsappQRString = resp.whatsappQR;   
-        
+        this.whatsappStatus = resp.whatsappStatus;
+        this.whatsappQRString = resp.whatsappQR;
+
         if (this.whatsappStatus === 'ESPERANDO_QR') {
           this.iniciarChequeoAutomatico();
         }
@@ -107,13 +114,13 @@ export class ConectarWhatsappComponent implements OnInit, OnDestroy{
     this.chequeoInterval = setInterval(() => {
       this.tiendaService.statusWhatsapp(localId).subscribe((resp: any) => {
         this.whatsappStatus = resp.whatsappStatus;
-        
+
         // 💥 SI LLEGA EL QR, FORZAMOS EL DIBUJO EN EL CANVAS DEL HTML
         if (this.whatsappStatus === 'ESPERANDO_QR' && resp.whatsappQR) {
           this.whatsappQRString = resp.whatsappQR;
           this.dibujarCodigoQR();
         }
-        
+
         if (this.whatsappStatus === 'CONECTADO') {
           this.whatsappQRString = '';
           clearInterval(this.chequeoInterval);
@@ -122,7 +129,7 @@ export class ConectarWhatsappComponent implements OnInit, OnDestroy{
       });
     }, 5000);
   }
-   dibujarCodigoQR() {
+  dibujarCodigoQR() {
     // Le damos un milisegundo de retraso para asegurar que Angular ya renderizó el elemento <canvas> en el DOM
     setTimeout(() => {
       const canvas = document.getElementById('canvas-qr') as HTMLCanvasElement;
@@ -134,17 +141,46 @@ export class ConectarWhatsappComponent implements OnInit, OnDestroy{
     }, 100);
   }
 
-  
-   ngOnDestroy(): void {
+  /**
+   * 🚨 NUEVA ACCIÓN: Modifica el flag 'botActivo' en MongoDB en caliente
+   */
+  toggleBotEstado() {
+    this.guardandoBot = true;
+    const localId = typeof this.user.local === 'string' ? this.user.local : this.user.local?._id;
 
-     if (this.chequeoInterval) clearInterval(this.chequeoInterval);
+    this.whatsappService.toggleBotStatus(localId, this.botActivo).subscribe({
+      next: (resp: any) => {
+        this.guardandoBot = false;
+        this.botActivo = resp.botActivo;
+
+        Swal.fire({
+          toast: true,
+          position: 'top-end',
+          icon: 'success',
+          title: resp.msg,
+          showConfirmButton: false,
+          timer: 3000
+        });
+      },
+      error: (err) => {
+        this.guardandoBot = false;
+        this.botActivo = !this.botActivo; // Revertir visualmente ante errores
+        console.error('Error modificando botActivo:', err);
+      }
+    });
+  }
+
+
+  ngOnDestroy(): void {
+
+    if (this.chequeoInterval) clearInterval(this.chequeoInterval);
     if (this.langSubscription) {
       this.langSubscription.unsubscribe();
     }
   }
 
   public encodeURIComponent(str: string): string {
-  return encodeURIComponent(str);
-}
+    return encodeURIComponent(str);
+  }
 
 }

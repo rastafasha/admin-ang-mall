@@ -46,7 +46,7 @@ import { FormcomponentsModule } from './tienda/formcomponents/formcomponents.mod
     NotificacionesComponent,
     ReservacionEstadisticasComponent,
     ConectarWhatsappComponent,
-    DriverpEditComponent
+    DriverpEditComponent,
 
   ],
   exports: [
@@ -62,7 +62,7 @@ import { FormcomponentsModule } from './tienda/formcomponents/formcomponents.mod
     NotificacionesComponent,
     ReservacionEstadisticasComponent,
     ConectarWhatsappComponent,
-    DriverpEditComponent
+    DriverpEditComponent,
 
   ],
   imports: [

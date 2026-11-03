@@ -58,101 +58,102 @@ import { CotizacionListComponent } from '../admin/cotizacion/cotizacion-list/cot
 
 
 const childRoutes: Routes = [
-  { path: '', component: DashboardComponent, data:{tituloPage:'Dashboard'} },
-            { path: 'account-settings', component: AccountSettingComponent, data:{tituloPage:'Ajustes de Cuenta'} },
-            { path: 'buscar/:termino', component: BusquedaComponent, data:{tituloPage:'Busquedas'} },
-            { path: 'perfil', component: PerfilComponent, data:{tituloPage:'Perfil'} },
-            { path: 'usuario/:id', component: UsuarioComponent, data:{tituloPage:'Perfil Usuario'} },
+  { path: '', component: DashboardComponent, data: { tituloPage: 'Dashboard' } },
+  { path: 'account-settings', component: AccountSettingComponent, data: { tituloPage: 'Ajustes de Cuenta' } },
+  { path: 'buscar/:termino', component: BusquedaComponent, data: { tituloPage: 'Busquedas' } },
+  { path: 'perfil', component: PerfilComponent, data: { tituloPage: 'Perfil' } },
+  { path: 'usuario/:id', component: UsuarioComponent, data: { tituloPage: 'Perfil Usuario' } },
 
-            //tienda
+  //tienda
 
-            { path: 'blog', component: BlogIndexComponent, data:{tituloPage:'Blog '} },
+  { path: 'blog', component: BlogIndexComponent, data: { tituloPage: 'Blog ' } },
 
-            { path: 'page', component: PageIndexComponent, data:{tituloPage:'Page '} },
-            
-
-            { path: 'slider', component: SliderComponent, data:{tituloPage:'Sliders '} },
-
-            { path: 'curso', component: CursoIndexComponent, data:{tituloPage:'Cursos '} },
-            { path: 'curso/edit/:id', component: CursoEditComponent, data:{tituloPage:'Cursos Edit '} },
-            { path: 'curso/create', component: CursoEditComponent, data:{tituloPage:'Cursos Create '} },
-
-            { path: 'curso/curso-video', component: VideoIndexComponent, data:{tituloPage:'Video '} },
-            { path: 'curso/curso-video/create', component: VideoEditComponent, data:{tituloPage:'Videos Create '} },
-            { path: 'curso/curso-video/edit/:id', component: VideoEditComponent, data:{tituloPage:'Videos Edit '} },
-
-            { path: 'marca', component: MarcaIndexComponent, data:{tituloPage:'Marcas '} },
-
-            { path: 'categoria', component: CatIndexComponent, data:{tituloPage:'Categorias '} },
-
-            { path: 'configuracion', component: ConfigSiteComponent, data:{tituloPage:'Configuracion '} },
-            { path: 'configuracion/edit/:id', component: ConfigSiteComponent, data:{tituloPage:'Configuracion '} },
-            { path: 'configuracion/create', component: ConfigSiteComponent, data:{tituloPage:'Producto'} },
-
-            { path: 'producto', component: ProdIndexComponent, data:{tituloPage:'Producto '} },
-
-            { path: 'cupon', component: CuponComponent, data:{tituloPage:'Cupon'} },
-
-            { path: 'promocion', component: PromocionComponent, data:{tituloPage:'Promocion '} },
-
-            { path: 'postal', component: PostalComponent, data:{tituloPage:'Configurar Delivery'} },
-            { path: 'postal/asignaciones', component: AsignarDeliveryComponent, data:{tituloPage:'Asignar Delivery'} },
-            { path: 'postal/mapa', component: MapaComponent, data:{tituloPage:'Mapa Delivery'} },
-
-            { path: 'contacto', component: ContactoComponent, data:{tituloPage:'Contacto'} },
-            { path: 'contacto/:id', component: ContactodetailsComponent, data:{tituloPage:'Contacto'} },
-
-            {path: 'tikets/modulo', component: AdminTicketComponent, data:{tituloPage:'Ticket'}},
-            {path: 'tikets/modulo/chat/:id', component: AdminChatComponent, data:{tituloPage:'Ticket'}},
-
-            {path: 'cancelacion/modulo', component: IndexCancelacionComponent , data:{tituloPage:'Cancelación'}},
-            {path: 'cancelacion/modulo/detalle/:id', component: DetalleCancelacionComponent , data:{tituloPage:'Cancelación'}},
-
-            {path: 'ventas/modulo', component: AdminVentasComponent , data:{tituloPage:'Ventas'}},
-            {path: 'ventas/modulo/invoice/:id', component: InvoiceComponent , data:{tituloPage:'Ventas'}},
-            {path: 'ventas/modulo/detalle/:id', component: AdminDetalleventasComponent , data:{tituloPage:'Ventas'}},
-
-            {path: 'ingresos', component: IndexIngresoComponent , data:{tituloPage:'Ingresos'}},
-            {path: 'ingresos/registro', component: CreateIngresoComponent , data:{tituloPage:'Ingresos'}},
-            {path: 'ingresos/detalle/:id', component: DetalleIngresoComponent , data:{tituloPage:'Ingresos'}},
-            //tienda
-            {path: 'tienda', component: TiendaListComponent , data:{tituloPage:'Tienda'}},
-            {path: 'tienda/comentariosapp', component: ComentariosappComponent , data:{tituloPage:'Comentarios App'}},
-            {path: 'tienda/pedidos', component: PedidosMenuComponent , data:{tituloPage:'Pedidos'}},
-            {path: 'atencion-local', component: AtencionLocalComponent , data:{tituloPage:'Atención Local'}},
-            {path: 'tienda-user', component: UsuariosTiendaComponent , data:{tituloPage:'Tienda empleado'}},
-            {path: 'tienda-user/registro', component: UsertiendaaddComponent , data:{tituloPage:'Tienda empleado'}},
-            {path: 'tienda-user/edit/:id', component: UsertiendaaddComponent , data:{tituloPage:'Tienda empleado editar'}},
-            {path: 'tienda-user/detalle/:id', component: UserDetailComponent , data:{tituloPage:'Tienda empleado detalle'}},
-            {path: 'tienda-user/edit/:id', component: UsertiendaaddComponent , data:{tituloPage:'Tienda empleado editar'}},
-            {path: 'tienda-user/detalle/:id', component: UserDetailComponent , data:{tituloPage:'Tienda empleado detalle'}},
-            {path: 'reservaciones', component: ReservacionListComponent , data:{tituloPage:'Reservaciones'}},
-            {path: 'carrito', component: CarritoComponent , data:{tituloPage:'Tienda Carrito'}},
-            {path: 'notificaciones', component: NotificacionesComponent , data:{tituloPage:'Notificaciones'}},
-            {path: 'conectarawhatsapp', component: ConectarWhatsappComponent , data:{tituloPage:'Conectar a Whatsapp'}},
-            {path: 'reservaciones', component: ReservacionListComponent , data:{tituloPage:'Reservaciones'}},
-            {path: 'cotizaciones', component: CotizacionListComponent , data:{tituloPage:'Cotizaciones'}},
-            //pagos
-            {path: 'tipos-de-pago', component: TiposdepagoComponent , data:{tituloPage:'Tipos de Pago'}},
-            {path: 'transferencias', component: ListaTrasnferenciasComponent , data:{tituloPage:'Transferencias'}},
-            {path: 'pagoscheque', component: PagosChequeComponent, data:{tituloPage:'Pagos en cheque'}},
-            {path: 'pagosefectivo', component: PagosEfectivoComponent, data:{tituloPage:'Pagos en Efectivo'}},
-        
-            
-            //tasas
-            {path: 'tasadollarbcv', component: TasabcvComponent , data:{tituloPage:'Tasa Dollar Bcv'}},
-            {path: 'tasaeurobcv', component: TasaeurobcvComponent , data:{tituloPage:'Tasa Euro Bcv'}},
-            
-            //mantenimientos
+  { path: 'page', component: PageIndexComponent, data: { tituloPage: 'Page ' } },
 
 
-            //rutas de admin
-            // canActivate: [ AdminGuard ],
-            { path: 'usuarios',  component: UsuariosComponent, data:{tituloPage:'Mantenimiento de Usuarios '} },
+  { path: 'slider', component: SliderComponent, data: { tituloPage: 'Sliders ' } },
+
+  { path: 'curso', component: CursoIndexComponent, data: { tituloPage: 'Cursos ' } },
+  { path: 'curso/edit/:id', component: CursoEditComponent, data: { tituloPage: 'Cursos Edit ' } },
+  { path: 'curso/create', component: CursoEditComponent, data: { tituloPage: 'Cursos Create ' } },
+
+  { path: 'curso/curso-video', component: VideoIndexComponent, data: { tituloPage: 'Video ' } },
+  { path: 'curso/curso-video/create', component: VideoEditComponent, data: { tituloPage: 'Videos Create ' } },
+  { path: 'curso/curso-video/edit/:id', component: VideoEditComponent, data: { tituloPage: 'Videos Edit ' } },
+
+  { path: 'marca', component: MarcaIndexComponent, data: { tituloPage: 'Marcas ' } },
+
+  { path: 'categoria', component: CatIndexComponent, data: { tituloPage: 'Categorias ' } },
+
+  { path: 'configuracion', component: ConfigSiteComponent, data: { tituloPage: 'Configuracion ' } },
+  { path: 'configuracion/edit/:id', component: ConfigSiteComponent, data: { tituloPage: 'Configuracion ' } },
+  { path: 'configuracion/create', component: ConfigSiteComponent, data: { tituloPage: 'Producto' } },
+
+  { path: 'producto', component: ProdIndexComponent, data: { tituloPage: 'Producto ' } },
+
+  { path: 'cupon', component: CuponComponent, data: { tituloPage: 'Cupon' } },
+
+  { path: 'promocion', component: PromocionComponent, data: { tituloPage: 'Promocion ' } },
+
+  { path: 'postal', component: PostalComponent, data: { tituloPage: 'Configurar Delivery' } },
+  { path: 'postal/asignaciones', component: AsignarDeliveryComponent, data: { tituloPage: 'Asignar Delivery' } },
+  { path: 'postal/mapa', component: MapaComponent, data: { tituloPage: 'Mapa Delivery' } },
+
+  { path: 'contacto', component: ContactoComponent, data: { tituloPage: 'Contacto' } },
+  { path: 'contacto/:id', component: ContactodetailsComponent, data: { tituloPage: 'Contacto' } },
+
+  { path: 'tikets/modulo', component: AdminTicketComponent, data: { tituloPage: 'Ticket' } },
+  { path: 'tikets/modulo/chat/:id', component: AdminChatComponent, data: { tituloPage: 'Ticket' } },
+
+  { path: 'cancelacion/modulo', component: IndexCancelacionComponent, data: { tituloPage: 'Cancelación' } },
+  { path: 'cancelacion/modulo/detalle/:id', component: DetalleCancelacionComponent, data: { tituloPage: 'Cancelación' } },
+
+  { path: 'ventas/modulo', component: AdminVentasComponent, data: { tituloPage: 'Ventas' } },
+  { path: 'ventas/modulo/invoice/:id', component: InvoiceComponent, data: { tituloPage: 'Ventas' } },
+  { path: 'ventas/modulo/detalle/:id', component: AdminDetalleventasComponent, data: { tituloPage: 'Ventas' } },
+
+  { path: 'ingresos', component: IndexIngresoComponent, data: { tituloPage: 'Ingresos' } },
+  { path: 'ingresos/registro', component: CreateIngresoComponent, data: { tituloPage: 'Ingresos' } },
+  { path: 'ingresos/detalle/:id', component: DetalleIngresoComponent, data: { tituloPage: 'Ingresos' } },
+  //tienda
+  { path: 'tienda', component: TiendaListComponent, data: { tituloPage: 'Tienda' } },
+  { path: 'tienda/comentariosapp', component: ComentariosappComponent, data: { tituloPage: 'Comentarios App' } },
+  { path: 'tienda/pedidos', component: PedidosMenuComponent, data: { tituloPage: 'Pedidos' } },
+  { path: 'atencion-local', component: AtencionLocalComponent, data: { tituloPage: 'Atención Local' } },
+  { path: 'tienda-user', component: UsuariosTiendaComponent, data: { tituloPage: 'Tienda empleado' } },
+  { path: 'tienda-user/registro', component: UsertiendaaddComponent, data: { tituloPage: 'Tienda empleado' } },
+  { path: 'tienda-user/edit/:id', component: UsertiendaaddComponent, data: { tituloPage: 'Tienda empleado editar' } },
+  { path: 'tienda-user/detalle/:id', component: UserDetailComponent, data: { tituloPage: 'Tienda empleado detalle' } },
+  { path: 'tienda-user/edit/:id', component: UsertiendaaddComponent, data: { tituloPage: 'Tienda empleado editar' } },
+  { path: 'tienda-user/detalle/:id', component: UserDetailComponent, data: { tituloPage: 'Tienda empleado detalle' } },
+  { path: 'reservaciones', component: ReservacionListComponent, data: { tituloPage: 'Reservaciones' } },
+  { path: 'carrito', component: CarritoComponent, data: { tituloPage: 'Tienda Carrito' } },
+  { path: 'notificaciones', component: NotificacionesComponent, data: { tituloPage: 'Notificaciones' } },
+  { path: 'conectarawhatsapp', component: ConectarWhatsappComponent, data: { tituloPage: 'Conectar a Whatsapp' } },
+
+  { path: 'reservaciones', component: ReservacionListComponent, data: { tituloPage: 'Reservaciones' } },
+  { path: 'cotizaciones', component: CotizacionListComponent, data: { tituloPage: 'Cotizaciones' } },
+  //pagos
+  { path: 'tipos-de-pago', component: TiposdepagoComponent, data: { tituloPage: 'Tipos de Pago' } },
+  { path: 'transferencias', component: ListaTrasnferenciasComponent, data: { tituloPage: 'Transferencias' } },
+  { path: 'pagoscheque', component: PagosChequeComponent, data: { tituloPage: 'Pagos en cheque' } },
+  { path: 'pagosefectivo', component: PagosEfectivoComponent, data: { tituloPage: 'Pagos en Efectivo' } },
+
+
+  //tasas
+  { path: 'tasadollarbcv', component: TasabcvComponent, data: { tituloPage: 'Tasa Dollar Bcv' } },
+  { path: 'tasaeurobcv', component: TasaeurobcvComponent, data: { tituloPage: 'Tasa Euro Bcv' } },
+
+  //mantenimientos
+
+
+  //rutas de admin
+  // canActivate: [ AdminGuard ],
+  { path: 'usuarios', component: UsuariosComponent, data: { tituloPage: 'Mantenimiento de Usuarios ' } },
 ]
 
 @NgModule({
-  imports: [ RouterModule.forChild(childRoutes) ],
-    exports: [ RouterModule ]
+  imports: [RouterModule.forChild(childRoutes)],
+  exports: [RouterModule]
 })
 export class ChildRoutesModule { }
