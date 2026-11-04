@@ -182,11 +182,14 @@
                                         </div>
                                     </div>
 
-                                    <span class="text-muted" *ngIf="producto.status == 'Edición'"
-                                        style="font-size: 13px;">{{'Este producto aún se encuentra en edición.'|translate}}</span>
-                                    <span class="text-muted" *ngIf="producto.status == 'Desactivado'"
+                                    <span class="text-info" *ngIf="producto.status == 'Edición'"
                                         style="font-size: 13px;">
-                                        {{'Este producto aún no está disponible en la tienda.'|translate}}
+                                    <i class="fa fa-info-circle" [title]="'Este producto aún se encuentra en edición.'|translate" ></i>    
+                                    </span>
+                                    <span class="text-muted text-warning" *ngIf="producto.status == 'Desactivado'"
+                                        style="font-size: 13px; gap:15px">
+                                        <i class="fa fa-info-circle" [title]="'Este producto aún no está disponible en la tienda.'|translate" ></i>
+                                        
                                     </span>
 
                                 </td>
