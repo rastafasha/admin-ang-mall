@@ -137,6 +137,7 @@ export class ProdEditComponent implements OnInit, OnChanges {
         precio_ahora: producto.precio_ahora,
         precio_antes: producto.precio_antes,
         isFeatured: producto.isFeatured,
+        bajoPedido: producto.bajoPedido,
         marca: producto.marca,
         local: producto.local?._id || producto.local || '', // Por si local viene poblado
         nombre_selector: producto.nombre_selector,
@@ -170,6 +171,7 @@ export class ProdEditComponent implements OnInit, OnChanges {
       categoria: '',
       subcategoria: '',
       isFeatured: false, // Inicializa los booleanos en false
+      bajoPedido: false, // Inicializa los booleanos en false
       marca: '',
       local: this.usuario?.local || '', // Mantenemos el local de tu usuario express
       nombre_selector: 'unico', // Tu valor por defecto estándar
@@ -200,6 +202,7 @@ export class ProdEditComponent implements OnInit, OnChanges {
     const categoria = this.productoForm.get('categoria');
     const subcategoria = this.productoForm.get('subcategoria');
     const isFeatured = this.productoForm.get('isFeatured');
+    const bajoPedido = this.productoForm.get('bajoPedido');
     const marca = this.productoForm.get('marca');
     const local = this.productoForm.get('local');
     const nombre_selector = this.productoForm.get('nombre_selector');
@@ -213,6 +216,7 @@ export class ProdEditComponent implements OnInit, OnChanges {
       subcategoria?.invalid || isFeatured?.invalid ||
       marca?.invalid || local?.invalid ||
       nombre_selector?.invalid ||
+      bajoPedido?.invalid ||
       condition?.invalid 
 
     ) {
@@ -228,6 +232,7 @@ export class ProdEditComponent implements OnInit, OnChanges {
       categoria?.markAsTouched();
       subcategoria?.markAsTouched();
       isFeatured?.markAsTouched();
+      bajoPedido?.markAsTouched();
       marca?.markAsTouched();
       local?.markAsTouched();
       nombre_selector?.markAsTouched();
@@ -255,6 +260,7 @@ export class ProdEditComponent implements OnInit, OnChanges {
       categoria: ['', Validators.required],
       subcategoria: [''],
       isFeatured: [''],
+      bajoPedido: [''],
       marca: [''],
       local: [''],
       condition: ['new', [Validators.required]],

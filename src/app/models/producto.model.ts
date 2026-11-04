@@ -27,6 +27,7 @@ export class Producto{
         public sku?: string,
         public local?: string,
         public isFeatured?: boolean,
+        public bajoPedido?: boolean,
         public img?: string,
         public _id?: string
 

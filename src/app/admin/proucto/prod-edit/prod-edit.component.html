@@ -252,6 +252,18 @@
                                             </select>
                                         </div>
                                     </div>
+                                    <!-- Destacado -->
+                                    <div class="col-xs-12 col-sm-6 col-md-3 ">
+                                        <div class="form-group">
+                                            <label for="select-input">{{'bajo Pedido?'|translate}}</label>
+                                            <select class="form-control " formControlName="bajoPedido"
+                                                name="bajoPedido">
+                                                <option disabled value="">{{'Seleccionar'|translate}}</option>
+                                                <option [value]="true">{{'Activo'|translate}}</option>
+                                                <option [value]="false">{{'Inactivo'|translate}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
                                     <!-- condition -->
                                     <div class="col-xs-12 col-sm-6 col-md-3 ">
                                         <div class="form-group">
