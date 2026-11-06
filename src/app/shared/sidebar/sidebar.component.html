@@ -73,6 +73,8 @@
                                 [routerLinkActiveOptions]="{exact:true}">{{'Marcas'| translate}} </a></li>
                         <li><a routerLink="categoria" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Categorías'| translate}} </a></li>
                         <li><a routerLink="producto" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Productos'| translate}} </a></li>
+                        <!-- *ngIf="usaPedido" -->
+                        <li ><a routerLink="producto/pedidos" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Pedido de Productos'| translate}} </a></li>
                         <li *ngIf="usuario.role ==='SUPERADMIN' "><a routerLink="promocion" routerLinkActive="active"
                                 [routerLinkActiveOptions]="{exact:true}">{{'Promoción'| translate}} </a></li>
                     </ul>

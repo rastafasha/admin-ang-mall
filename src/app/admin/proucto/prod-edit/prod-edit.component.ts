@@ -66,6 +66,8 @@ export class ProdEditComponent implements OnInit, OnChanges {
   public Editor = ClassicEditor;
   public Editor1 = ClassicEditor;
 
+  public isSubmitting: boolean = false;
+
   user: any;
  public typeof = (val: any) => typeof val;
   constructor(
@@ -332,7 +334,7 @@ export class ProdEditComponent implements OnInit, OnChanges {
 
 
   updateProducto() {
-    this.cargando = true;
+    this.isSubmitting = true;
     if (!this.productoForm.valid) {
       //mostramos las alertas de los campos requeridos
       this.productoForm.markAllAsTouched(); // Esto activa las validaciones visuales
@@ -361,7 +363,7 @@ export class ProdEditComponent implements OnInit, OnChanges {
 
       this.productoService.actualizarProducto(data).subscribe(
         resp => {
-          this.cargando = false;
+          this.isSubmitting = false;
           Swal.fire('Actualizado', `${titulo}  actualizado correctamente`, 'success');
           // Close modal programmatically
           const modalElement = document.getElementById('editProducto');
@@ -383,7 +385,7 @@ export class ProdEditComponent implements OnInit, OnChanges {
       }
       this.productoService.crearProducto(data)
         .subscribe((resp: any) => {
-          this.cargando = false;
+          this.isSubmitting = false;
           this.productoSeleccionado = resp.producto;
           Swal.fire('¡Paso 1 completado!', 'Post creado. Ahora sube la imagen.', 'success');
           // Como estmos creando, al finalizar debe ir al paso 2 para subir la imagen

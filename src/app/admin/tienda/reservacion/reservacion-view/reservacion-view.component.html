@@ -7,41 +7,132 @@
                     (click)="onClose()"></button>
             </div>
             <div class="modal-body">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-6">
-                            <p><b>{{'Cliente'|translate}}:</b> {{reservaSeleccionado?.first_name}} {{reservaSeleccionado?.last_name}}</p>
-                            <p><b>Email:</b> {{reservaSeleccionado?.email}}</p>
-                            <p><b>{{'Teléfono'|translate}}:</b> {{reservaSeleccionado?.telefono}}</p>
-                            <p><b>{{'Fecha'|translate}}:</b> {{reservaSeleccionado?.fecha | date:'MMM d, y, h:mm:ss a'}}</p>
-                            <p><b>{{'Hora'|translate}}:</b> {{reservaSeleccionado?.hora }}</p>
-                            <p><b>{{'Personas'|translate}}:</b> {{reservaSeleccionado?.personas}}</p>
-                            <p><b>{{'Creada'|translate}}:</b> {{reservaSeleccionado?.createdAt | date:'MMM d, y, h:mm:ss a'}}</p>
-                            <p><b>{{'Actualizada'|translate}}:</b> {{reservaSeleccionado?.updatedAt | date:'MMM d, y, h:mm:ss a'}}</p>
-                            <p><b>Status:</b>&nbsp;
-                                <span class="badge bg-primary"
-                                    *ngIf="reservaSeleccionado?.status === 'Pendiente'">{{'Pendiente'|translate}}</span>
-                                <span class="badge bg-success"
-                                    *ngIf="reservaSeleccionado?.status === 'Confirmada'">{{'Confirmada'|translate}}</span>
-                                <span class="badge bg-danger"
-                                    *ngIf="reservaSeleccionado?.status === 'Cancelada'">{{'Cancelada'|translate}}</span>
-                                <span class="badge bg-warning"
-                                    *ngIf="reservaSeleccionado?.status === 'Completada'">{{'Completada'|translate}}</span>
-                            </p>
-                            
-                        </div>
-                        <div class="col-xs-12 col-sm-6">
-                            <p><b>{{'Comensal con alergia?'|translate}}:</b>
-                                {{reservaSeleccionado?.comensal_alergia}}
-                            </p>
-                            <p *ngIf="reservaSeleccionado?.comensal_alergia === 'Si'"><b>{{'Comentarios sobre la alergia'|translate}}:</b></p>
-                            <p *ngIf="reservaSeleccionado?.comensal_alergia === 'Si'" [innerHTML]="reservaSeleccionado?.comentarios_alergia"></p>
-                            <p><b>{{'Comentarios'|translate}}:</b></p>
-                            <p [innerHTML]="reservaSeleccionado?.comentarios"></p>
+                <div class="card shadow-sm border-0">
+    <!-- Encabezado de la Tarjeta con Status Destacado -->
+    <div class="card-header bg-light d-flex justify-content-between align-items-center py-3 border-bottom-0">
+        <h5 class="card-title mb-0 text-secondary fw-semibold">
+            <i class="fas fa-receipt me-2 text-primary"></i>{{ 'Detalles de la Reserva' | translate }}
+        </h5>
+        <div>
+            <span class="badge bg-primary px-3 py-2 fs-6 rounded-pill" *ngIf="reservaSeleccionado?.status === 'Pendiente'">{{'Pendiente'|translate}}</span>
+            <span class="badge bg-success px-3 py-2 fs-6 rounded-pill" *ngIf="reservaSeleccionado?.status === 'Confirmada'">{{'Confirmada'|translate}}</span>
+            <span class="badge bg-danger px-3 py-2 fs-6 rounded-pill" *ngIf="reservaSeleccionado?.status === 'Cancelada'">{{'Cancelada'|translate}}</span>
+            <span class="badge bg-warning text-dark px-3 py-2 fs-6 rounded-pill" *ngIf="reservaSeleccionado?.status === 'Completada'">{{'Completada'|translate}}</span>
+        </div>
+    </div>
+
+    <!-- Cuerpo de la Ficha -->
+    <div class="card-body p-4">
+        <div class="row g-4">
+            
+            <!-- Columna Izquierda: Datos del Cliente y Tiempos -->
+            <div class="col-12 col-md-6 border-end-md">
+                <h6 class="text-uppercase text-muted tracking-wider small mb-3 fw-bold">{{ 'Información del Cliente' | translate }}</h6>
+                
+                <div class="d-flex align-items-center mb-3">
+                    <div class="bg-primary bg-opacity-10 text-primary rounded p-2 me-3">
+                        <i class="fas fa-user fa-fw"></i>
+                    </div>
+                    <div>
+                        <small class="text-muted d-block small-label">{{ 'Cliente' | translate }}</small>
+                        <span class="fw-semibold text-dark">{{reservaSeleccionado?.first_name}} {{reservaSeleccionado?.last_name}}</span>
+                    </div>
+                </div>
+
+                <div class="d-flex align-items-center mb-3">
+                    <div class="bg-secondary bg-opacity-10 text-secondary rounded p-2 me-3">
+                        <i class="fas fa-envelope fa-fw"></i>
+                    </div>
+                    <div>
+                        <small class="text-muted d-block small-label">Email</small>
+                        <span class="text-dark">{{reservaSeleccionado?.email}}</span>
+                    </div>
+                </div>
+
+                <div class="d-flex align-items-center mb-4">
+                    <div class="bg-secondary bg-opacity-10 text-secondary rounded p-2 me-3">
+                        <i class="fas fa-phone fa-fw"></i>
+                    </div>
+                    <div>
+                        <small class="text-muted d-block small-label">{{ 'Teléfono' | translate }}</small>
+                        <span class="text-dark">{{reservaSeleccionado?.telefono}}</span>
+                    </div>
+                </div>
+
+                <hr class="text-muted my-3 opacity-25">
+
+                <!-- Auditoría de fechas del sistema -->
+                <div class="row g-2 text-muted (small)" style="font-size: 0.85rem;">
+                    <div class="col-6">
+                        <span class="d-block"><b>{{ 'Creada' | translate }}:</b></span>
+                        <span>{{reservaSeleccionado?.createdAt | date:'MMM d, y, h:mm a'}}</span>
+                    </div>
+                    <div class="col-6">
+                        <span class="d-block"><b>{{ 'Actualizada' | translate }}:</b></span>
+                        <span>{{reservaSeleccionado?.updatedAt | date:'MMM d, y, h:mm a'}}</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Columna Derecha: Datos de la Mesa y Comentarios -->
+            <div class="col-12 col-md-6">
+                <h6 class="text-uppercase text-muted tracking-wider small mb-3 fw-bold">{{ 'Datos de la Reserva' | translate }}</h6>
+                
+                <!-- Grid de Datos Clave (Fecha, Hora, Pax) -->
+                <div class="row row-cols-3 g-2 mb-4 text-center">
+                    <div class="col">
+                        <div class="bg-light rounded p-2 h-100">
+                            <i class="far fa-calendar text-primary mb-1"></i>
+                            <small class="text-muted d-block" style="font-size: 0.75rem;">{{ 'Fecha' | translate }}</small>
+                            <span class="fw-bold text-dark d-block small">{{reservaSeleccionado?.fecha | date:'mediumDate'}}</span>
                         </div>
                     </div>
-
+                    <div class="col">
+                        <div class="bg-light rounded p-2 h-100">
+                            <i class="far fa-clock text-primary mb-1"></i>
+                            <small class="text-muted d-block" style="font-size: 0.75rem;">{{ 'Hora' | translate }}</small>
+                            <span class="fw-bold text-dark d-block small">{{reservaSeleccionado?.hora}}</span>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="bg-light rounded p-2 h-100">
+                            <i class="fas fa-users text-primary mb-1"></i>
+                            <small class="text-muted d-block" style="font-size: 0.75rem;">{{ 'Personas' | translate }}</small>
+                            <span class="fw-bold text-dark d-block fs-6">{{reservaSeleccionado?.personas}}</span>
+                        </div>
+                    </div>
                 </div>
+
+                <!-- Bloque Crítico de Alergias -->
+                <div class="mb-3 p-3 rounded" 
+                     [ngClass]="reservaSeleccionado?.comensal_alergia === 'Si' ? 'bg-danger bg-opacity-10 border border-danger border-opacity-25' : 'bg-light'">
+                    <div class="d-flex align-items-center mb-1">
+                        <i class="fas" 
+                           [ngClass]="reservaSeleccionado?.comensal_alergia === 'Si' ? 'fa-exclamation-triangle text-danger me-2' : 'fa-check-circle text-success me-2'"></i>
+                        <span class="fw-semibold text-dark">{{ 'Comensal con alergia?' | translate }}:</span>
+                        <span class="ms-2 badge" [ngClass]="reservaSeleccionado?.comensal_alergia === 'Si' ? 'bg-danger' : 'bg-secondary'">
+                            {{reservaSeleccionado?.comensal_alergia}}
+                        </span>
+                    </div>
+                    <div *ngIf="reservaSeleccionado?.comensal_alergia === 'Si'" class="mt-2 text-danger small p-2 bg-white rounded border">
+                        <strong class="d-block mb-1 text-uppercase font-monospace" style="font-size: 0.75rem;">{{ 'Comentarios sobre la alergia' | translate }}:</strong>
+                        <div [innerHTML]="reservaSeleccionado?.comentarios_alergia"></div>
+                    </div>
+                </div>
+
+                <!-- Comentarios Generales -->
+                <div class="p-3 bg-light rounded" *ngIf="reservaSeleccionado?.comentarios">
+                    <small class="text-muted fw-bold d-block mb-1 text-uppercase font-monospace" style="font-size: 0.75rem;">
+                        <i class="far fa-comment-alt me-1"></i>{{ 'Comentarios' | translate }}
+                    </small>
+                    <div class="text-dark small" [innerHTML]="reservaSeleccionado?.comentarios"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"

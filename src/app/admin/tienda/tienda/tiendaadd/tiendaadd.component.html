@@ -306,6 +306,26 @@
                                         </div>
                                     </div>
                                     <div class="form-group col-xs-12 col-sm-3  " *ngIf="user.role === 'SUPERADMIN'">
+                                        <label for="text-input">{{'Delivery?'|translate}} <span
+                                                class="required">*</span></label>
+                                        <div class="input-group">
+                                            <select class="form-control" formControlName="usaPedido">
+                                                <option disabled value="">{{'Seleccione'|translate}}</option>
+                                                <option [value]="true">{{'Si'|translate}}</option>
+                                                <option [value]="false">{{'No'|translate}}</option>
+                                            </select>
+                                        </div>
+                                        <div *ngIf="tiendaForm.get('usaPedido')?.touched && tiendaForm.get('usaPedido')?.invalid"
+                                            class="text-danger">
+                                            <div *ngIf="tiendaForm.get('usaPedido')?.errors?.['required']">
+                                                {{'Campo Requerido'|translate}}
+                                            </div>
+                                            <div *ngIf="tiendaForm.get('usaPedido')?.errors?.['minlength']">
+                                                {{'Por Favor Seleccione'|translate}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-xs-12 col-sm-3  " *ngIf="user.role === 'SUPERADMIN'">
                                         <label for="text-input">{{'Reservaciones?'|translate}} <span
                                                 class="required">*</span></label>
                                         <div class="input-group">

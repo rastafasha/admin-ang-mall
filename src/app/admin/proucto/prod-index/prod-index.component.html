@@ -94,12 +94,12 @@
 
                                     
 
-                                    
-                                    <button type="button" class="btn btn-accent"
+                                    <div class="d-flex gap-2">
+                                        <button type="button" class="btn btn-success"
                                         *ngIf="producto.status == 'Edición' || producto.status == 'Desactivado'"
-                                        data-bs-toggle="modal" [attr.data-bs-target]="'#activar-'+producto._id">
+                                        data-bs-toggle="modal" [attr.data-bs-target]="'#activar-'+producto._id" [title]="'Activar'|translate">
                                         <span class="czi-check"></span> 
-                                        {{'Activar'|translate}}
+                                        
                                     </button>
                                     <!-- modal activar -->
                                     
@@ -108,7 +108,7 @@
                                         <div class="modal-dialog modal-dialog-centered" >
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h4 class="modal-title">{{'Confirmación'|translate}}</h4>
+                                                    <h4 class="modal-title">{{'Activar'|translate}}</h4>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
@@ -120,15 +120,15 @@
                                                     <button class="btn btn-secondary btn-sm" type="button"
                                                         data-bs-dismiss="modal">{{'Cerrar'|translate}}</button>
                                                     <button class="btn btn-primary btn-shadow btn-sm" type="button"
-                                                        (click)="activar(producto._id)">{{'Aceptar'|translate}}</button>
+                                                        (click)="activar(producto._id)">{{'Activar'|translate}}</button>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                    
                                     <button type="button" class="btn btn-primary" *ngIf="producto.status == 'Activo'"
-                                        data-bs-toggle="modal" [attr.data-bs-target]="'#desactivar-'+producto._id"><span
-                                            class="czi-close"></span> {{'Desactivar'|translate}}
+                                        data-bs-toggle="modal" [attr.data-bs-target]="'#desactivar-'+producto._id" [title]="'Desactivar' |translate">
+                                        <span class="czi-close"></span> 
                                         </button>
                                         <!-- modal desactivar -->
                                     <div class="modal fade" [attr.id]="'desactivar-'+producto._id" tabindex="-1"
@@ -136,7 +136,7 @@
                                         <div class="modal-dialog modal-dialog-centered" >
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h4 class="modal-title">{{'Confirmación'|translate}}</h4>
+                                                    <h4 class="modal-title">{{'Desactivar'|translate}}</h4>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
@@ -148,15 +148,15 @@
                                                     <button class="btn btn-secondary btn-sm" type="button"
                                                         data-bs-dismiss="modal">{{'Cerrar'| translate}}</button>
                                                     <button class="btn btn-primary btn-shadow btn-sm" type="button"
-                                                        (click)="desactivar(producto._id)">{{'Aceptar'|translate}}</button>
+                                                        (click)="desactivar(producto._id)">{{'Desactivar'|translate}}</button>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
 
                                     <button type="button" class="btn btn-secondary" data-bs-toggle="modal"
-                                        [attr.data-bs-target]="'#papelera-'+producto._id">
-                                        <span class="czi-remove-folder"></span> {{'Papelera'|translate}}
+                                        [attr.data-bs-target]="'#papelera-'+producto._id" [title]="'Enviar a Papelera' | translate">
+                                        <span class="czi-remove-folder"></span> 
                                     </button>
 
                                     <div class="modal fade" [attr.id]="'papelera-'+producto._id" tabindex="-1"
@@ -164,7 +164,7 @@
                                         <div class="modal-dialog modal-dialog-centered" >
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h4 class="modal-title">{{'Confirmación'|translate}}</h4>
+                                                    <h4 class="modal-title">{{'Enviar a Papelera'|translate}}</h4>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
@@ -176,11 +176,13 @@
                                                     <button class="btn btn-secondary btn-sm" type="button"
                                                         data-bs-dismiss="modal">{{'Cerrar'| translate}}</button>
                                                     <button class="btn btn-primary btn-shadow btn-sm" type="button"
-                                                        (click)="papelera(producto._id)">{{'Aceptar'|translate}}</button>
+                                                        (click)="papelera(producto._id)">{{'Papelera'|translate}}</button>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+                                    </div>
+                                    
 
                                     <span class="text-info" *ngIf="producto.status == 'Edición'"
                                         style="font-size: 13px;">

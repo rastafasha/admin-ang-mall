@@ -1,24 +1,29 @@
 <div class="clear"></div>
+<div style="display: flex; gap:20px">
+    <div class="">
+        <app-backbutton></app-backbutton>
+    </div>
+    <div class="">
+        <a href="javascript:;" (click)="PageSize()" class="btn btn-primary ">
+            <i class="fas fa-sync"></i></a>
+    </div>
+</div>
 <app-skeleton-loader *ngIf="isLoading" [rows]="1" [columns]="5"></app-skeleton-loader>
 <app-skeleton-loader *ngIf="isLoading" [rows]="1" [columns]="6"></app-skeleton-loader>
+<div class="clear"></div>
 
-
-<div class="container" *ngIf="!isLoading">
+<div class="container-fluid" *ngIf="!isLoading">
     <div class="row">
-        <div class="col-lg-12" *ngIf="msm_error">
+        <!-- <div class="col-lg-12" *ngIf="msm_error">
             <div class="alert alert-primary alert-danger fade show" role="alert">
                 <span class="font-weight-medium">Mensaje:</span> {{msm_error}}
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close" (click)="close_alert()">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-        </div>
+        </div> -->
         <!-- ventasFiltradas -->
-        <div class=" mb-3">
-            <app-backbutton></app-backbutton> &nbsp;
-            <a href="javascript:;" (click)="PageSize()" class="btn btn-primary ">
-                <i class="fas fa-sync"></i></a>
-        </div>
+
         <div class="col-12  card">
             <div class="table-responsive table-sm">
                 <table class="table table-sm">
@@ -35,14 +40,17 @@
                             <th>OP</th>
                         </tr>
                     </thead>
-                    <tbody *ngFor="let pedido of pedidos |verified |  paginate: { itemsPerPage: countp, currentPage: pp }">
+                    <tbody
+                        *ngFor="let pedido of pedidos |verified |  paginate: { itemsPerPage: countp, currentPage: pp }">
                         <tr>
                             <td style="font-size: 13px;">{{pedido._id | slice:0:15}}...</td>
                             <td style="font-size: 13px;">
 
                                 <div class="font-size-sm mb-4">
-                                    <span class="badge badge-danger badge-shadow" *ngIf="pedido.verificado === false">{{pedido.verificado }}</span>
-                                    <span class="badge badge-success badge-shadow" *ngIf="pedido.verificado === true">{{pedido.verificado}}</span>
+                                    <span class="badge badge-danger badge-shadow"
+                                        *ngIf="pedido.verificado === false">{{pedido.verificado }}</span>
+                                    <span class="badge badge-success badge-shadow"
+                                        *ngIf="pedido.verificado === true">{{pedido.verificado}}</span>
 
                                 </div>
                             </td>
@@ -56,8 +64,8 @@
 
                                 </div>
                             </td>
-                            
-                            
+
+
                             <td style="font-size: 13px;">{{pedido.user.first_name}} {{pedido.user.last_name}}</td>
                             <td style="font-size: 13px;">
 
@@ -71,8 +79,9 @@
                             </td>
                             <td style="font-size: 13px;">{{pedido.user.first_name}} {{pedido.user.last_name}}</td>
                             <td style="font-size: 13px;">{{pedido.user.telefono}}</td>
-                            <td  style="font-size: 13px;">
-                                <span *ngIf="pedido.delivery === 'false' || pedido.delivery === 'true' && pedido.direccion === null ">
+                            <td style="font-size: 13px;">
+                                <span
+                                    *ngIf="pedido.delivery === 'false' || pedido.delivery === 'true' && pedido.direccion === null ">
                                     {{ 'Sin dirección / Retiro en tienda' |translate }}
                                 </span>
                                 <span *ngIf="pedido.delivery === 'true' && pedido.direccion !== null ">
@@ -179,5 +188,5 @@
 
 <!-- modal -->
 <app-modal-asignar (reloadList)="ngOnInit()" [drivers]="drivers" [ventaSelected]="ventaSelected"
-    (closeModal)="onClose()" (asignar)="asignarDeliveryconDriver($event)"  #asignarDelivery></app-modal-asignar>
+    (closeModal)="onClose()" (asignar)="asignarDeliveryconDriver($event)" #asignarDelivery></app-modal-asignar>
 <!-- modal -->

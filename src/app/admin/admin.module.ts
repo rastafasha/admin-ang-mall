@@ -16,11 +16,6 @@ import { MarcaIndexComponent } from './marca/marca-index/marca-index.component';
 import { MarcaEditComponent } from './marca/marca-edit/marca-edit.component';
 import { CatIndexComponent } from './categoria/cat-index/cat-index.component';
 import { CatEditComponent } from './categoria/cat-edit/cat-edit.component';
-import { ProdIndexComponent } from './proucto/prod-index/prod-index.component';
-import { ProdEditComponent } from './proucto/prod-edit/prod-edit.component';
-import { ColorComponent } from './proucto/color/color.component';
-import { SelectorComponent } from './proucto/selector/selector.component';
-import { PapeleraComponent } from './proucto/papelera/papelera.component';
 import { ConfigSiteComponent } from './config-site/config-site.component';
 import { PromocionComponent } from './promocion/promocion.component';
 import { CuponComponent } from './cupon/cupon.component';
@@ -32,7 +27,6 @@ import { AdminVentasComponent } from './ventas/admin-ventas/admin-ventas.compone
 import { CreateIngresoComponent } from './ingreso/create-ingreso/create-ingreso.component';
 import { DetalleIngresoComponent } from './ingreso/detalle-ingreso/detalle-ingreso.component';
 import { IndexIngresoComponent } from './ingreso/index-ingreso/index-ingreso.component';
-import { GaleriaProductoComponent } from './proucto/galeria-producto/galeria-producto.component';
 import { AdminChatComponent } from './ticket/admin-chat/admin-chat.component';
 import { AdminTicketComponent } from './ticket/admin-ticket/admin-ticket.component';
 import { DetalleCancelacionComponent } from './cancelacion/detalle-cancelacion/detalle-cancelacion.component';
@@ -69,7 +63,7 @@ import { TasabcvComponent } from './tasas/tasabcv/tasabcv.component';
 import { TasaeurobcvComponent } from './tasas/tasaeurobcv/tasaeurobcv.component';
 import { CotizacionListComponent } from './cotizacion/cotizacion-list/cotizacion-list.component';
 import { CotizacionEditComponent } from './cotizacion/cotizacion-edit/cotizacion-edit.component';
-import { ImportarProductosComponent } from './proucto/importar-productos/importar-productos.component';
+import { ProuctoModule } from './proucto/proucto.module';
 
 @NgModule({
   declarations: [
@@ -77,11 +71,7 @@ import { ImportarProductosComponent } from './proucto/importar-productos/importa
     MarcaEditComponent,
     CatIndexComponent,
     CatEditComponent,
-    ProdIndexComponent,
-    ProdEditComponent,
-    ColorComponent,
-    SelectorComponent,
-    PapeleraComponent,
+    
     ConfigSiteComponent,
     PromocionComponent,
     CuponComponent,
@@ -95,7 +85,6 @@ import { ImportarProductosComponent } from './proucto/importar-productos/importa
     DetalleIngresoComponent,
     AdminTicketComponent,
     AdminChatComponent,
-    GaleriaProductoComponent,
     IndexCancelacionComponent,
     DetalleCancelacionComponent,
     BlogIndexComponent,
@@ -119,7 +108,7 @@ import { ImportarProductosComponent } from './proucto/importar-productos/importa
     TasaeurobcvComponent,
     CotizacionListComponent,
     CotizacionEditComponent,
-    ImportarProductosComponent
+    
 
   ],
   exports: [
@@ -127,11 +116,6 @@ import { ImportarProductosComponent } from './proucto/importar-productos/importa
     MarcaEditComponent,
     CatIndexComponent,
     CatEditComponent,
-    ProdIndexComponent,
-    ProdEditComponent,
-    ColorComponent,
-    SelectorComponent,
-    PapeleraComponent,
     ConfigSiteComponent,
     PromocionComponent,
     CuponComponent,
@@ -145,7 +129,6 @@ import { ImportarProductosComponent } from './proucto/importar-productos/importa
     DetalleIngresoComponent,
     AdminTicketComponent,
     AdminChatComponent,
-    GaleriaProductoComponent,
     IndexCancelacionComponent,
     DetalleCancelacionComponent,
     BlogIndexComponent,
@@ -165,11 +148,8 @@ import { ImportarProductosComponent } from './proucto/importar-productos/importa
     TasaeurobcvComponent,
     CotizacionListComponent,
     CotizacionEditComponent,
-    ImportarProductosComponent
 
   ],
-
-
 
   imports: [
     CommonModule,
@@ -187,6 +167,7 @@ import { ImportarProductosComponent } from './proucto/importar-productos/importa
     ComponentsModule,
     TranslateModule,
     PostalcompModule,
+    ProuctoModule,
 ],
   providers:[
     IconosService,

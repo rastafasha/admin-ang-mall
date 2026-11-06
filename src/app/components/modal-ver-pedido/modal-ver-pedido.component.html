@@ -4,107 +4,127 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">{{'Pedido'|translate}}: {{item._id}}</h4>
-
-
-                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"><span
-                        aria-hidden="true">×</span></button>
+                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
             </div>
             <div class="modal-body">
-                <div class="topepedido">
-                    <!-- usuario -->
-                    <div class="d-flex flex-row align-center justify-center items-center">
-                        <h3>{{item.user.first_name}} {{item.user.last_name}}</h3>
-                        <!-- <p>{{item.user.numdoc}}</p> -->
-                        <p> <i class="fa fa-whatsapp"></i>
-                            {{item.user.telefono}}</p>
-                    </div>
-                    <div class="estados">
-                        <div>
-                            <small>{{'Verificado'|translate}}:</small>
-                            <div>
-                                <span class="badge badge-danger badge-shadow"
-                                    *ngIf="item.verificado === false">{{item.verificado }}</span>
-                                <span class="badge badge-success badge-shadow"
-                                    *ngIf="item.verificado === true">{{item.verificado}}</span>
+                <div class="card shadow-sm border-0 bg-white rounded-4 overflow-hidden mb-4">
+    
+    <!-- HEADER: Datos del Cliente e Info de Contacto -->
+    <div class="bg-light p-3 border-bottom">
+        <div class="d-flex flex-wrap justify-content-between align-items-center gap-2">
+            <div>
+                <small class="text-uppercase text-muted tracking-wider fw-bold font-monospace d-block mb-1" style="font-size: 0.7rem;">
+                    {{ 'Cliente' | translate }}
+                </small>
+                <h5 class="mb-0 text-dark fw-bold">
+                    <i class="fas fa-user-circle me-2 text-secondary"></i>{{item.user?.first_name}} {{item.user?.last_name}}
+                </h5>
+            </div>
+            
+            <!-- Enlace directo y limpio a WhatsApp -->
+            <div>
+                <a [href]="'https://wa.me' + item.user?.telefono" 
+                   target="_blank" 
+                   class="btn btn-success btn-sm rounded-pill d-inline-flex align-items-center gap-1 px-3 shadow-sm font-monospace">
+                    <i class="fab fa-whatsapp"></i>
+                    {{item.user?.telefono}}
+                </a>
+            </div>
+        </div>
+    </div>
 
-                            </div>
-                        </div>
-                        <div>
-                            <small>{{'Delivery'|translate}}:</small>
-                            <div>
-                                <span class="badge badge-danger badge-shadow"
-                                    *ngIf="item.delivery === 'false'">{{item.delivery }}</span>
-                                <span class="badge badge-success badge-shadow"
-                                    *ngIf="item.delivery === 'true'">{{item.delivery}}</span>
-
-                            </div>
-                        </div>
-                        <div>
-                            <small>{{'Status'|translate}}:</small>
-                            <div>
-                                <span class="badge badge-warning badge-shadow"
-                                    *ngIf="(item.status || '').toUpperCase() === 'PENDING'">{{item.status
-                                    ||
-                                    'N/A'}}</span>
-                                <span class="badge badge-success badge-shadow"
-                                    *ngIf="(item.status || '').toUpperCase() === 'ACTIVO'">{{item.status
-                                    ||
-                                    'N/A'}}</span>
-                                <span class="badge badge-primary badge-shadow"
-                                    *ngIf="(item.status || '').toUpperCase() === 'INPROCESS'">{{item.status
-                                    ||
-                                    'N/A'}}</span>
-                                <span class="badge badge-secondary badge-shadow"
-                                    *ngIf="!(item.status || '').toUpperCase()">N/A</span>
-                            </div>
-                        </div>
-                    </div>
-
-
-
-                </div>
-
-                <hr>
-                <div *ngFor="let pedidoitem of item.pedidoList;  let i = index">
-                    <div class="bg-light rounded-4 p-3 mb-4" style="border-radius: 15px;">
-
-                        <div class="d-flex justify-content-between mb-3 border-bottom pb-2">
-                            <span class="text-muted small">{{'Categoría'|translate}}</span>
-                            <span class="fw-bold small">
-                                {{ translate.currentLang === 'en' ? (pedidoitem.categoria.subcategorias?.en ||
-                                pedidoitem.categoria.subcategorias?.es) : (pedidoitem.categoria.subcategorias?.es ||
-                                pedidoitem.categoria.subcategorias?.en) }}
-                            </span>
-                        </div>
-                        <div class="d-flex justify-content-between mb-3 border-bottom pb-2">
-                            <span class="text-muted small">{{'Nombre'|translate}}</span> &nbsp;
-                            <div class="d-flex flex-column">
-                                <span class="fw-bold small">
-                                    {{ translate.currentLang === 'en' ? pedidoitem?.titulo?.en: pedidoitem?.titulo?.es}}
-                                </span>
-                                <span class="fw-bold small">{{ pedidoitem.selector_elegido }}</span>
-                            </div>
-                        </div>
-
-                        <div class="d-flex justify-content-between">
-                            <span class="text-muted small">{{'Cantidad'|translate}}</span>
-                            <span class="fw-bold small">{{ pedidoitem.cantidad }}</span>
-                        </div>
-
-                        <div class="d-flex justify-content-between">
-                            <span class="text-muted small">{{'Precio'|translate}}</span>
-                            <span class="fw-bold small">{{ +pedidoitem.precio_ahora | currency:tienda_moneda }}</span>
-                        </div>
-
-                        <div class="d-flex justify-content-between">
-                            <span class="text-muted small">Total</span>
-                            <!-- El símbolo + convierte el texto "20" y "10" en números reales antes de multiplicar -->
-                            <span class="fw-bold small">{{ (+pedidoitem.precio_ahora) *
-                                (+pedidoitem.cantidad) | currency:tienda_moneda
-                                }}</span>
-                        </div>
+    <!-- SUB-HEADER: Fila de Estados y Control de Flujo -->
+    <div class="p-3 bg-white border-bottom">
+        <div class="row g-2 text-center">
+            
+            <!-- Estado Verificado -->
+            <div class="col-4">
+                <div class="p-2 rounded bg-light border-0 h-100 d-flex flex-column justify-content-center">
+                    <small class="text-muted d-block mb-1 font-monospace" style="font-size: 0.75rem;">{{'Verificado'|translate}}</small>
+                    <div>
+                        <span class="badge bg-success px-2 py-1 rounded shadow-xs w-100" *ngIf="item.verificado === true || item.verificado === 'true'">{{'Sí'|translate}}</span>
+                        <span class="badge bg-danger px-2 py-1 rounded shadow-xs w-100" *ngIf="item.verificado === false || item.verificado === 'false'">{{'No'|translate}}</span>
                     </div>
                 </div>
+            </div>
+
+            <!-- Estado Delivery -->
+            <div class="col-4">
+                <div class="p-2 rounded bg-light border-0 h-100 d-flex flex-column justify-content-center">
+                    <small class="text-muted d-block mb-1 font-monospace" style="font-size: 0.75rem;">{{'Delivery'|translate}}</small>
+                    <div>
+                        <span class="badge bg-info text-white px-2 py-1 rounded shadow-xs w-100" *ngIf="item.delivery === true || item.delivery === 'true'">{{'Envío'|translate}}</span>
+                        <span class="badge bg-secondary px-2 py-1 rounded shadow-xs w-100" *ngIf="item.delivery === false || item.delivery === 'false'">{{'Retiro'|translate}}</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Estado Operacional (Status) -->
+            <div class="col-4">
+                <div class="p-2 rounded bg-light border-0 h-100 d-flex flex-column justify-content-center">
+                    <small class="text-muted d-block mb-1 font-monospace" style="font-size: 0.75rem;">{{'Status'|translate}}</small>
+                    <div class="w-100">
+                        <span class="badge bg-warning text-dark px-2 py-1 rounded shadow-xs d-block" *ngIf="(item.status || '').toUpperCase() === 'PENDING'">{{item.status}}</span>
+                        <span class="badge bg-success px-2 py-1 rounded shadow-xs d-block" *ngIf="(item.status || '').toUpperCase() === 'ACTIVO'">{{item.status}}</span>
+                        <span class="badge bg-primary px-2 py-1 rounded shadow-xs d-block" *ngIf="(item.status || '').toUpperCase() === 'INPROCESS'">{{item.status}}</span>
+                        <span class="badge bg-dark px-2 py-1 rounded shadow-xs d-block" *ngIf="!(item.status || '').toUpperCase()">N/A</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- CUERPO: Lista de Artículos Adquiridos -->
+    <div class="card-body p-3 bg-light bg-opacity-25">
+        <div *ngFor="let pedidoitem of item.pedidoList; let i = index" 
+             class="card border-0 shadow-xs bg-white rounded-3 mb-3 overflow-hidden">
+            
+            <!-- Encabezado de ítem con la categoría traducida -->
+            <div class="bg-light bg-opacity-75 px-3 py-2 d-flex justify-content-between align-items-center border-bottom">
+                <span class="badge bg-secondary bg-opacity-10 text-secondary text-uppercase font-monospace" style="font-size: 0.7rem;">
+                    {{ translate.currentLang === 'en' ? (pedidoitem.categoria.subcategorias?.en || pedidoitem.categoria.subcategorias?.es) : (pedidoitem.categoria.subcategorias?.es || pedidoitem.categoria.subcategorias?.en) }}
+                </span>
+                <span class="text-muted small font-monospace">#{{ i + 1 }}</span>
+            </div>
+
+            <div class="p-3">
+                <!-- Nombre y Variantes -->
+                <div class="d-flex justify-content-between align-items-start mb-3 gap-2">
+                    <div>
+                        <h6 class="fw-bold text-dark mb-1" style="font-size: 0.95rem;">
+                            {{ translate.currentLang === 'en' ? pedidoitem?.titulo?.en : pedidoitem?.titulo?.es }}
+                        </h6>
+                        <span *ngIf="pedidoitem.selector_elegido" class="badge bg-light text-muted border font-monospace small">
+                            <i class="fas fa-sliders-h me-1"></i>{{ pedidoitem.selector_elegido }}
+                        </span>
+                    </div>
+                    <span class="text-dark fw-bold font-monospace bg-light rounded px-2 py-1 small">
+                        {{ pedidoitem.cantidad }}x
+                    </span>
+                </div>
+
+                <!-- Desglose de Totales del Producto -->
+                <div class="bg-light rounded-3 p-2 font-monospace" style="font-size: 0.85rem;">
+                    <div class="d-flex justify-content-between text-muted mb-1">
+                        <span>{{ 'Precio' | translate }}</span>
+                        <span>{{ +pedidoitem.precio_ahora | currency:tienda_moneda }}</span>
+                    </div>
+                    <div class="d-flex justify-content-between fw-bold text-dark border-top pt-1 mt-1 fs-6">
+                        <span>Total</span>
+                        <span class="text-primary">
+                            {{ (+pedidoitem.precio_ahora) * (+pedidoitem.cantidad) | currency:tienda_moneda }}
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
             </div>
             <div class="modal-footer">
                 <button class="btn btn-secondary btn-sm" type="button" data-bs-dismiss="modal">Cerrar</button>

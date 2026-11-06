@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 import { Presupuesto } from 'src/app/models/presupuesto';
 import { PresupuestoService } from 'src/app/services/presupuesto.service';
@@ -20,7 +21,7 @@ export class CotizacionEditComponent implements OnChanges {
   public presupuestoForm!: FormGroup;
   public presupuesto!: Presupuesto;
   pageTitle!: string;
-  public medical: any = [];
+  public pedidoList: any = [];
   description: any;
   name_medical: any;
   precio!: number;
@@ -38,6 +39,7 @@ export class CotizacionEditComponent implements OnChanges {
   constructor(
     public presupuestoService: PresupuestoService,
     public usuarioService: UsuarioService,
+    public translate: TranslateService ,
     public router: Router,
     public toastr: ToastrService,
     public fb: FormBuilder,
@@ -69,16 +71,16 @@ export class CotizacionEditComponent implements OnChanges {
       const presupuesto = changes['presupuestoSeleccionado'].currentValue;
       this.cliente = presupuesto.cliente?.uid || presupuesto.cliente || '';
       this.amount = presupuesto.amount || presupuesto.amount || '';
-      this.medical = presupuesto.listItems || presupuesto.listItems || '';
+      this.pedidoList = presupuesto.pedidoList  || [];'';
 
       this.presupuestoForm.patchValue({
         id: presupuesto._id,
         title: presupuesto.title,
         description: presupuesto.description,
-        amount: this.amount,
+        amount: presupuesto.amount,
         status: presupuesto.status,
         cliente: this.cliente,
-        medical: this.medical,
+        pedidoList: presupuesto.pedidoList,
         usuario: this.user.uid,
       });
       this.presupuestoSeleccionado = presupuesto;
@@ -104,7 +106,7 @@ export class CotizacionEditComponent implements OnChanges {
       amount: null,
       status: null,
       cliente: null,
-      listItems: [],
+      pedidoList: [],
     });
     // Emit event to parent to reset the projectSeleccionado variable
 
@@ -130,7 +132,7 @@ export class CotizacionEditComponent implements OnChanges {
 
   addMedicamento() {
     if (this.name_medical && this.precio > 0) {
-      this.medical.push({
+      this.pedidoList.push({
         name_medical: this.name_medical,
         cantidad: this.cantidad + '',
         precio: this.precio + ''
@@ -142,20 +144,20 @@ export class CotizacionEditComponent implements OnChanges {
 
     }
     this.amount = 0;
-    for (let i = 0; i < this.medical.length; i++) {
-      this.amount += parseFloat(this.medical[i].precio) * parseFloat(this.medical[i].cantidad);
+    for (let i = 0; i < this.pedidoList.length; i++) {
+      this.amount += parseFloat(this.pedidoList[i].precio) * parseFloat(this.pedidoList[i].cantidad);
     }
   }
 
   deleteMedical(i: any) {
-    this.medical.splice(i, 1);
+    this.pedidoList.splice(i, 1);
     this.name_medical = '';
     this.precio = 0;
     this.amount = 0;
     this.cantidad = 0;
 
 
-    if (this.medical.length === 0) {
+    if (this.pedidoList.length === 0) {
       this.name_medical = '';
       this.precio = 0;
       this.cantidad = 0;
@@ -176,7 +178,7 @@ export class CotizacionEditComponent implements OnChanges {
       description: this.presupuestoForm.value.description,
       cliente: this.usuarioSelected,
       usuario: this.user.uid,
-      listItems: this.medical,
+      pedidoList: this.pedidoList,
       amount: this.amount,
       status: 'PENDING',
     }

@@ -55,6 +55,7 @@ import { ReservacionListComponent } from '../admin/tienda/reservacion/reservacio
 import { NotificacionesComponent } from '../admin/tienda/notificaciones/notificaciones.component';
 import { ConectarWhatsappComponent } from '../admin/tienda/conectar-whatsapp/conectar-whatsapp.component';
 import { CotizacionListComponent } from '../admin/cotizacion/cotizacion-list/cotizacion-list.component';
+import { SolicitudesListaComponent } from '../admin/proucto/solicitudes/solicitudes-lista/solicitudes-lista.component';
 
 
 const childRoutes: Routes = [
@@ -90,6 +91,7 @@ const childRoutes: Routes = [
   { path: 'configuracion/create', component: ConfigSiteComponent, data: { tituloPage: 'Producto' } },
 
   { path: 'producto', component: ProdIndexComponent, data: { tituloPage: 'Producto ' } },
+  { path: 'producto/pedidos', component: SolicitudesListaComponent, data: { tituloPage: 'Pedidos de Producto ' } },
 
   { path: 'cupon', component: CuponComponent, data: { tituloPage: 'Cupon' } },
 

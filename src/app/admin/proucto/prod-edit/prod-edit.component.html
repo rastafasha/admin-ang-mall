@@ -346,8 +346,15 @@
                                             type="button" (click)="nextStep()">{{'Siguiente'|translate}}</button>
                                     </div>
                                     <div class="col-6">
-                                        <button (click)="updateProducto()" class="btn btn-outline-success">
-                                            {{ (productoSeleccionado ? 'Actualizar y Continuar' : 'Crear y Continuar') | translate }}
+                                       <button (click)="updateProducto()"  [disabled]="isSubmitting"  class="btn btn-outline-success d-inline-flex align-items-center gap-2">
+    
+                                            <!-- 🟢 Icono de Loading (Spinner) que se muestra solo si isSubmitting es true -->
+                                            <i *ngIf="isSubmitting" class="fas fa-spinner fa-spin"></i>
+
+                                            <!-- Texto condicional con tu pipe de traducción -->
+                                            <span>
+                                                {{ (productoSeleccionado ? 'Actualizar y Continuar' : 'Crear y Continuar') | translate }}
+                                            </span>
                                         </button>
                                     </div>
                                 </div>
@@ -392,10 +399,13 @@
                                                     type="button" (click)="prevStep()">{{'Anterior'|translate}}</button>
                                             </div>
                                             <div class="col-6">
-                                                <button type="button" [disabled]="!imagenSubir" (click)="subirImagen()"
-                                                    class="btn btn-success waves-effect waves-light m-r-10 btn-block">
-                                                    <i class="fa fa-save"></i> {{'Subir imagen'|translate}}
-                                                </button>
+                                                <button (click)="subirImagen()"  [disabled]="cargandoImagen"  class="btn btn-success waves-effect waves-light m-r-10 btn-block d-inline-flex align-items-center gap-2">
+    
+                                            <!-- 🟢 Icono de Loading (Spinner) que se muestra solo si isSubmitting es true -->
+                                            <i *ngIf="cargandoImagen" class="fas fa-spinner fa-spin"></i>
+
+                                             <i class="fa fa-save"></i> {{'Subir imagen'|translate}}
+                                        </button>
                                             </div>
                                         </div>
                                     </div>

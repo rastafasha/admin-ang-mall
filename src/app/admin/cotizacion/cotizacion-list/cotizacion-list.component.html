@@ -45,9 +45,9 @@
                         </thead>
                         <tbody>
                             <tr *ngFor="let presupuesto of presupuestos |  paginate: { itemsPerPage: count, currentPage: p } | orderBy:'createdAt, desc'">
-                                <th scope="row"><span class="{{categoria.icono}}"></span></th>
+                                <th scope="row"><span >$</span></th>
                                 
-                                <td>{{ presupuesto.cliente }}</td>
+                                <td>{{ presupuesto.first_name }} {{ presupuesto.last_name }}</td>
                                 <td>{{ presupuesto.title }}</td>
                                 <td>{{ presupuesto.cantidadPersonas }}</td>
                                 <td>{{ presupuesto.fechaEvento | date }}</td>
@@ -62,18 +62,18 @@
 
                                     </div>
                                 </td>
-                                <td>{{ categoria.createdAt | date:'MMM d, y' }}</td>
+                                <td>{{ presupuesto.createdAt | date:'MMM d, y' }}</td>
                                 <td class="text-nowrap text-center">
                                  
                                     <button  class="btn btn-outline-success"
                                             data-toggle="tooltip" data-original-title="Edit"
-                                            (click)="onEditProject(categoria)"
+                                            (click)="onEditProject(presupuesto)"
                                             data-bs-toggle="modal"
-                                            data-bs-target="#editCategoria">
+                                            data-bs-target="#editPresupuesto">
                                             <i class="fa fa-edit"></i>
                                         </button>
                                          &nbsp;
-                                        <button *ngIf="user.role === 'SUPERADMIN'" (click)="eliminarCategoria(categoria)" class="btn btn-outline-danger" data-toggle="tooltip"
+                                        <button *ngIf="user.role === 'SUPERADMIN'" (click)="eliminarCategoria(presupuesto)" class="btn btn-outline-danger" data-toggle="tooltip"
                                             data-original-title="Borrar">
                                             <i class="fa fa-trash"></i>
                                         </button>

@@ -113,6 +113,7 @@ export class CotizacionListComponent {
       (resp:any) => {
         this.cargando = false;
         this.presupuestos = resp;
+        console.log(resp)
       }
     )
 

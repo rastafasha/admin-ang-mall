@@ -1,0 +1,72 @@
+<div class="clear"></div>
+<app-backbutton></app-backbutton>
+<div class="row animated fadeIn fast">
+    <div class="col-12">
+        <app-search [query]="query" [modelo]="solicitudes" [colleccionName]="solicitudes"
+[colleccion]="'solicitudes'" (searchEvent)="handleSearchEvent($event)" (resetEvent)="PageSize()"></app-search>
+        
+    </div>
+</div>
+
+<app-skeleton-loader *ngIf="cargando" [rows]="1" [columns]="3"></app-skeleton-loader>
+<app-skeleton-loader *ngIf="cargando" [rows]="4" [columns]="7"></app-skeleton-loader>
+
+<div class="row" *ngIf="!cargando">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+
+                <div class="table-responsive">
+                    <table class="table table-borderless">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>{{'Cliente'|translate}}</th>
+                                <th>{{'Status'|translate}}</th>
+                                <th>{{'Creación'|translate}}</th>
+                                <th class="text-nowrap" >{{'Acciones'|translate}}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let solicitud of solicitudes |  paginate: { itemsPerPage: count, currentPage: p } | orderBy:'createdAt, desc'">
+                                <th scope="row"><span >#</span></th>
+                                
+                                <td>{{ solicitud.user.first_name }}</td>
+                                 <td>
+                                    <div class="font-size-sm mb-4">
+                                        <span class="badge badge-primary badge-shadow"
+                                            *ngIf="solicitud.status == 'PENDING'">{{solicitud.status}}</span>
+                                        <span class="badge badge-success badge-shadow"
+                                            *ngIf="solicitud.status == 'APROVED'">{{solicitud.status}}</span>
+                                        <span class="badge badge-danger badge-shadow"
+                                            *ngIf="solicitud.status == 'REFUSED'">{{solicitud.status}}</span>
+
+                                    </div>
+                                </td>
+                                <td>{{ solicitud.createdAt | date:'MMM d, y' }}</td>
+                                <td class="text-nowrap text-center">
+                                 
+                                    <button  class="btn btn-outline-success"
+                                            data-toggle="tooltip" data-original-title="Edit"
+                                            (click)="onViewPedido(solicitud)"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#verSolicitudModal">
+                                            <i class="fa fa-eye"></i>
+                                        </button>
+                                         &nbsp;
+                                        <button (click)="eliminarSolicitud(solicitud)" class="btn btn-outline-danger" data-toggle="tooltip"
+                                            data-original-title="Borrar">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+                <pagination-controls (pageChange)="p = $event"></pagination-controls>
+            </div>
+        </div>
+    </div>
+</div>
+<app-solicitud-detail [solicitudSelected]="solicitudSelected"></app-solicitud-detail>

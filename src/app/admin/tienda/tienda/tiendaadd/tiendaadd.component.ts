@@ -120,6 +120,7 @@ export class TiendaaddComponent implements OnInit, OnChanges {
       state_banner: [false,],
       mostrarTasas: [false,],
       usaDelivery: [false,],
+      usaPedido: [false,],
       has_reservacion: [false,],
       has_cotizacion: [false,],
       capacidad_por_hora: [''],
@@ -187,6 +188,7 @@ export class TiendaaddComponent implements OnInit, OnChanges {
         status: tienda.status,
         mostrarTasas: tienda.mostrarTasas,
         usaDelivery: tienda.usaDelivery,
+        usaPedido: tienda.usaPedido,
         state_banner: tienda.state_banner,
         has_cotizacion: tienda.has_cotizacion,
         has_reservacion: tienda.has_reservacion,
@@ -238,6 +240,7 @@ export class TiendaaddComponent implements OnInit, OnChanges {
       status: null,
       mostrarTasas: null,
       usaDelivery: null,
+      usaPedido: null,
       state_banner: null,
       has_reservacion: null,
       has_cotizacion: null,
@@ -276,6 +279,7 @@ export class TiendaaddComponent implements OnInit, OnChanges {
     const zip = this.tiendaForm.get('zip');
     const mostrarTasas = this.tiendaForm.get('mostrarTasas');
     const usaDelivery = this.tiendaForm.get('usaDelivery');
+    const usaPedido = this.tiendaForm.get('usaPedido');
 
     const status = this.tiendaForm.get('status');
     const state_banner = this.tiendaForm.get('state_banner');
@@ -290,6 +294,7 @@ export class TiendaaddComponent implements OnInit, OnChanges {
       moneda?.invalid ||
       mostrarTasas?.invalid ||
       usaDelivery?.invalid ||
+      usaPedido?.invalid ||
       state_banner?.invalid ||
       has_reservacion?.invalid ||
       has_cotizacion?.invalid
@@ -304,6 +309,7 @@ export class TiendaaddComponent implements OnInit, OnChanges {
       moneda?.markAsTouched();
       mostrarTasas?.markAsTouched();
       usaDelivery?.markAsTouched();
+      usaPedido?.markAsTouched();
       ciudad?.markAsTouched();
       zip?.markAsTouched();
       status?.markAsTouched();
@@ -388,24 +394,7 @@ export class TiendaaddComponent implements OnInit, OnChanges {
     }
 
     const {
-      nombre,
-      local,
-      telefono,
-      categoria,
-      direccion,
-      latitud,
-      longitud,
-      pais,
-      ciudad,
-      moneda,
-      tipoFlujo,
-      zip,
-      subcategoria,
-      redssociales,
-      status,
-      state_banner,
-      isFeatured,
-      user,
+      nombre
     } = this.tiendaForm.value;
 
     if (this.tiendaSeleccionado) {
