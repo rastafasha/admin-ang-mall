@@ -5,11 +5,13 @@
     </div>
     <div class="">
         <a href="javascript:;" (click)="PageSize()" class="btn btn-primary ">
-            <i class="fas fa-sync"></i></a>
+            <i class="fas fa-sync"></i>
+        </a>
     </div>
 </div>
-<app-skeleton-loader *ngIf="isLoading" [rows]="1" [columns]="5"></app-skeleton-loader>
-<app-skeleton-loader *ngIf="isLoading" [rows]="1" [columns]="6"></app-skeleton-loader>
+<app-skeleton-loader *ngIf="isLoading" [rows]="4" [columns]="8"></app-skeleton-loader>
+<br>
+<app-skeleton-loader *ngIf="isLoading" [rows]="4" [columns]="7"></app-skeleton-loader>
 <div class="clear"></div>
 
 <div class="container-fluid" *ngIf="!isLoading">

@@ -45,7 +45,7 @@ export class UsuariosTiendaComponent implements OnInit, OnDestroy {
   private langSubscription!: Subscription;
 
   option_selectedd: number = 1;
-      solicitud_selectedd: any = 1;
+  solicitud_selectedd: any = 1;
 
   constructor(
     private usuarioService: UsuarioService,
@@ -58,7 +58,7 @@ export class UsuariosTiendaComponent implements OnInit, OnDestroy {
     window.scrollTo(0, 0);
     let USER = localStorage.getItem("user");
     this.user = JSON.parse(USER ? USER : '');
-     // 🟢 1. CARGA INICIAL DE LAS INSTRUCCIONES (Garantiza que la info no empiece vacía)
+    // 🟢 1. CARGA INICIAL DE LAS INSTRUCCIONES (Garantiza que la info no empiece vacía)
     this.translate.get('USERS_STORE.TITLE').subscribe(() => {
       this.actualizarInstruccionesPagos();
     });
@@ -72,7 +72,7 @@ export class UsuariosTiendaComponent implements OnInit, OnDestroy {
     this.role = this.user.role;
     this.loadUsuarios();
 
-    
+
   }
 
   private actualizarInstruccionesPagos() {
@@ -95,7 +95,7 @@ export class UsuariosTiendaComponent implements OnInit, OnDestroy {
   `;
   }
 
-   ngOnDestroy(): void {
+  ngOnDestroy(): void {
     if (this.langSubscription) {
       this.langSubscription.unsubscribe();
     }
@@ -114,7 +114,7 @@ export class UsuariosTiendaComponent implements OnInit, OnDestroy {
       )
   }
 
-  
+
 
 
   cambiarPagina(valor: number) {
@@ -184,17 +184,17 @@ export class UsuariosTiendaComponent implements OnInit, OnDestroy {
     )
   }
 
-   optionSelected(value: number) {
-        this.option_selectedd = value;
-        if (this.option_selectedd === 1) {
-    
-          // this.ngOnInit();
-        }
-        if (this.option_selectedd === 2) {
-          this.solicitud_selectedd = null;
-        }
-      }
-  
+  optionSelected(value: number) {
+    this.option_selectedd = value;
+    if (this.option_selectedd === 1) {
+
+      // this.ngOnInit();
+    }
+    if (this.option_selectedd === 2) {
+      this.solicitud_selectedd = null;
+    }
+  }
+
 
 
 }

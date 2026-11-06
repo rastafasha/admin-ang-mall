@@ -370,6 +370,7 @@ export class ProdEditComponent implements OnInit, OnChanges {
           const modal = bootstrap.Modal.getInstance(modalElement);
           if (modal) {
             modal.hide();
+            this.cleanModalBackdrop();
 
           }
           // Emit event to refresh project list
@@ -394,6 +395,19 @@ export class ProdEditComponent implements OnInit, OnChanges {
         })
     }
 
+  }
+
+  cleanModalBackdrop() {
+    // 1. Buscamos y removemos todos los elementos de backdrop del DOM
+    const backdrops = document.querySelectorAll('.modal-backdrop');
+    backdrops.forEach(backdrop => backdrop.remove());
+
+    // 2. Quitamos la clase 'modal-open' del body para que no bloquee el scroll de la página
+    document.body.classList.remove('modal-open');
+
+    // 3. Limpiamos estilos residuales de scroll que inyecta Bootstrap en el body
+    document.body.style.overflow = '';
+    document.body.style.paddingRight = '';
   }
 
 

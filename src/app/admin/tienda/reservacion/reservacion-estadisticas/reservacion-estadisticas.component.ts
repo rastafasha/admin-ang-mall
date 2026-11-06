@@ -16,6 +16,7 @@ export class ReservacionEstadisticasComponent {
   public datosAdaptados: any[] = [];
   public tieneDatos = false;
   user: any;
+  cargando = false;
   private reservacionService = inject(ReservacionService);
 
   ngOnInit(): void {
@@ -26,11 +27,13 @@ export class ReservacionEstadisticasComponent {
 
 
     cargarYAdaptarReservas() {
+      this.cargando = true;
     this.reservacionService.getReservacionEstadisticasByLocal().subscribe((resp: any) => {
       // 🟢 Forzamos un arreglo totalmente nuevo en memoria para despertar la gráfica
       this.datosAdaptados = [...resp];
       
       this.tieneDatos = this.datosAdaptados.length > 0;
+      this.cargando = false;
       console.log('Arreglo inmutable listo para el grafico:', this.datosAdaptados);
     });
   }

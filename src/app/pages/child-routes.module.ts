@@ -122,12 +122,12 @@ const childRoutes: Routes = [
   { path: 'tienda/comentariosapp', component: ComentariosappComponent, data: { tituloPage: 'Comentarios App' } },
   { path: 'tienda/pedidos', component: PedidosMenuComponent, data: { tituloPage: 'Pedidos' } },
   { path: 'atencion-local', component: AtencionLocalComponent, data: { tituloPage: 'Atención Local' } },
+  
   { path: 'tienda-user', component: UsuariosTiendaComponent, data: { tituloPage: 'Tienda empleado' } },
   { path: 'tienda-user/registro', component: UsertiendaaddComponent, data: { tituloPage: 'Tienda empleado' } },
-  { path: 'tienda-user/edit/:id', component: UsertiendaaddComponent, data: { tituloPage: 'Tienda empleado editar' } },
-  { path: 'tienda-user/detalle/:id', component: UserDetailComponent, data: { tituloPage: 'Tienda empleado detalle' } },
-  { path: 'tienda-user/edit/:id', component: UsertiendaaddComponent, data: { tituloPage: 'Tienda empleado editar' } },
-  { path: 'tienda-user/detalle/:id', component: UserDetailComponent, data: { tituloPage: 'Tienda empleado detalle' } },
+  { path: 'tienda-user/edit/:id', component: UsertiendaaddComponent, data: { tituloPage: 'Usuario editar' } },
+  { path: 'tienda-user/detalle/:id', component: UserDetailComponent, data: { tituloPage: 'Usuario detalle' } },
+  
   { path: 'reservaciones', component: ReservacionListComponent, data: { tituloPage: 'Reservaciones' } },
   { path: 'carrito', component: CarritoComponent, data: { tituloPage: 'Tienda Carrito' } },
   { path: 'notificaciones', component: NotificacionesComponent, data: { tituloPage: 'Notificaciones' } },

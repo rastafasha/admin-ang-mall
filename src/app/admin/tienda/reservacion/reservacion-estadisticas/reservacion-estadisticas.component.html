@@ -1,8 +1,9 @@
-<div *ngIf="tieneDatos && datosAdaptados.length > 0">
+<app-skeleton-loader *ngIf="cargando" [rows]="3" [columns]="4"></app-skeleton-loader>
+<div *ngIf="tieneDatos && datosAdaptados.length > 0 && !cargando">
     <!-- 🟢 CORREGIDO: Usamos el input exacto que tu componente bar-chart está esperando -->
     <app-bar-chart [estadisticas]="datosAdaptados"></app-bar-chart>
 </div>
 
-<div *ngIf="!tieneDatos || datosAdaptados.length === 0" class="text-center py-5 text-muted small">
+<div *ngIf="!tieneDatos || datosAdaptados.length === 0 && !cargando" class="text-center py-5 text-muted small">
     {{'No hay suficiente flujo de reservas esta semana para proyectar métricas'|translate}}.
 </div>

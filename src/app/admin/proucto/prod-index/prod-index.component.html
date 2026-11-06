@@ -7,8 +7,7 @@
     </div>
 </div>
 
-<app-skeleton-loader *ngIf="cargando" [rows]="1" [columns]="3"></app-skeleton-loader>
-<app-skeleton-loader *ngIf="cargando" [rows]="4" [columns]="8"></app-skeleton-loader>
+<app-skeleton-loader *ngIf="cargando" [rows]="5" [columns]="8"></app-skeleton-loader>
 
 <div class="row" *ngIf="!cargando">
     <div class="col-12">
@@ -37,9 +36,7 @@
                         </div>
                     </div>
                 </div>
-                <br>
                 <hr>
-
                 <div class="table-responsive">
                     <pagination-controls (pageChange)="p = $event"></pagination-controls>
                     <table class="table table-borderless">

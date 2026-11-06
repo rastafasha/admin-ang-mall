@@ -20,7 +20,9 @@
                             <i class="fa fa-plus"></i>
                         </button>
                     </div>
-                    <div class="col-lg-12 card p-3">
+                    <app-skeleton-loader *ngIf="cargando" [rows]="5" [columns]="4"></app-skeleton-loader>
+
+                    <div class="col-lg-12 card p-3" *ngIf="!cargando">
                         <div class="table-responsive table-sm">
                             <table class="table table-sm">
                                 <thead class="thead-dark">

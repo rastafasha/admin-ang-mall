@@ -8,14 +8,14 @@
     </div>
 </div>
 
-<app-skeleton-loader *ngIf="cargando" [rows]="1" [columns]="3"></app-skeleton-loader>
+<app-skeleton-loader *ngIf="cargando" [rows]="1" [columns]="7"></app-skeleton-loader>
 <app-skeleton-loader *ngIf="cargando" [rows]="4" [columns]="7"></app-skeleton-loader>
 
 <div class="row" *ngIf="!cargando">
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <div class="row">
+                <!-- <div class="row">
                     
                     <div class="col-1">
                         <div class="text-right">
@@ -27,13 +27,12 @@
                     </div>
                 </div>
                 <br>
-                <hr>
+                <hr> -->
 
                 <div class="table-responsive">
                     <table class="table table-borderless">
                         <thead>
                             <tr>
-                                <th>#</th>
                                 <th>{{'Cliente'|translate}}</th>
                                 <th>{{'Título'|translate}}</th>
                                 <th>{{'Cantidad Personas'|translate}}</th>
@@ -45,7 +44,7 @@
                         </thead>
                         <tbody>
                             <tr *ngFor="let presupuesto of presupuestos |  paginate: { itemsPerPage: count, currentPage: p } | orderBy:'createdAt, desc'">
-                                <th scope="row"><span >$</span></th>
+                                
                                 
                                 <td>{{ presupuesto.first_name }} {{ presupuesto.last_name }}</td>
                                 <td>{{ presupuesto.title }}</td>

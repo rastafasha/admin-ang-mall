@@ -2,7 +2,9 @@
     <div class="pt-2 px-4 pl-lg-0 pr-xl-5">
         <div class="container">
             <div class="row">
-               
+               <app-skeleton-loader *ngIf="cargando" [rows]="1" [columns]="8"></app-skeleton-loader>
+<app-skeleton-loader *ngIf="cargando" [rows]="4" [columns]="8"></app-skeleton-loader>
+
                 <div class="mostrarmapa  card">
                     <!-- Contenedor del mapa Leaflet -->
                     <div #mapContainer class="map-container"></div>
@@ -91,7 +93,8 @@
         <div class="cardss">
     
     <!-- 📊 TARJETA 1: Métricas de Flota -->
-    <div class="cardo p-3 text-start">
+     <app-skeleton-loader *ngIf="cargandodrivers" [rows]="3" [columns]="1"></app-skeleton-loader>
+    <div class="cardo p-3 text-start" *ngIf="!cargandodrivers">
         <h4 class="fw-bold border-bottom pb-2" style="color: #333;">📋 Resumen de Flota</h4>
         <div class="d-flex flex-column gap-3 mt-3">
             <div class="d-flex justify-content-between align-content-between">
@@ -110,7 +113,8 @@
     </div>
 
     <!-- 🛵 TARJETA 2: Lista de Conductores (Tu panel azul flotante mudado aquí) -->
-    <div class="cardo p-3 text-start" style=" overflow-y: auto;">
+     <app-skeleton-loader *ngIf="cargandodrivers" [rows]="3" [columns]="1"></app-skeleton-loader>
+    <div class="cardo p-3 text-start" style=" overflow-y: auto;" *ngIf="!cargandodrivers">
         <h4 class="fw-bold border-bottom pb-2" style="color: #333;">🛵 Conductores Activos</h4>
         <div class="list-group list-group-flush mt-2">
             <!-- Al hacer clic en un chofer, el mapa viaja hacia él automáticamente -->
@@ -133,7 +137,8 @@
     </div>
 
     <!-- 📍 TARJETA 3: Tracking de Coordenadas y Botón de WhatsApp -->
-    <div class="cardo p-3 text-start" style=" overflow-y: auto;">
+     <app-skeleton-loader *ngIf="cargandoMonitoreo" [rows]="3" [columns]="1"></app-skeleton-loader>
+    <div class="cardo p-3 text-start" style=" overflow-y: auto;" *ngIf="!cargandoMonitoreo">
         <h4 class="fw-bold border-bottom pb-2" style="color: #333;">📍 Monitoreo de Punto</h4>
         
         <!-- Si el administrador hizo clic en un conductor de la Tarjeta 2, se activa este bloque -->

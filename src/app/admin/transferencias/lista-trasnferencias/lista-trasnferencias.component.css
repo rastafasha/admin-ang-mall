@@ -13,3 +13,12 @@
   border-width: 2px;
   font-weight: bold;
 }
+
+.btng{
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btng:hover{
+    transform: scale(1.3);
+}

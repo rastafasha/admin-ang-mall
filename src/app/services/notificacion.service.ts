@@ -181,6 +181,9 @@ export class NotificacionService {
     if (tipo === 'NUEVO_PEDIDO' || tipo.startsWith('PEDIDO_')) {
       return `/dashboard/tienda/pedidos`; // O la ruta exacta donde gestiones las comandas
     }
+    if (tipo === 'NUEVA_SOLICITUD' || tipo.startsWith('SOLICITUD_')) {
+      return `/dashboard/producto/pedidos`; // O la ruta exacta donde gestiones las comandas
+    }
     if (tipo === 'NUEVA_RESERVACION' || tipo.startsWith('RESERVACION_')) {
       return `/dashboard/reservaciones`; // 🟢 Coincide exactamente con tu ruta
     }

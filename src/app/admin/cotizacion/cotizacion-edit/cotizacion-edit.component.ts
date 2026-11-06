@@ -9,7 +9,7 @@ import { UsuarioService } from 'src/app/services/usuario.service';
 declare var bootstrap: any;
 @Component({
   selector: 'app-cotizacion-edit',
-  standalone:false,
+  standalone: false,
   templateUrl: './cotizacion-edit.component.html',
   styleUrl: './cotizacion-edit.component.css'
 })
@@ -23,8 +23,8 @@ export class CotizacionEditComponent implements OnChanges {
   pageTitle!: string;
   public pedidoList: any = [];
   description: any;
-  name_medical: any;
-  precio!: number;
+  titulo: any;
+  precio_ahora!: number;
   cantidad!: number;
   amount = 0;
   user: any;
@@ -34,12 +34,12 @@ export class CotizacionEditComponent implements OnChanges {
   public clientes: any = [];
   usuarioSelected: any;
   cliente: any;
-  
+
 
   constructor(
     public presupuestoService: PresupuestoService,
     public usuarioService: UsuarioService,
-    public translate: TranslateService ,
+    public translate: TranslateService,
     public router: Router,
     public toastr: ToastrService,
     public fb: FormBuilder,
@@ -53,13 +53,13 @@ export class CotizacionEditComponent implements OnChanges {
     this.getClientes();
   }
 
-  getClientes(){
-    this.usuarioService.cargarEmployeesTienda(this.user.local).subscribe(local=>{
+  getClientes() {
+    this.usuarioService.cargarEmployeesTienda(this.user.local).subscribe(local => {
       this.clientes = local;
       console.log(local)
     })
   }
-  
+
   ngOnChanges(changes: SimpleChanges): void {
     this.isLoading = true;
 
@@ -71,7 +71,7 @@ export class CotizacionEditComponent implements OnChanges {
       const presupuesto = changes['presupuestoSeleccionado'].currentValue;
       this.cliente = presupuesto.cliente?.uid || presupuesto.cliente || '';
       this.amount = presupuesto.amount || presupuesto.amount || '';
-      this.pedidoList = presupuesto.pedidoList  || [];'';
+      this.pedidoList = presupuesto.pedidoList || []; '';
 
       this.presupuestoForm.patchValue({
         id: presupuesto._id,
@@ -128,38 +128,43 @@ export class CotizacionEditComponent implements OnChanges {
     this.usuarioSelected = documentId;
   }
 
- 
+
 
   addMedicamento() {
-    if (this.name_medical && this.precio > 0) {
+    if (this.titulo && this.precio_ahora > 0) {
       this.pedidoList.push({
-        name_medical: this.name_medical,
+        // 🟢 Envolvemos el título en un objeto emulando la estructura bilingüe del backend
+        titulo: {
+          es: this.titulo,
+          en: this.titulo
+        },
         cantidad: this.cantidad + '',
-        precio: this.precio + ''
+        precio_ahora: this.precio_ahora + ''
       });
-      this.name_medical = '';
-      this.precio = 0;
+
+      this.titulo = '';
+      this.precio_ahora = 0;
       this.cantidad = 0;
       this.amount = 0;
-
     }
+
     this.amount = 0;
     for (let i = 0; i < this.pedidoList.length; i++) {
-      this.amount += parseFloat(this.pedidoList[i].precio) * parseFloat(this.pedidoList[i].cantidad);
+      this.amount += parseFloat(this.pedidoList[i].precio_ahora) * parseFloat(this.pedidoList[i].cantidad);
     }
   }
 
   deleteMedical(i: any) {
     this.pedidoList.splice(i, 1);
-    this.name_medical = '';
-    this.precio = 0;
+    this.titulo = '';
+    this.precio_ahora = 0;
     this.amount = 0;
     this.cantidad = 0;
 
 
     if (this.pedidoList.length === 0) {
-      this.name_medical = '';
-      this.precio = 0;
+      this.titulo = '';
+      this.precio_ahora = 0;
       this.cantidad = 0;
       this.amount = 0;
     }
@@ -196,7 +201,7 @@ export class CotizacionEditComponent implements OnChanges {
           const modal = bootstrap.Modal.getInstance(modalElement);
           if (modal) {
             modal.hide();
-
+            this.cleanModalBackdrop();
           }
           // Emit event to refresh project list
           this.reloadList.emit();
@@ -215,6 +220,7 @@ export class CotizacionEditComponent implements OnChanges {
           const modal = bootstrap.Modal.getInstance(modalElement);
           if (modal) {
             modal.hide();
+            this.cleanModalBackdrop();
 
           }
           // Emit event to refresh project list
@@ -223,6 +229,19 @@ export class CotizacionEditComponent implements OnChanges {
         }
       })
     }
+  }
+
+  cleanModalBackdrop() {
+    // 1. Buscamos y removemos todos los elementos de backdrop del DOM
+    const backdrops = document.querySelectorAll('.modal-backdrop');
+    backdrops.forEach(backdrop => backdrop.remove());
+
+    // 2. Quitamos la clase 'modal-open' del body para que no bloquee el scroll de la página
+    document.body.classList.remove('modal-open');
+
+    // 3. Limpiamos estilos residuales de scroll que inyecta Bootstrap en el body
+    document.body.style.overflow = '';
+    document.body.style.paddingRight = '';
   }
 
 

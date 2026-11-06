@@ -30,6 +30,10 @@ export class MapaComponent implements OnInit, AfterViewInit, OnDestroy  {
   private asignacionSubscription: Subscription | null = null;
   private refreshInterval: any = null;
 
+  cargando = false;
+  cargandodrivers = false;
+  cargandoMonitoreo = false;
+
   // Estado para mostrar coordenadas
   // driverPosition: { lat: number; lng: number } | null = null;
   // deliveryPosition: { lat: number; lng: number } | null = null;
@@ -317,6 +321,7 @@ public iniciarSimulacionVirtual(): void {
 
 
 getDriversLocal() {
+  this.cargandodrivers = true;
     this.driverService.getByLocalId(this.user.local).subscribe((resp: any) => {
       // 1. Guardamos la respuesta del servidor en tu variable original
       this.drivers = Array.isArray(resp) ? resp : [];
@@ -325,31 +330,39 @@ getDriversLocal() {
       // NO borramos la pantalla; en su lugar, encendemos los conductores de prueba.
       if (this.drivers.length === 0) {
         console.log("No hay drivers en base de datos. Activando simulador virtual...");
-        this.generar10ConductoresFalsos(); 
+        this.cargandodrivers = false;
+        // this.generar10ConductoresFalsos(); 
       } else {
         // Si en el futuro creas un driver real en la BD, entrará por aquí y pisará el mapa limpiamente
         this.allDrivers = [...this.drivers];
+        this.cargandodrivers = false;
         this.updateAllMarkers();
       }
+
 
       if (resp.tienda) {
         this.tienda = resp.tienda;
       }
+      
     });
 }
 
 
   getDrivers() {
+    this.cargando = true;
     this.driverService.gets().subscribe((resp: any) => {
       this.drivers = Array.isArray(resp) ? resp : [];
+      this.cargando = false;
     })
   }
 
   // ADMIN: Load all drivers and asignaciones
   loadAllDriversAsignaciones() {
+    this.cargando = true;
     const localId = this.user.local;
     this.asignacionService.getByTiendaId(localId).subscribe((asigs: any) => {
       this.allAsignaciones = Array.isArray(asigs) ? asigs : [];
+      this.cargando = false;
     });
 
     if (this.user.role === 'SUPERADMIN') {
@@ -516,13 +529,12 @@ getDriversLocal() {
    */
   private updateAsignacionWithPosition(): void {
     if (!this.asignacionId || !this.driverPosition ) return;
-
-    
     // Update silently without showing alert
     this.updateAsignacion();
   }
 
    private initMap(): void {
+    this.cargando = true;
     let centerLat = 10.4806;
     let centerLng = -66.9036;
 
@@ -561,6 +573,7 @@ getDriversLocal() {
 
     // Actualizar marcadores y ruta
     this.updateMap();
+    this.cargando = false;
   }
 
   private updateMap(): void {
@@ -772,6 +785,7 @@ shareCoordinates(): void {
   }
 
   updateAsignacion(): void {
+    this.cargandoMonitoreo = true;
     // CHOFER: Only update driverPosition (own GPS location)
     if(this.user.role == 'CHOFER' && this.driverPosition){
       const data = {
@@ -781,6 +795,7 @@ shareCoordinates(): void {
       this.asignacionService.actualizarCoords(data).subscribe((resp: any) => {
         console.log('Asignación actualizada driverPosition:', this.driverPosition);
         this.asignacion = resp.asignacionActualizada;
+        this.cargandoMonitoreo = false;
       });
     }
     

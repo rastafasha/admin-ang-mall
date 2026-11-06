@@ -78,9 +78,11 @@ export class PostalComponent implements OnInit {
 
   
   listar() {
+    this.cargando = true;
     this.postalService.getPostalesLocal(this.identity.local).subscribe(
       (resp:any) => {
         this.postales = resp;
+        this.cargando = false;
       },
       error => {
       }

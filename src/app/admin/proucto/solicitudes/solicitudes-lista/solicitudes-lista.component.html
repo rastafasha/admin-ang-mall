@@ -8,8 +8,8 @@
     </div>
 </div>
 
-<app-skeleton-loader *ngIf="cargando" [rows]="1" [columns]="3"></app-skeleton-loader>
-<app-skeleton-loader *ngIf="cargando" [rows]="4" [columns]="7"></app-skeleton-loader>
+<app-skeleton-loader *ngIf="cargando" [rows]="1" [columns]="4"></app-skeleton-loader>
+<app-skeleton-loader *ngIf="cargando" [rows]="4" [columns]="4"></app-skeleton-loader>
 
 <div class="row" *ngIf="!cargando">
     <div class="col-12">
@@ -20,7 +20,6 @@
                     <table class="table table-borderless">
                         <thead>
                             <tr>
-                                <th>#</th>
                                 <th>{{'Cliente'|translate}}</th>
                                 <th>{{'Status'|translate}}</th>
                                 <th>{{'Creación'|translate}}</th>
@@ -29,7 +28,6 @@
                         </thead>
                         <tbody>
                             <tr *ngFor="let solicitud of solicitudes |  paginate: { itemsPerPage: count, currentPage: p } | orderBy:'createdAt, desc'">
-                                <th scope="row"><span >#</span></th>
                                 
                                 <td>{{ solicitud.user.first_name }}</td>
                                  <td>

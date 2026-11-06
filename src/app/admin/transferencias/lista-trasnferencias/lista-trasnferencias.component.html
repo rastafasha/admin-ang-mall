@@ -7,8 +7,7 @@
 
     </div>
 </div>
-<app-skeleton-loader *ngIf="cargando" [rows]="1" [columns]="3"></app-skeleton-loader>
-<app-skeleton-loader *ngIf="cargando" [rows]="4" [columns]="9"></app-skeleton-loader>
+<app-skeleton-loader *ngIf="cargando" [rows]="5" [columns]="11"></app-skeleton-loader>
 
 
 
@@ -47,8 +46,10 @@
                                     {{transf.metodo_pago.tipo}}
                                 </td>
                                 <td>
-                                    <a (click)="onViewPago(transf)" data-bs-toggle="modal" class="cursor"
-                                        data-bs-target="#viewPago">{{transf.referencia}}</a>
+                                    <span class="badge badge-success badge-shadow btng">
+                                        <a (click)="onViewPago(transf)" data-bs-toggle="modal" class="cursor text-white"
+                                            data-bs-target="#viewPago">{{transf.referencia}}</a>
+                                    </span>
                                 </td>
                                 <td>
                                     {{transf.bankName}}
@@ -113,7 +114,6 @@
         </div>
     </div>
 </div>
-<app-modal-instrucciones [info]="info" [sectionId]="'transferencias'"
-    #instruccionesModal></app-modal-instrucciones>
+<app-modal-instrucciones [info]="info" [sectionId]="'transferencias'" #instruccionesModal></app-modal-instrucciones>
 
 <app-payment-details [pagoSeleccionado]="pagoSeleccionado" (closeModal)="onClose()" #viewPago></app-payment-details>
