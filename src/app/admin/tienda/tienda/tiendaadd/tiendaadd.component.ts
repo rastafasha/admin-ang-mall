@@ -91,6 +91,11 @@ export class TiendaaddComponent implements OnInit, OnChanges {
     this.getPaises();
     this.getCategorias();
     this.validarFormulario();
+
+    // Sincroniza el estado del flujo si el formulario ya trae credenciales del backend
+    // if (this.tiendaForm.get('meli_client_id')?.value) {
+    //   this.meliStatus = 'CONFIGURADO'; 
+    // }
   }
 
   validarFormulario() {
@@ -198,7 +203,12 @@ export class TiendaaddComponent implements OnInit, OnChanges {
         img: tienda.img,
         img_hero: tienda.img_hero,
         user: tienda.user?._id || tienda.user || '', // Por si el objeto de usuario viene poblado
-
+        
+        // 🚀 NUEVA SINCRONIZACIÓN: Carga las credenciales guardadas en el modal
+        usaMercadoLibre: tienda.usaMercadoLibre || false,
+        meli_client_id: tienda.meli_client_id || '',
+        meli_client_secret: tienda.meli_client_secret || '',
+        meli_redirect_uri: tienda.meli_redirect_uri || '',
         // 🔑 5. INYECCIÓN DE CONTROL INTERNACIONAL AL EDITAR
         // Sincroniza los selectores y switches de tu HTML con la base de datos migrada
         tipoFlujo: tienda.tipoFlujo || 'WHATSAPP',
@@ -244,6 +254,7 @@ export class TiendaaddComponent implements OnInit, OnChanges {
       state_banner: null,
       has_reservacion: null,
       has_cotizacion: null,
+      usaMercadoLibre: null,
       texto_hero_uno: null,
       texto_hero_dos: null,
       texto_hero_destacado: null,

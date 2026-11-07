@@ -10,6 +10,8 @@ import { Usuario } from 'src/app/models/usuario.model';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { TranslateService } from '@ngx-translate/core';
 import { MercadolibreService } from 'src/app/services/mercadolibre.service';
+import { TiendaService } from 'src/app/services/tienda.service';
+import { Tienda } from 'src/app/models/tienda.model';
 
 declare var jQuery: any;
 declare var $: any;
@@ -19,7 +21,7 @@ declare var $: any;
   templateUrl: './prod-index.component.html',
   styleUrls: ['./prod-index.component.css']
 })
-export class ProdIndexComponent implements OnInit, OnDestroy{
+export class ProdIndexComponent implements OnInit, OnDestroy {
 
   public productos: Producto[] = [];
   public producto: Producto;
@@ -48,6 +50,7 @@ export class ProdIndexComponent implements OnInit, OnDestroy{
   user: Usuario;
   productoSeleccionado: Producto;
   idLocal: string = '';
+  tienda:Tienda;
 
   public verModalImportar: boolean = false;
 
@@ -56,9 +59,9 @@ export class ProdIndexComponent implements OnInit, OnDestroy{
   constructor(
     private productoService: ProductoService,
     private categoriaService: CategoriaService,
-    private usuarioService: UsuarioService,
+    private tiendaService: TiendaService,
     public translate: TranslateService,
-    private meliService: MercadolibreService 
+    private meliService: MercadolibreService
   ) {
   }
 
@@ -77,7 +80,7 @@ export class ProdIndexComponent implements OnInit, OnDestroy{
     this.langSubscription = this.translate.onLangChange.subscribe(() => {
       this.actualizarInstruccionesPagos();
     });
-    
+
     if (this.user.role === 'SUPERADMIN') {
       this.loadProductos();
     }
@@ -86,8 +89,9 @@ export class ProdIndexComponent implements OnInit, OnDestroy{
       this.getProductosbByTienda();
     }
     this.loadCategorias();
+    this.getTienda();
 
-    
+
   }
 
   private actualizarInstruccionesPagos() {
@@ -114,7 +118,7 @@ export class ProdIndexComponent implements OnInit, OnDestroy{
   `;
   }
 
-   ngOnDestroy(): void {
+  ngOnDestroy(): void {
     if (this.langSubscription) {
       this.langSubscription.unsubscribe();
     }
@@ -130,6 +134,12 @@ export class ProdIndexComponent implements OnInit, OnDestroy{
         this.cargando = false;
         this.productos = productos;
       })
+  }
+
+  getTienda(){
+    this.tiendaService.getTiendaById(this.idLocal).subscribe((resp:any)=>{
+      this.tienda = resp;
+    })
   }
 
   getProductosbByTienda() {
@@ -160,7 +170,7 @@ export class ProdIndexComponent implements OnInit, OnDestroy{
     this.meliService.exportarProducto(producto._id).subscribe({
       next: (resp) => {
         this.cargandoSincronizacion[producto._id!] = false;
-        
+
         // Mutamos el estado reactivo del ítem local de forma inmediata para cambiar la interfaz
         if (!producto.mercadolibre) {
           producto.mercadolibre = { id: resp.ml_id, status: 'active', last_sync: new Date() };
@@ -178,9 +188,13 @@ export class ProdIndexComponent implements OnInit, OnDestroy{
       },
       error: (err) => {
         this.cargandoSincronizacion[producto._id!] = false;
+
+        // 🚀 LOG EN CONSOLA REVELADOR: Abre la consola del navegador (F12) y lee el objeto
+        console.log('🔴 Error real devuelto por el Backend:', err);
+
         Swal.fire({
           title: 'Fallo de Sincronización',
-          text: err.error?.mensaje || 'Asegúrate de que la categoría de este producto esté vinculada a un ID de categoría de Mercado Libre en tu panel.',
+          text: err.error?.mensaje || err.error?.msg || 'Revisa la consola para más detalles.',
           icon: 'error'
         });
       }
@@ -269,7 +283,7 @@ export class ProdIndexComponent implements OnInit, OnDestroy{
   onCloseModal(): void { this.productoSeleccionado = null; }
   onClose() { this.ngOnInit(); }
 
-  openImportarExcel(){
+  openImportarExcel() {
 
   }
 

@@ -219,7 +219,7 @@
                                         data-bs-target="#editColor"><span class="czi-diamond"></span>
                                         </button>
                                         <!-- Inyección del botón multi-tenant dentro de las acciones de la fila del producto -->
-                                       <button type="button" 
+                                       <button type="button" *ngIf="tienda.usaMercadoLibre === true"
                                                 class="btn btn-xs fw-bold align-items-center gap-1"
                                                 [disabled]="cargandoSincronizacion[producto._id]"
                                                 (click)="sincronizarConMercadoLibre(producto)"

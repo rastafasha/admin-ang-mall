@@ -28,10 +28,11 @@ export class ImportarProductosComponent {
   constructor(private productoService: ProductoService) { } // Reemplaza por tu servicio real
 
   onExcelSelected(event: any): void {
-    if (event.target.files && event.target.files.length > 0) {
-      this.excelFile = event.target.files;
-    }
+  if (event.target.files && event.target.files.length > 0) {
+    // 🚀 CORRECCIÓN: Extraemos el primer archivo del arreglo FileList
+    this.excelFile = event.target.files[0]; 
   }
+}
 
   onImagesSelected(event: any): void {
     if (event.target.files && event.target.files.length > 0) {
@@ -69,49 +70,47 @@ export class ImportarProductosComponent {
     });
   }
 
-  subirExcel(): void {
-    if (!this.excelFile || !this.localId) return;
-    this.loading = true;
-    this.erroresLote = []; // Limpiamos errores anteriores
+ subirExcel(): void {
+  if (!this.excelFile || !this.localId) return;
+  this.loading = true;
+  this.erroresLote = []; 
 
-    const formData = new FormData();
-    formData.append('excel', this.excelFile);
-    formData.append('local', this.localId);
+  const formData = new FormData();
+  // El nombre 'excel' coincide perfectamente con req.files.excel en tu backend
+  formData.append('excel', this.excelFile); 
+  formData.append('local', this.localId);
 
-    this.productoService.importarExcel(formData).subscribe({
-      next: (resp: any) => {
-        this.loading = false;
+  this.productoService.importarExcel(formData).subscribe({
+    next: (resp: any) => {
+      this.loading = false;
+      if (resp.ok) {
+        this.productosCreadosCount = resp.creados;
+        this.erroresLote = resp.errores || [];
+        this.onRefreshProducts.emit();
 
-        if (resp.ok) {
-          this.productosCreadosCount = resp.creados;
-          this.erroresLote = resp.errores || [];
-          this.onRefreshProducts.emit(); // Refresca la tabla principal en segundo plano
-
-          if (this.erroresLote.length > 0) {
-            // Si hay errores, saltamos al "Paso 3" que es la pantalla de reporte de errores
-            this.pasoActual = 3;
-            Swal.fire({
-              title: 'Importación parcial',
-              text: `Se crearon ${resp.creados} productos, pero hubo ${resp.fallidos} conflictos en el archivo.`,
-              icon: 'warning'
-            });
-          } else {
-            // Si todo fue perfecto, avanzamos directo a subir las fotos
-            Swal.fire({
-              title: '¡Excel Procesado!',
-              text: `${resp.creados} productos creados y traducidos con éxito. Procedamos con las fotos.`,
-              icon: 'success'
-            });
-            this.pasoActual = 2;
-          }
+        if (this.erroresLote.length > 0) {
+          this.pasoActual = 3;
+          Swal.fire({
+            title: 'Importación parcial',
+            text: `Se crearon ${resp.creados} productos, pero hubo ${resp.fallidos} conflictos.`,
+            icon: 'warning'
+          });
+        } else {
+          Swal.fire({
+            title: '¡Excel Procesado!',
+            text: `${resp.creados} productos creados con éxito. Procedamos con las fotos.`,
+            icon: 'success'
+          });
+          this.pasoActual = 2;
         }
-      },
-      error: (err: any) => {
-        this.loading = false;
-        Swal.fire('Error', err.error?.msg || 'Verifica el formato del archivo de Excel.', 'error');
       }
-    });
-  }
+    },
+    error: (err: any) => {
+      this.loading = false;
+      Swal.fire('Error', err.error?.msg || 'Verifica el formato del archivo de Excel.', 'error');
+    }
+  });
+}
 
   subirImagenesMasivas(): void {
     if (this.imageFiles.length === 0 || !this.localId) return;

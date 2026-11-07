@@ -18,8 +18,9 @@ export class MercadolibreService {
    * Helper para obtener los headers de autenticación nativos de tu SaaS
    */
   get headers() {
+    const token = localStorage.getItem('token') || '';
     return new HttpHeaders({
-      'x-token': localStorage.getItem('token') || '' // Saca tu JWT de sesión actual para el middleware validarJWT
+      'x-token': token // Asegúrate de usar la clave exacta que espera tu backend (ej: 'x-token' o 'Authorization')
     });
   }
 
@@ -28,7 +29,7 @@ export class MercadolibreService {
    * Envía datos a: POST /api/ml/config
    */
   guardarConfiguracion(config: MercadoLibreConfig): Observable<MeliConfigResponse> {
-    const url = `${this.baseUrl}/config`;
+    const url = `${this.baseUrl}/meli/config/store`;
     return this.http.post<MeliConfigResponse>(url, config, { headers: this.headers });
   }
 
@@ -37,7 +38,7 @@ export class MercadolibreService {
    * Envía datos a: GET /api/ml/config
    */
   obtenerConfiguracion(): Observable<MeliConfigResponse> {
-    const url = `${this.baseUrl}/config`;
+    const url = `${this.baseUrl}/meli/config/get`;
     return this.http.get<MeliConfigResponse>(url, { headers: this.headers });
   }
 
@@ -45,8 +46,8 @@ export class MercadolibreService {
    * 🌍 Solicita al backend la generación de la URL OAuth regional dinámica (según el país de la tienda).
    * Envía datos a: GET /api/ml/url-vinculacion (o la ruta que definiste para obtenerUrlVinculacionML)
    */
-  obtenerUrlVinculacion(): Observable<MeliUrlResponse> {
-    const url = `${this.baseUrl}/url-vinculacion`;
+  obtenerUrlVinculacion(tiendaId:string): Observable<MeliUrlResponse> {
+    const url = `${this.baseUrl}/meli/url-vinculacion/${tiendaId}`;
     return this.http.get<MeliUrlResponse>(url, { headers: this.headers });
   }
 
@@ -56,6 +57,6 @@ export class MercadolibreService {
    */
   exportarProducto(idProducto: string): Observable<MeliSyncResponse> {
     const url = `${this.baseUrl}/productos/exportar-mercadolibre/${idProducto}`;
-    return this.http.post<MeliSyncResponse>(url, {}, { headers: { ...this.headers } });
+    return this.http.post<MeliSyncResponse>(url, {}, { headers: this.headers  });
   }
 }
