@@ -13,7 +13,7 @@ import { TiendaService } from 'src/app/services/tienda.service';
 import { PaisService } from 'src/app/services/pais.service';
 import { Pais } from 'src/app/models/pais.model';
 import { TranslateService } from '@ngx-translate/core';
-import { MercadolibreService } from 'src/app/services/mercadolibre.service';
+
 
 interface HtmlInputEvent extends Event {
   target: HTMLInputElement & EventTarget;
@@ -421,6 +421,9 @@ export class TiendaaddComponent implements OnInit, OnChanges {
             Swal.fire('Actualizado', `${nombre} actualizado correctamente. Ahora agrega la info para el menú y sube la imagen.`, 'success');
           }
 
+          // 🔥  Avisamos al ecosistema que la tienda cambió
+        this.tiendaService.tiendaActualizada$.next();
+
           // Intentamos el cierre nativo por botón
           const botonCerrar = document.getElementById('btnCerrarModalTienda'); // El ID que le pusiste a tu botón 'Cerrar'
           if (botonCerrar) {
@@ -470,6 +473,9 @@ export class TiendaaddComponent implements OnInit, OnChanges {
           this.tiendaSeleccionado = resp.tienda;
           Swal.fire('¡Paso 1 completado!', 'Tienda creada. Ahora Agrega la info para el menu y sube la imagen.', 'success');
           // Como estmos creando, al finalizar debe ir al paso 2 para subir la imagen
+
+           // 🔥  Por si es una tienda nueva, el sidebar se entere de sus switches iniciales
+      this.tiendaService.tiendaActualizada$.next();
           this.currentStep = 2;
         })
     }

@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, map, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Tienda } from '../models/tienda.model';
+import { Subject } from 'rxjs';
 
 const base_url = environment.baseUrl;
 
@@ -13,6 +14,8 @@ export class TiendaService {
 
   private selectedTiendaSubject = new BehaviorSubject<Tienda | null>(null);
   selectedTiendaObservable$ = this.selectedTiendaSubject.asObservable();
+
+  public tiendaActualizada$ = new Subject<void>();
 
   constructor(
     private http: HttpClient

@@ -20,12 +20,15 @@ export class SidebarComponent implements OnInit, OnDestroy {
   public usuario: Usuario;
   user:any;
   role:any;
-  private routeSubscription: Subscription;
   public menuActivo: string = '';
   tienda:Tienda;
   has_reservacion:boolean = false;
   has_cotizacion:boolean = false;
   usaDelivery:boolean = false;
+  usaPedido:boolean = false;
+  
+  private routeSubscription: Subscription;
+  private tiendaSubscription: Subscription;
 
   constructor(
     public sidebarService: SidebarService,
@@ -56,7 +59,13 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
     // Aplicar estado inicial del sidebar
     this.updateSidebarClasses();
+    // 1. Carga inicial de la tienda (lo que ya tenías)
     this.getTienda();
+
+    // 🚀 2. Escuchar activamente si la tienda se actualiza desde el modal
+    this.tiendaSubscription = this.tiendaService.tiendaActualizada$.subscribe(() => {
+      this.getTienda(); // Retorna y refresca las variables reactivas en tiempo real 
+    });
   }
 
   getTienda(){
@@ -66,14 +75,18 @@ export class SidebarComponent implements OnInit, OnDestroy {
         this.has_reservacion = resp.has_reservacion;
         this.has_cotizacion = resp.has_cotizacion;
         this.usaDelivery = resp.usaDelivery
+        this.usaPedido = resp.usaPedido
       }
     )
   }
 
   ngOnDestroy(): void {
-    // Limpiar la suscripción
     if (this.routeSubscription) {
       this.routeSubscription.unsubscribe();
+    }
+    // 🚀 Limpiamos la suscripción al destruir el componente
+    if (this.tiendaSubscription) {
+      this.tiendaSubscription.unsubscribe();
     }
   }
 

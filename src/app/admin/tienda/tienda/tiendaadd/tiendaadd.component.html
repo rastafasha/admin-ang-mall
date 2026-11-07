@@ -187,7 +187,7 @@
                                 </div>
                                 <div class="row">
                                     <!-- Botón ubicación actual -->
-                                    
+
                                     <app-tienda-mapa [formParent]="tiendaForm"></app-tienda-mapa>
                                     <div class="form-group col-xs-12 col-md-9">
                                         <label class=" col-form-label font-weight-medium"
@@ -264,8 +264,7 @@
                                 </div>
                                 <!-- Reservaciones -->
                                 <div class="row">
-
-                                    <div class="form-group col-xs-12 col-sm-3" *ngIf="user.role === 'SUPERADMIN'">
+                                    <div class="form-group col-xs-12 col-sm-3">
                                         <label for="text-input">{{'Mostrar Tasas?'|translate}} <span
                                                 class="required">*</span></label>
                                         <div class="input-group">
@@ -285,7 +284,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="form-group col-xs-12 col-sm-3  " *ngIf="user.role === 'SUPERADMIN'">
+                                    <div class="form-group col-xs-12 col-sm-3  ">
                                         <label for="text-input">{{'Delivery?'|translate}} <span
                                                 class="required">*</span></label>
                                         <div class="input-group">
@@ -305,8 +304,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="form-group col-xs-12 col-sm-3  " *ngIf="user.role === 'SUPERADMIN'">
-                                        <label for="text-input">{{'Delivery?'|translate}} <span
+                                    <div class="form-group col-xs-12 col-sm-3  ">
+                                        <label for="text-input">{{'usa Pedido?'|translate}} <span
                                                 class="required">*</span></label>
                                         <div class="input-group">
                                             <select class="form-control" formControlName="usaPedido">
@@ -325,38 +324,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="form-group col-xs-12 col-sm-3  " *ngIf="user.role === 'SUPERADMIN'">
-                                        <label for="text-input">{{'Reservaciones?'|translate}} <span
-                                                class="required">*</span></label>
-                                        <div class="input-group">
-                                            <select class="form-control" formControlName="has_reservacion">
-                                                <option disabled value="">{{'Seleccione'|translate}}</option>
-                                                <option [value]="true">{{'Si'|translate}}</option>
-                                                <option [value]="false">{{'No'|translate}}</option>
-                                            </select>
-                                        </div>
-                                        <div *ngIf="tiendaForm.get('has_reservacion')?.touched && tiendaForm.get('has_reservacion')?.invalid"
-                                            class="text-danger">
-                                            <div *ngIf="tiendaForm.get('has_reservacion')?.errors?.['required']">
-                                                {{'Campo Requerido'|translate}}
-                                            </div>
-                                            <div *ngIf="tiendaForm.get('has_reservacion')?.errors?.['minlength']">
-                                                {{'Por Favor Seleccione'|translate}}
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group col-xs-12 col-sm-3 " *ngIf="user.role === 'SUPERADMIN'">
-                                        <label for="Tienda">{{'Capacidad por Hora'|translate}} </label>
-                                        <div class="input-group">
-                                            <input type="number" formControlName="capacidad_por_hora"
-                                                class="form-control" id="capacidad_por_hora">
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- fin Reservaciones -->
-                                <!-- has_cotizacion -->
-                                <div class="row mt-3">
-                                    <div class="form-group col-xs-12 col-sm-6" *ngIf="user.role === 'SUPERADMIN'">
+                                    <div class="form-group col-xs-12 col-sm-3">
                                         <label for="text-input">{{'Cotiza?'|translate}} <span
                                                 class="required">*</span></label>
                                         <div class="input-group">
@@ -376,6 +344,44 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="form-group col-xs-12 col-sm-3">
+                                        <label for="text-input">{{'Reservaciones?'|translate}} <span
+                                                class="required">*</span></label>
+                                        <div class="input-group">
+                                            <!-- Mantenemos tu formControlName original -->
+                                            <select class="form-control" formControlName="has_reservacion">
+                                                <option disabled value="">{{'Seleccione'|translate}}</option>
+                                                <!-- CAMBIO: Usamos [ngValue] para forzar el booleano real -->
+                                                <option [ngValue]="true">{{'Si'|translate}}</option>
+                                                <option [ngValue]="false">{{'No'|translate}}</option>
+                                            </select>
+                                        </div>
+                                        <div *ngIf="tiendaForm.get('has_reservacion')?.touched && tiendaForm.get('has_reservacion')?.invalid"
+                                            class="text-danger">
+                                            <div *ngIf="tiendaForm.get('has_reservacion')?.errors?.['required']">
+                                                {{'Campo Requerido'|translate}}
+                                            </div>
+                                            <div *ngIf="tiendaForm.get('has_reservacion')?.errors?.['minlength']">
+                                                {{'Por Favor Seleccione'|translate}}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- El *ngIf ahora funcionará perfectamente porque el valor será un booleano estricto -->
+                                    <div class="form-group col-xs-12 col-sm-3"
+                                        *ngIf="tiendaForm.get('has_reservacion')?.value === true">
+                                        <label for="Tienda">{{'Capacidad por Hora'|translate}} </label>
+                                        <div class="input-group">
+                                            <input type="number" formControlName="capacidad_por_hora"
+                                                class="form-control" id="capacidad_por_hora">
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <!-- fin Reservaciones -->
+                                <!-- has_cotizacion -->
+                                <div class="row mt-3">
+
 
                                     <!-- Selector de Flujo Operativo (Agrégalo aquí) -->
                                     <div class="form-group col-xs-12 col-sm-6 " *ngIf="user.role === 'SUPERADMIN'">
@@ -388,13 +394,11 @@
                                 </div>
                                 <!-- MERCADO LIBRE -->
                                 <div class="row mt-3 mb-3">
-                                     <!-- 🚀 INTEGRACIÓN COMPLETA DE MERCADO LIBRE MULTI-TENANT -->
+                                    <!-- 🚀 INTEGRACIÓN COMPLETA DE MERCADO LIBRE MULTI-TENANT -->
                                     <div class="row mt-3">
                                         <div class="col-md-12">
                                             <div class="form-check form-switch custom-switch-meli">
-                                                <input class="form-check-input" 
-                                                    type="checkbox" 
-                                                    id="switchMeli" 
+                                                <input class="form-check-input" type="checkbox" id="switchMeli"
                                                     formControlName="usaMercadoLibre"
                                                     (change)="usaMercadoLibre = !usaMercadoLibre">
                                                 <label class="form-check-label fw-bold text-primary" for="switchMeli">
@@ -405,7 +409,8 @@
                                     </div>
                                     <!-- Formulario Colapsable Reactivo según el valor del booleano -->
                                     <div class="card bg-light border-0 mt-3 p-3" *ngIf="usaMercadoLibre">
-                                        <app-tiendamercadolibre [formParent]="tiendaForm"  [tiendaId]="tiendaSeleccionado?._id"> </app-tiendamercadolibre>
+                                        <app-tiendamercadolibre [formParent]="tiendaForm"
+                                            [tiendaId]="tiendaSeleccionado?._id"> </app-tiendamercadolibre>
                                     </div>
                                     <!-- 🚀 FIN INTEGRACIÓN MERCADO LIBRE -->
                                 </div>
@@ -416,14 +421,16 @@
                                         <div class="form-check form-switch bg-light p-2 rounded border">
                                             <input class="form-check-input" type="checkbox" id="checkUsd"
                                                 formControlName="acepta_usd_internacional">
-                                            <label class="form-check-label fw-bold ms-2" for="checkUsd">{{'Aceptar USD Internacional (Zelle)'|translate}}</label>
+                                            <label class="form-check-label fw-bold ms-2" for="checkUsd">{{'Aceptar USD
+                                                Internacional (Zelle)'|translate}}</label>
                                         </div>
                                     </div>
                                     <div class="form-group col-xs-12 col-sm-6">
                                         <div class="form-check form-switch bg-light p-2 rounded border">
                                             <input class="form-check-input" type="checkbox" id="checkEur"
                                                 formControlName="acepta_eur">
-                                            <label class="form-check-label fw-bold ms-2" for="checkEur">{{'Aceptar EUR Internacional (Bizum)'|translate}}</label>
+                                            <label class="form-check-label fw-bold ms-2" for="checkEur">{{'Aceptar EUR
+                                                Internacional (Bizum)'|translate}}</label>
                                         </div>
                                     </div>
                                 </div>
@@ -470,20 +477,20 @@
                         <div *ngIf="currentStep === 3">
                             <app-tiendamarketing [formParent]="tiendaForm"></app-tiendamarketing>
 
-                             <div class="row">
-                                    <div class="col-6">
-                                        <button class="btn btn-success waves-effect waves-light m-r-10 btn-block"
-                                            type="button" (click)="prevStep()">{{'Anterior'|translate}}</button>
-                                        <button class="btn btn-success waves-effect waves-light m-r-10 btn-block"
-                                            type="button" (click)="nextStepApp()">{{'Siguiente'|translate}}</button>
-                                    </div>
-                                    <div class="col-6">
-                                        <button (click)="saveTienda()" class="btn btn-outline-success">
-                                            {{ (tiendaSeleccionado ? 'Actualizar y Continuar' : 'Crear y Continuar') |
-                                            translate }}
-                                        </button>
-                                    </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <button class="btn btn-success waves-effect waves-light m-r-10 btn-block"
+                                        type="button" (click)="prevStep()">{{'Anterior'|translate}}</button>
+                                    <button class="btn btn-success waves-effect waves-light m-r-10 btn-block"
+                                        type="button" (click)="nextStepApp()">{{'Siguiente'|translate}}</button>
                                 </div>
+                                <div class="col-6">
+                                    <button (click)="saveTienda()" class="btn btn-outline-success">
+                                        {{ (tiendaSeleccionado ? 'Actualizar y Continuar' : 'Crear y Continuar') |
+                                        translate }}
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                         <!-- imagen -->
                         <div *ngIf="currentStep === 4">
