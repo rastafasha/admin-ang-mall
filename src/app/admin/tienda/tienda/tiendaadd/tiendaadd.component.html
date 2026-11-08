@@ -12,7 +12,7 @@
                     <div class="row">
 
                         <!-- Step Indicator -->
-                        <div class="step-indicator" *ngIf="user.role === 'SUPERADMIN'">
+                        <div class="step-indicator" >
                             <div class="step" [ngClass]="{'active': currentStep >= 1, 'completed': currentStep > 1}">
                                 <span class="step-number">1</span>
                                 <span class="step-label">{{'Datos'|translate}}</span>
@@ -185,34 +185,16 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="clear"></div>
                                 <div class="row">
                                     <!-- Botón ubicación actual -->
-
                                     <app-tienda-mapa [formParent]="tiendaForm"></app-tienda-mapa>
-                                    <div class="form-group col-xs-12 col-md-9">
-                                        <label class=" col-form-label font-weight-medium"
-                                            for="text-input">{{'Dirección'|translate}}
-                                            <span class="required">*</span></label>
-                                        <div class="col-md-12">
-                                            <textarea formControlName="direccion" id="direccion"
-                                                class="form-control"></textarea>
-                                            <div *ngIf="tiendaForm.get('direccion')?.touched && tiendaForm.get('direccion')?.invalid"
-                                                class="text-danger">
-                                                <div *ngIf="tiendaForm.get('direccion')?.errors?.['required']">
-                                                    {{'Campo Requerido'|translate}}
-                                                </div>
-                                                <div *ngIf="tiendaForm.get('direccion')?.errors?.['minlength']">
-                                                    {{'Mínimo 3 Caracteres'|translate}}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    
 
                                 </div>
                                 <!-- Categoría, Subcategoría, slide, Destacado -->
                                 <div class="row">
-                                    <div class="form-group col-xs-12 col-sm-6 col-md-3"
-                                        *ngIf="user.role === 'SUPERADMIN'">
+                                    <div class="form-group col-xs-12 col-sm-6 col-md-3">
                                         <label for="select-input">{{'Categoría'|translate}} </label>
                                         <select class="form-control" formControlName="categoria">
                                             <option disabled value="">{{ 'Seleccione' | translate }}</option>
@@ -223,8 +205,7 @@
                                             </option>
                                         </select>
                                     </div>
-                                    <div class="form-group col-xs-12 col-sm-6 col-md-3"
-                                        *ngIf="user.role === 'SUPERADMIN'">
+                                    <div class="form-group col-xs-12 col-sm-6 col-md-3">
                                         <label for="select-input">{{'Subcategoría'|translate}}</label>
                                         <select class="form-control" formControlName="subcategoria">
                                             <option disabled value="">{{ 'Seleccione' | translate }}</option>
@@ -239,8 +220,7 @@
                                             </option>
                                         </select>
                                     </div>
-                                    <div class="form-group col-xs-12 col-sm-6 col-md-3 "
-                                        *ngIf="user.role === 'SUPERADMIN'">
+                                    <div class="form-group col-xs-12 col-sm-6 col-md-3 ">
                                         <label for="text-input">{{'Mostrar en slide'|translate}}</label>
                                         <div class="input-group">
                                             <select class="form-control" formControlName="state_banner">
@@ -250,8 +230,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="form-group col-xs-12 col-sm-6 col-md-3 "
-                                        *ngIf="user.role === 'SUPERADMIN'">
+                                    <div class="form-group col-xs-12 col-sm-6 col-md-3 ">
                                         <label for="text-input">{{'Destacado?'|translate}}</label>
                                         <div class="input-group">
                                             <select class="form-control" formControlName="isFeatured">
@@ -377,29 +356,44 @@
                                         </div>
                                     </div>
 
-                                </div>
-                                <!-- fin Reservaciones -->
-                                <!-- has_cotizacion -->
-                                <div class="row mt-3">
-
-
                                     <!-- Selector de Flujo Operativo (Agrégalo aquí) -->
-                                    <div class="form-group col-xs-12 col-sm-6 " *ngIf="user.role === 'SUPERADMIN'">
+                                    <div class="form-group col-xs-12 col-sm-6 ">
                                         <label>{{'Tipo de Flujo'|translate}} <span class="required">*</span></label>
                                         <select class="form-control" formControlName="tipoFlujo">
                                             <option value="WHATSAPP">WhatsApp</option>
                                             <option value="POS_DIRECTO">POS Directo</option>
                                         </select>
                                     </div>
+                                    <!-- tipoFlujo -->
+                                    <div class="row col-xs-12 mt-3"
+                                    *ngIf="tiendaForm.get('tipoFlujo')?.value === 'POS_DIRECTO'">
+                                    <div class="form-group col-xs-12 col-sm-6">
+                                        <div class="form-check form-switch bg-light p-2 rounded border">
+                                            <input class="form-check-input" type="checkbox" id="checkUsd"
+                                                formControlName="acepta_usd_internacional">
+                                            <label class="form-check-label fw-bold ms-2" for="checkUsd">{{'Aceptar USD  Internacional (Zelle)'|translate}}</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-xs-12 col-sm-6">
+                                        <div class="form-check form-switch bg-light p-2 rounded border">
+                                            <input class="form-check-input" type="checkbox" id="checkEur"
+                                                formControlName="acepta_eur">
+                                            <label class="form-check-label fw-bold ms-2" for="checkEur">{{'Aceptar EUR  Internacional (Bizum)'|translate}}</label>
+                                        </div>
+                                    </div>
                                 </div>
+
+                                </div>
+                                <!-- fin Reservaciones -->
+
+                                
+                                
                                 <!-- MERCADO LIBRE -->
                                 <div class="row mt-3 mb-3">
                                     <!-- 🚀 INTEGRACIÓN COMPLETA DE MERCADO LIBRE MULTI-TENANT -->
                                     <div class="row mt-3">
                                         <div class="form-check col-xs-12">
-                                            <input class="form-check-input" 
-                                                type="checkbox" 
-                                                id="usaMercadoLibre" 
+                                            <input class="form-check-input" type="checkbox" id="usaMercadoLibre"
                                                 formControlName="usaMercadoLibre">
                                             <label class="form-check-label" for="usaMercadoLibre">
                                                 ¿Sincronizar esta tienda con Mercado Libre?
@@ -408,45 +402,24 @@
                                     </div>
                                     <!-- Formulario Colapsable Reactivo según el valor del booleano -->
                                     <div *ngIf="tiendaForm.get('usaMercadoLibre')?.value === true">
-                                        <app-tiendamercadolibre 
-                                            [formParent]="tiendaForm" 
+                                        <app-tiendamercadolibre [formParent]="tiendaForm"
                                             [tiendaId]="tiendaSeleccionado?._id">
                                         </app-tiendamercadolibre>
                                     </div>
                                     <!-- 🚀 FIN INTEGRACIÓN MERCADO LIBRE -->
                                 </div>
-                                <!-- tipoFlujo -->
-                                <div class="row col-xs-12 mt-3"
-                                    *ngIf="tiendaForm.get('tipoFlujo')?.value === 'POS_DIRECTO' && user.role === 'SUPERADMIN'">
-                                    <div class="form-group col-xs-12 col-sm-6">
-                                        <div class="form-check form-switch bg-light p-2 rounded border">
-                                            <input class="form-check-input" type="checkbox" id="checkUsd"
-                                                formControlName="acepta_usd_internacional">
-                                            <label class="form-check-label fw-bold ms-2" for="checkUsd">{{'Aceptar USD
-                                                Internacional (Zelle)'|translate}}</label>
-                                        </div>
-                                    </div>
-                                    <div class="form-group col-xs-12 col-sm-6">
-                                        <div class="form-check form-switch bg-light p-2 rounded border">
-                                            <input class="form-check-input" type="checkbox" id="checkEur"
-                                                formControlName="acepta_eur">
-                                            <label class="form-check-label fw-bold ms-2" for="checkEur">{{'Aceptar EUR
-                                                Internacional (Bizum)'|translate}}</label>
-                                        </div>
-                                    </div>
-                                </div>
+
 
                                 <div class="row">
-                                    <div class="col-6" *ngIf="user.role === 'SUPERADMIN'">
-                                        <button class="btn btn-success waves-effect waves-light m-r-10 btn-block"
-                                            type="button" (click)="nextStep()">{{'Siguiente'|translate}}</button>
-                                    </div>
-                                    <div class="col-6">
-                                        <button (click)="saveTienda()" class="btn btn-outline-success">
-                                            {{ (tiendaSeleccionado ? 'Actualizar y Continuar' : 'Crear y Continuar') |
-                                            translate }}
+                                    <div class="d-flex justify-content-end align-items-center mt-3 gap-3">
+                                        <button type="button" (click)="saveTienda()" class="btn btn-outline-success mr-2">
+                                            {{ (tiendaSeleccionado ? 'Actualizar y Continuar' : 'Crear y Continuar') | translate }}
+                                        </button>
+                                        <button type="button" (click)="nextStep()" class="btn btn-primary waves-effect waves-light">
+                                            {{ 'Siguiente' | translate }}
                                         </button>
                                     </div>
+                                    
                                 </div>
                             </form>
                         </div>
@@ -460,18 +433,16 @@
                             </div>
 
                             <div class="row">
-                                <div class="col-6">
-                                    <button class="btn btn-success waves-effect waves-light m-r-10 btn-block"
-                                        type="button" (click)="prevStep1()">{{'Anterior'|translate}}</button>
-                                    <button class="btn btn-success waves-effect waves-light m-r-10 btn-block"
-                                        type="button" (click)="nextStep2()">{{'Siguiente'|translate}}</button>
-                                </div>
-                                <div class="col-6">
-                                    <button (click)="saveTienda()" class="btn btn-outline-success">
+                                <div class="d-flex justify-content-end align-items-center mt-3 gap-3">
+                                        <button (click)="saveTienda()" class="btn btn-outline-success">
                                         {{ (tiendaSeleccionado ? 'Actualizar y Continuar' : 'Crear y Continuar') |
                                         translate }}
                                     </button>
-                                </div>
+                                        <button class="btn btn-warning waves-effect waves-light m-r-10 btn-block"
+                                        type="button" (click)="prevStep1()">{{'Anterior'|translate}}</button>
+                                    <button class="btn btn-primary waves-effect waves-light m-r-10 btn-block"
+                                        type="button" (click)="nextStep2()">{{'Siguiente'|translate}}</button>
+                                    </div>
                             </div>
                         </div>
                         <!-- Marketing/Hero -->
@@ -479,17 +450,15 @@
                             <app-tiendamarketing [formParent]="tiendaForm"></app-tiendamarketing>
 
                             <div class="row">
-                                <div class="col-6">
-                                    <button class="btn btn-success waves-effect waves-light m-r-10 btn-block"
-                                        type="button" (click)="prevStep()">{{'Anterior'|translate}}</button>
-                                    <button class="btn btn-success waves-effect waves-light m-r-10 btn-block"
-                                        type="button" (click)="nextStepApp()">{{'Siguiente'|translate}}</button>
-                                </div>
-                                <div class="col-6">
+                                <div class="d-flex justify-content-end align-items-center mt-3 gap-3">
                                     <button (click)="saveTienda()" class="btn btn-outline-success">
                                         {{ (tiendaSeleccionado ? 'Actualizar y Continuar' : 'Crear y Continuar') |
                                         translate }}
                                     </button>
+                                    <button class="btn btn-warning waves-effect waves-light m-r-10 btn-block"
+                                        type="button" (click)="prevStep()">{{'Anterior'|translate}}</button>
+                                    <button class="btn btn-primary waves-effect waves-light m-r-10 btn-block"
+                                        type="button" (click)="nextStepApp()">{{'Siguiente'|translate}}</button>
                                 </div>
                             </div>
                         </div>
@@ -521,18 +490,13 @@
                                                 [src]="tiendaSeleccionado.img | imagenPipe: 'tiendas'"
                                                 class="img-responsive img-thumbnail" style="width:150px; height: 150px;"
                                                 alt="">
-                                            <img *ngIf="imgTemp" [src]="imgTemp" class="img-responsive"
-                                                style="width:150px; height: 150px;">
-                                            <div class="form-group ">
-
-                                            </div>
                                         </div>
                                         <input type="file" (change)="cambiarImagen($event.target.files[0], 'img')">
                                         <br>
                                         <br>
-                                        <div class="col-6">
+                                        <div class="d-flex justify-content-end align-items-center mt-3 gap-3">
                                             <button type="button" [disabled]="!imagenSubir" (click)="subirImagen('img')"
-                                                class="btn btn-success waves-effect waves-light m-r-10 btn-block">
+                                                class="btn btn-outline-success waves-effect waves-light m-r-10 btn-block">
                                                 <i class="fa fa-save"></i> {{'Subir Logo'|translate}}
                                             </button>
                                         </div>
@@ -544,19 +508,14 @@
                                                 [src]="tiendaSeleccionado.img_hero | imagenPipe: 'tiendas'"
                                                 class="img-responsive img-thumbnail" style="width:150px; height: 150px;"
                                                 alt="">
-                                            <img *ngIf="imgHeroTemp" [src]="imgHeroTemp" class="img-responsive"
-                                                style="width:150px; height: 150px;">
-                                            <div class="form-group ">
-
-                                            </div>
                                         </div>
                                         <input type="file" (change)="cambiarImagen($event.target.files[0], 'img_hero')">
                                         <br>
                                         <br>
-                                        <div class="col-6">
+                                        <div class="d-flex justify-content-end align-items-center mt-3 gap-3">
                                             <button type="button" [disabled]="!imagenSubir"
                                                 (click)="subirImagen('img_hero')"
-                                                class="btn btn-success waves-effect waves-light m-r-10 btn-block">
+                                                class="btn btn-outline-success waves-effect waves-light m-r-10 btn-block">
                                                 <i class="fa fa-save"></i> {{'Subir img Banner'|translate}}
                                             </button>
                                         </div>
@@ -565,8 +524,8 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-6">
-                                        <button class="btn btn-success waves-effect waves-light m-r-10 btn-block"
+                                    <div class="d-flex justify-content-end align-items-center mt-3 gap-3">
+                                        <button class="btn btn-warning waves-effect waves-light m-r-10 btn-block"
                                             type="button" (click)="prevStep2()">{{'Anterior'|translate}}</button>
                                     </div>
 

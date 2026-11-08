@@ -25,6 +25,9 @@ export class Venta {
   month: string;
   year: string;
   estado: string;
+  origen: string;
+  meli_order_id: string;
+  meli_shipping_id: string;
 }
 
 

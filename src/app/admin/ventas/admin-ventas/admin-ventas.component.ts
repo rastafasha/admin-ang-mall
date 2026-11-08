@@ -12,6 +12,7 @@ import { Tienda } from 'src/app/models/tienda.model';
 import { ModalTrackingComponent } from 'src/app/components/modal-tracking/modal-tracking.component';
 import { Subscription } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
+import { MercadolibreService } from 'src/app/services/mercadolibre.service';
 
 declare var jQuery: any;
 declare var $: any;
@@ -39,9 +40,12 @@ export class AdminVentasComponent implements OnInit, OnDestroy {
   public year;
   public url;
 
-  public ventas: Array<any> = [];
   public ventasFiltradas: Array<any> = [];
+  public tiendaFiltroId: string = 'todas';
+  public filtroCanal: 'TODAS' | 'DIRECTA' | 'MERCADOLIBRE' = 'TODAS';
   public tipo;
+
+  public ventas: any[] = [];           // El arreglo que recorre tu *ngFor en el HTML
 
   public track;
   public msm_error_track = false;
@@ -64,6 +68,7 @@ export class AdminVentasComponent implements OnInit, OnDestroy {
   listTiendas: any;
   user: any;
   tiendaSelected: Tienda;
+  estadisticasMeli: any;
   public tienda_moneda: string;
 
   @ViewChild(FacturaComponent) factura !: FacturaComponent;
@@ -87,8 +92,9 @@ export class AdminVentasComponent implements OnInit, OnDestroy {
     private _route: ActivatedRoute,
     private _ventaService: VentaService,
     public translate: TranslateService,
-    private _productoService: ProductoService, 
-    private tiendaService: TiendaService, 
+    private _productoService: ProductoService,
+    private tiendaService: TiendaService,
+    private meliService: MercadolibreService,
   ) {
     this.identity = this._userService.usuario;
     this.url = environment.baseUrl;
@@ -165,7 +171,7 @@ export class AdminVentasComponent implements OnInit, OnDestroy {
   `;
   }
 
-   ngOnDestroy(): void {
+  ngOnDestroy(): void {
     if (this.langSubscription) {
       this.langSubscription.unsubscribe();
     }
@@ -214,8 +220,6 @@ export class AdminVentasComponent implements OnInit, OnDestroy {
   init_data() {
     this.search(null, null);
   }
-
-
 
   search(tipe, orden) {
     var sortby;
@@ -316,8 +320,6 @@ export class AdminVentasComponent implements OnInit, OnDestroy {
 
 
   }
-
-
 
   close_alert() {
     this.msm_error_track = false;
@@ -459,21 +461,53 @@ export class AdminVentasComponent implements OnInit, OnDestroy {
     this.tiendaService.getTiendaById(this.user.local).subscribe((resp: any) => {
       this.tiendaSelected = resp;
       this.tienda_moneda = this.tiendaSelected.moneda
+      this.getResumenMl()
+    })
+  }
+
+  getResumenMl() {
+    this.meliService.obtenerGraficoResumen(this.tiendaSelected._id).subscribe((resp: any) => {
+      this.estadisticasMeli = resp.reporte;
     })
   }
 
   onChangeTienda(event: any) {
-    console.log(event.target.value)
-    if (event.target.value === 'todas') {
-      // se seleccionó la opción de todas las ventas
-      this.ventasFiltradas = this.ventas;
-    }
-    else {
-      // se seleccionó las ventas por un local
-      this.ventasFiltradas = this.ventas.filter(item => item.local?._id === event.target.value)
+    this.tiendaFiltroId = event.target.value;
+    this.aplicarFiltrosCombinados();
+  }
 
+  aplicarFiltroCanal(canal: 'TODAS' | 'DIRECTA' | 'MERCADOLIBRE') {
+    this.filtroCanal = canal;
+    this.aplicarFiltrosCombinados();
+  }
+
+  private aplicarFiltrosCombinados() {
+    let resultado = [...this.ventas];
+
+    // 1. Filtra por tienda si el SuperAdmin seleccionó una específica
+    if (this.tiendaFiltroId !== 'todas') {
+      resultado = resultado.filter(item => item.local?._id === this.tiendaFiltroId);
     }
 
+    // 2. Filtra por canal de venta (Directa vs Mercado Libre)
+    if (this.filtroCanal === 'MERCADOLIBRE') {
+      resultado = resultado.filter(v => v.origen === 'MERCADOLIBRE');
+    } else if (this.filtroCanal === 'DIRECTA') {
+      resultado = resultado.filter(v => !v.origen || v.origen === 'DIRECTA');
+    }
+
+    this.ventasFiltradas = resultado;
+    this.p = 1; // Reinicia la paginación a la página 1
+  }
+
+  contarPorCanal(canal: 'TODAS' | 'DIRECTA' | 'MERCADOLIBRE'): number {
+    let base = this.tiendaFiltroId === 'todas'
+      ? this.ventas
+      : this.ventas.filter(item => item.local?._id === this.tiendaFiltroId);
+
+    if (canal === 'TODAS') return base.length;
+    if (canal === 'MERCADOLIBRE') return base.filter(v => v.origen === 'MERCADOLIBRE').length;
+    return base.filter(v => !v.origen || v.origen === 'DIRECTA').length;
   }
 
   onViewTracking(item: any) {
@@ -541,6 +575,7 @@ export class AdminVentasComponent implements OnInit, OnDestroy {
 
   ventasPorLocalId() {
     this._ventaService.listarporLocal(this.user.local).subscribe((resp: any) => {
+      this.ventas = resp.ventas;
       this.ventasFiltradas = resp.ventas;
     })
   }

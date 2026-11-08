@@ -38,6 +38,7 @@
                             </div>
                         </div>
                     </div>
+                 
                     <!-- notificaciones -->
                     <div class="col-xs-12 col-sm-4">
                         <!-- subcribirse a notificaciones-->
@@ -160,6 +161,11 @@
                     </div>
 
                 </div>
+                <!-- resumen mercadolibre -->
+                   <div class="col-xs-12 " *ngIf="tienda.usaMercadoLibre === true">
+                        <app-bar-chart *ngIf="estadisticasMeli" [estadisticas]="estadisticasMeli" chartId="barChartMeli"> </app-bar-chart>
+
+                    </div>
                 <!-- accesos tienda -->
                 <div class="row">
                     <!-- productos -->

@@ -53,13 +53,18 @@
                 <div class="row mb-5">
 
                     <div class="col-xs-12 col-sm-8"
-                        *ngIf="user.role ==='SUPERADMIN'|| user.role ==='ADMIN' ||user.role==='VENTAS' ">
+                        >
                         <!-- <app-bar-chart [ventas]="ventas"></app-bar-chart> -->
                         <app-line-chart [ventas]="ventasFiltradas"></app-line-chart>
 
                     </div>
-                    <div class="col-xs-12 col-sm-4">
+                    <div class="col-xs-12 col-sm-4" *ngIf="user.role ==='SUPERADMIN'|| user.role ==='ADMIN' ||user.role==='VENTAS' " >
                         <app-pie-chart2 [ventas]="ventasFiltradas"></app-pie-chart2>
+                    </div>
+                    <div class="col-xs-12 " *ngIf="tiendaSelected.usaMercadoLibre === true">
+                        <!-- <app-bar-chart [ventas]="ventas"></app-bar-chart> -->
+                        <app-bar-chart *ngIf="estadisticasMeli" [estadisticas]="estadisticasMeli" chartId="barChartMeli"> </app-bar-chart>
+
                     </div>
                 </div>
 
@@ -187,7 +192,7 @@
                                             <select name="" class="form-control custom-select"
                                                 style="border-top-left-radius: 0px;border-bottom-left-radius: 0px"
                                                 name="estado" [(ngModel)]="estado">
-                                                <option value="Venta en proceso" selected>{{'Venta en proceso'|translate}}</option>
+                                                <option value="Venta en proceso" selected>{{'Venta en  proceso'|translate}}</option>
                                                 <option value="Enviado">{{'Enviado'|translate}}</option>
                                                 <option value="Cancelado">{{'Cancelado'|translate}}</option>
                                                 <option value="Reembolsado">{{'Reembolsado'|translate}}</option>
@@ -241,13 +246,11 @@
                             style="margin-bottom: 0px !important;">
 
                             <div class="input-group-prepend">
-                                <span class="input-group-text"
-                                    style="border-top-right-radius: 0px;border-bottom-right-radius: 0px">
+                                <span class="input-group-text" style="border-top-right-radius: 0px;border-bottom-right-radius: 0px">
                                     <span class="czi-arrows-vertical"></span> &nbsp; {{'Orden'|translate}}
                                 </span>
                             </div>
-                            <select class="form-control custom-select" name="orden" [(ngModel)]="orden"
-                                (change)="search(tipo,orden)">
+                            <select class="form-control custom-select" name="orden" [(ngModel)]="orden" (change)="search(tipo,orden)">
                                 <option value="fecha+" selected>{{'Fecha'|translate}} (+ to -)</option>
                                 <option value="pagado+">{{'Total pagado'|translate}} (+ to -)</option>
                                 <option value="fecha-">{{'Fecha'|translate}} (- to +)</option>
@@ -255,7 +258,6 @@
                             </select>
                             <button type="button" class="btn btn-accent" (click)="init_data()">
                                 <span class="czi-filter"></span> </button>
-                            <!--  -->
                         </div>
 
                         <div class="btn-group" role="group" aria-label="Solid button group">
@@ -268,13 +270,34 @@
                         </div>
                     </div>
                     <div class="card-body" *ngIf="option_selected == 1">
+                        <div class="d-flex flex-wrap align-items-center justify-content-between mb-3" *ngIf="tiendaSelected.usaMercadoLibre === true">
+                            <div class="btn-group" role="group">
+                                <button type="button" class="btn btn-sm"
+                                        [ngClass]="filtroCanal === 'TODAS' ? 'btn-dark' : 'btn-outline-secondary'"
+                                        (click)="aplicarFiltroCanal('TODAS')">
+                                Todas ({{ contarPorCanal('TODAS') }})
+                                </button>
+
+                                <button type="button" class="btn btn-sm"
+                                        [ngClass]="filtroCanal === 'DIRECTA' ? 'btn-primary' : 'btn-outline-secondary'"
+                                        (click)="aplicarFiltroCanal('DIRECTA')">
+                                <i class="fa fa-store mr-1"></i> Venta Directa ({{ contarPorCanal('DIRECTA') }})
+                                </button>
+
+                                <button type="button" class="btn btn-sm"
+                                        [ngStyle]="filtroCanal === 'MERCADOLIBRE' ? {'background-color': '#FFE600', 'color': '#2D3277', 'border-color': '#E6C800', 'font-weight': '700'} : {}"
+                                        [ngClass]="filtroCanal !== 'MERCADOLIBRE' ? 'btn-outline-secondary' : ''"
+                                        (click)="aplicarFiltroCanal('MERCADOLIBRE')">
+                                <i class="fa fa-shopping-bag mr-1"></i> Mercado Libre ({{ contarPorCanal('MERCADOLIBRE') }})
+                                </button>
+                            </div>
+                            </div>
                         <div class="row">
                             <!-- | keys  -->
-                            <div class="col-lg-12 pb-2"
-                                *ngFor="let item of ventasFiltradas| paginate: { itemsPerPage: count, currentPage: p }">
+                            <div class="col-lg-12 pb-2"  *ngFor="let item of ventasFiltradas| paginate: { itemsPerPage: count, currentPage: p }">
                                 <div class="card">
                                     <div class="card-header">
-                                        <h3 class="product-title font-size-base" style="margin-bottom: 0px;">
+                                        <div class="product-title font-size-base d-flex gap-3 justify-between" style="margin-bottom: 0px;">
                                             <ng-container *ngIf="item.estado == 'Venta en proceso'">
                                                 <span class="badge badge-primary">{{item.estado}}</span>&nbsp;
                                             </ng-container>
@@ -290,8 +313,21 @@
                                             <ng-container *ngIf="item.estado == 'Finalizado'">
                                                 <span class="badge badge-primary">{{item.estado}}</span>&nbsp;
                                             </ng-container>
-                                            <a>{{'Compra'|translate}}: N°-{{item._id.toUpperCase()}}</a>
-                                        </h3>
+
+                                            <!-- Badge de Origen para Auditoría y Logística -->
+                                                <span *ngIf="item.origen === 'MERCADOLIBRE' && tiendaSelected.usaMercadoLibre === true" 
+                                                    class="badge ml-2" 
+                                                    style="background-color: #FFE600; color: #2D3277; font-weight: 700;">
+                                                <i class="fa fa-shopping-bag mr-1"></i> Mercado Libre
+                                                </span>
+
+                                                <span *ngIf="!item.origen || item.origen === 'DIRECTA' && tiendaSelected.usaMercadoLibre === true" 
+                                                    class="badge badge-light border ml-2 text-muted">
+                                                <i class="fa fa-store mr-1"></i> Venta Directa
+                                                </span>
+                                            
+                                            <a style="font-size: 14px; ">{{'Compra'|translate}}: N°-{{item._id.toUpperCase()}}</a>
+                                            </div>
 
                                     </div>
                                     <div class="card-body">
@@ -301,6 +337,8 @@
                                                     <div class="font-size-sm"><span
                                                             class="text-muted mr-2">{{'Cliente'|translate}}:</span>
                                                         {{item.user.first_name}} {{item.user.last_name}}
+
+                                                        <!-- {{ item.user ? (item.user.first_name + ' ' + item.user.last_name) : (item.destinatario || 'Comprador ML') }} -->
                                                     </div>
                                                     <div class="font-size-sm"><span
                                                             class="text-muted mr-2">Tracking:</span>
@@ -311,13 +349,11 @@
                                                     </div>
                                                     <div class="font-size-sm"><span
                                                             class="text-muted mr-2">{{'Destino'|translate}}:</span>
-                                                        {{item.pais}} -
-                                                        {{item.ciudad}}
+                                                        {{item.pais}} - {{item.ciudad}}
                                                     </div>
                                                     <div class="font-size-sm"><span
                                                             class="text-muted mr-2">{{'Fecha'|translate}}:</span> {{
-                                                        item.createdAt |
-                                                        date:'MMM d, y, h:mm:ss a' }}
+                                                        item.createdAt | date:'MMM d, y, h:mm:ss a' }}
                                                     </div>
                                                     <div class="font-size-lg text-accent pt-2"><span
                                                             class="text-muted mr-2">
@@ -392,7 +428,7 @@
                                         <th>#</th>
                                         <th>{{'Código'|translate}}</th>
                                         <th>{{'Fecha'|translate}}</th>
-                                        <th>{{'Estado'|translate}}</th>
+                                        <th>{{'Origen'|translate}}</th>
                                         <th>OP</th>
                                     </tr>
                                 </thead>

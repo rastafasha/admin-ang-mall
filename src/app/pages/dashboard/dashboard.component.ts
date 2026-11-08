@@ -16,6 +16,7 @@ import { ToastrService } from 'ngx-toastr';
 import { PushNotificationService } from 'src/app/services/push-notification.service';
 import { TranslateService } from '@ngx-translate/core';
 import { SidebarService } from 'src/app/services/sidebar.service';
+import { MercadolibreService } from 'src/app/services/mercadolibre.service';
 declare let Chart;
 
 @Component({
@@ -106,7 +107,8 @@ export class DashboardComponent implements OnInit {
   public usuario;
   public tasadollar;
   public tasaeuro;
-  mostrarTasas:boolean
+  mostrarTasas:boolean;
+  estadisticasMeli: any;
 
   
 
@@ -125,6 +127,7 @@ export class DashboardComponent implements OnInit {
     private toastr: ToastrService,
      public translate: TranslateService,
      public sidebarService: SidebarService,
+     private meliService: MercadolibreService, 
 
   ) {
     this.url = environment.baseUrl;
@@ -509,7 +512,14 @@ export class DashboardComponent implements OnInit {
     this.tiendaService.getTiendaById(this.usuario.local).subscribe((resp:any)=>{
       this.tienda = resp;
       this.mostrarTasas = this.tienda.mostrarTasas;
-      this.tienda_moneda = this.tienda.moneda
+      this.tienda_moneda = this.tienda.moneda;
+      this.getResumenMl();
+    })
+  }
+
+  getResumenMl(){
+    this.meliService.obtenerGraficoResumen(this.tienda._id).subscribe((resp:any)=>{
+      this.estadisticasMeli = resp.reporte;
     })
   }
 

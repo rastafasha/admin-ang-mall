@@ -50,6 +50,11 @@ export class MercadolibreService {
     const url = `${this.baseUrl}/meli/url-vinculacion/${tiendaId}`;
     return this.http.get<MeliUrlResponse>(url, { headers: this.headers });
   }
+ 
+  obtenerGraficoResumen(tiendaId:string): Observable<MeliUrlResponse> {
+    const url = `${this.baseUrl}/meli/resumen/${tiendaId}`;
+    return this.http.get<MeliUrlResponse>(url, { headers: this.headers });
+  }
 
   /**
    * 🚀 Dispara manualmente la exportación o actualización completa de un producto hacia Mercado Libre.

@@ -186,7 +186,7 @@ export class TiendaaddComponent implements OnInit, OnChanges {
         direccion: tienda.direccion,
         latitud: tienda.latitud,
         longitud: tienda.longitud,
-        pais: tienda.pais,
+        pais: tienda.pais.pais,
         moneda: tienda.moneda || 'USD', // Aseguramos un respaldo por si acaso
         ciudad: tienda.ciudad,
         zip: tienda.zip,
