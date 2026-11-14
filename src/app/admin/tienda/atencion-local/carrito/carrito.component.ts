@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, ChangeDetectorRef, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, ChangeDetectorRef, Input, OnDestroy } from '@angular/core';
 import { CarritoService } from "src/app/services/carrito.service";
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -8,25 +8,7 @@ import { CuponService } from "src/app/services/cupons.service";
 import { PostalService } from "src/app/services/postal.service";
 import { DireccionService } from "src/app/services/direccion.service";
 import { VentaService } from "src/app/services/venta.service";
-
-// declare var paypal;
-// declare var paypal: {
-//   Buttons: (arg0: {
-//     createOrder: (data: any, actions: any) => any; onApprove: (data: any, actions: any) => Promise<void>;
-
-//     // Define si el pago será con tarjeta o PayPal
-//     fundingSource: any; //agregado
-//     onError: (err: any) => void;
-//   }) => { (): any; new(): any; render: { (arg0: any): void; new(): any; }; }; FUNDING: { CARD: any; PAYPAL: any; };
-// };
-
-
-declare var jQuery:any;
-declare var $:any;
-
-// import { WebSocketService } from 'src/app/services/web-socket.service';
 import { io } from "socket.io-client";
-// import { Direccion } from '../../models/direccion.model';
 import { ProductoService } from 'src/app/services/producto.service';
 import { MessageService } from 'src/app/services/message.service';
 import { PaymentMethod } from 'src/app/models/paymenthmethod.model';
@@ -42,20 +24,28 @@ import { Tienda } from 'src/app/models/tienda.model';
 import { PaypalService } from 'src/app/services/paypal.service';
 import { Paypal } from 'src/app/models/paypal.model';
 import { ICreateOrderRequest, IPayPalConfig, NgxPayPalModule } from 'ngx-paypal';
-
+import { Subscription } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
+declare var jQuery:any;
+declare var $:any;
 @Component({
   selector: 'app-carrito',
   standalone:false,
   templateUrl: './carrito.component.html',
   styleUrls: ['./carrito.component.css']
 })
-export class CarritoComponent implements OnInit {
+export class CarritoComponent implements OnInit, OnDestroy {
 
   @ViewChild('paypal',{static:true}) paypalElement? : ElementRef;
 
   public payPalConfig ? : IPayPalConfig;
 
   public clienteSeleccionado: any;
+  
+   public currentLang: string = 'es';
+  private langSubscription!: Subscription;
+  public pasoPago: boolean = false; // Controla si estamos viendo el carrito o el formulario de cobro
+
 
 
 
@@ -144,12 +134,10 @@ export class CarritoComponent implements OnInit {
   constructor(
     private _userService: UsuarioService,
     private _router : Router,
-    private _route :ActivatedRoute,
     private _productoService : ProductoService,
     private _carritoService:CarritoService,
     private _cuponService :CuponService,
     private _postalService :PostalService,
-    private _direccionService :DireccionService,
     private _tiendaService :TiendaService,
     private _ventaService :VentaService,
     private _messageService: MessageService,
@@ -159,6 +147,7 @@ export class CarritoComponent implements OnInit {
     private _pagoEfectivo: PagoEfectivoService,
     private _pagoCheque: PagochequeService,
     private _paypalService: PaypalService,
+    public translate: TranslateService,
     private cdr: ChangeDetectorRef
   ) {
     this.identity = _userService.usuario;
@@ -168,17 +157,28 @@ export class CarritoComponent implements OnInit {
   }
 
   ngOnInit(): void {
-     let cliente = localStorage.getItem("cliente");
-      this.clienteSeleccionado = JSON.parse(cliente ? cliente : '');
-     // Si el cliente existe, lo parseamos de JSON a un objeto
-    if (cliente) {
-        this.clienteSeleccionado = JSON.parse(cliente);
-        this.listAndIdentify();
+     // 🟢 Idioma en tiempo real
+    this.currentLang = this.translate.currentLang || this.translate.getDefaultLang() || 'es';
+    this.langSubscription = this.translate.onLangChange.subscribe((event) => {
+      this.currentLang = event.lang;
+    });
+
+    // 🟢 Lectura segura de cliente en localStorage (sin romper si es null)
+    const cliente = localStorage.getItem('cliente');
+    if (cliente && cliente !== 'undefined' && cliente !== 'null') {
+      this.clienteSeleccionado = JSON.parse(cliente);
+      this.listAndIdentify();
     } else {
-        this.clienteSeleccionado = null; // O maneja el caso en que no hay cliente
+      this.clienteSeleccionado = null;
     }
-    
+
     this.direccionTienda();
+  }
+
+  ngOnDestroy(): void {
+    if (this.langSubscription) {
+      this.langSubscription.unsubscribe();
+    }
   }
 
    direccionTienda(){
@@ -444,33 +444,33 @@ export class CarritoComponent implements OnInit {
   }
 
   
-  listar_carrito(){
-    this._carritoService.preview_carrito(this.clienteSeleccionado.uid).subscribe(
-      response =>{
-        this.carrito = response.carrito;
-        this.subtotal = 0;
+  // 🟢 Cálculo seguro de subtotal (evita NaN si no hay envío postal)
+  listar_carrito() {
+    if (!this.clienteSeleccionado?.uid) return;
+    this._carritoService.preview_carrito(this.clienteSeleccionado.uid).subscribe({
+      next: (response) => {
+        this.carrito = response.carrito || [];
+        this.data_detalle = [];
+        let sumaProductos = 0;
+
         this.carrito.forEach(element => {
-          this.subtotal = Math.round(this.subtotal + (element.precio * element.cantidad));
+          sumaProductos += (Number(element.precio) * Number(element.cantidad));
           this.data_detalle.push({
-            producto : element.producto,
+            producto: element.producto,
             cantidad: element.cantidad,
-            precio: Math.round(element.precio),
+            precio: Number(element.precio),
             color: element.color,
-            selector : element.selector
+            selector: element.selector
           });
         });
-        this.subtotal = Math.round(this.subtotal + parseInt(this.precio_envio));
-        // refrescar cambios en la vista del carrito del header
+
+        const envio = Number(this.precio_envio) || 0;
+        this.subtotal = +(sumaProductos + envio).toFixed(2);
         this.cdr.detectChanges();
-
       },
-      error=>{
-        console.log(error);
-
-      }
-    );
+      error: (err) => console.error(err)
+    });
   }
-
 
 
   remove_producto(id){
@@ -878,6 +878,18 @@ export class CarritoComponent implements OnInit {
     });
     console.log('PayPal items:', items);
     return items;
+  }
+
+
+
+  // 🟢 Reemplazo limpio de verify_data() y back_data() sin jQuery
+  irAPagar() {
+    this.pasoPago = true;
+    this.verify_data();
+  }
+
+  volverACarrito() {
+    this.pasoPago = false;
   }
 
 }

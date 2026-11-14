@@ -14,7 +14,6 @@ import { PipesModule } from 'src/app/pipes/pipes.module';
 import { AtencionLocalComponent } from './atencion-local/atencion-local.component';
 import { CarritoComponent } from './atencion-local/carrito/carrito.component';
 import { ProductoComponent } from './atencion-local/producto/producto.component';
-import { ComponentsAtentionModule } from './atencion-local/components/components.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { PedidosMenuComponent } from './pedidos-menu/pedidos-menu.component';
 import { ComponentsModule } from 'src/app/components/components.module';
@@ -74,8 +73,6 @@ import { FormcomponentsModule } from './tienda/formcomponents/formcomponents.mod
     NgxDropzoneModule,
     PdfViewerModule,
     NgxPaginationModule,
-    // CKEditorModule,
-    ComponentsAtentionModule,
     SharedModule,
     ComponentsModule,
     PipesModule,

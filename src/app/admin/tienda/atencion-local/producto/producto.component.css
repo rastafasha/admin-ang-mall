@@ -1,15 +1,93 @@
-.listacolor{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    align-content: center;
-    flex-wrap: wrap;
-    align-items: baseline;
-    margin-top: -30px;
+.zlip-pos-product .zlip-gallery-box {
+  background: linear-gradient(180deg, #f8f9fa 0%, #ffffff 100%);
+  border-color: #e9ecef !important;
 }
-.listacolor  i{
-    border: 2px solid #fff;
-    box-shadow: 0px 0px 2px #333;
-    border-radius: 100px; height: 30px; width: 30px;
+
+.zlip-pos-product .zlip-main-img-wrapper {
+  height: 240px;
+}
+
+.zlip-pos-product .zlip-main-img-wrapper img {
+  max-height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+.zlip-pos-product .zlip-thumb-item {
+  width: 56px;
+  height: 56px;
+  cursor: pointer;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.zlip-pos-product .zlip-thumb-item img {
+  max-height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+.zlip-pos-product .zlip-thumb-item:hover,
+.zlip-pos-product .zlip-thumb-item.active {
+  border-color: #0d6efd !important;
+  box-shadow: 0 0 0 2px rgba(13, 110, 253, 0.2);
+}
+
+.zlip-pos-product .zlip-color-chip {
+  cursor: pointer;
+  transition: all 0.15s ease;
+  border-color: #dee2e6 !important;
+}
+
+.zlip-pos-product .zlip-color-chip:hover {
+  border-color: #111111 !important;
+}
+
+.zlip-pos-product .zlip-color-chip.active {
+  border-color: #111111 !important;
+  background-color: #f1f3f5 !important;
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.15);
+}
+
+.zlip-pos-product .zlip-color-dot {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.25);
+  display: inline-block;
+}
+
+.zlip-pos-product .zlip-selector-pill {
+  padding: 10px 16px;
+  border-radius: 12px;
+  border: 1.5px solid #dee2e6;
+  background-color: #ffffff;
+  color: #323232;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  text-align: left;
+}
+
+.zlip-pos-product .zlip-selector-pill:hover {
+  border-color: #111111;
+  background-color: #f8f9fa;
+}
+
+.zlip-pos-product .zlip-selector-pill.active {
+  background-color: #111111;
+  border-color: #111111;
+  color: #ffffff;
+  font-weight: 600;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.zlip-pos-product input[type="number"]::-webkit-inner-spin-button,
+.zlip-pos-product input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }

@@ -1,93 +1,209 @@
-<app-back-instrucc (onOpenHelp)="instruccionesModal.open()"></app-back-instrucc>
+<app-back-instrucc *ngIf="productNotSelected" (onOpenHelp)="instruccionesModal.open()"></app-back-instrucc>
 
 <div class="row animated fadeIn fast" *ngIf="productNotSelected">
     <div class="container">
-        <div class="card">
-            
-            <div class="card-body">
-                <form autocomplete="false">
+        <div class="card border-0 shadow-sm rounded-4 zlip-client-card mb-4">
 
-                    <!-- cliente -->
-                    <div class="row align-items-center py-4">
-                        <div class="col-xs-12 col-sm-8">
-                            <div class="row">
-                                <div class=" row col-12 ">
-                                    <div class="form-group local-forms col-12 col-md-6 col-xl-4">
-                                        <label>{{'Id/Cédula'|translate}} <span class="login-danger">*</span></label>
-                                        <input class="form-control" name="numdoc" [(ngModel)]="numdoc" type="text">
-                                        <button type="button" class="btn btn-sm " (click)="filterClient()">
-                                            {{'Filtrar'|translate}}
-                                        </button>
-                                        <button type="button" class="btn btn-sm " (click)="resetClient()">
-                                            {{'Resetear'|translate}}
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-6 col-xl-4">
-                                    <div class="form-group local-forms">
-                                        <label>{{'Nombre'|translate}} <span class="login-danger">*</span></label>
-                                        <input class="form-control" [(ngModel)]="first_name" name="first_name"
-                                            type="text">
-                                            
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-6 col-xl-4">
-                                    <div class="form-group local-forms">
-                                        <label>{{'Apellido'|translate}} <span class="login-danger">*</span></label>
-                                        <input class="form-control" [(ngModel)]="last_name" name="last_name"
-                                            type="text">
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-6 col-xl-4">
-                                    <div class="form-group local-forms">
-                                        <label>Email </label>
-                                        <input class="form-control" [(ngModel)]="email" name="email" type="text">
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-6 col-xl-4">
-                                    <div class="form-group local-forms">
-                                        <label>{{'Teléfono'|translate}} <span class="login-danger">*</span></label>
-                                        <input class="form-control" [(ngModel)]="telefono" name="telefono" type="text">
-                                    </div>
-                                </div>
+            <!-- ========================================================= -->
+            <!-- ESTADO 1: BARRA COMPACTA (Cuando el cliente ya está listo) -->
+            <!-- ========================================================= -->
+            <div *ngIf="clienteConfirmado && clienteSeleccionado"
+                class="card-body py-2 px-3 px-md-4 bg-light rounded-4 border">
+                <div class="d-flex flex-wrap align-items-center justify-content-between gap-3">
+
+                    <!-- Datos resumidos del Cliente -->
+                    <div class="d-flex flex-wrap align-items-center gap-3">
+                        <div class="d-flex align-items-center gap-2">
+                            <div class="zlip-mini-avatar bg-primary text-white rounded-circle">
+                                <i class="fas fa-user-check"></i>
                             </div>
-
-                            <div class="col-12 mb-3 btn-group">
-                                <button class="btn btn-outline-success btn-sm" (click)="addClient()">
-                                    {{'Registrar Cliente'|translate}}
-                                </button>
-                                <button class="btn btn-outline-primary btn-sm" (click)="adjuntarClienteaCompra()">
-                                    + {{'Agregar a Compra'|translate}}</button>
-                                <!-- <button class="btn btn-danger btn-sm">x</button> -->
+                            <div>
+                                <span class="text-muted d-block zlip-mini-label">{{ 'Cliente' | translate }}</span>
+                                <strong class="text-dark small">
+                                    {{ first_name }} {{ last_name }}
+                                </strong>
                             </div>
                         </div>
 
-                        <div class="col-xs-12 col-sm-4">
-                            <div class="form-group local-forms">
-                                <label>{{'Vendedor'|translate}} <span class="login-danger">*</span></label>
-                                <p>{{user?.first_name}} {{user?.last_name}}</p>
-                                <p>{{user?.role}}</p>
-                            </div>
-                            <div class="form-group local-forms">
-                                <label>{{'Tienda'|translate}} <span class="login-danger">*</span></label>
-                                <p>{{tienda?.nombre}}</p>
+                        <div class="vr d-none d-sm-block text-muted opacity-25"></div>
 
-                            </div>
-
+                        <div class="small text-secondary">
+                            <span class="me-3"><i class="fas fa-id-card text-muted me-1"></i><strong>ID:</strong> {{
+                                numdoc }}</span>
+                            <span *ngIf="telefono"><i class="fas fa-phone-alt text-muted me-1"></i>{{ telefono }}</span>
                         </div>
                     </div>
-                    <!-- cliente -->
-                </form>
 
+                    <!-- Datos resumidos de Vendedor, Tienda y Botón Cambiar -->
+                    <div class="d-flex flex-wrap align-items-center gap-3 ms-auto">
+                        <div class="d-none d-lg-flex align-items-center gap-3 small text-secondary">
+                            <span>
+                                <i class="fas fa-user-tie text-primary me-1"></i>
+                                <strong>{{ 'Vendedor' | translate }}:</strong> {{ user?.first_name }}
+                            </span>
+                            <span>
+                                <i class="fas fa-store text-success me-1"></i>
+                                <strong>{{ 'Tienda' | translate }}:</strong> {{ tienda?.nombre }}
+                            </span>
+                        </div>
+
+                        <div class="d-flex align-items-center gap-2">
+                            <button type="button" class="btn btn-sm btn-outline-primary rounded-3 fw-medium px-3"
+                                (click)="editarCliente()">
+                                <i class="fas fa-edit me-1"></i> {{ 'Cambiar' | translate }}
+                            </button>
+                            <button type="button" class="btn btn-sm btn-outline-danger rounded-3 px-2"
+                                (click)="resetClient()" title="{{ 'Quitar cliente' | translate }}">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
             </div>
+
+            <!-- ========================================================= -->
+            <!-- ESTADO 2: FORMULARIO COMPLETO (Para buscar o registrar)   -->
+            <!-- ========================================================= -->
+            <div *ngIf="!clienteConfirmado" class="card-body p-3 p-md-4">
+                <form autocomplete="off">
+                    <div class="row g-4 align-items-stretch">
+
+                        <!-- COLUMNA IZQUIERDA: Búsqueda y Datos del Cliente -->
+                        <div class="col-12 col-lg-8">
+                            <div class="d-flex align-items-center justify-content-between mb-3">
+                                <h6 class="fw-bold text-dark mb-0 d-flex align-items-center gap-2">
+                                    <i class="fas fa-user-tag text-primary"></i>
+                                    {{ 'Datos del Cliente' | translate }}
+                                </h6>
+                                <span class="text-muted small"><span class="text-danger">*</span> Campos
+                                    obligatorios</span>
+                            </div>
+
+                            <!-- Buscador por Cédula/ID -->
+                            <div class="row g-3 mb-3">
+                                <div class="col-12 col-md-7 col-xl-6">
+                                    <label class="form-label small fw-semibold text-secondary mb-1">
+                                        {{ 'Id/Cédula' | translate }} <span class="text-danger">*</span>
+                                    </label>
+                                    <div class="input-group">
+                                        <input class="form-control" name="numdoc" [(ngModel)]="numdoc"
+                                            (keyup.enter)="filterClient()" placeholder="Ej. 14427389" type="text">
+                                        <button type="button" class="btn btn-primary px-3" (click)="filterClient()">
+                                            <i class="fas fa-search me-1"></i> {{ 'Filtrar' | translate }}
+                                        </button>
+                                        <button type="button" class="btn btn-outline-secondary" (click)="resetClient()"
+                                            title="{{ 'Resetear' | translate }}">
+                                            <i class="fas fa-eraser"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <hr class="text-muted opacity-25 my-3">
+
+                            <!-- Campos de información personal -->
+                            <div class="row g-3">
+                                <div class="col-12 col-md-6">
+                                    <label class="form-label small fw-semibold text-secondary mb-1">
+                                        {{ 'Nombre' | translate }} <span class="text-danger">*</span>
+                                    </label>
+                                    <input class="form-control" [(ngModel)]="first_name" name="first_name" type="text">
+                                </div>
+
+                                <div class="col-12 col-md-6">
+                                    <label class="form-label small fw-semibold text-secondary mb-1">
+                                        {{ 'Apellido' | translate }} <span class="text-danger">*</span>
+                                    </label>
+                                    <input class="form-control" [(ngModel)]="last_name" name="last_name" type="text">
+                                </div>
+
+                                <div class="col-12 col-md-6">
+                                    <label class="form-label small fw-semibold text-secondary mb-1">Email</label>
+                                    <input class="form-control" [(ngModel)]="email" name="email" type="email">
+                                </div>
+
+                                <div class="col-12 col-md-6">
+                                    <label class="form-label small fw-semibold text-secondary mb-1">
+                                        {{ 'Teléfono' | translate }} <span class="text-danger">*</span>
+                                    </label>
+                                    <input class="form-control" [(ngModel)]="telefono" name="telefono" type="tel">
+                                </div>
+                            </div>
+
+                            <!-- Botones de acción -->
+                            <div class="d-flex flex-wrap align-items-center gap-2 mt-4 pt-2">
+                                <button type="button"
+                                    class="btn btn-outline-success fw-medium px-3 rounded-3 d-inline-flex align-items-center gap-2"
+                                    (click)="addClient()">
+                                    <i class="fas fa-user-plus"></i>
+                                    <span>{{ 'Registrar Cliente' | translate }}</span>
+                                </button>
+
+                                <button type="button"
+                                    class="btn btn-primary fw-semibold px-4 rounded-3 d-inline-flex align-items-center gap-2 shadow-sm"
+                                    (click)="adjuntarClienteaCompra()">
+                                    <i class="fas fa-plus-circle"></i>
+                                    <span>{{ 'Agregar a Compra' | translate }}</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- COLUMNA DERECHA: Resumen de Vendedor y Tienda -->
+                        <div class="col-12 col-lg-4">
+                            <div
+                                class="zlip-context-panel h-100 p-3 p-md-4 rounded-4 bg-light border d-flex flex-column justify-content-center gap-3">
+
+                                <div class="d-flex align-items-start gap-3">
+                                    <div class="zlip-icon-box bg-white text-primary shadow-sm rounded-3">
+                                        <i class="fas fa-user-tie"></i>
+                                    </div>
+                                    <div>
+                                        <span class="d-block text-uppercase text-muted fw-bold zlip-context-label">
+                                            {{ 'Vendedor' | translate }}
+                                        </span>
+                                        <p class="fw-bold text-dark mb-1">
+                                            {{ user?.first_name }} {{ user?.last_name }}
+                                        </p>
+                                        <span *ngIf="user?.role"
+                                            class="badge bg-primary-subtle text-primary rounded-pill px-2 py-1">
+                                            {{ user?.role }}
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <hr class="text-muted opacity-25 my-1">
+
+                                <div class="d-flex align-items-start gap-3">
+                                    <div class="zlip-icon-box bg-white text-success shadow-sm rounded-3">
+                                        <i class="fas fa-store"></i>
+                                    </div>
+                                    <div>
+                                        <span class="d-block text-uppercase text-muted fw-bold zlip-context-label">
+                                            {{ 'Tienda' | translate }}
+                                        </span>
+                                        <p class="fw-bold text-dark mb-0">
+                                            {{ tienda?.nombre || 'Sin tienda asignada' }}
+                                        </p>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+
         </div>
+
+
     </div>
 
 </div>
 <!-- fin cliente -->
 
-
-
+<!-- Advertencia -->
 <div class="row animated fadeIn fast" *ngIf="!clienteSeleccionado && !clienteGuardado">
     <div class="col-12">
         <div class="card">
@@ -97,73 +213,86 @@
         </div>
     </div>
 </div>
-<div class="row animated fadeIn fast" *ngIf="clienteSeleccionado || clienteGuardado">
-    <div class="col-12">
-        <div class="card">
-            <div class="card-body">
-                <app-search [query]="query" [modelo]="producto" [colleccionName]="productos" [colleccion]="'productos'"
+
+<!-- buscador -->
+<div class="row animated fadeIn fast" *ngIf="productNotSelected && clienteSeleccionado || clienteGuardado ">
+    <app-search [query]="query" [modelo]="producto" [colleccionName]="productos" [colleccion]="'productos'"
                     (searchEvent)="handleSearchEvent($event)" (resetEvent)="PageSize()"></app-search>
-            </div>
-        </div>
-    </div>
 </div>
 
-
+<!-- categorias y productos -->
 <section class="categories-section" id="categorias" *ngIf="clienteSeleccionado && productNotSelected">
     <div class="container">
 
         <app-loading *ngIf="cargando"></app-loading>
         <div *ngIf="!cargando">
             <div class="tab-content-set">
-                <ul class="nav" *ngFor="let category of subcategories"
-                    [class.active]="activeCategory === category.nombre">
-                    <li>
-                        <a href="#" onclick="return false;" [ngClass]="{'active': option_selectedd == 1}"
-                            (click)="selectCategory(category.nombre)">{{ category.nombre }}</a>
-                    </li>
-                </ul>
+                <div class="d-flex flex-wrap align-items-center gap-2 mb-4 zlip-category-bar">
+                    <!-- Botón Todas -->
+                    <button type="button" class="btn btn-sm rounded-pill px-3 py-2 fw-semibold zlip-cat-pill"
+                        [class.active]="activeCategory === 'all'" (click)="selectCategory('all')">
+                        {{ 'Todas' | translate }}
+                        <span class="badge rounded-pill ms-1"
+                            [ngClass]="activeCategory === 'all' ? 'bg-white text-dark' : 'bg-secondary-subtle text-dark'">
+                            {{ todosLosProductos.length }}
+                        </span>
+                    </button>
+
+                    <!-- Lista de las 4 categorías -->
+                    <button *ngFor="let category of subcategories" type="button"
+                        class="btn btn-sm rounded-pill px-3 py-2 fw-semibold zlip-cat-pill"
+                        [class.active]="activeCategory === category.nombre" (click)="selectCategory(category.nombre)">
+                        {{ category.nombre }}
+                        <span class="badge rounded-pill ms-1"
+                            [ngClass]="activeCategory === category.nombre ? 'bg-white text-dark' : 'bg-secondary-subtle text-dark'">
+                            {{ category.products.length }}
+                        </span>
+                    </button>
+                </div>
             </div>
-             <div class="row">
+            <div class="row">
                 <div class="row" *ngIf="productos.length > 8">
-                        <div class="col-md-12 text-right">
-                            <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                    <div class="col-md-12 text-right">
+                        <pagination-controls
+                            (pageChange)="p = $event; cambiarPagina(($event - 1) * limite)"></pagination-controls>
 
-                        </div>
-                    </div>
-                    <div class="productos-atention">
-                        <figure class="item"
-                            *ngFor="let prod of productos |  paginate: { itemsPerPage: count, currentPage: p }; let i = index">
-                            <div class="product product-style-1">
-                                <div class="img-wrapper">
-                                    <a (click)="cargarPorducto(prod)">
-                                        <img class="img-responsive" [src]="prod.img | imagenPipe: 'productos'"
-                                            alt="{{prod.titulo}} thumbnail" />
-                                    </a>
-                                </div>
-                                <figcaption class="desc text-center descript">
-                                    <h5>
-                                        {{prod.titulo}}
-                                    </h5>
-                                    <p>SKU:{{prod.sku}}</p>
-                                    <span class="price">
-                                        {{prod.precio_ahora |number:'1.2-2'| currency:tienda_moneda}}
-                                    </span>
-                                    <span class="price precioantes" *ngIf="prod.precio_antes > prod.precio_ahora">
-                                        {{prod.precio_antes |number:'1.2-2'| currency:tienda_moneda}}
-                                    </span>
-
-                                </figcaption>
-                            </div>
-                        </figure>
-                    </div>
-                    <div class="clear"></div>
-                    <div class="row" *ngIf="productos.length > 8">
-                        <div class="col-md-12 text-right">
-                            <pagination-controls (pageChange)="p = $event"></pagination-controls>
-
-                        </div>
                     </div>
                 </div>
+                <div class="productos-atention">
+                    <figure class="item"
+                        *ngFor="let prod of productos |  paginate: { itemsPerPage: count, currentPage: p, totalItems: totalProducts }; let i = index">
+                        <div class="product product-style-1">
+                            <div class="img-wrapper">
+                                <a (click)="cargarPorducto(prod)">
+                                    <img class="img-responsive" [src]="prod.img | imagenPipe: 'productos'"
+                                        alt="{{prod.titulo}} thumbnail" />
+                                </a>
+                            </div>
+                            <figcaption class="desc text-center descript">
+                                <h5>
+                                    {{ translate.currentLang === 'en' ? prod.titulo?.en : prod.titulo?.es }}
+                                </h5>
+                                <p>SKU:{{prod.sku}}</p>
+                                <span class="price">
+                                    {{prod.precio_ahora |number:'1.2-2'| currency:tienda_moneda}}
+                                </span>
+                                <span class="price precioantes" *ngIf="prod.precio_antes > prod.precio_ahora">
+                                    {{prod.precio_antes |number:'1.2-2'| currency:tienda_moneda}}
+                                </span>
+
+                            </figcaption>
+                        </div>
+                    </figure>
+                </div>
+                <div class="clear"></div>
+                <div class="row" *ngIf="productos.length > 8">
+                    <div class="col-md-12 text-right">
+                        <pagination-controls
+                            (pageChange)="p = $event; cambiarPagina(($event - 1) * limite)"></pagination-controls>
+
+                    </div>
+                </div>
+            </div>
         </div>
 
 
@@ -172,114 +301,14 @@
 <div class="clear"></div>
 
 
-
+<!-- modal producto -->
 <section class="container" *ngIf="clienteSeleccionado && !productNotSelected">
 
-    <div class="row">
-        <div class="col-xs-12 col-sm-6">
-            <article>
-                <img class="img-fluid" [src]="productoSeleccionado.img | imagenPipe: 'productos'"
-                    alt="{{productoSeleccionado.titulo}}">
-
-            </article>
-        </div>
-        <div class="col-xs-12 col-sm-6">
-            <button class="btn btn-outline-danger btn-sm mt-4" (click)="volverProductos()">
-                {{'Volver a Productos'|translate}}
-            </button>
-            <article>
-                <!-- implementar aqui la galeria de imagenes del producto -->
-                <h3 class="heading-style-3" style="color:#696262">
-                    {{productoSeleccionado.titulo}}
-                </h3>
-                <!-- mensaje indicando que se agregó producto al carrito-->
-                <div class="alert alert-success alert-dismissible fade show" role="alert" *ngIf="msm_success">
-                    {{'Artículo agregado al'|translate}} <a [routerLink]="['/dashboard/carrito']"><b>{{'Carrito'|translate}}!</b></a>.
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-
-                <!-- detalles -->
-                <!-- precio -->
-                <div class="mb-3">
-                    <span class="h3 font-weight-normal text-accent mr-2">
-                        {{productoSeleccionado.precio_ahora |currency : tienda_moneda}}
-                    </span>
-                    <del class="text-muted font-size-lg mr-3">
-                        {{productoSeleccionado.precio_antes |currency : tienda_moneda}}
-                    </del>
-                    <span class="badge badge-danger badge-shadow align-middle mt-2">{{'Oferta'|translate}}</span>
-                </div>
-
-                <!-- colores -->
-                <div class="font-size-sm">
-                    <div class="text-heading font-weight-medium mr-1 d-block">
-                        {{'Colores'|translate}}:
-                    </div>
-                    <div class="text-muted listacolor" id="colorOption">
-                        <ng-container *ngFor="let color of colores">
-                            <ng-container>
-                                <i [style.background]="color.color" style="cursor: pointer;"
-                                    (click)="get_color(color)"></i>
-                                <div class="d-block">{{color.titulo}}</div>
-                            </ng-container>
-                        </ng-container>
-                    </div>
-                </div>
-
-                <!-- stock -->
-                <div class="font-size-sm mb-4 mt-4">
-                    <span class="text-heading font-weight-medium mr-1">
-                        Stock:</span>
-                    <span class="text-muted">
-                        {{productoSeleccionado.stock}}
-                    </span>
-                </div>
-
-                <!-- form agregar al carrito -->
-                <form class="mb-grid-gutter" #carritoForm="ngForm" (ngSubmit)="add_to_cart(carritoForm)">
-                    <div class="form-group">
-                        <div class="d-flex justify-content-between align-items-center pb-1">
-                            <label class="font-weight-medium"
-                                for="product-size">{{productoSeleccionado.nombre_selector}}:</label>
-                            <a class="nav-link-style font-size-sm"
-                                *ngIf="productoSeleccionado.subcategoria == 'Calzado'" data-toggle="modal"
-                                data-target="#sizes-modal" style="cursor: pointer;">
-                                <i class="czi-ruler lead align-middle mr-1 mt-n1"></i>{{'Formato de tallas'|translate}}
-                            </a>
-                        </div>
-                        <select class="custom-select form-control" required="" id="product-size" name="selector_to_cart"
-                            [(ngModel)]="selector_to_cart">
-                            <option value=" " selected disabled>{{'Seleccione'|translate}}</option>
-                            <option value="{{selector.titulo}}" *ngFor="let selector of selectores">
-                                {{selector.titulo}}
-                            </option>
-                        </select>
-                        <div class="invalid-feedback" style="display: block;" *ngIf="selector_error">
-                            {{'Selecciona alguna opción por favor'|translate}}.
-                        </div>
-                    </div>
-                    <div class="form-group d-flex align-items-center">
-                        <input type="number" class="form-control mr-3" min="1" [attr.max]="productoSeleccionado.stock"
-                            name="cantidad_to_cart" [(ngModel)]="cantidad_to_cart" style="width: 5rem;">
-                        <button class="btn btn-primary btn-shadow btn-block" disabled type="submit">
-                            <i class="czi-cart font-size-lg mr-2"></i>{{'Agregar al carrito'|translate}}
-                        </button>
-                    </div>
-                    <div class="invalid-feedback" *ngIf="err_stock" style="display: block;">{{err_stock}}</div>
-                </form>
-
-                <!-- Product panels-->
-                <div class="card shadow">
-                    {{productoSeleccionado.info_short}}
-                </div>
-            </article>
-            
-        </div>
-
-    </div>
-
+    <app-producto [producto]="productoSeleccionado" [clienteSeleccionado]="clienteSeleccionado"
+        [tienda_moneda]="tienda_moneda" (volver)="volverProductos()">
+    </app-producto>
 
 </section>
-<app-modal-instrucciones [info]="info" [sectionId]="'atencionTienda' |translate" #instruccionesModal></app-modal-instrucciones>
+
+<app-modal-instrucciones [info]="info" [sectionId]="'atencionTienda' |translate"
+    #instruccionesModal></app-modal-instrucciones>

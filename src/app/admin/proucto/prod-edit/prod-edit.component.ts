@@ -55,6 +55,7 @@ export class ProdEditComponent implements OnInit, OnChanges {
   public selectores: any;
   cargando = false;
   cargandoImagen = false;
+  isDragging = false;
   currentStep = 1;
 
   banner: string;
@@ -69,7 +70,9 @@ export class ProdEditComponent implements OnInit, OnChanges {
   public isSubmitting: boolean = false;
 
   user: any;
- public typeof = (val: any) => typeof val;
+
+  public typeof = (val: any) => typeof val;
+
   constructor(
     private fb: FormBuilder,
     private productoService: ProductoService,
@@ -219,7 +222,7 @@ export class ProdEditComponent implements OnInit, OnChanges {
       marca?.invalid || local?.invalid ||
       nombre_selector?.invalid ||
       bajoPedido?.invalid ||
-      condition?.invalid 
+      condition?.invalid
 
     ) {
       titulo?.markAsTouched();
@@ -440,6 +443,30 @@ export class ProdEditComponent implements OnInit, OnChanges {
         Swal.fire('Error', 'No se pudo subir la imagen', 'error');
 
       })
+  }
+
+  onDragOver(event: DragEvent): void {
+    event.preventDefault();
+    event.stopPropagation();
+    this.isDragging = true;
+  }
+
+  onDragLeave(event: DragEvent): void {
+    event.preventDefault();
+    event.stopPropagation();
+    this.isDragging = false;
+  }
+
+  onDrop(event: DragEvent): void {
+    event.preventDefault();
+    event.stopPropagation();
+    this.isDragging = false;
+
+    const files = event.dataTransfer?.files;
+    if (files && files.length > 0) {
+      // Reutilizamos tu función actual pasándole el primer archivo arrastrado
+      this.cambiarImagen(files[0]);
+    }
   }
 
 

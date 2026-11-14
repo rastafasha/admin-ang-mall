@@ -1,481 +1,349 @@
-<div class="shop-cart" id="page">
-    <section class="sub-header shop-detail-1">
-        <img class="rellax bg-overlay" src="images/sub-header/013.jpg" alt="">
-        <div class="overlay-call-to-action"></div>
-        <h3 class="heading-style-3">{{'Carrito'|translate}} </h3>
-    </section>
+<div class="clear"></div>
 
-
-    <div class="container pb-5 mb-2 mb-md-4">
-        <div class="row">
-            <!-- List of items-->
-            <section class="col-lg-8">
-                <div class="d-flex justify-content-between align-items-center pt-3 pb-2 pb-sm-5 mt-1">
-                    <h2 class="h6 text-light mb-0">{{'Productos'|translate}}</h2><a class="btn btn-outline-primary btn-sm pl-2"
-                        [routerLink]="['../atencion-local']" routerLinkActive="router-link-active"><i
-                            class="czi-arrow-left mr-2"></i>{{'Continuar comprando'|translate}}</a>
-                </div>
-                <!-- Item-->
-                <div class="alert alert-danger alert-with-icon" role="alert" *ngIf="error_stock">
-                    <div class="alert-icon-box">
-                        <i class="alert-icon czi-close-circle"></i>
-                    </div>
-                    {{'Algun producto de su carrito de compras no tiene stock'|translate}}.
-                </div>
-
-                <ng-container *ngIf="carrito">
-                    <div *ngFor="let item of carrito"
-                        class="d-sm-flex justify-content-between align-items-center my-4 pb-3 border-bottom">
-
-                        <div class="media media-ie-fix d-block d-sm-flex align-items-center text-center text-sm-left">
-                            <div *ngIf="item.producto">
-                                <a class="d-inline-block mx-auto mr-sm-4"
-                                    [routerLink]="['../producto/',item.producto._id]" style="width: 10rem;">
-                                    <img [src]="item.producto.img | imagenPipe: 'productos'" style="width: 100%;"
-                                        alt="Product">
-                                </a>
-                            </div>
-                            <div class="media-body pt-2">
-                                <div *ngIf="item.producto">
-                                    <h3 class="product-title font-size-base mb-2">
-                                        <a
-                                            [routerLink]="['../producto/',item.producto._id]">{{item.producto.titulo}}</a>
-                                    </h3>
-                                </div>
-
-                                <ng-container *ngIf="item.producto.stock > 0">
-                                    <div class="font-size-sm"><span
-                                            class="text-muted mr-2">{{item.producto.nombre_selector}}:</span>{{item.selector}}
-                                    </div>
-                                    <div class="font-size-sm"><span class="text-muted mr-2">COLOR:</span>
-                                        <span [ngStyle]="{'background': item.color,'color': item.color}"
-                                            style="font-weight: 900;">||||||||||||||||||||</span>
-
-                                    </div>
-                                    <div class="font-size-lg text-accent pt-2">{{item.precio |currency : tienda_moneda}}
-                                    </div>
-                                </ng-container>
-
-                                <ng-container *ngIf="item.producto.stock == 0">
-                                    <span class="badge badge-danger">{{'No hay stock del producto'|translate}}</span>
-                                </ng-container>
-
-
-                            </div>
-                        </div>
-                        <div class="pt-2 pt-sm-0 pl-sm-3 mx-auto mx-sm-0 text-center text-sm-left"
-                            style="max-width: 9rem;">
-                            <div class="form-group mb-0">
-                                <label class="font-weight-medium" for="quantity1">{{'Cantidad'|translate}}</label>
-                                <input class="form-control" type="number" id="quantity1" readonly
-                                    [value]="item.cantidad">
-                            </div>
-                            <button class="btn btn-link px-0 text-danger" type="button"
-                                (click)="remove_producto(item._id)">
-                                <i class="fa fa-trash-o mr-2"></i>
-                                <span class="font-size-sm">{{'Eliminar'|translate}}</span>
-                            </button>
-                        </div>
-
-                    </div>
-                </ng-container>
-                <div *ngIf="!carrito" class="my-4 pb-3 border-bottom">
-                    <!-- Alert with bakground image -->
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="alert alert-bg-image alert-dismissible fade show text-center py-5"
-                                style="background-image: url(./assets/images/background/silver-ultrabook-supermarket-trolley-yellow-background-concept-shopping-modern-online-internet-commerce-sites-copy-220746051.jpeg)"
-                                role="alert">
-                                <i class="czi-time d-block text-white my-4" style="font-size: 3rem;"></i>
-                                <h2 class="text-white text-shadow">{{'Tu carrito actualmente esta vacío'|translate}}!</h2>
-                                <h4 class="text-white font-weight-normal text-shadow mb-4 pb-2">:'(</h4>
-                                <a [routerLink]="['/atencion-local']" class="btn btn-primary mb-3">{{'Ir a comprar'|translate}}</a>
-                                <button type="button" class="close text-white" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-            </section>
-            <!-- Sidebar-->
-            <aside class="col-lg-4 pt-4 pt-lg-0">
-                <div class="cz-sidebar-static rounded-lg box-shadow-lg ml-lg-auto">
-                    <!-- <div class="text-center mb-4 pb-3 border-bottom">
-                        <h2 class="h6 mb-3 pb-1">Subtotal</h2>
-                        <h3 class="font-weight-normal">{{subtotal | currency : tienda_moneda}}</h3>
-                    </div> -->
-                    <!-- <div class="card mb-4 cart-data-venta" style="padding-left: 8px;">
-                        <div class="card-body">
-                            <h3 style=" font-size: 1rem; margin-bottom: 0px;">Medio postal</h3>
-                        </div>
-                        <table class="postal">
-                            <thead>
-                                <th>OP</th>
-                                <th>Medio postal</th>
-                                <th>Precio</th>
-                            </thead>
-                            <tbody *ngFor="let item of postales">
-                                <tr>
-                                    <td *ngIf="item._id == radio_postal">
-                                        <input type="radio" class="form-control" style="height: 25px;width: 15px;"
-                                            [attr.id]="'postal-'+item._id" name="radio"
-                                            (change)="select_postal($event,item)" value="{{item._id}}" checked>
-                                    </td>
-                                    <td *ngIf="item._id != radio_postal">
-                                        <input type="radio" class="form-control" style="height: 25px;width: 15px;"
-                                            [attr.id]="'postal-'+item._id" name="radio"
-                                            (change)="select_postal($event,item)" value="{{item._id}}">
-                                    </td>
-                                    <td>
-                                        <blockquote class="blockquote" style="margin-bottom: 0.4rem;">
-                                            <p style="font-size: 13px;margin-bottom: 0px !important;">{{item.titulo}}
-                                            </p>
-                                            <footer class="blockquote-footer">
-                                                {{item.tiempo}}
-                                            </footer>
-                                        </blockquote>
-
-                                    </td>
-                                    <td>{{item.precio |currency : tienda_moneda}}</td>
-
-                                </tr>
-                            </tbody>
-
-                        </table>
-
-                    </div> -->
-                    <div class="accordion mb-4 cart-data-venta" id="order-options" *ngIf="carrito">
-                        <!-- <div class="card">
-                            <div class="card-header">
-                                <h3 class="accordion-heading"><a href="#promo-code" role="button" data-toggle="collapse"
-                                        aria-expanded="true" aria-controls="promo-code">Aplicar promoción<span
-                                            class="accordion-indicator"></span></a></h3>
-                            </div>
-                            <div class="collapse show" id="promo-code" data-parent="#order-options">
-                                <form class="card-body needs-validation" method="post" novalidate>
-                                    <div class="form-group">
-                                        <input class="form-control" type="text" placeholder="Cupón" name="cupon"
-                                            maxlength="13" [(ngModel)]="cupon" (keyup)="get_data_cupon($event,cupon)">
-                                        <div class="invalid-feedback" *ngIf="msm_error_cupon">Este cupón no esta
-                                            disponible.</div>
-                                        <div class="valid-feedback" *ngIf="msm_success_cupon" style="display: block;">
-                                            Cupón aplicado exitosamente!</div>
-                                    </div>
-
-                                </form>
-                            </div>
-                        </div> -->
-                        <!-- direcciones -->
-                        <!-- <div class="card">
-                            <div class="card-header">
-                                <h3 class="accordion-heading"><a class="collapsed" href="#shipping-estimates" role="button" data-toggle="collapse" aria-expanded="true" aria-controls="shipping-estimates">Dirección de envío<span class="accordion-indicator"></span></a></h3>
-                            </div>
-                            <div class="collapse" id="shipping-estimates" data-parent="#order-options">
-                                <div class="card-body">
-
-                                    <div class="form-group">
-                                        <select class="form-control custom-select" required (change)="get_direccion(id_direccion)"  [(ngModel)]="id_direccion">
-                                            <option value="" selected disabled >Selecciona</option>
-                                            <ng-container *ngFor="let direccion of direcciones" >
-                                                <option value="{{direccion._id}}">{{direccion.direccion}}</option>
-                                            </ng-container>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> -->
-
-                    </div>
-                    <div class="invalid-tooltip" style="display: block;" *ngIf="msm_error">{{msm_error}}</div>
-
-                    <button class="btn btn-primary btn-shadow btn-block mt-4 mb-4" *ngIf="carrito" id="btn-verify-data"
-                        (click)="verify_data()"><i class="czi-card font-size-lg mr-2"></i>Proceder a pagar</button>
-
-                    <button class="btn btn-primary btn-shadow btn-block mt-4 mb-4" id="btn-back-data"
-                        (click)="back_data()"><i class="czi-reply font-size-lg mr-2"></i>Regresar</button>
-
-                    <div class="rounded-lg px-4 pt-4 pb-2 mb-4" id="card-data-envio">
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <h4 class="h6">Detalles de Entrega:</h4>
-                                <ul class="list-unstyled font-size-sm">
-                                    <li><span class="text-muted dt-w">Cliente:&nbsp;
-                                            <br></span>{{clienteSeleccionado.first_name}}
-                                        {{clienteSeleccionado.last_name}}</li>
-                                    <!-- <li><span class="text-muted dt-w">Dirección:&nbsp;
-                                            <br></span>{{data_direccionLocal.direccion}}</li>
-                                    <li><span class="text-muted dt-w">País - Ciudad - ZIP:&nbsp; <br></span>
-                                        {{data_direccionLocal.pais}} <span> - </span> {{data_direccionLocal.ciudad}}
-                                        <span> - </span> {{data_direccionLocal.zip}}</li> -->
-                                </ul>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <!-- codigo comentado por Jose Prados -->
-                    <!-- <div class="card" id="card-pay">
-                        <div class="card-header">
-                            <h3 style="    font-size: 1rem;
-                margin-bottom: 0px;">Pagos</h3>
-                        </div>
-                        <div #paypal></div>
-                    </div> -->
-
-
-
-                    <div class="card p-4" id="card-pay">
-                        <label class="form-label">Seleccione el método de pago</label>
-                        <!-- select metodo de pago -->
-
-                        <select id="paymentMethod" class="form-control" (change)="onPaymentMethodChange($event)"
-                            [(ngModel)]="selectedMethod">
-                            <option value="">Seleccione</option>
-                            <option value="efectivo">Efectivo</option>
-                            <option value="transferencia">Transferencia Bancaria</option>
-                        </select>
-
-                        <!-- div que contiene el formulario para pago con transferencia -->
-                        <div *ngIf="habilitacionFormTransferencia">
-
-                            <form [formGroup]="formTransferencia" (ngSubmit)="sendFormTransfer()">
-
-                                <!-- metodo de pago -->
-                                <div class="mb-3 mt-2">
-                                    <label form="metodo_pago" class="form-label">Tipo de Transferencia</label>
-                                    <select formControlName="metodo_pago" (change)="onChangePayment($event)"
-                                        class="form-control" name="metodo_pago" id="metodo_pago">
-                                        <option value="">Seleccione</option>
-                                        <option [value]="metodo_pago._id" *ngFor="let metodo_pago of paymentMethods">
-                                            {{metodo_pago.tipo}}
-                                        </option>
-                                    </select>
-                                </div>
-                                <div class="card">
-                                    <div class="card-body alert-warning" *ngIf="paymentSelected">
-                                        <p *ngIf="paymentSelected.bankName">Nombre del
-                                            Banco:&nbsp;{{paymentSelected.bankName}}</p>
-                                        <p *ngIf="paymentSelected.bankAccount">Numero de
-                                            Cuenta:&nbsp;{{paymentSelected.bankAccount}}</p>
-                                        <p *ngIf="paymentSelected.phone">Numero de
-                                            Teléfono:&nbsp;{{paymentSelected.phone}}</p>
-                                        <p *ngIf="paymentSelected.email">Email:&nbsp;{{paymentSelected.email}}</p>
-                                        <p *ngIf="paymentSelected.ciorif">Ciorif:&nbsp;{{paymentSelected.ciorif}}
-                                        </p>
-                                        <!-- <p *ngIf="paymentSelected.username">Cheque a nombre
-                                            de:&nbsp;{{paymentSelected.username}}</p> -->
-                                    </div>
-                                </div>
-
-                                <!-- formularios Dólares Bolivares Euro -->
-                                <div class="row"
-                                    *ngIf="paymentSelected && paymentSelected?.tipo === 'Transferencia Dólares'|| paymentSelected && paymentSelected?.tipo === 'Transferencia Bolivares' || paymentSelected && paymentSelected?.tipo === 'Transferencia Euro'">
-                                    <!-- nombre del banco -->
-                                    <div class="mb-3 col-xs-12 col-sm-6">
-                                        <label for="bankName" class="form-label">Banco</label>
-                                        <input type="text" formControlName="bankName" class="form-control"
-                                            name="bankName" id="bankName">
-                                    </div>
-                                    <!-- monto -->
-                                    <div class="mb-3 col-xs-12 col-sm-6">
-                                        <label for="amount" class="form-label">Monto</label>
-                                        <input type="number" formControlName="amount" class="form-control" name="amount"
-                                            id="amount">
-                                    </div>
-                                    <!-- numero de referencia -->
-                                    <div class="mb-3 col-xs-12 col-sm-6">
-                                        <label for="referencia" class="form-label">N. Referencia</label>
-                                        <input type="text" formControlName="referencia" class="form-control"
-                                            name="referencia" id="referencia">
-                                    </div>
-
-                                    <!-- fecha de pago -->
-                                    <div class="mb-3 col-xs-12 col-sm-6">
-                                        <label for="paymentday" class="form-label">Fecha Pago</label>
-                                        <input type="date" formControlName="paymentday" class="form-control"
-                                            name="paymentday" id="paymentday">
-                                    </div>
-                                    <!-- botones -->
-                                    <div class="d-grid gap-2">
-                                        <button class="btn btn-primary" type="submit">
-                                            Enviar
-                                        </button>
-                                    </div>
-                                </div>
-
-                                <!-- formularios zelle -->
-                                <div *ngIf="paymentSelected && paymentSelected?.tipo === 'zelle'">
-                                    <div class="row">
-                                        <!-- numero de referencia -->
-                                        <div class="mb-3 col-xs-12 col-sm-6">
-                                            <label for="email" class="form-label">Email</label>
-                                            <input type="text" formControlName="email" class="form-control" name="email"
-                                                id="email">
-                                        </div>
-                                        <!-- nombre del banco -->
-                                        <div class="mb-3 col-xs-12 col-sm-6">
-                                            <label for="bankName" class="form-label">Banco</label>
-                                            <input type="text" formControlName="bankName" class="form-control"
-                                                name="bankName" id="bankName">
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <!-- numero de referencia -->
-                                        <div class="mb-3 col-xs-12 col-sm-6">
-                                            <label for="referencia" class="form-label">N. Referencia</label>
-                                            <input type="text" formControlName="referencia" class="form-control"
-                                                name="referencia" id="referencia">
-                                        </div>
-
-                                        <!-- monto -->
-                                        <div class="mb-3 col-xs-12 col-sm-6">
-                                            <label for="amount" class="form-label">Monto</label>
-                                            <input type="number" formControlName="amount" class="form-control"
-                                                name="amount" id="amount">
-                                        </div>
-                                    </div>
-                                    <!-- botones -->
-                                    <div class="d-grid gap-2">
-                                        <button class="btn btn-primary" type="submit">
-                                            Enviar
-                                        </button>
-                                    </div>
-
-
-                                </div>
-
-                                <!-- formularios pagomovil -->
-
-                                <div class="row" *ngIf="paymentSelected && paymentSelected?.tipo === 'pagomovil'">
-
-                                    <!-- nombre del banco -->
-                                    <div class="mb-3 col-xs-12 col-sm-6">
-                                        <label for="bankName" class="form-label">Banco</label>
-                                        <input type="text" formControlName="bankName" class="form-control"
-                                            name="bankName" id="bankName">
-                                    </div>
-                                    <!-- teléfono de la persona que hace la transferencia -->
-                                    <div class="mb-3 col-xs-12 col-sm-6">
-                                        <label for="phone" class="form-label">Teléfono</label>
-                                        <input type="number" formControlName="phone" class="form-control" name="phone"
-                                            id="phone">
-                                    </div>
-                                    <!-- monto -->
-                                    <div class="mb-3 col-xs-12 col-sm-6">
-                                        <label for="amount" class="form-label">Monto</label>
-                                        <input type="number" formControlName="amount" class="form-control" name="amount"
-                                            id="amount">
-                                    </div>
-                                    <div class="mb-3 col-xs-12 col-sm-6">
-                                        
-                                    </div>
-                                    <div class="clear"></div>
-                                    <!-- botones -->
-                                    <div class="d-grid gap-2">
-                                        <button class="btn btn-primary" type="submit">
-                                            Enviar
-                                        </button>
-                                    </div>
-                                </div>
-                                <!-- paypal -->
-                                <div #paypal *ngIf="paypal || paymentSelected && paymentSelected?.tipo === 'paypal'">
-                                    <ngx-paypal [config]="payPalConfig"></ngx-paypal>
-                                </div>
-                            </form>
-
-                        </div>
-
-                        <!-- div que contiene el formulario para pago en efectivo -->
-                        <div *ngIf="habilitacionFormEfectivo">
-                            <!-- formulario -->
-                            <form [formGroup]="formEfectivo" (ngSubmit)="sendFormEffective()" class="mt-4">
-
-                                <!-- monto -->
-                                <div class="mb-3">
-                                    <label for="amount" class="form-label">Monto</label>
-                                    <input type="number" formControlName="amount" class="form-control" name="amount"
-                                        id="amount">
-                                </div>
-
-                                <!-- fecha de pago -->
-                                <div class="mb-3">
-                                    <label for="paymentday" class="form-label">Fecha de Pago</label>
-                                    <input type="date" formControlName="paymentday" class="form-control"
-                                        name="paymentday" id="paymentday">
-                                </div>
-
-                                <!-- botones -->
-                                <div class="d-grid gap-2">
-                                    <button class="btn btn-primary" type="submit">
-                                        Enviar
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
-                        <!-- div que contiene el formulario para pago en cheque -->
-                        <div *ngIf="habilitacionFormCheque">
-                            <!-- formulario -->
-                            <form [formGroup]="formCheque" (ngSubmit)="sendFormCheque()" class="mt-4">
-                                <div class="card">
-                                    <div class="card-body p-2 alert-warning" *ngIf="paymentMethodinfo">
-                                        <p *ngIf="paymentMethodinfo.username">Cheque a nombre
-                                            de:&nbsp;{{paymentMethodinfo.username}}</p>
-                                    </div>
-                                </div>
-                                <!-- nombre de la persona que paga -->
-                                <div class="mb-3">
-                                    <label for="name_person" class="form-label">
-                                        Nombre y Apellido
-                                    </label>
-                                    <input type="text" formControlName="name_person" class="form-control"
-                                        name="name_person" id="name_person">
-                                </div>
-
-                                <!-- monto -->
-                                <div class="mb-3">
-                                    <label for="amount" class="form-label">Monto</label>
-                                    <input type="number" formControlName="amount" class="form-control" name="amount"
-                                        id="amount">
-                                </div>
-                                <!-- numero de cheque -->
-                                <div class="mb-3">
-                                    <label for="ncheck" class="form-label">N. Cheque</label>
-                                    <input type="number" formControlName="ncheck" class="form-control" name="ncheck"
-                                        id="ncheck">
-                                </div>
-
-                                <!-- teléfono de la persona que paga -->
-                                <div class="mb-3">
-                                    <label for="phone" class="form-label">Num. teléfono</label>
-                                    <input type="number" formControlName="phone" class="form-control" name="phone"
-                                        id="phone">
-                                </div>
-
-                                <!-- fecha de pago -->
-                                <div class="mb-3">
-                                    <label for="paymentday" class="form-label">Fecha de Pago</label>
-                                    <input type="date" formControlName="paymentday" class="form-control"
-                                        name="paymentday" id="paymentday">
-                                </div>
-
-                                <!-- botones -->
-                                <div class="d-grid gap-2">
-                                    <button class="btn btn-primary" type="submit">
-                                        Enviar
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
-
-                    </div>
-
-                </div>
-            </aside>
+<div class="zlip-cart-page row py-3">
+    <div class="clear"></div>
+    <!-- ========================================================= -->
+    <!-- ESTADO VACÍO: CUANDO NO HAY PRODUCTOS EN EL CARRITO       -->
+    <!-- ========================================================= -->
+    <div *ngIf="!carrito || carrito.length === 0" class="card border-0 shadow-sm rounded-4 text-center py-5 px-3">
+        <div class="py-4">
+            <div class="zlip-empty-icon mx-auto mb-3 rounded-circle bg-light text-muted">
+                <i class="fas fa-shopping-bag fs-2"></i>
+            </div>
+            <h4 class="fw-bold text-dark mb-2">{{ 'Tu carrito actualmente esta vacío' | translate }}</h4>
+            <p class="text-muted small mb-4">Agrega productos desde el catálogo para iniciar una venta.</p>
+            <a routerLink="/dashboard/atencion-local" class="btn btn-primary px-4 py-2 rounded-3 fw-semibold">
+                <i class="fas fa-arrow-left me-2"></i> {{ 'Ir a comprar' | translate }}
+            </a>
         </div>
     </div>
+    <div class="clear"></div>
+    <!-- ========================================================= -->
+    <!-- CARRITO CON PRODUCTOS                                     -->
+    <!-- ========================================================= -->
+    <div *ngIf="carrito && carrito.length > 0" class="row g-4 align-items-start">
+
+        <!-- COLUMNA IZQUIERDA: LISTA DE PRODUCTOS -->
+        <div class="col-12 col-lg-7" [class.d-none]="pasoPago" [class.d-lg-block]="pasoPago">
+            <div class="card border-0 shadow-sm rounded-4">
+                <div
+                    class="card-header bg-white border-bottom py-3 px-4 d-flex align-items-center justify-content-between">
+                    <h5 class="fw-bold text-dark mb-0 d-flex align-items-center gap-2">
+                        <i class="fas fa-shopping-cart text-primary"></i>
+                        <span>{{ 'Carrito' | translate }}</span>
+                        <span class="badge bg-primary-subtle text-primary rounded-pill">{{ carrito.length }}</span>
+                    </h5>
+
+                    <a routerLink="/dashboard/atencion-local" class="btn btn-sm btn-outline-secondary rounded-3">
+                        <i class="fas fa-plus me-1"></i> {{ 'Continuar comprando' | translate }}
+                    </a>
+                </div>
+
+                <div class="card-body p-3 p-md-4">
+
+                    <!-- Alerta general de stock -->
+                    <div *ngIf="error_stock"
+                        class="alert alert-danger d-flex align-items-center gap-2 rounded-3 small mb-3">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <span>{{ 'Algun producto de su carrito de compras no tiene stock' | translate }}.</span>
+                    </div>
+
+                    <!-- Items del carrito -->
+                    <div class="d-flex flex-column gap-3">
+                        <div *ngFor="let item of carrito" class="zlip-cart-item p-3 rounded-4 border bg-white">
+                            <div class="row g-3 align-items-center">
+
+                                <!-- Imagen -->
+                                <div class="col-3 col-sm-2">
+                                    <div class="zlip-item-img rounded-3 bg-light border p-1 mx-auto">
+                                        <img [src]="item.producto?.img | imagenPipe: 'productos'"
+                                            [alt]="currentLang === 'en' ? item.producto?.titulo?.en : item.producto?.titulo?.es"
+                                            class="img-fluid rounded-2">
+                                    </div>
+                                </div>
+
+                                <!-- Título, Variantes y Color -->
+                                <div class="col-9 col-sm-6">
+                                    <h6 class="fw-bold text-dark mb-1">
+                                        {{ currentLang === 'en' ? (item.producto?.titulo?.en ||
+                                        item.producto?.titulo?.es) : (item.producto?.titulo?.es ||
+                                        item.producto?.titulo) }}
+                                    </h6>
+
+                                    <div class="d-flex flex-column align-items-start gap-1 small text-secondary">
+                                        <!-- Medida / Selector con salto de línea permitido -->
+                                        <span
+                                            *ngIf="item.selector && item.selector !== ' ' && item.selector !== 'Único'"
+                                            class="badge bg-light text-dark border rounded-2 fw-medium text-wrap text-start lh-sm py-1 px-2">
+                                            {{ item.producto?.nombre_selector || 'Opción' }}: {{ item.selector }}
+                                        </span>
+
+                                        <!-- Muestra de Color -->
+                                        <span *ngIf="item.color"
+                                            class="d-inline-flex align-items-center gap-1 badge bg-light text-dark border rounded-2 fw-medium py-1 px-2">
+                                            <span>Color:</span>
+                                            <span class="zlip-color-dot" [style.background-color]="item.color"></span>
+                                        </span>
+                                    </div>
+
+                                    <!-- Aviso sin stock individual -->
+                                    <span *ngIf="item.producto?.stock <= 0"
+                                        class="badge bg-danger-subtle text-danger rounded-pill mt-1">
+                                        {{ 'No hay stock del producto' | translate }}
+                                    </span>
+                                </div>
+
+                                <!-- Precio, Cantidad y Eliminar -->
+                                <div
+                                    class="col-12 col-sm-4 text-sm-end d-flex flex-sm-column align-items-center align-items-sm-end justify-content-between pt-2 pt-sm-0 zlip-item-actions">
+                                    <div>
+                                        <span class="fw-bolder text-success fs-5 d-block lh-1 mb-1">
+                                            {{ (item.precio * item.cantidad) | currency: tienda_moneda }}
+                                        </span>
+                                        <span class="text-muted small d-block">
+                                            {{ item.cantidad }} × {{ item.precio | currency: tienda_moneda }}
+                                        </span>
+                                    </div>
+
+                                    <button type="button"
+                                        class="btn btn-sm btn-outline-danger rounded-3 mt-sm-2 px-2 py-1"
+                                        (click)="remove_producto(item._id)" title="{{ 'Eliminar' | translate }}">
+                                        <i class="fas fa-trash-alt me-1"></i>
+                                        <span class="small">{{ 'Eliminar' | translate }}</span>
+                                    </button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+        <!-- COLUMNA DERECHA: RESUMEN DE CLIENTE, TOTAL Y MÉTODOS DE PAGO -->
+        <div class="col-12 col-lg-5">
+            <div class="card border-0 shadow-sm rounded-4">
+                <div class="card-header bg-white border-bottom py-3 px-4">
+                    <h5 class="fw-bold text-dark mb-0 d-flex align-items-center gap-2">
+                        <i class="fas fa-cash-register text-success"></i>
+                        <span>{{ pasoPago ? ('Detalles de Pago' | translate) : ('Resumen de Venta' | translate)
+                            }}</span>
+                    </h5>
+                </div>
+
+                <div class="card-body p-4">
+
+                    <!-- Resumen de Cliente -->
+                    <div *ngIf="clienteSeleccionado"
+                        class="p-3 rounded-3 bg-light border mb-3 d-flex align-items-center gap-3">
+                        <div class="zlip-client-badge bg-primary text-white rounded-circle">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="small">
+                            <span class="text-muted d-block">Cliente</span>
+                            <strong class="text-dark">{{ clienteSeleccionado.first_name }} {{
+                                clienteSeleccionado.last_name }}</strong>
+                            <span *ngIf="clienteSeleccionado.telefono" class="text-muted d-block">{{
+                                clienteSeleccionado.telefono }}</span>
+                        </div>
+                    </div>
+
+                    <!-- Desglose de Total -->
+                    <div class="d-flex justify-content-between align-items-center py-2 border-bottom">
+                        <span class="text-secondary">Productos ({{ carrito.length }})</span>
+                        <span class="fw-semibold text-dark">{{ subtotal | currency: tienda_moneda }}</span>
+                    </div>
+
+                    <div class="d-flex justify-content-between align-items-center py-3 mb-3">
+                        <span class="fw-bold fs-5 text-dark">Total a Pagar</span>
+                        <span class="fw-bolder fs-3 text-success">{{ subtotal | currency: tienda_moneda }}</span>
+                    </div>
+
+                    <!-- Alerta de error general -->
+                    <div *ngIf="msm_error" class="alert alert-danger py-2 px-3 small rounded-3 mb-3">
+                        {{ msm_error }}
+                    </div>
+
+                    <!-- BOTÓN PASO 1: PROCEDER A PAGAR -->
+                    <div *ngIf="!pasoPago" class="d-grid">
+                        <button type="button" class="btn btn-success btn-lg fw-bold rounded-3 py-3 shadow-sm"
+                            (click)="irAPagar()">
+                            <span>{{ 'Proceder a pagar' | translate }}</span>
+                            <i class="fas fa-arrow-right ms-2"></i>
+                        </button>
+                    </div>
+
+                    <!-- PASO 2: FORMULARIOS DE MÉTODOS DE PAGO -->
+                    <div *ngIf="pasoPago">
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold small text-uppercase text-muted">
+                                {{ 'Seleccione el método de pago' | translate }}
+                            </label>
+                            <select class="form-select form-select-lg rounded-3" [(ngModel)]="selectedMethod"
+                                (change)="onPaymentMethodChange($event)">
+                                <option value="">{{ 'Seleccione' | translate }}</option>
+                                <option value="efectivo">{{ 'Efectivo' | translate }}</option>
+                                <option value="transferencia">{{ 'Transferencia Bancaria' | translate }}</option>
+                                <option value="cheque">Cheque</option>
+                                <option value="paypal">PayPal / Tarjeta</option>
+                            </select>
+                        </div>
+
+                        <!-- 1. FORMULARIO EFECTIVO -->
+                        <form *ngIf="selectedMethod === 'efectivo'" [formGroup]="formEfectivo"
+                            (ngSubmit)="sendFormEffective()" class="p-3 rounded-4 bg-light border mt-3">
+                            <h6 class="fw-bold text-dark mb-3">
+                                <i class="fas fa-money-bill-wave text-success me-2"></i>Pago en Efectivo
+                            </h6>
+
+                            <div class="mb-3">
+                                <label class="form-label small fw-semibold">{{ 'Monto' | translate }}</label>
+                                <input type="number" class="form-control rounded-3" formControlName="amount"
+                                    [placeholder]="subtotal">
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label small fw-semibold">{{ 'Fecha de Pago' | translate }}</label>
+                                <input type="date" class="form-control rounded-3" formControlName="paymentday">
+                            </div>
+
+                            <button type="submit" [disabled]="formEfectivo.invalid"
+                                class="btn btn-success w-100 fw-semibold rounded-3 py-2">
+                                <i class="fas fa-check-circle me-1"></i> {{ 'Enviar' | translate }}
+                            </button>
+                        </form>
+
+                        <!-- 2. FORMULARIO TRANSFERENCIA / PAGO MÓVIL -->
+                        <div *ngIf="selectedMethod === 'transferencia'" class="p-3 rounded-4 bg-light border mt-3">
+                            <h6 class="fw-bold text-dark mb-3">
+                                <i class="fas fa-university text-primary me-2"></i>Transferencia / Pago Digital
+                            </h6>
+
+                            <div class="mb-3">
+                                <label class="form-label small fw-semibold">{{ 'Tipo de Transferencia' | translate
+                                    }}</label>
+                                <select class="form-select rounded-3" (change)="onChangePayment($event)">
+                                    <option value="">{{ 'Seleccione' | translate }}</option>
+                                    <option *ngFor="let metodo of paymentMethods" [value]="metodo._id">
+                                        {{ metodo.tipo }} - {{ metodo.bankName }}
+                                    </option>
+                                </select>
+                            </div>
+
+                            <!-- Datos de la cuenta destino -->
+                            <div *ngIf="paymentSelected" class="alert alert-info py-2 px-3 small rounded-3 mb-3">
+                                <div *ngIf="paymentSelected.bankName"><strong>Banco:</strong> {{
+                                    paymentSelected.bankName }}</div>
+                                <div *ngIf="paymentSelected.bankAccount"><strong>Cuenta:</strong> {{
+                                    paymentSelected.bankAccount }}</div>
+                                <div *ngIf="paymentSelected.phone"><strong>Teléfono:</strong> {{ paymentSelected.phone
+                                    }}</div>
+                                <div *ngIf="paymentSelected.email"><strong>Email:</strong> {{ paymentSelected.email }}
+                                </div>
+                                <div *ngIf="paymentSelected.ciorif"><strong>CI/RIF:</strong> {{ paymentSelected.ciorif
+                                    }}</div>
+                            </div>
+
+                            <form [formGroup]="formTransferencia" (ngSubmit)="sendFormTransfer()">
+                                <div class="mb-2">
+                                    <label class="form-label small fw-semibold">Banco Emisor</label>
+                                    <input type="text" class="form-control rounded-3" formControlName="bankName">
+                                </div>
+
+                                <div class="row g-2 mb-2">
+                                    <div class="col-6">
+                                        <label class="form-label small fw-semibold">{{ 'Monto' | translate }}</label>
+                                        <input type="number" class="form-control rounded-3" formControlName="amount">
+                                    </div>
+                                    <div class="col-6">
+                                        <label class="form-label small fw-semibold">{{ 'N. Referencia' | translate
+                                            }}</label>
+                                        <input type="text" class="form-control rounded-3" formControlName="referencia">
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label small fw-semibold">{{ 'Fecha Pago' | translate }}</label>
+                                    <input type="date" class="form-control rounded-3" formControlName="paymentday">
+                                </div>
+
+                                <button type="submit" [disabled]="formTransferencia.invalid"
+                                    class="btn btn-primary w-100 fw-semibold rounded-3 py-2">
+                                    <i class="fas fa-paper-plane me-1"></i> {{ 'Enviar' | translate }}
+                                </button>
+                            </form>
+                        </div>
+
+                        <!-- 3. FORMULARIO CHEQUE -->
+                        <form *ngIf="selectedMethod === 'cheque'" [formGroup]="formCheque" (ngSubmit)="sendFormCheque()"
+                            class="p-3 rounded-4 bg-light border mt-3">
+                            <h6 class="fw-bold text-dark mb-3">
+                                <i class="fas fa-money-check text-secondary me-2"></i>Pago con Cheque
+                            </h6>
+
+                            <div class="mb-2">
+                                <label class="form-label small fw-semibold">{{ 'Nombre y Apellido' | translate
+                                    }}</label>
+                                <input type="text" class="form-control rounded-3" formControlName="name_person">
+                            </div>
+
+                            <div class="row g-2 mb-2">
+                                <div class="col-6">
+                                    <label class="form-label small fw-semibold">{{ 'Monto' | translate }}</label>
+                                    <input type="number" class="form-control rounded-3" formControlName="amount">
+                                </div>
+                                <div class="col-6">
+                                    <label class="form-label small fw-semibold">{{ 'N. Cheque' | translate }}</label>
+                                    <input type="text" class="form-control rounded-3" formControlName="ncheck">
+                                </div>
+                            </div>
+
+                            <div class="row g-2 mb-3">
+                                <div class="col-6">
+                                    <label class="form-label small fw-semibold">{{ 'Num. teléfono' | translate
+                                        }}</label>
+                                    <input type="text" class="form-control rounded-3" formControlName="phone">
+                                </div>
+                                <div class="col-6">
+                                    <label class="form-label small fw-semibold">{{ 'Fecha de Pago' | translate
+                                        }}</label>
+                                    <input type="date" class="form-control rounded-3" formControlName="paymentday">
+                                </div>
+                            </div>
+
+                            <button type="submit" [disabled]="formCheque.invalid"
+                                class="btn btn-dark w-100 fw-semibold rounded-3 py-2">
+                                {{ 'Enviar' | translate }}
+                            </button>
+                        </form>
+
+                        <!-- 4. BOTÓN PAYPAL -->
+                        <div *ngIf="paypal && payPalConfig" class="mt-3">
+                            <ngx-paypal [config]="payPalConfig"></ngx-paypal>
+                        </div>
+
+                        <!-- Botón Regresar -->
+                        <div class="mt-3 pt-2 border-top">
+                            <button type="button" class="btn btn-outline-secondary w-100 rounded-3"
+                                (click)="volverACarrito()">
+                                <i class="fas fa-arrow-left me-1"></i> {{ 'Regresar' | translate }}
+                            </button>
+                            <!-- Botón Regresar -->
+                            <div class="mt-3 pt-2 border-top">
+                                <button type="button" class="btn btn-outline-secondary w-100 rounded-3"
+                                    (click)="volverACarrito()">
+                                    <i class="fas fa-arrow-left me-1"></i> {{ 'Regresar' | translate }}
+                                </button>
+                            </div>
+
+                        </div> <!-- cierra *ngIf="pasoPago" -->
+                    </div> <!-- cierra card-body -->
+                </div> <!-- cierra card -->
+            </div> <!-- cierra col-12 col-lg-5 -->
+
+        </div> <!-- cierra *ngIf="carrito && carrito.length > 0" -->
+    </div> <!-- cierra zlip-cart-page -->
 
 </div>

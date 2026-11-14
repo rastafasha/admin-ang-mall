@@ -13,7 +13,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { ComponentsModule } from 'src/app/components/components.module';
 import { PipesModule } from 'src/app/pipes/pipes.module';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { ComponentsAtentionModule } from '../../atencion-local/components/components.module';
+// import { ComponentsAtentionModule } from '../../atencion-local/components/components.module';
 
 
 
@@ -39,7 +39,7 @@ import { ComponentsAtentionModule } from '../../atencion-local/components/compon
     NgxDropzoneModule,
     PdfViewerModule,
     NgxPaginationModule,
-    ComponentsAtentionModule,
+    // ComponentsAtentionModule,
     SharedModule,
     ComponentsModule,
     PipesModule,

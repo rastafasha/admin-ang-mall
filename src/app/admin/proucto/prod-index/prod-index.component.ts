@@ -51,6 +51,7 @@ export class ProdIndexComponent implements OnInit, OnDestroy {
   productoSeleccionado: Producto;
   idLocal: string = '';
   tienda: Tienda;
+  tienda_moneda: string;
 
 
   public verModalImportar: boolean = false;
@@ -149,6 +150,7 @@ export class ProdIndexComponent implements OnInit, OnDestroy {
     this.tiendaService.getTiendaById(this.idLocal).subscribe((resp: any) => {
       this.tienda = resp;
       this.usaMercadoLibre = this.tienda.usaMercadoLibre || null;
+      this.tienda_moneda = resp.moneda;
     })
   }
 

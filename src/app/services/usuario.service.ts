@@ -129,7 +129,7 @@ export class UsuarioService {
   }
 
   crearCliente(data: any) {
-    const url = `${base_url}/usuarios/registrocliente`;
+    const url = `${base_url}/usuarios/registro`;
     return this.http.post(url, data, this.headers);
   }
 

@@ -72,6 +72,9 @@ export class TiendaaddComponent implements OnInit, OnChanges {
   public meliStatus: string = 'DESCONECTADO';
   public meliNickname: string = '';
 
+  draggingType: 'img' | 'img_hero' | null = null;
+tipoSeleccionado: 'img' | 'img_hero' | null = null;
+
   constructor(
     private fb: FormBuilder,
     private categoriaService: CategoriaService,
@@ -560,6 +563,39 @@ export class TiendaaddComponent implements OnInit, OnChanges {
         Swal.fire('Error', 'No se pudo subir la imagen', 'error');
       });
   }
+
+  onDragOver(event: DragEvent, tipo: 'img' | 'img_hero'): void {
+  event.preventDefault();
+  event.stopPropagation();
+  this.draggingType = tipo;
+}
+
+onDragLeave(event: DragEvent): void {
+  event.preventDefault();
+  event.stopPropagation();
+  this.draggingType = null;
+}
+
+onDrop(event: DragEvent, tipo: 'img' | 'img_hero'): void {
+  event.preventDefault();
+  event.stopPropagation();
+  this.draggingType = null;
+
+  const files = event.dataTransfer?.files;
+  if (files && files.length > 0) {
+    this.tipoSeleccionado = tipo;
+    this.cambiarImagen(files[0], tipo);
+  }
+}
+
+// Opcional: crea este pequeño envoltorio para el (change) del input y así habilitar solo el botón correcto
+// seleccionarArchivo(event: Event, tipo: 'img' | 'img_hero'): void {
+//   const input = event.target as HTMLInputElement;
+//   if (input.files && input.files.length > 0) {
+//     this.tipoSeleccionado = tipo;
+//     this.cambiarImagen(input.files[0], tipo);
+//   }
+// }
 
 
 

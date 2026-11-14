@@ -30,11 +30,11 @@ declare var $: any;
 
 @Component({
   selector: 'app-atencion-local',
-  standalone:false,
+  standalone: false,
   templateUrl: './atencion-local.component.html',
   styleUrls: ['./atencion-local.component.css']
 })
-export class AtencionLocalComponent implements OnInit, OnDestroy  {
+export class AtencionLocalComponent implements OnInit, OnDestroy {
 
   public socket = io(environment.soketServer);
 
@@ -42,6 +42,8 @@ export class AtencionLocalComponent implements OnInit, OnDestroy  {
   cartItems: any[] = [];
 
   @Input() clienteSeleccionado: any;
+
+  public clienteConfirmado: boolean = false;
 
   public cantidad_to_cart = 1;
   public precio_to_cart;
@@ -107,7 +109,10 @@ export class AtencionLocalComponent implements OnInit, OnDestroy  {
   currentPage = 1;
   collecion = 'productos';
   public info: string = '';
-    private langSubscription!: Subscription;
+  private langSubscription!: Subscription;
+
+  totalProducts: number = 0;
+  public todosLosProductos: any[] = [];
 
   constructor(
     private productoService: ProductoService,
@@ -127,11 +132,11 @@ export class AtencionLocalComponent implements OnInit, OnDestroy  {
   }
 
   ngOnInit(): void {
-     window.scrollTo(0, 0);
+    window.scrollTo(0, 0);
     // obtenemos el cliente del localstorage
     const cliente = localStorage.getItem('cliente');
     // Si el cliente existe, lo parseamos de JSON a un objeto
-     // 🟢 1. CARGA INICIAL DE LAS INSTRUCCIONES (Garantiza que la info no empiece vacía)
+    // 🟢 1. CARGA INICIAL DE LAS INSTRUCCIONES (Garantiza que la info no empiece vacía)
     this.translate.get('LOCAL_ATENTION.TITLE').subscribe(() => {
       this.actualizarInstruccionesPagos();
     });
@@ -144,8 +149,9 @@ export class AtencionLocalComponent implements OnInit, OnDestroy  {
     if (cliente) {
       this.clienteSeleccionado = JSON.parse(cliente);
       this.loadClienteenProceso();
-    } else {
-      this.clienteSeleccionado = null; // O maneja el caso en que no hay cliente
+      if (this.clienteSeleccionado && this.clienteSeleccionado !== 404 && this.clienteSeleccionado.first_name) {
+        this.clienteConfirmado = true;
+      }
     }
 
     if (!this.identity) {
@@ -160,7 +166,7 @@ export class AtencionLocalComponent implements OnInit, OnDestroy  {
 
     this.uploads();
 
-    
+
   }
 
   private actualizarInstruccionesPagos() {
@@ -184,7 +190,7 @@ export class AtencionLocalComponent implements OnInit, OnDestroy  {
     </ul>
   `;
   }
-   ngOnDestroy(): void {
+  ngOnDestroy(): void {
     if (this.langSubscription) {
       this.langSubscription.unsubscribe();
     }
@@ -192,7 +198,7 @@ export class AtencionLocalComponent implements OnInit, OnDestroy  {
   }
 
 
-  
+
 
   private uploads() {
 
@@ -206,9 +212,10 @@ export class AtencionLocalComponent implements OnInit, OnDestroy  {
     this.local = this.user.local;
 
     if (this.user.role === 'SUPERADMIN') {
-      this.loadProductos()
+      this.loadProductos();
     }
-    if (this.user.role === 'ADMIN' || this.user.role === 'VENTAS') {
+
+    if (this.user.role === 'ADMIN' || this.user.role === 'VENTAS' || this.user.role === 'TIENDA' || this.user.role === 'ALMACEN') {
       this.getLocal();
     }
 
@@ -265,7 +272,7 @@ export class AtencionLocalComponent implements OnInit, OnDestroy  {
   }
 
   getLocal() {
-    this.tiendaService.getTiendaById(this.local).subscribe(tienda => {
+    this.tiendaService.getTiendaById(this.user.local).subscribe(tienda => {
       this.tienda = tienda;
       this.tienda_moneda = tienda.moneda;
       this.activeCategory = tienda.categoria.nombre;
@@ -275,55 +282,61 @@ export class AtencionLocalComponent implements OnInit, OnDestroy  {
     })
   }
 
+getProductosbByTienda() {
+  this.cargando = true;
+  // Pedimos todos los productos activos (ej. 500) para que salgan TODAS las categorías en el POS
+  this.productoService.getProductosTienda(this.user.local, 1, 500).subscribe({
+    next: (resp: any) => {
+      const lista = Array.isArray(resp) ? resp : (resp?.productos || []);
+      this.todosLosProductos = lista;
+      this.productos = [...lista];
 
+      // Extraemos subcategorías únicas normalizadas (sin espacios extra)
+      const mapaSubcategorias = new Map<string, { nombre: string; products: any[] }>();
 
-  // getProductosCatName() {
-  //   this.catname = this.tienda?.categoria?.nombre ?? this.activeCategory
-  //   this.cargando = true
-  //   this.categoryService.find_by_nombre(this.catname).subscribe(
-  //     (resp: any) => {
-  //       this.products = resp.productos || [];
-  //       // console.log(this.products)
-  //       this.updateTodo();
-  //       this.cargando = false
-  //     },
-  //     (error) => {
-  //       console.error('Error al obtener los productos', error);
-  //     }
-  //   );
-  // }
+      lista.forEach((producto: any) => {
+        const subRaw = typeof producto.subcategoria === 'object'
+          ? (producto.subcategoria?.es || '')
+          : (producto.subcategoria || '');
 
+        const nombreLimpio = subRaw.trim();
+        if (!nombreLimpio) return;
 
-  getProductosbByTienda() {
-    this.cargando = true;
-    this.productoService.getProductosTienda(this.tienda._id).subscribe(productos => {
-      this.productos = productos;
-      // console.log(this.productos)
+        const clave = nombreLimpio.toLowerCase();
+        if (!mapaSubcategorias.has(clave)) {
+          mapaSubcategorias.set(clave, {
+            nombre: nombreLimpio,
+            products: []
+          });
+        }
+        mapaSubcategorias.get(clave)!.products.push(producto);
+      });
 
-      //filtramos los productos donde sea igual a la categoria Panaderia
-      const productosfiltrados = this.productos.filter((producto: any) => producto.categoria.nombre === this.tienda.subcategoria);
-      //extraemos el campo subcategoria
-      const subcategorias = productos.map((producto: any) => producto.subcategoria);
-      //eliminamos los duplicados
-      const subcategoriasUnicas = [...new Set(subcategorias)];
-      //creamos un arreglo de objetos con el nombre de la subcategoria y el arreglo de productos
-      const categorias = subcategoriasUnicas.map((subcategoria: any) => ({
-        nombre: subcategoria,
-        products: productos.filter((product: any) => product.subcategoria === subcategoria),
-      }));
-      this.subcategories = categorias || [];
+      this.subcategories = Array.from(mapaSubcategorias.values());
+      this.activeCategory = 'all';
       this.cargando = false;
-    })
-  }
+    },
+    error: (err) => {
+      console.error('Error al cargar productos:', err);
+      this.todosLosProductos = [];
+      this.productos = [];
+      this.subcategories = [];
+      this.cargando = false;
+    }
+  });
+}
 
-  selectCategory(category: string) {
-    // console.log('selectCategory called with:', category);
-    this.activeCategory = category;
-    this.cargando = true
-    this.updateTodo();
-    this.cargando = false
+selectCategory(category: string) {
+  this.activeCategory = category;
+  if (category === 'all') {
+    this.productos = [...this.todosLosProductos];
+  } else {
+    const encontrada = this.subcategories.find(
+      subcat => subcat.nombre.toLowerCase() === category.toLowerCase()
+    );
+    this.productos = encontrada ? [...encontrada.products] : [];
   }
-
+}
   updateTodo() {
     // console.log('updateTodo called. activeCategory:', this.activeCategory, 'products:', this.products, 'subcategories:', this.subcategories);
     this.cargando = true
@@ -380,21 +393,42 @@ export class AtencionLocalComponent implements OnInit, OnDestroy  {
   }
 
   adjuntarClienteaCompra() {
-    // lo salvamos temporalmente en el storage
+    if (!this.clienteSeleccionado || this.clienteSeleccionado === 404) return;
     localStorage.setItem('cliente', JSON.stringify(this.clienteSeleccionado));
-    localStorage.getItem('cliente');
-    this.ngOnInit();
-
+    this.clienteConfirmado = true; // 👈 Colapsa el formulario a la barra compacta
   }
+
+  editarCliente() {
+    this.clienteConfirmado = false; // 👈 Vuelve a desplegar el formulario si quieren editar o buscar otro
+  }
+
   resetClient() {
     localStorage.removeItem('cliente');
+    this.clienteSeleccionado = null;
+    this.clienteConfirmado = false;
     this.first_name = '';
     this.last_name = '';
     this.email = '';
     this.telefono = '';
-    this.numdoc = 0;
+    this.numdoc = null;
+  }
 
-    // location.reload();
+  /**
+* Función para los botones de Siguiente y Anterior del paginador
+*/
+  cambiarPagina(valor: number): void {
+    const nuevoDesde = this.desde + valor;
+
+    // Validaciones de seguridad para no salirnos del rango real de la BD
+    if (nuevoDesde < 0) return;
+    if (nuevoDesde >= this.totalProducts) return;
+
+    this.desde = nuevoDesde;
+    if (this.user.role === 'ADMIN' || this.user.role === 'VENTAS' || this.user.role === 'TIENDA' || this.user.role === 'ALMACEN') {
+      this.getProductosbByTienda();
+    } else {
+      this.loadProductos(); // Al cambiar de página, hace una sola petición limpia
+    }
   }
 
 
@@ -407,7 +441,7 @@ export class AtencionLocalComponent implements OnInit, OnDestroy  {
       numdoc: this.numdoc,
       telefono: this.telefono,
       password: this.telefono,
-      local: this.local,
+      role: 'USER',
     }
 
     //guardamos el cliente nuevo
@@ -422,12 +456,14 @@ export class AtencionLocalComponent implements OnInit, OnDestroy  {
         this.userService.getClient(this.numdoc).subscribe(
           (numdoc) => {
             this.clienteGuardado = numdoc;
-            console.log(this.clienteGuardado);
             // definir cliente seleccionado luego del registro
             this.clienteSeleccionado = numdoc;
+            
             localStorage.setItem('cliente', JSON.stringify(this.clienteGuardado));
           }
         );
+
+        this.clienteConfirmado = true;
 
       }, (err) => {
         Swal.fire('Error', err.error.msg, 'error');
