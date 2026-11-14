@@ -33,6 +33,7 @@ export class SelectorComponent implements OnInit, OnChanges {
   public titulo;
   public msm_error;
   pageTitle: string;
+  cargando = false;
 
   constructor(
     private fb: FormBuilder,
@@ -69,9 +70,11 @@ export class SelectorComponent implements OnInit, OnChanges {
   }
 
   get_selector() {
+    this.cargando=true;
     this._selectorService.selectorByProduct(this.productoSeleccionado._id).subscribe(
       response => {
         this.selector = response;
+        this.cargando=false;
       }
     );
   }
@@ -100,6 +103,7 @@ export class SelectorComponent implements OnInit, OnChanges {
   }
 
   onSubmit(selectorForm) {
+    this.cargando=true;
 
     let data = {
       titulo: this.titulo,
@@ -111,6 +115,7 @@ export class SelectorComponent implements OnInit, OnChanges {
           this.selector
           this.titulo = '';
           this.msm_error = '';
+          this.cargando=false;
           this.get_selector();
         },
         error => {
@@ -123,9 +128,11 @@ export class SelectorComponent implements OnInit, OnChanges {
   }
 
   eliminar(_id: string) {
+     this.cargando=true;
     this._selectorService.borrarSelector(_id)
       .subscribe(resp => {
-        Swal.fire('Borrado', this.selector.titulo, 'success')
+        // Swal.fire('Borrado', this.selector.titulo, 'success')
+         this.cargando=false;
         this.get_selector();
       });
   }

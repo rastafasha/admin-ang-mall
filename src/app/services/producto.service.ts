@@ -19,13 +19,13 @@ export class ProductoService {
     private http: HttpClient
   ) { }
 
-  get token():string{
+  get token(): string {
     return localStorage.getItem('token') || '';
   }
 
 
-  get headers(){
-    return{
+  get headers() {
+    return {
       headers: {
         'x-token': this.token
       }
@@ -33,32 +33,51 @@ export class ProductoService {
   }
 
 
-  cargarProductos(){
+  // cargarProductos(){
 
-    const url = `${base_url}/productos`;
-    return this.http.get<any>(url, this.headers)
-      .pipe(
-        map((resp:{ok: boolean, productos: Producto[]}) => resp.productos)
-      )
+  //   const url = `${base_url}/productos`;
+  //   return this.http.get<any>(url, this.headers)
+  //     .pipe(
+  //       map((resp:{ok: boolean, productos: Producto[]}) => resp.productos)
+  //     )
 
+  // }
+
+  cargarProductos(page: number = 1, limit: number = 6) {
+    const url = `${base_url}/productos?page=${page}&limit=${limit}`;
+    return this.http.get<any>(url, this.headers).pipe(
+      map((resp: { ok: boolean, productos: Producto[], total: number }) => {
+        return resp; // Ahora devolvemos el objeto completo { ok, projects, total }
+      })
+    );
   }
-  cargarProductosActivos(){
+
+  getProductosTienda(tienda: any, page: number = 1, limit: number = 6): Observable<any> {
+  const url = `${base_url}/productos/producto_by_tiendaId/${tienda}?page=${page}&limit=${limit}`;
+  return this.http.get<any>(url, this.headers).pipe(
+      map((resp: { ok: boolean, productos: Producto[], total: number }) => {
+        return resp; 
+      })
+    );
+}
+
+  cargarProductosActivos() {
 
     const url = `${base_url}/productos/activos`;
     return this.http.get<any>(url, this.headers)
       .pipe(
-        map((resp:{ok: boolean, productos: Producto[]}) => resp.productos)
+        map((resp: { ok: boolean, productos: Producto[] }) => resp.productos)
       )
 
   }
 
 
-  getProductoById(_id: string){
+  getProductoById(_id: string) {
     const url = `${base_url}/productos/${_id}`;
     return this.http.get<any>(url, this.headers)
       .pipe(
-        map((resp:{ok: boolean, producto: Producto}) => resp.producto)
-        );
+        map((resp: { ok: boolean, producto: Producto }) => resp.producto)
+      );
 
   }
 
@@ -76,12 +95,12 @@ export class ProductoService {
     video_review: string,
     precio_ahora: string,
     isFeatured: boolean,
-  }){
+  }) {
     const url = `${base_url}/productos/store`;
     return this.http.post(url, producto, this.headers);
   }
 
-  actualizarProducto(producto: any):Observable<any>{
+  actualizarProducto(producto: any): Observable<any> {
     const url = `${base_url}/productos/update/${producto._id}`;
     return this.http.put(url, producto, this.headers);
   }
@@ -91,17 +110,17 @@ export class ProductoService {
   // }
 
 
-  importarExcel(data: any){
+  importarExcel(data: any) {
     const url = `${base_url}/productos/importar-excel`;
     return this.http.post(url, data, this.headers);
   }
 
-  vincularImagen(data: any){
+  vincularImagen(data: any) {
     const url = `${base_url}/productos/vincular-imagen`;
     return this.http.post(url, data, this.headers);
   }
 
- descargarPlantilla(): Observable<Blob> {
+  descargarPlantilla(): Observable<Blob> {
     return this.http.post(`${base_url}/productos//descargar-plantilla`, {}, {
       headers: this.headers.headers,
       responseType: 'blob' // Obligatorio para manejar archivos binarios desde el backend
@@ -110,119 +129,113 @@ export class ProductoService {
 
 
 
-  getProductosTienda(tienda: any):Observable<any>{
-    const url = `${base_url}/productos/producto_by_tiendaId/${tienda}`;
-    return this.http.get<any>(url)
-    .pipe(
-      map((resp:{ok: boolean, productos: Producto}) => resp.productos)
-      );
-  }
-  borrarProducto(_id:string){
+ 
+  borrarProducto(_id: string) {
     const url = `${base_url}/productos/${_id}`;
     return this.http.delete(url, this.headers);
   }
 
-  best_seller():Observable<any>{
+  best_seller(): Observable<any> {
     const url = `${base_url}/productos/productos_ventas/best_sellers`;
     return this.http.get(url, this.headers);
   }
-  best_sellerLocal(id:string):Observable<any>{
-    const url = `${base_url}/productos/productos_ventas/best_sellers/local/`+id;
+  best_sellerLocal(id: string): Observable<any> {
+    const url = `${base_url}/productos/productos_ventas/best_sellers/local/` + id;
     return this.http.get(url, this.headers);
   }
 
-  populares():Observable<any>{
+  populares(): Observable<any> {
     const url = `${base_url}/productos/productos_ventas/populares`;
     return this.http.get(url, this.headers);
   }
-  popularesLocal(id:string):Observable<any>{
-    const url = `${base_url}/productos/productos_ventas/populares/local/`+id;
+  popularesLocal(id: string): Observable<any> {
+    const url = `${base_url}/productos/productos_ventas/populares/local/` + id;
     return this.http.get(url, this.headers);
   }
 
-  listar_admin(filtro:any):Observable<any>{
-    const url = `${base_url}/productos/admin/`+filtro;
-    return this.http.get(url,  this.headers);
+  listar_admin(filtro: any): Observable<any> {
+    const url = `${base_url}/productos/admin/` + filtro;
+    return this.http.get(url, this.headers);
   }
 
-  listar_prices(filtro:any,min:any,max:any,subcategoria:any,cat:any,sort:any,marca:any):Observable<any>{
-    const url = `${base_url}/productos/`+filtro+'/'+min+'/'+max+'/'+subcategoria+'/'+cat+'/'+sort+'/'+marca;
-    return this.http.get(url,  this.headers);
+  listar_prices(filtro: any, min: any, max: any, subcategoria: any, cat: any, sort: any, marca: any): Observable<any> {
+    const url = `${base_url}/productos/` + filtro + '/' + min + '/' + max + '/' + subcategoria + '/' + cat + '/' + sort + '/' + marca;
+    return this.http.get(url, this.headers);
   }
 
-  cat_by_name(nombre:any):Observable<any>{
-    const url = `${base_url}/productos/categoria/name/`+nombre;
-    return this.http.get(url,  this.headers);
+  cat_by_name(nombre: any): Observable<any> {
+    const url = `${base_url}/productos/categoria/name/` + nombre;
+    return this.http.get(url, this.headers);
   }
 
-  listar_papelera(filtro:any):Observable<any>{
-    const url = `${base_url}/productos/productos/papelera/`+filtro;
-    return this.http.get(url,  this.headers);
+  listar_papelera(filtro: any): Observable<any> {
+    const url = `${base_url}/productos/productos/papelera/` + filtro;
+    return this.http.get(url, this.headers);
   }
 
-  listar_cat(filtro:any):Observable<any>{
-    const url = `${base_url}/productos/producto_admin_cat/cat/`+filtro;
-    return this.http.get(url,  this.headers);
+  listar_cat(filtro: any): Observable<any> {
+    const url = `${base_url}/productos/producto_admin_cat/cat/` + filtro;
+    return this.http.get(url, this.headers);
   }
 
-  listar_autocomplete():Observable<any>{
+  listar_autocomplete(): Observable<any> {
     const url = `${base_url}/productos/producto_cliente_autocomplete`;
-    return this.http.get(url,  this.headers);
+    return this.http.get(url, this.headers);
   }
 
-  listar_general_data(filtro:any):Observable<any>{
-    const url = `${base_url}/productos/producto_general/general/data/`+filtro;
-    return this.http.get(url,  this.headers);
+  listar_general_data(filtro: any): Observable<any> {
+    const url = `${base_url}/productos/producto_general/general/data/` + filtro;
+    return this.http.get(url, this.headers);
   }
 
-  find_by_slug(slug:any):Observable<any>{
-    const url = `${base_url}/productos/producto_by_slug/slug/`+slug;
-    return this.http.get(url,  this.headers);
+  find_by_slug(slug: any): Observable<any> {
+    const url = `${base_url}/productos/producto_by_slug/slug/` + slug;
+    return this.http.get(url, this.headers);
   }
 
-  listar_cat_papelera(filtro:any):Observable<any>{
-    const url = `${base_url}/productos/productos/cat/papelera/`+filtro;
-    return this.http.get(url,  this.headers);
+  listar_cat_papelera(filtro: any): Observable<any> {
+    const url = `${base_url}/productos/productos/cat/papelera/` + filtro;
+    return this.http.get(url, this.headers);
   }
 
-  list_one(id:string):Observable<any>{
-    const url = `${base_url}/productos/producto_admin_editar/one/`+id;
-    return this.http.get(url,  this.headers);
+  list_one(id: string): Observable<any> {
+    const url = `${base_url}/productos/producto_admin_editar/one/` + id;
+    return this.http.get(url, this.headers);
   }
 
-  listar_newest():Observable<any>{
+  listar_newest(): Observable<any> {
     const url = `${base_url}/productos/productos_nuevos/show_producto`;
-    return this.http.get(url,  this.headers);
+    return this.http.get(url, this.headers);
   }
 
-  reducir_stock(id:string,cantidad:any):Observable<any>{
-    const url = `${base_url}/productos/productos_stock/reducir/`+id+'/'+cantidad;
-    return this.http.get(url,  this.headers);
+  reducir_stock(id: string, cantidad: any): Observable<any> {
+    const url = `${base_url}/productos/productos_stock/reducir/` + id + '/' + cantidad;
+    return this.http.get(url, this.headers);
   }
 
-  aumentar_stock(id:string,cantidad:any):Observable<any>{
-    const url = `${base_url}/productos/productos_stock/aumentar/`+id+'/'+cantidad;
-    return this.http.get(url,  this.headers);
+  aumentar_stock(id: string, cantidad: any): Observable<any> {
+    const url = `${base_url}/productos/productos_stock/aumentar/` + id + '/' + cantidad;
+    return this.http.get(url, this.headers);
   }
 
-  desactivar(id:string):Observable<any>{
-    const url = `${base_url}/productos/producto_admin/admin/desactivar/`+id;
-    return this.http.get(url,  this.headers);
+  desactivar(id: string): Observable<any> {
+    const url = `${base_url}/productos/producto_admin/admin/desactivar/` + id;
+    return this.http.get(url, this.headers);
   }
 
-  activar(id:string):Observable<any>{
-    const url = `${base_url}/productos/producto_admin/admin/activar/`+id;
-    return this.http.get(url,  this.headers);
+  activar(id: string): Observable<any> {
+    const url = `${base_url}/productos/producto_admin/admin/activar/` + id;
+    return this.http.get(url, this.headers);
   }
 
-  papelera(_id:string){
+  papelera(_id: string) {
     const url = `${base_url}/productos/producto_admin/admin/papelera/${_id}`;
-    return this.http.get(url,  this.headers);
+    return this.http.get(url, this.headers);
   }
 
-  aumentar_ventas(id:string):Observable<any>{
-    const url = `${base_url}/productos/productos_ventas/aumentar/`+id;
-    return this.http.get(url,  this.headers);
+  aumentar_ventas(id: string): Observable<any> {
+    const url = `${base_url}/productos/productos_ventas/aumentar/` + id;
+    return this.http.get(url, this.headers);
   }
 
 

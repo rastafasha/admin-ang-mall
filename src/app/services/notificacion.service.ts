@@ -190,6 +190,9 @@ export class NotificacionService {
     if (tipo === 'VENTA_FINALIZADA' || tipo.startsWith('VENTA_')) {
       return `/dashboard/ventas/modulo`; // 🟢 Coincide exactamente con tu ruta
     }
+    if (tipo === 'STOCK_CERO' || tipo.startsWith('STOCK_')) {
+      return `/dashboard/producto`; // 🟢 Coincide exactamente con tu ruta
+    }
 
     return '/dashboard';
   }

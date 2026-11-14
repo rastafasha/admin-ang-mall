@@ -105,8 +105,17 @@
                                             type="button" (click)="nextStep()">{{'Siguiente'|translate}}</button>
                                     </div>
                                     <div class="col-6">
-                                        <button (click)="updateCategoria()" class="btn btn-outline-success">
-                                             {{ (categoriaSeleccionado ? 'Actualizar y Continuar' : 'Crear y Continuar') | translate }}
+                                        
+
+                                        <button (click)="updateCategoria()"  [disabled]="isSubmitting"  class="btn btn-outline-success d-inline-flex align-items-center gap-2">
+    
+                                            <!-- 🟢 Icono de Loading (Spinner) que se muestra solo si isSubmitting es true -->
+                                            <i *ngIf="isSubmitting" class="fas fa-spinner fa-spin"></i>
+
+                                            <!-- Texto condicional con tu pipe de traducción -->
+                                            <span>
+                                                {{ (categoriaSeleccionado ? 'Actualizar y Continuar' : 'Crear y Continuar') | translate }}
+                                            </span>
                                         </button>
                                     </div>
                                 </div>

@@ -40,7 +40,7 @@ export class UsuarioComponent implements OnInit {
   public imgTemp: any = null;
   public file :File;
   public imgSelect : String | ArrayBuffer;
-
+  cargando = false
 
   public direcciones : Direccion[];
 
@@ -49,6 +49,9 @@ export class UsuarioComponent implements OnInit {
 
   banner: string;
   pageTitle: string;
+
+  option_selectedd: number = 1;
+    solicitud_selectedd: any = 1;
 
 
   public Editor = ClassicEditor;
@@ -93,6 +96,7 @@ export class UsuarioComponent implements OnInit {
 
 
   cargarUsuario(_id: string){
+    this.cargando = true
 
     if (_id) {
       this.pageTitle = 'Edit Usuario';
@@ -112,6 +116,7 @@ export class UsuarioComponent implements OnInit {
             img : res.img
           });
           this.usuario = res;
+          this.cargando = false
         }
       );
     } else {
@@ -137,7 +142,6 @@ export class UsuarioComponent implements OnInit {
       this.usuarioService.guardarUsuario(data).subscribe(
         resp =>{
           Swal.fire('Actualizado', `${first_name}  actualizado correctamente`, 'success');
-          console.log(this.usuario);
         });
 
     }else{
@@ -151,7 +155,6 @@ export class UsuarioComponent implements OnInit {
     this._direccionService.listarUsuario(_id).subscribe(
       response =>{
         this.direcciones = response.direcciones;
-        console.log(this.direcciones);
       },
       error=>{
 
@@ -163,7 +166,6 @@ export class UsuarioComponent implements OnInit {
     this.ventaService.listarporUser(_id).subscribe(
       response=>{
         this.ventas = response.ventas;
-        console.log(this.ventas);
       },
       error=>{
 
@@ -175,7 +177,6 @@ export class UsuarioComponent implements OnInit {
     this.ventaService.listarCancelacionporUser(_id).subscribe(
       response=>{
         this.cancelacion = response.cancelacion;
-        console.log(this.cancelacion);
       },
       error=>{
 
@@ -185,6 +186,17 @@ export class UsuarioComponent implements OnInit {
 
   goBack() {
     this.location.back(); // <-- go back to previous location on cancel
+  }
+
+  optionSelected(value: number) {
+    this.option_selectedd = value;
+    if (this.option_selectedd === 1) {
+
+      // this.ngOnInit();
+    }
+    if (this.option_selectedd === 2) {
+      this.solicitud_selectedd = null;
+    }
   }
 
 

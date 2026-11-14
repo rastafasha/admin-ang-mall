@@ -40,6 +40,7 @@ export class CatEditComponent implements OnInit, OnChanges {
   pageTitle: string;
   listIcons;
   state_banner: boolean;
+  isSubmitting = false
 
   public Editor = ClassicEditor;
 
@@ -120,6 +121,7 @@ export class CatEditComponent implements OnInit, OnChanges {
 
     // Emitimos el evento al padre para limpiar cualquier variable externa
     this.closeModal.emit();
+    this.cleanModalBackdrop()
   }
 
 
@@ -168,7 +170,7 @@ export class CatEditComponent implements OnInit, OnChanges {
   }
 
   updateCategoria() {
-
+    this.isSubmitting = true;
     if (!this.categoriaForm.valid) {
       this.categoriaForm.markAllAsTouched();
       return;
@@ -194,6 +196,7 @@ export class CatEditComponent implements OnInit, OnChanges {
       }
       this.categoriaService.actualizarCategoria(data).subscribe(
         resp => {
+          this.isSubmitting = false;
           Swal.fire('Actualizado', `${nombre} actualizado correctamente`, 'success');
           const modalElement = document.getElementById('editCategoria');
           const modal = bootstrap.Modal.getInstance(modalElement);
@@ -202,6 +205,7 @@ export class CatEditComponent implements OnInit, OnChanges {
           }
           this.refreshCatList.emit();
           this.ngOnInit();
+          this.cleanModalBackdrop();
         });
 
     } else {
@@ -213,6 +217,7 @@ export class CatEditComponent implements OnInit, OnChanges {
 
       this.categoriaService.crearCategoria(nuevaCategoriaData)
         .subscribe((resp: any) => {
+          this.isSubmitting = false;
           this.categoriaSeleccionado = resp.categoria;
           Swal.fire('¡Paso 1 completado!', 'Post creado. Ahora sube la imagen.', 'success');
           this.currentStep = 2;
@@ -220,7 +225,18 @@ export class CatEditComponent implements OnInit, OnChanges {
     }
   }
 
+cleanModalBackdrop() {
+    // 1. Buscamos y removemos todos los elementos de backdrop del DOM
+    const backdrops = document.querySelectorAll('.modal-backdrop');
+    backdrops.forEach(backdrop => backdrop.remove());
 
+    // 2. Quitamos la clase 'modal-open' del body para que no bloquee el scroll de la página
+    document.body.classList.remove('modal-open');
+
+    // 3. Limpiamos estilos residuales de scroll que inyecta Bootstrap en el body
+    document.body.style.overflow = '';
+    document.body.style.paddingRight = '';
+  }
 
 
   cambiarImagen(file: File) {

@@ -1,6 +1,34 @@
+<app-backbutton></app-backbutton>
+<div class="clear"></div>
 <div class="row">
+    <app-skeleton-loader *ngIf="cargando" [rows]="1" [columns]="2"></app-skeleton-loader>
     <!-- Column -->
-    <div class="col-lg-4 col-xlg-3 col-md-5">
+    <div class="row"*ngIf="usuario.role !=='USER' && !cargando">
+        <div class="card col-xs-12 col-sm-6"> <img class="card-img" src="../assets/images/background/socialbg.jpg" alt="Card image">
+            <div class="card-img-overlay card-inverse social-profile d-flex ">
+                <div class="align-self-center"> <img src="../assets/images/users/1.jpg" class="img-circle" width="100">
+                    <h4 class="card-title">{{usuario.first_name}} {{usuario.last_name}}</h4>
+                    <h6 class="card-subtitle">{{usuario.first_name}}</h6>
+                    <h6 class="card-subtitle">
+                        <span *ngIf="usuario.google" class="label label-danger">Google</span>
+                        <span *ngIf="!usuario.google" class="label label-info">Email</span>
+                    </h6>
+
+                </div>
+            </div>
+        </div>
+        <div class="card col-xs-12 col-sm-6">
+            <div class="card-body">
+                <small class="text-muted">Role </small>
+                <h6>{{usuario.role}}</h6>
+                <small class="text-muted">Email address </small>
+                <h6>{{usuario.email}}</h6>
+                <small class="text-muted p-t-30 db">Phone</small>
+                <h6>{{usuario.telefono}}</h6>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 col-xlg-3 col-md-5"*ngIf="usuario.role ==='USER' && !cargando">
         <div class="card"> <img class="card-img" src="../assets/images/background/socialbg.jpg" alt="Card image">
             <div class="card-img-overlay card-inverse social-profile d-flex ">
                 <div class="align-self-center"> <img src="../assets/images/users/1.jpg" class="img-circle" width="100">
@@ -11,7 +39,6 @@
                         <span *ngIf="!usuario.google" class="label label-info">Email</span>
                     </h6>
 
-                    <!-- <p class="text-white">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt </p> -->
                 </div>
             </div>
         </div>
@@ -23,30 +50,26 @@
                 <h6>{{usuario.email}}</h6>
                 <small class="text-muted p-t-30 db">Phone</small>
                 <h6>{{usuario.telefono}}</h6>
-
-                <!-- <small class="text-muted p-t-30 db">Social Profile</small>
-                <br>
-                <button class="btn btn-circle btn-secondary"><i class="fa fa-facebook"></i></button>
-                <button class="btn btn-circle btn-secondary"><i class="fa fa-twitter"></i></button>
-                <button class="btn btn-circle btn-secondary"><i class="fa fa-youtube"></i></button> -->
             </div>
         </div>
     </div>
     <!-- Column -->
     <!-- Column -->
-    <div class="col-lg-8 col-xlg-9 col-md-7">
+    <div class="col-lg-8 col-xlg-9 col-md-7" *ngIf="usuario.role ==='USER' && !cargando">
         <div class="card">
             <!-- Nav tabs -->
+            <!-- Nav tabs -->
             <ul class="nav nav-tabs profile-tab" role="tablist">
-                <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#ordenes" role="tab" aria-expanded="true">Ordenes</a> </li>
-                <li class="nav-item"> <a class="nav-link " data-toggle="tab" href="#cancelaciones" role="tab" aria-expanded="false">Cancelaciones</a> </li>
-                <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#direccion" role="tab" aria-expanded="false">Direcciones</a> </li>
-                <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#settings" role="tab" aria-expanded="false">Settings</a> </li>
+                <li class="nav-item" > <a class="nav-link " href="#" onclick="return false;" [ngClass]="{'active': option_selectedd == 1}"
+                    (click)="optionSelected(1)">Ordenes</a> </li>
+                <li class="nav-item" > <a class="nav-link "href="#" onclick="return false;" [ngClass]="{'active': option_selectedd == 2}"
+                    (click)="optionSelected(2)">Cancelaciones</a> </li>
+                <li class="nav-item" > <a class="nav-link" href="#" onclick="return false;" [ngClass]="{'active': option_selectedd == 3}"
+                    (click)="optionSelected(3)">Direcciones</a> </li>
             </ul>
             <!-- Tab panes -->
-            <div class="tab-content">
-                <div class="tab-pane active" id="ordenes" role="tabpanel" aria-expanded="true">
-                    <div class="card-body">
+             <div *ngIf="option_selectedd == 1">
+                 <div class="card-body">
                         <div *ngFor="let vent of ventas">
                             <br>
                             <!--Pedido-->
@@ -72,10 +95,9 @@
                             <!--Pedido-->
                         </div>
                     </div>
-                </div>
-                <!--2 tab-->
-                <div class="tab-pane " id="cancelaciones" role="tabpanel" aria-expanded="false">
-                    <div class="card-body">
+             </div>
+             <div *ngIf="option_selectedd == 2">
+                <div class="card-body">
                         <div *ngFor="let can of cancelacion">
                             <br>
                             <!--Pedido-->
@@ -98,11 +120,9 @@
                             <!--Pedido-->
                         </div>
                     </div>
-                </div>
-                <!--3 tab-->
-                <div class="tab-pane" id="direccion" role="tabpanel" aria-expanded="false">
-
-                    <div class="card-body">
+             </div>
+             <div *ngIf="option_selectedd == 3">
+                <div class="card-body">
                         <div *ngFor="let dir of direcciones">
                             <div class="row">
                                 <div class="col-md-3 col-xs-6 b-r"> <strong>Nombre Completo</strong>
@@ -131,62 +151,7 @@
 
                         </div>
                     </div>
-                </div>
-                <!--4 tab-->
-                <div class="tab-pane" id="settings" role="tabpanel" aria-expanded="false">
-                    <div class="card-body">
-                        <form class="form-horizontal form-material">
-                            <div class="form-group">
-                                <label class="col-md-12">Full Name</label>
-                                <div class="col-md-12">
-                                    <input type="text" placeholder="Johnathan Doe" class="form-control form-control-line">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="example-email" class="col-md-12">Email</label>
-                                <div class="col-md-12">
-                                    <input type="email" placeholder="johnathan@admin.com" class="form-control form-control-line" name="example-email" id="example-email">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-12">Password</label>
-                                <div class="col-md-12">
-                                    <input type="password" value="password" class="form-control form-control-line">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-12">Phone No</label>
-                                <div class="col-md-12">
-                                    <input type="text" placeholder="123 456 7890" class="form-control form-control-line">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-12">Message</label>
-                                <div class="col-md-12">
-                                    <textarea rows="5" class="form-control form-control-line"></textarea>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-12">Select Country</label>
-                                <div class="col-sm-12">
-                                    <select class="form-control form-control-line">
-                                      <option>London</option>
-                                      <option>India</option>
-                                      <option>Usa</option>
-                                      <option>Canada</option>
-                                      <option>Thailand</option>
-                                  </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-sm-12">
-                                    <button class="btn btn-success">Update Profile</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
+             </div>
         </div>
     </div>
     <!-- Column -->

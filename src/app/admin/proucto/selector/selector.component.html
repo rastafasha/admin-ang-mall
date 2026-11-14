@@ -37,7 +37,8 @@
                                 </button>
                             </div>
                         </div>
-                        <div class="col-lg-10" *ngIf="selector">
+                        <app-skeleton-loader *ngIf="cargando" [rows]="2" [columns]="2"></app-skeleton-loader>
+                        <div class="col-lg-10" *ngIf="selector && !cargando">
                             <div class="table-responsive">
                                 <table class="table table-striped table-sm">
                                     <thead>

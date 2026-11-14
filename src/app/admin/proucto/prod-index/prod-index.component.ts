@@ -50,12 +50,18 @@ export class ProdIndexComponent implements OnInit, OnDestroy {
   user: Usuario;
   productoSeleccionado: Producto;
   idLocal: string = '';
-  tienda:Tienda;
+  tienda: Tienda;
+
 
   public verModalImportar: boolean = false;
+  public usaMercadoLibre: boolean = false;
 
   public info: string = '';
   private langSubscription!: Subscription;
+
+  totalProducts: number = 0;
+
+
   constructor(
     private productoService: ProductoService,
     private categoriaService: CategoriaService,
@@ -129,25 +135,48 @@ export class ProdIndexComponent implements OnInit, OnDestroy {
 
   loadProductos() {
     this.cargando = true;
-    this.productoService.cargarProductos().subscribe(
-      productos => {
+    this.productoService.cargarProductos(this.p, this.count).subscribe(
+      (resp: any) => {
+        this.productos = resp.productos || [];
+        this.totalProducts = resp.total || 0;
         this.cargando = false;
-        this.productos = productos;
       })
   }
 
-  getTienda(){
-    this.tiendaService.getTiendaById(this.idLocal).subscribe((resp:any)=>{
+ 
+
+  getTienda() {
+    this.tiendaService.getTiendaById(this.idLocal).subscribe((resp: any) => {
       this.tienda = resp;
+      this.usaMercadoLibre = this.tienda.usaMercadoLibre || null;
     })
   }
 
   getProductosbByTienda() {
     this.cargando = true;
-    this.productoService.getProductosTienda(this.user.local).subscribe(productos => {
-      this.productos = productos;
+    this.productoService.getProductosTienda(this.user.local, this.p, this.count).subscribe((resp: any) => {
+      this.productos = resp.productos || [];
+      this.totalProducts = resp.total || 0;
       this.cargando = false;
     })
+  }
+
+   /**
+ * Función para los botones de Siguiente y Anterior del paginador
+ */
+  cambiarPagina(valor: number): void {
+    const nuevoDesde = this.desde + valor;
+
+    // Validaciones de seguridad para no salirnos del rango real de la BD
+    if (nuevoDesde < 0) return;
+    if (nuevoDesde >= this.totalProducts) return;
+
+    this.desde = nuevoDesde;
+     if (this.user.role === 'ADMIN' || this.user.role === 'VENTAS' || this.user.role === 'TIENDA' || this.user.role === 'ALMACEN') {
+      this.getProductosbByTienda();
+    }else{
+      this.loadProductos(); // Al cambiar de página, hace una sola petición limpia
+    }
   }
 
   loadCategorias() {
@@ -240,6 +269,7 @@ export class ProdIndexComponent implements OnInit, OnDestroy {
         $('#desactivar-' + id).modal('hide');
         $('.modal-backdrop').removeClass('show');
         this.ngOnInit();
+        this.cleanModalBackdrop();
       },
       error => {
         this.msm_error = 'No se pudo desactivar el producto, vuelva a intenter.'
@@ -254,6 +284,7 @@ export class ProdIndexComponent implements OnInit, OnDestroy {
         $('#activar-' + id).modal('hide');
         $('.modal-backdrop').removeClass('show');
         this.ngOnInit();
+        this.cleanModalBackdrop();
       },
       error => {
         this.msm_error = 'No se pudo activar el producto, vuelva a intenter.'
@@ -261,18 +292,35 @@ export class ProdIndexComponent implements OnInit, OnDestroy {
     )
   }
 
+
+
   papelera(id) {
     this.productoService.papelera(id).subscribe(
       response => {
         $('#papelera-' + id).modal('hide');
         $('.modal-backdrop').removeClass('show');
         this.ngOnInit();
+        this.cleanModalBackdrop();
       },
       error => {
         this.msm_error = 'No se pudo mover a papelera el producto, vuelva a intenter.'
       }
     )
   }
+
+   cleanModalBackdrop() {
+    // 1. Buscamos y removemos todos los elementos de backdrop del DOM
+    const backdrops = document.querySelectorAll('.modal-backdrop');
+    backdrops.forEach(backdrop => backdrop.remove());
+
+    // 2. Quitamos la clase 'modal-open' del body para que no bloquee el scroll de la página
+    document.body.classList.remove('modal-open');
+
+    // 3. Limpiamos estilos residuales de scroll que inyecta Bootstrap en el body
+    document.body.style.overflow = '';
+    document.body.style.paddingRight = '';
+  }
+
 
   onEditColor(producto: Producto) { this.productoSeleccionado = producto; }
   onEditSelector(producto: Producto) { this.productoSeleccionado = producto; }

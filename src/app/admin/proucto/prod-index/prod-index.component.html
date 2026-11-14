@@ -15,7 +15,7 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-10">
-                        <h4 class="card-title">{{'Productos'|translate}}: ({{ productos.length}})</h4>
+                        <h4 class="card-title">{{'Productos'|translate}}: ({{ totalProducts}})</h4>
                         <h6 class="card-subtitle">{{'Productos registrados en la app'|translate}}</h6>
                     </div>
                     <div class="col-2 gap-3 d-flex">
@@ -38,7 +38,7 @@
                 </div>
                 <hr>
                 <div class="table-responsive">
-                    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                    <pagination-controls (pageChange)="p = $event; cambiarPagina(($event - 1) * limite)"></pagination-controls>
                     <table class="table table-borderless">
                         <thead>
                             <tr>
@@ -57,7 +57,7 @@
                         
                         <tbody>
                             <tr
-                                *ngFor="let producto of productos |  paginate: { itemsPerPage: count, currentPage: p } | orderBy:'createdAt, desc' ">
+                                *ngFor="let producto of productos |  paginate: { itemsPerPage: count, currentPage: p, totalItems: totalProducts } | orderBy:'createdAt, desc' ">
                                 <td class="text-center">
                                     <!-- <img [src]="producto.img | imagenPipe: 'productos'" class="img-responsive avatar" alt="{{producto.titulo}}"> -->
                                     <img [routerLink]="['/dashboard/producto/edit',producto._id]"
@@ -219,7 +219,7 @@
                                         data-bs-target="#editColor"><span class="czi-diamond"></span>
                                         </button>
                                         <!-- Inyección del botón multi-tenant dentro de las acciones de la fila del producto -->
-                                       <button type="button" *ngIf="tienda.usaMercadoLibre === true"
+                                       <button type="button" *ngIf="usaMercadoLibre === true"
                                                 class="btn btn-xs fw-bold align-items-center gap-1"
                                                 [disabled]="cargandoSincronizacion[producto._id]"
                                                 (click)="sincronizarConMercadoLibre(producto)"
@@ -253,7 +253,7 @@
                         </tbody>
                     </table>
                 </div>
-                <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                <pagination-controls (pageChange)="p = $event; cambiarPagina(($event - 1) * limite)"></pagination-controls>
             </div>
         </div>
     </div>
