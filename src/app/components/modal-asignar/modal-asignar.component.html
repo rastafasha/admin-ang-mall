@@ -1,57 +1,128 @@
-<div class="modal fade" id="asignarDelivery" tabindex="-1" aria-labelledby="editPresupuestoLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="editPresupuestoLabel">{{ventaSelected?.referencia}}</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
-                    (click)="onClose()"></button>
-            </div>
-            <div class="modal-body">
-             <div class="card">
-                <div class="card-title">
-                    <h4>Dirección de Envío</h4>
-                </div>
-                <div class="card-body">
-                    <p>{{direccionSelected?.referencia}}</p>
-                    <p>{{direccionSelected?.direccion}}</p>
-                    <p>{{direccionSelected?.zip}}</p>
-                </div>
-             </div>
-              <p class="font-size-sm">¿Desea asignar el pedido a la referencia
-                    <b>{{ventaSelected?.referencia}}</b> ?
-                </p>
-                <table class="table table-sm">
-                    <thead class="thead-dark">
-                        <tr>
-
-                            <th>numdoc</th>
-                            <th>usuario</th>
-                            <th>telefono</th>
-                            <th>OP</th>
-                        </tr>
-                    </thead>
-                    <tbody *ngFor="let driver of drivers">
-                        <tr>
-                            <td style="font-size: 13px;">{{driver.user.numdoc}}</td>
-                            <td style="font-size: 13px;">{{driver.user.first_name}}
-                                {{driver.user.last_name}}</td>
-                            <td style="font-size: 13px;">{{driver.user.telefono}}</td>
-                            <td style="font-size: 13px;">
-                                <a class="nav-link-style text-success" (click)="onAsignarDelivery(driver._id, ventaSelected)"
-                                    style="cursor:pointer">
-                                    <div class="czi-add"></div>
-                                </a>
-                            </td>
-
-                        </tr>
-                    </tbody>
-                </table>
-                
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
-                    (click)="onClose()">Cerrar</button>
-            </div>
+<div class="modal fade zlip-assign-modal" id="asignarDelivery" tabindex="-1" aria-labelledby="asignarDeliveryLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
+    <div class="modal-content border-0 shadow-lg rounded-4 overflow-hidden">
+      
+      <!-- CABECERA DEL MODAL -->
+      <div class="modal-header bg-white border-bottom py-3 px-4">
+        <div class="d-flex align-items-center gap-2">
+          <div class="zlip-modal-icon bg-primary-subtle text-primary rounded-3">
+            <i class="fas fa-motorcycle"></i>
+          </div>
+          <div>
+            <h5 class="modal-title fw-bold text-dark mb-0" id="asignarDeliveryLabel">
+              {{ 'Asignar Repartidor' | translate }}
+            </h5>
+            <small class="text-muted" *ngIf="ventaSelected">
+              Ref: <strong>{{ ventaSelected?.referencia || (ventaSelected?._id | slice:0:12) }}</strong>
+            </small>
+          </div>
         </div>
+
+        <button 
+          type="button" 
+          class="btn-close" 
+          data-bs-dismiss="modal" 
+          (click)="onClose()" 
+          aria-label="Close">
+        </button>
+      </div>
+
+      <!-- CUERPO DEL MODAL -->
+      <div class="modal-body p-4" *ngIf="ventaSelected">
+        
+        <!-- BLOQUE 1: DIRECCIÓN DE ENVÍO -->
+        <div class="p-3 rounded-4 bg-light border mb-4">
+          <h6 class="fw-bold text-dark small text-uppercase mb-2 d-flex align-items-center gap-2">
+            <i class="fas fa-map-marker-alt text-danger"></i>
+            <span>{{ 'Dirección de Envío' | translate }}</span>
+          </h6>
+
+          <!-- Si tiene dirección registrada -->
+          <div *ngIf="ventaSelected.direccion && direccionSelected" class="small text-secondary">
+            <p class="fw-semibold text-dark mb-1">{{ direccionSelected?.direccion }}</p>
+            <div class="d-flex flex-wrap gap-3 text-muted">
+              <span *ngIf="direccionSelected?.referencia">
+                <strong>Ref:</strong> {{ direccionSelected?.referencia }}
+              </span>
+              <span *ngIf="direccionSelected?.zip">
+                <strong>ZIP:</strong> {{ direccionSelected?.zip }}
+              </span>
+            </div>
+          </div>
+
+          <!-- Si NO tiene dirección (Retiro en tienda) -->
+          <div *ngIf="!ventaSelected.direccion" class="small text-muted fst-italic">
+            {{ 'Sin dirección / Retiro en tienda' | translate }}
+          </div>
+        </div>
+
+        <!-- PREGUNTA DE CONFIRMACIÓN -->
+        <p class="small text-secondary mb-3">
+          ¿Desea asignar el pedido <strong>{{ ventaSelected?.referencia || (ventaSelected?._id | slice:0:10) }}</strong> a uno de los siguientes repartidores?
+        </p>
+
+        <!-- BLOQUE 2: LISTA DE REPARTIDORES DISPONIBLES -->
+        <div *ngIf="drivers && drivers.length > 0; else sinDrivers" class="d-flex flex-column gap-2">
+          <div 
+            *ngFor="let driver of drivers" 
+            class="zlip-driver-card p-3 rounded-4 border bg-white d-flex flex-wrap align-items-center justify-content-between gap-3">
+            
+            <!-- Info del Driver -->
+            <div class="d-flex align-items-center gap-3">
+              <div class="zlip-driver-avatar bg-dark text-white rounded-circle fw-bold">
+                {{ (driver.user?.first_name?.[0] || 'D') | uppercase }}
+              </div>
+
+              <div>
+                <h6 class="fw-bold text-dark mb-1">
+                  {{ driver.user?.first_name }} {{ driver.user?.last_name }}
+                </h6>
+                <div class="d-flex flex-wrap align-items-center gap-3 small text-muted">
+                  <span *ngIf="driver.user?.numdoc">
+                    <i class="fas fa-id-card me-1"></i>{{ driver.user?.numdoc }}
+                  </span>
+                  <span *ngIf="driver.user?.telefono">
+                    <i class="fas fa-phone-alt me-1"></i>{{ driver.user?.telefono }}
+                  </span>
+                  <span *ngIf="driver.tipo_vehiculo" class="badge bg-light text-dark border text-capitalize">
+                    <i class="fas me-1" [ngClass]="driver.tipo_vehiculo?.toLowerCase() === 'moto' ? 'fa-motorcycle' : 'fa-car'"></i>
+                    {{ driver.tipo_vehiculo }} <span *ngIf="driver.licencianum">({{ driver.licencianum }})</span>
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Botón Asignar -->
+            <button 
+              type="button" 
+              class="btn btn-success btn-sm rounded-3 px-3 py-2 fw-semibold d-inline-flex align-items-center gap-2 shadow-sm ms-auto"
+              (click)="onAsignarDelivery(driver._id, ventaSelected)">
+              <i class="fas fa-check-circle"></i>
+              <span>{{ 'Asignar' | translate }}</span>
+            </button>
+
+          </div>
+        </div>
+
+        <ng-template #sinDrivers>
+          <div class="alert alert-warning rounded-3 small mb-0">
+            <i class="fas fa-exclamation-circle me-1"></i> No hay repartidores registrados en esta tienda.
+          </div>
+        </ng-template>
+
+      </div>
+
+      <!-- PIE DEL MODAL -->
+      <div class="modal-footer bg-light border-top py-2 px-4">
+        <button 
+          type="button" 
+          class="btn btn-outline-secondary rounded-3 px-4" 
+          data-bs-dismiss="modal" 
+          (click)="onClose()">
+          {{ 'Cerrar' | translate }}
+        </button>
+      </div>
+
     </div>
+  </div>
 </div>

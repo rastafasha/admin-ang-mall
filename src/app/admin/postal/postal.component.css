@@ -1,35 +1,4 @@
 
-.tab-content-set {
-    display: flex;
-    justify-content: space-between;
-    
-}
-
-.tab-content-set .nav {
-    align-items: center;
-    padding: 6px;
-    gap: 5px;
-
-
-}
-
-.tab-content-set .nav li {
-    padding: 5px;
-    font-size: 16px;
-    color: #333;
-}
-
-
-.tab-content-set .nav li a {
-    color: #333;
-    text-decoration: none;
-
-}
-
-
-.active {
-    color: #b02b2b !important;
-}
 
 .btn-outline-primary.rounded-circle {
   width: 32px;
@@ -39,4 +8,37 @@
   justify-content: center;
   border-width: 2px;
   font-weight: bold;
+}
+
+
+.zlip-postal-admin .zlip-header-icon {
+  width: 42px;
+  height: 42px;
+  min-width: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+}
+
+.zlip-postal-admin .zlip-table thead th {
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  font-size: 0.74rem;
+  padding-top: 0.9rem;
+  padding-bottom: 0.9rem;
+  border-bottom-width: 1px;
+}
+
+.zlip-postal-admin .zlip-table tbody td {
+  padding-top: 0.9rem;
+  padding-bottom: 0.9rem;
+}
+
+.zlip-postal-admin .zlip-row-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+  flex-shrink: 0;
 }

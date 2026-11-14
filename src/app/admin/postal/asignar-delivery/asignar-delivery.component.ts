@@ -49,6 +49,9 @@ export class AsignarDeliveryComponent implements OnInit {
 
   public last_sellers: Array<any> = [];
 
+   option_selectedd: number = 1;
+  solicitud_selectedd: any = 1;
+
   constructor(
     private ventaService: VentaService,
     private asignacionDService: AsignardeliveryService,
@@ -198,6 +201,17 @@ getDireccion(idDireccion: string) {
   }
 
   onClose() { }
+
+   optionSelected(value: number) {
+    this.option_selectedd = value;
+    if (this.option_selectedd === 1) {
+
+      // this.ngOnInit();
+    }
+    if (this.option_selectedd === 2) {
+      this.solicitud_selectedd = null;
+    }
+  }
 
 
 }

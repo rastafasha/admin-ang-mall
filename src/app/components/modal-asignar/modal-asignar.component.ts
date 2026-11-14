@@ -30,19 +30,13 @@ export class ModalAsignarComponent implements OnChanges, OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-
-    // console.log('ventaSelected ',this.ventaSelected)
-    console.log('drivers ',this.drivers)
-
-    if (
-      changes['ventaSelected'] &&
-      changes['ventaSelected'].currentValue
-    ) {
+  if (changes['ventaSelected'] && changes['ventaSelected'].currentValue) {
+    this.direccionSelected = undefined!; // Limpia la dirección del pedido anterior
+    if (this.ventaSelected.direccion) {
       this.getDireccion();
     }
-
-
   }
+}
 
   getDireccion() {
     this.direccionService.get_direccion(this.ventaSelected.direccion).subscribe((resp: any) => {
@@ -78,7 +72,6 @@ export class ModalAsignarComponent implements OnChanges, OnInit {
 
   onClose() {
     this.ventaSelected = null;
-    this.drivers = null;
     this.reloadList.emit();
     this.closeModal.emit();
   }

@@ -1,67 +1,154 @@
 <app-back-instrucc (onOpenHelp)="instruccionesModal.open()"></app-back-instrucc>
 <!-- Content-->
-<section >
-    <div class="row">
-            <div class="col-xs-12 form-group">
-                <div class="card">
-                    <div class="col-lg-11" *ngIf="msm_error">
-                        <div class="alert alert-primary alert-danger fade show" role="alert">
-                            <span class="font-weight-medium">Mensaje:</span> {{msm_error}}
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"
-                                (click)="close_alert()">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                    </div>
+<div class="container-fluid py-3 zlip-postal-admin">
 
-                    <div class="col-3">
-                        <button (click)="openEditModal()" class="btn btn-outline-success" data-toggle="tooltip"
-                            data-original-title="Edit" data-bs-toggle="modal" data-bs-target="#editPostal">
-                            <i class="fa fa-plus"></i>
-                        </button>
-                    </div>
-                    <app-skeleton-loader *ngIf="cargando" [rows]="5" [columns]="4"></app-skeleton-loader>
+  <!-- Alerta de error si existe -->
+  <div *ngIf="msm_error" class="alert alert-danger alert-dismissible fade show d-flex align-items-center justify-content-between rounded-3 shadow-sm mb-3" role="alert">
+    <div class="d-flex align-items-center gap-2">
+      <i class="fas fa-exclamation-triangle"></i>
+      <span><strong>Mensaje:</strong> {{ msm_error }}</span>
+    </div>
+    <button type="button" class="btn-close" (click)="close_alert()" aria-label="Close"></button>
+  </div>
 
-                    <div class="col-lg-12 card p-3" *ngIf="!cargando">
-                        <div class="table-responsive table-sm">
-                            <table class="table table-sm">
-                                <thead class="thead-dark">
-                                    <tr>
-                                        <th>{{'Título'|translate}}</th>
-                                        <th>{{'Tiempo'|translate}}</th>
-                                        <th>{{'Precio'|translate}}</th>
-                                        <th>{{'Distancia'|translate}}</th>
-                                        <th>OP</th>
-                                    </tr>
-                                </thead>
-                                <tbody *ngFor="let item of postales">
-                                    <tr>
-                                        <td style="font-size: 13px;">{{item.titulo}}</td>
-                                        <td style="font-size: 13px;">{{item.tiempo}}</td>
-                                        <td style="font-size: 13px;">{{item.precio}}</td>
-                                        <td style="font-size: 13px;">{{item.distancia}}</td>
-                                        <td class="text-center">
-                                            <button class="btn btn-outline-success" data-toggle="tooltip"
-                                                data-original-title="Edit" (click)="onEditProject(item)"
-                                                data-bs-toggle="modal" data-bs-target="#editPostal">
-                                                <i class="fa fa-edit"></i>
-                                            </button>
-                                            <button (click)="eliminar(item._id)" class="btn btn-outline-danger"
-                                                data-toggle="tooltip" data-original-title="Borrar">
-                                                <i class="fa fa-trash"></i>
-                                            </button>
-
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
+  <!-- TARJETA PRINCIPAL DE TARIFAS DE DELIVERY -->
+  <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+    
+    <!-- Cabecera -->
+    <div class="card-header bg-white border-bottom py-3 px-4 d-flex flex-wrap align-items-center justify-content-between gap-3">
+      <div class="d-flex align-items-center gap-3">
+        <div class="zlip-header-icon bg-primary-subtle text-primary rounded-3">
+          <i class="fas fa-shipping-fast"></i>
         </div>
-</section>
+        <div>
+          <h5 class="fw-bold text-dark mb-0">{{ 'Tarifas de Delivery' | translate }}</h5>
+          <small class="text-muted">Configura las zonas, tiempos estimados y costos de envío</small>
+        </div>
+      </div>
+
+      <!-- Botón Agregar (conecta aquí tu routerLink o modal original) -->
+      <div class="d-flex align-items-center gap-2">
+        <span class="badge bg-light text-dark border rounded-pill px-3 py-2 fw-medium d-none d-sm-inline-block">
+          {{ postales?.length || 0 }} tarifas
+        </span>
+
+        <button 
+          type="button" 
+          class="btn btn-primary rounded-3 px-3 py-2 fw-semibold d-inline-flex align-items-center gap-2 shadow-sm"
+          
+           data-toggle="tooltip"
+                            data-original-title="Edit" data-bs-toggle="modal" data-bs-target="#editPostal"
+          (click)="openEditModal()" >
+          <i class="fas fa-plus"></i>
+          <span>{{ 'Agregar Tarifa' | translate }}</span>
+        </button>
+
+      </div>
+    </div>
+
+    <!-- Cuerpo -->
+    <div class="card-body p-0">
+      
+      <!-- Loader -->
+      <div *ngIf="cargando" class="py-5 text-center">
+        <app-loading></app-loading>
+      </div>
+
+      <!-- Tabla Limpia -->
+      <div *ngIf="!cargando" class="table-responsive">
+        <table class="table table-hover align-middle mb-0 zlip-table">
+          <thead class="table-light small text-uppercase text-muted">
+            <tr>
+              <th class="ps-4">{{ 'Título' | translate }}</th>
+              <th>{{ 'Tiempo' | translate }}</th>
+              <th>{{ 'Distancia' | translate }}</th>
+              <th>{{ 'Precio' | translate }}</th>
+              <th class="text-end pe-4">{{ 'Opciones' | translate }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of postales">
+              
+              <!-- Título de la tarifa -->
+              <td class="ps-4">
+                <div class="d-flex align-items-center gap-2">
+                  <span class="zlip-row-dot bg-primary"></span>
+                  <span class="fw-bold text-dark">{{ item.titulo }}</span>
+                </div>
+              </td>
+
+              <!-- Tiempo estimado -->
+              <td>
+                <span class="badge bg-light text-secondary border rounded-pill px-3 py-1 fw-medium">
+                  <i class="far fa-clock text-primary me-1"></i> {{ item.tiempo }}
+                </span>
+              </td>
+
+              <!-- Distancia -->
+              <td>
+                <span class="small text-secondary fw-medium">
+                  <i class="fas fa-route text-muted me-1"></i> {{ item.distancia }}
+                </span>
+              </td>
+
+              <!-- Precio o Gratis -->
+              <td>
+                <span *ngIf="item.precio > 0" class="fw-bolder text-dark fs-6">
+                  {{ item.precio | currency:'USD' }}
+                </span>
+                <span *ngIf="!item.precio || item.precio == 0" class="badge bg-success-subtle text-success rounded-pill px-3 py-1 fw-semibold">
+                  {{ 'Gratis' | translate }} ($0.00)
+                </span>
+              </td>
+
+              <!-- Botones de Acción alineados -->
+              <td class="text-end pe-4">
+                <div class="d-inline-flex align-items-center gap-2">
+                  <button 
+                    type="button" 
+                    class="btn btn-sm btn-outline-warning rounded-3 px-2 py-1"
+                    data-original-title="Edit"
+                    data-bs-toggle="modal" data-bs-target="#editPostal"
+                    (click)="onEditProject(item)"
+                    title="{{ 'Editar' | translate }}">
+                    <i class="fas fa-edit"></i>
+                  </button>
+
+                  <button 
+                    type="button" 
+                    class="btn btn-sm btn-outline-danger rounded-3 px-2 py-1"
+                    data-toggle="tooltip" data-original-title="Borrar"
+                    (click)="eliminar(item._id)"
+                    title="{{ 'Eliminar' | translate }}">
+                    <i class="fas fa-trash-alt"></i>
+                  </button>
+
+
+                </div>
+              </td>
+
+            </tr>
+
+            <!-- Estado vacío -->
+            <tr *ngIf="!postales || postales.length === 0">
+              <td colspan="5" class="text-center py-5">
+                <i class="fas fa-map-marked-alt fs-2 text-muted opacity-50 mb-2 d-block"></i>
+                <p class="text-muted small mb-0">No hay tarifas de delivery configuradas todavía.</p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+
+
+
+  
 <app-crear-postal (refreshPostalList)="ngOnInit()" [postalSeleccionado]="postalSeleccionado" (closeModal)="onClose()"
     #editPostal></app-crear-postal>
 

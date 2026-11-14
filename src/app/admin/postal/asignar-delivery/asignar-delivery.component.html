@@ -10,185 +10,291 @@
 </div>
 <div class="clear"></div>
 <app-skeleton-loader *ngIf="isLoading" [rows]="4" [columns]="8"></app-skeleton-loader>
-<br>
-<app-skeleton-loader *ngIf="isLoading" [rows]="4" [columns]="7"></app-skeleton-loader>
 <div class="clear"></div>
 
-<div class="container-fluid" *ngIf="!isLoading">
-    <div class="row">
-        <!-- <div class="col-lg-12" *ngIf="msm_error">
-            <div class="alert alert-primary alert-danger fade show" role="alert">
-                <span class="font-weight-medium">Mensaje:</span> {{msm_error}}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close" (click)="close_alert()">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+<div class="row">
+    <ul class="nav nav-tabs profile-tab" role="tablist">
+        <li class="nav-item">
+            <a href="#" onclick="return false;" class="nav-link " [ngClass]="{'active': option_selectedd == 1}"
+                (click)="optionSelected(1)">
+                {{ 'Pedidos por Asignar' | translate }}
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="#" onclick="return false;" class="nav-link " [ngClass]="{'active': option_selectedd == 2}"
+                (click)="optionSelected(2)">
+                {{ 'Asignaciones' | translate }}
+            </a>
+        </li>
+    </ul>
+</div>
+
+<div class="container-fluid py-3 zlip-delivery-admin" *ngIf="!isLoading">
+    <div *ngIf="option_selectedd == 1">
+        <!-- ========================================================= -->
+        <!-- TARJETA 1: PEDIDOS DISPONIBLES PARA ASIGNAR               -->
+        <!-- ========================================================= -->
+        <div class="card border-0 shadow-sm rounded-4 mb-4">
+            <div
+                class="card-header bg-white border-bottom py-3 px-4 d-flex flex-wrap align-items-center justify-content-between gap-2">
+                <div class="d-flex align-items-center gap-2">
+                    <div class="zlip-header-icon bg-primary-subtle text-primary rounded-3">
+                        <i class="fas fa-box-open"></i>
+                    </div>
+                    <div>
+                        <h5 class="fw-bold text-dark mb-0">{{ 'Pedidos por Asignar' | translate }}</h5>
+                        <small class="text-muted">Gestiona los pedidos listos para despacho</small>
+                    </div>
+                </div>
+
+                <span class="badge bg-primary-subtle text-primary rounded-pill px-3 py-2 fw-semibold">
+                    {{ pedidos?.length || 0 }} {{ 'pedidos' | translate }}
+                </span>
             </div>
-        </div> -->
-        <!-- ventasFiltradas -->
 
-        <div class="col-12  card">
-            <div class="table-responsive table-sm">
-                <table class="table table-sm">
-                    <thead class="thead-dark">
-                        <tr>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0 zlip-table">
+                        <thead class="table-light small text-uppercase text-muted">
+                            <tr>
+                                <th class="ps-4">{{ 'Pedido Id' | translate }}</th>
+                                <th>{{ 'Cliente' | translate }}</th>
+                                <th>{{ 'Dirección' | translate }}</th>
+                                <th class="text-center">{{ 'Verificado' | translate }}</th>
+                                <th class="text-center">{{ 'Delivery' | translate }}</th>
+                                <th class="text-center">{{ 'Asignado' | translate }}</th>
+                                <th class="text-end pe-4">{{ 'Opciones' | translate }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr
+                                *ngFor="let pedido of pedidos | paginate: { id: 'pedidosPage', itemsPerPage: countp, currentPage: p }">
 
-                            <th>Pedido Id</th>
-                            <th>Verificado </th>
-                            <th>delivery</th>
-                            <th>usuario</th>
-                            <th>Asignado</th>
-                            <th>telefono</th>
-                            <th>Direccion</th>
-                            <th>OP</th>
-                        </tr>
-                    </thead>
-                    <tbody
-                        *ngFor="let pedido of pedidos |verified |  paginate: { itemsPerPage: countp, currentPage: pp }">
-                        <tr>
-                            <td style="font-size: 13px;">{{pedido._id | slice:0:15}}...</td>
-                            <td style="font-size: 13px;">
+                                <!-- ID corto tipo código -->
+                                <td class="ps-4">
+                                    <span class="badge bg-light text-dark border font-monospace px-2 py-1"
+                                        [title]="pedido._id">
+                                        #{{ pedido._id | slice:0:10 }}...
+                                    </span>
+                                </td>
 
-                                <div class="font-size-sm mb-4">
-                                    <span class="badge badge-danger badge-shadow"
-                                        *ngIf="pedido.verificado === false">{{pedido.verificado }}</span>
-                                    <span class="badge badge-success badge-shadow"
-                                        *ngIf="pedido.verificado === true">{{pedido.verificado}}</span>
+                                <!-- Cliente + Teléfono unificados -->
+                                <td>
+                                    <div class="fw-semibold text-dark small">
+                                        {{ pedido.user?.first_name }} {{ pedido.user?.last_name }}
+                                    </div>
+                                    <div *ngIf="pedido.user?.telefono" class="text-muted zlip-subtext">
+                                        <i class="fas fa-phone-alt me-1"></i>{{ pedido.user?.telefono }}
+                                    </div>
+                                </td>
 
-                                </div>
-                            </td>
-                            <td style="font-size: 13px;">
+                                <!-- Dirección o Retiro -->
+                                <td>
+                                    <span *ngIf="!pedido.direccion"
+                                        class="badge bg-secondary-subtle text-secondary rounded-pill px-3 py-1 fw-medium">
+                                        <i class="fas fa-store me-1"></i> {{ 'Sin dirección / Retiro en tienda' |
+                                        translate }}
+                                    </span>
+                                    <span *ngIf="pedido.direccion" class="small text-dark fw-medium">
+                                        <i class="fas fa-map-marker-alt text-danger me-1"></i> {{ 'Revisar Dirección' |
+                                        translate }}
+                                    </span>
+                                </td>
 
-                                <div class="font-size-sm mb-4">
-                                    <span class="badge badge-success badge-shadow"
-                                        *ngIf="pedido.delivery == 'true'">{{pedido.delivery}}</span>
-                                    <span class="badge badge-danger badge-shadow"
-                                        *ngIf="pedido.delivery == 'false'">{{pedido.delivery}}</span>
+                                <!-- Estado Verificado -->
+                                <td class="text-center">
+                                    <span class="badge rounded-pill px-3 py-1"
+                                        [ngClass]="pedido.verificado ? 'bg-success-subtle text-success' : 'bg-warning-subtle text-dark'">
+                                        <i class="fas me-1"
+                                            [ngClass]="pedido.verificado ? 'fa-check-circle' : 'fa-clock'"></i>
+                                        {{ (pedido.verificado ? 'Sí' : 'No') | translate }}
+                                    </span>
+                                </td>
 
-                                </div>
-                            </td>
+                                <!-- Estado Delivery -->
+                                <td class="text-center">
+                                    <span class="badge rounded-pill px-3 py-1"
+                                        [ngClass]="pedido.delivery ? 'bg-info-subtle text-info' : 'bg-light text-muted border'">
+                                        <i class="fas me-1"
+                                            [ngClass]="pedido.delivery ? 'fa-motorcycle' : 'fa-walking'"></i>
+                                        {{ (pedido.delivery ? 'Sí' : 'No') | translate }}
+                                    </span>
+                                </td>
 
+                                <!-- Estado Asignado -->
+                                <td class="text-center">
+                                    <span class="badge rounded-pill px-3 py-1"
+                                        [ngClass]="pedido.asignado ? 'bg-success-subtle text-success' : 'bg-danger-subtle text-danger'">
+                                        {{ (pedido.asignado ? 'Asignado' : 'Pendiente') | translate }}
+                                    </span>
+                                </td>
 
-                            <td style="font-size: 13px;">{{pedido.user.first_name}} {{pedido.user.last_name}}</td>
-                            <td style="font-size: 13px;">
+                                <!-- Botón Asignar Driver -->
+                                <td class="text-end pe-4">
+                                    <button 
+                                        type="button" 
+                                        class="btn btn-sm rounded-3 px-3 fw-semibold d-inline-flex align-items-center gap-2"
+                                        [ngClass]="pedido.asignado ? 'btn-outline-secondary' : 'btn-primary shadow-sm'"
+                                        data-bs-toggle="modal" 
+                                        data-bs-target="#asignarDelivery"
+                                        (click)="onViewVenta(pedido)">
+                                        <i class="fas fa-motorcycle"></i>
+                                        <span>{{ (pedido.asignado ? 'Reasignar' : 'Asignar') | translate }}</span>
+                                        </button>
+                                </td>
 
-                                <div class="font-size-sm mb-4">
-                                    <span class="badge badge-success badge-shadow"
-                                        *ngIf="pedido.asignado == true">{{pedido.asignado}}</span>
-                                    <span class="badge badge-danger badge-shadow"
-                                        *ngIf="pedido.asignado == false">{{pedido.asignado}}</span>
+                            </tr>
 
-                                </div>
-                            </td>
-                            <td style="font-size: 13px;">{{pedido.user.first_name}} {{pedido.user.last_name}}</td>
-                            <td style="font-size: 13px;">{{pedido.user.telefono}}</td>
-                            <td style="font-size: 13px;">
-                                <span
-                                    *ngIf="pedido.delivery === 'false' || pedido.delivery === 'true' && pedido.direccion === null ">
-                                    {{ 'Sin dirección / Retiro en tienda' |translate }}
-                                </span>
-                                <span *ngIf="pedido.delivery === 'true' && pedido.direccion !== null ">
-                                    {{ 'Revisar Dirección' |translate }}
-                                </span>
-                            </td>
-                            <td class="text-center">
-                                <a class="nav-link-style text-success" (click)="onViewVenta(pedido)"
-                                    data-bs-toggle="modal" class="cursor" data-bs-target="#asignarDelivery"
-                                    style="cursor:pointer">
-                                    <div class="czi-share"></div>
-                                </a>
+                            <!-- Estado vacío -->
+                            <tr *ngIf="!pedidos || pedidos.length === 0">
+                                <td colspan="7" class="text-center py-4 text-muted small">
+                                    No hay pedidos registrados en este momento.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
 
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                <!-- Paginación Pedidos -->
+                <div *ngIf="pedidos && pedidos.length > countp" class="d-flex justify-content-end p-3 border-top">
+                    <pagination-controls id="pedidosPage" (pageChange)="p = $event" previousLabel="Anterior"
+                        nextLabel="Siguiente"></pagination-controls>
+                </div>
             </div>
-            <pagination-controls (pageChange)="pp = $event"></pagination-controls>
         </div>
-
     </div>
-    <div class="row">
-        <!-- asignaciones -->
-        <div class="col-12  card">
-            <h3>Asignaciones</h3>
-            <div class="table-responsive table-sm">
-                <table class="table table-sm">
-                    <thead class="thead-dark">
-                        <tr>
+    <div *ngIf="option_selectedd == 2">
+        <!-- ========================================================= -->
+        <!-- TARJETA 2: ASIGNACIONES ACTIVAS E HISTORIAL               -->
+        <!-- ========================================================= -->
+        <div class="card border-0 shadow-sm rounded-4">
+            <div
+                class="card-header bg-white border-bottom py-3 px-4 d-flex flex-wrap align-items-center justify-content-between gap-2">
+                <div class="d-flex align-items-center gap-2">
+                    <div class="zlip-header-icon bg-success-subtle text-success rounded-3">
+                        <i class="fas fa-route"></i>
+                    </div>
+                    <div>
+                        <h5 class="fw-bold text-dark mb-0">{{ 'Asignaciones' | translate }}</h5>
+                        <small class="text-muted">Seguimiento de repartidores y entregas</small>
+                    </div>
+                </div>
 
-                            <th>T. Vehiculo</th>
-                            <th>Licencia</th>
-                            <th>Pedido Id</th>
-                            <th>Tienda</th>
-                            <th>Estado</th>
-                            <th>Fecha</th>
-                            <th>OP</th>
-                        </tr>
-                    </thead>
-                    <tbody *ngFor="let asignacion of asignaciones |  paginate: { itemsPerPage: count, currentPage: p }">
-                        <tr>
-                            <td style="font-size: 13px;">{{asignacion.driver.tipo_vehiculo}}</td>
-                            <td style="font-size: 13px;">{{asignacion.driver.licencianum}}</td>
-                            <td style="font-size: 13px;">{{asignacion.pedido}}</td>
-                            <td style="font-size: 13px;">{{asignacion.tienda.nombre}}</td>
-                            <td style="font-size: 13px;">
-                                <span class="badge badge-accent badge-shadow"
-                                    *ngIf="(asignacion.status || '').toUpperCase() === 'POR-ASIGNAR'">{{asignacion.status
-                                    ||
-                                    'N/A'}}</span>
-                                <span class="badge badge-success badge-shadow"
-                                    *ngIf="(asignacion.status || '').toUpperCase() === 'ASIGNADO'">{{asignacion.status
-                                    ||
-                                    'N/A'}}</span>
-                                <span class="badge badge-primary badge-shadow"
-                                    *ngIf="(asignacion.status || '').toUpperCase() === 'ENTREGADO'">{{asignacion.status
-                                    ||
-                                    'N/A'}}</span>
-                                <span class="badge badge-warning badge-shadow"
-                                    *ngIf="(asignacion.status || '').toUpperCase() === 'CONFIRMADO'">{{asignacion.status
-                                    ||
-                                    'N/A'}}</span>
-                                <span class="badge badge-secondary badge-shadow"
-                                    *ngIf="!(asignacion.status || '').toUpperCase()">N/A</span>
+                <span class="badge bg-success-subtle text-success rounded-pill px-3 py-2 fw-semibold">
+                    {{ $any(asignaciones)?.length || 0 }} {{ 'asignaciones' | translate }}
+                </span>
+            </div>
 
-                            </td>
-                            <td style="font-size: 13px;">{{asignacion.updatedAt|date:'dd/mm/YYYY'}}</td>
-                            <td class="text-center">
-                                <a class="nav-link-style text-primary" data-toggle="modal"
-                                    [attr.data-target]="'#edit-'+asignacion._id" style="cursor:pointer">
-                                    <div class="czi-trash"></div>
-                                </a>
-                                <div class="modal fade" [attr.id]="'edit-'+asignacion._id" tabindex="-1" role="dialog"
-                                    style="display: none;" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h4 class="modal-title">Confirmación</h4>
-                                                <button class="close" type="button" data-dismiss="modal"
-                                                    aria-label="Close"><span aria-hidden="true">×</span></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <p class="font-size-sm">¿Desea eliminar definitivamente el regsitro?</p>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button class="btn btn-secondary btn-sm" type="button"
-                                                    data-dismiss="modal">Cancelar</button>
-                                                <!-- <button class="btn btn-primary btn-shadow btn-sm" type="button"
-                                                    (click)="eliminar(item._id)">Suprimir</button> -->
-                                            </div>
+            <div class="card-body p-0">
+                <div *ngIf="isLoading" class="py-5 text-center">
+                    <app-loading></app-loading>
+                </div>
+
+                <div *ngIf="!isLoading" class="table-responsive">
+                    <table class="table table-hover align-middle mb-0 zlip-table">
+                        <thead class="table-light small text-uppercase text-muted">
+                            <tr>
+                                <th class="ps-4">{{ 'Vehículo y Licencia' | translate }}</th>
+                                <th>{{ 'Pedido Id' | translate }}</th>
+                                <th>{{ 'Tienda' | translate }}</th>
+                                <th class="text-center">{{ 'Estado' | translate }}</th>
+                                <th>{{ 'Fecha' | translate }}</th>
+                                <th class="text-end pe-4">{{ 'OP' | translate }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr
+                                *ngFor="let asignacion of $any(asignaciones) | paginate: { id: 'asigPage', itemsPerPage: count, currentPage: pp }">
+
+                                <!-- Vehículo con icono + Placa/Licencia -->
+                                <td class="ps-4">
+                                    <div class="d-flex align-items-center gap-2">
+                                        <span class="zlip-vehicle-badge bg-light border rounded-3 text-dark">
+                                            <i class="fas"
+                                                [ngClass]="asignacion.driver?.tipo_vehiculo?.toLowerCase() === 'moto' ? 'fa-motorcycle' : 'fa-car'"></i>
+                                        </span>
+                                        <div>
+                                            <span class="fw-semibold text-dark text-capitalize d-block small">
+                                                {{ asignacion.driver?.tipo_vehiculo || 'Vehículo' }}
+                                            </span>
+                                            <small class="text-muted font-monospace">{{ asignacion.driver?.licencianum
+                                                }}</small>
                                         </div>
                                     </div>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                                </td>
+
+                                <!-- ID Pedido -->
+                                <td>
+                                    <span class="badge bg-light text-dark border font-monospace px-2 py-1"
+                                        [title]="asignacion.pedido">
+                                        #{{ asignacion.pedido | slice:0:12 }}...
+                                    </span>
+                                </td>
+
+                                <!-- Tienda -->
+                                <td class="fw-medium text-dark small text-capitalize">
+                                    <i class="fas fa-store text-muted me-1"></i> {{ asignacion.tienda?.nombre }}
+                                </td>
+
+                                <!-- Estado de entrega -->
+                                <td class="text-center">
+                                    <span class="badge rounded-pill px-3 py-1 fw-semibold" [ngClass]="{
+                    'bg-success-subtle text-success': asignacion.status === 'Entregado',
+                    'bg-primary-subtle text-primary': asignacion.status === 'Asignado',
+                    'bg-warning-subtle text-dark': asignacion.status === 'En camino',
+                    'bg-secondary-subtle text-secondary': !asignacion.status
+                  }">
+                                        {{ asignacion.status || 'N/A' }}
+                                    </span>
+                                </td>
+
+                                <!-- Fecha corregida (MM en mayúsculas para el mes) -->
+                                <td class="small text-secondary">
+                                    <i class="far fa-calendar-alt me-1 text-muted"></i>
+                                    {{ asignacion.updatedAt | date:'dd/MM/yyyy' }}
+                                </td>
+
+                                <!-- Acción Eliminar -->
+                                <td class="text-end pe-4">
+                                    <button type="button" class="btn btn-sm btn-outline-danger rounded-3 px-2 py-1"
+                                        data-bs-toggle="modal" data-bs-target="#deleteAsignacionModal"
+                                        title="{{ 'Eliminar' | translate }}">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
+                                </td>
+
+                            </tr>
+
+                            <tr *ngIf="!asignaciones || $any(asignaciones).length === 0">
+                                <td colspan="6" class="text-center py-4 text-muted small">
+                                    Aún no hay asignaciones registradas.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Paginación Asignaciones -->
+                <div *ngIf="asignaciones && $any(asignaciones).length > count"
+                    class="d-flex justify-content-end p-3 border-top">
+                    <pagination-controls id="asigPage" (pageChange)="pp = $event" previousLabel="Anterior"
+                        nextLabel="Siguiente"></pagination-controls>
+                </div>
             </div>
-            <pagination-controls (pageChange)="p = $event"></pagination-controls>
         </div>
     </div>
+
+
+
 </div>
 
 <!-- modal -->
-<app-modal-asignar (reloadList)="ngOnInit()" [drivers]="drivers" [ventaSelected]="ventaSelected"
-    (closeModal)="onClose()" (asignar)="asignarDeliveryconDriver($event)" #asignarDelivery></app-modal-asignar>
+<app-modal-asignar 
+  #asignarDelivery
+  [drivers]="drivers" 
+  [ventaSelected]="ventaSelected"
+  (reloadList)="ngOnInit()" 
+  (closeModal)="onCloseModal()" 
+  (asignar)="asignarDeliveryconDriver($event)">
+</app-modal-asignar>
 <!-- modal -->
