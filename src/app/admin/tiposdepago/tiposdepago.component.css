@@ -7,3 +7,102 @@
   border-width: 2px;
   font-weight: bold;
 }
+
+/* Cuadrícula estricta de 2 columnas para que NUNCA se salgan de la tarjeta */
+.zlip-payments-admin .zlip-channels-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  width: 100%;
+}
+
+@media (max-width: 576px) {
+  .zlip-payments-admin .zlip-channels-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Diseño de cada píldora */
+.zlip-payments-admin .zlip-channel-pill {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 14px;
+  border: 1.5px solid #dee2e6;
+  background-color: #ffffff;
+  color: #323232;
+  cursor: pointer;
+  transition: all 0.15s ease-in-out;
+  overflow: hidden;
+}
+
+.zlip-payments-admin .zlip-channel-pill:hover {
+  border-color: #111111;
+  background-color: #f8f9fa;
+  transform: translateY(-1px);
+}
+
+.zlip-payments-admin .zlip-channel-pill.active {
+  background-color: #111111;
+  border-color: #111111;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.zlip-payments-admin .zlip-pill-icon {
+  width: 34px;
+  height: 34px;
+  min-width: 34px;
+  border-radius: 10px;
+  background-color: #f1f3f5;
+  color: #111111;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+  transition: all 0.15s ease;
+}
+
+.zlip-payments-admin .zlip-channel-pill.active .zlip-pill-icon {
+  background-color: rgba(255, 255, 255, 0.16);
+  color: #ffffff;
+}
+
+.zlip-payments-admin .zlip-pill-text {
+  min-width: 0;
+  flex: 1;
+}
+
+.zlip-payments-admin .zlip-pill-title {
+  font-size: 0.82rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.zlip-payments-admin .zlip-pill-sub {
+  font-size: 0.7rem;
+  color: #6c757d;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.zlip-payments-admin .zlip-channel-pill.active .zlip-pill-sub {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+/* Inputs limpios */
+.zlip-payments-admin .form-control,
+.zlip-payments-admin .form-select {
+  border-color: #dee2e6;
+  font-size: 0.92rem;
+}
+
+.zlip-payments-admin .form-control:focus,
+.zlip-payments-admin .form-select:focus {
+  border-color: #111111;
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.08);
+}

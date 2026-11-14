@@ -69,6 +69,51 @@ export class TiposdepagoComponent implements OnInit, OnDestroy {
   public info: string = '';
     private langSubscription!: Subscription;
 
+    canalesPago = [
+  {
+    value: 'transferencia',
+    label: 'Transferencia Nacional',
+    sublabel: 'Bizum, Alias, Cuenta RUT',
+    icon: 'fas fa-university'
+  },
+  {
+    value: 'transferencia_usd',
+    label: 'Transferencia USD',
+    sublabel: 'Zelle, Swift, Wire',
+    icon: 'fas fa-globe-americas'
+  },
+  {
+    value: 'transferencia_eur',
+    label: 'Transferencia EUR',
+    sublabel: 'SEPA Europa',
+    icon: 'fas fa-euro-sign'
+  },
+  {
+    value: 'pagomovil',
+    label: 'Pago Móvil',
+    sublabel: 'Venezuela',
+    icon: 'fas fa-mobile-alt'
+  },
+  {
+    value: 'zelle',
+    label: 'Zelle (USD)',
+    sublabel: 'Transferencia rápida',
+    icon: 'fas fa-bolt'
+  },
+  {
+    value: 'paypal',
+    label: 'PayPal',
+    sublabel: 'Pasarela / Tarjeta',
+    icon: 'fab fa-paypal'
+  },
+  {
+    value: 'cheque',
+    label: 'Cheque',
+    sublabel: 'Pago físico',
+    icon: 'fas fa-money-check'
+  }
+];
+
   constructor(
     private fb: FormBuilder,
     private paymentMethodService: TiposdepagoService,
@@ -109,6 +154,14 @@ export class TiposdepagoComponent implements OnInit, OnDestroy {
 
     
   }
+
+  seleccionarCanal(valor: string): void {
+  this.tipo = valor;
+  this.pagoSeleccionado = valor;
+  if (valor === 'paypal') {
+    this.loadPaypalConfig();
+  }
+}
 
   private actualizarInstruccionesPagos() {
     // Jalamos los textos traducidos desde el JSON en milisegundos
@@ -326,5 +379,47 @@ export class TiposdepagoComponent implements OnInit, OnDestroy {
       }
     });
   }
+
+
+  // Método limpio para agrupar sin duplicados y con soporte bilingüe
+agruparCategoriasSinDuplicados(productos: any[]) {
+  const mapaCategorias = new Map<string, {
+    clave: string;
+    nombre: { es: string; en: string };
+    products: any[];
+  }>();
+
+  productos.forEach((producto: any) => {
+    // 1. Extraemos el nombre base en español (o string directo)
+    const rawEs = typeof producto.subcategoria === 'object'
+      ? (producto.subcategoria?.es || '')
+      : (producto.subcategoria || '');
+
+    const rawEn = typeof producto.subcategoria === 'object'
+      ? (producto.subcategoria?.en || rawEs)
+      : (producto.categoria?.subcategorias?.en || rawEs);
+
+    const nombreEsLimpio = rawEs.trim();
+    if (!nombreEsLimpio) return;
+
+    // 2. Clave única normalizada (evita "Bolsos" vs "bolsos ")
+    const claveUnica = nombreEsLimpio.toLowerCase();
+
+    if (!mapaCategorias.has(claveUnica)) {
+      mapaCategorias.set(claveUnica, {
+        clave: claveUnica,
+        nombre: {
+          es: nombreEsLimpio,
+          en: rawEn.trim() || nombreEsLimpio
+        },
+        products: []
+      });
+    }
+
+    mapaCategorias.get(claveUnica)!.products.push(producto);
+  });
+
+  return Array.from(mapaCategorias.values());
+}
 }
 

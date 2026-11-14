@@ -2,311 +2,307 @@
 
 <app-skeleton-loader *ngIf="isLoading" [rows]="1" [columns]="3"></app-skeleton-loader>
 <app-skeleton-loader *ngIf="isLoading" [rows]="3" [columns]="2"></app-skeleton-loader>
+<div class="clear"></div>
+<div class="g-4 align-items-start py-3 zlip-payments-admin d-flex gap-3" *ngIf="!isLoading">
 
-<div class="row" *ngIf="!isLoading">
-    <div class="card p-3">
-        <div class="tab-pane" id="address" role="tabpanel" aria-labelledby="address-tab">
-                <div class="row">
-                    <!-- formulario -->
-                    <div class="col-xs-12 col-sm-5" *ngIf="!tipoSeleccionado ">
-                            <!-- Edit header -->
-                            <div *ngIf="isEditMode" class="alert alert-warning mb-3">
-                                <strong>{{'Editando'|translate}}: </strong>{{editingPayment?.tipo}}
-                                <button type="button" class="btn btn-sm btn-secondary float-end"
-                                    (click)="cancelEdit()">{{'Cancelar'|translate}}</button>
+    <!-- COLUMNA IZQUIERDA: FORMULARIO CON PILLS -->
+    <div class="col-12 col-lg-5">
+        <div class="card border-0 shadow-sm rounded-4">
+            <div class="card-header bg-white border-bottom py-3 px-4 d-flex align-items-center justify-content-between">
+                <h5 class="fw-bold text-dark mb-0 d-flex align-items-center gap-2">
+                    <i class="fas" [ngClass]="isEditMode ? 'fa-edit text-warning' : 'fa-plus-circle text-primary'"></i>
+                    <span>{{ (isEditMode ? 'Editando' : 'Tipos de Pago') | translate }}</span>
+                </h5>
+
+                <button *ngIf="isEditMode" type="button" class="btn btn-sm btn-outline-secondary rounded-3"
+                    (click)="cancelEdit()">
+                    <i class="fas fa-times me-1"></i> {{ 'Cancelar' | translate }}
+                </button>
+            </div>
+
+            <div class="card-body p-4">
+
+                <div *ngIf="isEditMode"
+                    class="alert alert-warning py-2 px-3 small rounded-3 mb-3 d-flex align-items-center gap-2">
+                    <i class="fas fa-pen"></i>
+                    <span><strong>{{ 'Editando' | translate }}:</strong> {{ editingPayment?.tipo }}</span>
+                </div>
+
+                <!-- SELECTOR EN FORMATO GRID DE PILLS (2 POR FILA) -->
+                <div class="mb-4">
+                    <label class="form-label small fw-bold text-uppercase text-muted mb-2">
+                        {{ 'Tipo de Pago / Canal' | translate }} <span class="text-danger">*</span>
+                    </label>
+
+                    <div class="zlip-channels-grid">
+                        <button *ngFor="let canal of canalesPago" type="button" class="zlip-channel-pill text-start"
+                            [class.active]="tipo === canal.value" (click)="seleccionarCanal(canal.value)">
+                            <span class="zlip-pill-icon">
+                                <i [class]="canal.icon"></i>
+                            </span>
+                            <div class="zlip-pill-text">
+                                <span class="d-block fw-semibold lh-sm zlip-pill-title">{{ canal.label | translate
+                                    }}</span>
+                                <small class="d-block zlip-pill-sub">{{ canal.sublabel }}</small>
                             </div>
-                            <form class="rbt-profile-row rbt-default-form row row--15">
-                                <div class="form-group col-xs-12" *ngIf="!isEditMode">
-                                    <label for="exampleInputEmail0">{{'Tipo de Pago / Canal'|translate}}<span class="required">*</span></label>
-                                    <select name="tipo" id="input" class="form-control" [(ngModel)]="tipo" (change)="selectedTypeEdit($event.target.value)">
-                                        <option value="seleccione">{{'Seleccione'|translate}}</option>
-                                        
-                                        <!-- 🌍 OPCIONES UNIVERSALES CAMALEÓNICAS (Envían el string que espera Node, pero se adaptan visualmente) -->
-                                        <option value="Transferencia Bolivares">{{'Transferencia Nacional / Moneda Local (Bizum, Alias, Cuenta RUT)'|translate}}</option>
-                                        <option value="Transferencia Dólares">{{'Transferencia Internacional USD (Zelle, Swift, Wire)'|translate}}</option>
-                                        <option value="Transferencia Euro">{{'Transferencia Internacional EUR (SEPA Europa)'|translate}}</option>
-                                        
-                                        <!-- Mantienes tus opciones fijas tradicionales que ya funcionan -->
-                                        <option value="pagomovil">{{'Pago Móvil (Venezuela)'|translate}}</option>
-                                        <option value="zelle">Zelle (USD)</option>
-                                        <option value="paypal">Paypal</option>
-                                        <option value="cheque">{{'Cheque'|translate}}</option>
-                                    </select>
-                                </div>
-
-                                <div class="clear"></div>
-
-                                <!-- Transferencia  -->
-                                <div *ngIf="pagoSeleccionado == 'Transferencia Dólares' || pagoSeleccionado == 'Transferencia Euro' || pagoSeleccionado == 'Transferencia Bolivares'"
-                                    class="card p-3">
-                                    <div class="card-body">
-                                        <h4>{{'Transferencia'|translate}}</h4>
-                                        <div class="row">
-                                            <div class="form-group col-xs-12">
-                                                <label for="exampleInputEmail1">{{'Tipo de Cuenta'|translate}}<span
-                                                        class="required">*</span></label>
-                                                <select name="bankAccountType" id="input" class="form-control"
-                                                    [(ngModel)]="bankAccountType">
-                                                    <option value="">{{'Seleccione'|translate}}</option>
-                                                    <option value="ahorro">{{'Ahorro'|translate}}</option>
-                                                    <option value="corriente">{{'Corriente'|translate}}</option>
-                                                </select>
-
-                                            </div>
-                                            <div class="form-group col-xs-12">
-                                                <label for="exampleInputEmail1">{{'Num. de Cuenta'|translate}}</label>
-                                                <input [(ngModel)]="bankAccount" name="bankAccount" type="text"
-                                                    class="form-control">
-                                            </div>
-                                            <div class="form-group col-xs-12">
-                                                <label for="exampleInputEmail1">{{'Nombre del Banco'|translate}}</label>
-                                                <input [(ngModel)]="bankName" name="bankName" type="text"
-                                                    class="form-control">
-                                            </div>
-                                            <div class="form-group col-xs-12 ">
-                                                <label for="exampleInputEmail1">{{'Ci/iD ó RIF'|translate}}</label>
-                                                <input [(ngModel)]="ciorif" name="ciorif" type="text"
-                                                    class="form-control">
-                                            </div>
-                                        </div>
-                                        <input type="hidden" [(ngModel)]="id">
-                                        <button (click)="save()" class="btn btn-primary">
-                                            {{ (isEditMode ? 'Actualizar' : 'Guardar') | translate }}
-                                        </button>
-                                    </div>
-                                </div>
-                                <!-- Transferencia  -->
-                                <!-- pagomovil -->
-                                <div *ngIf="pagoSeleccionado == 'pagomovil'" class="card p-3">
-                                    <div class="card-body">
-                                        <h4>Pago Móvil</h4>
-                                        <div class="row">
-                                            <div class="form-group col-xs-12 ">
-                                                <label for="exampleInputEmail1">{{'Nombre del Banco'|translate}}</label>
-                                                <input [(ngModel)]="bankName" name="bankName" type="text"
-                                                    class="form-control">
-                                            </div>
-                                            <div class="form-group col-xs-12 col-sm-6">
-                                                <label for="exampleInputEmail1">{{'Ci o RIF'|translate}}</label>
-                                                <input [(ngModel)]="ciorif" name="ciorif" type="text"
-                                                    class="form-control">
-                                            </div>
-                                            <div class="form-group col-xs-12 col-sm-6">
-                                                <label for="exampleInputEmail1">{{'Télefono'|translate}}</label>
-                                                <input [(ngModel)]="phone" name="phone" type="text"
-                                                    class="form-control">
-                                            </div>
-                                        </div>
-                                        <button (click)="save()" class="btn btn-primary">
-                                            {{ (isEditMode ? 'Actualizar' : 'Guardar') | translate }}
-                                        </button>
-                                    </div>
-                                </div>
-                                <!-- pagomovil  -->
-                                <!-- zelle -->
-                                <div *ngIf="pagoSeleccionado == 'zelle'" class="card p-3">
-                                    <div class="card-body">
-                                        <h4>Zelle</h4>
-                                        <div class="row">
-                                            <div class="form-group col-xs-12 ">
-                                                <label for="exampleInputEmail1">{{'Nombre del Banco'|translate}}</label>
-                                                <input [(ngModel)]="bankName" name="bankName" type="text"  class="form-control">
-                                            </div>
-                                            <div class="form-group col-xs-12 ">
-                                                <label for="exampleInputEmail1">{{'Nombre de Usuario'|translate}}</label>
-                                                <input [(ngModel)]="username" name="username" type="text"
-                                                    class="form-control">
-                                            </div>
-                                            <div class="form-group col-xs-12 ">
-                                                <label for="exampleInputEmail1">Email</label>
-                                                <input [(ngModel)]="email" name="email" type="text"
-                                                    class="form-control">
-                                            </div>
-                                            <div class="form-group col-xs-12 ">
-                                                <label for="exampleInputEmail1">{{'Ci/iD ó RIF'|translate}}</label>
-                                                <input [(ngModel)]="ciorif" name="ciorif" type="text"
-                                                    class="form-control">
-                                            </div>
-                                        </div>
-                                        <button (click)="save()" class="btn btn-primary">
-                                            {{ (isEditMode ? 'Actualizar' : 'Guardar') | translate }}
-                                        </button>
-                                    </div>
-                                </div>
-                                <!-- zelle  -->
-                                <!-- paypal -->
-                                <div *ngIf="pagoSeleccionado == 'paypal'" class="card p-3">
-                                    <div class="card-body">
-                                        <h4>Paypal</h4>
-                                        <div class="row">
-                                            <div class="form-group col-xs-12 ">
-                                                <label for="exampleInputEmail1">email</label>
-                                                <input [(ngModel)]="email" name="email" type="text"
-                                                    class="form-control">
-                                            </div>
-                                            <div class="form-group col-xs-12 ">
-                                                <label for="exampleInputEmail1">clientId Paypal</label>
-                                                <input [(ngModel)]="clientIdPaypal" name="clientIdPaypal" type="text"
-                                                    class="form-control">
-                                            </div>
-                                            <div class="form-group col-xs-12 ">
-                                                <label for="exampleInputEmail1">Client Secret Paypal</label>
-                                                <input [(ngModel)]="clientSecret" name="clientSecret" type="text"
-                                                    class="form-control">
-                                            </div>
-                                            <div class="form-group col-xs-12 ">
-                                                <label for="exampleInputEmail1">{{'Modo'|translate}}</label>
-                                                <select name="mode" id="input" class="form-control" [(ngModel)]="mode">
-                                                    <option value="seleccione">{{'Seleccione'|translate}}</option>
-                                                    <option value="sandbox">{{'Sandbox (Pruebas)'|translate}}</option>
-                                                    <option value="live">{{'Live (Producción)'|translate}}</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <button (click)="save()" class="btn btn-primary">
-                                            {{ (isEditMode ? 'Actualizar' : 'Guardar') | translate }}
-                                        </button>
-                                    </div>
-                                </div>
-                                <!-- paypal  -->
-                                <!-- cheque -->
-                                <div *ngIf="pagoSeleccionado == 'cheque'" class="card p-3">
-                                    <div class="card-body">
-                                        <h4>{{'Cheque'|translate}}</h4>
-                                        <div class="row">
-                                            <div class="form-group col-xs-12 ">
-                                                <label for="exampleInputEmail1">{{'Nombre del Titular'|translate}}</label>
-                                                <input [(ngModel)]="username" name="username" type="text"
-                                                    class="form-control">
-                                            </div>
-                                        </div>
-                                        <button (click)="save()" class="btn btn-primary">
-                                            {{ (isEditMode ? 'Actualizar' : 'Guardar') | translate }}
-                                        </button>
-                                    </div>
-                                </div>
-                                <!-- cheque  -->
-                            </form>
+                        </button>
                     </div>
-                        <!-- lista de tipos de pago -->
-                    <div class="col-xs-12 col-sm-7" *ngIf="!tipoSeleccionado">
-                            <div class="card">
-                               <table class="rbt-table table table-responsive">
-                                        <thead>
-                                            <tr>
-                                                <th>{{'Tipo'|translate}}</th>
-                                                <th>{{'Nombre'|translate}}</th>
-                                                <th>{{'Status'|translate}}</th>
-                                                <th>{{'Activar'|translate}}</th>
-                                                <th>{{'Opciones'|translate}}</th>
-                                            </tr>
-                                        </thead>
+                </div>
 
-                                        <tbody>
-                                            <ng-container *ngFor="let tipodepago of tiposdepagos">
-                                                <tr>
-                                                    <td>{{tipodepago.tipo}}</td>
-                                                    <td>
-                                                        <span
-                                                            *ngIf="tipodepago.tipo !== 'cheque'">{{tipodepago.bankName}}</span>
-                                                        <span
-                                                            *ngIf="tipodepago.tipo === 'cheque'">{{tipodepago.username}}</span>
-                                                    </td>
-                                                    <td>
-                                                        <span class="badge bg-success"
-                                                            *ngIf="tipodepago.status === 'ACTIVE'">{{'Activo'|translate}}</span>
-                                                        <span class="badge bg-danger"
-                                                            *ngIf="tipodepago.status === 'INACTIVE'">{{'Inactivo'|translate}}</span>
-                                                    </td>
-                                                    <td>
-                                                        <select class="form-control form-select-solid fw-bolder"
-                                                            name="status" [(ngModel)]="tipodepago.status"
-                                                            (change)="cambiarStatus(tipodepago)" placeholder="status">
-                                                            <option value="">{{'Seleccione'|translate}}</option>
-                                                            <option value="ACTIVE">{{'Activo'|translate}}</option>
-                                                            <option value="INACTIVE">{{'Inactivo'|translate}}</option>
-                                                        </select>
-                                                    </td>
-                                                    <td>
-                                                        <a class="btn btn-outline-warning btn-sm me-1" href="#" onclick="return false;" (click)="editPayment(tipodepago)" title="Editar"><i class="fa fa-edit pl--0"></i></a>
-                                                        <!-- <a class="btn btn-outline-primary btn-sm me-1" href="#" onclick="return false;" (click)="selectedType(tipodepago)" title="Ver"><i class="fa fa-eye pl--0"></i></a> -->
-                                                        <a class="btn btn-outline-danger btn-sm" href="#"  onclick="return false;" (click)="deleteTipoPago(tipodepago)" title="delete"><i class="fa fa-trash pl--0"></i></a>
-                                                    </td>
-                                                </tr>
-                                            </ng-container>
+                <!-- Estado vacío antes de elegir -->
+                <div *ngIf="!tipo" class="text-center py-4 px-3 rounded-4 bg-light border text-muted small">
+                    <i class="fas fa-hand-pointer fs-4 mb-2 d-block text-primary opacity-75"></i>
+                    Selecciona un canal de pago arriba para completar sus datos.
+                </div>
 
-                                        </tbody>
-                                    </table>
+                <!-- FORMULARIO DINÁMICO -->
+                <form *ngIf="tipo" (ngSubmit)="save()" autocomplete="off" class="pt-3 border-top">
 
+                    <!-- 1. TRANSFERENCIAS -->
+                    <div
+                        *ngIf="tipo === 'transferencia' || tipo === 'transferencia_usd' || tipo === 'transferencia_eur'">
+                        <h6 class="fw-bold text-dark mb-3">{{ 'Transferencia' | translate }}</h6>
+
+                        <div class="mb-3">
+                            <label class="form-label small fw-semibold">{{ 'Tipo de Cuenta' | translate }} <span
+                                    class="text-danger">*</span></label>
+                            <div class="d-flex gap-2">
+                                <button type="button" class="btn btn-sm rounded-pill px-3 fw-medium"
+                                    [ngClass]="bankAccountType === 'Ahorro' ? 'btn-dark' : 'btn-outline-secondary'"
+                                    (click)="bankAccountType = 'Ahorro'">
+                                    {{ 'Ahorro' | translate }}
+                                </button>
+                                <button type="button" class="btn btn-sm rounded-pill px-3 fw-medium"
+                                    [ngClass]="bankAccountType === 'Corriente' ? 'btn-dark' : 'btn-outline-secondary'"
+                                    (click)="bankAccountType = 'Corriente'">
+                                    {{ 'Corriente' | translate }}
+                                </button>
                             </div>
-                    </div>
-                    </div>
-                    <!-- mostrar info tipo pago -->
-                    <div class="row" *ngIf="tipoSeleccionado">
-                        <div class="card">
-                            <div class="card-body">
+                        </div>
 
-                                <div class="row ">
-                                    <div class="col-xs-12 col-sm-6 col-md-6 ">
-                                        <div class="rbt-form-group">
-                                            <b>
-                                                {{'Tipo de Pago'|translate}}</b><br>
-                                            {{tipoSeleccionado.tipo}}
-                                        </div>
-                                    </div>
-                                    <br>
-                                    <div class="col-xs-12 col-sm-6 col-md-6 " *ngIf="tipoSeleccionado.email">
-                                        <div class="rbt-form-group">
-                                            <b>
-                                                Email</b><br>
-                                            {{tipoSeleccionado.email}}
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-6 col-md-6 " *ngIf="tipoSeleccionado.ciorif">
-                                        <div class="rbt-form-group">
-                                            <b>
-                                                {{'Ci/iD ó RIF'|translate}}</b><br>
-                                            {{tipoSeleccionado.ciorif}}
-                                        </div>
-                                    </div>
-                                    <br>
-                                    <div class="col-xs-12 col-sm-6 col-md-6 " *ngIf="tipoSeleccionado.phone">
-                                        <div class="rbt-form-group">
-                                            <b> {{'Teléfono'|translate}}</b><br>
-                                            {{tipoSeleccionado.phone}}
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-6 col-md-6 " *ngIf="tipoSeleccionado.bankName">
-                                        <div class="rbt-form-group">
-                                            <b> {{'Nombre del Banco'|translate}}</b><br>
-                                            {{tipoSeleccionado.bankName}}
-                                        </div>
-                                    </div>
-                                    <br>
-                                    <div class="col-xs-12 col-sm-6 col-md-6 " *ngIf="tipoSeleccionado.bankAccount">
-                                        <div class="rbt-form-group">
-                                            <b> {{'Num. de Cuenta'|translate}}</b><br>
-                                            {{tipoSeleccionado.bankAccount}}
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-6 col-md-6 " *ngIf="tipoSeleccionado.username">
-                                        <div class="rbt-form-group">
-                                            <b> {{'Nombre de Usuario'|translate}}</b><br>
-                                            {{tipoSeleccionado.username}}
-                                        </div>
-                                    </div>
-                                </div>
+                        <div class="mb-3">
+                            <label class="form-label small fw-semibold">{{ 'Num. de Cuenta' | translate }}</label>
+                            <input type="text" class="form-control rounded-3" [(ngModel)]="bankAccount"
+                                name="bankAccount">
+                        </div>
 
+                        <div class="row g-2 mb-3">
+                            <div class="col-12 col-sm-6">
+                                <label class="form-label small fw-semibold">{{ 'Nombre del Banco' | translate }}</label>
+                                <input type="text" class="form-control rounded-3" [(ngModel)]="bankName"
+                                    name="bankName">
+                            </div>
+                            <div class="col-12 col-sm-6">
+                                <label class="form-label small fw-semibold">{{ 'Ci/iD ó RIF' | translate }}</label>
+                                <input type="text" class="form-control rounded-3" [(ngModel)]="ciorif" name="ciorif">
                             </div>
                         </div>
                     </div>
-                    <div *ngIf="tipoSeleccionado">
-                        <button class="btn btn-primary btn-sm" (click)="tipoSeleccionado = null">{{'Regresar'|translate}}</button>
-                    </div>
-                    <!-- Start Profile Row  -->
 
-                    <!-- End Profile Row  -->
+                    <!-- 2. PAGO MÓVIL -->
+                    <div *ngIf="tipo === 'pagomovil'">
+                        <h6 class="fw-bold text-dark mb-3">Pago Móvil</h6>
+
+                        <div class="mb-3">
+                            <label class="form-label small fw-semibold">{{ 'Nombre del Banco' | translate }}</label>
+                            <input type="text" class="form-control rounded-3" [(ngModel)]="bankName" name="bankName">
+                        </div>
+
+                        <div class="row g-2 mb-3">
+                            <div class="col-12 col-sm-6">
+                                <label class="form-label small fw-semibold">{{ 'Ci o RIF' | translate }}</label>
+                                <input type="text" class="form-control rounded-3" [(ngModel)]="ciorif" name="ciorif">
+                            </div>
+                            <div class="col-12 col-sm-6">
+                                <label class="form-label small fw-semibold">{{ 'Télefono' | translate }}</label>
+                                <input type="tel" class="form-control rounded-3" [(ngModel)]="phone" name="phone">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 3. ZELLE -->
+                    <div *ngIf="tipo === 'zelle'">
+                        <h6 class="fw-bold text-dark mb-3">Zelle</h6>
+
+                        <div class="row g-2 mb-3">
+                            <div class="col-12 col-sm-6">
+                                <label class="form-label small fw-semibold">{{ 'Nombre del Banco' | translate }}</label>
+                                <input type="text" class="form-control rounded-3" [(ngModel)]="bankName"
+                                    name="bankName">
+                            </div>
+                            <div class="col-12 col-sm-6">
+                                <label class="form-label small fw-semibold">{{ 'Nombre de Usuario' | translate
+                                    }}</label>
+                                <input type="text" class="form-control rounded-3" [(ngModel)]="username"
+                                    name="username">
+                            </div>
+                        </div>
+
+                        <div class="row g-2 mb-3">
+                            <div class="col-12 col-sm-6">
+                                <label class="form-label small fw-semibold">Email</label>
+                                <input type="email" class="form-control rounded-3" [(ngModel)]="email" name="email">
+                            </div>
+                            <div class="col-12 col-sm-6">
+                                <label class="form-label small fw-semibold">{{ 'Ci/iD ó RIF' | translate }}</label>
+                                <input type="text" class="form-control rounded-3" [(ngModel)]="ciorif" name="ciorif">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 4. PAYPAL -->
+                    <div *ngIf="tipo === 'paypal'">
+                        <h6 class="fw-bold text-dark mb-3">PayPal</h6>
+
+                        <div class="mb-3">
+                            <label class="form-label small fw-semibold">Email</label>
+                            <input type="email" class="form-control rounded-3" [(ngModel)]="email" name="email">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label small fw-semibold">Client ID PayPal</label>
+                            <input type="text" class="form-control rounded-3" [(ngModel)]="clientIdPaypal"
+                                name="clientIdPaypal">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label small fw-semibold">Client Secret PayPal</label>
+                            <input type="password" class="form-control rounded-3" [(ngModel)]="clientSecret"
+                                name="clientSecret">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label small fw-semibold">{{ 'Modo' | translate }}</label>
+                            <div class="d-flex gap-2">
+                                <button type="button" class="btn btn-sm rounded-pill px-3 fw-medium"
+                                    [ngClass]="mode === 'sandbox' ? 'btn-warning text-dark' : 'btn-outline-secondary'"
+                                    (click)="mode = 'sandbox'">
+                                    {{ 'Sandbox (Pruebas)' | translate }}
+                                </button>
+                                <button type="button" class="btn btn-sm rounded-pill px-3 fw-medium"
+                                    [ngClass]="mode === 'live' ? 'btn-success' : 'btn-outline-secondary'"
+                                    (click)="mode = 'live'">
+                                    {{ 'Live (Producción)' | translate }}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 5. CHEQUE -->
+                    <div *ngIf="tipo === 'cheque'">
+                        <h6 class="fw-bold text-dark mb-3">{{ 'Cheque' | translate }}</h6>
+
+                        <div class="mb-3">
+                            <label class="form-label small fw-semibold">{{ 'Nombre del Titular' | translate }}</label>
+                            <input type="text" class="form-control rounded-3" [(ngModel)]="username" name="username">
+                        </div>
+                    </div>
+
+                    <div class="d-grid mt-4">
+                        <button type="submit" class="btn btn-primary btn-lg fw-semibold rounded-3 shadow-sm">
+                            <i class="fas fa-save me-2"></i>
+                            {{ (isEditMode ? 'Actualizar' : 'Guardar') | translate }}
+                        </button>
+                    </div>
+
+                </form>
+            </div>
         </div>
     </div>
+    <!-- COLUMNA DERECHA: LISTADO Y DETALLE -->
+    <div class="col-12 col-lg-7">
+        <div class="card border-0 shadow-sm rounded-4">
+            <div class="card-header bg-white border-bottom py-3 px-4 d-flex align-items-center justify-content-between">
+                <h5 class="fw-bold text-dark mb-0">Métodos Configurados</h5>
+                <span class="badge bg-primary-subtle text-primary rounded-pill px-3 py-1">
+                    {{ tiposdepagos?.length || 0 }} registrados
+                </span>
+            </div>
+
+            <div class="card-body p-3 p-md-4">
+                <app-loading *ngIf="isLoading"></app-loading>
+
+                <!-- Vista de detalle al pulsar el ojo -->
+                <div *ngIf="!isLoading && tipoSeleccionado" class="p-4 rounded-4 bg-light border mb-3">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h6 class="fw-bold text-primary mb-0 text-uppercase">{{ tipoSeleccionado.tipo }}</h6>
+                        <button type="button" class="btn btn-sm btn-outline-secondary rounded-3"
+                            (click)="tipoSeleccionado = null">
+                            <i class="fas fa-arrow-left me-1"></i> {{ 'Regresar' | translate }}
+                        </button>
+                    </div>
+
+                    <div class="row g-2 small">
+                        <div class="col-6" *ngIf="tipoSeleccionado.bankName"><strong>{{ 'Nombre del Banco' | translate
+                                }}:</strong> {{ tipoSeleccionado.bankName }}</div>
+                        <div class="col-6" *ngIf="tipoSeleccionado.bankAccount"><strong>{{ 'Num. de Cuenta' | translate
+                                }}:</strong> {{ tipoSeleccionado.bankAccount }}</div>
+                        <div class="col-6" *ngIf="tipoSeleccionado.username"><strong>{{ 'Nombre de Usuario' | translate
+                                }}:</strong> {{ tipoSeleccionado.username }}</div>
+                        <div class="col-6" *ngIf="tipoSeleccionado.ciorif"><strong>{{ 'Ci/iD ó RIF' | translate
+                                }}:</strong> {{ tipoSeleccionado.ciorif }}</div>
+                        <div class="col-6" *ngIf="tipoSeleccionado.phone"><strong>{{ 'Teléfono' | translate }}:</strong>
+                            {{ tipoSeleccionado.phone }}</div>
+                        <div class="col-6" *ngIf="tipoSeleccionado.email"><strong>Email:</strong> {{
+                            tipoSeleccionado.email }}</div>
+                    </div>
+                </div>
+
+                <!-- Tabla principal -->
+                <div *ngIf="!isLoading && !tipoSeleccionado" class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="table-light small text-uppercase text-muted">
+                            <tr>
+                                <th>{{ 'Tipo' | translate }}</th>
+                                <th>{{ 'Nombre' | translate }}</th>
+                                <th>{{ 'Status' | translate }}</th>
+                                <th>{{ 'Activar' | translate }}</th>
+                                <th class="text-end">{{ 'Opciones' | translate }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let tipodepago of tiposdepagos">
+                                <td class="fw-semibold text-dark">{{ tipodepago.tipo }}</td>
+                                <td class="text-secondary small">{{ tipodepago.bankName || tipodepago.username ||
+                                    tipodepago.email }}</td>
+                                <td>
+                                    <span class="badge rounded-pill px-3 py-1"
+                                        [ngClass]="tipodepago.status === 'Activo' ? 'bg-success-subtle text-success' : 'bg-danger-subtle text-danger'">
+                                        {{ tipodepago.status | translate }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <select class="form-select form-select-sm rounded-3" [(ngModel)]="tipodepago.status"
+                                        (change)="cambiarStatus(tipodepago)" style="width: 110px;">
+                                        <option value="Activo">{{ 'Activo' | translate }}</option>
+                                        <option value="Inactivo">{{ 'Inactivo' | translate }}</option>
+                                    </select>
+                                </td>
+                                <td class="text-end">
+                                    <div class="d-inline-flex gap-1">
+                                        <button type="button" class="btn btn-sm btn-outline-info rounded-3"
+                                            (click)="selectedType(tipodepago)" title="Ver detalle">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-sm btn-outline-warning rounded-3"
+                                            (click)="editPayment(tipodepago)" title="Editar">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-sm btn-outline-danger rounded-3"
+                                            (click)="deleteTipoPago(tipodepago)" title="Eliminar">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
 </div>
+
 <app-modal-instrucciones [info]="info" [sectionId]="'tiposdePago'" #instruccionesModal></app-modal-instrucciones>
