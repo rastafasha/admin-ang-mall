@@ -22,6 +22,8 @@
                             <tr>
                                 <th>{{'Cliente'|translate}}</th>
                                 <th>{{'Status'|translate}}</th>
+                                <th>{{'Fecha'|translate}}</th>
+                                <th>{{'Hora'|translate}}</th>
                                 <th>{{'Creación'|translate}}</th>
                                 <th class="text-nowrap" >{{'Acciones'|translate}}</th>
                             </tr>
@@ -41,6 +43,8 @@
 
                                     </div>
                                 </td>
+                                <td>{{ solicitud.fechaSolicitud | date:'MMM d, y' }}</td>
+                                <td>{{ solicitud.horaSolicitud  }}</td>
                                 <td>{{ solicitud.createdAt | date:'MMM d, y' }}</td>
                                 <td class="text-nowrap text-center">
                                  

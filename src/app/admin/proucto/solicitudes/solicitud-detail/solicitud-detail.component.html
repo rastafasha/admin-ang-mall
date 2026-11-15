@@ -32,6 +32,29 @@
             </div>
         </div>
     </div>
+    <!-- tiempo: Fecha y hora-->
+    <div class="bg-light p-4 border-bottom">
+        <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-3">
+            <div>
+                <small class="text-uppercase text-muted tracking-wider small fw-bold font-monospace d-block mb-1">
+                    {{ 'Fecha' | translate }}
+                </small>
+                <h4 class="mb-0 text-dark fw-bold">
+                    <i class="fas fa-user-circle me-2 text-secondary"></i>{{solicitudSelected?.fechaSolicitud}} 
+                </h4>
+            </div>
+            <div>
+                <small class="text-uppercase text-muted tracking-wider small fw-bold font-monospace d-block mb-1">
+                    {{ 'Hora' | translate }}
+                </small>
+                <h4 class="mb-0 text-dark fw-bold">
+                    <i class="fas fa-user-circle me-2 text-secondary"></i>{{solicitudSelected?.horaSolicitud}} 
+                </h4>
+            </div>
+            
+            
+        </div>
+    </div>
 
     <!-- CUERPO: Listado de Ítems del Pedido -->
     <div class="card-body p-4 bg-light bg-opacity-25">
