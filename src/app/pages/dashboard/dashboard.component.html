@@ -236,49 +236,81 @@
                     </div>
                 </div>
                 <!-- tasas -->
-                <div class="row" *ngIf="mostrarTasas === true">
+                <div class="row mb-4" *ngIf="mostrarTasas === true">
                     <!-- dollar -->
-                    <div class="col">
-                        <div class="card">
-                            <div class="card-body" style="padding-bottom: 12px;">
-                                <div class="d-flex align-items-center mx-auto py-3 px-3"
-                                    style="padding: 0px !important;">
-                                    <div class="display-2 font-weight-normal border-color mr-4">
-                                        <a routerLink="tasadollarbcv">
-                                            <span class="fa fa-dollar"></span>
-                                        </a>
-                                    </div>
-                                    <div class="infotasa ">
-                                        <h6 style="margin-bottom: 0px;">
-                                            {{'Tasa Dollar BCV'| translate}}
-                                        </h6>
-                                        <p>Bs.{{tasadollar?.precio_dia}}</p>
+                    <div class="col-xs-12 col-sm-6">
+                        <div class="card border-0 shadow-sm rounded-3 h-100">
+                            <div class="card-body p-3 d-flex align-items-center justify-content-between">
+
+                                <!-- Bloque izquierdo: Icono + Título y Precio -->
+                                <div class="d-flex align-items-center gap-3">
+                                    <!-- Icono encuadrado en verde suave -->
+                                    <a routerLink="tasadollarbcv"
+                                        class="bg-success bg-opacity-10 text-success rounded-3 d-flex align-items-center justify-content-center text-decoration-none flex-shrink-0"
+                                        style="width: 54px; height: 54px;" title="Actualizar tasa">
+                                        <i class="fas fa-dollar fs-3"></i>
+                                    </a>
+
+                                    <!-- Información de la tasa -->
+                                    <div>
+                                        <span class="text-muted small text-uppercase fw-bold d-block"
+                                            style="letter-spacing: 0.5px;">
+                                            {{ 'Tasa Dollar BCV' | translate }}
+                                        </span>
+                                        <h3 class="mb-0 fw-bold text-dark">
+                                            <span class="fs-6 text-muted fw-normal me-1">Bs.</span>{{
+                                            (tasadollar?.precio_dia || 0) | number:'1.2-2' }}
+                                        </h3>
                                     </div>
                                 </div>
-                            </div>
 
+                                <!-- Botón derecho sutil para ir a editar/ver historial -->
+                                <a routerLink="tasadollarbcv"
+                                    class="btn btn-sm btn-light border text-secondary rounded-circle d-flex align-items-center justify-content-center"
+                                    style="width: 34px; height: 34px;" title="Gestionar tasa">
+                                    <i class="fas fa-pencil"></i>
+                                </a>
+
+                            </div>
                         </div>
                     </div>
+
                     <!-- euro -->
-                    <div class="col">
-                        <div class="card">
-                            <div class="card-body" style="padding-bottom: 12px;">
-                                <div class="d-flex align-items-center mx-auto py-3 px-3"
-                                    style="padding: 0px !important;">
-                                    <div class="display-2 font-weight-normal border-color mr-4">
-                                        <a routerLink="tasaeurobcv">
-                                            <span class="fa fa-euro"></span>
-                                        </a>
-                                    </div>
-                                    <div class="infotasa ">
-                                        <h6 style="margin-bottom: 0px;">
-                                            {{'Tasa Euro BCV'| translate}}
-                                        </h6>
-                                        <p>Bs.{{tasaeuro?.precio_dia}}</p>
+                      <!-- dollar -->
+                    <div class="col-xs-12 col-sm-6">
+                        <div class="card border-0 shadow-sm rounded-3 h-100">
+                            <div class="card-body p-3 d-flex align-items-center justify-content-between">
+
+                                <!-- Bloque izquierdo: Icono + Título y Precio -->
+                                <div class="d-flex align-items-center gap-3">
+                                    <!-- Icono encuadrado en verde suave -->
+                                    <a routerLink="tasaeurobcv"
+                                        class="bg-success bg-opacity-10 text-success rounded-3 d-flex align-items-center justify-content-center text-decoration-none flex-shrink-0"
+                                        style="width: 54px; height: 54px;" title="Actualizar tasa">
+                                        <i class="fas fa-dollar fs-3"></i>
+                                    </a>
+
+                                    <!-- Información de la tasa -->
+                                    <div>
+                                        <span class="text-muted small text-uppercase fw-bold d-block"
+                                            style="letter-spacing: 0.5px;">
+                                            {{ 'Tasa Euro BCV' | translate }}
+                                        </span>
+                                        <h3 class="mb-0 fw-bold text-dark">
+                                            <span class="fs-6 text-muted fw-normal me-1">Bs.</span>{{
+                                            (tasaeuro?.precio_dia || 0) | number:'1.2-2' }}
+                                        </h3>
                                     </div>
                                 </div>
-                            </div>
 
+                                <!-- Botón derecho sutil para ir a editar/ver historial -->
+                                <a routerLink="tasaeurobcv"
+                                    class="btn btn-sm btn-light border text-secondary rounded-circle d-flex align-items-center justify-content-center"
+                                    style="width: 34px; height: 34px;" title="Gestionar tasa">
+                                    <i class="fas fa-pencil"></i>
+                                </a>
+
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -305,123 +337,263 @@
                         </div>
                     </div>
 
+                    <!-- Ultimas ventas -->
                     <div class="col-xs-12 col-sm-6">
-                        <div class="card p-2">
-                            <h3 class="widget-title"> {{'Ultimas ventas'| translate}} &nbsp; <a style="cursor: pointer;"
-                                    class="ml-2" (click)="data_ventas()"><span class="czi-compare"></span></a>
-                            </h3>
-                            <div class="card-body" style="max-height: 520px;  overflow-y: auto;">
-                                <div class="widget">
+                        <div class="card border-0 shadow-sm rounded-3 overflow-hidden h-100">
 
-                                    <!-- Item -->
-                                    <div class="media align-items-center pb-2 border-bottom "
-                                        style="display: flex; gap:10px" *ngFor="let item of last_sellers">
-                                        <a class="d-block mr-2" *ngIf="item.producto">
-                                            <img width="64" [src]="item.producto.img | imagenPipe: 'productos' "
-                                                alt="Product" />
+                            <!-- Encabezado moderno a juego con la tarjeta anterior -->
+                            <div
+                                class="card-header bg-white border-bottom py-3 d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0 fw-bold text-dark">
+                                    <i class="fa fa-shopping-bag text-primary me-2"></i> {{'Ultimas ventas' |
+                                    translate}}
+                                </h5>
+                                <button type="button" class="btn btn-sm btn-light border text-secondary"
+                                    (click)="data_ventas()" title="Actualizar ventas">
+                                    <span class="czi-compare"></span>
+                                </button>
+                            </div>
+
+                            <!-- Cuerpo con scroll suave y altura alineada -->
+                            <div class="card-body p-0" style="max-height: 520px; overflow-y: auto;">
+
+                                <!-- Mensaje si no hay ventas recientes -->
+                                <div *ngIf="!last_sellers || last_sellers.length === 0"
+                                    class="text-center text-muted py-5">
+                                    <i class="fa fa-inbox d-block fs-2 mb-2 text-secondary"></i>
+                                    <span>{{'No hay ventas recientes' | translate}}</span>
+                                </div>
+
+                                <!-- Lista de productos vendidos -->
+                                <ul class="list-group list-group-flush" *ngIf="last_sellers && last_sellers.length > 0">
+                                    <li class="list-group-item p-3 d-flex align-items-center gap-3"
+                                        *ngFor="let item of last_sellers">
+
+                                        <!-- Miniatura encuadrada con borde suave -->
+                                        <a class="flex-shrink-0 border rounded p-1 bg-light d-flex align-items-center justify-content-center"
+                                            *ngIf="item.producto" style="width: 64px; height: 64px;">
+                                            <img [src]="item.producto.img | imagenPipe: 'productos'" alt="Product"
+                                                class="img-fluid rounded"
+                                                style="max-height: 56px; object-fit: contain;" />
                                         </a>
-                                        <div class="media-body">
-                                            <h6 class="card-title pt-4" *ngIf="item.producto"
-                                                style="font-size: 15.2px;margin-bottom: 0px;">
+
+                                        <!-- Información central -->
+                                        <div class="flex-grow-1 min-w-0">
+                                            <h6 class="mb-1 fw-bold text-dark text-truncate" *ngIf="item.producto"
+                                                style="font-size: 15px;">
                                                 {{ translate.currentLang === 'en' ?
-                                                item.producto?.titulo?.en?.substring(0,30) :
-                                                item.producto?.titulo?.es?.substring(0,30) }}...
+                                                (item.producto?.titulo?.en || item.producto?.titulo?.es) :
+                                                item.producto?.titulo?.es }}
                                             </h6>
 
-                                            <div class="font-size-sm">
-                                                <span class="text-muted mr-2">{{'Cantidad'|
-                                                    translate}}:</span>{{item.cantidad}}
-                                            </div>
-                                            <div class="font-size-sm" *ngIf="item.producto"><span
-                                                    class="text-muted mr-2">{{item.producto.nombre_selector}}:</span>{{item.selector}}
-                                            </div>
-                                            <div class="font-size-sm"><span class="text-muted mr-2">{{'Color'|
-                                                    translate}}:</span>
-                                                <span [ngStyle]="{'background': item.color,'color': item.color}"
-                                                    style="font-weight: 900;">||||||||||||||||||||</span>
-                                            </div>
+                                            <!-- Etiquetas de Cantidad, Selector y Color en una misma línea limpia -->
+                                            <div
+                                                class="d-flex flex-wrap align-items-center gap-2 small text-muted mb-1">
 
-                                            <div class="font-size-sm">
-                                                <span class="text-muted mr-2"> {{'Precio unitario'|
-                                                    translate}}:</span>{{item.precio | currency:tienda_moneda}}
+                                                <!-- Cantidad -->
+                                                <span class="badge bg-light text-dark border">
+                                                    {{'Cantidad' | translate}}: <strong>{{item.cantidad}}</strong>
+                                                </span>
+
+                                                <!-- Selector (solo se muestra si no es vacío) -->
+                                                <span class="badge bg-light text-secondary border"
+                                                    *ngIf="item.producto?.nombre_selector && item.selector">
+                                                    {{item.producto.nombre_selector}}:
+                                                    <strong>{{item.selector}}</strong>
+                                                </span>
+
+                                                <!-- Círculo de color elegante (reemplaza las barras ||||) -->
+                                                <span
+                                                    class="d-inline-flex align-items-center gap-1 border rounded px-2 py-0 bg-white"
+                                                    *ngIf="item.color">
+                                                    <span>{{'Color' | translate}}:</span>
+                                                    <span class="rounded-circle border"
+                                                        [ngStyle]="{'background-color': item.color}"
+                                                        style="width: 12px; height: 12px; display: inline-block;">
+                                                    </span>
+                                                </span>
+
                                             </div>
-
-
-
                                         </div>
-                                    </div>
 
+                                        <!-- Precio Unitario destacado a la derecha -->
+                                        <div class="text-end flex-shrink-0">
+                                            <span class="d-block small text-muted" style="font-size: 11px;">{{'Precio
+                                                unitario' | translate}}</span>
+                                            <span class="fw-bold text-success fs-6">{{item.precio |
+                                                currency:tienda_moneda}}</span>
+                                        </div>
+
+                                    </li>
+                                </ul>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Resumen General -->
+                    <div class="col-xs-12 col-sm-6">
+                        <div class="card border-0 shadow-sm rounded-3 overflow-hidden">
+
+                            <!-- Encabezado con título claro y resumen principal -->
+                            <div
+                                class="card-header bg-white border-bottom py-3 d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0 fw-bold text-dark">
+                                    <i class="fas fa-chart-bar text-primary me-2"></i> {{'Resumen General' | translate}}
+                                </h5>
+                                <span class="badge bg-light text-secondary border px-2 py-1">
+                                    {{current_month | translate}}
+                                </span>
+                            </div>
+
+                            <!-- Bloque destacado para el Total Ganado -->
+                            <div class="p-3 bg-light border-bottom d-flex justify-content-between align-items-center">
+                                <div>
+                                    <span class="text-muted small text-uppercase fw-bold d-block">{{'Total ganado' |
+                                        translate}}</span>
+                                    <h3 class="mb-0 fw-bold text-success">{{dinero_ganado | currency:tienda_moneda}}
+                                    </h3>
+                                </div>
+                                <div class="bg-success bg-opacity-10 text-success rounded-circle d-flex align-items-center justify-content-center"
+                                    style="width: 48px; height: 48px;">
+                                    <!-- <i class="fas fa-dollar-sign"></i> -->
+                                    <i class="fas fa-money-bill fs-4"></i>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="col-xs-12 col-sm-6">
-                        <div class="card">
-                            <div class="card-header">
 
+                            <!-- Lista de métricas secundarias -->
+                            <div class="card-body p-0">
+                                <ul class="list-group list-group-flush">
+
+                                    <!-- Mes actual (con tendencia) -->
+                                    <li
+                                        class="list-group-item d-flex justify-content-between align-items-center py-2 px-3">
+                                        <div class="d-flex align-items-center">
+                                            <span class="badge bg-primary bg-opacity-10 text-primary p-2 me-3 rounded">
+                                                <i class="fas fa-calendar"></i>
+                                            </span>
+                                            <span class="text-dark">{{'Mes actual' | translate}}</span>
+                                        </div>
+                                        <div class="text-end">
+                                            <span class="fw-bold text-dark me-2">{{total_mes |
+                                                currency:tienda_moneda}}</span>
+                                            <span *ngIf="total_mes > total_ganado_ant"
+                                                class="badge bg-success bg-opacity-10 text-success">
+                                                <i class="fas fa-caret-up"></i>
+                                            </span>
+                                            <span *ngIf="total_mes <= total_ganado_ant"
+                                                class="badge bg-danger bg-opacity-10 text-danger">
+                                                <i class="fas fa-caret-down"></i>
+                                            </span>
+                                        </div>
+                                    </li>
+
+                                    <!-- Mes anterior -->
+                                    <li
+                                        class="list-group-item d-flex justify-content-between align-items-center py-2 px-3">
+                                        <div class="d-flex align-items-center">
+                                            <span
+                                                class="badge bg-secondary bg-opacity-10 text-secondary p-2 me-3 rounded">
+                                                <i class="fas fa-history"></i>
+                                            </span>
+                                            <span class="text-muted">{{'Mes anterior' | translate}}</span>
+                                        </div>
+                                        <span class="fw-bold text-secondary">{{total_ganado_ant |
+                                            currency:tienda_moneda}}</span>
+                                    </li>
+
+                                    <!-- Ventas totales -->
+                                    <li
+                                        class="list-group-item d-flex justify-content-between align-items-center py-2 px-3">
+                                        <div class="d-flex align-items-center">
+                                            <span class="badge bg-info bg-opacity-10 text-info p-2 me-3 rounded">
+                                                <i class="fas fa-shopping-bag"></i>
+                                            </span>
+                                            <span class="text-dark">{{'Ventas totales' | translate}}</span>
+                                        </div>
+                                        <span class="fw-bold text-dark">{{num_ventas}}</span>
+                                    </li>
+
+                                    <!-- Ventas mes actual (con tendencia) -->
+                                    <li
+                                        class="list-group-item d-flex justify-content-between align-items-center py-2 px-3">
+                                        <div class="d-flex align-items-center">
+                                            <span class="badge bg-warning bg-opacity-10 text-warning p-2 me-3 rounded">
+                                                <i class="fas fa-line-chart"></i>
+                                            </span>
+                                            <span class="text-dark">{{'Ventas' | translate}} {{current_month |
+                                                translate}}</span>
+                                        </div>
+                                        <div class="text-end">
+                                            <span class="fw-bold text-dark me-2">{{total_ventas}}</span>
+                                            <span *ngIf="total_ventas > total_ventas_ant"
+                                                class="badge bg-success bg-opacity-10 text-success">
+                                                <i class="fas fa-caret-up"></i>
+                                            </span>
+                                            <span *ngIf="total_ventas <= total_ventas_ant"
+                                                class="badge bg-danger bg-opacity-10 text-danger">
+                                                <i class="fas fa-caret-down"></i>
+                                            </span>
+                                        </div>
+                                    </li>
+
+                                    <!-- Ventas mes anterior -->
+                                    <li
+                                        class="list-group-item d-flex justify-content-between align-items-center py-2 px-3">
+                                        <div class="d-flex align-items-center">
+                                            <span
+                                                class="badge bg-secondary bg-opacity-10 text-secondary p-2 me-3 rounded">
+                                                <i class="fas fa-clock-o"></i>
+                                            </span>
+                                            <span class="text-muted">{{'Ventas' | translate}} {{last_month |
+                                                translate}}</span>
+                                        </div>
+                                        <span class="fw-bold text-secondary">{{total_ventas_ant}}</span>
+                                    </li>
+
+                                    <!-- Productos -->
+                                    <li
+                                        class="list-group-item d-flex justify-content-between align-items-center py-2 px-3">
+                                        <div class="d-flex align-items-center">
+                                            <span class="badge bg-dark bg-opacity-10 text-dark p-2 me-3 rounded">
+                                                <i class="fas fa-cubes"></i>
+                                            </span>
+                                            <span class="text-dark">{{'Productos' | translate}}</span>
+                                        </div>
+                                        <span class="fw-bold text-dark">{{num_productos}}</span>
+                                    </li>
+
+                                    <!-- Usuarios mes actual -->
+                                    <li
+                                        class="list-group-item d-flex justify-content-between align-items-center py-2 px-3">
+                                        <div class="d-flex align-items-center">
+                                            <span class="badge bg-primary bg-opacity-10 text-primary p-2 me-3 rounded">
+                                                <i class="fas fa-users"></i>
+                                            </span>
+                                            <span class="text-dark">{{'Usuarios' | translate}} {{current_month |
+                                                translate}}</span>
+                                        </div>
+                                        <span class="fw-bold text-dark">{{num_user}}</span>
+                                    </li>
+
+                                    <!-- Regeneraciones / Comentarios -->
+                                    <li
+                                        class="list-group-item d-flex justify-content-between align-items-center py-2 px-3">
+                                        <div class="d-flex align-items-center">
+                                            <span class="badge bg-info bg-opacity-10 text-info p-2 me-3 rounded">
+                                                <i class="fas fa-comments"></i>
+                                            </span>
+                                            <span class="text-dark">{{'Regeneraciones' | translate}} {{current_month |
+                                                translate}}</span>
+                                        </div>
+                                        <span class="fw-bold text-dark">{{num_comentarios}}</span>
+                                    </li>
+
+                                </ul>
                             </div>
-                            <table class="table">
-                                <thead class="thead-dark table-bordered table-sm ">
-                                    <tr>
-                                        <th class="text-center"> {{'Dato'| translate}}</th>
-                                        <th class="text-center"> {{'Valor'| translate}}</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td> {{'Total ganado'| translate}}</td>
-                                        <td class="text-center">{{dinero_ganado | currency:tienda_moneda}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>{{'Mes anterior'| translate}}</td>
-                                        <td class="text-center">{{total_ganado_ant | currency:tienda_moneda}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>{{'Mes actual'| translate}}</td>
-                                        <td class="text-center" *ngIf="total_mes > total_ganado_ant">{{total_mes |
-                                            currency:tienda_moneda}}
-                                            <i class="fa fa-caret-up text-success"></i>
-                                        </td>
-                                        <td class="text-center" *ngIf="total_mes <= total_ganado_ant">{{total_mes |
-                                            currency:tienda_moneda}}
-                                            <i class="fa fa-caret-down text-danger"></i>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>{{'Productos'| translate}}</td>
-                                        <td class="text-center">{{num_productos}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>{{'Ventas totales'| translate}}</td>
-                                        <td class="text-center">{{num_ventas}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>{{'Ventas '| translate}} {{current_month| translate}}</td>
-                                        <td class="text-center" *ngIf="total_ventas > total_ventas_ant">{{total_ventas
-                                            }}
-                                            <i class="fa fa-caret-up text-success"></i>
-                                        </td>
-                                        <td class="text-center" *ngIf="total_ventas <= total_ventas_ant">
-                                            {{total_ventas}}
-                                            <i class="fa fa-caret-down text-danger"></i>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>{{'Ventas'| translate}} {{last_month | translate}}</td>
-                                        <td class="text-center">{{total_ventas_ant}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>{{'Usuarios'| translate}} {{current_month | translate}}</td>
-                                        <td class="text-center">{{num_user}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>{{'Regeneraciones'| translate}} {{current_month | translate}}</td>
-                                        <td class="text-center">{{num_comentarios}}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>

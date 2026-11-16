@@ -1,38 +1,82 @@
 <div class="col">
-    <div class="card">
-        <h3>{{title}}</h3>
-        <div class="card-body" style="max-height: 320px; overflow-y: auto;">
-            <div class="widget">
-                <!-- Item -->
-                <div class="media align-items-center pb-2 border-bottom " style="display: flex; gap:10px"
-                    *ngFor="let item of collection">
-                    <a class="d-block mr-2">
-                        <img width="64" [src]="item.img | imagenPipe: 'productos' " alt="Product" />
-                    </a>
-                    <div class="media-body">
-                        <h6 class="card-title pt-4" style="font-size: 15.2px; margin-bottom: 0px;">
-                            {{ translate.currentLang === 'en' ? item?.titulo?.en?.substring(0,30) :
-                            item?.titulo?.es?.substring(0,30) }}...
-                        </h6>
-                        <div class="font-size-sm">
-                            <span class="text-muted mr-2">{{'Subcategoria'}}:</span>
-                            {{ item?.subcategoria?.[translate.currentLang] }}
-                        </div>
-                        <div class="font-size-sm"><span class="text-muted mr-2">{{'Stock'}}:</span>{{item.stock}}
-                        </div>
-                        <div class="font-size-sm"><span class="text-muted mr-2">{{'SKU'}}:</span>{{item.sku}}
-                        </div>
+    <div class="card border-0 shadow-sm rounded-3 overflow-hidden h-100">
 
-                        <div class="font-size-sm">
-                            <span class="text-muted mr-2"> {{'Precio unitario'}}:</span>${{item.precio_ahora}}
-                        </div>
+        <!-- Encabezado dinámico con icono y contador -->
+        <div class="card-header bg-white border-bottom py-3 d-flex justify-content-between align-items-center">
+            <h5 class="mb-0 fw-bold text-dark d-flex align-items-center gap-2">
+                <!-- Icono dinámico según el título -->
+                <i class="fa fa-trophy text-warning" *ngIf="title === 'Best Sellers'"></i>
+                <i class="fa fa-star text-warning" *ngIf="title === 'Populares'"></i>
+                <i class="fa fa-shopping-cart text-primary"
+                    *ngIf="title !== 'Best Sellers' && title !== 'Populares'"></i>
+                <span>{{ title | translate }}</span>
+            </h5>
+            <span class="badge bg-light text-secondary border">
+                {{ collection?.length || 0 }}
+            </span>
+        </div>
 
+        <!-- Cuerpo con scroll suave -->
+        <div class="card-body p-0" style="max-height: 360px; overflow-y: auto;">
 
-
-                    </div>
-                </div>
-
+            <!-- Estado vacío -->
+            <div *ngIf="!collection || collection.length === 0" class="text-center text-muted py-5">
+                <i class="fa fa-box-open d-block fs-2 mb-2 text-secondary"></i>
+                <span>{{ 'No hay productos en esta lista' | translate }}</span>
             </div>
+
+            <!-- Lista de productos -->
+            <ul class="list-group list-group-flush" *ngIf="collection && collection.length > 0">
+                <li class="list-group-item p-3 d-flex align-items-center gap-3" *ngFor="let item of collection">
+
+                    <!-- Miniatura encuadrada de 64x64px -->
+                    <a class="flex-shrink-0 border rounded p-1 bg-light d-flex align-items-center justify-content-center"
+                        style="width: 64px; height: 64px;">
+                        <img [src]="item.img | imagenPipe: 'productos'" alt="Product" class="img-fluid rounded"
+                            style="max-height: 56px; object-fit: contain;" />
+                    </a>
+
+                    <!-- Información central del producto -->
+                    <div class="flex-grow-1 min-w-0">
+                        <h6 class="mb-1 fw-bold text-dark text-truncate" style="font-size: 15px;">
+                            {{ translate.currentLang === 'en' ?
+                            (item?.titulo?.en || item?.titulo?.es) :
+                            item?.titulo?.es }}
+                        </h6>
+
+                        <!-- Etiquetas de Subcategoría, SKU y Stock -->
+                        <div class="d-flex flex-wrap align-items-center gap-2 small text-muted">
+
+                            <!-- Subcategoría (soporta string directo o bilingüe) -->
+                            <span class="badge bg-light text-secondary border" *ngIf="item?.subcategoria">
+                                {{ item.subcategoria?.[translate.currentLang] || item.subcategoria }}
+                            </span>
+
+                            <!-- SKU -->
+                            <span class="badge bg-light text-muted border text-monospace" *ngIf="item?.sku">
+                                SKU: {{ item.sku }}
+                            </span>
+
+                            <!-- Stock con color dinámico según disponibilidad -->
+                            <span class="badge border" [ngClass]="item.stock > 5 ? 'bg-success bg-opacity-10 text-success border-success' : 
+                                             (item.stock > 0 ? 'bg-warning bg-opacity-10 text-warning border-warning' : 
+                                                               'bg-danger bg-opacity-10 text-danger border-danger')">
+                                {{ 'Stock' | translate }}: <strong>{{ item.stock }}</strong>
+                            </span>
+
+                        </div>
+                    </div>
+
+                    <!-- Precio destacado a la derecha -->
+                    <div class="text-end flex-shrink-0">
+                        <span class="d-block small text-muted" style="font-size: 11px;">{{ 'Precio' | translate
+                            }}</span>
+                        <span class="fw-bold text-success fs-6">${{ item.precio_ahora | number:'1.2-2' }}</span>
+                    </div>
+
+                </li>
+            </ul>
+
         </div>
     </div>
 </div>
