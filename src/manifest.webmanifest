@@ -1,7 +1,7 @@
 {
     "name": "Zlipmenu Admin",
     "short_name": "Zlipmenu Admin",
-    "theme_color": "#1976d2",
+    "theme_color": "#020673",
     "background_color": "#fafafa",
     "display": "fullscreen",
     "scope": "./",
