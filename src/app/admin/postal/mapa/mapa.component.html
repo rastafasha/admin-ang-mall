@@ -103,11 +103,11 @@
             </div>
             <div class="d-flex justify-content-between align-content-between">
                 <span class="text-secondary fw-bold">En Ruta:</span>
-                <span class="badge bg-primary fs-6 px-3">2</span>
+                <span class="badge bg-primary fs-6 px-3">{{driversEnRuta}}</span>
             </div>
             <div class="d-flex justify-content-between align-content-between">
                 <span class="text-secondary fw-bold">Disponibles:</span>
-                <span class="badge bg-success fs-6 px-3">3</span>
+                <span class="badge bg-success fs-6 px-3">{{driversDisponibles}}</span>
             </div>
         </div>
     </div>
@@ -138,29 +138,37 @@
 
     <!-- 📍 TARJETA 3: Tracking de Coordenadas y Botón de WhatsApp -->
      <app-skeleton-loader *ngIf="cargandoMonitoreo" [rows]="3" [columns]="1"></app-skeleton-loader>
-    <div class="cardo p-3 text-start" style=" overflow-y: auto;" *ngIf="!cargandoMonitoreo">
-        <h4 class="fw-bold border-bottom pb-2" style="color: #333;">📍 Monitoreo de Punto</h4>
-        
-        <!-- Si el administrador hizo clic en un conductor de la Tarjeta 2, se activa este bloque -->
-        <div *ngIf="driverPosition; else seleccionarPrompt" class="mt-3">
-            <p class="mb-1 text-muted small fw-bold">Coordenadas en Tiempo Real (Caracas):</p>
-            <div class="bg-light p-2 rounded text-monospace small mb-3 border font-weight-bold" style="background-color: #f8f9fa;">
-                📌 {{ driverPosition.lat.toFixed(6) }}, {{ driverPosition.lng.toFixed(6) }}
-            </div>
-            
-            <button class="btn btn-success w-100 fw-bold shadow-sm d-flex align-items-center justify-content-center gap-2" (click)="shareCoordinates()">
-                <i class="fa fa-whatsapp fs-5"></i> Escribir a Repartidor
-            </button>
-        </div>
+    <div class="cardo p-3 text-start" style="overflow-y: auto;" *ngIf="!cargandoMonitoreo">
+    <h4 class="fw-bold border-bottom pb-2" style="color: #333;">📍 Monitoreo de Punto</h4>
+    
+    <!-- Se activa SOLO cuando haces clic en un conductor -->
+    <div *ngIf="conductorSeleccionado; else seleccionarPrompt" class="mt-3">
+        <p class="mb-1 fw-bold text-primary">
+            🛵 {{ conductorSeleccionado.user?.first_name || 'Conductor' }}
+        </p>
 
-        <!-- Si todavía no han seleccionado a ningún chofer de la lista -->
-        <ng-template #seleccionarPrompt>
-            <div class="text-center text-muted py-4 small mt-2">
-                <i class="fa fa-info-circle d-block fs-2 mb-2 text-secondary"></i>
-                Haz clic en un conductor de la lista central para ver su rastreo exacto en vivo.
-            </div>
-        </ng-template>
+        <p class="mb-1 text-muted small fw-bold">Coordenadas en Tiempo Real:</p>
+        <div *ngIf="driverPosition" class="bg-light p-2 rounded text-monospace small mb-3 border font-weight-bold">
+            📌 {{ driverPosition.lat.toFixed(6) }}, {{ driverPosition.lng.toFixed(6) }}
+        </div>
+        <div *ngIf="!driverPosition" class="alert alert-warning py-2 small mb-3">
+            ⚠️ Este conductor aún no transmite ubicación GPS.
+        </div>
+        
+        <button class="btn btn-success w-100 fw-bold shadow-sm d-flex align-items-center justify-content-center gap-2" 
+                (click)="contactarRepartidorWhatsApp()">
+            <i class="fa fa-whatsapp fs-5"></i> Escribir a Repartidor
+        </button>
     </div>
+
+    <!-- Mensaje inicial antes de seleccionar -->
+    <ng-template #seleccionarPrompt>
+        <div class="text-center text-muted py-4 small mt-2">
+            <i class="fa fa-info-circle d-block fs-2 mb-2 text-secondary"></i>
+            Haz clic en un conductor de la lista central para ver su rastreo exacto en vivo.
+        </div>
+    </ng-template>
+</div>
 
 </div>
 

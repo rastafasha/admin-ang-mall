@@ -38,7 +38,7 @@
                             </div>
                         </div>
                     </div>
-                 
+
                     <!-- notificaciones -->
                     <div class="col-xs-12 col-sm-4">
                         <!-- subcribirse a notificaciones-->
@@ -162,10 +162,10 @@
 
                 </div>
                 <!-- resumen mercadolibre -->
-                   <div class="col-xs-12 " *ngIf="tienda.usaMercadoLibre === true">
-                        <app-bar-chart *ngIf="estadisticasMeli" [estadisticas]="estadisticasMeli" chartId="barChartMeli"> </app-bar-chart>
-
-                    </div>
+                <div class="col-xs-12 " *ngIf="usaMercadoLibre === true">
+                    <app-bar-chart *ngIf="estadisticasMeli" [estadisticas]="estadisticasMeli" chartId="barChartMeli">
+                    </app-bar-chart>
+                </div>
                 <!-- accesos tienda -->
                 <div class="row">
                     <!-- productos -->
@@ -284,30 +284,33 @@
                 </div>
                 <!-- comportamiento ventas productos -->
                 <div class="row">
-                    <div class="col-lg-12 form-group">
-                        <div class="row">
-                            <div class="col-xs-12 col-sm-6">
-                                <div class="card p-2">
-                                    <app-produc-list-featured [bestsellers]="bestsellers"></app-produc-list-featured>
+                    <!-- bestSellers -->
+                    <div class="col-xs-12 col-sm-6" *ngIf="bestSellers?.length > 0">
+                        <div class="card p-2">
+                            <app-produc-list-featured [bestsellers]="bestsellers"></app-produc-list-featured>
 
-                                </div>
-                            </div>
-                            <div class="col-xs-12 col-sm-6">
-                                <div class="card p-2">
-                                    <app-produc-list-featured [populares]="populares"></app-produc-list-featured>
+                        </div>
+                    </div>
+                    <!-- populares -->
+                    <div class="col-xs-12 col-sm-6" *ngIf="populares?.length > 0">
+                        <div class="card p-2">
+                            <app-produc-list-featured [populares]="populares"></app-produc-list-featured>
 
-                                </div>
-                            </div>
+                        </div>
+                    </div>
+                    <!-- productosML usaMercadoLibre -->
+                    <div class="col-xs-12 col-sm-6 " *ngIf="usaMercadoLibre === true">
+                        <div class="card p-2">
+                            <app-produc-list-featured [productosML]="productosML"></app-produc-list-featured>
                         </div>
                     </div>
 
-                    <div class="col">
+                    <div class="col-xs-12 col-sm-6">
                         <div class="card p-2">
                             <h3 class="widget-title"> {{'Ultimas ventas'| translate}} &nbsp; <a style="cursor: pointer;"
                                     class="ml-2" (click)="data_ventas()"><span class="czi-compare"></span></a>
                             </h3>
-                            <div class="card-body" style="max-height: 520px;
-                        overflow-y: auto;">
+                            <div class="card-body" style="max-height: 520px;  overflow-y: auto;">
                                 <div class="widget">
 
                                     <!-- Item -->
@@ -352,7 +355,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col">
+                    <div class="col-xs-12 col-sm-6">
                         <div class="card">
                             <div class="card-header">
 

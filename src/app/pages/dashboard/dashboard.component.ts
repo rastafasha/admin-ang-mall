@@ -32,8 +32,11 @@ export class DashboardComponent implements OnInit {
   public isLoadingSwitch: boolean = false; // Controla la carga general de las métricas del dashboard
 
 
-  public bestsellers: Producto[] = [];
-  public populares: Producto[] = [];
+  public bestsellers: any[] = [];
+public populares: any[] = [];
+
+public productosML: any[] = [];
+public cargandoML = false;
 
   public total_mes = 0;
   public total_ventas = 0;
@@ -109,6 +112,7 @@ export class DashboardComponent implements OnInit {
   public tasaeuro;
   mostrarTasas:boolean;
   estadisticasMeli: any;
+  usaMercadoLibre = false;
 
   
 
@@ -513,6 +517,7 @@ export class DashboardComponent implements OnInit {
       this.tienda = resp;
       this.mostrarTasas = this.tienda.mostrarTasas;
       this.tienda_moneda = this.tienda.moneda;
+      this.usaMercadoLibre = this.tienda.usaMercadoLibre;
       this.getResumenMl();
     })
   }
@@ -533,35 +538,95 @@ export class DashboardComponent implements OnInit {
       }
     );
   }
+
   getProductsBstSll() {
-    if (this.usuario.role === 'SUPERADMIN') {
-      this._productoService.best_seller().subscribe((resp: any) => {
-        this.bestsellers = resp.data;
-      });
-    }
+  if (!this.usuario) return; // Evita errores si usuario aún no carga
 
-    if (this.usuario.role === 'ADMIN' || this.usuario.role === 'VENTAS') {
-      this._productoService.best_sellerLocal(this.usuario.local).subscribe((resp: any) => {
-        this.bestsellers = resp.data;
-      });
-    }
-
+  if (this.usuario.role === 'SUPERADMIN') {
+    this._productoService.best_seller().subscribe({
+      next: (resp: any) => {
+        this.bestsellers = Array.isArray(resp?.data) ? resp.data : [];
+      },
+      error: (err) => {
+        console.error('Error al cargar best sellers:', err);
+        this.bestsellers = [];
+      }
+    });
   }
-  getProductsPop() {
-    if (this.usuario.role === 'SUPERADMIN') {
-      this._productoService.populares().subscribe((resp: any) => {
-        this.populares = resp.data;
-      });
-    }
 
-    if (this.usuario.role === 'ADMIN' || this.usuario.role === 'VENTAS') {
-      this._productoService.popularesLocal(this.usuario.local).subscribe((resp: any) => {
-        this.populares = resp.data;
-      });
-    }
-
-
+  if (this.usuario.role === 'ADMIN' || this.usuario.role === 'VENTAS') {
+    this._productoService.best_sellerLocal(this.usuario.local).subscribe({
+      next: (resp: any) => {
+        this.bestsellers = Array.isArray(resp?.data) ? resp.data : [];
+      },
+      error: (err) => {
+        console.error('Error al cargar best sellers locales:', err);
+        this.bestsellers = [];
+      }
+    });
   }
+}
+
+getProductsPop() {
+  if (!this.usuario) return; // Evita errores si usuario aún no carga
+
+  if (this.usuario.role === 'SUPERADMIN') {
+    this._productoService.populares().subscribe({
+      next: (resp: any) => {
+        this.populares = Array.isArray(resp?.data) ? resp.data : [];
+      },
+      error: (err) => {
+        console.error('Error al cargar best sellers:', err);
+        this.populares = [];
+      }
+    });
+  }
+
+  if (this.usuario.role === 'ADMIN' || this.usuario.role === 'VENTAS') {
+    this._productoService.popularesLocal(this.usuario.local).subscribe({
+      next: (resp: any) => {
+        this.populares = Array.isArray(resp?.data) ? resp.data : [];
+      },
+      error: (err) => {
+        console.error('Error al cargar best sellers locales:', err);
+        this.populares = [];
+      }
+    });
+  }
+}
+
+cargarProductosMercadoLibre() {
+  if (!this.usuario) return;
+  this.cargandoML = true;
+
+  if (this.usuario.role === 'SUPERADMIN') {
+    this.meliService.getProductosMLGlobal().subscribe({
+      next: (resp: any) => {
+        this.productosML = Array.isArray(resp?.data) ? resp.data : [];
+        this.cargandoML = false;
+      },
+      error: (err) => {
+        console.error('Error al cargar productos ML:', err);
+        this.productosML = [];
+        this.cargandoML = false;
+      }
+    });
+  } else if (this.usuario.role === 'ADMIN' || this.usuario.role === 'VENTAS') {
+    this.meliService.getProductosMLByLocal(this.usuario.local).subscribe({
+      next: (resp: any) => {
+        this.productosML = Array.isArray(resp?.data) ? resp.data : [];
+        this.cargandoML = false;
+      },
+      error: (err) => {
+        console.error('Error al cargar productos ML locales:', err);
+        this.productosML = [];
+        this.cargandoML = false;
+      }
+    });
+  }
+}
+
+
   getComentarios() {
     this._comentarioService.listar().subscribe(
       response => {

@@ -10,24 +10,32 @@ import { Producto } from 'src/app/models/producto.model';
 })
 export class ProducListFeaturedComponent implements OnChanges {
 
-  @Input() bestsellers: Producto[] = [];
+ @Input() bestsellers: Producto[] = [];
   @Input() populares: Producto[] = [];
+  @Input() productosML: Producto[] = [];
+
   public collection: Producto[] = [];
   public title: string = '';
 
-   constructor(
-  // Debe ser public para que el HTML pueda leer "translate.currentLang"
-  public translate: TranslateService 
-) {}
+  constructor(
+    public translate: TranslateService 
+  ) {}
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['bestsellers'] && this.bestsellers.length > 0) {
+    // 1. Si cambió 'bestsellers' (y no viene undefined)
+    if (changes['bestsellers'] && Array.isArray(this.bestsellers)) {
       this.collection = this.bestsellers;
       this.title = 'Best Sellers';
-    } else if (changes['populares'] && this.populares.length > 0) {
+    } 
+    // 2. Si cambió 'populares'
+    else if (changes['populares'] && Array.isArray(this.populares)) {
       this.collection = this.populares;
       this.title = 'Populares';
+    } 
+    // 3. Si cambió 'productosML'
+    else if (changes['productosML'] && Array.isArray(this.productosML)) {
+      this.collection = this.productosML;
+      this.title = 'Más Vendidos por Mercado Libre';
     }
   }
-
 }

@@ -64,4 +64,13 @@ export class MercadolibreService {
     const url = `${this.baseUrl}/productos/exportar-mercadolibre/${idProducto}`;
     return this.http.post<MeliSyncResponse>(url, {}, { headers: this.headers  });
   }
+
+   getProductosMLGlobal(): Observable<any> {
+      const url = `${this.baseUrl}/productos/productos_ml/global`;
+      return this.http.get(url, { headers: this.headers  });
+    }
+    getProductosMLByLocal(id: string): Observable<any> {
+      const url = `${this.baseUrl}/productos/productos_ml/local/` + id;
+      return this.http.get(url, { headers: this.headers  });
+    }
 }
