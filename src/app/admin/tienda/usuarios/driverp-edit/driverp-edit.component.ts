@@ -20,6 +20,7 @@ const defaultDriver: Driver = {
   asignaciones: {} as any,
   status: '',
   licencianum: '',
+  local: '',
   img: ''
 };
 

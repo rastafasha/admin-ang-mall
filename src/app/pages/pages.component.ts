@@ -9,8 +9,7 @@ declare function customInitFunctions(); //llamammos a la funcion que carga los j
   selector: 'app-pages',
   standalone:false,
   templateUrl: './pages.component.html',
-  styles: [
-  ]
+  styleUrls: ['./pages.component.css']
 })
 export class PagesComponent implements OnInit {
 

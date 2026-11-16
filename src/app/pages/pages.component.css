@@ -1,0 +1,9 @@
+.page{
+    float: left; 
+}
+
+@media(max-width:768px){
+    .page{
+     width: 80vw;
+}
+}

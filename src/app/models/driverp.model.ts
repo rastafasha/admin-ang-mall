@@ -13,6 +13,7 @@ export class Driver {
         public asignaciones: Asignacion,
         public status: string,
         public licencianum: string,
+        public local: string,
         public img?: string,
         public _id?: string
 

@@ -1,16 +1,14 @@
 <div class="clear"></div>
-<div class="tab-content-set">
-    <ul class="nav">
-        <li>
-            <a href="#" onclick="return false;" [ngClass]="{'active': option_selectedd == 1}"
+<ul class="nav nav-tabs profile-tab">
+        <li class="nav-item">
+            <a href="#" onclick="return false;" class="nav-link " [ngClass]="{'active': option_selectedd == 1}"
                 (click)="optionSelected(1)"> {{'Perfil'|translate}}</a>
         </li>
-        <li *ngIf="isDriver">
-            <a href="#" onclick="return false;" [ngClass]="{'active': option_selectedd == 2}"
+        <li *ngIf="isDriver" class="nav-item">
+            <a href="#" onclick="return false;" class="nav-link " [ngClass]="{'active': option_selectedd == 2}"
                 (click)="optionSelected(2)">{{'Chofer'|translate}}</a>
         </li>
     </ul>
-</div>
 <div *ngIf="option_selectedd == 1">
     <div class="row">
 
