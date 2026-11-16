@@ -10,6 +10,7 @@ import { tap, map, catchError } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { Router } from '@angular/router';
 import { Usuario } from '../models/usuario.model';
+import { PushNotificationService } from './push-notification.service';
 
 const base_url = environment.baseUrl;
 const clientIdGoogle = environment.clientIdGoogle;
@@ -25,7 +26,8 @@ export class UsuarioService {
   constructor(
     private http: HttpClient,
     private router: Router,
-    private ngZone: NgZone
+    private ngZone: NgZone,
+    private pushNotificationService: PushNotificationService
   ) {
   }
 
@@ -66,14 +68,24 @@ export class UsuarioService {
   }
 
 
-  logout() {
+  async logout() {
+  try {
+    // 1. Primero desvinculamos el dispositivo en el servidor y navegador (mientras existe el token)
+    await this.pushNotificationService.unsubscribeOnLogout();
+  } catch (error) {
+    console.warn('No se pudo desuscribir de notificaciones al salir:', error);
+  } finally {
+    // 2. Limpiamos todo el almacenamiento local
     localStorage.removeItem('token');
     localStorage.removeItem('menu');
     localStorage.removeItem('user');
     localStorage.removeItem('auth_token');
     localStorage.removeItem('__paypal_storage__');
+
+    // 3. Recargamos la app completamente limpia
     window.location.reload();
   }
+}
 
   validarToken(): Observable<boolean> {
     return this.http
@@ -140,6 +152,7 @@ export class UsuarioService {
          map((resp:{ok: boolean, usuarios: Usuario[]}) => resp.usuarios)
        )
    }
+
   getDrivers(){
      const url = `${base_url}/usuarios/drivers/`;
      return this.http.get<any>(url, this.headers)
@@ -147,6 +160,7 @@ export class UsuarioService {
          map((resp:{ok: boolean, drivers: Usuario[]}) => resp.drivers)
        )
    }
+
   getDriversLocal(local:string){
      const url = `${base_url}/usuarios/drivers/local/${local}`;
      return this.http.get<any>(url, this.headers)
@@ -281,6 +295,7 @@ export class UsuarioService {
       .get<any>(url, this.headers)
       .pipe(map((resp: { ok: boolean; local: Usuario[] }) => resp.local));
   }
+
   cargarUsuariosAlmacen(desde: number = 0) {
     const url = `${base_url}/usuarios/users_almacen?desde=${desde}`;
     return this.http.get<CargarUsuario>(url, this.headers).pipe(
@@ -310,6 +325,7 @@ export class UsuarioService {
       })
     );
   }
+
   cargarEmployeess() {
     const url = `${base_url}/usuarios/employees`;
     return this.http.get<CargarUsuario>(url, this.headers).pipe(

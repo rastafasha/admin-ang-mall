@@ -16,13 +16,8 @@ export class AccountService {
 
   serverUrl = environment.baseUrl;
   isLoggedIn = false;
-
   public error = null;
-
   public user;
-
-
-
 
   constructor(
     private http: HttpClient,
