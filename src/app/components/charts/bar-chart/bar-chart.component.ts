@@ -11,6 +11,7 @@ import { Chart } from 'chart.js';
 export class BarChartComponent implements OnChanges {
  @ViewChild('barCanvas') barCanvas!: ElementRef<HTMLCanvasElement>;
   public chart: Chart;
+  isLoading=false;
 
   @Input() estadisticas: any[] = [];
 
@@ -20,11 +21,14 @@ export class BarChartComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['estadisticas'] && this.estadisticas) {
+      
       this.createChart();
     }
   }
 
   private createChart() {
+    this.isLoading=true;
+
     setTimeout(() => {
       if (!this.estadisticas || this.estadisticas.length === 0) return;
 
@@ -32,6 +36,8 @@ export class BarChartComponent implements OnChanges {
       if (!this.barCanvas || !this.barCanvas.nativeElement) {
         return;
       }
+
+      this.isLoading=false;
 
       const labels = this.estadisticas.map(item => item._id);
       const totalFacturado = this.estadisticas.map(item => item.totalVendido); 
