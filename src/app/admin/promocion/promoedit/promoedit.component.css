@@ -60,3 +60,56 @@
     background-color: #e0e0e0;
     margin-bottom: 20px;
 }
+
+
+
+.drop-zone {
+    border: 2px dashed #d1d5db;
+    border-radius: 8px;
+    padding: 25px 15px;
+    text-align: center;
+    cursor: pointer;
+    background-color: #ffffff;
+    transition: all 0.25s ease;
+    margin-top: 15px;
+}
+
+.drop-zone:hover,
+.drop-zone.drag-over {
+    border-color: #26c6da; /* Cambia por el tono verde/agua de tu plantilla */
+    background-color: #f8fcfb;
+}
+
+.preview-wrapper {
+    margin-bottom: 15px;
+}
+
+.img-preview {
+    width: 130px;
+    height: 130px;
+    object-fit: cover;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border: 3px solid #ffffff;
+}
+
+.drop-text {
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.drop-text i {
+    font-size: 18px;
+}
+
+.drop-hint {
+    display: block;
+    color: #9ca3af;
+    font-size: 12px;
+    margin-top: 4px;
+}

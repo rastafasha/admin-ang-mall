@@ -50,6 +50,14 @@ export class PromocionService {
         );
 
   }
+  getPromocionByIdLocal(_id: string){
+    const url = `${base_url}/promocions/local/${_id}`;
+    return this.http.get<any>(url, this.headers)
+      .pipe(
+        map((resp:{ok: boolean, promociones: Promocion}) => resp.promociones)
+        );
+
+  }
 
 
   crearPromocion(promocion: Promocion){

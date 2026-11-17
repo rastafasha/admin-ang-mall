@@ -68,6 +68,7 @@ export class ProdEditComponent implements OnInit, OnChanges {
   public Editor1 = ClassicEditor;
 
   public isSubmitting: boolean = false;
+  mostrarOpcionesAvanzadas = false;
 
   user: any;
 
@@ -105,6 +106,9 @@ export class ProdEditComponent implements OnInit, OnChanges {
     }
     this.cargar_Locales();
   }
+   togglePersiana() {
+  this.mostrarOpcionesAvanzadas = !this.mostrarOpcionesAvanzadas;
+}
 
   ngOnChanges(changes: SimpleChanges): void {
 

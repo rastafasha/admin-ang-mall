@@ -8,6 +8,7 @@ import { Promocion } from '../../models/promocion.model';
 import { PromocionService } from '../../services/promocion.service';
 import { ModalImagenService } from '../../services/modal-imagen.service';
 import { FormGroup } from '@angular/forms';
+import { Usuario } from 'src/app/models/usuario.model';
 
 declare var jQuery: any;
 declare var $: any;
@@ -36,6 +37,7 @@ export class PromocionComponent implements OnInit {
   currentPage = 1;
   collecion = 'promocions';
   promocionSeleccionado: Promocion;
+  user: Usuario;
 
   constructor(
     private promocionService: PromocionService,
@@ -44,8 +46,16 @@ export class PromocionComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    let USER = localStorage.getItem("user");
+    this.user = USER ? JSON.parse(USER) : null;
 
-    this.loadPromocions();
+    if (this.user.role === 'SUPERADMIN') {
+      this.loadPromocions();
+    }
+
+    if (this.user.role === 'ADMIN' || this.user.role === 'VENTAS' || this.user.role === 'TIENDA' || this.user.role === 'ALMACEN') {
+      this.loadPromocionsbByTienda();
+    }
     this.imgSubs = this.modalImagenService.nuevaImagen
       .pipe(
         delay(100)
@@ -61,11 +71,20 @@ export class PromocionComponent implements OnInit {
     this.cargando = true;
     this.promocionService.cargarPromocions().subscribe(
       promocions => {
-        this.cargando = false;
         this.promocions = promocions;
+        this.cargando = false;
       }
     )
 
+  }
+  loadPromocionsbByTienda(){
+    this.cargando = true;
+    this.promocionService.getPromocionByIdLocal(this.user.local).subscribe(
+      (resp:any) => {
+        this.promocions = resp;
+        this.cargando = false;
+      }
+    )
   }
 
   guardarCambios(promocion: Promocion) {

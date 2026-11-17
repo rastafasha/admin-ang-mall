@@ -26,6 +26,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
   has_cotizacion:boolean = false;
   usaDelivery:boolean = false;
   usaPedido:boolean = false;
+  usaPromocion:boolean = false;
   
   private routeSubscription: Subscription;
   private tiendaSubscription: Subscription;
@@ -76,6 +77,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
         this.has_cotizacion = resp.has_cotizacion;
         this.usaDelivery = resp.usaDelivery
         this.usaPedido = resp.usaPedido
+        this.usaPromocion = resp.usaPromocion
       }
     )
   }

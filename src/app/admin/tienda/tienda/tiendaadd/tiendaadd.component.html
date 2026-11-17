@@ -12,7 +12,7 @@
                     <div class="row">
 
                         <!-- Step Indicator -->
-                        <div class="step-indicator" >
+                        <div class="step-indicator">
                             <div class="step" [ngClass]="{'active': currentStep >= 1, 'completed': currentStep > 1}">
                                 <span class="step-number">1</span>
                                 <span class="step-label">{{'Datos'|translate}}</span>
@@ -37,389 +37,380 @@
                         <div *ngIf="currentStep === 1">
                             <form class="form p-t-20 form-horizontal form-material" [formGroup]="tiendaForm">
                                 <!-- Local -->
-                                <div class="row">
-                                    <div class="form-group col-xs-12 col-sm-4 col-md-4">
-                                        <label for="Tienda">{{'Nombre'|translate}} <span
-                                                class="required">*</span></label>
-                                        <div class="input-group">
+                                <details class="persiana-nativa col-xs-12" open>
+                                    <summary class="persiana-summary">
+                                        {{ 'Local y ubicación' | translate }}
+                                    </summary>
 
-                                            <input type="text" formControlName="nombre" class="form-control" id="Tienda"
-                                                placeholder="nombre">
-                                            <div *ngIf="tiendaForm.get('nombre')?.touched && tiendaForm.get('nombre')?.invalid"
-                                                class="text-danger">
-                                                <div *ngIf="tiendaForm.get('nombre')?.errors?.['required']">
-                                                    {{'Campo Requerido'|translate}}
-                                                </div>
-                                                <div *ngIf="tiendaForm.get('nombre')?.errors?.['minlength']">
-                                                    {{'Mínimo 3 Caracteres'|translate}}
-                                                </div>
-                                            </div>
+                                    <div class="row p-3">
+                                            <div class="form-group col-xs-12 col-sm-4 col-md-4">
+                                                <label for="Tienda">{{'Nombre'|translate}} <span
+                                                        class="required">*</span></label>
+                                                <div class="input-group">
 
-                                        </div>
-                                    </div>
-                                    <div class="form-group  col-xs-12 col-sm-4 col-md-4">
-                                        <label for="Local">{{'Tienda'|translate}} <span
-                                                class="required">*</span></label>
-                                        <div class="input-group">
+                                                    <input type="text" formControlName="nombre" class="form-control"
+                                                        id="Tienda" placeholder="nombre">
+                                                    <div *ngIf="tiendaForm.get('nombre')?.touched && tiendaForm.get('nombre')?.invalid"
+                                                        class="text-danger">
+                                                        <div *ngIf="tiendaForm.get('nombre')?.errors?.['required']">
+                                                            {{'Campo Requerido'|translate}}
+                                                        </div>
+                                                        <div *ngIf="tiendaForm.get('nombre')?.errors?.['minlength']">
+                                                            {{'Mínimo 3 Caracteres'|translate}}
+                                                        </div>
+                                                    </div>
 
-                                            <input type="text" formControlName="local" class="form-control" id="Local"
-                                                placeholder="local">
-                                            <div *ngIf="tiendaForm.get('local')?.touched && tiendaForm.get('local')?.invalid"
-                                                class="text-danger">
-                                                <div *ngIf="tiendaForm.get('local')?.errors?.['required']">
-                                                    {{'Campo Requerido'|translate}}
-                                                </div>
-                                                <div *ngIf="tiendaForm.get('local')?.errors?.['minlength']">
-                                                    {{'Mínimo 3 Caracteres'|translate}}
                                                 </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group  col-xs-12 col-sm-4 col-md-4">
-                                        <label for="telefono">{{'Teléfono'|translate}} (whatsapp) <span
-                                                class="required">*</span></label>
-                                        <div class="input-group">
+                                            <div class="form-group  col-xs-12 col-sm-4 col-md-4">
+                                                <label for="Local">{{'Tienda'|translate}} <span
+                                                        class="required">*</span></label>
+                                                <div class="input-group">
 
-                                            <input type="text" formControlName="telefono" class="form-control"
-                                                id="telefono" placeholder="telefono">
-                                            <div *ngIf="tiendaForm.get('telefono')?.touched && tiendaForm.get('telefono')?.invalid"
-                                                class="text-danger">
-                                                <div *ngIf="tiendaForm.get('telefono')?.errors?.['required']">
-                                                    {{'Campo Requerido'|translate}}
-                                                </div>
-                                                <div *ngIf="tiendaForm.get('telefono')?.errors?.['minlength']">
-                                                    {{'Mínimo 3 Caracteres'|translate}}
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <!-- Pais -->
-                                <div class="row">
-                                    <div class="form-group col-xs-12 col-sm-6 col-md-3">
-                                        <label for="Pais">{{'Pais'|translate}} <span class="required">*</span></label>
-                                        <div class="input-group">
-
-                                            <select class="form-control " formControlName="pais" required>
-                                                <option disabled value="">{{'Seleccione'|translate}}</option>
-                                                <option *ngFor="let pais of paises" [value]="pais.pais">
-                                                    {{pais.pais}}
-                                                </option>
-
-                                            </select>
-
-                                            <div *ngIf="tiendaForm.get('pais')?.touched && tiendaForm.get('pais')?.invalid"
-                                                class="text-danger">
-                                                <div *ngIf="tiendaForm.get('pais')?.errors?.['required']">
-                                                    {{'Campo Requerido'|translate}}
-                                                </div>
-                                                <div *ngIf="tiendaForm.get('pais')?.errors?.['minlength']">
-                                                    {{'Seleccione una opción'|translate}}
+                                                    <input type="text" formControlName="local" class="form-control"
+                                                        id="Local" placeholder="local">
+                                                    <div *ngIf="tiendaForm.get('local')?.touched && tiendaForm.get('local')?.invalid"
+                                                        class="text-danger">
+                                                        <div *ngIf="tiendaForm.get('local')?.errors?.['required']">
+                                                            {{'Campo Requerido'|translate}}
+                                                        </div>
+                                                        <div *ngIf="tiendaForm.get('local')?.errors?.['minlength']">
+                                                            {{'Mínimo 3 Caracteres'|translate}}
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
+                                            <div class="form-group  col-xs-12 col-sm-4 col-md-3">
+                                                <label for="telefono">{{'Teléfono'|translate}} (whatsapp) <span
+                                                        class="required">*</span></label>
+                                                <div class="input-group">
 
-                                        </div>
-                                    </div>
-                                    <div class="form-group col-xs-12 col-sm-6 col-md-3">
-                                        <label for="Ciudad">{{'Ciudad'|translate}} <span
-                                                class="required">*</span></label>
-                                        <div class="input-group">
+                                                    <input type="text" formControlName="telefono" class="form-control"
+                                                        id="telefono" placeholder="telefono">
+                                                    <div *ngIf="tiendaForm.get('telefono')?.touched && tiendaForm.get('telefono')?.invalid"
+                                                        class="text-danger">
+                                                        <div *ngIf="tiendaForm.get('telefono')?.errors?.['required']">
+                                                            {{'Campo Requerido'|translate}}
+                                                        </div>
+                                                        <div *ngIf="tiendaForm.get('telefono')?.errors?.['minlength']">
+                                                            {{'Mínimo 3 Caracteres'|translate}}
+                                                        </div>
+                                                    </div>
 
-                                            <input type="text" formControlName="ciudad" class="form-control" id="Ciudad"
-                                                placeholder="Ciudad">
-                                            <div *ngIf="tiendaForm.get('ciudad')?.touched && tiendaForm.get('ciudad')?.invalid"
-                                                class="text-danger">
-                                                <div *ngIf="tiendaForm.get('ciudad')?.errors?.['required']">
-                                                    {{'Campo Requerido'|translate}}
-                                                </div>
-                                                <div *ngIf="tiendaForm.get('ciudad')?.errors?.['minlength']">
-                                                    {{'Mínimo 3 Caracteres'|translate}}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group col-xs-12 col-sm-6 col-md-3">
-                                        <label for="text-input">{{'Moneda'|translate}} <span
-                                                class="required">*</span></label>
-                                        <div class="input-group">
-                                            <select class="form-control" formControlName="moneda">
-                                                <option disabled value="">{{'Seleccione'|translate}}</option>
-                                                <option value="USD">USD</option>
-                                                <option value="EUR">EUR</option>
-                                                <!-- 🌍 NUEVAS MONEDAS INTERNACIONALES SOPORTADAS -->
-                                                <option value="ARS">ARS</option>
-                                                <option value="CLP">CLP</option>
-                                                <option value="UYU">UYU</option>
-                                                <option value="EGP">EGP</option>
-                                            </select>
-
-                                            <!-- 🛡️ CORREGIDO: Ahora valida estrictamente el campo 'moneda' -->
-                                            <div *ngIf="tiendaForm.get('moneda')?.touched && tiendaForm.get('moneda')?.invalid"
-                                                class="text-danger">
-                                                <div *ngIf="tiendaForm.get('moneda')?.errors?.['required']">
-                                                    {{'Campo Requerido'|translate}}
                                                 </div>
                                             </div>
+                                            <div class="form-group col-xs-12 col-sm-6 col-md-3">
+                                                <label for="select-input">{{'Categoría'|translate}} </label>
+                                                <select class="form-control" formControlName="categoria">
+                                                    <option disabled value="">{{ 'Seleccione' | translate }}</option>
+                                                    <!-- Filtramos y extraemos el nombre en el idioma activo del sistema -->
+                                                    <option *ngFor="let item of listCategorias | unique:'nombre'"
+                                                        [value]="item._id">
+                                                        {{ item.nombre?.[translate.currentLang] || item.nombre?.es }}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group col-xs-12 col-sm-6 col-md-3">
+                                                <label for="select-input">{{'Subcategoría'|translate}}</label>
+                                                <select class="form-control" formControlName="subcategoria">
+                                                    <option disabled value="">{{ 'Seleccione' | translate }}</option>
+                                                    <option *ngFor="let item of listCategorias"
+                                                        [value]="(item.subcategorias && typeof item.subcategorias === 'object') ? (item.subcategorias?.es) : item.subcategorias">
+
+                                                        <!-- 🟢 Control bilingüe inteligente que acepta texto plano u objeto {es, en} -->
+                                                        {{ (item.subcategorias && typeof item.subcategorias ===
+                                                        'object')
+                                                        ? (item.subcategorias?.[translate.currentLang] ||
+                                                        item.subcategorias?.es)
+                                                        : item.subcategorias }}
+                                                    </option>
+                                                </select>
+                                            </div>
+
                                         </div>
-                                    </div>
+                                        <!-- Pais -->
+                                        <div class="row p-3">
+                                            <div class="form-group col-xs-12 col-sm-6 col-md-3">
+                                                <label for="Pais">{{'Pais'|translate}} <span
+                                                        class="required">*</span></label>
+                                                <div class="input-group">
 
+                                                    <select class="form-control " formControlName="pais" required>
+                                                        <option disabled value="">{{'Seleccione'|translate}}</option>
+                                                        <option *ngFor="let pais of paises" [value]="pais.pais">
+                                                            {{pais.pais}}
+                                                        </option>
 
-                                    <div class="form-group col-xs-12 col-sm-6 col-md-3">
-                                        <label for="zip">{{'Código postal'|translate}} <span
-                                                class="required">*</span></label>
-                                        <div class="input-group">
+                                                    </select>
 
-                                            <input type="text" formControlName="zip" class="form-control" id="zip"
-                                                placeholder="1010G">
-                                            <div *ngIf="tiendaForm.get('zip')?.touched && tiendaForm.get('zip')?.invalid"
-                                                class="text-danger">
-                                                <div *ngIf="tiendaForm.get('zip')?.errors?.['required']">
-                                                    {{'Campo Requerido'|translate}}
+                                                    <div *ngIf="tiendaForm.get('pais')?.touched && tiendaForm.get('pais')?.invalid"
+                                                        class="text-danger">
+                                                        <div *ngIf="tiendaForm.get('pais')?.errors?.['required']">
+                                                            {{'Campo Requerido'|translate}}
+                                                        </div>
+                                                        <div *ngIf="tiendaForm.get('pais')?.errors?.['minlength']">
+                                                            {{'Seleccione una opción'|translate}}
+                                                        </div>
+                                                    </div>
+
                                                 </div>
-                                                <div *ngIf="tiendaForm.get('zip')?.errors?.['minlength']">
-                                                    {{'Mínimo 3 Caracteres'|translate}}
+                                            </div>
+                                            <div class="form-group col-xs-12 col-sm-6 col-md-3">
+                                                <label for="Ciudad">{{'Ciudad'|translate}} <span
+                                                        class="required">*</span></label>
+                                                <div class="input-group">
+
+                                                    <input type="text" formControlName="ciudad" class="form-control"
+                                                        id="Ciudad" placeholder="Ciudad">
+                                                    <div *ngIf="tiendaForm.get('ciudad')?.touched && tiendaForm.get('ciudad')?.invalid"
+                                                        class="text-danger">
+                                                        <div *ngIf="tiendaForm.get('ciudad')?.errors?.['required']">
+                                                            {{'Campo Requerido'|translate}}
+                                                        </div>
+                                                        <div *ngIf="tiendaForm.get('ciudad')?.errors?.['minlength']">
+                                                            {{'Mínimo 3 Caracteres'|translate}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-xs-12 col-sm-6 col-md-3">
+                                                <label for="text-input">{{'Moneda'|translate}} <span
+                                                        class="required">*</span></label>
+                                                <div class="input-group">
+                                                    <select class="form-control" formControlName="moneda">
+                                                        <option disabled value="">{{'Seleccione'|translate}}</option>
+                                                        <option value="USD">USD</option>
+                                                        <option value="EUR">EUR</option>
+                                                        <!-- 🌍 NUEVAS MONEDAS INTERNACIONALES SOPORTADAS -->
+                                                        <option value="ARS">ARS</option>
+                                                        <option value="CLP">CLP</option>
+                                                        <option value="UYU">UYU</option>
+                                                        <option value="EGP">EGP</option>
+                                                    </select>
+
+                                                    <!-- 🛡️ CORREGIDO: Ahora valida estrictamente el campo 'moneda' -->
+                                                    <div *ngIf="tiendaForm.get('moneda')?.touched && tiendaForm.get('moneda')?.invalid"
+                                                        class="text-danger">
+                                                        <div *ngIf="tiendaForm.get('moneda')?.errors?.['required']">
+                                                            {{'Campo Requerido'|translate}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="form-group col-xs-12 col-sm-6 col-md-3">
+                                                <label for="zip">{{'Código postal'|translate}} <span
+                                                        class="required">*</span></label>
+                                                <div class="input-group">
+
+                                                    <input type="text" formControlName="zip" class="form-control"
+                                                        id="zip" placeholder="1010G">
+                                                    <div *ngIf="tiendaForm.get('zip')?.touched && tiendaForm.get('zip')?.invalid"
+                                                        class="text-danger">
+                                                        <div *ngIf="tiendaForm.get('zip')?.errors?.['required']">
+                                                            {{'Campo Requerido'|translate}}
+                                                        </div>
+                                                        <div *ngIf="tiendaForm.get('zip')?.errors?.['minlength']">
+                                                            {{'Mínimo 3 Caracteres'|translate}}
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="clear"></div>
-                                <div class="row">
-                                    <!-- Botón ubicación actual -->
-                                    <app-tienda-mapa [formParent]="tiendaForm"></app-tienda-mapa>
-                                    
+                                        <div class="clear"></div>
+                                        <!-- Botón ubicación actual -->
+                                        <div class="row">
+                                            <!-- Botón ubicación actual -->
+                                            <app-tienda-mapa [formParent]="tiendaForm"></app-tienda-mapa>
+                                        </div>
+                                </details>
 
-                                </div>
-                                <!-- Categoría, Subcategoría, slide, Destacado -->
-                                <div class="row">
-                                    <div class="form-group col-xs-12 col-sm-6 col-md-3">
-                                        <label for="select-input">{{'Categoría'|translate}} </label>
-                                        <select class="form-control" formControlName="categoria">
-                                            <option disabled value="">{{ 'Seleccione' | translate }}</option>
-                                            <!-- Filtramos y extraemos el nombre en el idioma activo del sistema -->
-                                            <option *ngFor="let item of listCategorias | unique:'nombre'"
-                                                [value]="item._id">
-                                                {{ item.nombre?.[translate.currentLang] || item.nombre?.es }}
-                                            </option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group col-xs-12 col-sm-6 col-md-3">
-                                        <label for="select-input">{{'Subcategoría'|translate}}</label>
-                                        <select class="form-control" formControlName="subcategoria">
-                                            <option disabled value="">{{ 'Seleccione' | translate }}</option>
-                                            <option *ngFor="let item of listCategorias"
-                                                [value]="(item.subcategorias && typeof item.subcategorias === 'object') ? (item.subcategorias?.es) : item.subcategorias">
+                                <!--  slide, Destacado Reservaciones -->
 
-                                                <!-- 🟢 Control bilingüe inteligente que acepta texto plano u objeto {es, en} -->
-                                                {{ (item.subcategorias && typeof item.subcategorias === 'object')
-                                                ? (item.subcategorias?.[translate.currentLang] ||
-                                                item.subcategorias?.es)
-                                                : item.subcategorias }}
-                                            </option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group col-xs-12 col-sm-6 col-md-3 ">
-                                        <label for="text-input">{{'Mostrar en slide'|translate}}</label>
-                                        <div class="input-group">
-                                            <select class="form-control" formControlName="state_banner">
-                                                <option disabled value="">{{'Seleccione'|translate}}</option>
-                                                <option [value]="true">{{'Activo'|translate}}</option>
-                                                <option [value]="false">{{'Inactivo'|translate}}</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="form-group col-xs-12 col-sm-6 col-md-3 ">
-                                        <label for="text-input">{{'Destacado?'|translate}}</label>
-                                        <div class="input-group">
-                                            <select class="form-control" formControlName="isFeatured">
-                                                <option disabled value="">{{'Seleccione'|translate}}</option>
-                                                <option [value]="true">{{'Activo'|translate}}</option>
-                                                <option [value]="false">{{'Inactivo'|translate}}</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Reservaciones -->
-                                <div class="row">
-                                    <div class="form-group col-xs-12 col-sm-3">
-                                        <label for="text-input">{{'Mostrar Tasas?'|translate}} <span
-                                                class="required">*</span></label>
-                                        <div class="input-group">
-                                            <select class="form-control" formControlName="mostrarTasas">
-                                                <option disabled value="">{{'Seleccione'|translate}}</option>
-                                                <option [value]="true">{{'Si'|translate}}</option>
-                                                <option [value]="false">{{'No'|translate}}</option>
-                                            </select>
-                                        </div>
-                                        <div *ngIf="tiendaForm.get('mostrarTasas')?.touched && tiendaForm.get('mostrarTasas')?.invalid"
-                                            class="text-danger">
-                                            <div *ngIf="tiendaForm.get('mostrarTasas')?.errors?.['required']">
-                                                {{'Campo Requerido'|translate}}
-                                            </div>
-                                            <div *ngIf="tiendaForm.get('mostrarTasas')?.errors?.['minlength']">
-                                                {{'Por Favor Seleccione'|translate}}
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group col-xs-12 col-sm-3  ">
-                                        <label for="text-input">{{'Delivery?'|translate}} <span
-                                                class="required">*</span></label>
-                                        <div class="input-group">
-                                            <select class="form-control" formControlName="usaDelivery">
-                                                <option disabled value="">{{'Seleccione'|translate}}</option>
-                                                <option [value]="true">{{'Si'|translate}}</option>
-                                                <option [value]="false">{{'No'|translate}}</option>
-                                            </select>
-                                        </div>
-                                        <div *ngIf="tiendaForm.get('usaDelivery')?.touched && tiendaForm.get('usaDelivery')?.invalid"
-                                            class="text-danger">
-                                            <div *ngIf="tiendaForm.get('usaDelivery')?.errors?.['required']">
-                                                {{'Campo Requerido'|translate}}
-                                            </div>
-                                            <div *ngIf="tiendaForm.get('usaDelivery')?.errors?.['minlength']">
-                                                {{'Por Favor Seleccione'|translate}}
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group col-xs-12 col-sm-3  ">
-                                        <label for="text-input">{{'usa Pedido?'|translate}} <span
-                                                class="required">*</span></label>
-                                        <div class="input-group">
-                                            <select class="form-control" formControlName="usaPedido">
-                                                <option disabled value="">{{'Seleccione'|translate}}</option>
-                                                <option [value]="true">{{'Si'|translate}}</option>
-                                                <option [value]="false">{{'No'|translate}}</option>
-                                            </select>
-                                        </div>
-                                        <div *ngIf="tiendaForm.get('usaPedido')?.touched && tiendaForm.get('usaPedido')?.invalid"
-                                            class="text-danger">
-                                            <div *ngIf="tiendaForm.get('usaPedido')?.errors?.['required']">
-                                                {{'Campo Requerido'|translate}}
-                                            </div>
-                                            <div *ngIf="tiendaForm.get('usaPedido')?.errors?.['minlength']">
-                                                {{'Por Favor Seleccione'|translate}}
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group col-xs-12 col-sm-3">
-                                        <label for="text-input">{{'Cotiza?'|translate}} <span
-                                                class="required">*</span></label>
-                                        <div class="input-group">
-                                            <select class="form-control" formControlName="has_cotizacion">
-                                                <option disabled value="">{{'Seleccione'|translate}}</option>
-                                                <option [value]="true">{{'Si'|translate}}</option>
-                                                <option [value]="false">{{'No'|translate}}</option>
-                                            </select>
-                                        </div>
-                                        <div *ngIf="tiendaForm.get('has_cotizacion')?.touched && tiendaForm.get('has_cotizacion')?.invalid"
-                                            class="text-danger">
-                                            <div *ngIf="tiendaForm.get('has_cotizacion')?.errors?.['required']">
-                                                {{'Campo Requerido'|translate}}
-                                            </div>
-                                            <div *ngIf="tiendaForm.get('has_cotizacion')?.errors?.['minlength']">
-                                                {{'Por Favor Seleccione'|translate}}
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group col-xs-12 col-sm-3">
-                                        <label for="text-input">{{'Reservaciones?'|translate}} <span
-                                                class="required">*</span></label>
-                                        <div class="input-group">
-                                            <!-- Mantenemos tu formControlName original -->
-                                            <select class="form-control" formControlName="has_reservacion">
-                                                <option disabled value="">{{'Seleccione'|translate}}</option>
-                                                <!-- CAMBIO: Usamos [ngValue] para forzar el booleano real -->
-                                                <option [ngValue]="true">{{'Si'|translate}}</option>
-                                                <option [ngValue]="false">{{'No'|translate}}</option>
-                                            </select>
-                                        </div>
-                                        <div *ngIf="tiendaForm.get('has_reservacion')?.touched && tiendaForm.get('has_reservacion')?.invalid"
-                                            class="text-danger">
-                                            <div *ngIf="tiendaForm.get('has_reservacion')?.errors?.['required']">
-                                                {{'Campo Requerido'|translate}}
-                                            </div>
-                                            <div *ngIf="tiendaForm.get('has_reservacion')?.errors?.['minlength']">
-                                                {{'Por Favor Seleccione'|translate}}
-                                            </div>
-                                        </div>
-                                    </div>
+                                <details class="persiana-nativa col-xs-12">
+                                    <summary class="persiana-summary">
+                                        {{ 'Configuración adicional' | translate }}
+                                    </summary>
 
-                                    <!-- El *ngIf ahora funcionará perfectamente porque el valor será un booleano estricto -->
-                                    <div class="form-group col-xs-12 col-sm-3"
-                                        *ngIf="tiendaForm.get('has_reservacion')?.value === true">
-                                        <label for="Tienda">{{'Capacidad por Hora'|translate}} </label>
-                                        <div class="input-group">
-                                            <input type="number" formControlName="capacidad_por_hora"
-                                                class="form-control" id="capacidad_por_hora">
-                                        </div>
-                                    </div>
+                                    <div class="row p-3">
+                                            <div class="form-group col-xs-12 col-sm-3">
+                                                <label for="state_banner">{{'Mostrar en slide?'|translate}}</label>
 
-                                    <!-- Selector de Flujo Operativo (Agrégalo aquí) -->
-                                    <div class="form-group col-xs-12 col-sm-6 ">
-                                        <label>{{'Tipo de Flujo'|translate}} <span class="required">*</span></label>
-                                        <select class="form-control" formControlName="tipoFlujo">
-                                            <option value="WHATSAPP">WhatsApp</option>
-                                            <option value="POS_DIRECTO">POS Directo</option>
-                                        </select>
-                                    </div>
-                                    <!-- tipoFlujo -->
-                                    <div class="row col-xs-12 mt-3"
-                                    *ngIf="tiendaForm.get('tipoFlujo')?.value === 'POS_DIRECTO'">
-                                    <div class="form-group col-xs-12 col-sm-6">
-                                        <div class="form-check form-switch bg-light p-2 rounded border">
-                                            <input class="form-check-input" type="checkbox" id="checkUsd"
-                                                formControlName="acepta_usd_internacional">
-                                            <label class="form-check-label fw-bold ms-2" for="checkUsd">{{'Aceptar USD  Internacional (Zelle)'|translate}}</label>
-                                        </div>
-                                    </div>
-                                    <div class="form-group col-xs-12 col-sm-6">
-                                        <div class="form-check form-switch bg-light p-2 rounded border">
-                                            <input class="form-check-input" type="checkbox" id="checkEur"
-                                                formControlName="acepta_eur">
-                                            <label class="form-check-label fw-bold ms-2" for="checkEur">{{'Aceptar EUR  Internacional (Bizum)'|translate}}</label>
-                                        </div>
-                                    </div>
-                                </div>
+                                                <div class="switch-wrapper">
+                                                    <label class="toggle-switch">
+                                                        <input type="checkbox" id="state_banner"
+                                                            formControlName="state_banner">
+                                                        <span class="slider"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
 
-                                </div>
-                                <!-- fin Reservaciones -->
+                                            <div class="form-group col-xs-12 col-sm-3">
+                                                <label for="isFeatured">{{'Destacado?'|translate}}</label>
 
-                                
-                                
+                                                <div class="switch-wrapper">
+                                                    <label class="toggle-switch">
+                                                        <input type="checkbox" id="isFeatured"
+                                                            formControlName="isFeatured">
+                                                        <span class="slider"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-xs-12 col-sm-3">
+                                                <label for="mostrarTasas">{{'Mostrar Tasas?'|translate}}</label>
+
+                                                <div class="switch-wrapper">
+                                                    <label class="toggle-switch">
+                                                        <input type="checkbox" id="mostrarTasas"
+                                                            formControlName="mostrarTasas">
+                                                        <span class="slider"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-xs-12 col-sm-3">
+                                                <label for="usaDelivery">{{'Delivery?'|translate}}</label>
+
+                                                <div class="switch-wrapper">
+                                                    <label class="toggle-switch">
+                                                        <input type="checkbox" id="usaDelivery"
+                                                            formControlName="usaDelivery">
+                                                        <span class="slider"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-xs-12 col-sm-3">
+                                                <label for="usaPedido">{{'Pedido?'|translate}}</label>
+
+                                                <div class="switch-wrapper">
+                                                    <label class="toggle-switch">
+                                                        <input type="checkbox" id="usaPedido"
+                                                            formControlName="usaPedido">
+                                                        <span class="slider"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-xs-12 col-sm-3">
+                                                <label for="has_cotizacion">{{'Cotiza?'|translate}}</label>
+
+                                                <div class="switch-wrapper">
+                                                    <label class="toggle-switch">
+                                                        <input type="checkbox" id="has_cotizacion"
+                                                            formControlName="has_cotizacion">
+                                                        <span class="slider"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-xs-12 col-sm-3">
+                                                <label for="usaPromocion">{{'Promociones?'|translate}}</label>
+
+                                                <div class="switch-wrapper">
+                                                    <label class="toggle-switch">
+                                                        <input type="checkbox" id="usaPromocion"
+                                                            formControlName="usaPromocion">
+                                                        <span class="slider"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-xs-12 col-sm-3">
+                                                <label for="has_reservacion">{{'Reservaciones?'|translate}}</label>
+
+                                                <div class="switch-wrapper">
+                                                    <label class="toggle-switch">
+                                                        <input type="checkbox" id="has_reservacion"
+                                                            formControlName="has_reservacion">
+                                                        <span class="slider"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+
+
+                                            <!-- El *ngIf ahora funcionará perfectamente porque el valor será un booleano estricto -->
+                                            <div class="form-group col-xs-12 col-sm-3"
+                                                *ngIf="tiendaForm.get('has_reservacion')?.value === true">
+                                                <label for="Tienda">{{'Capacidad por Hora'|translate}} </label>
+                                                <div class="input-group">
+                                                    <input type="number" formControlName="capacidad_por_hora"
+                                                        class="form-control" id="capacidad_por_hora">
+                                                </div>
+                                            </div>
+
+                                            <!-- Selector de Flujo Operativo (Agrégalo aquí) -->
+                                            <div class="form-group col-xs-12 col-sm-6 ">
+                                                <label>{{'Tipo de Flujo'|translate}} <span
+                                                        class="required">*</span></label>
+                                                <select class="form-control" formControlName="tipoFlujo">
+                                                    <option value="WHATSAPP">WhatsApp</option>
+                                                    <option value="POS_DIRECTO">POS Directo</option>
+                                                </select>
+                                            </div>
+                                            <!-- tipoFlujo -->
+                                            <div class="row col-xs-12 mt-3"
+                                                *ngIf="tiendaForm.get('tipoFlujo')?.value === 'POS_DIRECTO'">
+                                                <div class="form-group col-xs-12 col-sm-6">
+                                                    <div class="form-check form-switch bg-light p-2 rounded border">
+                                                        <input class="form-check-input" type="checkbox" id="checkUsd"
+                                                            formControlName="acepta_usd_internacional">
+                                                        <label class="form-check-label fw-bold ms-2"
+                                                            for="checkUsd">{{'Aceptar USD Internacional (Zelle)'|translate}}</label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-xs-12 col-sm-6">
+                                                    <div class="form-check form-switch bg-light p-2 rounded border">
+                                                        <input class="form-check-input" type="checkbox" id="checkEur"
+                                                            formControlName="acepta_eur">
+                                                        <label class="form-check-label fw-bold ms-2"
+                                                            for="checkEur">{{'Aceptar EUR Internacional (Bizum)'|translate}}</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                </details>
+
                                 <!-- MERCADO LIBRE -->
-                                <div class="row mt-3 mb-3">
-                                    <!-- 🚀 INTEGRACIÓN COMPLETA DE MERCADO LIBRE MULTI-TENANT -->
-                                    <div class="row mt-3">
+
+                                 <details class="persiana-nativa col-xs-12">
+                                    <summary class="persiana-summary">
+                                        {{ 'Configuración Mercado Libre' | translate }}
+                                    </summary>
+                                    <div class="row p-3">
+                                        <!-- 🚀 INTEGRACIÓN COMPLETA DE MERCADO LIBRE MULTI-TENANT -->
                                         <div class="form-check col-xs-12">
-                                            <input class="form-check-input" type="checkbox" id="usaMercadoLibre"
-                                                formControlName="usaMercadoLibre">
-                                            <label class="form-check-label" for="usaMercadoLibre">
-                                                ¿Sincronizar esta tienda con Mercado Libre?
-                                            </label>
+                                                <input class="form-check-input" type="checkbox" id="usaMercadoLibre"
+                                                    formControlName="usaMercadoLibre">
+                                                <label class="form-check-label" for="usaMercadoLibre">
+                                                    ¿Sincronizar esta tienda con Mercado Libre?
+                                                </label>
+                                            </div>
+                                        <!-- Formulario Colapsable Reactivo según el valor del booleano -->
+                                        <div *ngIf="tiendaForm.get('usaMercadoLibre')?.value === true">
+                                            <app-tiendamercadolibre [formParent]="tiendaForm"
+                                                [tiendaId]="tiendaSeleccionado?._id">
+                                            </app-tiendamercadolibre>
                                         </div>
+                                        <!-- 🚀 FIN INTEGRACIÓN MERCADO LIBRE -->
                                     </div>
-                                    <!-- Formulario Colapsable Reactivo según el valor del booleano -->
-                                    <div *ngIf="tiendaForm.get('usaMercadoLibre')?.value === true">
-                                        <app-tiendamercadolibre [formParent]="tiendaForm"
-                                            [tiendaId]="tiendaSeleccionado?._id">
-                                        </app-tiendamercadolibre>
-                                    </div>
-                                    <!-- 🚀 FIN INTEGRACIÓN MERCADO LIBRE -->
-                                </div>
-
-
+                                    
+                                </details>
                                 <div class="row">
-                                    <div class="d-flex justify-content-end align-items-center mt-3 gap-3">
-                                        <button type="button" (click)="saveTienda()" class="btn btn-outline-success mr-2">
-                                            {{ (tiendaSeleccionado ? 'Actualizar y Continuar' : 'Crear y Continuar') | translate }}
+                                    <div class="d-flex justify-content-end align-items-center mt-3 gap-3">                            
+                                        <button (click)="saveTienda()" [disabled]="isSubmitting"
+                                            class="btn btn-outline-success d-inline-flex align-items-center gap-2">
+
+                                            <!-- 🟢 Icono de Loading (Spinner) que se muestra solo si isSubmitting es true -->
+                                            <i *ngIf="isSubmitting" class="fas fa-spinner fa-spin"></i>
+
+                                            <!-- Texto condicional con tu pipe de traducción -->
+                                            <span>
+                                                {{ (tiendaSeleccionado ? 'Actualizar y Continuar' : 'Crear y Continuar') | translate }}
+                                            </span>
                                         </button>
-                                        <button type="button" (click)="nextStep()" class="btn btn-primary waves-effect waves-light">
+                                        <button type="button" (click)="nextStep()"
+                                            class="btn btn-primary waves-effect waves-light">
                                             {{ 'Siguiente' | translate }}
                                         </button>
                                     </div>
-                                    
                                 </div>
                             </form>
                         </div>
@@ -434,15 +425,23 @@
 
                             <div class="row">
                                 <div class="d-flex justify-content-end align-items-center mt-3 gap-3">
-                                        <button (click)="saveTienda()" class="btn btn-outline-success">
-                                        {{ (tiendaSeleccionado ? 'Actualizar y Continuar' : 'Crear y Continuar') |
-                                        translate }}
+                                    
+                                    <button (click)="saveTienda()" [disabled]="isSubmitting"
+                                        class="btn btn-outline-success d-inline-flex align-items-center gap-2">
+
+                                        <!-- 🟢 Icono de Loading (Spinner) que se muestra solo si isSubmitting es true -->
+                                        <i *ngIf="isSubmitting" class="fas fa-spinner fa-spin"></i>
+
+                                        <!-- Texto condicional con tu pipe de traducción -->
+                                        <span>
+                                            {{ (tiendaSeleccionado ? 'Actualizar y Continuar' : 'Crear y Continuar') | translate }}
+                                        </span>
                                     </button>
-                                        <button class="btn btn-warning waves-effect waves-light m-r-10 btn-block"
+                                    <button class="btn btn-warning waves-effect waves-light m-r-10 btn-block"
                                         type="button" (click)="prevStep1()">{{'Anterior'|translate}}</button>
                                     <button class="btn btn-primary waves-effect waves-light m-r-10 btn-block"
                                         type="button" (click)="nextStep2()">{{'Siguiente'|translate}}</button>
-                                    </div>
+                                </div>
                             </div>
                         </div>
                         <!-- Marketing/Hero -->
@@ -451,10 +450,17 @@
 
                             <div class="row">
                                 <div class="d-flex justify-content-end align-items-center mt-3 gap-3">
-                                    <button (click)="saveTienda()" class="btn btn-outline-success">
-                                        {{ (tiendaSeleccionado ? 'Actualizar y Continuar' : 'Crear y Continuar') |
-                                        translate }}
-                                    </button>
+                                    <button (click)="saveTienda()" [disabled]="isSubmitting"
+                                            class="btn btn-outline-success d-inline-flex align-items-center gap-2">
+
+                                            <!-- 🟢 Icono de Loading (Spinner) que se muestra solo si isSubmitting es true -->
+                                            <i *ngIf="isSubmitting" class="fas fa-spinner fa-spin"></i>
+
+                                            <!-- Texto condicional con tu pipe de traducción -->
+                                            <span>
+                                                {{ (tiendaSeleccionado ? 'Actualizar y Continuar' : 'Crear y Continuar') | translate }}
+                                            </span>
+                                        </button>
                                     <button class="btn btn-warning waves-effect waves-light m-r-10 btn-block"
                                         type="button" (click)="prevStep()">{{'Anterior'|translate}}</button>
                                     <button class="btn btn-primary waves-effect waves-light m-r-10 btn-block"
@@ -464,184 +470,184 @@
                         </div>
                         <!-- imagen -->
                         <div *ngIf="currentStep === 4" class="zlip-upload-step">
-  
-  <!-- Estado de carga general -->
-  <div *ngIf="isLoadingImage || cargandoImagen" class="text-center py-5">
-    <app-loading></app-loading>
-  </div>
 
-  <div *ngIf="!isLoadingImage && !cargandoImagen">
-    
-    <!-- Alerta si no hay tienda creada -->
-    <div *ngIf="!tiendaSeleccionado" class="alert alert-warning d-flex align-items-center gap-2 rounded-3" role="alert">
-      <i class="fas fa-exclamation-triangle"></i>
-      <span class="fw-medium">{{ 'Debe Crear un post para agregar la imagen' | translate }}</span>
-    </div>
+                            <!-- Estado de carga general -->
+                            <div *ngIf="isLoadingImage || cargandoImagen" class="text-center py-5">
+                                <app-loading></app-loading>
+                            </div>
 
-    <!-- Contenido principal cuando existe la tienda -->
-    <div *ngIf="tiendaSeleccionado">
-      
-      <!-- Barra superior con especificaciones compactas -->
-      <div class="zlip-specs-card p-3 rounded-4 bg-light border mb-4">
-        <div class="d-flex flex-wrap align-items-center justify-content-between gap-2">
-          <span class="fw-bold text-dark small d-flex align-items-center gap-2">
-            <i class="fas fa-info-circle text-primary"></i>
-            {{ 'Especificaciones' | translate }}:
-          </span>
-          <div class="d-flex flex-wrap gap-3 small text-secondary">
-            <span><i class="fas fa-expand-arrows-alt text-muted me-1"></i><strong>{{ 'Tamaño máximo' | translate }}:</strong> 300px × 300px</span>
-            <span><i class="fas fa-weight-hanging text-muted me-1"></i><strong>{{ 'Peso máximo' | translate }}:</strong> 2 MB</span>
-            <span><i class="fas fa-file-image text-muted me-1"></i><strong>{{ 'Formato permitido' | translate }}:</strong> .jpg, .gif, .png</span>
-          </div>
-        </div>
-      </div>
+                            <div *ngIf="!isLoadingImage && !cargandoImagen">
 
-      <!-- Dos columnas: Logo y Banner -->
-      <div class="row g-4">
-        
-        <!-- COLUMNA 1: LOGO DE TIENDA ('img') -->
-        <div class="col-12 col-md-6">
-          <div class="card border-0 shadow-sm rounded-4 p-3 h-100 d-flex flex-column justify-content-between">
-            <div>
-              <label class="form-label fw-bold text-dark mb-2 d-flex align-items-center gap-2">
-                <i class="fas fa-store text-success"></i> Logo de la tienda
-              </label>
+                                <!-- Alerta si no hay tienda creada -->
+                                <div *ngIf="!tiendaSeleccionado"
+                                    class="alert alert-warning d-flex align-items-center gap-2 rounded-3" role="alert">
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                    <span class="fw-medium">{{ 'Debe Crear un post para agregar la imagen' | translate
+                                        }}</span>
+                                </div>
 
-              <input 
-                #fileInputLogo 
-                type="file" 
-                class="d-none" 
-                accept="image/png, image/jpeg, image/gif"
-                (change)="seleccionarArchivo($event, 'img')">
+                                <!-- Contenido principal cuando existe la tienda -->
+                                <div *ngIf="tiendaSeleccionado">
 
-              <div 
-                class="zlip-dropzone text-center p-4 rounded-4 position-relative"
-                [class.zlip-dropzone-active]="draggingType === 'img'"
-                (click)="fileInputLogo.click()"
-                (dragover)="onDragOver($event, 'img')"
-                (dragleave)="onDragLeave($event)"
-                (drop)="onDrop($event, 'img')">
-                
-                <div class="zlip-preview-wrapper mx-auto mb-3">
-                  <img 
-                    *ngIf="!imgTemp"
-                    [src]="tiendaSeleccionado.img | imagenPipe: 'tiendas'"
-                    class="img-fluid rounded-3 shadow-sm"
-                    alt="Logo actual">
-                  
-                  <img 
-                    *ngIf="imgTemp" 
-                    [src]="imgTemp" 
-                    class="img-fluid rounded-3 shadow-sm"
-                    alt="Vista previa nuevo logo">
+                                    <!-- Barra superior con especificaciones compactas -->
+                                    <div class="zlip-specs-card p-3 rounded-4 bg-light border mb-4">
+                                        <div class="d-flex flex-wrap align-items-center justify-content-between gap-2">
+                                            <span class="fw-bold text-dark small d-flex align-items-center gap-2">
+                                                <i class="fas fa-info-circle text-primary"></i>
+                                                {{ 'Especificaciones' | translate }}:
+                                            </span>
+                                            <div class="d-flex flex-wrap gap-3 small text-secondary">
+                                                <span><i class="fas fa-expand-arrows-alt text-muted me-1"></i><strong>{{
+                                                        'Tamaño máximo' | translate }}:</strong> 300px × 300px</span>
+                                                <span><i class="fas fa-weight-hanging text-muted me-1"></i><strong>{{
+                                                        'Peso máximo' | translate }}:</strong> 2 MB</span>
+                                                <span><i class="fas fa-file-image text-muted me-1"></i><strong>{{
+                                                        'Formato permitido' | translate }}:</strong> .jpg, .gif,
+                                                    .png</span>
+                                            </div>
+                                        </div>
+                                    </div>
 
-                  <span *ngIf="imgTemp" class="badge bg-success position-absolute top-0 end-0 m-2 rounded-pill">
-                    Nuevo
-                  </span>
-                </div>
+                                    <!-- Dos columnas: Logo y Banner -->
+                                    <div class="row g-4">
 
-                <p class="mb-1 fw-semibold text-dark small">
-                  <i class="fas fa-cloud-upload-alt text-success me-1"></i>
-                  <span *ngIf="draggingType === 'img'">{{ '¡Suelta el logo aquí!' | translate }}</span>
-                  <span *ngIf="draggingType !== 'img'">
-                    {{ imgTemp ? ('Arrastra otro logo o haz clic' | translate) : ('Arrastra el logo o haz clic aquí' | translate) }}
-                  </span>
-                </p>
-                <span class="text-muted zlip-dropzone-hint">JPG, PNG o GIF (Max. 2MB)</span>
-              </div>
-            </div>
+                                        <!-- COLUMNA 1: LOGO DE TIENDA ('img') -->
+                                        <div class="col-12 col-md-6">
+                                            <div
+                                                class="card border-0 shadow-sm rounded-4 p-3 h-100 d-flex flex-column justify-content-between">
+                                                <div>
+                                                    <label
+                                                        class="form-label fw-bold text-dark mb-2 d-flex align-items-center gap-2">
+                                                        <i class="fas fa-store text-success"></i> Logo de la tienda
+                                                    </label>
 
-            <div class="mt-3">
-              <button 
-                type="button" 
-                [disabled]="!imagenSubir || tipoSeleccionado !== 'img'" 
-                (click)="subirImagen('img')"
-                class="btn btn-success w-100 py-2 fw-semibold rounded-3 d-inline-flex align-items-center justify-content-center gap-2">
-                <i class="fa fa-save"></i> {{ 'Subir Logo' | translate }}
-              </button>
-            </div>
-          </div>
-        </div>
+                                                    <input #fileInputLogo type="file" class="d-none"
+                                                        accept="image/png, image/jpeg, image/gif"
+                                                        (change)="seleccionarArchivo($event, 'img')">
 
-        <!-- COLUMNA 2: BANNER / HERO ('img_hero') -->
-        <div class="col-12 col-md-6">
-          <div class="card border-0 shadow-sm rounded-4 p-3 h-100 d-flex flex-column justify-content-between">
-            <div>
-              <label class="form-label fw-bold text-dark mb-2 d-flex align-items-center gap-2">
-                <i class="fas fa-image text-primary"></i> Imagen Banner (Hero)
-              </label>
+                                                    <div class="zlip-dropzone text-center p-4 rounded-4 position-relative"
+                                                        [class.zlip-dropzone-active]="draggingType === 'img'"
+                                                        (click)="fileInputLogo.click()"
+                                                        (dragover)="onDragOver($event, 'img')"
+                                                        (dragleave)="onDragLeave($event)"
+                                                        (drop)="onDrop($event, 'img')">
 
-              <input 
-                #fileInputHero 
-                type="file" 
-                class="d-none" 
-                accept="image/png, image/jpeg, image/gif"
-                (change)="seleccionarArchivo($event, 'img_hero')">
+                                                        <div class="zlip-preview-wrapper mx-auto mb-3">
+                                                            <img *ngIf="!imgTemp"
+                                                                [src]="tiendaSeleccionado.img | imagenPipe: 'tiendas'"
+                                                                class="img-fluid rounded-3 shadow-sm" alt="Logo actual">
 
-              <div 
-                class="zlip-dropzone text-center p-4 rounded-4 position-relative"
-                [class.zlip-dropzone-active]="draggingType === 'img_hero'"
-                (click)="fileInputHero.click()"
-                (dragover)="onDragOver($event, 'img_hero')"
-                (dragleave)="onDragLeave($event)"
-                (drop)="onDrop($event, 'img_hero')">
-                
-                <div class="zlip-preview-wrapper zlip-preview-banner mx-auto mb-3">
-                  <img 
-                    *ngIf="!imgHeroTemp"
-                    [src]="tiendaSeleccionado.img_hero | imagenPipe: 'tiendas'"
-                    class="img-fluid rounded-3 shadow-sm"
-                    alt="Banner actual">
-                  
-                  <img 
-                    *ngIf="imgHeroTemp" 
-                    [src]="imgHeroTemp" 
-                    class="img-fluid rounded-3 shadow-sm"
-                    alt="Vista previa nuevo banner">
+                                                            <img *ngIf="imgTemp" [src]="imgTemp"
+                                                                class="img-fluid rounded-3 shadow-sm"
+                                                                alt="Vista previa nuevo logo">
 
-                  <span *ngIf="imgHeroTemp" class="badge bg-success position-absolute top-0 end-0 m-2 rounded-pill">
-                    Nuevo
-                  </span>
-                </div>
+                                                            <span *ngIf="imgTemp"
+                                                                class="badge bg-success position-absolute top-0 end-0 m-2 rounded-pill">
+                                                                Nuevo
+                                                            </span>
+                                                        </div>
 
-                <p class="mb-1 fw-semibold text-dark small">
-                  <i class="fas fa-cloud-upload-alt text-success me-1"></i>
-                  <span *ngIf="draggingType === 'img_hero'">{{ '¡Suelta el banner aquí!' | translate }}</span>
-                  <span *ngIf="draggingType !== 'img_hero'">
-                    {{ imgHeroTemp ? ('Arrastra otro banner o haz clic' | translate) : ('Arrastra el banner o haz clic aquí' | translate) }}
-                  </span>
-                </p>
-                <span class="text-muted zlip-dropzone-hint">JPG, PNG o GIF (Max. 2MB)</span>
-              </div>
-            </div>
+                                                        <p class="mb-1 fw-semibold text-dark small">
+                                                            <i class="fas fa-cloud-upload-alt text-success me-1"></i>
+                                                            <span *ngIf="draggingType === 'img'">{{ '¡Suelta el logo aquí!' | translate }}</span>
+                                                            <span *ngIf="draggingType !== 'img'">
+                                                                {{ imgTemp ? ('Arrastra otro logo o haz clic' |
+                                                                translate) : ('Arrastra el logo o haz clic aquí' |
+                                                                translate) }}
+                                                            </span>
+                                                        </p>
+                                                        <span class="text-muted zlip-dropzone-hint">JPG, PNG o GIF (Max.
+                                                            2MB)</span>
+                                                    </div>
+                                                </div>
 
-            <div class="mt-3">
-              <button 
-                type="button" 
-                [disabled]="!imagenSubir || tipoSeleccionado !== 'img_hero'" 
-                (click)="subirImagen('img_hero')"
-                class="btn btn-success w-100 py-2 fw-semibold rounded-3 d-inline-flex align-items-center justify-content-center gap-2">
-                <i class="fa fa-save"></i> {{ 'Subir img Banner' | translate }}
-              </button>
-            </div>
-          </div>
-        </div>
+                                                <div class="mt-3">
+                                                    <button type="button"
+                                                        [disabled]="!imagenSubir || tipoSeleccionado !== 'img'"
+                                                        (click)="subirImagen('img')"
+                                                        class="btn btn-success w-100 py-2 fw-semibold rounded-3 d-inline-flex align-items-center justify-content-center gap-2">
+                                                        <i class="fa fa-save"></i> {{ 'Subir Logo' | translate }}
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
 
-      </div>
+                                        <!-- COLUMNA 2: BANNER / HERO ('img_hero') -->
+                                        <div class="col-12 col-md-6">
+                                            <div
+                                                class="card border-0 shadow-sm rounded-4 p-3 h-100 d-flex flex-column justify-content-between">
+                                                <div>
+                                                    <label
+                                                        class="form-label fw-bold text-dark mb-2 d-flex align-items-center gap-2">
+                                                        <i class="fas fa-image text-primary"></i> Imagen Banner (Hero)
+                                                    </label>
 
-      <!-- Botón Anterior abajo -->
-      <div class="d-flex justify-content-start mt-4">
-        <button 
-          class="btn btn-outline-secondary px-4 py-2 fw-medium rounded-3"
-          type="button" 
-          (click)="prevStep2()">
-          <i class="fas fa-arrow-left me-1"></i> {{ 'Anterior' | translate }}
-        </button>
-      </div>
+                                                    <input #fileInputHero type="file" class="d-none"
+                                                        accept="image/png, image/jpeg, image/gif"
+                                                        (change)="seleccionarArchivo($event, 'img_hero')">
 
-    </div>
-  </div>
-</div>
+                                                    <div class="zlip-dropzone text-center p-4 rounded-4 position-relative"
+                                                        [class.zlip-dropzone-active]="draggingType === 'img_hero'"
+                                                        (click)="fileInputHero.click()"
+                                                        (dragover)="onDragOver($event, 'img_hero')"
+                                                        (dragleave)="onDragLeave($event)"
+                                                        (drop)="onDrop($event, 'img_hero')">
+
+                                                        <div
+                                                            class="zlip-preview-wrapper zlip-preview-banner mx-auto mb-3">
+                                                            <img *ngIf="!imgHeroTemp"
+                                                                [src]="tiendaSeleccionado.img_hero | imagenPipe: 'tiendas'"
+                                                                class="img-fluid rounded-3 shadow-sm"
+                                                                alt="Banner actual">
+
+                                                            <img *ngIf="imgHeroTemp" [src]="imgHeroTemp"
+                                                                class="img-fluid rounded-3 shadow-sm"
+                                                                alt="Vista previa nuevo banner">
+
+                                                            <span *ngIf="imgHeroTemp"
+                                                                class="badge bg-success position-absolute top-0 end-0 m-2 rounded-pill">
+                                                                Nuevo
+                                                            </span>
+                                                        </div>
+
+                                                        <p class="mb-1 fw-semibold text-dark small">
+                                                            <i class="fas fa-cloud-upload-alt text-success me-1"></i>
+                                                            <span *ngIf="draggingType === 'img_hero'">{{ '¡Suelta el  banner aquí!' | translate }}</span>
+                                                            <span *ngIf="draggingType !== 'img_hero'">
+                                                                {{ imgHeroTemp ? ('Arrastra otro banner o haz clic' |
+                                                                translate) : ('Arrastra el banner o haz clic aquí' |
+                                                                translate) }}
+                                                            </span>
+                                                        </p>
+                                                        <span class="text-muted zlip-dropzone-hint">JPG, PNG o GIF (Max.
+                                                            2MB)</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="mt-3">
+                                                    <button type="button"
+                                                        [disabled]="!imagenSubir || tipoSeleccionado !== 'img_hero'"
+                                                        (click)="subirImagen('img_hero')"
+                                                        class="btn btn-success w-100 py-2 fw-semibold rounded-3 d-inline-flex align-items-center justify-content-center gap-2">
+                                                        <i class="fa fa-save"></i> {{ 'Subir img Banner' | translate }}
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <!-- Botón Anterior abajo -->
+                                    <div class="d-flex justify-content-start mt-4">
+                                        <button class="btn btn-outline-secondary px-4 py-2 fw-medium rounded-3"
+                                            type="button" (click)="prevStep2()">
+                                            <i class="fas fa-arrow-left me-1"></i> {{ 'Anterior' | translate }}
+                                        </button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
 
 
 

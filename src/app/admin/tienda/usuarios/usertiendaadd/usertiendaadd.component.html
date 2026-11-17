@@ -1,14 +1,14 @@
 <div class="clear"></div>
 <ul class="nav nav-tabs profile-tab">
-        <li class="nav-item">
-            <a href="#" onclick="return false;" class="nav-link " [ngClass]="{'active': option_selectedd == 1}"
-                (click)="optionSelected(1)"> {{'Perfil'|translate}}</a>
-        </li>
-        <li *ngIf="isDriver" class="nav-item">
-            <a href="#" onclick="return false;" class="nav-link " [ngClass]="{'active': option_selectedd == 2}"
-                (click)="optionSelected(2)">{{'Chofer'|translate}}</a>
-        </li>
-    </ul>
+    <li class="nav-item">
+        <a href="#" onclick="return false;" class="nav-link " [ngClass]="{'active': option_selectedd == 1}"
+            (click)="optionSelected(1)"> {{'Perfil'|translate}}</a>
+    </li>
+    <li *ngIf="isDriver" class="nav-item">
+        <a href="#" onclick="return false;" class="nav-link " [ngClass]="{'active': option_selectedd == 2}"
+            (click)="optionSelected(2)">{{'Chofer'|translate}}</a>
+    </li>
+</ul>
 <div *ngIf="option_selectedd == 1">
     <div class="row">
 
@@ -21,7 +21,8 @@
                     <form class="form p-t-20 form-horizontal form-material" [formGroup]="registerForm">
                         <div class="row">
                             <div class="form-group col-xs-12 col-sm-6">
-                                <label for="exampleInputuname">{{'Nombre'|translate}} <span class="required">*</span></label>
+                                <label for="exampleInputuname">{{'Nombre'|translate}} <span
+                                        class="required">*</span></label>
                                 <div class="input-group">
                                     <input class="form-control" type="text" formControlName="first_name"
                                         placeholder="Nombre">
@@ -37,7 +38,8 @@
                                 </div>
                             </div>
                             <div class="form-group col-xs-12 col-sm-6">
-                                <label for="exampleInputuname">{{'Apellido'|translate}} <span class="required">*</span></label>
+                                <label for="exampleInputuname">{{'Apellido'|translate}} <span
+                                        class="required">*</span></label>
                                 <div class="input-group">
 
                                     <input class="form-control" type="text" formControlName="last_name"
@@ -55,7 +57,8 @@
                                 </div>
                             </div>
                             <div class="form-group col-xs-12 col-sm-6">
-                                <label for="exampleInputuname">{{'Teléfono'|translate}} <span class="required">*</span></label>
+                                <label for="exampleInputuname">{{'Teléfono'|translate}} <span
+                                        class="required">*</span></label>
                                 <div class="input-group">
 
                                     <input class="form-control" type="text" formControlName="telefono">
@@ -71,7 +74,8 @@
                                 </div>
                             </div>
                             <div class="form-group col-xs-12 col-sm-6">
-                                <label for="exampleInputuname">{{'Identificación'|translate}} <span class="required">*</span></label>
+                                <label for="exampleInputuname">{{'Identificación'|translate}} <span
+                                        class="required">*</span></label>
                                 <div class="input-group">
 
                                     <input class="form-control" type="text" formControlName="numdoc">
@@ -106,7 +110,8 @@
                                 </div>
                             </div>
                             <div class="form-group col-xs-12 col-sm-6">
-                                <label for="exampleInputuname">{{'Contraseña'|translate}} <span class="required">*</span></label>
+                                <label for="exampleInputuname">{{'Contraseña'|translate}} <span
+                                        class="required">*</span></label>
                                 <div class="input-group">
                                     <input class="form-control" type="password" formControlName="password"
                                         placeholder="Password">
@@ -122,7 +127,8 @@
                                 </div>
                             </div>
                             <div class="form-group col-xs-12 col-sm-6">
-                                <label for="exampleInputuname">{{'Confirmar Contraseña'|translate}} <span class="required">*</span></label>
+                                <label for="exampleInputuname">{{'Confirmar Contraseña'|translate}} <span
+                                        class="required">*</span></label>
                                 <div class="input-group">
                                     <input class="form-control" type="password" formControlName="password2"
                                         placeholder="Confirm Password">
@@ -142,17 +148,17 @@
                                 <div class="input-group">
                                     <select formControlName="local" name="local" class="form-control">
                                         <option *ngFor="let tienda of listTiendas" value="{{tienda._id}}">
-                                             {{tienda.nombre}} | {{tienda.local}}
+                                            {{tienda.nombre}} | {{tienda.local}}
                                         </option>
                                     </select>
                                 </div>
                             </div>
-                            
+
                         </div>
                         <app-loading *ngIf="cargando"></app-loading>
                         <button type="button" [disabled]="registerForm.invalid" *ngIf="!cargando" (click)="guardar()"
-                                class="btn btn-outline-success btn-md btn-block text-uppercase btn-rounded">
-                                <i class="fa fa-save"></i> {{'Guardar'|translate}} 
+                            class="btn btn-outline-success btn-md btn-block text-uppercase btn-rounded">
+                            <i class="fa fa-save"></i> {{'Guardar'|translate}}
                         </button>
                     </form>
                 </div>
@@ -162,22 +168,40 @@
             <app-loading *ngIf="cargandoImagen"></app-loading>
             <div class="card" *ngIf="!cargandoImagen">
                 <div class="card-body">
-                    <h4 class="card-title">{{'Imagen'|translate}}</h4>
-                    <h6 class="card-subtitle">{{'Foto de Perfil'|translate}}</h6>
-                    <div class="text-center">
-                        <img *ngIf="!imgTemp" [src]="usertiendaSeleccionado.img | imagenPipe: 'usuarios'  "
-                            class="img-responsive img-thumbnail" alt="">
-                        <img *ngIf="imgTemp" [src]="imgTemp" class="img-avatar">
+                    <h4 class="card-title">
+                        <i class="fa fa-user-circle text-success m-r-5"></i> {{'Foto de Perfil'|translate}}
+                    </h4>
+
+                    <!-- Zona Drag & Drop -->
+                    <div class="drop-zone" [class.drag-over]="isDragging" (click)="fileInput.click()"
+                        (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)" (drop)="onDrop($event)">
+
+                        <!-- Vista previa de la imagen -->
+                        <div class="preview-wrapper">
+                            <img *ngIf="!imgTemp" [src]="usertiendaSeleccionado.img | imagenPipe: 'usuarios'"
+                                class="img-preview" alt="Foto de perfil">
+                            <img *ngIf="imgTemp" [src]="imgTemp" class="img-preview" alt="Vista previa">
+                        </div>
+
+                        <!-- Textos e ícono de subida -->
+                        <div class="drop-text">
+                            <i class="fa fa-cloud-upload text-success"></i>
+                            <span>{{'Arrastra la imagen o haz clic aquí'|translate}}</span>
+                        </div>
+                        <small class="drop-hint">JPG, PNG o GIF (Max. 2MB)</small>
+
+                        <!-- Input oculto -->
+                        <input #fileInput type="file" accept="image/png, image/jpeg, image/gif" style="display: none;"
+                            (change)="onFileSelected($event)">
                     </div>
-                    <input type="file" (change)="cambiarImagen($event.target.files[0])">
-                    <br>
-                    <br>
+
                     <button type="button" [disabled]="!imagenSubir" (click)="subirImagen()"
-                        class="btn btn-success waves-effect waves-light m-r-10 btn-block">
-                        <i class="fa fa-save"></i> {{'Subir'|translate}}
+                        class="btn btn-success waves-effect waves-light btn-block m-t-15">
+                        <i class="fa fa-save"></i> {{'Subir Foto'|translate}}
                     </button>
                 </div>
             </div>
+
         </div>
     </div>
 </div>

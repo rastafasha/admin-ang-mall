@@ -1,4 +1,6 @@
-<app-back-instrucc (onOpenHelp)="instruccionesModal.open()"></app-back-instrucc>
+
+<app-back-instrucc [displayInfo]="true" [displayBack]="true" (onOpenHelp)="instruccionesModal.open()"></app-back-instrucc>
+
 
 <div class="row animated fadeIn fast">
     <div class="col-12" *ngIf="user.role === 'SUPERADMIN'">

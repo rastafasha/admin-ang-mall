@@ -38,6 +38,8 @@ export class PromoeditComponent implements OnInit, OnChanges {
   public promocionForm: FormGroup;
 
   public promocions: Promocion[] = [];
+  isDragging = false;
+  isSubmitting = false;
 
   public imagenSubir: File;
   public imgTemp: any = null;
@@ -71,6 +73,7 @@ export class PromoeditComponent implements OnInit, OnChanges {
       end: ['', Validators.required],
       enlace: ['', Validators.required],
       estado: [''],
+      tipo: [''],
       colorfondo: ['', Validators.required]
     })
   }
@@ -93,6 +96,7 @@ export class PromoeditComponent implements OnInit, OnChanges {
         enlace: promocion.enlace,
         estado: promocion.estado,
         colorfondo: promocion.colorfondo,
+        tipo: promocion.tipo,
         img: promocion.img
       });
       this.promocionSeleccionado = promocion;
@@ -118,6 +122,7 @@ export class PromoeditComponent implements OnInit, OnChanges {
       enlace: null,
       estado: null,
       colorfondo: null,
+      tipo: null,
       img: null
     });
     // Emit event to parent to reset the projectSeleccionado variable
@@ -134,11 +139,13 @@ export class PromoeditComponent implements OnInit, OnChanges {
     const enlace = this.promocionForm.get('enlace');
     const estado = this.promocionForm.get('estado');
     const colorfondo = this.promocionForm.get('colorfondo');
+    const tipo = this.promocionForm.get('tipo');
 
     if (first_title?.invalid || producto_title?.invalid ||
       subtitulo?.invalid || etiqueta?.invalid ||
       end?.invalid || enlace?.invalid ||
-      estado?.invalid || colorfondo?.invalid
+      estado?.invalid || colorfondo?.invalid ||
+      tipo?.invalid 
 
     ) {
       first_title?.markAsTouched();
@@ -149,6 +156,7 @@ export class PromoeditComponent implements OnInit, OnChanges {
       enlace?.markAsTouched();
       estado?.markAsTouched();
       colorfondo?.markAsTouched();
+      tipo?.markAsTouched();
       return;
     }
     this.currentStep = 2;
@@ -160,7 +168,7 @@ export class PromoeditComponent implements OnInit, OnChanges {
 
 
   onSubmit() {
-
+    this.isSubmitting =true;
     if (!this.promocionForm.valid) {
       //mostramos las alertas de los campos requeridos
       this.promocionForm.markAllAsTouched(); // Esto activa las validaciones visuales
@@ -186,6 +194,7 @@ export class PromoeditComponent implements OnInit, OnChanges {
       }
       this.promocionService.actualizarPromocion(data).subscribe(
         resp => {
+          this.isSubmitting =false;
           Swal.fire('Actualizado', `${producto_title} actualizado correctamente`, 'success');
           // Close modal programmatically
           const modalElement = document.getElementById('editPromocion');
@@ -204,42 +213,94 @@ export class PromoeditComponent implements OnInit, OnChanges {
       this.promocionService.crearPromocion(this.promocionForm.value)
         .subscribe((resp: any) => {
           this.promocionSeleccionado = resp.promocion;
+          this.isSubmitting =false;
           Swal.fire('¡Paso 1 completado!', 'Post creado. Ahora sube la imagen.', 'success');
           // Como estmos creando, al finalizar debe ir al paso 2 para subir la imagen
           this.currentStep = 2;
         })
     }
   }
+onDragOver(event: DragEvent) {
+  event.preventDefault();
+  event.stopPropagation();
+  this.isDragging = true;
+}
 
-  cambiarImagen(file: File) {
-    this.imagenSubir = file;
+onDragLeave(event: DragEvent) {
+  event.preventDefault();
+  event.stopPropagation();
+  this.isDragging = false;
+}
 
-    if (!file) {
-      return this.imgTemp = null;
-    }
+onDrop(event: DragEvent) {
+  event.preventDefault();
+  event.stopPropagation();
+  this.isDragging = false;
 
-    const reader = new FileReader();
-    const url64 = reader.readAsDataURL(file);
+  const files = event.dataTransfer?.files;
+  if (files && files.length > 0) {
+    this.cambiarImagen(files[0]);
+  }
+}
 
-    reader.onloadend = () => {
-      this.imgTemp = reader.result;
-    }
+onFileSelected(event: any) {
+  const file = event.target?.files?.[0];
+  if (file) {
+    this.cambiarImagen(file);
+  }
+}
+
+cambiarImagen(file: File) {
+  if (!file) {
+    this.imagenSubir = null;
+    return this.imgTemp = null;
   }
 
-  subirImagen() {
-    this.isLoadingImage = true;
-    this.fileUploadService
-      .actualizarFoto(this.imagenSubir, 'promocions', this.promocionSeleccionado._id)
-      .then(img => {
-        this.promocionSeleccionado.img = img;
-        this.isLoadingImage = false;
-        Swal.fire('Guardado', 'La imagen fue actualizada', 'success');
-
-      }).catch(err => {
-        Swal.fire('Error', 'No se pudo subir la imagen', 'error');
-
-      })
+  // 1. Validar formato permitido
+  const tiposPermitidos = ['image/jpeg', 'image/png', 'image/gif'];
+  if (!tiposPermitidos.includes(file.type)) {
+    this.imagenSubir = null;
+    this.imgTemp = null;
+    Swal.fire('Formato inválido', 'Solo se permiten imágenes JPG, PNG o GIF', 'warning');
+    return;
   }
+
+  // 2. Validar peso máximo (2 MB)
+  const maxBytes = 2 * 1024 * 1024;
+  if (file.size > maxBytes) {
+    this.imagenSubir = null;
+    this.imgTemp = null;
+    Swal.fire('Archivo muy pesado', 'La imagen no debe superar los 2 MB', 'warning');
+    return;
+  }
+
+  // 3. Procesar vista previa si pasa las validaciones
+  this.imagenSubir = file;
+  const reader = new FileReader();
+  reader.readAsDataURL(file);
+
+  reader.onloadend = () => {
+    this.imgTemp = reader.result;
+  };
+}
+
+subirImagen() {
+  this.isLoadingImage = true;
+
+  this.fileUploadService
+    .actualizarFoto(this.imagenSubir, 'promocions', this.promocionSeleccionado._id)
+    .then(img => {
+      this.promocionSeleccionado.img = img;
+      this.imagenSubir = null; // Deshabilita el botón de subir hasta que elijan otra foto
+      this.isLoadingImage = false;
+      Swal.fire('Guardado', 'La imagen fue actualizada', 'success');
+    })
+    .catch(err => {
+      console.error(err);
+      this.isLoadingImage = false; // Importante: apaga el spinner si falla
+      Swal.fire('Error', 'No se pudo subir la imagen', 'error');
+    });
+}
 
 
 }

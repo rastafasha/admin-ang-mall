@@ -10,6 +10,8 @@ export class BackInstruccComponent {
 
   @Output() onOpenHelp = new EventEmitter<void>();
   @Input()instruccionesModal;
+  @Input()displayInfo = false;
+  @Input()displayBack = false;
 
   abrirAyuda() {
     this.onOpenHelp.emit();

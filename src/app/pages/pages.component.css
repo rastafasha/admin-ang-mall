@@ -1,9 +1,54 @@
-.page{
-    float: left; 
+.page {
+    float: left;
+    width: 70vw;
 }
 
-@media(max-width:768px){
-    .page{
-     width: 80vw;
+/* Convierte el contenedor en flex permitiendo que el resto del contenido baje */
+.header-align-container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
 }
+
+/* El breadcrumb ocupa la parte izquierda */
+.header-align-container .page {
+    flex: 1;
+    min-width: 200px;
+}
+
+/* El router-outlet no debe generar caja física para que los hijos participen en el flex */
+.header-align-container router-outlet {
+    display: none;
+}
+
+/* El componente hijo actúa como contenedor transparente (display: contents) */
+.header-align-container ::ng-deep router-outlet + * {
+    display: contents;
+}
+
+/* La barra de botones del hijo sube a la derecha del breadcrumb */
+.header-align-container ::ng-deep app-back-instrucc {
+    display: flex;
+    align-items: center;
+    /* justify-content: flex-end; */
+    margin-bottom: 15px;
+}
+
+/* El resto del contenido del hijo (tablas, tarjetas, formularios) ocupa el 100% abajo */
+.header-align-container ::ng-deep router-outlet + * > *:not(app-back-instrucc) {
+    width: 100%;
+    flex-basis: 100%;
+}
+
+@media (max-width: 768px) {
+    .page {
+        width: 100vw;
+    }
+    .header-align-container {
+        flex-direction: column;
+    }
+    .header-align-container {
+        align-items: flex-start;
+    }
 }

@@ -74,30 +74,41 @@
         </div>
     </div>
     <div class="col-md-6">
-        <div class="card">
-            <div class="card-body">
-                <h4 class="card-title">{{'Imagen'|translate}}</h4>
-                <h6 class="card-subtitle">{{'Foto de Perfil'|translate}}</h6>
-                <div class="text-center">
-                    <img *ngIf="!imgTemp" [src]="usuario.img" class="img-avatar">
-                    <img *ngIf="imgTemp" [src]="imgTemp" class="img-avatar">
-                </div>
-                <input type="file" (change)="cambiarImagen($event.target.files[0])">
-                <br>
-                <br>
-                <button type="button" [disabled]="!imagenSubir" (click)="subirImagen()"
-                    class="btn btn-success waves-effect waves-light m-r-10 btn-block">
-                    <i class="fa fa-save"></i> {{'Subir'|translate}}
-                </button>
-                <div class="col-xs-12">
-                    <h4>{{'Especificaciones'}}:</h4>
-                    <ul>
-                        <li>{{'Tamaño máximo'}}: 300px X 300px</li>
-                        <li>{{'Peso máximo'}}: 3 mega bites</li>
-                        <li>{{'Formato permitido'}}: jpg, .gif, .png</li>
-                    </ul>
+        <app-loading *ngIf="cargandoImagen"></app-loading>
+            <div class="card" *ngIf="!cargandoImagen">
+                <div class="card-body">
+                    <h4 class="card-title">
+                        <i class="fa fa-user-circle text-success m-r-5"></i> {{'Foto de Perfil'|translate}}
+                    </h4>
+
+                    <!-- Zona Drag & Drop -->
+                    <div class="drop-zone" [class.drag-over]="isDragging" (click)="fileInput.click()"
+                        (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)" (drop)="onDrop($event)">
+
+                        <!-- Vista previa de la imagen -->
+                        <div class="preview-wrapper">
+                            <img *ngIf="!imgTemp" [src]="usuario.img | imagenPipe: 'usuarios'"
+                                class="img-preview" alt="Foto de perfil">
+                            <img *ngIf="imgTemp" [src]="imgTemp" class="img-preview" alt="Vista previa">
+                        </div>
+
+                        <!-- Textos e ícono de subida -->
+                        <div class="drop-text">
+                            <i class="fa fa-cloud-upload text-success"></i>
+                            <span>{{'Arrastra la imagen o haz clic aquí'|translate}}</span>
+                        </div>
+                        <small class="drop-hint">JPG, PNG o GIF (Max. 2MB)</small>
+
+                        <!-- Input oculto -->
+                        <input #fileInput type="file" accept="image/png, image/jpeg, image/gif" style="display: none;"
+                            (change)="onFileSelected($event)">
+                    </div>
+
+                    <button type="button" [disabled]="!imagenSubir" (click)="subirImagen()"
+                        class="btn btn-success waves-effect waves-light btn-block m-t-15">
+                        <i class="fa fa-save"></i> {{'Subir Foto'|translate}}
+                    </button>
                 </div>
             </div>
-        </div>
     </div>
 </div>

@@ -1,14 +1,6 @@
-<div style="display: flex; gap:20px">
-    <div class="">
-        <app-backbutton></app-backbutton>
-    </div>
-    <div class="">
-        <a href="javascript:;" (click)="PageSize()" class="btn btn-primary ">
-            <i class="fas fa-sync"></i>
-        </a>
-    </div>
-</div>
-<div class="clear"></div>
+
+<app-back-instrucc [displayInfo]="false" [displayBack]="true" ></app-back-instrucc>
+
 <app-skeleton-loader *ngIf="isLoading" [rows]="4" [columns]="8"></app-skeleton-loader>
 <div class="clear"></div>
 
@@ -24,6 +16,12 @@
             <a href="#" onclick="return false;" class="nav-link " [ngClass]="{'active': option_selectedd == 2}"
                 (click)="optionSelected(2)">
                 {{ 'Asignaciones' | translate }}
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="#" onclick="return false;" class="btn btn-primary" [ngClass]="{'active': option_selectedd == 2}"
+                (click)="PageSize()">
+                <i class="fas fa-sync"></i>
             </a>
         </li>
     </ul>

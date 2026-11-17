@@ -117,3 +117,173 @@
   display: block;
   pointer-events: none;
 }
+
+
+
+
+.switch-wrapper {
+    display: flex;
+    align-items: center;
+    height: 34px; /* Mantiene la altura estándar de tus form-control de Bootstrap */
+}
+
+.toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 46px;
+    height: 24px;
+    margin: 0;
+}
+
+/* Ocultamos el checkbox nativo */
+.toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* Fondo gris del switch (estado apagado - como en tu foto) */
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #cccccc;
+    transition: 0.3s;
+    border-radius: 34px;
+}
+
+/* Círculo blanco interior */
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: 0.3s;
+    border-radius: 50%;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+/* Color cuando está activado (true) */
+input:checked + .slider {
+    background-color: #2196F3; /* Cambia este código por el color principal de tu app */
+}
+
+/* Movimiento del círculo a la derecha */
+input:checked + .slider:before {
+    transform: translateX(22px);
+}
+
+
+.persiana-contenedor {
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  margin-bottom: 15px;
+  background-color: #fff;
+  overflow: hidden;
+}
+
+.persiana-header {
+  width: 100%;
+  background-color: #f8f9fa;
+  border: none;
+  padding: 12px 15px;
+  text-align: left;
+  font-weight: 600;
+  color: #333;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+
+.persiana-header:hover {
+  background-color: #eef1f5;
+}
+
+.flecha {
+  font-size: 12px;
+  transition: transform 0.3s ease;
+}
+
+.flecha.rotada {
+  transform: rotate(180deg);
+}
+
+/* Efecto persiana suave */
+.persiana-cuerpo {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.3s ease-out;
+}
+
+.persiana-cuerpo.abierta {
+  grid-template-rows: 1fr;
+}
+
+.persiana-contenido {
+  overflow: hidden;
+  padding: 0 15px;
+}
+
+.persiana-cuerpo.abierta .persiana-contenido {
+  padding: 15px;
+  border-top: 1px solid #ddd;
+}
+
+.persiana-form {
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  margin-bottom: 12px;
+  background-color: #ffffff;
+  overflow: hidden;
+}
+
+.persiana-summary {
+  padding: 12px 15px;
+  background-color: #f8f9fa;
+  font-weight: 600;
+  color: #444;
+  cursor: pointer;
+  user-select: none; /* Evita que se seleccione el texto al hacer clic rápido */
+  list-style: none;  /* Oculta la flecha por defecto en algunos navegadores */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+/* Oculta la flecha por defecto en Chrome y Safari */
+.persiana-summary::-webkit-details-marker {
+  display: none;
+}
+
+/* Agrega una flecha limpia a la derecha */
+.persiana-summary::after {
+  content: '▼';
+  font-size: 11px;
+  color: #777;
+  transition: transform 0.25s ease;
+  
+}
+
+/* Rota la flecha cuando la persiana está abierta */
+.persiana-form[open] .persiana-summary::after {
+  transform: rotate(180deg);
+}
+
+.persiana-form[open] .persiana-summary {
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.persiana-contenido {
+  padding: 15px;
+  margin: 0; /* Corrige el margen negativo de la clase .row de Bootstrap */
+}
+
+

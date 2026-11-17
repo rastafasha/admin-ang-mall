@@ -5,11 +5,11 @@
     <app-sidebar></app-sidebar>
 
     <div class="page-wrapper">
-        <div class="container-fluid">
+        <div class="container-fluid header-align-container">
             <!-- Breadcrumbs -->
-            <div class="col-xs-12 col-sm-11 page" style="" >
-                    <app-breadcrumbs></app-breadcrumbs>
-                </div>
+            <div class="page" >
+                <app-breadcrumbs></app-breadcrumbs>
+            </div>
             <!-- Mi sistema de rutas -->
             <router-outlet></router-outlet>
 
@@ -19,7 +19,8 @@
         <!-- footer -->
         <!-- ============================================================== -->
         <footer class="footer">
-            <small>© {{ year }} Admin Zlipmenu. | Desarrollado por: <a href="https://malcolmcordova.com" target="_blank">Malcolm Córdova Studio Design</a></small>
+            <small>© {{ year }} Admin Zlipmenu. | Desarrollado por: <a href="https://malcolmcordova.com"
+                    target="_blank">Malcolm Córdova Studio Design</a></small>
         </footer>
         <!-- ============================================================== -->
         <!-- End footer -->
@@ -29,3 +30,4 @@
 
 
 </div>
+

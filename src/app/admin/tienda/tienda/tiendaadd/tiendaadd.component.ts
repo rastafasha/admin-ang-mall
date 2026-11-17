@@ -74,6 +74,8 @@ export class TiendaaddComponent implements OnInit, OnChanges {
 
   draggingType: 'img' | 'img_hero' | null = null;
 tipoSeleccionado: 'img' | 'img_hero' | null = null;
+mostrarOpcionesAvanzadas = false;
+isSubmitting = false;
 
   constructor(
     private fb: FormBuilder,
@@ -100,6 +102,10 @@ tipoSeleccionado: 'img' | 'img_hero' | null = null;
     //   this.meliStatus = 'CONFIGURADO'; 
     // }
   }
+
+  togglePersiana() {
+  this.mostrarOpcionesAvanzadas = !this.mostrarOpcionesAvanzadas;
+}
 
   validarFormulario() {
     this.tiendaForm = this.fb.group({
@@ -139,6 +145,7 @@ tipoSeleccionado: 'img' | 'img_hero' | null = null;
       color_primario: ['',],
       color_fondo: ['',],
       isFeatured: [false,],
+      usaPromocion: [false,],
       user: [this.user.uid],
 
       usaMercadoLibre: [false], // 🚀 NUEVO SWITCH
@@ -201,6 +208,7 @@ tipoSeleccionado: 'img' | 'img_hero' | null = null;
         has_cotizacion: tienda.has_cotizacion,
         has_reservacion: tienda.has_reservacion,
         capacidad_por_hora: tienda.capacidad_por_hora,
+        usaPromocion: tienda.usaPromocion,
         color_primario: tienda.color_primario,
         color_fondo: tienda.color_fondo,
         img: tienda.img,
@@ -257,6 +265,7 @@ tipoSeleccionado: 'img' | 'img_hero' | null = null;
       state_banner: null,
       has_reservacion: null,
       has_cotizacion: null,
+      usaPromocion: null,
       usaMercadoLibre: null,
       texto_hero_uno: null,
       texto_hero_dos: null,
@@ -400,7 +409,7 @@ tipoSeleccionado: 'img' | 'img_hero' | null = null;
 
 
   saveTienda() {
-    this.cargando = true;
+    this.isSubmitting = true;
     if (!this.tiendaForm.valid) {
       //mostramos las alertas de los campos requeridos
       this.tiendaForm.markAllAsTouched(); // Esto activa las validaciones visuales
@@ -425,7 +434,7 @@ tipoSeleccionado: 'img' | 'img_hero' | null = null;
 
       this.tiendaService.actualizarTienda(data).subscribe(
         resp => {
-          this.cargando = false;
+          this.isSubmitting = false;
           // 1. Mensajes personalizados según el rol
           if (this.user.role === 'ADMIN') {
             Swal.fire('Actualizado', `${nombre} actualizado correctamente.`, 'success');
@@ -483,7 +492,7 @@ tipoSeleccionado: 'img' | 'img_hero' | null = null;
       }
       this.tiendaService.crearTienda(data)
         .subscribe((resp: any) => {
-          this.cargando = false;
+          this.isSubmitting = false;
           this.tiendaSeleccionado = resp.tienda;
           Swal.fire('¡Paso 1 completado!', 'Tienda creada. Ahora Agrega la info para el menu y sube la imagen.', 'success');
           // Como estmos creando, al finalizar debe ir al paso 2 para subir la imagen

@@ -47,6 +47,7 @@ export class UsertiendaaddComponent implements OnInit {
   state_banner: boolean;
   cargandoImagen: boolean;
   isDriver: boolean = false;
+  isDragging = false;
 
   option_selectedd: number = 1;
   solicitud_selectedd: any = null;
@@ -238,6 +239,36 @@ export class UsertiendaaddComponent implements OnInit {
 
       })
   }
+
+  onDragOver(event: DragEvent) {
+  event.preventDefault();
+  event.stopPropagation();
+  this.isDragging = true;
+}
+
+onDragLeave(event: DragEvent) {
+  event.preventDefault();
+  event.stopPropagation();
+  this.isDragging = false;
+}
+
+onDrop(event: DragEvent) {
+  event.preventDefault();
+  event.stopPropagation();
+  this.isDragging = false;
+
+  const files = event.dataTransfer?.files;
+  if (files && files.length > 0) {
+    this.cambiarImagen(files[0]);
+  }
+}
+
+onFileSelected(event: any) {
+  const file = event.target?.files?.[0];
+  if (file) {
+    this.cambiarImagen(file);
+  }
+}
 
   goBack() {
     this.location.back(); // <-- go back to previous location on cancel

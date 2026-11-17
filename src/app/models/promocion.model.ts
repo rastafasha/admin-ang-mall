@@ -11,6 +11,7 @@ export class Promocion {
     public enlace: string,
     public estado: boolean,
     public colorfondo: string,
+    public tipo: 'DESING' |'IMAGEN' ,
     public img?: string,
     public _id?: string
   ){}

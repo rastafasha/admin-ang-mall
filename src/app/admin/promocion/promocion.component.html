@@ -1,8 +1,10 @@
-<div class="clear"></div>
+
+<app-back-instrucc [displayInfo]="false" [displayBack]="true" ></app-back-instrucc>
+
 <div class="row animated fadeIn fast">
     <div class="col-12">
         <app-search [query]="query" [modelo]="promocion" [colleccionName]="promocions"
-[colleccion]="'promocions'" (searchEvent)="handleSearchEvent($event)" (resetEvent)="PageSize()"></app-search>
+        [colleccion]="'promocions'" (searchEvent)="handleSearchEvent($event)" (resetEvent)="PageSize()"></app-search>
     </div>
 </div>
 <app-skeleton-loader *ngIf="cargando" [rows]="1" [columns]="3"></app-skeleton-loader>

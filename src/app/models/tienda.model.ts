@@ -47,6 +47,7 @@ export class Tienda{
     public state_banner?: boolean,
     public usaDelivery?: boolean,
     public usaPedido?: boolean,
+    public usaPromocion?: boolean,
     public iva?: number,
     public status?: 'Desactivado' |'Activo' ,
     

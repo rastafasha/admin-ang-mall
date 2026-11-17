@@ -1,4 +1,5 @@
-<app-back-instrucc *ngIf="productNotSelected" (onOpenHelp)="instruccionesModal.open()"></app-back-instrucc>
+
+<app-back-instrucc *ngIf="productNotSelected"  [displayInfo]="true" [displayBack]="true" (onOpenHelp)="instruccionesModal.open()"></app-back-instrucc>
 
 <div class="row animated fadeIn fast" *ngIf="productNotSelected">
     <div class="container">

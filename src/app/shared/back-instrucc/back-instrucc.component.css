@@ -1,14 +1,14 @@
 .backinst{
     display: flex;
     align-items: center;
-    gap:40px
+    gap:60px
 }
 
 @media (max-width:768px){
-.backinst{
-    display: flex;
-    justify-content: start;
-    align-items: start;
-    flex-direction: column;
-}
+    .backinst {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: row;
+    }
 }

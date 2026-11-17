@@ -1,5 +1,6 @@
 
-<app-back-instrucc (onOpenHelp)="instruccionesModal.open()"></app-back-instrucc>
+
+<app-back-instrucc [displayInfo]="true" [displayBack]="true" (onOpenHelp)="instruccionesModal.open()"></app-back-instrucc>
 
 <!-- ESTADO 1: Si está desconectado, muestra el botón para activar -->
 <div *ngIf="whatsappStatus === 'DESCONECTADO'">

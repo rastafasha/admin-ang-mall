@@ -9,8 +9,7 @@ import Swal from 'sweetalert2';
   selector: 'app-perfil',
   standalone:false,
   templateUrl: './perfil.component.html',
-  styles: [
-  ]
+  styleUrls: ['./perfil.component.css']
 })
 export class PerfilComponent implements OnInit {
 
@@ -19,6 +18,8 @@ export class PerfilComponent implements OnInit {
   public imagenSubir: File;
   public imgTemp: any = null;
   uid:string;
+  cargandoImagen = false;
+  isDragging = false;
 
   user:any=[];
 
@@ -104,6 +105,38 @@ export class PerfilComponent implements OnInit {
     }).catch(err =>{
       Swal.fire('Error', 'No se pudo subir la imagen', 'error');
     })
+  }
+
+
+
+    onDragOver(event: DragEvent) {
+    event.preventDefault();
+    event.stopPropagation();
+    this.isDragging = true;
+  }
+  
+  onDragLeave(event: DragEvent) {
+    event.preventDefault();
+    event.stopPropagation();
+    this.isDragging = false;
+  }
+  
+  onDrop(event: DragEvent) {
+    event.preventDefault();
+    event.stopPropagation();
+    this.isDragging = false;
+  
+    const files = event.dataTransfer?.files;
+    if (files && files.length > 0) {
+      this.cambiarImagen(files[0]);
+    }
+  }
+  
+  onFileSelected(event: any) {
+    const file = event.target?.files?.[0];
+    if (file) {
+      this.cambiarImagen(file);
+    }
   }
 
 }

@@ -27,324 +27,328 @@
                         <div *ngIf="currentStep === 1">
                             <form class="form p-t-20 form-horizontal form-material" [formGroup]="productoForm">
                                 <!-- basico -->
-                                <div class="row">
-                                    <div class="col-xs-12 col-sm-6">
-                                        <div class="form-group">
-                                            <label for="exampleInputuname">{{'Título'|translate}} <span
-                                                    class="required">*</span>
+                                <details class="persiana-nativa col-xs-12" open>
+                                    <summary class="persiana-summary">
+                                        {{ 'información Básica' | translate }}
+                                    </summary>
+                                    <div class="row p-3">
+                                        <div class="col-xs-12 col-sm-6">
+                                            <div class="form-group">
+                                                <label for="exampleInputuname">{{'Título'|translate}} <span
+                                                        class="required">*</span>
+                                                </label>
+                                                <div class="input-group">
+
+                                                    <input type="text" formControlName="titulo" class="form-control"
+                                                        id="exampleInputuname" placeholder="titulo" required>
+
+                                                    <div *ngIf="productoForm.get('titulo')?.touched && productoForm.get('titulo')?.invalid"
+                                                        class="text-danger">
+                                                        <div *ngIf="productoForm.get('titulo')?.errors?.['required']">
+                                                            {{'Campo Requerido'|translate}}
+                                                        </div>
+                                                        <div *ngIf="productoForm.get('titulo')?.errors?.['minlength']">
+                                                            {{'Mínimo 3 Caracteres'|translate}}
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-12 ">
+                                                <input class="form-control form-control-sm" type="text"
+                                                    placeholder="slug" formControlName="slug" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-6">
+                                            <div class="form-group">
+                                                <label for="exampleInputuname">Sku <span
+                                                        class="required">*</span></label>
+                                                <div class="input-group">
+
+                                                    <input type="text" formControlName="sku" class="form-control"
+                                                        id="exampleInputuname" placeholder="codigo personalizado"
+                                                        required>
+
+                                                    <div *ngIf="productoForm.get('sku')?.touched && productoForm.get('sku')?.invalid"
+                                                        class="text-danger">
+                                                        <div *ngIf="productoForm.get('sku')?.errors?.['required']">
+                                                            {{'Campo Requerido'|translate}}
+                                                        </div>
+                                                        <div *ngIf="productoForm.get('sku')?.errors?.['minlength']">
+                                                            {{'Mínimo 3 Caracteres'|translate}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Descripción -->
+                                    <div class="row p-3">
+                                        <div class="form-group col-xs-12 col-sm-6">
+                                            <label class=" col-form-label font-weight-medium"
+                                                for="text-input">{{'Descripción'|translate}} <span
+                                                    class="required">*</span></label>
+                                            <div class="col-md-12">
+                                                <textarea formControlName="detalle" id="detalle"
+                                                    class="form-control"></textarea>
+                                                <div *ngIf="productoForm.get('detalle')?.touched && productoForm.get('detalle')?.invalid"
+                                                    class="text-danger">
+                                                    <div *ngIf="productoForm.get('detalle')?.errors?.['required']">
+                                                        {{'Campo Requerido'|translate}}
+                                                    </div>
+                                                    <div *ngIf="productoForm.get('detalle')?.errors?.['minlength']">
+                                                        {{'Mínimo 3 Caracteres'|translate}}
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-xs-12 col-sm-6">
+                                            <label class=" col-form-label font-weight-medium"
+                                                for="textarea-input">{{'Descripción corta'|translate}} 
+                                                <span  class="required">*</span></label>
+                                            <div class="col-md-12">
+
+                                                <textarea formControlName="info_short" id="info_short"
+                                                    class="form-control"></textarea>
+
+                                                <div *ngIf="productoForm.get('info_short')?.touched && productoForm.get('info_short')?.invalid"
+                                                    class="text-danger">
+                                                    <div *ngIf="productoForm.get('info_short')?.errors?.['required']">
+                                                        {{'Campo Requerido'|translate}}
+                                                    </div>
+                                                    <div *ngIf="productoForm.get('info_short')?.errors?.['minlength']">
+                                                        {{'Mínimo 3 Caracteres'|translate}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- video -->
+                                        <div class="form-group col-12">
+                                            <label class=" col-form-label font-weight-medium" for="text-input">{{'video de youtube'|translate}}
                                             </label>
-                                            <div class="input-group">
-
-                                                <input type="text" formControlName="titulo" class="form-control"
-                                                    id="exampleInputuname" placeholder="titulo" required>
-
-                                                <div *ngIf="productoForm.get('titulo')?.touched && productoForm.get('titulo')?.invalid"
-                                                    class="text-danger">
-                                                    <div *ngIf="productoForm.get('titulo')?.errors?.['required']">
-                                                        {{'Campo Requerido'|translate}}
-                                                    </div>
-                                                    <div *ngIf="productoForm.get('titulo')?.errors?.['minlength']">
-                                                        {{'Mínimo 3 Caracteres'|translate}}
-                                                    </div>
-                                                </div>
+                                            <div class="col-md-12">
+                                                <input type="text" formControlName="video_review" class="form-control"  id="exampleInputuname">
 
                                             </div>
                                         </div>
-                                        <div class="form-group col-12 ">
-                                            <input class="form-control form-control-sm" type="text" placeholder="slug"
-                                                formControlName="slug" readonly>
-                                        </div>
                                     </div>
-                                    <div class="col-xs-12 col-sm-6">
-                                        <div class="form-group">
-                                            <label for="exampleInputuname">Sku <span class="required">*</span></label>
-                                            <div class="input-group">
+                                    
+                                </details>
 
-                                                <input type="text" formControlName="sku" class="form-control"
-                                                    id="exampleInputuname" placeholder="codigo personalizado" required>
-
-                                                <div *ngIf="productoForm.get('sku')?.touched && productoForm.get('sku')?.invalid"
-                                                    class="text-danger">
-                                                    <div *ngIf="productoForm.get('sku')?.errors?.['required']">
-                                                        {{'Campo Requerido'|translate}}
-                                                    </div>
-                                                    <div *ngIf="productoForm.get('sku')?.errors?.['minlength']">
-                                                        {{'Mínimo 3 Caracteres'|translate}}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Descripción -->
-                                <div class="row">
-                                    <div class="form-group col-xs-12 col-sm-6">
-                                        <label class=" col-form-label font-weight-medium"
-                                            for="text-input">{{'Descripción'|translate}} <span
-                                                class="required">*</span></label>
-                                        <div class="col-md-12">
-                                            <!-- <ckeditor formControlName="detalle" [editor]="Editor" data="<p>Hello, world!</p>" required>
-                            </ckeditor> -->
-                                            <textarea formControlName="detalle" id="detalle"
-                                                class="form-control"></textarea>
-                                            <div *ngIf="productoForm.get('detalle')?.touched && productoForm.get('detalle')?.invalid"
-                                                class="text-danger">
-                                                <div *ngIf="productoForm.get('detalle')?.errors?.['required']">
-                                                    {{'Campo Requerido'|translate}}
-                                                </div>
-                                                <div *ngIf="productoForm.get('detalle')?.errors?.['minlength']">
-                                                    {{'Mínimo 3 Caracteres'|translate}}
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                    <div class="form-group col-xs-12 col-sm-6">
-                                        <label class=" col-form-label font-weight-medium"
-                                            for="textarea-input">{{'Descripción corta'|translate}} <span
-                                                class="required">*</span></label>
-                                        <div class="col-md-12">
-                                            <!-- <ckeditor formControlName="info_short" [editor]="Editor1" data="<p>Hello, world!</p>"
-                                required></ckeditor> -->
-
-                                            <textarea formControlName="info_short" id="info_short"
-                                                class="form-control"></textarea>
-
-                                            <div *ngIf="productoForm.get('info_short')?.touched && productoForm.get('info_short')?.invalid"
-                                                class="text-danger">
-                                                <div *ngIf="productoForm.get('info_short')?.errors?.['required']">
-                                                    {{'Campo Requerido'|translate}}
-                                                </div>
-                                                <div *ngIf="productoForm.get('info_short')?.errors?.['minlength']">
-                                                    {{'Mínimo 3 Caracteres'|translate}}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Descripción -->
-                                <!-- video -->
-                                <div class="form-group ">
-                                    <label class=" col-form-label font-weight-medium" for="text-input">{{'video de
-                                        youtube'|translate}}
-                                    </label>
-                                    <div class="col-md-12">
-                                        <input type="text" formControlName="video_review" class="form-control"
-                                            id="exampleInputuname">
-
-                                    </div>
-                                </div>
 
                                 <!-- precio y stock -->
-                                <div class="form-group ">
-                                    <label class=" col-form-label font-weight-medium" for="text-input">{{'Detalles
-                                        Valor'|translate}}
-                                        <span class="required">*</span></label>
-                                    <div class="col-md-12">
-                                        <div class="row">
-                                            <div class="col-xs-12 col-sm-6 col-md-4 ">
-                                                <label class=" col-form-label font-weight-medium">{{'Stock'|translate}}
-                                                    <span class="required">*</span></label>
-                                                <input class="form-control" type="number"
-                                                    placeholder="Stock del producto" formControlName="stock" min="0"
-                                                    required>
-                                                <div *ngIf="productoForm.get('stock')?.touched && productoForm.get('stock')?.invalid"
-                                                    class="text-danger">
-                                                    <div *ngIf="productoForm.get('stock')?.errors?.['required']">
-                                                        {{'Campo Requerido'|translate}}
-                                                    </div>
-                                                    <div *ngIf="productoForm.get('stock')?.errors?.['minlength']">
-                                                        {{'Mínimo 100'|translate}}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-xs-12 col-sm-6 col-md-4 ">
-                                                <label class=" col-form-label font-weight-medium">{{'Precio
-                                                    Actual'|translate}} <span class="required">*</span></label>
-                                                <input class="form-control" type="number" placeholder="Precio actual"
-                                                    formControlName="precio_ahora" min="0" required>
-                                                <div *ngIf="productoForm.get('precio_ahora')?.touched && productoForm.get('precio_ahora')?.invalid"
-                                                    class="text-danger">
-                                                    <div *ngIf="productoForm.get('precio_ahora')?.errors?.['required']">
-                                                        {{'Campo Requerido'|translate}}
-                                                    </div>
-                                                    <div
-                                                        *ngIf="productoForm.get('precio_ahora')?.errors?.['minlength']">
-                                                        {{'Mínimo 1'|translate}}
+                                <details class="persiana-nativa col-xs-12" >
+                                    <summary class="persiana-summary">
+                                        {{ 'precio y stock' | translate }}
+                                    </summary>
+                                    <div class="row p-3">
+                                                <div class="col-xs-12 col-sm-6 col-md-4 ">
+                                                    <label
+                                                        class=" col-form-label font-weight-medium">{{'Stock'|translate}}
+                                                        <span class="required">*</span></label>
+                                                    <input class="form-control" type="number"
+                                                        placeholder="Stock del producto" formControlName="stock" min="0"
+                                                        required>
+                                                    <div *ngIf="productoForm.get('stock')?.touched && productoForm.get('stock')?.invalid"
+                                                        class="text-danger">
+                                                        <div *ngIf="productoForm.get('stock')?.errors?.['required']">
+                                                            {{'Campo Requerido'|translate}}
+                                                        </div>
+                                                        <div *ngIf="productoForm.get('stock')?.errors?.['minlength']">
+                                                            {{'Mínimo 100'|translate}}
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-xs-12 col-sm-6 col-md-4 ">
-                                                <label class=" col-form-label font-weight-medium">{{'Precio
-                                                    Antes'|translate}} <span class="required">*</span></label>
-                                                <input class="form-control" type="number" placeholder="Precio antes"
-                                                    formControlName="precio_antes" min="0" required>
-
-                                                <div *ngIf="productoForm.get('precio_antes')?.touched && productoForm.get('precio_antes')?.invalid"
-                                                    class="text-danger">
-                                                    <div *ngIf="productoForm.get('precio_antes')?.errors?.['required']">
-                                                        {{'Campo Requerido'|translate}}
-                                                    </div>
-                                                    <div
-                                                        *ngIf="productoForm.get('precio_antes')?.errors?.['minlength']">
-                                                        {{'Si no tiene variacion el monto debe ser igual a Precio
-                                                        Actual'|translate}}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <!-- Categorías -->
-                                    <div class="col-xs-12 col-sm-6 col-md-3 ">
-                                        <div class="form-group">
-                                            <label for="select-input">{{'Categoría'|translate}} <span
-                                                    class="required">*</span></label>
-                                            <select class="form-control" formControlName="categoria">
-                                                <option disabled value="">{{ 'Seleccione' | translate }}</option>
-                                                <!-- Filtramos y extraemos el nombre en el idioma activo del sistema -->
-                                                <option *ngFor="let item of listCategorias | unique:'nombre'"
-                                                    [value]="item._id">
-                                                    {{ item.nombre?.[translate.currentLang] || item.nombre?.es }}
-                                                </option>
-                                            </select>
-                                            <div *ngIf="productoForm.get('categoria')?.touched && productoForm.get('categoria')?.invalid"
-                                                class="text-danger">
-                                                <div *ngIf="productoForm.get('categoria')?.errors?.['required']">
-                                                    {{'Campo Requerido'|translate}}
-                                                </div>
-                                                <div *ngIf="productoForm.get('categoria')?.errors?.['minlength']">
-                                                    {{'Seleccione una opción'|translate}}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-6 col-md-3 ">
-                                        <div class="form-group">
-                                            <label for="select-input">{{'Subcategoría'|translate}} <span
-                                                    class="required">*</span></label>
-                                            <select class="form-control" formControlName="subcategoria">
-                                                <option disabled value="">{{ 'Seleccione' | translate }}</option>
-                                                <option *ngFor="let item of listCategorias"
-                                                    [value]="(item.subcategorias && typeof item.subcategorias === 'object') ? (item.subcategorias?.es) : item.subcategorias">
-
-                                                    <!-- 🟢 Control bilingüe inteligente que acepta texto plano u objeto {es, en} -->
-                                                    {{ (item.subcategorias && typeof item.subcategorias === 'object')
-                                                    ? (item.subcategorias?.[translate.currentLang] ||
-                                                    item.subcategorias?.es)
-                                                    : item.subcategorias }}
-                                                </option>
-                                            </select>
-                                            <div *ngIf="productoForm.get('subcategoria')?.touched && productoForm.get('subcategoria')?.invalid"
-                                                class="text-danger">
-                                                <div *ngIf="productoForm.get('subcategoria')?.errors?.['required']">
-                                                    {{'Campo Requerido'|translate}}
-                                                </div>
-                                                <div *ngIf="productoForm.get('subcategoria')?.errors?.['minlength']">
-                                                    {{'Seleccione una opción'|translate}}
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                    <!-- Destacado -->
-                                    <div class="col-xs-12 col-sm-6 col-md-3 ">
-                                        <div class="form-group">
-                                            <label for="select-input">{{'Destacado?'|translate}}</label>
-                                            <select class="form-control " formControlName="isFeatured"
-                                                name="isFeatured">
-                                                <option disabled value="">{{'Seleccionar'|translate}}</option>
-                                                <option [value]="true">{{'Activo'|translate}}</option>
-                                                <option [value]="false">{{'Inactivo'|translate}}</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <!-- Destacado -->
-                                    <div class="col-xs-12 col-sm-6 col-md-3 ">
-                                        <div class="form-group">
-                                            <label for="select-input">{{'bajo Pedido?'|translate}}</label>
-                                            <select class="form-control " formControlName="bajoPedido"
-                                                name="bajoPedido">
-                                                <option disabled value="">{{'Seleccionar'|translate}}</option>
-                                                <option [value]="true">{{'Activo'|translate}}</option>
-                                                <option [value]="false">{{'Inactivo'|translate}}</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <!-- condition -->
-                                    <div class="col-xs-12 col-sm-6 col-md-3 ">
-                                        <div class="form-group">
-                                            <label for="select-input">{{'Condición?'|translate}}</label>
-                                            <select class="form-control " formControlName="condition" name="condition"
-                                                required>
-                                                <option disabled value="">{{'Seleccionar'|translate}}</option>
-                                                <option value="new">{{'Nuevo'|translate}}</option>
-                                                <option value="used">{{'Usado'|translate}}</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <!-- marca -->
-                                    <div class="col-xs-12 col-sm-6 col-md-3" *ngIf="user.role === 'SUPERADMIN'">
-                                        <label for="text-input">{{'Marca'|translate}} </label>
-                                        <div class="input-group">
-                                            <select class="form-control " name="marca" formControlName="marca" required>
-                                                <option disabled value="">{{'Seleccionar'|translate}}</option>
-                                                <option *ngFor="let item of listMarcas" [value]="item._id">
-                                                    {{item.nombre}}</option>
-                                            </select>
-                                        </div>
-
-                                    </div>
-                                    <div class="col-xs-12 col-sm-6 col-md-3" *ngIf="user.role === 'SUPERADMIN'">
-                                        <label class=" col-form-label font-weight-medium"
-                                            for="local">{{'Tienda'|translate}} <span class="required">*</span></label>
-                                        <div class="input-group">
-                                            <select class="form-control " name="local" formControlName="local" required>
-                                                <option disabled value="">{{'Seleccionar'|translate}}</option>
-                                                <option *ngFor="let tienda of listTiendas" [value]="tienda._id">
-                                                    {{tienda.local}} | {{tienda.nombre}}
-                                                </option>
-                                            </select>
-
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-6 col-md-9 mb-3">
-                                        <label class="col-form-label font-weight-medium"
-                                            for="text-input">{{'Tipo'|translate}} <span
-                                                class="required">*</span></label>
-                                        <div class="col-md-12">
-                                            <div class="row">
-                                                <div class="col-lg-12">
-                                                    <input class="form-control" type="text"
-                                                        placeholder="Nombre del selector"
-                                                        formControlName="nombre_selector" min="0">
-
-                                                    <div *ngIf="productoForm.get('nombre_selector')?.touched && productoForm.get('nombre_selector')?.invalid"
+                                                <div class="col-xs-12 col-sm-6 col-md-4 ">
+                                                    <label class=" col-form-label font-weight-medium">{{'Precio Actual'|translate}} <span class="required">*</span></label>
+                                                    <input class="form-control" type="number"
+                                                        placeholder="Precio actual" formControlName="precio_ahora"
+                                                        min="0" required>
+                                                    <div *ngIf="productoForm.get('precio_ahora')?.touched && productoForm.get('precio_ahora')?.invalid"
                                                         class="text-danger">
                                                         <div
-                                                            *ngIf="productoForm.get('nombre_selector')?.errors?.['required']">
+                                                            *ngIf="productoForm.get('precio_ahora')?.errors?.['required']">
                                                             {{'Campo Requerido'|translate}}
                                                         </div>
                                                         <div
-                                                            *ngIf="productoForm.get('nombre_selector')?.errors?.['minlength']">
-                                                            {{'Si no existe variación, colocar único'|translate}}
+                                                            *ngIf="productoForm.get('precio_ahora')?.errors?.['minlength']">
+                                                            {{'Mínimo 1'|translate}}
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-12">
-                                                    <span class="text-muted">
-                                                        {{'Por ejemplo: Si el producto, no tiene sabores,
-                                                        colocar'|translate}}
-                                                        <b>{{'Sabores'|translate}}</b>.
-                                                        {{'Para calzados el selector es'|translate}}
-                                                        <b>{{'Tallas'|translate}}</b></span>
+                                                <div class="col-xs-12 col-sm-6 col-md-4 ">
+                                                    <label class=" col-form-label font-weight-medium">{{'Precio Antes'|translate}} <span class="required">*</span></label>
+                                                    <input class="form-control" type="number" placeholder="Precio antes"
+                                                        formControlName="precio_antes" min="0" required>
+
+                                                    <div *ngIf="productoForm.get('precio_antes')?.touched && productoForm.get('precio_antes')?.invalid"
+                                                        class="text-danger">
+                                                        <div
+                                                            *ngIf="productoForm.get('precio_antes')?.errors?.['required']">
+                                                            {{'Campo Requerido'|translate}}
+                                                        </div>
+                                                        <div
+                                                            *ngIf="productoForm.get('precio_antes')?.errors?.['minlength']">
+                                                            {{'Si no tiene variacion el monto debe ser igual a Precio Actual'|translate}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                    </div>
+                                    <div class="row p-3">
+                                        <!-- Categorías -->
+                                        <div class="col-xs-12 col-sm-6 col-md-3 ">
+                                            <div class="form-group">
+                                                <label for="select-input">{{'Categoría'|translate}} <span
+                                                        class="required">*</span></label>
+                                                <select class="form-control" formControlName="categoria">
+                                                    <option disabled value="">{{ 'Seleccione' | translate }}</option>
+                                                    <!-- Filtramos y extraemos el nombre en el idioma activo del sistema -->
+                                                    <option *ngFor="let item of listCategorias | unique:'nombre'"
+                                                        [value]="item._id">
+                                                        {{ item.nombre?.[translate.currentLang] || item.nombre?.es }}
+                                                    </option>
+                                                </select>
+                                                <div *ngIf="productoForm.get('categoria')?.touched && productoForm.get('categoria')?.invalid"
+                                                    class="text-danger">
+                                                    <div *ngIf="productoForm.get('categoria')?.errors?.['required']">
+                                                        {{'Campo Requerido'|translate}}
+                                                    </div>
+                                                    <div *ngIf="productoForm.get('categoria')?.errors?.['minlength']">
+                                                        {{'Seleccione una opción'|translate}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-6 col-md-3 ">
+                                            <div class="form-group">
+                                                <label for="select-input">{{'Subcategoría'|translate}} <span
+                                                        class="required">*</span></label>
+                                                <select class="form-control" formControlName="subcategoria">
+                                                    <option disabled value="">{{ 'Seleccione' | translate }}</option>
+                                                    <option *ngFor="let item of listCategorias"
+                                                        [value]="(item.subcategorias && typeof item.subcategorias === 'object') ? (item.subcategorias?.es) : item.subcategorias">
+
+                                                        <!-- 🟢 Control bilingüe inteligente que acepta texto plano u objeto {es, en} -->
+                                                        {{ (item.subcategorias && typeof item.subcategorias === 'object')
+                                                        ? (item.subcategorias?.[translate.currentLang] || item.subcategorias?.es) : item.subcategorias }}
+                                                    </option>
+                                                </select>
+                                                <div *ngIf="productoForm.get('subcategoria')?.touched && productoForm.get('subcategoria')?.invalid"
+                                                    class="text-danger">
+                                                    <div *ngIf="productoForm.get('subcategoria')?.errors?.['required']">
+                                                        {{'Campo Requerido'|translate}}
+                                                    </div>
+                                                    <div
+                                                        *ngIf="productoForm.get('subcategoria')?.errors?.['minlength']">
+                                                        {{'Seleccione una opción'|translate}}
+                                                    </div>
                                                 </div>
 
                                             </div>
                                         </div>
+                                        <!-- Destacado -->
+                                        
+                                        <div class="form-group col-xs-12 col-sm-6 col-md-3 ">
+                                                <label for="isFeatured">{{'Destacado?'|translate}}</label>
+
+                                                <div class="switch-wrapper">
+                                                    <label class="toggle-switch">
+                                                        <input type="checkbox" id="isFeatured"
+                                                            formControlName="isFeatured">
+                                                        <span class="slider"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        <!-- bajo Pedido -->
+                                         <div class="form-group col-xs-12 col-sm-6 col-md-3 ">
+                                                <label for="bajoPedido">{{'bajo Pedido?'|translate}}</label>
+
+                                                <div class="switch-wrapper">
+                                                    <label class="toggle-switch">
+                                                        <input type="checkbox" id="bajoPedido"
+                                                            formControlName="bajoPedido">
+                                                        <span class="slider"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        <!-- condition -->
+                                        <div class="col-xs-12 col-sm-6 col-md-3 ">
+                                            <div class="form-group">
+                                                <label for="select-input">{{'Condición?'|translate}}</label>
+                                                <select class="form-control " formControlName="condition"
+                                                    name="condition" required>
+                                                    <option disabled value="">{{'Seleccionar'|translate}}</option>
+                                                    <option value="new">{{'Nuevo'|translate}}</option>
+                                                    <option value="used">{{'Usado'|translate}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <!-- marca -->
+                                        <div class="col-xs-12 col-sm-6 col-md-3" *ngIf="user.role === 'SUPERADMIN'">
+                                            <label for="text-input">{{'Marca'|translate}} </label>
+                                            <div class="input-group">
+                                                <select class="form-control " name="marca" formControlName="marca"
+                                                    required>
+                                                    <option disabled value="">{{'Seleccionar'|translate}}</option>
+                                                    <option *ngFor="let item of listMarcas" [value]="item._id">
+                                                        {{item.nombre}}</option>
+                                                </select>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-xs-12 col-sm-6 col-md-3" *ngIf="user.role === 'SUPERADMIN'">
+                                            <label class=" col-form-label font-weight-medium"
+                                                for="local">{{'Tienda'|translate}} <span
+                                                    class="required">*</span></label>
+                                            <div class="input-group">
+                                                <select class="form-control " name="local" formControlName="local"
+                                                    required>
+                                                    <option disabled value="">{{'Seleccionar'|translate}}</option>
+                                                    <option *ngFor="let tienda of listTiendas" [value]="tienda._id">
+                                                        {{tienda.local}} | {{tienda.nombre}}
+                                                    </option>
+                                                </select>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-6 col-md-9 mb-3">
+                                            <label class="col-form-label font-weight-medium"
+                                                for="text-input">{{'Tipo'|translate}} <span
+                                                    class="required">*</span></label>
+                                            <div class="col-md-12">
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <input class="form-control" type="text"
+                                                            placeholder="Nombre del selector"
+                                                            formControlName="nombre_selector" min="0">
+
+                                                        <div *ngIf="productoForm.get('nombre_selector')?.touched && productoForm.get('nombre_selector')?.invalid"
+                                                            class="text-danger">
+                                                            <div
+                                                                *ngIf="productoForm.get('nombre_selector')?.errors?.['required']">
+                                                                {{'Campo Requerido'|translate}}
+                                                            </div>
+                                                            <div
+                                                                *ngIf="productoForm.get('nombre_selector')?.errors?.['minlength']">
+                                                                {{'Si no existe variación, colocar único'|translate}}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-12">
+                                                        <span class="text-muted">
+                                                            {{'Por ejemplo: Si el producto, no tiene sabores, colocar'|translate}}
+                                                            <b>{{'Sabores'|translate}}</b>.
+                                                            {{'Para calzados el selector es'|translate}}
+                                                            <b>{{'Tallas'|translate}}</b></span>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
+                                </details>
+
 
 
                                 <div class="row">
@@ -361,8 +365,7 @@
 
                                             <!-- Texto condicional con tu pipe de traducción -->
                                             <span>
-                                                {{ (productoSeleccionado ? 'Actualizar y Continuar' : 'Crear y
-                                                Continuar') | translate }}
+                                                {{ (productoSeleccionado ? 'Actualizar y Continuar' : 'Crear y Continuar') | translate }}
                                             </span>
                                         </button>
                                     </div>

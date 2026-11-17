@@ -60,7 +60,7 @@ import { SolicitudesListaComponent } from '../admin/proucto/solicitudes/solicitu
 
 const childRoutes: Routes = [
   { path: '', component: DashboardComponent, data: { tituloPage: 'Dashboard' } },
-  { path: 'account-settings', component: AccountSettingComponent, data: { tituloPage: 'Ajustes de Cuenta' } },
+  { path: 'account-settings', component: AccountSettingComponent, data: { tituloPage: 'Ajustes de Interfaz' } },
   { path: 'buscar/:termino', component: BusquedaComponent, data: { tituloPage: 'Busquedas' } },
   { path: 'perfil', component: PerfilComponent, data: { tituloPage: 'Perfil' } },
   { path: 'usuario/:id', component: UsuarioComponent, data: { tituloPage: 'Perfil Usuario' } },
