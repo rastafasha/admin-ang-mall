@@ -7,6 +7,7 @@ import { FileUploadService } from 'src/app/services/file-upload.service';
 import { UsuarioService } from '../../../services/usuario.service';
 import { PromocionService } from 'src/app/services/promocion.service';
 import { Promocion } from 'src/app/models/promocion.model';
+import { Usuario } from 'src/app/models/usuario.model';
 
 interface HtmlInputEvent extends Event {
   target: HTMLInputElement & EventTarget;
@@ -46,6 +47,7 @@ export class PromoeditComponent implements OnInit, OnChanges {
   currentStep = 1;
   pageTitle: string;
   banner;
+  user:Usuario;
 
   constructor(
     private fb: FormBuilder,
@@ -55,26 +57,28 @@ export class PromoeditComponent implements OnInit, OnChanges {
     private router: Router,
   ) {
     this.url = environment.baseUrl;
-    this.identity = this.userService.usuario;
   }
 
   ngOnInit(): void {
     window.scrollTo(0, 0);
     this.validarFormulario();
+    let USER = localStorage.getItem("user");
+    this.user = USER ? JSON.parse(USER) : null;
 
   }
 
   validarFormulario() {
     this.promocionForm = this.fb.group({
       producto_title: ['', Validators.required],
-      first_title: ['', Validators.required],
-      etiqueta: ['', Validators.required],
-      subtitulo: ['', Validators.required],
-      end: ['', Validators.required],
-      enlace: ['', Validators.required],
-      estado: [''],
+      first_title: [''],
+      etiqueta: [''],
+      subtitulo: [''],
+      end: [''],
+      enlace: [''],
+      estado: [false],
       tipo: [''],
-      colorfondo: ['', Validators.required]
+      colorfondo: [''],
+      
     })
   }
 
@@ -126,39 +130,42 @@ export class PromoeditComponent implements OnInit, OnChanges {
       img: null
     });
     // Emit event to parent to reset the projectSeleccionado variable
-
+    this.refreshPromoList.emit();
     this.closeModal.emit();
   }
 
   nextStep() {
-    const first_title = this.promocionForm.get('first_title');
-    const producto_title = this.promocionForm.get('producto_title');
-    const subtitulo = this.promocionForm.get('subtitulo');
-    const etiqueta = this.promocionForm.get('etiqueta');
-    const end = this.promocionForm.get('end');
-    const enlace = this.promocionForm.get('enlace');
-    const estado = this.promocionForm.get('estado');
-    const colorfondo = this.promocionForm.get('colorfondo');
-    const tipo = this.promocionForm.get('tipo');
+    // if(this.promocionForm.value.tipo ==='DESIGN'){
+    //   const first_title = this.promocionForm.get('first_title');
+    //   const producto_title = this.promocionForm.get('producto_title');
+    //   const subtitulo = this.promocionForm.get('subtitulo');
+    //   const etiqueta = this.promocionForm.get('etiqueta');
+    //   const end = this.promocionForm.get('end');
+    //   const enlace = this.promocionForm.get('enlace');
+    //   const estado = this.promocionForm.get('estado');
+    //   const colorfondo = this.promocionForm.get('colorfondo');
+    //   const tipo = this.promocionForm.get('tipo');
 
-    if (first_title?.invalid || producto_title?.invalid ||
-      subtitulo?.invalid || etiqueta?.invalid ||
-      end?.invalid || enlace?.invalid ||
-      estado?.invalid || colorfondo?.invalid ||
-      tipo?.invalid 
+    //   if (first_title?.invalid || producto_title?.invalid ||
+    //     subtitulo?.invalid || etiqueta?.invalid ||
+    //     end?.invalid || enlace?.invalid ||
+    //     estado?.invalid || colorfondo?.invalid ||
+    //     tipo?.invalid 
 
-    ) {
-      first_title?.markAsTouched();
-      producto_title?.markAsTouched();
-      subtitulo?.markAsTouched();
-      etiqueta?.markAsTouched();
-      end?.markAsTouched();
-      enlace?.markAsTouched();
-      estado?.markAsTouched();
-      colorfondo?.markAsTouched();
-      tipo?.markAsTouched();
-      return;
-    }
+    //   ) {
+    //     first_title?.markAsTouched();
+    //     producto_title?.markAsTouched();
+    //     subtitulo?.markAsTouched();
+    //     etiqueta?.markAsTouched();
+    //     end?.markAsTouched();
+    //     enlace?.markAsTouched();
+    //     estado?.markAsTouched();
+    //     colorfondo?.markAsTouched();
+    //     tipo?.markAsTouched();
+    //     return;
+    //   }
+    // }
+    
     this.currentStep = 2;
   }
 
@@ -190,7 +197,10 @@ export class PromoeditComponent implements OnInit, OnChanges {
       //actualizar
       const data = {
         ...this.promocionForm.value,
-        _id: this.promocionSeleccionado._id
+        local: this.user.local,
+      usuario: this.user.uid,
+        _id: this.promocionSeleccionado._id,
+        
       }
       this.promocionService.actualizarPromocion(data).subscribe(
         resp => {
@@ -210,7 +220,13 @@ export class PromoeditComponent implements OnInit, OnChanges {
 
     } else {
       //crear
-      this.promocionService.crearPromocion(this.promocionForm.value)
+      const data = {
+        ...this.promocionForm.value,
+        local: this.user.local,
+        usuario: this.user.uid,
+        
+      }
+      this.promocionService.crearPromocion(data)
         .subscribe((resp: any) => {
           this.promocionSeleccionado = resp.promocion;
           this.isSubmitting =false;
@@ -250,39 +266,54 @@ onFileSelected(event: any) {
   }
 }
 
-cambiarImagen(file: File) {
-  if (!file) {
-    this.imagenSubir = null;
-    return this.imgTemp = null;
+// cambiarImagen(file: File) {
+//   if (!file) {
+//     this.imagenSubir = null;
+//     return this.imgTemp = null;
+//   }
+
+//   // 1. Validar formato permitido
+//   const tiposPermitidos = ['image/jpeg', 'image/png', 'image/gif'];
+//   if (!tiposPermitidos.includes(file.type)) {
+//     this.imagenSubir = null;
+//     this.imgTemp = null;
+//     Swal.fire('Formato inválido', 'Solo se permiten imágenes JPG, PNG o GIF', 'warning');
+//     return;
+//   }
+
+//   // 2. Validar peso máximo (2 MB)
+//   const maxBytes = 2 * 1024 * 1024;
+//   if (file.size > maxBytes) {
+//     this.imagenSubir = null;
+//     this.imgTemp = null;
+//     Swal.fire('Archivo muy pesado', 'La imagen no debe superar los 2 MB', 'warning');
+//     return;
+//   }
+
+//   // 3. Procesar vista previa si pasa las validaciones
+//   this.imagenSubir = file;
+//   const reader = new FileReader();
+//   reader.readAsDataURL(file);
+
+//   reader.onloadend = () => {
+//     this.imgTemp = reader.result;
+//   };
+// }
+
+cambiarImagen(file: File){
+    this.imagenSubir = file;
+
+    if(!file){
+      return this.imgTemp = null;
+    }
+
+    const reader = new FileReader();
+    const url64 = reader.readAsDataURL(file);
+
+    reader.onloadend = () =>{
+      this.imgTemp = reader.result;
+    }
   }
-
-  // 1. Validar formato permitido
-  const tiposPermitidos = ['image/jpeg', 'image/png', 'image/gif'];
-  if (!tiposPermitidos.includes(file.type)) {
-    this.imagenSubir = null;
-    this.imgTemp = null;
-    Swal.fire('Formato inválido', 'Solo se permiten imágenes JPG, PNG o GIF', 'warning');
-    return;
-  }
-
-  // 2. Validar peso máximo (2 MB)
-  const maxBytes = 2 * 1024 * 1024;
-  if (file.size > maxBytes) {
-    this.imagenSubir = null;
-    this.imgTemp = null;
-    Swal.fire('Archivo muy pesado', 'La imagen no debe superar los 2 MB', 'warning');
-    return;
-  }
-
-  // 3. Procesar vista previa si pasa las validaciones
-  this.imagenSubir = file;
-  const reader = new FileReader();
-  reader.readAsDataURL(file);
-
-  reader.onloadend = () => {
-    this.imgTemp = reader.result;
-  };
-}
 
 subirImagen() {
   this.isLoadingImage = true;

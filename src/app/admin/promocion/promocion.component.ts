@@ -106,7 +106,7 @@ export class PromocionComponent implements OnInit {
 
   public PageSize(): void {
     this.query = '';
-    this.loadPromocions();
+    this.ngOnInit();
   }
 
   handleSearchEvent(event: any) {

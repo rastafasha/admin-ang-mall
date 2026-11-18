@@ -12,7 +12,7 @@
                     <div class="row">
 
                         <!-- Step Indicator -->
-                        
+
                         <!-- editar/crear post -->
                         <div *ngIf="currentStep === 1">
                             <form [formGroup]="promocionForm" (ngSubmit)="onSubmit()"
@@ -21,14 +21,16 @@
                                 <div class="form-group col-xs-12 col-sm-6 ">
                                     <label>{{'Tipo de Flujo'|translate}} <span class="required">*</span></label>
                                     <select class="form-control" formControlName="tipo">
+                                        <option value="">{{'Seleccione'|translate}}</option>
                                         <option value="DESING">{{'Contenido'|translate}}</option>
                                         <option value="IMAGEN">{{'Sólo imagen'|translate}}</option>
                                     </select>
                                 </div>
 
-                                <div class="row col-xs-12 mt-3 mb-3" *ngIf="promocionForm.get('tipo')?.value === 'DESING'">
+                                <div class="row col-xs-12 mt-3 mb-3"  *ngIf="promocionForm.get('tipo')?.value === 'DESING'">
                                     <div class="step-indicator m-t-20 m-b-20">
-                                        <div class="step" [ngClass]="{'active': currentStep >= 1, 'completed': currentStep > 1}">
+                                        <div class="step"
+                                            [ngClass]="{'active': currentStep >= 1, 'completed': currentStep > 1}">
                                             <span class="step-number">1</span>
                                             <span class="step-label">Datos</span>
                                         </div>
@@ -186,123 +188,73 @@
                                     </div>
 
                                     <div class="row">
-                                    <div class="d-flex justify-content-end align-items-center mt-3 gap-3">
-                                        
-                                        <button (click)="onSubmit()" [disabled]="isSubmitting"
-                                            class="btn btn-outline-success d-inline-flex align-items-center gap-2">
+                                        <div class="d-flex justify-content-end align-items-center mt-3 gap-3">
 
-                                            <!-- 🟢 Icono de Loading (Spinner) que se muestra solo si isSubmitting es true -->
-                                            <i *ngIf="isSubmitting" class="fas fa-spinner fa-spin"></i>
+                                            <button (click)="onSubmit()" [disabled]="isSubmitting"
+                                                class="btn btn-outline-success d-inline-flex align-items-center gap-2">
 
-                                            <!-- Texto condicional con tu pipe de traducción -->
-                                            <span>
-                                                {{ (promocionSeleccionado ? 'Actualizar y Continuar' : 'Crear y Continuar') | translate }}
-                                            </span>
-                                        </button>
-                                        <button class="btn btn-primary waves-effect waves-light m-r-10 btn-block"
-                                            type="button" (click)="nextStep2()">{{'Siguiente'|translate}}</button>
+                                                <!-- 🟢 Icono de Loading (Spinner) que se muestra solo si isSubmitting es true -->
+                                                <i *ngIf="isSubmitting" class="fas fa-spinner fa-spin"></i>
+
+                                                <!-- Texto condicional con tu pipe de traducción -->
+                                                <span>
+                                                    {{ (promocionSeleccionado ? 'Actualizar y Continuar' : 'Crear y Continuar') | translate }}
+                                                </span>
+                                            </button>
+                                            <button class="btn btn-primary waves-effect waves-light m-r-10 btn-block"
+                                                type="button" (click)="nextStep()">{{'Siguiente'|translate}}</button>
+                                        </div>
                                     </div>
                                 </div>
-                                </div>
-                                <div class="row col-xs-12 mt-3 mb-3" *ngIf="promocionForm.get('tipo')?.value === 'IMAGEN'">
+                                <div class="row col-xs-12 mt-3 mb-3"  *ngIf="promocionForm.get('tipo')?.value === 'IMAGEN'">
+                                    <div class="step-indicator m-t-20 m-b-20">
+                                        <div class="step"
+                                            [ngClass]="{'active': currentStep >= 1, 'completed': currentStep > 1}">
+                                            <span class="step-number">1</span>
+                                            <span class="step-label">Datos</span>
+                                        </div>
+                                        <div class="step-line"></div>
+                                        <div class="step" [ngClass]="{'active': currentStep >= 2}">
+                                            <span class="step-number">2</span>
+                                            <span class="step-label">Imagen</span>
+                                        </div>
+                                    </div>
                                     <div class="form-group col-xs-12 col-sm-6">
-                                            <label class=" col-form-label font-weight-medium" for="text-input">Título
-                                                <span class="required">*</span></label>
-                                            <div class="input-group">
-                                                <input class="form-control" required type="text"
-                                                    placeholder="Nombre del producto" formControlName="producto_title">
-                                                <div *ngIf="promocionForm.get('producto_title')?.touched && promocionForm.get('producto_title')?.invalid"
-                                                    class="text-danger">
-                                                    <div
-                                                        *ngIf="promocionForm.get('producto_title')?.errors?.['required']">
-                                                        Campo Requerido
-                                                    </div>
-                                                    <div
-                                                        *ngIf="promocionForm.get('producto_title')?.errors?.['minlength']">
-                                                        Seleccione una opción
-                                                    </div>
+                                        <label class=" col-form-label font-weight-medium" for="text-input">Título
+                                            <span class="required">*</span></label>
+                                        <div class="input-group">
+                                            <input class="form-control" required type="text"
+                                                placeholder="Nombre del producto" formControlName="producto_title">
+                                            <div *ngIf="promocionForm.get('producto_title')?.touched && promocionForm.get('producto_title')?.invalid" class="text-danger">
+                                                <div *ngIf="promocionForm.get('producto_title')?.errors?.['required']">
+                                                    Campo Requerido
+                                                </div>
+                                                <div *ngIf="promocionForm.get('producto_title')?.errors?.['minlength']">
+                                                    Seleccione una opción
                                                 </div>
                                             </div>
                                         </div>
+                                    </div>
                                     <!-- Contenido cuando ya existe promocionSeleccionado -->
-                                <div class="row m-t-10" >
-                                    
-                                    <!-- Columna izquierda: Especificaciones -->
-                                    <div class="col-xs-12 col-sm-5">
-                                        <div class="specs-box">
-                                            <h5><i class="fa fa-info-circle text-info m-r-5"></i>
-                                                {{'Especificaciones:'|translate}}</h5>
-                                            <ul class="specs-list">
-                                                <li><strong>Dimensiones:</strong> 300px X 300px máx.</li>
-                                                <li><strong>Peso máximo:</strong> 2 MB</li>
-                                                <li><strong>Formatos:</strong> JPG, PNG o GIF</li>
-                                            </ul>
+                                    <div class="row">
+                                        <div class="d-flex justify-content-end align-items-center mt-3 gap-3">
+
+                                            <button (click)="onSubmit()" [disabled]="isSubmitting"
+                                                class="btn btn-outline-success d-inline-flex align-items-center gap-2">
+
+                                                <!-- 🟢 Icono de Loading (Spinner) que se muestra solo si isSubmitting es true -->
+                                                <i *ngIf="isSubmitting" class="fas fa-spinner fa-spin"></i>
+
+                                                <!-- Texto condicional con tu pipe de traducción -->
+                                                <span>
+                                                    {{ (promocionSeleccionado ? 'Actualizar y Continuar' : 'Crear y Continuar') | translate }}
+                                                </span>
+                                            </button>
+                                            <button class="btn btn-primary waves-effect waves-light m-r-10 btn-block" 
+                                                type="button" (click)="nextStep()">{{'Siguiente'|translate}}</button>
                                         </div>
                                     </div>
-
-                                    <!-- Columna derecha: Zona Drag & Drop y Botones -->
-                                    <div class="col-xs-12 col-sm-7">
-                                        <label class="font-bold">{{'Imagen de la promoción'|translate}}</label>
-
-                                        <div class="drop-zone" [class.drag-over]="isDragging"
-                                            (click)="fileInputPromo.click()" (dragover)="onDragOver($event)"
-                                            (dragleave)="onDragLeave($event)" (drop)="onDrop($event)">
-
-                                            <!-- Vista previa -->
-                                            <div class="preview-wrapper">
-                                                <img *ngIf="!imgTemp"
-                                                    [src]="promocionSeleccionado.img | imagenPipe: 'promocions'"
-                                                    class="img-preview-promo" alt="Imagen promoción">
-                                                <img *ngIf="imgTemp" [src]="imgTemp" class="img-preview-promo"
-                                                    alt="Vista previa">
-                                            </div>
-
-                                            <!-- Textos indicativos -->
-                                            <div class="drop-text">
-                                                <i class="fa fa-cloud-upload text-success"></i>
-                                                <span>{{'Arrastra la imagen o haz clic aquí'|translate}}</span>
-                                            </div>
-                                            <small class="drop-hint">JPG, PNG o GIF (Max. 2MB)</small>
-
-                                            <!-- Input oculto -->
-                                            <input #fileInputPromo type="file" accept="image/png, image/jpeg, image/gif"
-                                                style="display: none;" (change)="onFileSelected($event)">
-                                        </div>
-
-                                        <!-- Botones de acción -->
-                                        <div class="row m-t-15">
-                                            <div class="col-xs-6">
-                                                <button type="button" [disabled]="!imagenSubir" (click)="subirImagen()"
-                                                    class="btn btn-success waves-effect waves-light btn-block">
-                                                    <i class="fa fa-save m-r-5"></i> {{'Subir imagen'|translate}}
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-
                                 </div>
-                                <div class="row">
-                                    <div class="d-flex justify-content-end align-items-center mt-3 gap-3">
-                                        
-                                        <button (click)="onSubmit()" [disabled]="isSubmitting"
-                                            class="btn btn-outline-success d-inline-flex align-items-center gap-2">
-
-                                            <!-- 🟢 Icono de Loading (Spinner) que se muestra solo si isSubmitting es true -->
-                                            <i *ngIf="isSubmitting" class="fas fa-spinner fa-spin"></i>
-
-                                            <!-- Texto condicional con tu pipe de traducción -->
-                                            <span>
-                                                {{ (promocionSeleccionado ? 'Actualizar y Continuar' : 'Crear y Continuar') | translate }}
-                                            </span>
-                                        </button>
-                                    </div>
-                                </div>
-                                </div>
-
-                                
-                                
-
-                                
                             </form>
                         </div>
                         <div *ngIf="currentStep === 2">
@@ -361,17 +313,19 @@
                                         </div>
 
                                         <!-- Botones de acción -->
-                                        
+
 
                                         <div class="row">
                                             <div class="d-flex justify-content-end align-items-center mt-3 gap-3">
-                                                <button class="btn btn-warning waves-effect waves-light m-r-10 btn-block"
-                                                type="button" (click)="prevStep1()">{{'Anterior'|translate}}</button>
+                                                <button
+                                                    class="btn btn-warning waves-effect waves-light m-r-10 btn-block"
+                                                    type="button"
+                                                    (click)="prevStep()">{{'Anterior'|translate}}</button>
                                                 <button type="button" [disabled]="!imagenSubir" (click)="subirImagen()"
                                                     class="btn btn-success waves-effect waves-light btn-block">
                                                     <i class="fa fa-save m-r-5"></i> {{'Subir imagen'|translate}}
                                                 </button>
-                                    
+
                                             </div>
                                         </div>
 
