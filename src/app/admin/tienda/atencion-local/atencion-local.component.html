@@ -262,27 +262,40 @@
                 <div class="productos-atention">
                     <figure class="item"
                         *ngFor="let prod of productos |  paginate: { itemsPerPage: count, currentPage: p, totalItems: totalProducts }; let i = index">
-                        <div class="product product-style-1">
-                            <div class="img-wrapper">
-                                <a (click)="cargarPorducto(prod)">
-                                    <img class="img-responsive" [src]="prod.img | imagenPipe: 'productos'"
-                                        alt="{{prod.titulo}} thumbnail" />
-                                </a>
-                            </div>
-                            <figcaption class="desc text-center descript">
-                                <h5>
-                                    {{ translate.currentLang === 'en' ? prod.titulo?.en : prod.titulo?.es }}
-                                </h5>
-                                <p>SKU:{{prod.sku}}</p>
-                                <span class="price">
-                                    {{prod.precio_ahora |number:'1.2-2'| currency:tienda_moneda}}
-                                </span>
-                                <span class="price precioantes" *ngIf="prod.precio_antes > prod.precio_ahora">
-                                    {{prod.precio_antes |number:'1.2-2'| currency:tienda_moneda}}
-                                </span>
+                        <div class="card product-card h-100 border-0 shadow-sm" (click)="cargarPorducto(prod)">
+  <!-- Contenedor de imagen con proporción fija -->
+  <div class="img-wrapper position-relative overflow-hidden">
+    <img 
+      class="card-img-top product-img" 
+      [src]="prod.img | imagenPipe: 'productos'" 
+      [alt]="prod.titulo" 
+    />
+    <!-- Etiqueta opcional si hay descuento -->
+    <span class="badge bg-danger position-absolute top-0 end-0 m-2" *ngIf="prod.precio_antes > prod.precio_ahora">
+      Oferta
+    </span>
+  </div>
 
-                            </figcaption>
-                        </div>
+  <!-- Cuerpo de la tarjeta -->
+  <div class="card-body d-flex flex-column text-center p-3">
+    <small class="text-muted text-uppercase sku-text mb-1">SKU: {{prod.sku}}</small>
+    
+    <h5 class="card-title product-title mb-2">
+      {{ translate.currentLang === 'en' ? prod.titulo?.en : prod.titulo?.es }}
+    </h5>
+
+    <!-- Precio empujado hacia abajo con mt-auto para alinear todas las tarjetas -->
+    <div class="price-wrapper mt-auto pt-2">
+      <span class="price-now fw-bold">
+        {{prod.precio_ahora | number:'1.2-2' | currency:tienda_moneda}}
+      </span>
+      <span class="price-old text-muted text-decoration-line-through ms-2" *ngIf="prod.precio_antes > prod.precio_ahora">
+        {{prod.precio_antes | number:'1.2-2' | currency:tienda_moneda}}
+      </span>
+    </div>
+  </div>
+</div>
+
                     </figure>
                 </div>
                 <div class="clear"></div>
